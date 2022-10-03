@@ -136,7 +136,7 @@ secretnext = "MAP02"
 sky1 = "SKYEAR1", 0.1
 cluster = 1
 //par = 60
-music = M_island
+music = ORB
 }
 
 map PSMAP58 "The Mansion"
