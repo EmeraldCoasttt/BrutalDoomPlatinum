@@ -1,0 +1,127 @@
+
+
+
+
+
+
+
+
+
+ACTOR GreenPlasmaBallPlayerTransformed: GreenPlasmaBall
+{
+	Radius 10
+	Height 16
+	Speed 25
+	FastSpeed 25
+    -THRUGHOST
+    Damage (random(105,125))
+	Species "MArines"
+	+Activateimpact
+}
+
+
+ACTOR ThrowedZombieMan2B: ThrowedZombieMan2
+{
+    -NOGRAVITY
+	Damage 20
+	Speed 30
+}
+
+
+ACTOR ThrowedSergeantPieceB: ThrowedZombieMan2B
+{
+	Damage 20
+	Speed 30
+	Radius 6
+	Height 6
+	+MISSILE
+	Species "Marines"
+	States
+	{
+	Spawn:
+        SP2X HIJK 5
+		Loop
+		
+    Death:
+	    TNT1 A 0 A_SpawnItem("MeatDeath")
+		TNT1 A 0 A_CustomMissile ("XDeathSergeantHeadOnXDeath", 2, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("XDeathArm1", 2, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 5
+		Stop
+	}
+}
+
+
+actor D4HoldingZOmbieman
+{
+    Scale 1.0
+	PROJECTILE
+	+MISSILE
+    +CLIENTSIDEONLY
+	Speed 8
+    States
+    {
+    Spawn:
+	Death:
+		TNT1 A 0
+		TNT1 A 0
+		TNT1 A 0 A_Stop
+		TNT1 A 0 A_SpawnItem("D4ZombiemanBeingHold", 20, -20)
+        TNT1 A 2
+        stop
+    }
+}
+
+
+actor D4ZombiemanBeingHold
+{
+    +CLIENTSIDEONLY
+	+NOBLOCKMAP
+	+FORCEXYBILLBOARD
+    States
+    {
+    Spawn:
+	Death:
+		TNT1 A 0
+        D4BH A 1
+        stop
+    }
+}
+
+
+
+actor D4HoldingSergeant
+{
+    Scale 1.0
+	PROJECTILE
+	+MISSILE
+    +CLIENTSIDEONLY
+	Speed 8
+    States
+    {
+    Spawn:
+	Death:
+		TNT1 A 0
+		TNT1 A 0
+		TNT1 A 0 A_Stop
+		TNT1 A 0 A_SpawnItem("D4SergeantBeingHold", 20, 5)
+        TNT1 A 2
+        stop
+    }
+}
+
+
+actor D4SergeantBeingHold
+{
+    +CLIENTSIDEONLY
+	+NOBLOCKMAP
+	+FORCEXYBILLBOARD
+    States
+    {
+    Spawn:
+	Death:
+		TNT1 A 0
+        SP2X H 1
+        stop
+    }
+}

@@ -1,0 +1,189 @@
+ACTOR AmmoDroper : BrutalWeapon
+{
+	+WEAPON.NOAUTOFIRE
+	+WEAPON.DONTBOB
+	+WEAPON.NOALERT
+	+WEAPON.WIMPY_WEAPON
+	+WEAPON.NO_AUTO_SWITCH
+	Weapon.SelectionOrder 9999
+	
+    States
+	{
+	
+	Select:
+		TNT1 A 0
+		TNT1 A 1 A_Raise
+		TNT1 AAAAAAAAA 0 A_Raise
+		Goto Ready
+		
+	Deselect:
+		TNT1 A 0
+		TNT1 AAAAAAAAA 0 A_Lower
+		TNT1 AAAAAA 1 A_Lower
+		
+		TNT1 A 1 
+		TNT1 A 0 A_TakeInventory("AmmoDroper", 1)
+		TNT1 A -1
+		Stop
+	
+	Ready3:
+	SelectAnimation:
+	Ready:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+        TNT1 A 0 A_JumpIfInventory("Taunting",1,"Taunt")
+		TNT1 A 0 A_JumpIfInventory("Salute1", 1, "Salute")
+		TNT1 A 0 A_JumpIfInventory("Salute2", 1, "Salute")
+        TNT1 A 0 A_JumpIfInventory("Reloading",1,"Reload")
+		TNT1 A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+		TNT1 A 0 ACS_ExecuteAlways(396)
+		
+		TNT1 A 0 A_JumpIfInventory("AmmoDropSlot", 6, "ReadyGrenade")
+		TNT1 A 0 A_JumpIfInventory("AmmoDropSlot", 5, "ReadyFuel")
+		TNT1 A 0 A_JumpIfInventory("AmmoDropSlot", 4, "ReadyCell")
+		TNT1 A 0 A_JumpIfInventory("AmmoDropSlot", 3, "ReadyRocket")
+		TNT1 A 0 A_JumpIfInventory("AmmoDropSlot", 2, "ReadyShell")
+		TNT1 A 0 A_JumpIfInventory("AmmoDropSlot", 1, "ReadyRifle")
+	ReadyPistol:	
+		ADRO A 1 BRIGHT A_WeaponReady
+		Goto Ready
+	ReadyRifle:
+		ADRO B 1 BRIGHT A_WeaponReady
+		Goto Ready
+	ReadyShell:
+		ADRO C 1 BRIGHT A_WeaponReady
+		Goto Ready
+	ReadyRocket:
+		ADRO D 1 BRIGHT A_WeaponReady
+		Goto Ready
+	ReadyCell:
+		ADRO E 1 BRIGHT A_WeaponReady
+		Goto Ready
+	ReadyFuel:
+		ADRO F 1 BRIGHT A_WeaponReady
+		Goto Ready
+	ReadyGrenade:
+		ADRO G 1 BRIGHT A_WeaponReady
+		Goto Ready
+		
+	AltFire:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("AmmoDropSlot", 6, 4)
+		TNT1 A 0 A_GiveInventory("AmmoDropSlot", 1)
+		Goto Ready
+		TNT1 AAA 0
+		TNT1 A 0 A_TakeInventory("AmmoDropSlot", 7)
+		Goto Ready
+		
+	Fire:
+		TNT1 A 0
+		TNT1 A 0 ACS_ExecuteAlways(396)
+		TNT1 A 0 A_JumpIfInventory("AmmoDropSlot", 6, "DropGrenade")
+		TNT1 A 0 A_JumpIfInventory("AmmoDropSlot", 5, "DropFuel")
+		TNT1 A 0 A_JumpIfInventory("AmmoDropSlot", 4, "DropCell")
+		TNT1 A 0 A_JumpIfInventory("AmmoDropSlot", 3, "DropRocket")
+		TNT1 A 0 A_JumpIfInventory("AmmoDropSlot", 2, "DropShell")
+		TNT1 A 0 A_JumpIfInventory("AmmoDropSlot", 1, "DropRifle")
+	DropPistol:
+		ADRO A 1 BRIGHT
+		ADRO A 1 BRIGHT A_JumpIFInventory("Clip1", 10, 4)
+		TNT1 A 0 BRIGHT A_Print("Not enough ammo to drop", 1)
+		Goto Ready
+		TNT1 AAAA 0
+		TNT1 A 0 A_TakeInventory("Clip1", 10)
+		ADRO A 10 BRIGHT A_SpawnItemEx("CLIP1Drop", random(51, 55), random(-4, 4), 40, 2, 0, 2, angle, SXF_ABSOLUTEANGLE)
+		TNT1 A 0 A_Refire
+		Goto Ready
+		
+	DropRifle:
+		ADRO B 1 BRIGHT
+		ADRO B 1 BRIGHT A_JumpIFInventory("Clip2", 30, 4)
+		TNT1 A 0 BRIGHT A_Print("Not enough ammo to drop", 1)
+		Goto Ready
+		TNT1 AAAA 0
+		TNT1 A 0 A_TakeInventory("Clip2", 30)
+		ADRO B 10 BRIGHT A_SpawnItemEx("Clip2", random(51, 55), random(-4, 4), 40, 2, 0, 2, angle, SXF_ABSOLUTEANGLE)
+		TNT1 A 0 A_Refire
+		Goto Ready	
+		
+	DropShell:
+		ADRO C 1 BRIGHT
+		ADRO C 1 BRIGHT A_JumpIFInventory("AmmoSHell", 4, 4)
+		TNT1 A 0 BRIGHT A_Print("Not enough ammo to drop", 1)
+		Goto Ready
+		TNT1 AAAA 0
+		TNT1 A 0 A_TakeInventory("AmmoSHell", 4)
+		ADRO C 10 BRIGHT A_SpawnItemEx("AmmoSHell", random(51, 55), random(-4, 4), 40, 2, 0, 2, angle, SXF_ABSOLUTEANGLE)
+		TNT1 A 0 A_Refire
+		Goto Ready	
+		
+	DropRocket:
+		ADRO D 1 BRIGHT
+		ADRO D 1 BRIGHT A_JumpIFInventory("AmmoRocket", 1, 4)
+		TNT1 A 0 BRIGHT A_Print("Not enough ammo to drop", 1)
+		Goto Ready
+		TNT1 AAAA 0
+		TNT1 A 0 A_TakeInventory("AmmoRocket", 1)
+		ADRO D 10 BRIGHT A_SpawnItemEx("AmmoRocket", random(51, 55), random(-4, 4), 40, 2, 0, 2, angle, SXF_ABSOLUTEANGLE)
+		TNT1 A 0 A_Refire
+		Goto Ready	
+		
+	DropCell:
+		ADRO E 1 BRIGHT
+		ADRO E 1 BRIGHT A_JumpIFInventory("AmmoCell", 20, 4)
+		TNT1 A 0 BRIGHT A_Print("Not enough ammo to drop", 1)
+		Goto Ready
+		TNT1 AAAA 0
+		TNT1 A 0 A_TakeInventory("AmmoCell", 20)
+		ADRO E 10 BRIGHT A_SpawnItemEx("AmmoCell", random(51, 55), random(-4, 4), 40, 2, 0, 2, angle, SXF_ABSOLUTEANGLE)
+		TNT1 A 0 A_Refire
+		Goto Ready	
+		
+	DropFuel:
+		ADRO F 1 BRIGHT
+		ADRO F 1 BRIGHT A_JumpIFInventory("Gas", 50, 4)
+		TNT1 A 0 BRIGHT A_Print("Not enough ammo to drop", 1)
+		Goto Ready
+		TNT1 AAAA 0
+		TNT1 A 0 A_TakeInventory("Gas", 50)
+		ADRO F 10 BRIGHT A_SpawnItemEx("Gas", random(51, 55), random(-4, 4), 40, 2, 0, 2, angle, SXF_ABSOLUTEANGLE)
+		TNT1 A 0 A_Refire
+		Goto Ready		
+		
+	DropGrenade:
+		ADRO G 1 BRIGHT
+		ADRO G 1 BRIGHT A_JumpIFInventory("GrenadeAmmo", 1, 4)
+		TNT1 A 0 BRIGHT A_Print("Not enough ammo to drop", 1)
+		Goto Ready
+		TNT1 AAAA 0
+		TNT1 A 0 A_TakeInventory("GrenadeAmmo", 1)
+		ADRO G 10 BRIGHT A_SpawnItemEx("GrenadeAmmo", random(51, 55), random(-4, 4), 40, 2, 0, 2, angle, SXF_ABSOLUTEANGLE)
+		TNT1 A 0 A_Refire
+		Goto Ready		
+		
+	 Reload:
+		TNT1 A 0
+		TNT1 A 0 A_TakeInventory("Reloading", 1)
+		ADRO C 0 BRIGHT A_JumpIFInventory("ArmorShard", 5, "DropArmor")
+		ADRO C 0 BRIGHT A_JumpIFInventory("ArmorShardDroped", 5, "DropArmor")
+		ADRO C 0 BRIGHT A_JumpIFInventory("BasicArmor", 5, "DropArmor")
+		ADRO C 0 BRIGHT A_JumpIFInventory("HeavyArmor", 5, "DropArmor")
+		TNT1 A 0 BRIGHT A_Print("Not enough armor to drop", 1)
+		Goto Ready
+	DropArmor:	
+		TNT1 A 0
+		TNT1 A 0 A_TakeInventory("ArmorShard", 5)
+		TNT1 A 0 A_TakeInventory("ArmorShardDroped", 5)
+		TNT1 A 0 A_TakeInventory("BasicArmor", 5)
+		TNT1 A 0 A_TakeInventory("HeavyArmor", 5)
+		ADRO G 0 BRIGHT A_SpawnItemEx("ArmorShardDroped", random(51, 55), random(-4, 4), 40, 2, 0, 2, angle, SXF_ABSOLUTEANGLE)
+		Goto Ready		
+	}
+}
+
+
+ACTOR AmmoDropSlot : Inventory
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 7
+}

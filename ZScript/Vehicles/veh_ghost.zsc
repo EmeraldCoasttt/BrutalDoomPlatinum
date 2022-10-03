@@ -1,0 +1,402 @@
+class BDPBike_Guns : VehPart
+{
+	uint cooldown;
+	
+	Default
+	{
+		Radius 16;
+		Height 16;
+	}
+	
+	override void UpdatePos(bool moving)
+	{
+		super.UpdatePos(moving);
+		if(!base || !base.driver) return;
+		
+		A_SetAngle(base.driver.angle, SPF_INTERPOLATE);
+		A_SetPitch(base.driver.pitch, SPF_INTERPOLATE);
+	}
+		
+	override void DoUpdate(VehCamera cam)
+	{
+		if(cooldown) 
+		{
+			cam.SetZoom(1.0, 0.1);
+			cooldown--;
+		}
+		
+		if( CheckButtons(BT_ATTACK, VehButtons.BTS_DOWN) && !cooldown )
+		{
+			cooldown = 12;
+			double rmax = 2.0;
+			for(int i = 0; i < 7; i++)
+			{
+				double arecoil = frandom(-rmax, rmax);
+				double precoil = frandom(-rmax, rmax)*0.5;
+				let pball = BDPMath.FireProjectile("PlasmaBall", level.vec3offset(pos, base.vel), angle + arecoil, pitch + precoil, 0, 0, 20, 1, 60);
+			}
+			A_StartSound("BDP/Bike/Fire", CHAN_BODY, CHANF_OVERLAP);
+			cam.Quake(1.25,1.25,0,0.5);
+		}
+	}
+	
+	States
+	{
+		Spawn:
+			TNT1 A 1;
+		loop;
+	}
+}
+
+class Bike_Tire : VehPart
+{
+	bool invert;
+	double trueturn;
+	double turnvel;
+	Property BackTires : invert;
+	
+	Default
+	{
+		Radius 16;
+		Height 16;
+	}
+	
+	double GetSteerAngle(bool behind = false)
+	{
+		double fromangle = behind ? base.driver.angle-180 : base.driver.angle;
+		return -BDPMath.AngleDiff(fromangle, base.angle);
+	}
+	
+	override void UpdatePos(bool moving)
+	{
+		if(!base) return;
+		vector3 finalpos = GetOffsetPos(base);
+		SetOrigin(finalpos, moving);
+		
+		if(!base.driver) return;
+		
+		let Bike = BDPBike(base);
+		
+		// Determine angle based on aim.
+		// Get angle of "steering wheel"
+		double steerangle = GetSteerAngle();
+		bool behind = steerangle < -(180 - 50) || steerangle > (180 - 50);
+		if(behind) steerangle = GetSteerAngle(true);
+		if(invert) steerangle = -steerangle;
+		
+		trueturn = base.angle + clamp(steerangle, -50, 50);
+		steerangle = clamp(steerangle, -30, 30);
+		
+		A_SetAngle(steerangle + base.angle, SPF_INTERPOLATE);
+		A_SetPitch(pitch + Bike.accel, SPF_INTERPOLATE);
+		A_SetRoll(base.roll, SPF_INTERPOLATE);
+		/*
+		If(bike.accel > 1)
+				{
+				//console.printf("wemovingforward");
+					A_spawnprojectile("bikefootstep", 10, 0, 0, CMF_AIMDIRECTION,90);
+				}
+			*/	
+	}
+		
+	States
+	{
+		Spawn:
+			MODL A 1
+			{
+	
+				
+			}
+		loop;
+	}
+}
+class Bike_BackTire : Bike_Tire 
+{
+	Default
+	{
+		Bike_Tire.BackTires true;
+	}
+}
+
+class BDPBike : BDPVehicle
+{
+	Bike_Tire Tire_T, Tire_B;
+	
+	double throttle; // Throttle
+	double accel;    // Tire rotation velocity.
+	double angvel;   // Angular velocity.
+	uint horntics;   // How long the horn is being held for.
+	VehPart gun;
+	uint explosiontimer;
+	bool firstboost;
+	
+	Default
+	{
+		Radius 32;
+		Height 40;
+		
+		Mass 300;
+		Health 1000;
+		BDPVehicle.Armored 0;
+		Scale 1.0;
+		MaxSlopeSteepness 0.1;
+	}
+	
+	override void tick()
+	{
+		If(Health < 500 && health > 0)
+			{
+			A_spawnprojectile ("VehicleSmoke", 7, 0, random (0, 360), 2, random (-80, -100));
+			}
+		If(Health < 250 && health > 0)
+			{
+			A_spawnprojectile("FlameTrailsLongersmaller", 7, 0, random (0, 360), 2, random (-70, -120));
+			}
+		Super.tick();
+	}
+	
+	override void BeginPlay()
+	{
+		Tire_T = Bike_Tire(VehPart.Attach("Bike_Tire", self, (65,0,0), (0,0)));
+		Tire_B = Bike_Tire(VehPart.Attach("Bike_BackTire", self, (-65,0,0), (0,0)));
+		super.BeginPlay();
+	
+	}
+	
+	override void OnDestroy()
+	{
+		if(gun) gun.Destroy();
+	}
+	
+	override bool RemoveDriver(PlayerPawn user, vector3 exitpos)
+	{
+		bool success = super.RemoveDriver(user, exitpos);
+		if(success) A_StartSound("BDP/Bike/EngineOFF",flags:CHANF_OVERLAP);
+		return success;
+	}
+	
+	override void TakeDriver(PlayerPawn user)
+	{
+		if(health <= 0) return;
+		if(user) driver = user;
+		A_StartSound("BIKESTRT",8,flags:CHANF_OVERLAP);
+		SetupBDPCamera(dist:-90, 50, 50, 80);
+		
+		ReadyDriver(user);
+		SetCrosshair(user, "BikeRET", (1.0,1.0));
+	}
+	
+	override vector3 GetDrivePos()
+	{
+		return (-20,-5,0);
+	}
+	
+	void ExplodeBike()
+	{
+		A_StartSound("BDP/Bike/Explosion", flags:CHANF_OVERLAP);
+		A_SetHealth(0);
+		A_Explode(60,256);
+		A_StopSound(CHAN_7);
+		A_StopSound(CHAN_5);
+		A_spawnitemex("BarrellessExplosion");
+		A_spawnprojectile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360));
+		A_spawnprojectile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360));
+		A_spawnprojectile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360));
+		A_spawnprojectile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360));
+		A_spawnprojectile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360));
+		A_spawnprojectile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360));
+		A_spawnprojectile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360));
+		A_spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("BikePieces1", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("BikePieces2", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("BikePieces3", 32, 0, random (0, 360), 2, random (-20, -50));
+		A_spawnprojectile ("BikePieces4", 32, 0, random (0, 360), 2, random (-20, -50));
+		Destroy();
+	}
+		vector2 GetTireDir(Bike_Tire tire)
+	{
+		return (cos(tire.trueturn), sin(tire.trueturn));
+	}
+	double GetTireVel(Bike_Tire tire, double velmod = 0.025)
+	{
+		velmod *= BDPMath.fmap(vel.xy.length(), 0, 30, 0.05, 1.0); 
+		return BDPMath.AngleDiff(angle, Tire_T.angle) * velmod;
+	}
+	override void DoMove(float forwardmove, float sidemove)
+	{	
+		if(onground) 
+		{
+			vel.xy *= 0.85;
+			accel *= 0.92;
+		}
+		else
+		{
+			vel.xy *= 0.992;
+			accel *= 0.992;
+		}
+		
+		if(pos.z+vel.z <= floorz && vel.z <= -3) 
+		{
+			A_StartSound("EBIKECLS", flags:CHANF_OVERLAP | CHANF_NOSTOP);
+			A_DoGroundFX();
+			double movepenalty = BDPMath.fmap(abs(vel.z), 0, 20, 1.20, 1.30);
+			double bounce = clamp(abs(vel.z)/20.0, 0, 1.0) * 20;
+
+			vel.xy *= movepenalty;
+			vel.z += bounce;
+			pitch -= bounce;
+			throttle *= movepenalty;
+		}
+		
+		// SFX
+		if(!driver)
+		{
+			A_StopSound(CHAN_5);
+			A_StopSound(CHAN_6);
+			A_StopSound(CHAN_7); // Engine
+			A_StopSound(CHAN_VOICE); // Horn
+		}
+		else
+			A_StartSound("BIKE1", CHAN_7, CHANF_LOOPING,0.5);
+
+		if(abs(accel) > 0.5)
+		{
+			double topitch = BDPMath.fmap(accel, -10.0, 10.0, 0.5, 1.0); 
+			//A_StartSound("BIKE1A", CHAN_5, CHANF_LOOPING,0.5);
+			A_StartSound("Bike1A", CHAN_6, CHANF_LOOPING,0.5);
+			A_SoundPitch(CHAN_5, topitch);
+			A_SoundPitch(CHAN_6, topitch);
+		}
+		else
+		{
+			A_StopSound(CHAN_5); // Drive 1
+			A_StopSound(CHAN_6); // Drive 2
+		}
+		
+		If(accel > 1 && pos.z+vel.z <= floorz)
+				{
+				//console.printf("wemovingforward");
+					A_DoGroundFX();
+				}
+				
+		// Physics
+		DoCollisionDamage(1.0,5);
+		
+		
+		
+		// Apply angular velocity
+		A_SetAngle(angle + angvel, SPF_INTERPOLATE);
+		angvel *= 0.92;
+		
+		// Validity check.
+		if(health <= 0)  
+		{
+			if(driver) RemoveDriver(driver, GetExitPos(driver));
+			ExplodeBike();
+			return;
+		}
+		if(!driver) return;
+		
+		// Honk honk
+		bool horn = CheckButtons(BT_ATTACK, VehButtons.BTS_DOWN);
+		if(horn)
+		{
+			if(horntics < 3) 
+				A_StartSound("BDP/Bike/Horn", flags:CHANF_OVERLAP | CHANF_NOSTOP);
+			else
+				A_StartSound("BDP/Bike/HornLoop", CHAN_VOICE, CHANF_LOOPING);
+			
+			driver.A_AlertMonsters(1024, AMF_TARGETEMITTER); 
+			horntics++;
+		}
+		else
+		{
+			horntics = 0;
+			A_StopSound(CHAN_VOICE);
+		}
+		
+		if(!onground) return;
+		
+		// Add tire forces for velocities
+		double tireforce = 0.80 * throttle;
+		if(abs(throttle) > 0)
+		{
+			vel.xy += GetTireDir(Tire_T) * tireforce;
+			vel.xy += GetTireDir(Tire_B) * tireforce;
+			angvel += GetTireVel(Tire_T) * abs(tireforce);
+			angvel += GetTireVel(Tire_B) * abs(tireforce);
+		}
+		
+		// Handle throttle and acceleration.
+		if(forwardmove)
+		{
+			vector2 movedir = (forwardmove, -sidemove).Unit();
+			throttle += movedir.x * 0.015;
+			accel += throttle * 2.5;
+		}
+		else
+		{
+			throttle *= 0.80;
+		}		
+		throttle = clamp(throttle, -0.5, 2.5);
+		accel = clamp(accel, -10, 10);
+							
+		// Slow down while turning
+		vector2 dir = AngleToVector(angle);
+		vector2 aimdir = AngleToVector(viewcam.angle);
+		double cosAng = (dir dot aimdir); // -1 to 1;
+		vector2 slowforce = AngleToVector(angle, tireforce) * (1.0-cosAng);
+		vel.xy -= slowforce;
+		
+		driver.trymove((pos.x,pos.y),0,false);
+		//driver.checkmove((pos.x,pos.y),0);
+	}
+	
+	States
+	{
+		PilotedSpawn:
+			TNT1 A 0 
+			{
+			Scale.x = 1.0;
+			scale.y = 1.0;
+			}
+			BIKE A 1
+			{
+			
+			}
+		Spawn:
+			TNT1 A 0 A_jumpif(driver,"pilotedspawn");
+			TNT1 A 0 
+			{
+			Scale.x = 0.71;
+			scale.y = 0.71;
+			}
+			BIKP A 1;
+		loop;
+		
+		Death:
+			Death:	
+		TNT1 A 1;
+		BIKE A 0 A_Scream();
+		NULL AAAAAAAAA 0 A_spawnprojectile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAAAA 0 A_spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (-20, -50));
+		TNT1 A 0 A_spawnprojectile ("BikePieces1", 32, 0, random (0, 360), 2, random (-20, -50));
+		TNT1 A 0 A_spawnprojectile ("BikePieces2", 32, 0, random (0, 360), 2, random (-20, -50));
+		TNT1 A 0 A_spawnprojectile ("BikePieces3", 32, 0, random (0, 360), 2, random (-20, -50));
+		TNT1 A 0 A_spawnprojectile ("BikePieces4", 32, 0, random (0, 360), 2, random (-20, -50));
+		TNT1 A -1;
+		stop;
+	}
+}

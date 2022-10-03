@@ -1,0 +1,49 @@
+//ITEMS
+POWERHUM POWERHUM
+$rolloff POWERHUM 100 300
+$volume POWERHUM 0.7
+$random RUNEIDLE  {UNMLOOP1 UNMLOOP2 UNMLOOP3} //unmaker idle
+$rolloff RUNEIDLE 100 300
+$volume RUNEIDLE 0.7
+
+PLAPICK1 PLAPICK1
+PLAPICK2 PLAPICK2
+
+items/armorbonus ARBPKUP
+items/hellisharmorbonus FARBPKUP
+
+items/healthbonus HBPKUP
+items/hellishhealthbonus FHBPKUP
+
+$volume items/healthbonus 0.9
+$volume items/hellishhealthbonus 0.9
+
+items/keycard KCRPKUP
+items/skullkey SKLPKUP
+
+items/nightvision NVGPKUP
+items/computermap COMPKUP
+items/radsuit RADSPKUP
+
+items/energyshield ARMORSH
+
+items/quaddamage QDAMAGE
+
+$limit items/quaddamage 1 100000
+
+items/soulsphere MGSPHERE
+
+
+sigil/pickup SIGIL1
+
+sigil/quake SGQUAKE
+
+sigil/bio SGBIO
+
+sigil/haste SGHASTE
+
+sigil/protection SGARMOR
+
+sigil/time SGTIME
+
+TIMEFREZ TIMEFREZ

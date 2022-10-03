@@ -1,0 +1,179 @@
+decal FootDecalRed
+{
+	pic FootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "65 00 00"
+}
+decal FootDecalBlue
+{
+	pic FootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "00 00 65"
+}
+decal FootDecalGreen
+{
+	pic FootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "00 65 00"
+}
+decal FootDecalRedLeft
+{
+	
+	pic FootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "65 00 00"
+	flipx
+}
+decal FootDecalBlueLeft
+{
+	pic FootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "00 00 65"
+	flipx
+}
+decal FootDecalGreenLeft
+{
+	pic FootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "00 65 00"
+	flipx
+}
+
+//Berserk
+decal SuperFootDecalRed
+{
+	pic FootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "65 00 00"
+	lowerdecal CrackMelee
+}
+decal SuperFootDecalBlue
+{
+	pic FootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "00 00 65"
+	lowerdecal CrackMelee
+}
+decal SuperFootDecalGreen
+{
+	pic FootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "00 65 00"
+	lowerdecal CrackMelee
+}
+//SIDEWAYS
+decal FootDecalRedSide
+{
+	pic SideFootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "65 00 00"
+}
+decal FootDecalBlueSide
+{
+	pic SideFootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "00 00 65"
+}
+decal FootDecalGreenSide
+{
+	pic SideFootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "00 65 00"
+}
+decal FootDecalRedSideleft
+{
+	pic SideFootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "65 00 00"
+	flipx
+}
+decal FootDecalBlueSideleft
+{
+	pic SideFootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "00 00 65"
+	flipx
+}
+decal FootDecalGreenSideleft
+{
+	pic SideFootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "00 65 00"
+	flipx
+}
+//berserked
+decal SuperFootDecalRedSide
+{
+	pic SideFootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "65 00 00"
+	lowerdecal CrackMelee
+}
+decal SuperFootDecalBlueSide
+{
+	pic SideFootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "00 00 65"
+	lowerdecal CrackMelee
+}
+decal SuperFootDecalGreenSide
+{
+	pic SideFootprintDecal
+	x-scale 0.3
+	y-scale 0.3
+	solid
+	add 1
+	shade "00 65 00"
+	lowerdecal CrackMelee
+}

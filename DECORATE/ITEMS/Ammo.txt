@@ -1,0 +1,1105 @@
+//Changes made:
+//Rifle/pistol mags, rockets, shells and shellboxes had alternative pickups coded in.
+
+
+
+ACTOR MiniGunCount : Ammo 
+{
+	Inventory.PickupMessage "Picked up a Minigun."
+	Inventory.Amount 1
+	Inventory.MaxAmount 5
+	Inventory.Icon "MGUNB0"
+	Inventory.PickupSound "CLIPICK2"
+	ammo.backpackamount 0
+//	Scale 0.9
+}
+
+
+
+// Backpack ---------------------------------------------------------------
+
+ACTOR AmmoSuply : BackpackItem Replaces Backpack
+{
+	Game Doom
+	SpawnID 144
+	Height 26
+	Inventory.PickupMessage "$GOTBACKPACK"
+	Inventory.PickupSound "BACKPACK"
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		BPAK A -1
+		Stop
+	}
+}
+
+ACTOR Clip2 : Ammo Replaces Clip
+{
+	Inventory.PickupMessage "Picked up a Rifle Magazine."
+	Inventory.Amount 30
+	Inventory.MaxAmount 300
+	Ammo.BackpackAmount 30
+	Ammo.BackpackMaxAmount 600
+	Inventory.Icon "CLIPA0"
+	Inventory.PickupSound "CLIPICK2"
+//	Scale 0.9
+	States
+	{
+	Spawn:
+	TNT1 A 1
+	TNT1 A 0 A_jump(64,"becomeclip1")
+	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1")
+	NULL A 0 A_jump(128,2)
+	NULL A 0 A_ChangeFlag("XFLIP",1)
+	TNT1 A 0
+	TNT1 A 0 A_Jump(256,"spawn1","spawn2")
+	
+	Spawn1:
+		CLIP A -1
+		Stop
+		
+		Spawn2:
+		CLIP E -1
+		Stop
+		Becomeclip1:
+		TNT1 A 0 A_spawnitemex("clip1")
+		STOP
+	}
+}
+
+
+
+
+ACTOR Clip2Dropped : Clip2 { Inventory.Amount 10 }
+
+
+ACTOR DoubleRifleAmmo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 62
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 62
+   Inventory.Icon "RIFLB0"
+}
+
+
+
+ACTOR Clip1 : Ammo
+{
+	Game Doom
+	Inventory.PickupMessage "Picked up a Pistol Magazine."
+	Inventory.Amount 30
+	Inventory.MaxAmount 200
+	Ammo.BackpackAmount 100
+	Ammo.BackpackMaxAmount 400
+	Inventory.Icon "CLIPB0"
+	Inventory.PickupSound "CLIPICK"
+//	Scale 0.9
+	States
+	{
+	Spawn:
+	TNT1 A 1
+	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1")
+	NULL A 0 A_jump(128,2)
+	NULL A 0 A_ChangeFlag("XFLIP",1)
+	TNT1 A 0
+	TNT1 A 0 A_Jump(256,"Spawn1","Spawn2")
+	
+	Spawn1:
+		CLIP B -1
+		Stop
+		
+		Spawn2:
+		CLIP C -1
+		Stop
+		
+		Spawn3:
+		CLIP D -1
+		Stop
+	}
+}
+
+
+
+
+ACTOR Clip1Drop: CustomInventory
+{
+ scale 0.4
+ radius 24
+ height 24
+ +THRUACTORS +FORCEXYBILLBOARD
+ Inventory.PickupMessage "Picked up a Pistol Magazine."
+ Inventory.PickupSound "CLIPIN"
+ Mass 1
+    States
+    {
+
+	 Spawn:
+		TNT1 A 0
+		TNT1 A 1
+		TNT1 A 0 
+		TNT1 A 0 A_ChangeFlag("THRUACTORS", 0)
+		TNT1 A 0
+	Stay:
+		CLIP B 1
+		CLIP B -1
+		Stop
+	Pickup:
+	    TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "Purist")
+	PickupNormal:	
+		TNT1 A 0 A_GiveInventory("Clip1", 10)
+		Stop
+	Purist:
+	    TNT1 A 0 A_GiveInventory("Clip2", 10)
+		Stop
+    }
+}
+
+Actor ClipBoxSpawner: RandomSpawner replaces Clipbox
+{
+	DropItem "ClipBox2", 255, 4
+	DropItem "PAmmoBox", 255, 1
+}
+
+ACTOR ClipBox2 : Clip2 //Replaces Clipbox
+{
+	Game Doom
+	SpawnID 139
+	Inventory.PickupMessage "Picked up a box of rifle ammunition."
+	Inventory.PickupSound "CBOXPICK"
+	Inventory.Amount 75
+	Scale 0.9
+	States
+	{
+	Spawn:
+	    TNT1 A 0
+		TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1")
+		TNT1 A 0 A_Jump(16, "NINlogo")
+	    TNT1 A 0 A_Jump(255, "Spawn1","Spawn2","Spawn3")
+		Loop
+	Spawn1:
+		AMMO A -1
+		Stop
+	Spawn2:
+		AMMO B -1
+		Stop
+	Spawn3:
+		AMMO C -1
+		Stop
+	NINlogo:
+	    AMMO D -1
+		stop
+	}
+}
+
+ACTOR PAmmoBox: CustomInventory
+{
+ Game Doom
+ //Scale 0.8
+ Scale 0.9
+ Radius 20
+ Height 16
+ Inventory.PickupMessage "Picked up a box of pistol ammunition."
+ Inventory.PickupSound "CBOXPICK"
+ States
+ {
+  Spawn:
+  TNT1 A 0
+  TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1")
+  TNT1 A 0 A_Jump(256, "spawn1", "spawn2", "spawn3", "spawn4", "spawn5", "spawn6", "spawn7")
+  Loop
+  
+  Spawn1:
+   4M0K A -1
+   stop
+   Spawn2:
+   4M0K B -1
+   stop
+   Spawn3:
+   4M0K C -1
+   stop
+   Spawn4:
+   4M0K D -1
+   stop
+   Spawn5:
+   4M0K E -1
+   stop
+   Spawn6:
+   4M0K F -1
+   stop
+   Spawn7:
+   4M0K G -1
+   stop
+   
+  Pickup:
+   TNT1 A 0 A_GiveInventory("Clip1", 70)
+   Stop
+   
+  }
+}
+
+
+ACTOR BDSMGAmmo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 41
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 41
+   Inventory.Icon SMGZA0
+}
+
+
+
+ACTOR BDDualSMGAmmo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 82
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 82
+   Inventory.Icon SMGZB0
+}
+
+
+ACTOR AmmoRocket : Ammo Replaces RocketAmmo
+{
+	Game Doom
+	SpawnID 140
+	Inventory.PickupMessage "$GOTROCKET"
+	Inventory.Amount 1
+	Inventory.MaxAmount 50
+	Ammo.BackpackAmount 6
+	Ammo.BackpackMaxAmount 100
+	Inventory.Icon "ROCKA0"
+	Inventory.Pickupsound "RCKCLIP"
+	Scale 0.9
+	-SHOOTABLE
+	+NOTAUTOAIMED
+	+NOBLOOD
+	+NORADIUSDMG
+	+FORCERADIUSDMG
+	
+	damagefactor "Shrapnel", 0.0  damagefactor "Trample", 0.0 
+	damagefactor "Head", 0.0	damagefactor "FriendBullet", 0.0    damagefactor "Taunt", 0.0    damagefactor "KillMe", 0.0
+	damagefactor "CancelTeleportFog", 0.0	damagefactor "BHFTOnBarrel", 0.0	damagefactor "GibRemoving", 0.0
+	damagefactor "SpawnMarine", 0.0	damagefactor "TeleportRemover", 0.0	damagefactor "MinorHead", 0.0
+	damagefactor "Decaptate", 0.0	damagefactor "MonsterKnocked", 0.0
+	DamageFactor "CauseSplash", 0.0 DamageFactor "CauseObjectsToSplashSlime", 0.0 DamageFactor "CauseObjectsToSplashNukage", 0.0
+	DamageFactor "CauseObjectsToSplashBlood", 0.0 DamageFactor "CauseObjectsToSplashLava", 0.0
+	damagefactor "HelperMarineFatallity", 0.0	damagefactor "Leg", 0.0
+	DamageFactor "KillMeBot", 0.0
+	Health 20
+	States
+	{
+	Spawn:
+	TNT1 A 1
+	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1")
+	TNT1 A 0 A_Jump(256, "spawn1", "spawn2", "spawn3")
+	Loop
+	
+	    Spawn1:
+		ROCK A -1
+		Stop
+		
+        Spawn2:
+		ROCK B -1
+		Stop
+		
+		Spawn3:
+		ROCK C -1
+		Stop
+		
+	}
+}
+
+// Rocket box --------------------------------------------------------------
+
+ACTOR AmmoRocketBox : AmmoRocket Replaces RocketBox
+{
+	Game Doom
+	SpawnID 141
+	Inventory.PickupMessage "$GOTROCKBOX"
+	Inventory.Amount 3
+	Scale 0.9
+	Inventory.Pickupsound "RCKCLIP2"
+	-SHOOTABLE
+	+NOTAUTOAIMED
+	States
+	{
+	
+	Spawn:
+	TNT1 A 1
+//	TNT1 A 0 A_Jump(32, "SpawnGrenadeBox")
+	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1")
+	TNT1 A 0 A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "spawn4", "spawn5", "spawn6")
+	Loop
+	
+	    Spawn1:
+		BROK A -1
+		Stop
+		
+        Spawn2:
+		RBOK B -1
+		Stop
+		
+		Spawn3:
+		RBOK C -1
+		Stop
+		
+		Spawn4:
+		RBOK D -1
+		Stop
+		
+		Spawn5:
+		RBOK E -1
+		Stop
+		
+		Spawn6:
+		RBOK F -1
+		Stop
+		
+ 	SpawnGrenadeBox:
+	    TNT1 A 0 A_SpawnItemEx ("GrenadeBox",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_TRANSFERSPECIAL|SXF_TRANSFERAMBUSHFLAG,0, tid)
+ 		stop
+		
+// 	Death:
+// 		TNT1 A 0
+// 		TNT1 A 0 A_SpawnItemEx ("ExplosionSplashSpawner", 0, 0, -20)
+//         TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+// 	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+// 	    TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+//         TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+//         TNT1 AAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180))
+//         TNT1 AAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 360))
+// 		TNT1 AAAAAAAAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 360), 2, random (0, 360))
+//         TNT1 AAAA 0 A_CustomMissile ("MediumExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
+//         EXPL AAAA 0 A_CustomMissile ("ExplosionSmokeFast22", 0, 0, random (0, 360), 2, random (0, 360))
+// 		EXPL A 0 A_CustomMissile ("BigNeoSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+// 		TNT1 A 0 A_SpawnItemEx ("RocketExplosion",0,0,13,0,0,0,0,SXF_NOCHECKPOSITION,0)
+// 		//TNT1 A 0 A_SpawnItemEx ("RocketPenetrator",cos(-pitch)*42,0,0+(sin(pitch)*42),cos(-pitch)*40,0,sin(pitch)*40,0,SXF_TRANSFERPITCH)
+// 		//TNT1 AA 0 A_SpawnItem("SuperExpensiveParticleSpawner")
+// 		EXPL AAA 0 A_CustomMissile ("BarrelKaboom", 0, 0, random (0, 360), 2, random (0, 360))
+// 		TNT1 A 0 A_Explode(150, 300)
+// 		TNT1 A 2
+// 		TNT1 A 0 A_SpawnItemEx ("LiquidExplosionEffectSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+// 		TNT1 A 0 A_PlaySound("FAREXPL", 3)
+// 		TNT1 A 15
+// 		TNT1 A 0 A_PlaySound("distantexp", 5)
+// 		TNT1 AAAAA 4 A_CustomMissile ("HeavyExplosionSmoke", 2, 0, random (0, 360), 2, random (0, 360))
+// 		Stop
+	}
+}
+
+
+// Cell --------------------------------------------------------------------
+
+ACTOR AmmoCell : Ammo Replaces Cell
+{
+	Game Doom
+	SpawnID 75
+	Inventory.PickupMessage "$GOTCELL"
+	Inventory.Amount 20
+	Inventory.MaxAmount 300
+	Ammo.BackpackAmount 20
+	Ammo.BackpackMaxAmount 600
+	Inventory.Pickupsound "PLAPICK1"
+	Inventory.Icon "CELLA0"
+	Scale 0.9
+	States
+	{
+	Spawn:
+	    TNT1 A 0
+		TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"SpawnOriginal")
+	    TNT1 A 0 A_Jump(64, "SpawnOriginal")
+	    TNT1 A 1 A_Jump(256, "Spawn1", "Spawn2", "Spawn3")
+		Loop
+		
+	Spawn1:
+	    CELL BCDEF 3
+		loop
+	    
+	Spawn2:
+	    CELL EFBCD 3
+		loop
+		
+	Spawn3:
+	    CELL DEFBC 3
+		loop
+		
+	SpawnOriginal:
+	    CELL A -1
+		Stop
+	}
+}
+
+// Cell pack ---------------------------------------------------------------
+
+ACTOR AmmoCellPack : AmmoCell Replaces CellPack
+{
+	Game Doom
+	SpawnID 142
+	Inventory.PickupMessage "$GOTCELLBOX"
+	Inventory.Pickupsound "PLAPICK2"
+	Inventory.Amount 80
+	Scale 0.9
+	States
+	{
+	Spawn:
+	TNT1 A 0
+	TNT1 A 0 A_jump(24,"spawnnuke")
+	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1")
+	NULL A 0 A_jump(128,2)
+	NULL A 0 A_ChangeFlag("XFLIP",1)
+	TNT1 A 0
+	    TNT1 A 1 A_Jump(256, "spawn1", "spawn2", "spawn3")
+		Loop
+		
+	Spawn1:
+		CELP ABCDEFGH 2
+		Loop
+	Spawn2:
+		CELP CDEFGHAB 2
+		Loop
+	Spawn3:
+		CELP FGHABCDE 2
+		Loop
+		
+	SpawnNuke:
+	    TNT1 A 0 A_SpawnItemEx ("PickyNuke",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_TRANSFERSPECIAL|SXF_TRANSFERAMBUSHFLAG,0, tid)
+ 		stop
+	}
+}
+
+// Shells ------------------------------------------------------------------
+
+ACTOR AmmoShell : Ammo Replaces Shell
+{
+	Game Doom
+	SpawnID 12
+	Inventory.PickupMessage "$GOTSHELLS"
+	Inventory.Amount 4
+	Inventory.MaxAmount 50
+	Ammo.BackpackAmount 8
+	Ammo.BackpackMaxAmount 100
+	Inventory.Icon "SHELA0"
+	Inventory.Pickupsound "SHELPK1"
+	Scale 0.9
+	States
+	{
+	Spawn:
+	TNT1 A 1
+	TNT1 A 0
+	//TNT1 A 0 A_jump(7,"spawngrenade")
+	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1")
+	NULL A 0 A_jump(128,2)
+	NULL A 0 A_ChangeFlag("XFLIP",1)
+	TNT1 A 0
+	
+		TNT1 A 0 A_Jump(256,"Spawn1","Spawn2","Spawn3","Spawn4","Spawn5","Spawn6","Spawn7","Spawn8","Spawn9")
+		Spawn1:
+		SHEL B -1
+		Stop
+		Spawn2:
+		SHEL C -1
+		Stop
+		Spawn3:
+		SHEL D -1
+		Stop
+		Spawn4:
+		SHEL E -1
+		Stop
+		Spawn5:
+		SHEL F -1
+		Stop
+		Spawn6:
+		SHEL G -1
+		Stop
+		Spawn7:
+		SHEL H -1
+		Stop
+		Spawn8:
+		SHEL I -1
+		Stop
+		Spawn9:
+		SHEL J -1
+		Stop
+		Spawngrenade:
+		TNT1 A 0 A_spawnitemex("grenadebox")
+		STOP
+		
+	}
+}
+
+ACTOR AmmoShellSingle : AmmoShell
+{
++ROLLSPRITE
++ROLLCENTER
+Inventory.Amount 1
+Inventory.PickupMessage "Picked up a shell."
+	States
+	{
+	Spawn:
+	TNT1 A 1
+	TNT1 A 0 A_Jump(255,"SpawnX","SpawnY","SpawnZ","Stay")
+	
+	SpawnX:
+		TNT1 A 0 A_SetRoll(90)
+		Goto Stay
+	SpawnY:
+		TNT1 A 0 A_SetRoll(-90)
+		Goto Stay
+	SpawnZ:
+		TNT1 A 0 A_SetRoll(180)
+		Goto Stay
+	
+	Stay:
+	SHEL K -1
+	stop
+	}
+}
+// Shell box ---------------------------------------------------------------
+
+ACTOR AmmoShellBox : AmmoShell Replaces SHellBox
+{
+	Game Doom
+	SpawnID 143
+	Inventory.PickupMessage "$GOTSHELLBOX"
+	Inventory.Amount 14
+	Inventory.Pickupsound "SHELPK2"
+	Scale 0.9
+	States
+	{
+	Spawn:
+	TNT1 A 1
+	//TNT1 A 0 A_jump(7,"spawngrenade")
+	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1")
+	NULL A 0 A_jump(128,2)
+	NULL A 0 A_ChangeFlag("XFLIP",1)
+	TNT1 A 0
+	    TNT1 A 0 A_Jump(256,"Spawn1","Spawn2","Spawn3","Spawn4","Spawn5")
+		
+	Spawn1:
+		SBOX A -1
+		Stop
+		
+	Spawn2:
+		SBOX B -1
+		Stop
+		
+	Spawn3:
+		SBOX C -1
+		Stop
+		
+	Spawn4:
+		SBOX D -1
+		Stop
+		
+	Spawn5:
+		SBOX E -1
+		Stop
+		
+		Spawngrenade:
+		TNT1 A 0 A_spawnitemex("grenadebox")
+		STOP
+		
+	}
+}
+
+
+
+ACTOR SSGAmmo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 2
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 2
+   Inventory.Icon "SGN2A0"
+}
+
+ACTOR PlasmaAmmo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 50
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 50
+   Inventory.Icon "PLASA0"
+}
+
+
+
+ACTOR GLAmmo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 1
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 1
+   Inventory.Icon "GLAPA0"
+}
+
+
+ACTOR DoublePlasmaAmmo : Ammo //Your weapon's magazine ammo.
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 100 //Your weapon's magazine ammo limit. Always leave one more bullet, so you can do the 12+1 effect.
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 100
+   Inventory.Icon "PLASB0"
+}
+
+
+
+ACTOR MiniHellRocketAmmo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 100
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 150
+   Inventory.Icon "FATBD0"
+}
+
+
+ACTOR SoulAmmo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 666
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 666
+   Inventory.Icon "BON1E0"
+}
+
+
+ACTOR BuzzSawAmmo : Ammo
+{
+   Inventory.Amount 100
+   Inventory.MaxAmount 600
+   Ammo.BackpackAmount 450
+   Ammo.BackpackMaxAmount 600
+   Inventory.Icon "HBUSE0"
+}
+
+ACTOR Gas : Ammo
+{
+   Inventory.Amount 50
+   Inventory.MaxAmount 400
+   Ammo.BackpackAmount 100
+   Ammo.BackpackMaxAmount 600
+   Inventory.Icon "GSLNA0"
+   Inventory.PickupMessage "You got Gasoline."
+}
+
+ACTOR MP40Ammo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 32
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 32
+   Inventory.Icon "MP40I0"
+   
+}
+
+
+ACTOR DualMP40Ammo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 64
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 64
+   Inventory.Icon "MP40J0"
+   
+}
+
+ACTOR RailgunAmmo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 5
+   Ammo.BackpackAmount 0
+   Inventory.Icon "SRCGA0"
+   Ammo.BackpackMaxAmount 5
+}
+
+
+ACTOR NuRailgunAmmo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 5
+   Ammo.BackpackAmount 0
+   Inventory.Icon "SRCGA0"
+   Ammo.BackpackMaxAmount 5
+}
+
+		
+		
+
+ACTOR GrenadeAmmo : Ammo
+{
+	Game Doom
+	Inventory.PickupMessage "Picked up a Grenade."
+	Inventory.Amount 1
+	Inventory.MaxAmount 3
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 3
+	Inventory.Icon "GRNDA"
+	Scale 0.3
+	States
+	{
+	Spawn:
+		TNT1 A 1
+		Stop
+	}
+}
+
+
+ACTOR GrenadeBox : GrenadeAmmo
+{
+	Game Doom
+	SpawnID 139
+	Inventory.PickupMessage "Picked up a box of throwables."
+	Inventory.Pickupsound "RCKCLIP"
+	Inventory.Amount 4
+	Scale 0.9
+	States
+	{
+	Spawn:
+	TNT1 A 1
+	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1")
+//	TNT1 A 0 A_Jump(48, "SpawnGrenadeBox")
+	TNT1 A 0 A_Jump(256, "spawn1", "spawn2", "spawn3")
+	Loop
+	
+	    Spawn1:
+		RBOK G -1
+		Stop
+		
+        Spawn2:
+		RBOK H -1
+		Stop
+		
+		Spawn3:
+		RBOK I -1
+		Stop
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+ACTOR TankAmmo : Ammo
+{
+	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.Amount 10
+	Inventory.MaxAmount 100
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 100
+	Inventory.Icon "NULL"
+	States
+	{
+	Spawn:
+		CLIP A -1
+		Stop
+	}
+}
+
+
+ACTOR MechAmmo : Ammo
+{
+
+	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.Amount 10
+	Inventory.MaxAmount 100
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 100
+	Inventory.Icon "NULL"
+	States
+	{
+	Spawn:
+		CLIP A -1
+		Stop
+	}
+}
+
+
+
+
+ACTOR HeavyMachinegunAmmo : Ammo
+{
+	Game Doom
+	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.Amount 100
+	Inventory.MaxAmount 2000
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 2000
+	Inventory.Icon "NULL"
+	States
+	{
+	Spawn:
+		CLIP A -1
+		Stop
+	}
+}
+
+
+
+
+ACTOR MechRocketAmmo : Ammo
+{
+	Game Doom
+	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.Amount 5
+	Inventory.MaxAmount 60
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 60
+	Inventory.Icon "NULL"
+	States
+	{
+	Spawn:
+		CLIP A -1
+		Stop
+	}
+}
+
+
+ACTOR MechLaserAmmo : Ammo
+{
+	Game Doom
+	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.Amount 30
+	Inventory.MaxAmount 200
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 200
+	Inventory.Icon "NULL"
+	States
+	{
+	Spawn:
+		CLIP A -1
+		Stop
+	}
+}
+
+
+
+ACTOR MechMOrtarAmmo : Ammo
+{
+	Game Doom
+	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.Amount 1
+	Inventory.MaxAmount 20
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 20
+	Inventory.Icon "NULL"
+	States
+	{
+	Spawn:
+		CLIP A -1
+		Stop
+	}
+}
+
+
+
+ACTOR HelicopterRocketAmmo : Ammo
+{
+	Game Doom
+	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.Amount 1
+	Inventory.MaxAmount 100
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 100
+	Inventory.Icon "NULL"
+	States
+	{
+	Spawn:
+		CLIP A -1
+		Stop
+	}
+}
+
+
+ACTOR HelicopterMissileAmmo : Ammo
+{
+	Game Doom
+	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.Amount 1
+	Inventory.MaxAmount 50
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 50
+	Inventory.Icon "NULL"
+	States
+	{
+	Spawn:
+		CLIP A -1
+		Stop
+	}
+}
+
+
+		
+ACTOR BDPistolAmmo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 21
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 21
+   Inventory.Icon PISTG0
+}
+
+
+ACTOR BDDualPistolAmmo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 32
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 32
+   Inventory.Icon PISTH0
+}
+
+
+ACTOR Nuke : Ammo
+{
+	Inventory.PickupMessage "Picked up a Nuke Cell."
+	Inventory.Amount 1
+	Inventory.MaxAmount 1
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 1
+	Inventory.Icon "NKLGH0"
+	Inventory.PickupSound "BFGREADY"
+	//Scale 1.2
+	States
+	{
+	Spawn:
+		NULL A 0
+		NULL A 0 A_jump(128,2)
+		NULL A 0 A_ChangeFlag("XFLIP",1)
+		Stay:
+		TNT1 A 0 A_startSound ("10KIDLE",12,0,0.5)
+		NKLG EFGEFG 2 A_spawnitemex("greenflaresmall",0,0,8)
+		LOOP
+
+	}
+}
+
+ACTOR PickyNuke : Nuke
+{
+
+
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("BFG10k",1,"stay",AAPTR_PLAYER1)
+		 TNT1 A 0 A_SpawnItemEx ("AmmoCellPack",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_TRANSFERSPECIAL|SXF_TRANSFERAMBUSHFLAG,0, tid)
+ 		stop
+		Stay:
+		NULL A 0 A_jump(128,2)
+		NULL A 0 A_ChangeFlag("XFLIP",1)
+		Stay2:
+		TNT1 A 0 A_startSound ("10KIDLE",12,0,0.5)
+		NKLG EFGEFG 2 A_spawnitemex("greenflaresmall",0,0,8)
+		LOOP
+		
+	}
+
+
+}
+
+ACTOR Mauser9mm : Ammo
+{
+	Game Doom
+	Inventory.PickupMessage "Picked up a Pistol Magazine."
+	Inventory.Amount 10
+	Inventory.MaxAmount 200
+	Ammo.BackpackAmount 150
+	Ammo.BackpackMaxAmount 400
+	Inventory.Icon "CLIPB0"
+	Inventory.PickupSound "CLIPICK"
+	Scale 0.9
+	States
+	{
+	Spawn:
+		CLIP B -1
+		Stop
+	}
+}
+
+Actor AmmoFragGrenade : Ammo
+{
+	Inventory.PickupMessage "Picked up a Grenade."
+	Inventory.Amount 1
+	Inventory.MaxAmount 2
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 3
+	Scale 0.5
+	Inventory.PickupSound "GRNPIN"
+	States
+	{
+	Spawn:
+		GRND D -1
+		Stop
+	}
+
+}
+
+Actor AmmoPipeBomb : Ammo
+{
+	Inventory.PickupMessage "Picked up a Pipe Bomb."
+	Inventory.Amount 1
+	Inventory.MaxAmount 2
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 3
+	Scale 0.7
+	Inventory.PickupSound "PIPESEL"
+	
+	States
+	{
+	Spawn:
+		PIPb B -1
+		Stop
+	}
+
+}
+
+Actor AmmoIceGrenade : Ammo
+{
+	Inventory.PickupMessage "Picked up an Freeze 'Nade."
+	Inventory.Amount 1
+	Inventory.MaxAmount 2
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 3
+	Scale 0.5
+	Inventory.PickupSound "ICEGPRE2"
+	States
+	{
+	Spawn:
+		GRND E -1
+		Stop
+	}
+
+}
+
+Actor AmmoVoidGrenade : Ammo
+{
+	Inventory.PickupMessage "Picked up a Void Grenade."
+	Inventory.Amount 1
+	Inventory.MaxAmount 2
+	Ammo.BackpackAmount 1
+	Ammo.BackpackMaxAmount 3
+	Scale 0.5
+	Inventory.PickupSound "VoidNadeBounce"
+
+	States
+	{
+	Spawn:
+		GRND F -1
+		Stop
+	}
+
+}
+
+

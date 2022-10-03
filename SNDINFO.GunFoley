@@ -1,0 +1,171 @@
+//Created/edited/mixed by Dissy EX
+//(Sorry it took me so long my guy ily)
+
+//Pistol
+//
+foley/PistolSlideBack PISTFOL1
+foley/PistolSlideForward PISTFOL2
+$random foley/PistolInspectMisc { PISTFOL3 PISTFOL4 PISTFOL5 }
+PISTFOL3 PISTFOL3
+PISTFOL4 PISTFOL4 
+PISTFOL5 PISTFOL5
+foley/PistolDualWieldSelect PISTFOL6 
+foley/PistolDualWieldDeselect PISTFOL7 
+foley/PistolSilencerIn PISTFOL8 
+foley/PistolSilencerOut PISTFOL9 
+
+
+//SMG
+$random foley/SMGInspectMisc { SMGFOL1 SMGFOL2 SMGFOL3 }
+SMGFOL1 SMGFOL1 
+SMGFOL2 SMGFOL2 
+SMGFOL3 SMGFOL3
+$volume foley/SMGInspectMisc 0.6
+foley/SMGDualWieldSelect SMGFOL4
+foley/SMGDualWieldDeselect SMGFOL5
+foley/SMGReloadOut SMGFOL6
+foley/SMGReloadIn SMGFOL7
+
+
+//Assault Shotgun
+foley/ASGDrumOut ASGFOL1
+foley/ASGDrumIn ASGFOL2
+$volume foley/ASGDrumIn 0.7
+foley/ASGPump ASGFOL3
+foley/ASGPlasma ASGFOL4
+foley/ASGBuckshot ASGFOL5
+
+
+//Shotgun (orgams)
+$random foley/ShotgunPumpIn {PMPFOL1 PMPFOL2 PMPFOL3 }
+PMPFOL1 PMPFOL1 
+PMPFOL2 PMPFOL2 
+PMPFOL3 PMPFOL3 
+$volume foley/ShotgunPumpIn 0.6
+$random foley/ShotgunPumpOut {PMPFOL4 PMPFOL5 PMPFOL6 }
+PMPFOL4 PMPFOL4 
+PMPFOL5 PMPFOL5 
+PMPFOL6 PMPFOL6 
+$volume foley/ShotgunPumpOut 0.6
+$random foley/ShotgunPumpMisc {PMPFOL7 PMPFOL8 PMPFOL9 }
+PMPFOL7 PMPFOL7
+PMPFOL8 PMPFOL8 
+PMPFOL9 PMPFOL9 
+$random foley/ShotgunReloadShell {PMPFOL10 PMPFOL11 PMPFOL12 PMPFOL13 PMPFOL14 PMPFOL15 }
+PMPFOL10 PMPFOL10 
+PMPFOL11 PMPFOL11 
+PMPFOL12 PMPFOL12
+PMPFOL13 PMPFOL13 
+PMPFOL14 PMPFOL14 
+PMPFOL15 PMPFOL15
+$random foley/ShotgunReloadRaise {PMPFOL16 PMPFOL17 PMPFOL18 }
+PMPFOL16 PMPFOL16
+PMPFOL17 PMPFOL17
+PMPFOL18 PMPFOL18
+$volume foley/ShotgunReloadRaise 0.9
+$random foley/ShotgunReloadLower {PMPFOL19 PMPFOL20 PMPFOL21 }
+PMPFOL19 PMPFOL19 
+PMPFOL20 PMPFOL20 
+PMPFOL21 PMPFOL21 
+$volume foley/ShotgunReloadLower 0.8
+
+$random insertshell {Shellin1 Shellin3}
+Shellin1 Shellin1
+Shellin3 Shellin3
+
+//SSG
+$random foley/SSGshellEject {SSGFOL1 SSGFOL2 SSGFOL3 SSGFOL4}
+SSGFOL1 SSGFOL1 
+SSGFOL2 SSGFOL2 
+SSGFOL3 SSGFOL3 
+SSGFOL4 SSGFOL4 
+foley/SSGopen SSGFOL5 
+foley/SSGclose SSGFOL6 
+$random foley/SSGinsertSingle {SSGFOL7 SSGFOL8 SSGFOL9}
+SSGFOL7 SSGFOL7 
+SSGFOL8 SSGFOL8 
+SSGFOL9 SSGFOL9 
+$random foley/SSGinsertShells {SSGFOL10 SSGFOL11 SSGFOL12 SSGFOL13}
+SSGFOL10 SSGFOL10 
+SSGFOL11 SSGFOL11 
+SSGFOL12 SSGFOL12 
+SSGFOL13 SSGFOL13 
+$random foley/SSGlowerBeforeOpen {SSGFOL15 SSGFOL16}
+SSGFOL14 SSGFOL14 
+SSGFOL15 SSGFOL15 
+$volume foley/SSGlowerBeforeOpen 0.8
+$random foley/SSGraiseAfterClose {SSGFOL16 SSGFOL17}
+SSGFOL16 SSGFOL16 
+SSGFOL17 SSGFOL17
+$volume foley/SSGraiseAfterClose 0.6
+
+
+//Machinegun
+$random foley/MGMoveBeforeGrenadeReload {LMGFOL1 LMGFOL2 LMGFOL3 }
+LMGFOL1 LMGFOL1 
+LMGFOL2 LMGFOL2 
+LMGFOL3 LMGFOL3 
+$random foley/MGMoveAfterGrenadeReload {LMGFOL4 LMGFOL5 LMGFOL6 }
+LMGFOL4 LMGFOL4 
+LMGFOL5 LMGFOL5 
+LMGFOL6 LMGFOL6 
+foley/MGopenTube LMGFOL7
+foley/MGcloseTube LMGFOL8
+foley/MGinsertBelt LMGFOL9
+foley/MGboltPull LMGFOL10
+
+
+//Rifle
+$random foley/RifleInspectMisc {RIFFOL1 RIFFOL2}//RIFFOL3}
+RIFFOL1 RIFFOL1
+RIFFOL2 RIFFOL2
+RIFFOL3 RIFFOL3
+
+
+//Minigun
+foley/NailgunInspect MINFOL1
+foley/NailgunToMinigun MINFOL2
+foley/MinigunToNailgun MINFOL3
+foley/NailgunInsertMag MINFOL4
+foley/MinigunInspectRotor MINFOL5
+
+
+//Grenade Launcher
+foley/GLDownwardsToOpen GLFOL1
+foley/GLUpwardsToClose GLFOL2
+foley/GLOpen GLFOL3
+foley/GLClose GLFOL4
+foley/GLEjectShell GLFOL5
+foley/GLLoadShell GLFOL6
+
+
+//RocketLauncher
+foley/SpinDrum RLFOL1
+foley/ActivateLaster RLFOL2
+foley/DisableLaser RLFOL3
+
+
+//Railgun
+$random foley/RailgunIceSlap {RAIFOL1 RAIFOL2 RAIFOL3 RAIFOL4} 
+RAIFOL1 RAIFOL1 
+RAIFOL2 RAIFOL2 
+RAIFOL3 RAIFOL3 
+RAIFOL4 RAIFOL4 
+foley/RailgunRippingMagMovement RAIFOL5 
+$volume foley/RailgunRippingMagMovement 0.8
+foley/RailgunInsectCellMovement RAIFOL6 
+$volume foley/RailgunInsectCellMovement 0.6
+foley/RailgunCellBeingInserted RAIFOL7 
+foley/RailgunInspectRemove RAIFOL8
+foley/RailgunInspectInsert RAIFOL9
+
+
+//Plasmagun
+foley/PlasmaButtonBeep PLAFOL1
+$random foley/PlasmaInspectMisc {PLAFOL2 PLAFOL3}
+PLAFOL2 PLAFOL2
+PLAFOL3 PLAFOL3
+
+$random PlasmagunFire { PLSFIRE1 PLSFIRE2 }
+PLSFIRE1 PLSFIRE1
+PLSFIRE2 PLSFIRE2

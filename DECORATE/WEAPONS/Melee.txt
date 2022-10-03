@@ -1,0 +1,2524 @@
+Actor KickAttackLow
+{
++NOGRAVITY
+}
+
+ACTOR IsDoingUpper: Inventory {Inventory.MaxAmount 1}
+
+ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
+{
+	Game Doom
+	Weapon.SelectionOrder 4000
+	Weapon.Kickback 100
+	Obituary "%o was Ripped and Teared by 	%k"
+	+WEAPON.MELEEWEAPON
+    +WEAPON.NOALERT
+    +WEAPON.NOAUTOAIM
+	+WEAPON.CHEATNOTWEAPON
+	+INVENTORY.UNDROPPABLE
+	+WEAPON.NOAUTOFIRE
+	Tag "Fists"
+	Inventory.AltHUDIcon "PRNSF0"
+	BrutalWeapon.weight 0
+	States
+	{
+	
+	//KickingFlash:
+	//TNT1 A 16
+	//Goto Ready
+	
+	LedgeClimb: //It's here so only stainable weapons can show stained fists.
+		TNT1 A 0 A_WeaponReady
+		TNT1 A 0 A_Playsound("ledgeclimb")
+		3L1M A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    2L1M A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    1L1M A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+	    CL1M N 0
+		"####" ABCD 1 A_SetPitch(pitch-pitch/2, SPF_INTERPOLATE)
+		"####" A 0 A_SetPitch(0, SPF_INTERPOLATE)
+		//"####" EF 1 A_SetPitch(pitch-0.5, SPF_INTERPOLATE)
+		"####" E 1
+		"####" FF 1 A_SetPitch(pitch-0.5, SPF_INTERPOLATE)
+		"####" G 1 A_SetPitch(pitch+3, SPF_INTERPOLATE)
+		"####" HI 1 A_SetPitch(pitch+4, SPF_INTERPOLATE)
+		"####" JK 1 A_SetPitch(pitch-3, SPF_INTERPOLATE)
+		"####" LM 1  A_SetPitch(pitch-2, SPF_INTERPOLATE)
+		TNT1 A 0 A_TakeInventory("Climbed_Ledge", 5000)
+		TNT1 A 0 A_TakeInventory("Grabbing_A_Ledge", 5000)
+		TNT1 AA 1 A_SetPitch(pitch-1, SPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 2)
+		TNT1 A 0 A_Overlay(-610, "FirstPersonLegsStand")
+		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+		Goto Ready3
+		
+	GrenadeThrowFlash:
+	FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+	FISA N 0
+	"####" A 0
+	"####" ABCD 1
+	TNT1 A 24
+	FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+	FISA N 0
+	"####" A 0
+	"####" DCBA 1 //36 in total
+	stop
+	
+	/*
+	KickingFlash:
+	FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+	FISA N 0
+   "####" A 0
+	"####" NMLK 1
+	TNT1 AAAAAAAA 1
+	FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+    FISA N 0
+    "####" A 0
+	"####" KLMN 1
+	Goto Ready
+	
+	AirKickingFlash:
+	    FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+     	FISA N 0
+        "####" A 0
+	    "####" NMLK 1
+	    TNT1 AAAAAAAAAA 1 //18
+		FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+     	FISA N 0
+        "####" A 0
+		"####" KLMN 1
+	    Goto Ready
+	
+	 SlideKickingStart:
+	 FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	 FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+	    FISA N 0
+        "####" A 0
+	    "####" NMLK 1
+	    TNT1 A 1
+	    TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+		Goto Ready
+
+	 SlideKickingEnd:
+	    TNT1 AAAAAA 1 //10
+		FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+     	FISA N 0
+        "####" A 0
+		"####" KLMN 1
+	    Goto Ready
+		*/
+		
+		
+		/*
+	    KickingFlash: //God, I'm so sorry it's such a mess... it has to be...
+	    "####" A 0 A_TakeInventory("PSeq1", 2)
+		"####" A 0 A_TakeInventory("PSeq2", 2)
+	    FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		FISA N 0
+		
+		"####" NNOOPPQQRRSSTT 1 {
+			A_WeaponReady(WRF_ALLOWRELOAD|WRF_NOSWITCH);
+			if (CountInv("ExecuteDownedEnemy") == 1) { return state("DoExecution"); }
+			if (CountInv("ShotgunguyHead") == 1) { return state("ReadyShotgunguyHead"); }
+			if (CountInv("HasCacoEye") == 1) { return state("ReadyCacoEye"); }
+			if (CountInv("HasImpFatality") == 1) { return state("ReadyImpFatality"); }
+			if (CountInv("HasHearthFatality") == 1) { return state("ReadyHearthFatality"); }
+			if (CountInv("LostSoulFatality") == 1) { return state("ReadySoul"); }
+			if (CountInv("HasBarrel") == 1) { return state("PickBarrel"); }
+			if (CountInv("Taunting") == 1) { return state("Taunt"); }
+			if (CountInv("Salute1") == 1 || CountInv("Salute2") == 1) { return state("Salute"); }
+			if (CountInv("Reloading") == 1) { return state("Reload"); }
+			if (CountInv("GoFatality") == 1) { return state("Steady"); }
+			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
+			if (CountInv("IsRunning") == 1) { return state("CheckSprint"); }
+			//if (CountInv("PressedUSe") == 1) { return state("CheckGrab"); }
+			if (CountInv("StartDualWield") == 1) { return state("CheckGrab2"); }
+			return state("");
+		}
+		Goto Ready3
+		*/
+		
+		
+		
+	Steady:
+	TNT1 A 1
+	Goto Ready
+	
+	Reload:
+		TNT1 A 0 A_jumpifinventory("PowerStrength",1,"SelectFatalityModes")
+		PGNS A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		PBNS A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRNS A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PUNS N 0
+		"####" A 0
+	    "####" BD 1 
+		"####" EFF 1
+		"####" A 0 A_PlaySound("Knuckled")
+		"####" GGG 1
+		"####" G 1 offset(0,31)
+		"####" G 1 offset(0,32)
+		"####" G 1 offset(0,31)
+		"####" GG 1 offset(0,32)
+		"####" FFE 3
+		"####" DB 1 A_TakeInventory("Reloading", 1)
+		Goto Ready3
+		
+	SelectFatalityModes:
+	    TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("NoFatality", 1, "FatalityOn")
+		Goto FatalityOff
+	FatalityOn:
+	    TNT1 A 0 A_Print("RIP AND TEAR!",1)
+		PGNS A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		PBNS A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRNS A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PUNS N 0
+		"####" A 0 A_TakeInventory("NoFatality", 1)
+		"####" A 0 A_TakeInventory("reloading", 1)
+	    "####" BD 1 A_weaponready
+		"####" EFF 1 A_weaponready
+		"####" A 0 A_PlaySound("Knuckled")
+		"####" GGG 1 A_weaponready
+		"####" G 1 offset(0,31)
+		"####" G 1 offset(0,32)
+		"####" G 1 offset(0,31)
+		"####" GG 1 offset(0,32)
+		"####" FFE 3 A_weaponready
+		"####" DB 1 A_weaponready
+		"####" A 0 A_TakeInventory("Reloading", 1)
+		Goto Ready3
+		
+	FatalityOff:
+		TNT1 A 0 A_Print("SMASH!",1)
+		PGNS A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		PBNS A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRNS A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PUNS N 0
+		"####" A 0 A_GiveInventory("NoFatality", 1)
+		"####" A 0 A_TakeInventory("reloading", 1)
+	    "####" BD 1 A_weaponready
+		"####" EFF 1 A_weaponready
+		"####" A 0 A_PlaySound("Knuckled")
+		"####" GGG 1 A_weaponready
+		"####" G 1 offset(0,31) A_weaponready
+		"####" G 1 offset(0,32) A_weaponready
+		"####" G 1 offset(0,31) A_weaponready
+		"####" GG 1 offset(0,32) A_weaponready
+		"####" FFE 3 A_weaponready
+		"####" DB 1 A_weaponready
+		"####" A 0 A_TakeInventory("Reloading", 1)
+		Goto Ready3
+		
+	CheckGrab:
+		TNT1 A 0
+		TNT1 A 0 A_TakeInventory("PressedUse", 1)
+		TNT1 A 0 A_TakeInventory("MeatAmmo", 100)
+		"####" A 0 A_JUmpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
+		TNT1 A 0 A_JumpIfInTargetInventory("IsPickable",1, "Pick")
+		TNT1 A 0 A_JumpIfInTargetInventory("SKZombieman",1, "StealthAttack")
+		TNT1 A 0 A_JumpIfInTargetInventory("SKShotgunguy",1, "StealthAttack")
+		TNT1 A 0 A_JumpIfInTargetInventory("SKChaingunguy",1, "StealthAttack")
+		TNT1 A 0 A_JumpIfInTargetInventory("SKNazi",1, "StealthAttack")
+		TNT1 A 0 A_JumpIfInTargetInventory("SKLabguy",1, "StealthAttack")
+		TNT1 A 0 A_JumpIfInTargetInventory("SKImp",1, "StealthAttack")
+// 		PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+// 		PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+// 		PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+// 		PONG N 0
+// 		"####" A 0
+// 		"####" A 0 A_JUmpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
+// 		"####" A 1
+		TNT1 A 0 A_JumpIfInventory("PowerStrength",1, "GrabCheckDist")
+		TNT1 A 0 A_JumpIfCloser(150, "StealthAttack")
+		Goto Ready3
+		
+		
+	DualWield:
+		TNT1 A 0
+		TNT1 A 0 A_TakeInventory("StartDualWield", 1)
+		TNT1 A 0 A_TakeInventory("MeatAmmo", 100)
+		TNT1 A 0 A_JumpIfInTargetInventory("IsPickable",1, "Pick")
+		TNT1 A 0 A_JumpIfInTargetInventory("SKZombieman",1, "StealthAttack")
+		TNT1 A 0 A_JumpIfInTargetInventory("SKShotgunguy",1, "StealthAttack")
+		TNT1 A 0 A_JumpIfInTargetInventory("SKChaingunguy",1, "StealthAttack")
+		TNT1 A 0 A_JumpIfInTargetInventory("SKNazi",1, "StealthAttack")
+		TNT1 A 0 A_JumpIfInTargetInventory("SKLabguy",1, "StealthAttack")
+		TNT1 A 0 A_JumpIfInTargetInventory("SKImp",1, "StealthAttack")
+// 		PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+// 		PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+// 		PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+// 		PONG N 0
+// 		"####" A 0
+// 		"####" A 1
+		TNT1 A 0 A_JumpIfInventory("PowerStrength",1, "GrabAttack")
+		//TNT1 A 0 A_JumpIfCloser(150, "StealthAttack")
+		Goto Ready3
+		
+	StealthAttack:	
+		PUNS A 0
+		TNT1 A 0 A_GiveInventory("GoSpecial")
+		TNT1 A 0 A_GiveInventory("Punching")
+		PONG A 0 A_FireCustomMissile("StealthAttack", 0, 0, 0, -9)
+		PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PONG N 0
+		"####" A 0
+		"####" AA 1 A_JUmpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
+		"####" A 0 ACS_ExecuteAlways(310)//Make player go to special state
+		"####" AA 1 A_JUmpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
+		"####" A 0 A_TakeInventory("PressedUse", 1)
+		Goto Fire
+		
+	Pick:	
+		PUNS A 0
+		TNT1 A 0 A_GiveInventory("GoSpecial")
+		TNT1 A 0 A_GiveInventory("Punching")
+		PKGP A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		PKBP A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PKRP A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PKUP N 0
+		"####" A 0
+		"####" E 1
+		"####" A 0 A_FireCustomMissile("PickMissile", 0, 0, 0, -9)
+		"####" FG 1
+		"####" A 0 A_TakeInventory("PressedUse", 1)
+		Goto Jab	
+		
+	GrabCheckDist:
+		TNT1 A 0
+// 		PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+// 		PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+// 		prng A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+// 		pong N 0
+// 		"####" A 0
+// 		"####" A 1
+		"####" A 0 A_TakeInventory("PressedUse", 1)
+		"####" A 0 A_JumpIfCloser(150, "GrabAttack")
+		Goto Ready3
+		
+	GrabAttack:
+	    PKGP A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    PKBP A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    PKRP A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PKUP N 0
+		"####" A 0
+		"####" ABCD 1
+		"####" A 0 A_FireCustomMissile("BerserkGrabAttack",0,0,0,-15)
+		"####" A 0 A_GiveInventory("Reloading", 1)
+		"####" E 1
+		"####" A 0 A_TakeInventory("Reloading", 1)
+		"####" A 0 A_JumpIfInventory("HasBarrel",1,"PickBarrel")
+		"####" A 0 A_JumpIfInventory("GrabbedAZombieman",1,"PickZombieman")
+		"####" A 0 A_JumpIfInventory("GrabbedAShotgunguy",1,"PickShotgunguy")
+		"####" A 0 A_JumpIfInventory("GrabbedAChaingunguy",1,"PickChaingunguy")
+		"####" A 0 A_JumpIfInventory("GrabbedAZombieCivilian",1,"PickZombieCivilian")
+		"####" A 0 A_JumpIfInventory("GrabbedAEvilMarine",1,"PickEvilMarine")
+		"####" A 0 A_JumpIfInventory("GrabbedANazi",1,"PickNazi")
+		"####" A 0 A_JumpIfInventory("GrabbedAImp",1,"PickImp")
+		"####" FG 1
+		"####" A 0 A_JumpIfInventory("HasBarrel",1,"PickBarrel")
+		"####" A 0 A_JumpIfInventory("GrabbedAZombieman",1,"PickZombieman")
+		"####" A 0 A_JumpIfInventory("GrabbedAShotgunguy",1,"PickShotgunguy")
+		"####" A 0 A_JumpIfInventory("GrabbedAChaingunguy",1,"PickChaingunguy")
+		"####" A 0 A_JumpIfInventory("GrabbedAZombieCivilian",1,"PickZombieCivilian")
+		"####" A 0 A_JumpIfInventory("GrabbedAEvilMarine",1,"PickEvilMarine")
+		"####" A 0 A_JumpIfInventory("GrabbedANazi",1,"PickNazi")
+		"####" A 0 A_JumpIfInventory("GrabbedAImp",1,"PickImp")
+		"####" HIJKL 1
+		"####" A 0 A_TakeInventory("PressedUse", 1)
+		TNT1 A 0 A_TakeInventory("StartDualWield", 1)
+		Goto Ready
+	
+	DoingFatality:
+	    PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PONG N 0
+		"####" A 0
+		"####" A 1
+		"####" A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)
+		Goto Ready3
+	
+	LetsGetStarted:
+	    TNT1 A 0 A_TakeInventory("NeverSelectedShotgun",1)
+	    PONG A 24 A_WeaponReady
+	    PUNS BD 1 A_WeaponReady
+		PUNS EFF 1 A_WeaponReady
+		PUNS A 0 A_PlaySound("Knuckled")
+		PUNS GG 1 A_WeaponReady
+		PUNS G 1 offset(0,31)
+		PUNS G 1 offset(0,32)
+		PUNS G 1 offset(0,31)
+		PUNS GG 1 offset(0,32)
+		PUNS FFE 3 A_WeaponReady
+		PUNS KLL 1 A_WeaponReady
+		PUNS A 0 A_PlaySound("Knuckled")
+		PUNS MM 1 A_WeaponReady
+		PUNS M 1 offset(0,31)
+		PUNS M 1 offset(0,32)
+		PUNS M 1 offset(0,31)
+		PUNS MM 1 offset(0,32)
+		PUNS LLK 3 A_WeaponReady
+		PUNS DB 1 A_TakeInventory("Reloading", 1)
+		TNT1 A 0 A_Jump(250,2)
+		TNT1 A 0 A_PlaySound("letsago")
+		TNT1 A 0
+		TNT1 A 0 A_TakeInventory("Reloading", 1)
+		Goto Ready3
+	
+	TakeTheAxeByTheWay:
+	TNT1 A 0 A_TakeInventory("SwitchingDualModes",1)
+	TNT1 A 0 A_JumpIfInventory("iJustThrowedMySaw",1,"NoooTakeMySawInstead")
+	TNT1 A 0 A_TakeInventory("BrutalAxe",1)
+	Goto SelectAnimation
+	
+	NoooTakeMySawInstead:
+	TNT1 A 0 A_TakeInventory("iJustThrowedMySaw",1)
+	TNT1 A 0 A_TakeInventory("Chain_saw",1)
+	Goto SelectAnimation
+	
+	Select:
+		TNT1 A 0 
+		Goto SelectFirstPersonLegs
+		SelectContinue:
+		"####" A 0 A_GiveInventory("IsPlayingDoxMod",1)
+		TNT1 A 0 A_Giveinventory("GoSpecial",1)
+		TNT1 A 0 A_Giveinventory("SwitchtoFist",1)
+		TNT1 A 0 A_SetCrosshair(41)
+        ////////////////// Check if player is performing a fatality\\\\
+	
+        ////////////////////
+		PUNS A 1 A_Raise
+		TNT1 AAAAAAAAAAAAAA 0 A_Raise
+		TNT1 A 0 A_Giveinventory("FistsSelected",1)
+		TNT1 A 0 A_jumpifinventory("LostSoulFatality",1,"ReadySoul")
+		TNT1 A 0 A_JumpIfInventory("SwitchingDualModes", 1, "TakeTheAxeByTheWay")
+	SelectAnimation: 
+	ReturnFromNothing:
+	    FIGA A 0 A_JumpIfInventory("NeverSelectedShotgun",1,"LetsGetStarted")
+	    FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		FISA N 0
+		"####" A 0
+//        "####" C 0 A_PlaySound("FISTSLCT")
+        "####" DCBA 1 A_WeaponReady(WRF_NOFIRE)
+//		"####" D 1 A_SetPitch (-0.6 + Pitch, SPF_INTERPOLATE)
+//		"####" E 1 A_SetPitch (+0.6 + Pitch, SPF_INTERPOLATE)
+//		"####" EFG 1 A_WeaponReady(WRF_NOFIRE)
+	//Ready:
+	   //PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		//PONG N 0
+		//"####" A 0
+		//"####" A 1 A_WEAPONREADY
+    Ready:
+	TNT1 A 0 A_WEAPONREADYDX(0,FALSE)
+	//	TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 3)
+	//	TNT1 A 0 A_Overlay(-10,"FirstPersonLegsStand")
+	//	TNT1 A 0 A_OverlayFlags(-10, PSPF_ADDWEAPON, False)
+	Ready3: //God, I'm so sorry it's such a mess... it has to be...
+	    "####" A 0 A_TakeInventory("PSeq1", 2)
+		"####" A 0 A_TakeInventory("PSeq2", 2)
+	    FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		FISA N 0
+		
+		//PONG A 1 
+		     "####" EFGHIJKL 2 {
+		
+		 //   if (CountInv("Kicking") == 1)
+			//{
+			//A_WeaponReadyDX(WRF_ALLOWRELOAD|WRF_NOSWITCH, FALSE);
+			
+		//	}
+			//else
+			//{
+			A_WeaponReadyDX(WRF_ALLOWRELOAD, FALSE);
+			//}
+			//if (CountInv("IsDoingUpper") == 1) { return state("KickingFlash"); } //for pipebomb to work properly
+			if (CountInv("ExecuteDownedEnemy") == 1) { return state("DoExecution"); }
+			if (CountInv("ShotgunguyHead") == 1) { return state("ReadyShotgunguyHead"); }
+			if (CountInv("HasCacoEye") == 1) { return state("ReadyCacoEye"); }
+			if (CountInv("HasImpFatality") == 1) { return state("ReadyImpFatality"); }
+			if (CountInv("HasHearthFatality") == 1) { return state("ReadyHearthFatality"); }
+			if (CountInv("LostSoulFatality") == 1) { return state("ReadySoul"); }
+			if (CountInv("HasBarrel") == 1) { return state("PickBarrel"); }
+			
+			//if (CountInv("Kicking") == 1) {	return state("KickingFlash");}
+
+			return state("");
+		}
+		Goto Ready
+	
+		
+		
+		
+	Sprintoverlay:
+	    PKGP A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    PKBP A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    PKRP A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PKUP N 0
+		
+	Sprintoverlay2:
+		"####" A 1 
+		LOOP
+	
+		
+
+    Deselect: "####" A 0 A_TakeInventory("IsPlayingDoxMod",1)
+		TNT1 A 0 A_TakeInventory("TossGrenade", 1)
+		TNT1 A 0 A_Takeinventory("FistsSelected",1)
+		TNT1 A 0 A_Takeinventory("PSeq2",3)
+		TNT1 A 0 A_Takeinventory("PSeq1",3)
+		//TNT1 A 0 A_jumpifinventory("LostSoulFatality",1,"KillLS")
+		TNT1 A 0 A_JumpIfInventory("HasBarrel",1,"FireBarrel")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieman",1,"ThrowZombieman")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAShotgunguy",1,"ThrowShotgunguy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAChaingunguy",1,"ThrowChaingunguy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieCivilian",1,"ThrowZombieCivilian")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAEvilMarine",1,"ThrowEvilMarine")
+		TNT1 A 0 A_JumpIfInventory("GrabbedANazi",1,"ThrowNazi")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAImp",1,"ThrowImp")
+		//TNT1 A 0 A_SetCrosshair(0)
+		FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		FISA N 0
+		"####" A 0
+		"####" A 0 A_ClearOverlays(-2,-2)
+		"####" ABCD 1
+		TNT1 A 0 A_Takeinventory("PowerBloodOnVisor",1)
+		TNT1 A 0 A_Takeinventory("PowerBlueBloodOnVisor",1)
+		TNT1 A 0 A_Takeinventory("PowerGreenBloodOnVisor",1)
+		TNT1 A 1 A_Lower
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		TNT1 A 0 A_SetCrosshair(0)
+		Wait
+
+
+	
+		
+	////////////////////////////////////////////// Normal Attacks
+	
+	LeftSuddenSwingBack:
+	PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+	PONG N 0
+	"####" A 0
+	"####" XY 1
+	stop
+	
+	LeftIdleCross:
+	PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+	PONG N 0
+	"####" A 0
+	"####" "[" 1
+	stop
+	
+	RightIdle:
+	PGN3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	PBN3 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	PRN3 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+	PUN3 N 0
+	"####" A 0
+	RightIdleLoop:
+	"####" "[" 1
+	loop
+	
+	RightIdleAttack:
+	PGN3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	PBN3 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	PRN3 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+	PUN3 N 0
+	"####" A 0
+	"####" LMN 1
+	"####" O 3
+	"####" NML 1 
+	stop //11 total
+	
+	RightIdleLeftCross:
+	PGN3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	PBN3 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	PRN3 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+	PUN3 N 0
+	"####" A 0
+	"####" "[" 1
+	"####" LN 1
+	stop
+	
+	
+	RightCrossLeftReturnToIdle:
+	PGN3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	PBN3 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	PRN3 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+	PUN3 N 0
+	"####" A 0
+	"####" RQP 1
+	stop
+	LeftCrossRightReturnToIdle:
+	PGN3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	PBN3 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	PRN3 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+	PUN3 N 0
+	"####" A 0
+	"####" UTS 1
+	stop
+	
+	Fire:
+	//	TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 3)
+	//	TNT1 A 0 A_Overlay(-10,"FirstPersonLegsStand")
+	//	TNT1 A 0 A_OverlayFlags(-10, PSPF_ADDWEAPON, False)
+		
+		TNT1 A 0 A_JumpIfInventory("ShotgunguyHead",1,"ShotgunguyHeadFire")
+		TNT1 A 0 A_JumpIfInventory("HasImpFatality",1,"ImpFatalityFire")
+		//TNT1 A 0 A_JumpIfInventory("HasHearthFatality",1,"HasHearthFatalityFire")
+		TNT1 A 0 A_JumpIfInventory("HasCacoEye",1,"CacoeyeFire")
+		TNT1 A 0 A_jumpifinventory("LostSoulFatality",1,"LSFire")
+		TNT1 A 0 A_JumpIfInventory("HasBarrel",1,"FireBarrel")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieman",1,"ThrowZombieman")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAShotgunguy",1,"ThrowShotgunguy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAChaingunguy",1,"ThrowChaingunguy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieCivilian",1,"ThrowZombieCivilian")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAEvilMarine",1,"ThrowEvilMarine")
+		TNT1 A 0 A_JumpIfInventory("GrabbedANazi",1,"ThrowNazi")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAImp",1,"ThrowImp")
+		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		"####" A 0 A_JUmpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
+		TNT1 A 0 A_JumpIfInventory("PSeq2", 1, "Upper")
+		TNT1 A 0 A_JumpIfInventory("PSeq1", 2, "BeginLeftCross")
+		TNT1 A 0 A_JumpIfInventory("PSeq1", 1, "ReFireJab")
+		TNT1 A 0 A_TakeInventory("FireHold", 40)
+		PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PONG N 0
+		"####" A 0
+	    "####" QR 1 A_GunFlash("RightIdle")
+		"####" A 0 A_ReFire("Hold")
+		Goto Jab
+	Hold:
+	    "####" R 1 offset(0,33) A_GiveInventory("FireHold", 1)
+		"####" R 1 offset(0,32) A_GiveInventory("FireHold", 1)
+		"####" A 0 A_Refire
+		"####" A 0 A_JumpIfInventory("FireHold", 10, "LeftCrossHold")
+		"####" A 0 A_TakeInventory("FireHold", 40)
+		Goto Jab
+		
+	AltFire:
+		TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 3)
+		TNT1 A 0 A_Overlay(-610,"FirstPersonLegsStand")
+		TNT1 A 0 A_OverlayFlags(-610, PSPF_ADDWEAPON, False)
+		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieman",1,"ShieldZombieman")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAShotgunguy",1,"ShieldShotgunguy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAChaingunguy",1,"ShieldChaingunguy")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieCivilian",1,"ShieldZombieCivilian")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAEvilMarine",1,"ShieldEvilMarine")
+		TNT1 A 0 A_JumpIfInventory("GrabbedANazi",1,"ShieldNazi")
+		TNT1 A 0 A_JumpIfInventory("GrabbedAImp",1,"ShieldImp")
+		TNT1 A 0 A_jumpifinventory("LostSoulFatality",1,"LSFire")
+		TNT1 A 0 A_JumpIfInventory("HasBarrel",1,"AltFireBarrel")
+		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		TNT1 A 0 A_Recoil(-1)
+		Goto Cross	
+		
+	ReFireJab:	
+"####" A 0 { If(CountInv("PowerGreenBloodOnVisor")==1){A_TakeInventory("PowerBlueBloodOnVisor",1); A_TakeInventory("PowerBloodOnVisor",1);} If(CountInv("PowerBlueBloodOnVisor")==1) {A_TakeInventory("PowerBloodOnVisor",1); A_TakeInventory("PowerGreenBloodOnVisor",1);} If(CountInv("PowerBloodOnVisor")==1) { A_TakeInventory("PowerBlueBloodOnVisor",1); A_TakeInventory("PowerGreenBloodOnVisor",1);}}	
+	    PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PONG N 0
+		"####" A 0
+		"####" KQ 1
+	Goto ContinueJab
+	Jab:
+"####" A 0 { If(CountInv("PowerGreenBloodOnVisor")==1){A_TakeInventory("PowerBlueBloodOnVisor",1); A_TakeInventory("PowerBloodOnVisor",1);} If(CountInv("PowerBlueBloodOnVisor")==1) {A_TakeInventory("PowerBloodOnVisor",1); A_TakeInventory("PowerGreenBloodOnVisor",1);} If(CountInv("PowerBloodOnVisor")==1) { A_TakeInventory("PowerBlueBloodOnVisor",1); A_TakeInventory("PowerGreenBloodOnVisor",1);}}
+	    PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PONG N 0
+		"####" A 0
+		"####" B 1 
+	ContinueJab:
+		"####" C 1 
+		{
+		A_SetAngle(angle-1, SPF_INTERPOLATE);
+		A_GunFlash("RightIdleAttack");
+		}
+		"####" A 0 A_PlaySound("fstatk", 1)
+        "####" A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		"####" A 0 A_Giveinventory("Punching",1)
+		"####" A 0 A_Giveinventory("PSeq1",1)
+		"####" A 0 A_Giveinventory("GoSpecial",1)
+	    "####" A 0 
+		{ 
+			A_FireCustomMissile("MeleeAttackLeft", 0, 0, 0, 1);
+			
+		}	
+	 //Finish:
+	
+		"####" D 1 A_SetAngle(angle+1, SPF_INTERPOLATE)
+		"####" A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		"####" E 2 
+"####" A 0 {If(CountInv("PowerBlueBloodOnVisor")==1) {A_TakeInventory("PowerBloodOnVisor",1); A_TakeInventory("PowerGreenBloodOnVisor",1);} If(CountInv("PowerBloodOnVisor")==1) { A_TakeInventory("PowerBlueBloodOnVisor",1); A_TakeInventory("PowerGreenBloodOnVisor",1);} If(CountInv("PowerGreenBloodOnVisor")==1){A_TakeInventory("PowerBlueBloodOnVisor",1); A_TakeInventory("PowerBloodOnVisor",1);}}
+	PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+	PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+	PONG N 0
+	"####" A 0
+		"####" A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		"####" A 0 A_TakeInventory("PSeq2", 1)
+		"####" FG 1 A_WeaponReady
+		
+"####" A 0 { If(CountInv("PowerBloodOnVisor")==1) { A_TakeInventory("PowerBlueBloodOnVisor",1); A_TakeInventory("PowerGreenBloodOnVisor",1);}If(CountInv("PowerGreenBloodOnVisor")==1){A_TakeInventory("PowerBlueBloodOnVisor",1); A_TakeInventory("PowerBloodOnVisor",1);} If(CountInv("PowerBlueBloodOnVisor")==1) {A_TakeInventory("PowerBloodOnVisor",1); A_TakeInventory("PowerGreenBloodOnVisor",1);} }
+	PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,4)
+	PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+	PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+    PONG N 0
+	"####" A 0
+		"####" HIJ 1 A_WeaponReady
+		"####" A 0 A_TakeInventory("PSeq1", 2)
+		"####" A 0 A_JumpIfInventory("LostSoulFatality",1,"ReadySoul")
+		Goto Ready3
+		
+	BeginLeftCross:
+	    PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PONG N 0
+		"####" A 0
+		"####" K 1
+	LeftCross:
+		TNT1 A 0
+		PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PONG N 0
+		"####" A 0
+		"####" A 0 A_GunFlash("RightIdle")
+		"####" QRRQ 1
+	LeftCrossHold:
+	    "####" A 0 A_GunFLash("RightIdleLeftCross")
+		PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PONG N 0
+		"####" A 0
+		"####" A 0 A_PlaySound("*grunt", 5)
+		"####" C 1 
+		"####" A 0 
+		{
+		A_PlaySound("skeleton/swing");
+		A_PlaySound("fstatk", 1);
+		if(CountInv("PowerStrength")==1)
+		    {
+			A_PlaySound("weapons/gswing");
+			
+			}
+		
+			A_FireCustomMissile("MeleeAttackLeftStrong", 0, 0, 0, 1);
+			
+		}
+		
+		"####" LMN 1 A_SetAngle(angle-1, SPF_INTERPOLATE)
+		"####" OP 1 A_SetAngle(angle-2, SPF_INTERPOLATE)
+	//	"####" Z 5 //empty
+	//	"####" ZZZ 1 A_SetAngle(angle-1, SPF_INTERPOLATE)
+		"####" A 0 A_Giveinventory("Punching",1)
+		"####" A 0 A_Takeinventory("PSeq1",2)
+	 //Finish:
+	    PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PONG N 0
+		"####" A 0
+		
+		"####" A 0 A_TakeInventory("Kicking", 1)
+		"####" A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		"####" A 0 A_TakeInventory("PSeq2", 1)
+		TNT1 AA 1 
+		{
+		A_SetAngle(angle-0.5, SPF_INTERPOLATE);
+//		A_WeaponReady(WRF_NOPRIMARY);
+		}
+		TNT1 AAA 1 A_WeaponReady(WRF_NOPRIMARY)
+		TNT1 A 1 
+		{
+		A_SetAngle(angle+1, SPF_INTERPOLATE);
+		A_WeaponReady(WRF_NOPRIMARY);
+		}
+		TNT1 A 1 
+		{
+		A_SetAngle(angle+2, SPF_INTERPOLATE);
+		A_WeaponReady(WRF_NOPRIMARY);
+		}
+		TNT1 A 1 A_WeaponReady(WRF_NOPRIMARY)
+	//	"####" A 0 A_SetAngle(angle+2, SPF_INTERPOLATE)
+		//"####" A 0 A_JumpIfInventory("Kicking",1,"KickLeft")
+		PGNG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		PBNG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PONG N 0
+		"####" A 0
+		"####" ZZZST 1
+		{
+		A_WeaponReady(WRF_NOPRIMARY);
+		A_SetAngle(angle+1, SPF_INTERPOLATE);
+		}
+		"####" A 0
+		"####" A 0 A_JumpIfInventory("LostSoulFatality",1,"ReadySoul")
+		"####" A 0 A_GunFlash("LeftCrossRightReturnToIdle")
+		"####" UVW 1 A_WeaponReady
+		Goto Ready	
+		
+	Cross:	
+		TNT1 A 0 A_TAkeInventory("FiredPrimary", 1)
+		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		PGN3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		PBN3 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRN3 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PUN3 N 0
+		"####" A 0
+		"####" A 0
+		{
+		If(CountInv("PSeq1") == 1)
+		    {
+		    A_GunFlash("LeftSuddenSwingBack");
+			}
+	//	else
+	//	    {
+	//		A_GunFlash("LeftIdleCross");
+	//		}
+		Return;
+		}
+		"####" A 0 A_PlaySound("*grunt", 6)
+		"####" A 0 A_Giveinventory("Punching",1)
+		"####" A 0 A_GunFlash("none")
+		"####" B 1
+		{
+		A_SetAngle(angle+3, SPF_INTERPOLATE);
+		A_PlaySound("skeleton/swing",5);
+		A_PlaySound("fstatk", 1);
+		if(CountInv("PowerStrength")==1)
+		    {
+			A_PlaySound("weapons/gswing",5);
+		
+			}
+		
+			A_FireCustomMissile("MeleeAttackRight", 0, 0, 0, 1);
+				
+		}
+		TNT1 A 0 A_GiveInventory("PSeq2", 1)
+		PGN3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		PBN3 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRN3 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PUN3 N 0
+		"####" A 0
+		"####" C 1 { A_SetAngle(angle+3.0, SPF_INTERPOLATE); }
+		"####" D 1 { A_SetAngle(angle+2.0, SPF_INTERPOLATE); }
+		"####" E 1 { A_SetAngle(angle+1.0, SPF_INTERPOLATE); }
+		"####" F 1 { A_SetAngle(angle+1.0, SPF_INTERPOLATE); }
+		"####" A 0 
+		TNT1 AAA 1 { A_SetAngle(angle-2.0, SPF_INTERPOLATE); }
+		TNT1 AAA 1 { A_SetAngle(angle-1.0, SPF_INTERPOLATE); A_WeaponReady(WRF_NOSECONDARY); }
+		"####" A 0 A_SetAngle(angle-1.0, SPF_INTERPOLATE)
+		TNT1 A 7 A_WeaponReady(WRF_NOSECONDARY)
+		"####" A 0 A_ReFire
+		PGN3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		PBN3 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRN3 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PUN3 N 0
+		"####" A 0
+		"####" H 1 A_WeaponReady
+		"####" A 0 A_GunFlash("RightCrossLeftReturnToIdle")
+		"####" IJK 1 A_WeaponReady
+		Goto Ready
+		
+	Upper:
+	//	TNT1 A 1
+		PGN5 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		PBN5 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		PRN5 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		PUN5 N 0
+		"####" A 0
+		//"####" A 0 A_PlaySound("*grunt", 5)
+		"####" A 0 A_PlaySound("UpperUnf", 5)
+		"####" A 0 A_GiveInventory("IsDoingUpper",1)
+		"####" A 0 A_TakeInventory("PSeq1", 2)
+		"####" A 0 A_TakeInventory("PSeq2", 2)
+		"####" A 0 
+		{
+		A_PlaySound("fstatk", 1);
+		if(CountInv("PowerStrength")==1)
+		    {
+			A_PlaySound("weapons/gswing");
+		    }
+		}
+		"####" A 0 A_GunFlash("none")
+		"####" AB 1
+		//"####" A 0 A_jumpifinventory("PowerStrength",1,"PowerUpper")   
+		"####" A 0 A_Giveinventory("Punching",1)
+		//TNT1 A 0 A_Giveinventory("GoSpecial",1)
+		"####" A 0 A_GiveInventory("HeavyStrikeUpward", 1)
+		"####" A 0 
+		{
+		 A_FireCustomMissile("MeleeAttackUppercut", 0, 0, 0, 0); 
+		}		
+		"####" A 0 A_SetPitch(pitch-8, SPF_INTERPOLATE)
+		"####" CDEE 1
+		"####" FGHI 1 A_SetPitch(pitch+2, SPF_INTERPOLATE)
+		"####" A 0 A_TakeInventory("HeavyStrikeUpward", 1)
+		"####" A 0 
+		{
+		SetPlayerProperty(0,0,0);
+		A_GunFlash("LeftCrossRightReturnToIdle");
+		A_TakeInventory("IsDoingUpper",1);
+		}
+		"####" JKL 1
+		Goto Ready
+		
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		
+	KickRight:
+		TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 3)
+		TNT1 A 0 A_Overlay(-610,"FirstPersonLegsKickRight")
+		TNT1 A 0 A_OverlayFlags(-610, PSPF_ADDWEAPON, False)
+		TNT1 A 0 SetPlayerProperty(0,1,0)
+		3IK2 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8)//perma gren
+	    2IK2 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7)//perma blu
+	    1IK2 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6)//perma red
+		KIK2 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5)//disabled
+		//	
+		3IK2 A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4)
+	    2IK2 A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3)
+	    1IK2 A 0 A_JumpIfInventory("RedBloodOnBoots",1,2)
+	    KIK2 N 0
+        "####" A 0
+		"####" ABC 1
+        "####"A 0 A_PlaySound("KICK",69)
+		"####" A 0 A_Giveinventory("Kicking",1)
+		"####" A 0 A_SetPitch(pitch-9, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle+9, SPF_INTERPOLATE)
+		"####" AA 0 A_FireCustomMissile("MeleeAttack", 0, 0, 0, 0)
+		"####" D 1
+		"####" A 0 A_SetPitch(pitch+2, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle-2, SPF_INTERPOLATE)
+		"####" D 1
+		"####" A 0 A_SetPitch(pitch+2, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle-2, SPF_INTERPOLATE)
+		"####" E 1
+		"####" A 0 A_SetPitch(pitch+1, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle-1, SPF_INTERPOLATE)
+		"####" E 1
+		"####" A 0 A_SetPitch(pitch+1, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle-1, SPF_INTERPOLATE)
+		"####" C 1
+		"####" A 0 A_SetPitch(pitch+1, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle-1, SPF_INTERPOLATE)
+		"####" B 1
+		"####" A 0 A_SetPitch(pitch+1, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle-1, SPF_INTERPOLATE)
+		"####" A 1
+		"####" A 0 A_SetPitch(pitch+1, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle-1, SPF_INTERPOLATE)
+		TNT1 A 0 SetPlayerProperty(0,0,0)
+		TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 3)
+	    TNT1 A 0 A_Overlay(-610,"FirstPersonLegsStand")
+	    TNT1 A 0 A_OverlayFlags(-610, PSPF_ADDWEAPON, False)
+		NULL A 0
+		TNT1 A 5 A_TakeInventory("Kicking",1)
+		/*
+		FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		FISA N 0
+		"####" A 0
+		"####" KLM 1 A_WeaponReady
+		*/
+		"####" A 0 A_TakeInventory("Kicking",1)
+		Goto KickCheck//Ready
+		
+		
+		
+	KickLeft:
+		TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 3)
+		TNT1 A 0 A_Overlay(-610,"FirstPersonLegsKickLeft")
+		TNT1 A 0 A_OverlayFlags(-610, PSPF_ADDWEAPON, False)
+		TNT1 A 0 SetPlayerProperty(0,1,0)	
+		3IK1 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8)//perma gren
+	    2IK1 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7)//perma blu
+	    1IK1 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6)//perma red
+		KIK1 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5)//disabled
+		//
+		3IK1 A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4)
+	    2IK1 A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3)
+	    1IK1 A 0 A_JumpIfInventory("RedBloodOnBoots",1,2)
+	    KIK1 N 0
+        "####" A 0
+		"####" ABC 1
+        "####"A 0 A_PlaySound("KICK",69)
+		"####" A 0 A_Giveinventory("Kicking",1)
+		"####" A 0 A_SetPitch(pitch-9, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle-9, SPF_INTERPOLATE)
+		"####" AA 0 A_FireCustomMissile("MeleeAttack", 0, 0, 0, 0)
+		"####" D 1
+		"####" A 0 A_SetPitch(pitch+2, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle+2, SPF_INTERPOLATE)
+		"####" D 1
+		"####" A 0 A_SetPitch(pitch+2, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle+2, SPF_INTERPOLATE)
+		"####" E 1
+		"####" A 0 A_SetPitch(pitch+1, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle+1, SPF_INTERPOLATE)
+		"####" E 1
+		"####" A 0 A_SetPitch(pitch+1, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle+1, SPF_INTERPOLATE)
+		"####" C 1
+		"####" A 0 A_SetPitch(pitch+1, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle+1, SPF_INTERPOLATE)
+		"####" B 1
+		"####" A 0 A_SetPitch(pitch+1, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle+1, SPF_INTERPOLATE)
+		"####" A 1
+		"####" A 0 A_SetPitch(pitch+1, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle+1, SPF_INTERPOLATE)
+		TNT1 A 0 SetPlayerProperty(0,0,0)
+		TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 3)
+	    TNT1 A 0 A_Overlay(-610,"FirstPersonLegsStand")
+	    TNT1 A 0 A_OverlayFlags(-610, PSPF_ADDWEAPON, False)
+		NULL A 0
+		TNT1 A 5 A_TakeInventory("Kicking",1)
+		/*
+		FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		FISA N 0
+		"####" A 0
+		"####" KLM 1 A_WeaponReady
+		*/
+		"####" A 0 A_TakeInventory("Kicking",1)
+		Goto KickCheck//Ready
+		
+		
+		
+		
+
+		
+	
+       Taunt:
+		TNT1 A 0 A_Takeinventory("Zoomed",1)
+        TNT1 A 0 A_ZoomFactor(1.0)
+		TNT1 A 0 A_Takeinventory("Taunting",1)
+		TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "TauntClassic")
+		3UCK A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		2UCK A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		1UCK A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		0UCK A 0
+		"####" A 0
+		"####" A 1
+		"####" A 0 BRIGHT A_FireCustomMissile("Taunter", 0, 0, -1, 0)
+		"####" A 0 BRIGHT A_FireCustomMissile("Taunter", -9, 0, -1, 0)
+		"####" A 0 BRIGHT A_FireCustomMissile("Taunter", 9, 0, -1, 0)
+		"####" A 0 A_JumpIfInventory("GenderFemale", 1, "TauntFemale")
+		"####" A 0 A_Jump(256, "FuckYourself", "FhaccYoself", "GoFuckYourself", "GetOffScum")
+		
+	FuckYourself:
+		"####" A 0 ACS_NamedExecute("InsultFuckYourself",0,0)
+        "####" B 1 A_PlaySound("FUCK1", 2)
+		Goto FinishTaunt
+	FhaccYoself:
+		"####" A 0 ACS_NamedExecute("InsultFhaccYoself",0,0)
+        "####" B 1 A_PlaySound("FUCK3", 2)
+		Goto FinishTaunt
+	GoFuckYourself:
+		"####" A 0 ACS_NamedExecute("InsultGoFuckYourself",0,0)
+        "####" B 1 A_PlaySound("FUCK4", 2)
+		Goto FinishTaunt
+	GetOffScum:
+		"####" A 0 ACS_NamedExecute("InsultGetOffScum",0,0)
+        "####" B 1 A_PlaySound("FUCK2", 2)
+	FinishTaunt:
+        "####" CDE 1 A_AlertMonsters
+		"####" F 12 A_Takeinventory("Taunting",1)
+        "####" EDCBA 1
+		Goto Ready	 
+		
+		
+	TauntFemale:
+		"####" B 1 A_PlaySound("FTAUNT", 2)
+        "####" CDE 1 A_AlertMonsters
+		"####" F 12 A_Takeinventory("Taunting",1)
+        "####" EDCBA 1
+		Goto Ready		
+		
+	
+	
+	
+
+		
+    KillLS:
+        "####" JKLLMN 1
+        "####" A 0 A_FireCustomMissile("LSOHK",40,0,0,5)
+        "####" A 0 A_Takeinventory("LostSoulFatality",1)
+        "####" OPQQQ 1
+		"####" RSTU 1
+		"####" A 0 A_TakeInventory("Reloading",1)
+		TNT1 A 3
+		FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		FISA N 0
+		"####" A 0
+		"####" DCBA 1 A_WeaponReady	
+		Goto Ready3
+		
+	
+	
+		
+		
+		
+	
+	//PICKING UP ENEMIES ////////////////////////////////////////////////////////////////////
+	PickZombieman:	
+		TNT1 A 0
+		GRZ1 C 1 offset(12, 32)
+		GRZ1 C 1 offset(6, 32)
+		GRZ1 C 1  A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "ZombiemanDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShield", 15, 0, 15, 0)
+		GRZ1 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickZombieman+5
+		TNT1 AAAA 0
+		GRZ1 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickZombieman+5
+	
+	ThrowZombieman:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfHealthLower(1, "ZombiemanDie")
+		GRZ1 D 1 offset(-4, 32)
+		GRZ1 D 1 offset(-9, 33)
+		GRZ1 D 1 offset(-16, 34)
+		GRZ1 D 2 offset(-24, 35)
+		GRZ1 D 3 offset(-36, 48)
+		GRZ1 D 1 offset(-24, 35)
+		GRZ1 B 1 offset(-16, 34)
+		GRZ1 B 1 offset(-9, 33)
+		GRZ1 B 1 offset(-1, 32)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedZman", 0, 0, 0, 0)
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasZmanShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAZombieman",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		3HEF A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    2HEF A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    1HEF A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+        THEF N 0
+        "####" A 0
+        "####" EFGHIJ 1 
+		TNT1 A 7
+		TNT1 A 0 A_TakeInventory("StartDualWield", 1)
+		FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		FISA N 0
+		"####" A 0
+		"####" DCBA 1 A_WeaponReady	
+		Goto Ready
+		
+	ShieldZombieman:
+	    TNT1 A 0 A_JumpIf(GetCvar("BD_DontUseMeatshield")==1, "Fire")
+		TNT1 A 0 A_TakeInventory("GrabbedAZombieman",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAShotgunguy",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAChaingunguy",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAZombieCivilian",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAImp",1)
+		TNT1 A 0 A_GiveInventory("ZMANShield",1)
+		GRZ1 A 1 offset(0,40)
+		GRZ1 A 1 offset(0,48)
+		TNT1 A 0 A_SelectWeapon("ZMANShield")
+		TNT1 A 1 A_WeaponReady(WRF_NOFIRE)
+		Goto Ready
+		
+	ZombiemanDie:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItem("SargeXDeath", 0, 40)
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasZmanShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAZombieman",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		Goto Ready
+		
+		
+	//---------------------------------------------------Zombieman End
+	//Imp Start
+	
+	PickImp:	
+		TNT1 A 0
+		GRZ3 C 1 offset(12, 32)
+		GRZ3 C 1 offset(6, 32)
+		GRZ3 C 1  A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "ImpDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShield", 15, 0, 15, 0)
+		GRZ3 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickImp+5
+		TNT1 AAAA 0
+		GRZ3 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickImp+5
+	
+	ThrowImp:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfHealthLower(1, "ImpDie")
+		GRZ3 D 1 offset(-4, 32)
+		GRZ3 D 1 offset(-9, 33)
+		GRZ3 D 1 offset(-16, 34)
+		GRZ3 D 2 offset(-24, 35)
+		GRZ3 D 3 offset(-36, 48)
+		GRZ3 D 1 offset(-24, 35)
+		GRZ3 B 1 offset(-16, 34)
+		GRZ3 B 1 offset(-9, 33)
+		GRZ3 B 1 offset(-1, 32)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedImp", 0, 0, 0, 0)
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasZmanShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAImp",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+        3HEF A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    2HEF A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    1HEF A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+        THEF N 0
+        "####" A 0
+        "####" EFGHIJ 1 
+		TNT1 A 7
+		TNT1 A 0 A_TakeInventory("StartDualWield", 1)
+		FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		FISA N 0
+		"####" A 0
+		"####" DCBA 1 A_WeaponReady	
+		Goto Ready
+		
+	ShieldImp:
+	    TNT1 A 0 A_JumpIf(GetCvar("BD_DontUseMeatshield")==1, "Fire")
+		TNT1 A 0 A_TakeInventory("GrabbedAImp",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAShotgunguy",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAChaingunguy",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAZombieCivilian",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAImp",1)
+		TNT1 A 0 A_GiveInventory("ImpShield",1)
+		GRZ3 A 1 offset(0,40)
+		GRZ3 A 1 offset(0,48)
+		TNT1 A 0 A_SelectWeapon("ImpShield")
+		TNT1 A 1 A_WeaponReady(WRF_NOFIRE)
+		Goto Ready
+		
+	ImpDie:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItem("ImpXDeath", 0, 40)
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasZmanShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAImp",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		Goto Ready
+		
+		
+	//---------------------------------------------------Imp End
+	//Shotgunguy Start	----------------------------------------
+	PickShotgunguy:	
+		TNT1 A 0
+		GRZ2 C 1 offset(12, 32)
+		GRZ2 C 1 offset(6, 32)
+		GRZ2 C 1  A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "ShotgunguyDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShield", 15, 0, 15, 0)
+		GRZ2 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickShotgunguy+5
+		TNT1 AAAA 0
+		GRZ2 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickShotgunguy+5
+	
+	ThrowShotgunguy:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfHealthLower(1, "ShotgunguyDie")
+		GRZ2 D 1 offset(-4, 32)
+		GRZ2 D 1 offset(-9, 33)
+		GRZ2 D 1 offset(-16, 34)
+		GRZ2 D 2 offset(-24, 35)
+		GRZ2 D 3 offset(-36, 48)
+		GRZ2 D 1 offset(-24, 35)
+		GRZ2 B 1 offset(-16, 34)
+		GRZ2 B 1 offset(-9, 33)
+		GRZ2 B 1 offset(-1, 32)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedShotgunguy", 0, 0, 0, 0)
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasZmanShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAShotgunguy",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+        3HEF A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    2HEF A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    1HEF A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+        THEF N 0
+        "####" A 0
+        "####" EFGHIJ 1 
+		TNT1 A 7
+		TNT1 A 0 A_TakeInventory("StartDualWield", 1)
+		FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		FISA N 0
+		"####" A 0
+		"####" DCBA 1 A_WeaponReady	
+		Goto Ready
+		
+	ShieldShotgunguy:
+	    TNT1 A 0 A_JumpIf(GetCvar("BD_DontUseMeatshield")==1, "Fire")
+		TNT1 A 0 A_TakeInventory("GrabbedAShotgunguy",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAShotgunguy",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAChaingunguy",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAZombieCivilian",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAImp",1)
+		TNT1 A 0 A_GiveInventory("SguyShield",1)
+		GRZ2 A 1 offset(0,40)
+		GRZ2 A 1 offset(0,48)
+		TNT1 A 0 A_SelectWeapon("SGuyShield")
+		TNT1 A 1 A_WeaponReady(WRF_NOFIRE)
+		Goto Ready
+		
+	ShotgunguyDie:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItem("SargeXDeath", 0, 40)
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasZmanShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAShotgunguy",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		Goto Ready
+		
+	//End Shotgunguy-------------------------------------------------
+	//CHaingunguy Start------------------------------------------------
+	
+	PickChaingunguy:	
+		TNT1 A 0
+		GRZ4 C 1 offset(12, 32)
+		GRZ4 C 1 offset(6, 32)
+		GRZ4 C 1  A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "ChaingunguyDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShield", 15, 0, 15, 0)
+		GRZ4 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickChaingunguy+5
+		TNT1 AAAA 0
+		GRZ4 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickChaingunguy+5
+	
+	ThrowChaingunguy:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfHealthLower(1, "ChaingunguyDie")
+		GRZ4 D 1 offset(-4, 32)
+		GRZ4 D 1 offset(-9, 33)
+		GRZ4 D 1 offset(-16, 34)
+		GRZ4 D 2 offset(-24, 35)
+		GRZ4 D 3 offset(-36, 48)
+		GRZ4 D 1 offset(-24, 35)
+		GRZ4 B 1 offset(-16, 34)
+		GRZ4 B 1 offset(-9, 33)
+		GRZ4 B 1 offset(-1, 32)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedChaingunguy", 0, 0, 0, 0)
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasZmanShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAChaingunguy",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+        3HEF A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    2HEF A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    1HEF A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+        THEF N 0
+        "####" A 0
+        "####" EFGHIJ 1 
+		TNT1 A 7
+		TNT1 A 0 A_TakeInventory("StartDualWield", 1)
+		FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		FISA N 0
+		"####" A 0
+		"####" DCBA 1 A_WeaponReady	
+		Goto Ready
+		
+	ShieldChaingunguy:
+	    TNT1 A 0 A_JumpIf(GetCvar("BD_DontUseMeatshield")==1, "Fire")
+		TNT1 A 0 A_TakeInventory("GrabbedAChaingunguy",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAImp",1)
+		TNT1 A 0 A_GiveInventory("CguyShield",1)
+		GRZ4 A 1 offset(0,40)
+		GRZ4 A 1 offset(0,48)
+		TNT1 A 0 A_SelectWeapon("CGuyShield")
+		TNT1 A 1 A_WeaponReady(WRF_NOFIRE)
+		Goto Ready
+		
+	ChaingunguyDie:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItem("SargeXDeath", 0, 40)
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasZmanShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAChaingunguy",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		Goto Ready
+		
+	//End Chaingunguy-------------------------------------------------
+	//Labguy Start------------------------------------------------	
+	
+	PickZombieCivilian:	
+		TNT1 A 0
+		GRZ7 C 1 offset(12, 32)
+		GRZ7 C 1 offset(6, 32)
+		GRZ7 C 1  A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "ZombieCivilianDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShield", 15, 0, 15, 0)
+		GRZ7 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickZombieCivilian+5
+		TNT1 AAAA 0
+		GRZ7 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickZombieCivilian+5
+	
+	ThrowZombieCivilian:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfHealthLower(1, "ZombieCivilianDie")
+		GRZ7 D 1 offset(-4, 32)
+		GRZ7 D 1 offset(-9, 33)
+		GRZ7 D 1 offset(-16, 34)
+		GRZ7 D 2 offset(-24, 35)
+		GRZ7 D 3 offset(-36, 48)
+		GRZ7 D 1 offset(-24, 35)
+		GRZ7 B 1 offset(-16, 34)
+		GRZ7 B 1 offset(-9, 33)
+		GRZ7 B 1 offset(-1, 32)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedZombieCivilian", 0, 0, 0, 0)
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasZmanShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAZombieCivilian",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+        3HEF A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    2HEF A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    1HEF A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+        THEF N 0
+        "####" A 0
+        "####" EFGHIJ 1 
+		TNT1 A 7
+		TNT1 A 0 A_TakeInventory("StartDualWield", 1)
+		FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		FISA N 0
+		"####" A 0
+		"####" DCBA 1 A_WeaponReady	
+		Goto Ready
+		
+	ShieldZombieCivilian:
+	    TNT1 A 0 A_JumpIf(GetCvar("BD_DontUseMeatshield")==1, "Fire")
+		TNT1 A 0 A_TakeInventory("GrabbedAZombieCivilian",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAImp",1)
+		TNT1 A 0 A_GiveInventory("ZombieCivilianShield",1)
+		GRZ7 A 1 offset(0,40)
+		GRZ7 A 1 offset(0,48)
+		TNT1 A 0 A_SelectWeapon("ZombieCivilianShield")
+		TNT1 A 1 A_WeaponReady(WRF_NOFIRE)
+		Goto Ready
+		
+	ZombieCivilianDie:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItem("SargeXDeath", 0, 40)
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasZmanShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAZombieCivilian",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		Goto Ready
+		
+	//Civilian End------------------------------------------------	
+	//Evil Marine Start------------------------------------------------
+	
+	PickEvilMarine:	
+		TNT1 A 0
+		GRZ5 C 1 offset(12, 32)
+		GRZ5 C 1 offset(6, 32)
+		GRZ5 C 1  A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "EvilMarineDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShield", 15, 0, 15, 0)
+		GRZ5 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickEvilMarine+5
+		TNT1 AAAA 0
+		GRZ5 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickEvilMarine+5
+	
+	ThrowEvilMarine:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfHealthLower(1, "EvilMarineDie")
+		GRZ5 D 1 offset(-4, 32)
+		GRZ5 D 1 offset(-9, 33)
+		GRZ5 D 1 offset(-16, 34)
+		GRZ5 D 2 offset(-24, 35)
+		GRZ5 D 3 offset(-36, 48)
+		GRZ5 D 1 offset(-24, 35)
+		GRZ5 B 1 offset(-16, 34)
+		GRZ5 B 1 offset(-9, 33)
+		GRZ5 B 1 offset(-1, 32)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedEvilMarine", 0, 0, 0, 0)
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasZmanShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAEvilMarine",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+        3HEF A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    2HEF A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    1HEF A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+        THEF N 0
+        "####" A 0
+        "####" EFGHIJ 1 
+		TNT1 A 7
+		TNT1 A 0 A_TakeInventory("StartDualWield", 1)
+		FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		FISA N 0
+		"####" A 0
+		"####" DCBA 1 A_WeaponReady	
+		Goto Ready
+		
+	ShieldEvilMarine:
+	    TNT1 A 0 A_JumpIf(GetCvar("BD_DontUseMeatshield")==1, "Fire")
+		TNT1 A 0 A_TakeInventory("GrabbedAEvilMarine",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAImp",1)
+		TNT1 A 0 A_GiveInventory("EvilMarineShield",1)
+		GRZ5 A 1 offset(0,40)
+		GRZ5 A 1 offset(0,48)
+		TNT1 A 0 A_SelectWeapon("EvilMarineShield")
+		TNT1 A 1 A_WeaponReady(WRF_NOFIRE)
+		Goto Ready
+		
+	EvilMarineDie:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItem("SargeXDeath", 0, 40)
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasZmanShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAEvilMarine",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		Goto Ready	
+		
+		
+	//Evil Marine End------------------------------------------------	
+	//Nazi Start------------------------------------------------
+	
+	PickNazi:	
+		TNT1 A 0
+		GRZ6 C 1 offset(12, 32)
+		GRZ6 C 1 offset(6, 32)
+		GRZ6 C 1  A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 60, "NaziDie")
+		TNT1 A 0 A_SpawnItemEx("MeatShield", 15, 0, 15, 0)
+		GRZ6 A 3 A_WeaponReady(WRF_NOSWITCH)
+		TNT1 A 0 A_Jump(20, 2)
+		Goto PickNazi+5
+		TNT1 AAAA 0
+		GRZ6 ABACACA 4 A_WeaponReady(WRF_NOSWITCH)
+		Goto PickNazi+5
+	
+	ThrowNazi:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfHealthLower(1, "NaziDie")
+		GRZ6 D 1 offset(-4, 32)
+		GRZ6 D 1 offset(-9, 33)
+		GRZ6 D 1 offset(-16, 34)
+		GRZ6 D 2 offset(-24, 35)
+		GRZ6 D 3 offset(-36, 48)
+		GRZ6 D 1 offset(-24, 35)
+		GRZ6 B 1 offset(-16, 34)
+		GRZ6 B 1 offset(-9, 33)
+		GRZ6 B 1 offset(-1, 32)
+		TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedNazi", 0, 0, 0, 0)
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasZmanShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("GrabbedANazi",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+        3HEF A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    2HEF A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    1HEF A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+        THEF N 0
+        "####" A 0
+        "####" EFGHIJ 1 
+		TNT1 A 7
+		TNT1 A 0 A_TakeInventory("StartDualWield", 1)
+		FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+		FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+		FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		FISA N 0
+		"####" A 0
+		"####" DCBA 1 A_WeaponReady	
+		Goto Ready
+		
+	ShieldNazi:
+	    TNT1 A 0 A_JumpIf(GetCvar("BD_DontUseMeatshield")==1, "Fire")
+		TNT1 A 0 A_TakeInventory("GrabbedANazi",1)
+		TNT1 A 0 A_TakeInventory("GrabbedAImp",1)
+		TNT1 A 0 A_GiveInventory("NaziShield",1)
+		GRZ6 A 1 offset(0,40)
+		GRZ6 A 1 offset(0,48)
+		TNT1 A 0 A_SelectWeapon("NaziShield")
+		TNT1 A 1 A_WeaponReady(WRF_NOFIRE)
+		Goto Ready
+		
+	NaziDie:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItem("SargeXDeath", 0, 40)
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasZmanShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("GrabbedANazi",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		Goto Ready		
+	}
+}
+
+
+
+
+
+ACTOR ThrowedBarrel
+{
+	Radius 6
+	Height 8
+	Speed 32
+    Fastspeed 32
+	Damage 55
+	+MISSILE
+	Gravity 0.6
+    Scale 1.0
+	+FORCEXYBILLBOARD
+	DamageType Explosive
+	Alpha 1
+	DeathSound "Explosion"
+	+ROLLSPRITE
+	+ROLLCENTER
+	States
+	{
+	Spawn:
+	TNT1 A 0
+	    TNT1 A 0 A_JumpIf(GetCVAR("bd_ToxicWasteOnExplosion")==0,"SpawnNoToxic")
+		SpawnLoop:    
+		TNT1 A 0 A_SPawnItem("Brutal_Bloodnukage",0,30)
+		BARI ABCDCB 1 A_SetRoll(roll+6)
+		Loop
+	SpawnNoToxic:
+	BARI ABCDCB 1 A_SetRoll(roll+6)
+	Loop
+    Death:
+        TNT1 A 0 A_AlertMonsters
+		TNT1 A 0 A_SpawnItemEx ("BarrelExplosionDamage",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        TNT1 A 0 A_SpawnItem("WhiteShockwaveBig")
+		TNT1 A 0 A_NoBlocking
+	    TNT1 A 0 A_Fall
+		
+		TNT1 A 0 A_SpawnItemEx ("BarrelKaboom",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 AAAA 0 A_CustomMissile ("FireworkSFXType2", 64, 0, random (0, 360), 2, random (30, 60))
+		TNT1 AAA 0 A_CustomMissile ("HighExplosiveFlames", random (10, 20), 0, random (0, 360), 2, random (10, 90))
+		EXPL AA 0 A_CustomMissile ("BigBlackSmokeLarger", 20, 0, random (0, 360), 2, random (10, 90))
+        TNT1 AAA 0 A_CustomMissile ("BDExplosionparticles3", 64, 0, random (0, 360), 2, random (40, 90))
+		TNT1 AAA 0 A_CustomMissile ("BDExplosionparticles4", 64, 0, random (0, 360), 2, random (40, 90))
+		EXPL A 0 Radius_Quake (2, 24, 0, 15, 0)
+		BEXP B 0 BRIGHT A_Scream
+        
+		TNT1 AA 0 A_CustomMissile ("BarrelShrapnel1", 25, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("BarrelShrapnel2", 15, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("BarrelShrapnel3", 5, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("BarrelShrapnel4", 5, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_PlaySound("FAREXPL", 3)
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15))
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35))
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35))
+		TNT1 A 0 A_JumpIf(GetCVAR("bd_ToxicWasteOnExplosion")==0,29)
+		//Emerald's nukage blood
+		TNT1 AAAAAA 0 A_CustomMissile ("SuperWallRedBloodnukage", 40, 0, random (0, 360), 2, random (-15, 15))
+	    TNT1 AAAAAAAAAA 0 A_CustomMissile ("CeilBloodLauncherLongnukage", 0, 0, random (0, 360), 2, random (50, 130))
+//		TNT1 AAA 0 A_CustomMissile ("SuperGoreSpawnernukage", 30, 0, random (0, 360), 2, random (30, 60))
+
+		TNT1 AAAA 0 A_SpawnItem ("brutal_BloodSpotnukage")
+	    TNT1 AAAAAA 0 A_CustomMissile ("BloodMistExtraBignukage", 30, 0, random (0, 360), 2, random (40, 90))
+	    //
+		TNT1 AA 2
+		TNT1 A 0 A_SpawnItemEx ("ExplosionSplashSpawner", 0, 0, 0)
+		
+		TNT1 AAA 8 A_CustomMissile ("ExplosionSmoke", 1, 0, random (0, 360), 2, random (50, 130))
+		Stop
+	}
+}
+
+ACTOR throwedbarrelranged : throwedbarrel
+{
+Gravity 0.2
+}
+
+ACTOR ThrowedBarrelRusty: ThrowedBarrel
+{
+	States
+	{
+	Spawn:
+	    TNT1 A 0
+	    TNT1 A 0 A_JumpIf(GetCVAR("bd_ToxicWasteOnExplosion")==0,"SpawnNoToxic")
+	SpawnLoop:    
+		TNT1 A 0 A_SPawnItem("Brutal_Bloodnukage",0,30)
+		BARI FGHIHG 1 A_SetRoll(roll+6)
+		Loop
+	SpawnNoToxic:
+	BARI FGHIHG 1 A_SetRoll(roll+6)
+	Loop
+	}
+}
+
+
+
+
+ACTOR KickAttack: FastProjectile
+{
+	Radius 12
+	Height 2
+	DamageType Kick
+	Projectile 
+	+FORCEXYBILLBOARD
+	+NOEXTREMEDEATH
+	RenderStyle Add
+	Alpha 0.6
+    Damage (random(14,14))
+    Speed 30
+	//HitObituary "$OB_IMPHIT"
+	Obituary "%o ate %k's boot."
+	SeeSound "none"
+	DeathSound "none"
+	Decal "none"
+	Species "Marines"
+	+THRUSPECIES
+	+MTHRUSPECIES
+	States
+	{
+	Spawn:
+		TNT1 A 1 BRIGHT
+        TNT1 A 1 //A_PlaySound("weapons/gswing")
+		Stop
+	Crash:	
+	Death:
+	//XDEath:
+			TNT1 A 0 A_AlertMonsters(32)
+			TNT1 A 0 A_CheckFloor("DeathOnGround")
+		    PUFF A 0 A_PlaySound("FOOTWALL", 3)
+			TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 A 0 A_GiveToTarget("KickHasHit", 1)
+			TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0)//(intensity, duration, damrad, tremrad, tid)
+			
+			TNT1 A 10
+		Stop
+	//Death:
+	XDEath:
+			TNT1 A 0 A_AlertMonsters(32)
+			TNT1 A 0 A_CheckFloor("DeathOnGround")
+		    PUFF A 0 A_PlaySound("FOOTMEAT", 3)
+			TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		//	EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 A 0 A_GiveToTarget("KickHasHit", 1)
+			TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0)//(intensity, duration, damrad, tremrad, tid)
+			
+			TNT1 A 10
+		Stop
+	
+	DeathOnGround:
+			TNT1 A 0
+		    PUFF A 0 A_PlaySound("FOOTWALL", 3)
+			TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0)//(intensity, duration, damrad, tremrad, tid)
+			TNT1 A 0 A_Explode(10, 40, 0)
+			TNT1 A 10
+		Stop
+	}
+}
+
+ACTOR KickAttackStainedRed : KickAttack {decal "FootDecalRed"}
+ACTOR KickAttackStainedBlue : KickAttack {decal "FootDecalBlue"}
+ACTOR KickAttackStainedGreen : KickAttack {decal "FootDecalGreen"}
+
+ACTOR KickAttackFist: FastProjectile
+{
+	Radius 12
+	Height 2
+	DamageType Kick
+	Projectile 
+	+FORCEXYBILLBOARD
+	+NOEXTREMEDEATH
+	RenderStyle Add
+	Alpha 0.6
+    Damage (random(14,14))
+    Speed 30
+	//HitObituary "$OB_IMPHIT"
+	Obituary "%o ate %k's boot."
+	SeeSound "none"
+	DeathSound "none"
+	Decal "none"
+	+BLOODSPLATTER
+	Species "Marines"
+	+THRUSPECIES
+	+MTHRUSPECIES
+	States
+	{
+	Spawn:
+		TNT1 A 1 BRIGHT
+        TNT1 A 1 //A_PlaySound("weapons/gswing")
+		Stop
+	Death:
+			TNT1 A 0 A_AlertMonsters(32)
+			TNT1 A 0 A_CheckFloor("DeathOnGround")
+		  //  PUFF A 0 A_PlaySound("player/cyborg/fist", 3)
+		  PUFF A 0 A_PlaySound("FistWallKD", 3)
+		  TNT1 AAAA 0 A_CustomMissile ("SparkX", 6, 0, random (0, 360), 2, random (-10, 150))
+			TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 A 0 A_GiveToTarget("KickHasHit", 1)
+			TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0)//(intensity, duration, damrad, tremrad, tid)			
+			TNT1 A 10
+		    Stop
+	XDEath:
+			TNT1 A 0 A_AlertMonsters(32)
+			TNT1 A 0 A_CheckFloor("DeathOnGround")
+		    PUFF A 0 A_PlaySound("player/cyborg/fist", 3)
+			TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		//	EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 A 0 A_GiveToTarget("KickHasHit", 1)
+			TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0)//(intensity, duration, damrad, tremrad, tid)			
+			TNT1 A 10
+		    Stop
+	
+	DeathOnGround:
+			TNT1 A 0
+		    PUFF A 0 A_PlaySound("FistWallKD", 3)
+			TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			TNT1 AAAA 0 A_CustomMissile ("SparkX", 6, 0, random (0, 360), 2, random (-10, 150))
+			EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0)//(intensity, duration, damrad, tremrad, tid)
+			TNT1 A 0 A_Explode(10, 40, 0)
+			TNT1 A 10
+		Stop
+	}
+}
+
+
+ACTOR KickAttackFistGorySound: KickAttackFist
+{
+States
+	{
+	Death:
+			TNT1 A 0 A_AlertMonsters(32)
+			TNT1 A 0 A_CheckFloor("DeathOnGround")
+		    PUFF A 0 A_PlaySound("player/cyborg/fist", 3)
+		    TNT1 AAAA 0 A_CustomMissile ("SparkX", 6, 0, random (0, 360), 2, random (-10, 150))
+			TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 A 0 A_GiveToTarget("KickHasHit", 1)
+			TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0)//(intensity, duration, damrad, tremrad, tid)			
+			TNT1 A 10
+		    Stop
+	}
+}
+
+ACTOR KickAttackDetectDowned: KickAttack
+{
+	Radius 4
+	Height 4
+	DamageType LowKick
+	Damage (random(2, 2))
+	Speed 40
+	+NOBLOOD
+	+BLOODLESSIMPACT
+	-ACTIVATEIMPACT
+	States
+	{
+	Death:
+	TNT1 A 0
+	TNT1 A 1
+	Stop
+	}
+}
+
+ACTOR SuperKickAttack: KickAttack
+{
+    Damage (random(55,55))
+	-NOEXTREMEDEATH
+	+EXTREMEDEATH
+	DamageType Extremepunches
+	Decal "CrackMelee"
+}
+
+ACTOR SuperKickAttackStainedRed : SuperKickAttack {decal "SuperFootDecalRed"}
+ACTOR SuperKickAttackStainedBlue : SuperKickAttack {decal "SuperFootDecalBlue"}
+ACTOR SuperKickAttackStainedGreen : SuperKickAttack {decal "SuperFootDecalGreen"}
+
+
+ACTOR SuperKickAttackFist: KickAttackFist
+{
+    Damage (random(55,55))
+	-NOEXTREMEDEATH
+	+EXTREMEDEATH
+	DamageType Extremepunches
+	Decal "CrackMelee"
+}
+
+ACTOR StompAttack: KickAttack
+{
+    Damage (random(150,200))
+	speed 100
+	DamageType Trample
+	States
+	{
+	Death:
+		    PUFF A 0 A_PlaySound("player/cyborg/fist")
+			TNT1 A 0 A_Explode(150, 15, 0)
+			EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 A 10
+			Stop
+		}
+}
+
+
+ACTOR SuperStompAttack: KickAttack
+{
+    Damage (random(300,500))
+	Speed 100
+	DamageType HeavyTrample
+		States
+	{
+	Death:
+		    PUFF A 0 A_PlaySound("player/cyborg/fist")
+			TNT1 A 0 A_Explode(300, 15, 0)
+			EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 A 10
+			Stop
+		}
+}
+
+ACTOR HookAttack: KickAttack
+{
+	Damage (random(30,30))
+    Speed 30
+}
+
+ACTOR AirKickAttack: KickAttack
+{
+	Radius 20
+	Height 32
+    Damage (random(50,50))
+}
+
+ACTOR AirKickAttackStainedRed : AirKickAttack {decal "FootDecalRedSide"}
+ACTOR AirKickAttackStainedBlue : AirKickAttack {decal "FootDecalBlueSide"}
+ACTOR AirKickAttackStainedGreen : AirKickAttack {decal "FootDecalGreenSide"}
+
+
+ACTOR SuperAirKickAttack: KickAttack
+{
+	Radius 20
+	Height 32
+	-NOEXTREMEDEATH
+	+EXTREMEDEATH
+	DamageType Extremepunches
+	Decal "CrackMelee"
+    Damage (random(85,85))
+	/*
+		States
+	{
+	Death:
+	Crash:
+		    PUFF A 0 A_PlaySound("FOOTWALL", 3)
+			TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 A 0 A_GiveToTarget("KickHasHit", 1)
+			TNT1 A 0 Radius_Quake (4, 10, 0, 5, 0)//(intensity, duration, damrad, tremrad, tid)
+			TNT1 A 10
+		Stop
+	}
+	*/
+}
+
+ACTOR SuperAirKickAttackStainedRed : SuperAirKickAttack {decal "SuperFootDecalRedSide"}
+ACTOR SuperAirKickAttackStainedBlue : SuperAirKickAttack {decal "SuperFootDecalBlueSide"}
+ACTOR SuperAirKickAttackStainedGreen : SuperAirKickAttack {decal "SuperFootDecalGreenSide"}
+
+
+ACTOR MeleeStrike1: KickAttackFist
+{
+DamageType Melee
+Damage (random(5,5))
+Speed 30
+States
+{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 1
+		Stop
+	Death:
+	    TNT1 A 0
+		TNT1 A 0 A_AlertMonsters(32)
+		PUFF A 0 A_PlaySound("FistWallKD")
+		TNT1 AAAA 0 A_CustomMissile ("SparkX", 1, 0, random (0, 360), 2, random (-10, 150))
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 10
+		Stop
+}
+}
+
+
+ACTOR MeleeStrike2: MeleeStrike1
+{
+Damage (random(20,20))
+Speed 40
+-BLOODSPLATTER
+States
+{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 1
+		Stop
+	Death:
+	    TNT1 A 0
+		TNT1 A 0 A_AlertMonsters(32)
+		PUFF A 0 A_PlaySound("FistWall")
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 10
+		Stop
+}}
+
+ACTOR MeleeStrike2PrimaryFire: MeleeStrike1
+{
+Damage (random(25,25))
+Speed 40
+//-BLOODSPLATTER
+DamageType Kick
+}
+
+ACTOR MeleeStrike2PrimaryFireBerserked: MeleeStrike1
+{
+Damage (random(95,95))
+Speed 30
+//-BLOODSPLATTER
+DamageType Extremepunches
+Decal "CrackMelee"
+}
+
+ACTOR MeleeStrike2Berserk: MeleeStrike1
+{
+Damage (random(80,80))
+Speed 30
+DamageType Extremepunches
+Decal "CrackMelee"
+States
+{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 1
+		Stop
+	Death:
+	    TNT1 A 0
+		TNT1 A 0 A_AlertMonsters(32)
+		PUFF A 0 A_PlaySound("FistWall")
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 10
+		Stop
+}}
+
+
+ACTOR MeleeStrikeNormal: MeleeStrike1
+{
+Damage (random(10,10))
+Speed 40
+}
+
+
+ACTOR MeleeStrike1Fatality: MeleeStrike1
+{
+Damage (random(60,60))
+DamageType Fatality
+-NOEXTREMEDEATH
++EXTREMEDEATH
+Decal "CrackMelee"
+}
+
+ACTOR MeleeStrike1Berserked: MeleeStrike1
+{
+Damage (random(65,65))
+-NOEXTREMEDEATH
++EXTREMEDEATH
+DamageType ExtremePunches
+Decal "CrackMelee"
+}
+
+
+ACTOR MeleeStrike1FatalityGrab: MeleeStrike1
+{
+Damage (random(42,45))
+DamageType Fatality
+}
+
+ACTOR MeleeStrike1FatalityNoDamage: MeleeStrike1
+{
+Damage (random(1,1))
+DamageType Fatality
+States
+{
+	Death:
+	    TNT1 A 0
+		Stop
+}
+}
+
+ACTOR MeleeStrike1Smash: MeleeStrike1
+{
+Damage (random(60,60))
+DamageType Extremepunches
+-NOEXTREMEDEATH
++EXTREMEDEATH
+Decal "CrackMelee"
+}
+
+
+
+ACTOR MeleeStrikeSuperHook: MeleeStrike1
+{
+Damage (random(90,90))
+DamageType Extremepunches
+-NOEXTREMEDEATH
++EXTREMEDEATH
+Decal "CrackMelee"
+}
+
+
+
+ACTOR BerserkGrabAttack: KickAttack
+{
+Damage (random(2,3))
+
+DamageType PussyGrab
++NOPAIN
++THRUGHOST
++GHOST
+Speed 90
+Radius 16
+Height 16
+States
+{
+Death:
+XDeath:
+Crash:
+	    TNT1 A 0
+		TNT1 A 10
+		Stop
+		}
+}
+
+
+ACTOR UseAttack: KickAttack
+{
+Damage (random(1,1))
+
+DamageType Use
++NOPAIN
++PAINLESS
++THRUGHOST
++GHOST
+-ACTIVATEIMPACT
++BLOODLESSIMPACT
+Speed 20
+Radius 4
+Height 4
+States
+{
+Crash:
+Death:
+XDeath:
+	    TNT1 A 0
+		TNT1 A 10
+		Stop
+		}
+}
+
+
+ACTOR ExecutionAttackKick: KickAttackFist
+{
+    Damage (random(21,22))
+	speed 100
+	DamageType Kick
+	Radius 2
+	Height 2
+	-ACTIVATEIMPACT
+	-ACTIVATEPCROSS
+	-ACTIVATEMCROSS
+	-CANUSEWALLS
+	States
+	{
+	Death:
+		    PUFF A 0 A_PlaySound("player/cyborg/fist")
+			TNT1 A 0 A_Explode(10, 10, 0)
+			EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 A 10
+			Stop
+		}
+}
+
+
+
+
+ACTOR StealthAttack: KickAttack
+{
+    Damage (random(1,1))
+	speed 50
+	DamageType Stealth
+	Radius 4
+	Height 4
+	-ACTIVATEIMPACT
+	-ACTIVATEPCROSS
+	-ACTIVATEMCROSS
+	-CANUSEWALLS
+	States
+	{
+	Crash:
+	Death:
+	Xdeath:
+			TNT1 A 10
+			Stop
+		}
+}
+
+ACTOR PickMissile: StealthAttack
+{
+	DamageType Pick
+}
+
+
+
+
+
+ACTOR ExecutionAttackMelee: ExecutionAttackKick
+{
+	DamageType Melee
+}
+
+
+ACTOR ExecutionAttackFatality: ExecutionAttackKick
+{
+	DamageType Fatality
+}
+
+ACTOR ExecutionAttackStompWall: ExecutionAttackKick
+{
+	DamageType StompWall
+	Damage (random (100, 110))
+	+ACTIVATEIMPACT
+	+ACTIVATEPCROSS
+	+ACTIVATEMCROSS
+	+CANUSEWALLS
+}
+
+
+ACTOR ExecutionFrontWallDetect: ExecutionAttackKick
+{
+	DamageType None
+	Damage (random (0, 1))
+	+THRUACTORS
+	Radius 2
+	Height 2
+	Speed 40
+	States
+	{
+		Spawn:
+			TNT1 A 2
+			Stop
+		Death:
+		    TNT1 A 0
+			TNT1 A 0 A_GiveToTarget("ExecuteStompWall", 1)
+			Stop
+		Xdeath:
+			TNT1 A 0
+			TNT1 A 1
+			Stop
+			}
+}
+
+
+ACTOR ExecutionLeftWallDetect: ExecutionAttackKick
+{
+	DamageType None
+	Damage (random (0, 1))
+	+THRUACTORS
+	Radius 2
+	Height 2
+	Speed 20
+	States
+	{
+		Spawn:
+			TNT1 A 2
+			Stop
+		Death:
+		    TNT1 A 0
+			TNT1 A 0 A_GiveToTarget("ExecuteBashWall", 1)
+			Stop
+		Xdeath:
+			TNT1 A 0
+			TNT1 A 1
+			Stop
+			}
+}
+
+
+
+
+
+
+ACTOR SlideAttack: KickAttack
+{
+	DamageType Slide
+	Radius 12
+    Damage (random(4,5))
+	+GHOST
+	+THRUGHOST
+	Speed 50
+	Obituary "%o tripped on %k's slide kick."
+	States
+	{
+	Spawn:
+		TNT1 A 1 BRIGHT
+        TNT1 A 1 //A_PlaySound("weapons/gswing")
+		Stop
+
+	XDEath:
+			TNT1 A 0
+		    PUFF A 0 A_PlaySound("FOOTMEAT", 3)
+			TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0)//(intensity, duration, damrad, tremrad, tid)
+			TNT1 A 10
+			Stop
+			
+		
+	DEath:
+	Crash:
+			TNT1 A 0
+		    PUFF A 0 A_PlaySound("FOOTWALL", 3)
+			TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 A 0 A_GiveToTarget("KickHasHit", 1)
+			TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0)//(intensity, duration, damrad, tremrad, tid)
+			TNT1 A 10
+			Stop		
+	
+	
+	}
+}
+
+ACTOR SlideAttackStainedRed : SlideAttack {decal "FootDecalRedSide"}
+ACTOR SlideAttackStainedBlue : SlideAttack {decal "FootDecalBlueSide"}
+ACTOR SlideAttackStainedGreen : SlideAttack {decal "FootDecalGreenSide"}
+
+
+
+
+
+
+
+ACTOR SuperKickAttackRealism: SuperKickAttack
+{
+    Damage (random(16,16))
+
+}
+
+
+
+
+ACTOR KickAttackRealism: Kickattack
+{
+    Damage (random(3,3))
+
+}
+
+
+
+
+ACTOR AirKickAttackRealism: AirKickattack
+{
+    Damage (random(9,9))
+
+}
+
+
+ACTOR SuperAirKickAttackRealism: SuperAirKickattack
+{
+    Damage (random(24,24))
+
+}
+
+
+
+ACTOR MeleeStrikeNormalRealism: MeleeStrikeNormal
+{
+    Damage (random(2,2))
+
+}
+
+
+
+ACTOR MeleeStrike2Realism: MeleeStrike2
+{
+    Damage (random(5,5))
+
+}
+
+ACTOR RifleBash : KickAttack {Damage (random(26,26)) }
+ACTOR StrongRifleBash : SuperKickAttack {damage (random(74,74))}
+
+
+
+
+ACTOR MeleeStrike2Baron : MeleeStrike2Berserk
+{
+
+Damage (random(100,550))
+Speed 70
++solid
++REFLECTIVE 
++AIMREFLECT
++shootable
++buddha
+States
+{
+Death:
+	    TNT1 A 0
+		TNT1 A 0 A_AlertMonsters(32)
+		PUFF A 0 A_PlaySound("player/cyborg/fist")
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 10
+		Stop
+
+}
+
+}
+
+ACTOR MeleeStrike2Baron2 : MeleeStrike2Baron
+{
+Damage (random(50,50))
+//radius 78
+//+noclip
+//radius 2
+decal "none"
+Speed 50
+-REFLECTIVE 
+-AIMREFLECT
+-shootable
+-buddha
++ripper
+States
+{
+Death:
+	    TNT1 A 0
+		TNT1 A 0 A_AlertMonsters(32)
+		//PUFF A 0 A_PlaySound("player/cyborg/fist")
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 10
+		Stop
+
+}
+}
+
+ACTOR meleestrike2baron3 : MeleeStrike2Baron2
+{
+decal "CrackMelee"
+}
+
+ACTOR meleeStrike1Rev : mEleeStrike2Baron
+{
+Damage (random(100,250))
+States
+{
+	Death:
+	    TNT1 A 0
+		TNT1 A 0 A_AlertMonsters(32)
+		PUFF A 0 A_PlaySound("skeleton/melee")
+		//TNT1 AAAA 0 A_CustomMissile ("SparkX", 1, 0, random (0, 360), 2, random (-10, 150))
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 10
+		Stop
+}
+}

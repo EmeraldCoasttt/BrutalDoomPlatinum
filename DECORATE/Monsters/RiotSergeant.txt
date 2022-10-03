@@ -1,0 +1,389 @@
+ACTOR RiotShieldGuy : ShotgunGuy1
+{
+  //$Title "Riot Shield Sergeant"
+  //$Category XV117Monsters
+	Obituary "%o was assassinated by a Riot Shield Sergeant."
+	Health 70
+	Radius 20//50SpriteW(96%=48)
+	Height 44//56SpriteH(96%=54)
+	Scale 0.96
+	Mass 100
+	Speed 4
+	//DropItem "GrenadeAmmo" 4
+	damagefactor "Avoid", 0.0
+	DropItem "none"
+	Tag "Riot Shield Sergeant"
+	+FLOORCLIP
+	+AVOIDMELEE
+	-DOHARMSPECIES
+	States
+	{
+	
+
+	//////////////////////////////////////
+
+	Spawn:
+	  TNT1 A 0
+	  TNT1 A 0 A_spawnitemex("RiotShieldGuyShield",0,0,0,0,0,0,0,SXF_SETTRACER)
+	  TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER)
+	  TNT1 A 0 A_GiveInventory("SKShotgunGuy", 1)
+	  TNT1 A 0 A_GiveInventory("TypeSergeant", 1)
+	  TNT1 A 0 A_GiveInventory("MP40Ammo", random(0,31))
+	  RPSZ A 1
+	  Goto Stand
+
+	Stand:
+		TNT1 A 0 A_CheckSight("Stand2")
+	    TNT1 A 0 
+		TNT1 A 0 
+		RPSZ A 4 A_Look
+	    TNT1 A 0 
+		RPSZ A 4 A_Look
+	    TNT1 A 0 
+		RPSZ A 4 A_Look
+	    TNT1 A 0 
+		RPSZ A 4 A_Look
+		Loop
+		
+	Stand2:
+		RPSZ A 14 A_Look
+		Goto Stand
+		
+		
+	FallBack:
+	TNT1 A 0 A_CheckSight("Advance")
+	TNT1 A 0 A_ChangeFLag("NODROPOFF", 1)
+	TNT1 A 0 
+	TNT1 A 0 
+	RPSZ D 2 A_FaceTarget
+	RPSZ D 2 A_Recoil(2)
+	TNT1 A 0 A_PlaySound("humans/step",3)
+	TNT1 A 0 A_jump(64, "Missile")
+	TNT1 A 0 
+	TNT1 A 0 
+	RPSZ C 2 A_FaceTarget
+	RPSZ C 2 A_Recoil(2)
+	TNT1 A 0 
+	TNT1 A 0 
+	RPSZ B 2 A_FaceTarget
+	RPSZ B 2 A_Recoil(2)
+	TNT1 A 0 A_PlaySound("humans/step",3)
+	TNT1 A 0 
+	TNT1 A 0 
+	RPSZ A 2 A_FaceTarget
+	RPSZ A 2 A_Recoil(2)
+	TNT1 A 0 
+	TNT1 A 0 
+	RPSZ D 2 A_FaceTarget
+	RPSZ D 2 A_Recoil(2)
+	TNT1 A 0 A_PlaySound("humans/step",3)
+	TNT1 A 0 A_jump(64, "Missile")
+	TNT1 A 0 
+	TNT1 A 0 
+	RPSZ C 2 A_FaceTarget
+	RPSZ C 2 A_Recoil(2)
+	TNT1 A 0 
+	TNT1 A 0 
+	RPSZ B 2 A_FaceTarget
+	RPSZ B 2 A_Recoil(2)
+	TNT1 A 0 A_PlaySound("humans/step",3)
+	TNT1 A 0 
+	TNT1 A 0 
+	RPSZ A 2 A_FaceTarget
+	RPSZ A 2 A_Recoil(2)
+	TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
+	GOto Missile
+	
+	SearchForPlayer:
+	Idle:
+		TNT1 A 0 A_JumpIfHealthLower(1, "Death")
+	    TNT1 A 0 A_ClearTarget
+	    TNT1 A 0 A_TakeInventory("EnemyMemory", 30)
+		TNT1 A 0 A_GiveInventory("SKShotgunGUy", 1)
+        TNT1 A 0 
+	    TNT1 A 0 
+		RPSZ A 10 A_Look
+        TNT1 A 0 
+	    TNT1 A 0 
+		RPSZ C 10 A_Look
+		TNT1 A 0 
+	    TNT1 A 0 
+		RPSZ A 10 A_Look
+        TNT1 A 0 
+	    TNT1 A 0 
+		RPSZ D 10 A_Look
+		TNT1 A 0 
+	    TNT1 A 0 
+		RPSZ A 10 A_Look
+		
+		RPSZ A 4 A_Look
+		TNT1 A 0 
+	    TNT1 A 0 
+		TNT1 A 0 A_Wander
+		TNT1 A 0 A_Recoil(-1)
+		RPSZ B 4 A_Look
+		TNT1 A 0 
+	    TNT1 A 0 
+		TNT1 A 0 A_Wander
+		TNT1 A 0 A_Recoil(-1)
+		RPSZ C 4 A_Look
+		TNT1 A 0 
+	    TNT1 A 0 
+		TNT1 A 0 A_Wander
+		TNT1 A 0 A_Recoil(-1)
+		RPSZ D 4 A_Look
+		TNT1 A 0 
+	    TNT1 A 0 
+		TNT1 A 0 A_Wander
+		TNT1 A 0 A_Recoil(-1)
+		
+		TNT1 A 0 A_Jump(128, "Idle")
+		RPSZ A 4 A_Look
+		TNT1 A 0 
+	    TNT1 A 0 
+		TNT1 A 0 A_Wander
+		TNT1 A 0 A_Recoil(-1)
+		RPSZ B 4 A_Look
+		TNT1 A 0 
+	    TNT1 A 0 
+		TNT1 A 0 A_Wander
+		TNT1 A 0 A_Recoil(-1)
+		RPSZ C 4 A_Look
+		TNT1 A 0 
+	    TNT1 A 0 
+		TNT1 A 0 A_Wander
+		TNT1 A 0 A_Recoil(-1)
+		RPSZ D 4 A_Look
+		TNT1 A 0 
+	    TNT1 A 0 
+		TNT1 A 0 A_Wander
+		TNT1 A 0 A_Recoil(-1)
+		Loop
+		
+	See:
+	TNT1 A 0 A_JumpIfHealthLower(1, "Death")
+	TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
+	TNT1 A 0 A_TakeInventory("SKZombieman", 1)
+	TNT1 A 0 A_TakeInventory("EnemyMemory", 15)
+	TNT1 A 0 A_CheckSight("SeeNeverSeen")
+	Goto SeeContinue
+	
+	SeeContinue:
+	TNT1 A 0 A_JumpIfHealthLower(1, "Death")
+	TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
+	TNT1 A 0 A_JumpIfCloser(148, "FallBack")
+	//Advance:
+	TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
+	//TNT1 A 0 A_JumpIfInventory("EnemyMemory", 15, "SearchForPlayer")
+	TNT1 A 0 A_GiveInventory("EnemyMemory", 1)
+	TNT1 A 0 A_SpawnItemEx("FootStep", 0, 0, 20, 0, 0)
+	TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1)
+	TNT1 A 0 
+	TNT1 A 0 
+	RPSZ AAA 2 A_Chase
+	TNT1 A 0 
+	TNT1 A 0 
+	TNT1 A 0 A_PlaySound("humans/step",3)
+	RPSZ BBB 2 A_Chase
+
+	TNT1 A 0 
+	TNT1 A 0 
+	RPSZ CCC 2 A_Chase
+	TNT1 A 0 
+	TNT1 A 0 
+	TNT1 A 0 A_PlaySound("humans/step",3)
+	RPSZ DDD 2 A_Chase
+	Loop
+		
+	SeeNeverSeen:
+		TNT1 A 0 A_JumpIfCloser(148, "FallBack")
+	Advance:
+		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
+        TNT1 A 0 A_SpawnItemEx("FootStep", 0, 0, 10, 0, 0)
+		TNT1 A 0 
+	    TNT1 A 0 
+		RPSZ A 4 A_Chase
+		TNT1 A 0 A_Recoil(-1)
+		TNT1 A 0 A_TakeInventory("SKZombieman", 1)
+		TNT1 A 0 
+	    TNT1 A 0 
+		RPSZ B 4 A_Chase
+		TNT1 A 0 A_PlaySound("humans/step",3)
+		TNT1 A 0 
+	    TNT1 A 0 
+		RPSZ C 4 A_Chase
+		TNT1 A 0 
+	    TNT1 A 0 
+		RPSZ D 4 A_Chase
+		TNT1 A 0 A_PlaySound("humans/step",3)
+		Loop
+		
+		
+	///////////////////////////////////////	
+	Missile:
+		TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1)
+	    TNT1 A 0 A_giveinventory("KillHeadSHotTargets",1)
+		RPSZ E 4 A_FaceTarget
+	    TNT1 A 0 
+        TNT1 A 0 A_JumpIfInventory("MP40Ammo", 31, "Reload")
+        TNT1 A 0 A_PlaySound("MP40")
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 28, 0, random(-7, 7), 1, random(-4, 4))
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0)
+		TNT1 A 0 A_CustomMissile("DistantFireSoundRifle", 36, 7, 0, 1, 0)
+		RPSZ F 2 BRIGHT
+		TNT1 A 0 A_GiveInventory("MP40Ammo", 1)
+
+	    TNT1 A 0 
+		RPSZ E 1 
+		RPSZ E 1 A_FaceTarget
+	     TNT1 A 0 
+        TNT1 A 0 A_JumpIfInventory("MP40Ammo", 31, "Reload")
+        TNT1 A 0 A_PlaySound("MP40")
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 28, 0, random(-7, 7), 1, random(-4, 4))
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0)
+		TNT1 A 0 A_CustomMissile("DistantFireSoundRifle", 36, 7, 0, 1, 0)
+		RPSZ F 2 BRIGHT
+		TNT1 A 0 A_GiveInventory("MP40Ammo", 1)
+
+	    TNT1 A 0 
+		RPSZ E 1 
+		RPSZ E 1 A_FaceTarget
+		 TNT1 A 0 
+        TNT1 A 0 A_JumpIfInventory("MP40Ammo", 31, "Reload")
+        TNT1 A 0 A_PlaySound("MP40")
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 28, 0, random(-7, 7), 1, random(-4, 4))
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0)
+		TNT1 A 0 A_CustomMissile("DistantFireSoundRifle", 36, 7, 0, 1, 0)
+		RPSZ F 2 BRIGHT
+		TNT1 A 0 A_GiveInventory("MP40Ammo", 1)
+
+	    TNT1 A 0 
+		RPSZ E 1 
+		RPSZ E 1 A_FaceTarget
+		 TNT1 A 0 
+        TNT1 A 0 A_JumpIfInventory("MP40Ammo", 31, "Reload")
+        TNT1 A 0 A_PlaySound("MP40")
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 28, 0, random(-7, 7), 1, random(-4, 4))
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0)
+		TNT1 A 0 A_CustomMissile("DistantFireSoundRifle", 36, 7, 0, 1, 0)
+		RPSZ F 2 BRIGHT
+		TNT1 A 0 A_GiveInventory("MP40Ammo", 1)
+		
+	    TNT1 A 0 
+		RPSZ E 1 
+		RPSZ E 1 A_FaceTarget
+		 TNT1 A 0 
+        TNT1 A 0 A_JumpIfInventory("MP40Ammo", 31, "Reload")
+        TNT1 A 0 A_PlaySound("MP40")
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 28, 0, random(-7, 7), 1, random(-4, 4))
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0)
+		TNT1 A 0 A_CustomMissile("DistantFireSoundRifle", 36, 7, 0, 1, 0)
+		RPSZ F 2 BRIGHT
+		TNT1 A 0 A_GiveInventory("MP40Ammo", 1)
+	
+	    TNT1 A 0 
+		RPSZ E 1 
+		RPSZ E 1 A_FaceTarget
+		TNT1 A 0 A_giveinventory("KillHeadSHotTargets",1)
+		 TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER)
+		Goto SeeContinue
+
+	Reload:
+	TNT1 A 0 A_giveinventory("KillHeadSHotTargets",1)
+		 TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER)
+		TNT1 A 0 A_TakeInventory("MP40Ammo", 31)
+		TNT1 A 0 
+		TNT1 A 0
+        RSP6 A 6 A_CustomMissile("EmptyClipSpawn", 36, 0, random(-11, 11), 0)
+        TNT1 A 0 A_PlaySound("Reload", 1)
+		TNT1 A 0 
+		TNT1 A 0
+        RSP6 A 6
+		TNT1 A 0 
+		TNT1 A 0
+        RSP6 B 6
+        TNT1 A 0 A_PlaySound("prel", 3)
+        RSP6 B 6
+		TNT1 A 0 
+		TNT1 A 0
+        RSP6 C 6
+		TNT1 A 0 
+		TNT1 A 0
+		TNT1 A 0 A_giveinventory("KillHeadSHotTargets",1)
+		RPSZ E 6
+		TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER)
+	    TNT1 A 0 
+        Goto SeeContinue	
+ 
+	Pain.Melee:
+	TNT1 A 0
+	TNT1 A 0 A_giveinventory("KillHeadSHotTargets",1)
+		 TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER)
+        TNT1 A 0 A_JumpIfInventory ("IsDown", 1, 6)
+		RPSZ A 3
+		TNT1 A 0 A_JumpIfInventory ("SKShotgunGuy", 1, "StealthKill")
+		RPSZ A 3 A_Pain
+		Goto SeeContinue
+        TNT1 AAAAA 0
+        TNT1 A 0 A_TakeInventory("IsDown", 1)
+	Pain:
+	Pain.Avoid: 
+	Pain.Kick:
+	Pain.head:
+	TNT1 A 0 A_giveinventory("KillHeadSHotTargets",1)
+		 TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER)
+        TNT1 A 0 A_JumpIfInventory ("IsDown", 1, 6)
+		TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1)
+		TNT1 A 0 
+		RPSZ D 4 A_Pain
+		RPSZ CBA 3 
+	DeployShield:
+        TNT1 AAAAA 0
+        TNT1 A 0 A_FaceTarget
+	    TNT1 A 0 
+        RPSZ E 4
+	    TNT1 A 0 
+		RPSZ E 4
+	    TNT1 A 0 
+        RPSZ E 4
+	    TNT1 A 0 
+		RPSZ E 4
+	    TNT1 A 0 
+        RPSZ E 4
+	    TNT1 A 0 
+		RPSZ E 4
+	    TNT1 A 0 
+        TNT1 A 0 A_TakeInventory("IsDown", 1)
+		RPSZ E 4
+	    TNT1 A 0 
+        Goto SeeContinue
+		
+
+
+		Death.Ice:
+	Death.Freeze:
+	Death.Frost:
+	TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+	TNT1 A 0 A_ChangeFlag("SOLID", 0)
+	TNT1 A 0 A_noblocking
+	TNT1 A 0 A_SpawnItem("FrozenShotgunGuy")
+	Stop
+
+	}
+}
+
+
+
+Actor ExecutedRiotSergeant: DeadShotgunGuy1
+{
+States{Spawn:
+		FSP6 L -1
+        Stop 
+		
+		Death:
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItem("MeatDeathSmall")
+		TNT1 A 0 A_SpawnItem("DeadShotgunguySZD3C")
+		TNT1 AA 0 A_CustomMissile ("XDeathArm1", 32, 0, random (0, 360), 2, random (0, 160))
+		Stop
+}}

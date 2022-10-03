@@ -1,0 +1,1132 @@
+ACTOR AxeThrowAltFire: Inventory { Inventory.MaxAmount 1 }
+ACTOR HeyIHaveAnAxeBTW: Inventory { Inventory.MaxAmount 1 } //Used to make the revenant's missile reflection work.
+ACTOR DamageMultiplier: Inventory { Inventory.MaxAmount 30 }
+ACTOR AxeCounter: Inventory {Inventory.MaxAmount 2}
+ACTOR BrutalAxe : BrutalWeapon
+{
+	Obituary "%o was choped down by %k's axe."
+    AttackSound "None"
+    Inventory.PickupSound "AXEDRAW"
+	Inventory.Pickupmessage "You got your Axe back! (Slot 1)"
+    +WEAPON.NOAUTOAIM
+    +WEAPON.NOAUTOFIRE
+    +FORCEXYBILLBOARD
+	damagetype Saw
+	+WEAPON.NOALERT
+	+WEAPON.AXEBLOOD
+	Weapon.SelectionOrder 3000
+	Scale 0.9
+	Tag "Axe"
+	brutalweapon.handedness 2
+	Inventory.AltHUDIcon "AXE9A0"
+	BrutalWeapon.weight 0
+	States
+	{
+	
+	LedgeClimb: //It's here so only stainable weapons can show stained fists.
+		TNT1 A 0 A_WeaponReady
+		TNT1 A 0 A_Playsound("ledgeclimb")
+		3L1M A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    2L1M A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    1L1M A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+	    CL1M N 0
+		"####" ABCD 1 A_SetPitch(pitch-pitch/2, SPF_INTERPOLATE)
+		"####" A 0 A_SetPitch(0, SPF_INTERPOLATE)
+		//"####" EF 1 A_SetPitch(pitch-0.5, SPF_INTERPOLATE)
+		"####" E 1
+		"####" FF 1 A_SetPitch(pitch-0.5, SPF_INTERPOLATE)
+		"####" G 1 A_SetPitch(pitch+3, SPF_INTERPOLATE)
+		"####" HI 1 A_SetPitch(pitch+4, SPF_INTERPOLATE)
+		"####" JK 1 A_SetPitch(pitch-3, SPF_INTERPOLATE)
+		"####" LM 1  A_SetPitch(pitch-2, SPF_INTERPOLATE)
+		TNT1 A 0 A_TakeInventory("Climbed_Ledge", 5000)
+		TNT1 A 0 A_TakeInventory("Grabbing_A_Ledge", 5000)
+		TNT1 AA 1 A_SetPitch(pitch-1, SPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 2)
+		TNT1 A 0 A_Overlay(-610, "FirstPersonLegsStand")
+		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+		Goto Ready3
+	
+	GrenadeThrowFlash:
+	AXRS A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+    AXBS A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+    AXGS A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+    AXES A 0
+	"####" DCBA 1
+	TNT1 A 24
+	AXRS A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+    AXBS A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+    AXGS A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+    AXES A 0
+	"####" ABCD 1//32 in total
+	stop	
+	KickingFlash:
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEG A 0
+		"####" GHIJKKKKKKKKJIHG 1
+	    Goto Ready
+	AirKickingFlash:
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEG A 0
+		"####" GHIJKKKKKKKKKKJIHG 1
+		Goto Ready
+	SlideKickingStart:
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEG A 0
+	    "####" GHIJK 1
+	ContinueSlideKicking:
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEG A 0
+	    "####" KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+		Goto Ready
+	SlideKickingEnd:
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEG A 0
+	    "####" KKKKKKJIHG 1 //10
+	    Goto Ready
+		
+	FuckYouFlash:
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEG A 0
+		"####" GHIJKKKKKKKKKKKKKKKKKKKKJIHG 1
+		Goto Ready	
+		/*
+	Taunt:
+	    TNT1 A 0 A_Takeinventory("Taunting",1)
+		TNT1 A 0 A_JumpIfInventory("GenderFemale", 1, "TauntFemale")
+		TNT1 A 0 BRIGHT A_FireCustomMissile("Taunter", 0, 0, -1, 0)
+		TNT1 A 0 BRIGHT A_FireCustomMissile("Taunter", -9, 0, -1, 0)
+		TNT1 A 0 BRIGHT A_FireCustomMissile("Taunter", 9, 0, -1, 0)
+		TNT1 A 0 A_Jump(256, "FuckYourself", "FhaccYoself", "GoFuckYourself", "GetOffScum")		
+	FuckYourself:
+		TNT1 A 0 ACS_NamedExecute("InsultFuckYourself",0,0)
+        PI2F I 0 A_PlaySound("FUCK1", 2)
+		Goto Ready
+	FhaccYoself:
+		TNT1 A 0 ACS_NamedExecute("InsultFhaccYoself",0,0)
+        TNT1 I 0 A_PlaySound("FUCK3", 2)
+		Goto Ready
+	GoFuckYourself:
+		TNT1 A 0 ACS_NamedExecute("InsultGoFuckYourself",0,0)
+        TNT1 I 0 A_PlaySound("FUCK4", 2)
+		Goto Ready
+	GetOffScum:
+		TNT1 A 0 ACS_NamedExecute("InsultGetOffScum",0,0)
+        TNT1 I 0 A_PlaySound("FUCK2", 2)
+        Goto Ready
+		 
+	TauntFemale:
+		TNT1 A 0 A_PlaySound("FTAUNT", 2)
+		TNT1 A 0 BRIGHT A_FireCustomMissile("Taunter", 0, 0, -1, 0)
+		TNT1 A 0 BRIGHT A_FireCustomMissile("Taunter", -9, 0, -1, 0)
+		TNT1 A 0 BRIGHT A_FireCustomMissile("Taunter", 9, 0, -1, 0)
+        Goto Ready	
+		*/
+	
+	Ready3:
+	Ready:
+		TNT1 A 0
+		TNT1 A 0 A_Giveinventory("HasCutingWeapon",1)
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"GreenBloodReady")
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"BlueBloodReady")
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"RedBloodReady")
+		AXEG A 0
+		"####" A 1 A_WeaponReadyDX
+		Loop
+	RedBloodReady:
+		AXRG A 0
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor", 1)
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor", 1)
+		"####" A 1 A_WeaponReadyDX
+		Goto Ready
+	BlueBloodReady:
+		AXBG A 0
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor", 1)
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor", 1)
+		"####" A 1 A_WeaponReadyDX
+		Goto Ready	
+	GreenBloodReady:
+		AXGG A 0
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor", 1)
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor", 1)
+		"####" A 1 A_WeaponReadyDX
+		Goto Ready	
+		
+		
+		SprintOverlay:
+		
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEG A 0
+		"####" GHIJ 1
+		SprintOverlay2:
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEG A 0
+		"####" K 1
+	    Wait
+		
+		ReturnFromSprint:
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEG A 0
+		"####" JIHG 1
+		Goto ready
+		
+		
+	
+	
+	
+	InstantDeselect:
+	    TNT1 A 3 A_TakeInventory("QuickSwitchSSG",1)
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		wait
+	Deselect: "####" A 0 A_TakeInventory("IsPlayingDoxMod",1)
+	    TNT1 A 0 A_JumpIfInventory("SwitchingDualModes", 1, "DeselectToFists")
+		TNT1 A 0 A_JumpIfInventory("QuickSwitchSSG", 1, "InstantDeselect")
+	    AXRS A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBS A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGS A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXES A 0
+		"####" A 0 A_ClearOverlays(-2,-2)
+		"####" DCBA 1
+		TNT1 A 0 A_SetCrosshair(0)
+		"####" A 0 A_Takeinventory("PowerBloodOnVisor",1)
+		"####" A 0 A_Takeinventory("PowerBlueBloodOnVisor",1)
+		"####" A 0 A_Takeinventory("PowerGreenBloodOnVisor",1)
+		"####" A 0 A_Takeinventory("HasCutingWeapon",1)
+		"####" AAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		"####" A 0 A_Takeinventory("HasCutingWeapon",1)
+		"####" A 0 A_TakeInventory("TossGrenade", 1)
+		"####" A 1 A_Lower
+		Wait
+	DeselectToFists:
+	    TNT1 AAAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		wait
+		
+	Select:
+		TNT1 A 0 
+		Goto SelectFirstPersonLegs
+		SelectContinue:
+		"####" A 0 A_GiveInventory("IsPlayingDoxMod",1)
+		AXEG A 0 A_Giveinventory("GoSpecial",1)
+		TNT1 A 0 A_SetCrosshair(41)
+		
+		TNT1 AAAAAAAAAAAAAAA 0 A_Raise
+		Goto SelectAnimation
+		
+	SelectAnimation:
+		TNT1 A 1
+		ReturnFromNothing:
+		AXEG A 0 A_Giveinventory("HasCutingWeapon",1)
+	    AXEG A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+        AXEG A 0 A_PlaySound("AXEDRAW")
+		AXRS A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBS A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGS A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXES A 0
+		"####" ABCD 1 A_WeaponReady(WRF_NOFIRE)
+		Goto Ready
+		
+	
+    Fire:
+		AXEG A 0
+		AXEG A 0 A_TakeInventory("AxeHit", 1)
+        AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"Hold.RedBlood")
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"Hold.BlueBlood")
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"Hold.GreenBlood")
+        AXEG A 0
+		"####" X 0 A_PlaySound("foley/GLUpwardsToClose",10,0.7)
+        "####" BCDE 1
+		Goto Hold
+		
+	Hold.BlueBlood:
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
+		"####" BCDE 1
+		Goto Hold
+	Hold.RedBlood:
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
+		"####" BCDE 1
+		Goto Hold
+	Hold.GreenBlood:
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		"####" BCDE 1
+		Goto Hold
+		
+	Hold:
+		AXEG A 0
+		AXEG A 0 A_TakeInventory("AxeHit", 1)
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEG A 0
+		"####" A 0 A_GiveInventory("DamageMultiplier",1)
+		//"####" E 1 A_WeaponOffset( frandom(CountInv("DamageMultiplier")/20, CountInv("DamageMultiplier")/-20), 32+frandom(CountInv("DamageMultiplier")/20, CountInv("DamageMultiplier")/-20) )
+		"####" E 1 //This one seems messier, but it does appear smoother...
+		{
+		if(CountInv("DamageMultiplier")>=20)
+		    {
+		    A_WeaponOffset(random(1,-1),32+random(1,-1));
+			Return State("");
+			}
+		Return State("");
+		}
+		
+		"####" A 0 A_Refire
+		"####" FL 1 A_GiveInventory("HeyIHaveAnAxeBTW")
+		"####" A 0 
+		{
+		A_PlaySound("AXSWING1", 1);
+		A_WeaponOffset(0,32);
+		}
+		AXRF A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBF A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGF A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEF A 0
+		"####" AB 1
+		"####" A 0
+		{
+		if(CountInv("PowerStrength")==1)
+		   {
+		    if(CountInv("DamageMultiplier")>=20)
+		    {
+			  A_Saw("", "", 10, "AxePuffs", 0, 120, 0,1);
+		      A_FireCustomMissile("AxeAttackBerserkStrong", 0, 0, 0, 0) ; 	
+			}
+		   else
+		    {
+		      A_Saw("", "", 10, "AxePuffs", 0, 120, 0,1);
+		      A_FireCustomMissile("AxeAttackBerserk", 0, 0, 0, 0) ; 
+			}
+		  }
+		else
+		  {
+		  if(CountInv("DamageMultiplier")>=20)
+		   {
+		      A_Saw("", "", 3, "AxePuffs", 0, 120, 0,1);
+		      A_FireCustomMissile("AxeAttackStrong", 0, 0, 0, 0) ;	
+			}
+		   else
+		    {
+		      A_Saw("", "", 3, "AxePuffs", 0, 120, 0,1);
+		      A_FireCustomMissile("AxeAttack", 0, 0, 0, 0) ;
+			}
+		  }
+		}
+		
+	//	"####" A 0 A_JumpIfInventory("PowerStrength", 1, "StrongAttack")
+	//	"####" A 0 A_Saw("", "", 3, "AxePuffs", 0, 120, 0,1)
+	//	"####" A 0 A_FireCustomMissile("AxeAttack", 0, 0, 0, 0)
+		
+	EndSwing:
+		"####" C 1 A_SetPitch(pitch+2, SPF_INTERPOLATE)
+	//	"####" A 0 A_ReFire("Combo")
+		"####" D 1 A_SetPitch(pitch+4, SPF_INTERPOLATE)
+		"####" A 0 A_TakeInventory("HeyIHaveAnAxeBTW")
+		"####" E 1 A_SetPitch(pitch+2, SPF_INTERPOLATE)
+		TNT1 A 0 A_TakeInventory("DamageMultiplier",40)
+		TNT1 AA 1 A_SetPitch(pitch+1, SPF_INTERPOLATE)//originally 10,  now 
+		TNT1 A 2
+		TNT1 AA 1 A_SetPitch(pitch-1, SPF_INTERPOLATE)
+		TNT1 A 1 A_SetPitch(pitch-2, SPF_INTERPOLATE)
+		TNT1 A 1 A_SetPitch(pitch-4, SPF_INTERPOLATE)
+		TNT1 A 1 A_SetPitch(pitch-2, SPF_INTERPOLATE)
+		//TNT1 AAAAA 1 A_SetPitch(pitch-2, SPF_INTERPOLATE)
+		TNT1 A 0 A_GiveInventory("QuickSwitchSSG",1)
+		TNT1 A 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		NULL A 0 A_TakeInventory("QuickSwitchSSG",1)	
+		AXRS A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBS A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGS A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXES A 0
+		"####" A 1
+		"####" BCD 1 A_WeaponReady(WRF_NOBOB)
+		"####" A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"RedEndSwing")
+		"####" A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"BlueEndSwing")
+        "####" A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"GreenEndSwing")
+		Goto Ready
+	RedEndSwing:
+		"####" A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"BlueBloodReady")
+        "####" A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"GreenBloodReady")
+		Goto RedBloodReady
+	BlueEndSwing:
+        "####" A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"RedBloodReady")
+        "####" A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"GreenBloodReady")
+		Goto BlueBloodReady
+	GreenEndSwing:
+        "####" A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"RedBloodReady")
+		"####" A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"BlueBloodReady")
+		Goto GreenBloodReady
+	
+	HasHit:
+		AXRF A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBF A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGF A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEF A 0
+		"####" DE 1  A_SetPitch(pitch+3, SPF_INTERPOLATE)
+		"####" FTFE 1 A_SetPitch(pitch-3, SPF_INTERPOLATE)
+		"####" GH 1 A_JumpIfInventory("FiredPrimary", 1, "Hold")
+		"####" HHH 1 A_JumpIfInventory("FiredPrimary", 1, "Hold")
+		Goto Ready
+		
+	Combo:	
+		AXRF A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBF A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGF A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEF A 0
+		"####" F 1 A_SetPitch(pitch+1, SPF_INTERPOLATE)
+		"####" GHHHH 1
+		"####" GFC 1 A_SetPitch(pitch-1, SPF_INTERPOLATE)
+		"####" BA 1
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEG A 0
+		"####" LFDE 1
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"Hold.RedBlood")
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"Hold.BlueBlood")
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"Hold.GreenBlood")
+        AXEG A 0
+		Goto Hold
+	
+	StrongAttack:
+        "####" A 0
+		"####" A 0 A_Saw("", "", 10, "AxePuffs", 0, 120, 0,1)
+		"####" AA 0 A_FireCustomMissile("AxeAttack", 0, 0, 0, 0)
+		Goto EndSwing
+		
+	Steady:
+		TNT1 A 1
+		Goto Ready	
+	Spawn:
+		AXE9 A 1
+		AXE9 A -1
+		Stop
+			
+		
+		
+		
+		
+	//Alt Fire Mode
+	
+	
+    AltFire:
+		ASEG A 0
+		//TNT1 A 0 A_JumpIfInventory("AxeThrowAltFire",1,"AltFireThrow")
+		ASEG A 0 A_TakeInventory("AxeHit", 1)
+		ASRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"AltHold.RedBlood")
+        ASBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"AltHold.BlueBlood")
+        ASGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"AltHold.GreenBlood")
+        ASEG A 0
+		"####" X 0 A_PlaySound("foley/GLUpwardsToClose",10,0.7)
+        "####" ABCDE 1
+		Goto AltHold
+		
+	AltHold.BlueBlood:
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
+		"####" ABCDE 1
+		Goto AltHold
+	AltHold.RedBlood:
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
+		"####" ABCDE 1
+		Goto AltHold
+	AltHold.GreenBlood:
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		"####" ABCDE 1
+		Goto AltHold
+		
+	AltHold:
+		"####" A 0
+		"####" A 0 A_TakeInventory("AxeHit", 1)
+		"####" A 0 A_GiveInventory("DamageMultiplier",1)
+		//"####" E 1 A_WeaponOffset( frandom(CountInv("DamageMultiplier")/20, CountInv("DamageMultiplier")/-20), 32+frandom(CountInv("DamageMultiplier")/20, CountInv("DamageMultiplier")/-20) )
+		"####" E 1 //This one seems messier, but it does appear smoother...
+		{
+		if(CountInv("DamageMultiplier")>=20)
+		    {
+		    A_WeaponOffset(random(1,-1),32+random(1,-1));
+			Return State("");
+			}
+		Return State("");
+		}
+		"####" A 0 A_Refire
+		"####" D 0 
+		{
+		A_GiveInventory("HeyIHaveAnAxeBTW");
+		A_WeaponOffset(0,32);
+		}
+		ASRF A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        ASBF A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        ASGF A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        ASEF A 0
+		"####" A 1
+	    "####" B 1 
+		{
+		A_PlaySound("AXSWING2", 1);
+		if(CountInv("PowerStrength")==1)
+		   {
+		    if(CountInv("DamageMultiplier")>=20)
+		    {
+			 A_Saw("", "", 10, "AxePuffsHorizontal", 0, 120, 0,1);
+		     A_FireCustomMissile("AltAxeAttackBerserkStrong", 0, 0, 0, 0);
+		     A_FireCustomMissile("AltAxeAttackBerserkStrong", 8, 0, 0, 0);
+		     A_FireCustomMissile("AltAxeAttackBerserkStrong", -8, 0, 0, 0);  	
+			}
+		   else
+		    {
+		     A_Saw("", "", 10, "AxePuffsHorizontal", 0, 120, 0,1);
+		     A_FireCustomMissile("AltAxeAttackBerserk", 0, 0, 0, 0);
+		     A_FireCustomMissile("AltAxeAttackBerserk", 8, 0, 0, 0);
+		     A_FireCustomMissile("AltAxeAttackBerserk", -8, 0, 0, 0);  
+			}
+		  }
+		else
+		  {
+		  if(CountInv("DamageMultiplier")>=20)
+		   {
+		     A_Saw("", "", 3, "AxePuffsHorizontal", 0, 120, 0,1);
+		     A_FireCustomMissile("AltAxeAttackStrong", 0, 0, 0, 0);
+		     A_FireCustomMissile("AltAxeAttackStrong", 9, 0, 0, 0);
+		     A_FireCustomMissile("AltAxeAttackStrong", -9, 0, 0, 0);  	
+			}
+		   else
+		    {
+		     A_Saw("", "", 3, "AxePuffsHorizontal", 0, 120, 0,1);
+		     A_FireCustomMissile("AltAxeAttack", 0, 0, 0, 0);
+		     A_FireCustomMissile("AltAxeAttack", 9, 0, 0, 0);
+		     A_FireCustomMissile("AltAxeAttack", -9, 0, 0, 0);  
+			}
+		  }
+		}
+		
+	AltEndSwing:	
+		"####" C 1 A_SetAngle(angle+2, SPF_INTERPOLATE)
+		"####" D 1 A_SetAngle(angle+2, SPF_INTERPOLATE)
+		"####" E 1 A_SetAngle(angle+4, SPF_INTERPOLATE)
+		"####" FG 1 A_SetAngle(angle+4, SPF_INTERPOLATE) //+16
+		TNT1 A 5 A_TakeInventory("DamageMultiplier", 40)
+		TNT1 AAAAAAAA 1 A_SetAngle(angle-2, SPF_INTERPOLATE)
+		TNT1 A 0 A_GiveInventory("QuickSwitchSSG",1)
+		TNT1 AA 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		NULL A 0 A_TakeInventory("QuickSwitchSSG",1)
+		AXRS A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBS A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGS A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXES A 0
+		"####" A 1
+		"####" BCD 1 A_WeaponReady(WRF_NOBOB)
+		"####" A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"AltRedEndSwing")
+		"####" A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"AltBlueEndSwing")
+        "####" A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"AltGreenEndSwing")
+		Goto Ready
+	AltRedEndSwing:
+		"####" A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"BlueBloodReady")
+        "####" A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"GreenBloodReady")
+		Goto RedBloodReady
+	AltBlueEndSwing:
+        "####" A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"RedBloodReady")
+        "####" A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"GreenBloodReady")
+		Goto BlueBloodReady
+	AltGreenEndSwing:
+        "####" A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"RedBloodReady")
+		"####" A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"BlueBloodReady")
+		Goto GreenBloodReady
+		
+			
+	AltStrongAttack:
+		"####" A 0 A_Saw("", "", 10, "AxePuffsHorizontal", 0, 120, 0,1)
+		"####" AA 0 A_FireCustomMissile("AltAxeAttack", 0, 0, 0, 0)
+		"####" AA 0 A_FireCustomMissile("AltAxeAttack", 20, 0, 0, 0)
+		"####" AA 0 A_FireCustomMissile("AltAxeAttack", -20, 0, 0, 0)
+		Goto AltEndSwing
+		
+	DualWield:
+//	NULL A 0 A_JumpIfInventory("AxeThrowAltFire",1,"BackToNormal")
+	//NULL A 0 A_GiveInventory("AxeThrowAltFire",1)
+  ////  NULL A 0 A_Print("Alt Fire: Throw",1)
+	//TNT1 A 0 A_TakeInventory("StartDualWield", 1)
+	//Goto Ready
+	//BackToNormal:
+	//NULL A 0 A_TakeInventory("AxeThrowAltFire",1)
+	//NULL A 0 A_Print("Alt Fire: Horizontal Swing",1)
+	//TNT1 A 0 A_TakeInventory("StartDualWield", 1)
+	//Goto Ready
+	
+	AltFireThrow:
+		ASEG A 0 A_takeinventory("startdualwield",1)
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEG A 0
+        "####" A 0
+		"####" A 0 A_SetCrosshair(0)
+		"####" X 0 A_PlaySound("foley/GLUpwardsToClose",10,0.7)
+        "####" ABCDE 1
+	AltThrowHold:
+		AXRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEG A 0
+		"####" E 1
+		"####" A 0 A_jumpifinventory("holdingdual",1,"altthrowhold")
+		"####" FL 1 //A_GiveInventory("HeyIHaveAnAxeBTW")
+		AXRF A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+        AXBF A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+        AXGF A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,2)
+        AXEF A 0
+		"####" A 1
+		TNT1 A 0 A_SetCrosshair(41)
+	    AXEG A 0 A_PlaySound("AXSWING3", 1)
+		AXEG A 0 A_JumpIfInventory("PowerStrength", 1, "StrongThrow")
+		AXEG A 0 A_FireCustomMissile("ThrowedAxe", 0, 0, 0, 0)
+		ContinueAltThrow:
+		TNT1 A 0 A_TakeInventory("AxeCounter",1)
+		ASEG A 0 A_takeinventory("startdualwield",1)
+		AXEZ ABC 1
+		{
+		A_SetAngle(Angle+2, SPF_INTERPOLATE);
+		A_SetPitch(Pitch+1, SPF_INTERPOLATE);
+		}
+		AXEZ D 1
+		{
+		A_SetAngle(Angle+1, SPF_INTERPOLATE);
+		A_SetPitch(Pitch+0.5, SPF_INTERPOLATE);
+		}
+		AXEZ E 1
+		{
+		A_SetAngle(Angle+0.5, SPF_INTERPOLATE); //7,5
+		A_SetPitch(Pitch+0.2, SPF_INTERPOLATE); //3,7
+		}
+		AXEZ E 2
+		AXEZ E 1
+		{
+		A_SetAngle(Angle-0.5, SPF_INTERPOLATE);
+		A_SetPitch(Pitch-0.2, SPF_INTERPOLATE);
+		}
+		AXEZ EEF 1
+		{
+		A_SetAngle(Angle-2, SPF_INTERPOLATE);
+		A_SetPitch(Pitch-1, SPF_INTERPOLATE);
+		}
+		AXEZ G 1
+		{
+		A_SetAngle(Angle-1, SPF_INTERPOLATE);
+		A_SetPitch(Pitch-0.5, SPF_INTERPOLATE);
+		}
+		AXEZ HI 1
+		TNT1 A 0
+		TNT1 A 1
+		TNT1 A 0 
+		{
+		If(CountInv("AxeCounter")==0)
+		  {
+		  A_GiveInventory("SwitchingDualModes",1);
+		  A_SelectWeapon("Melee_Attacks");
+		  }
+		}
+		TNT1 A 0 A_WeaponReady
+		//TNT1 A 0 A_TakeInventory("BrutalAxe", 1)
+		Goto SelectAnimation
+		
+	StrongThrow:	
+		AXEG A 0 A_FireCustomMissile("ThrowedAxeStrong", 0, 0, 0, 0)
+		Goto ContinueAltThrow	
+		
+	}
+}
+
+
+
+
+ACTOR AxeAttack: FastProjectile
+{
+	Radius 4
+	Height 14
+	DamageType Saw
+	+MISSILE
+	+FORCEXYBILLBOARD
+	+FORCERADIUSDMG
+	+BLOODSPLATTER
+	+FORCEPAIN
+	RenderStyle Add
+	Alpha 0.6
+    Damage (random(70,70))
+    Speed 50
+	SeeSound "none"
+	DeathSound "none"
+	//decal "AxeVertical"
+	Scale 0.01
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 1 BRIGHT
+		Stop
+	Death:
+				AXEG A 0
+				TNT1 AB 0 bright
+				TNT1 A 0 A_giveToTarget("AxeHit", 1)
+				AXEG A 0 Radius_Quake (2, 6, 0, 5, 0)//(intensity, duration, damrad, tremrad, tid)
+				AXEG A 0 A_CheckFloor("SpawnFloor")
+				AXEG A 0 A_SpawnItem ("Sparks", 0)
+				AXEG A 0 A_PlaySound("AXECLN", 6)
+				AXEG A 0 A_ALertMonsters(400)
+				
+				TNT1 AAAAAAAAAAAAAAAA 0 A_CustomMissile ("SparkX", 2, 0, random (0, 360), 2, random (30, 170))
+				AXEG A 0 A_JumpIfInTargetInventory("PowerStrength", 1, "Berserk")
+				Stop
+				
+	
+	SpawnFloor:
+	AXEG A 0
+	AXEG A 0 Acs_namedexecutealways("BDCheckFloorType", 0, 0, 0, 0)//Check if is under a liquid
+	TNT1 A 2
+	AXEG A 0 A_ALertMonsters(400)
+	AXEG A 0 A_JumpIfInventory("IsOverWater", 1, "SpawnWater")
+	AXEG A 0 A_JumpIfInventory("IsOverNukage", 1, "SpawnNukage")
+	AXEG A 0 A_JumpIfInventory("IsOverSlime", 1, "SpawnSlime")
+	AXEG A 0 A_JumpIfInventory("IsOverBlood", 1, "SpawnBlood")
+	AXEG A 0 A_JumpIfInventory("IsOverLava", 1, "SpawnLava")
+	AXEG A 0 A_JumpIfInventory("IsOverGrass", 1, "SpawnDirt")
+	AXEG A 0 A_JumpIfInventory("IsOverSand", 1, "SpawnSand")
+	
+	AXEG A 0 A_PlaySound("AXECLN", 6)
+	PUFF A 0 bright A_PlaySound("ricochet/hit")
+	AXEG A 0 A_SpawnItem ("YellowFlareSmall", 0)
+	AXEG A 0 A_SetScale(-0.6)
+    AXEG A 0 A_Jump (132, 15)
+    FX58 ABCD 1 BRIGHT 
+	AXEG A 0 A_CustomMissile("OldschoolRocketSmokeTrail2Bigger", 2, 0, random (0, 360), 2, random (0, 360))
+	FX58 EFGHIJ 1 bright
+    Stop
+    TNT1 AAAAA 0
+    FX57 ABCD 1 BRIGHT 
+	AXEG A 0 A_CustomMissile("OldschoolRocketSmokeTrail2Bigger", 2, 0, random (0, 360), 2, random (0, 360))
+	FX57 EFGHIJ 1 bright
+    stop
+	
+	SpawnWater:
+	AXEG A 0
+	TNT1 A 0 A_PlaySound("bigspl1", 1)
+	TNT1 AAAAA 0 A_CustomMissile ("WaterParticleXFAster", 8, 0, random (0, 360), 2, random (30, 160))
+	TNT1 AAAAA 0 A_CustomMissile ("WaterParticleXSuperFast", 24, 0, random (0, 360), 2, random (30, 160))
+	AXEG A 0 A_SpawnItem("WaterSplashWaves")
+	AXEG A 0 A_SetScale(0.5, 0.5)
+	SPHW ABCDE 3
+	Stop
+	
+	SpawnSlime:
+	AXEG A 0
+	TNT1 A 0 A_PlaySound("bigspl1", 1)
+	TNT1 AAAAA 0 A_CustomMissile ("SLimeParticleXFAster", 8, 0, random (0, 360), 2, random (30, 160))
+	TNT1 AAAAA 0 A_CustomMissile ("SlimeParticleXFAster", 24, 0, random (0, 360), 2, random (30, 160))
+	AXEG A 0 A_SpawnItem("SlimeSplashWaves")
+	AXEG A 0 A_SetScale(0.5, 0.5)
+	SPHB ABCDE 3
+	Stop
+	
+	
+	SpawnNukage:
+	AXEG A 0
+	TNT1 A 0 A_PlaySound("bigspl1", 1)
+	TNT1 AAAAA 0 A_CustomMissile ("nukageParticleXFAster", 8, 0, random (0, 360), 2, random (30, 160))
+	TNT1 AAAAA 0 A_CustomMissile ("nukageParticleXFAster", 24, 0, random (0, 360), 2, random (30, 160))
+	AXEG A 0 A_SpawnItem("NukageSplashWaves")
+	AXEG A 0 A_SetScale(0.5, 0.5)
+	SPHG ABCDE 3
+	Stop
+	
+	SpawnBlood:
+	AXEG A 0
+	TNT1 A 0 A_PlaySound("bigspl1", 1)
+	TNT1 AAAAA 0 A_CustomMissile ("BloodParticleXFAster", 8, 0, random (0, 360), 2, random (30, 160))
+	TNT1 AAAAA 0 A_CustomMissile ("BloodParticleXFAster", 24, 0, random (0, 360), 2, random (30, 160))
+	AXEG A 0 A_SpawnItem("BloodSplashWaves")
+	AXEG A 0 A_SetScale(0.5, 0.5)
+	SPHR ABCDE 3
+	Stop
+	
+	SpawnLava:
+	AXEG A 0
+	AXEG A 0 A_CustomMissile ("OldschoolRocketSmokeTrailDarker", 12, 0, random (160, 210), 2, random (10, 90))
+	AXEG A 0 A_SpawnItemEx("TinyBurningPiece3", random (-5, 5), random (-5, 5))
+	TNT1 AAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 10, 0, random (0, 180), 2, random (10, 90))
+	AXEG A 0 A_SetScale(0.5, 0.5)
+	INFE ABCDEFGHIJKLMNOPQR 1 BRIGHT 
+	INFE ST 1 BRIGHT A_CustomMissile ("OldschoolRocketSmokeTrailDarker", 32, 0, random (160, 210), 2, random (10, 90))
+	TNT1 AAA 4 A_CustomMissile ("OldschoolRocketSmokeTrailDarker", 14, 0, random (160, 210), 2, random (10, 90))
+	Stop
+	
+	
+	SpawnDirt:
+	AXEG A 0
+	AXEG A 0 A_CustomMissile ("BrownCloudSmallLong", 0, 0, random (0, 360), 2, random (10, 150))
+	TNT1 AA 0 A_CustomMissile ("DirtChunk3", 0, 0, random (0, 360), 2, random (30, 150))
+	TNT1 AA 0 A_CustomMissile ("DirtChunk4", 0, 0, random (0, 360), 2, random (30, 150))
+	AXEG A 0 A_CustomMissile ("MudDustSmall", 4, 0, random (0, 360), 2, random (30, 150))
+	AXEG A 0 A_SpawnItem("DirtRicochet")
+	Stop
+	
+	
+	SpawnSand:
+	AXEG A 0
+	AXEG A 0 A_CustomMissile ("SandCloudSmallLong", 0, 0, random (0, 360), 2, random (10, 90))
+	AXEG A 0 A_CustomMissile ("SandCloudSmall", 0, 0, random (0, 360), 2, random (10, 90))
+	AXEG A 0 A_CustomMissile ("SandDustSmall", 4, 0, random (0, 360), 2, random (30, 150))
+	Stop
+	
+	
+	
+	
+	XDeath:
+	Melee:
+	Crash:
+			AXEG A 0
+			TNT1 A 0 A_giveToTarget("AxeHit", 1)
+			PUFF A 0 A_PlaySound("player/cyborg/fist", 3)
+			AXEG A 0 A_PlaySound("AXEHIT", 6)
+			AXEG A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			AXEG A 0 Radius_Quake (2, 6, 0, 5, 0)//(intensity, duration, damrad, tremrad, tid)
+			AXEG A 0 A_JumpIfInTargetInventory("PowerStrength", 1, "Berserk")
+			TNT1 A 10
+			Stop
+			
+	Berserk:
+		TNT1 A 1
+		AXEG A 0 A_explode(90, 5, 0)
+		TNT1 A 10
+		Stop
+	
+	}
+}
+
+ACTOR AxeAttackStrong: AxeAttack
+{
+Damage (random(100,100))
+}
+
+ACTOR AxeAttackBerserk: AxeAttack
+{
+Damage (random(120,120))
+}
+ACTOR AxeAttackBerserkStrong: AxeAttack
+{
+Damage (random(160,160))
+}
+
+
+Actor AltAxeAttack: AxeAttack
+{
+Radius 12
+Height 2
+Damagetype "Cut"
+//+RIPPER
+//decal "AxeHorizontal"
+Speed 40
+Damage (random(50,50))
+}
+Actor AltAxeAttackStrong: AltAxeAttack
+{
+Radius 12
+Height 2
+Damagetype "Cut"
+//+RIPPER
+//decal "AxeHorizontal"
+//Damage (random(10, 10))
+Damage (random(60, 60))
+}
+
+Actor AltAxeAttackBerserk: AltAxeAttack
+{
+Radius 12
+Height 2
+Damagetype "Cut"
+//+RIPPER
+//decal "AxeHorizontal"
+Damage (random(70, 70))
+}
+Actor AltAxeAttackBerserkStrong: AltAxeAttack
+{
+Radius 12
+Height 2
+Damagetype "Cut"
++RIPPER
+//decal "AxeHorizontal"
+Damage (random(20, 20))
+}
+
+
+
+Actor AltAxeAttackHugeDamage: AxeAttack
+{
+Radius 12
+Height 2
+Damagetype "Cut"
++RIPPER
+//decal "SawHorizontal"
+Damage (random(90,95))
+}
+
+ACTOR AxePuffs: HitPuff
+{
+  renderstyle Translucent
+scale 0.15
+alpha 0.7
+Radius 20
+damagetype Saw
+decal "AxeVertical"
+  +NOBLOCKMAP
+  +NOGRAVITY
+  +NOEXTREMEDEATH
+  +FORCEXYBILLBOARD
+  +BLOODSPLATTER
+  states
+  {
+Spawn:
+Death:
+XDeath:
+Melee:
+		
+		TNT1 A 20
+		
+Stop	
+  }
+}
+ACTOR AxePuffsHorizontal: AxePuffs { decal "AxeHorizontal" }
+
+
+
+
+
+
+
+ACTOR ThrowedAxe
+{
+	Radius 8
+	Height 8
+	Speed 45
+	Damage (random(100, 100))
+	DamageType Saw
+	+MISSILE
+	+FORCEXYBILLBOARD
+	-NOGRAVITY
+	+NOEXTREMEDEATH
+	+SKYEXPLODE
+	+NOEXTREMEDEATH
+	+THRUSPECIES
+	+BLOODSPLATTER
+	+thruactors
+	Species "Marines"
+	Decal "Cracksmol"
+	Gravity 0.9
+	scale 0.5
+	BounceType Doom
+	BounceCount 2
+	BounceFactor 0.6
+	WallBounceFactor 0.3
+	//+ripper
+	//ripperlevel 666
+	//SeeSound"AXEWOOSH"
+	//BounceSound"AXECLN"
+	//DeathSound"AXECLN"
+	+USEBOUNCESTATE
+	+EXPLODEONWATER
+	Species "Marines"
+	+THRUSPECIES
+	+MTHRUSPECIES
+	Obituary "%o was hunted down by %k's axe."
+	States
+	{
+	Spawn:
+		AXET A 2 
+		{
+		A_PlaySound("swoosh1");
+		A_explode(70,32,0,0,15,0,0,"none","Saw");
+		//A_custommissile("axeattack");
+		}
+		AXET B 2 A_explode(70,64,0,0,32,0,0,"none","Saw")
+		AXET C 2 {
+		A_PlaySound("swoosh1");
+		A_explode(70,32,0,0,15,0,0,"none","Saw");
+		//A_custommissile("axeattack");
+		}
+		AXET D 2 A_explode(70,32,0,0,15,0,0,"none","Saw")
+		AXET E 2 {
+		A_PlaySound("swoosh1");
+		A_explode(70,64,0,0,32,0,0,"none","Saw");
+		//A_custommissile("axeattack");
+		}
+		AXET F 2 A_explode(70,32,0,0,15,0,0,"none","Saw")
+		AXET G 2 {
+		A_PlaySound("swoosh1");
+		A_explode(70,64,0,0,32,0,0,"none","Saw");
+		//A_custommissile("axeattack");
+		}
+		AXET H 2 A_explode(70,32,0,0,15,0,0,"none","Saw")
+		Loop
+		
+	Bounce:
+	AXEG A 0 A_PlaySound("AXECLN", 6)
+	AXEG A 0 A_SpawnItem ("Sparks", 0)
+	Goto Spawn
+	
+	Death:	
+	   //AXEG A 0 A_CheckFloor("SpawnFloor")
+		AXEG A 0 A_SpawnItem ("Sparks", 0)
+		TNT1 A 0 A_StopSound
+		AXEG A 0 A_PlaySound("AXECLN", 6)
+	XDeath:
+		TNT1 A 0
+		TNT1 A 0 A_ALertMonsters(200)
+		TNT1 A 0 A_spawnItem("AxeSpawner")
+		Stop
+	SpawnFloor:
+	AXEG A 0
+	AXEG A 0 Acs_namedexecutealways("BDCheckFloorType", 0, 0, 0, 0)//Check if is under a liquid
+	TNT1 A 2
+	AXEG A 0 A_ALertMonsters(400)
+	AXEG A 0 A_JumpIfInventory("IsOverWater", 1, "SpawnWater")
+	AXEG A 0 A_JumpIfInventory("IsOverNukage", 1, "SpawnNukage")
+	AXEG A 0 A_JumpIfInventory("IsOverSlime", 1, "SpawnSlime")
+	AXEG A 0 A_JumpIfInventory("IsOverBlood", 1, "SpawnBlood")
+	AXEG A 0 A_JumpIfInventory("IsOverLava", 1, "SpawnLava")
+	AXEG A 0 A_JumpIfInventory("IsOverGrass", 1, "SpawnDirt")
+	AXEG A 0 A_JumpIfInventory("IsOverSand", 1, "SpawnSand")
+	AXEG A 0 A_PlaySound("AXECLN", 6)
+	PUFF A 0 bright A_PlaySound("ricochet/hit")
+	AXEG A 0 A_SpawnItem ("YellowFlareSmall", 0)
+	AXEG A 0 A_SetScale(-0.6)
+    AXEG A 0 A_Jump (132, 15)
+    FX58 ABCD 1 BRIGHT 
+	AXEG A 0 A_CustomMissile("OldschoolRocketSmokeTrail2Bigger", 2, 0, random (0, 360), 2, random (0, 360))
+	FX58 EFGHIJ 1 bright
+    Stop
+    TNT1 AAAAA 0
+    FX57 ABCD 1 BRIGHT 
+	AXEG A 0 A_CustomMissile("OldschoolRocketSmokeTrail2Bigger", 2, 0, random (0, 360), 2, random (0, 360))
+	FX57 EFGHIJ 1 bright
+    stop
+	SpawnWater:
+	AXEG A 0
+	TNT1 A 0 A_PlaySound("bigspl1", 1)
+	TNT1 AAAAA 0 A_CustomMissile ("WaterParticleXFAster", 8, 0, random (0, 360), 2, random (30, 160))
+	TNT1 AAAAA 0 A_CustomMissile ("WaterParticleXSuperFast", 24, 0, random (0, 360), 2, random (30, 160))
+	AXEG A 0 A_SpawnItem("WaterSplashWaves")
+	AXEG A 0 A_SetScale(0.5, 0.5)
+	SPHW ABCDE 3
+	Stop
+	SpawnSlime:
+	AXEG A 0
+	TNT1 A 0 A_PlaySound("bigspl1", 1)
+	TNT1 AAAAA 0 A_CustomMissile ("SLimeParticleXFAster", 8, 0, random (0, 360), 2, random (30, 160))
+	TNT1 AAAAA 0 A_CustomMissile ("SlimeParticleXFAster", 24, 0, random (0, 360), 2, random (30, 160))
+	AXEG A 0 A_SpawnItem("SlimeSplashWaves")
+	AXEG A 0 A_SetScale(0.5, 0.5)
+	SPHB ABCDE 3
+	Stop
+	SpawnNukage:
+	AXEG A 0
+	TNT1 A 0 A_PlaySound("bigspl1", 1)
+	TNT1 AAAAA 0 A_CustomMissile ("nukageParticleXFAster", 8, 0, random (0, 360), 2, random (30, 160))
+	TNT1 AAAAA 0 A_CustomMissile ("nukageParticleXFAster", 24, 0, random (0, 360), 2, random (30, 160))
+	AXEG A 0 A_SpawnItem("NukageSplashWaves")
+	AXEG A 0 A_SetScale(0.5, 0.5)
+	SPHG ABCDE 3
+	Stop	
+	SpawnBlood:
+	AXEG A 0
+	TNT1 A 0 A_PlaySound("bigspl1", 1)
+	TNT1 AAAAA 0 A_CustomMissile ("BloodParticleXFAster", 8, 0, random (0, 360), 2, random (30, 160))
+	TNT1 AAAAA 0 A_CustomMissile ("BloodParticleXFAster", 24, 0, random (0, 360), 2, random (30, 160))
+	AXEG A 0 A_SpawnItem("BloodSplashWaves")
+	AXEG A 0 A_SetScale(0.5, 0.5)
+	SPHR ABCDE 3
+	Stop	
+	SpawnLava:
+	AXEG A 0
+	AXEG A 0 A_CustomMissile ("OldschoolRocketSmokeTrailDarker", 12, 0, random (160, 210), 2, random (10, 90))
+	AXEG A 0 A_SpawnItemEx("TinyBurningPiece3", random (-5, 5), random (-5, 5))
+	TNT1 AAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 10, 0, random (0, 180), 2, random (10, 90))
+	AXEG A 0 A_SetScale(0.5, 0.5)
+	INFE ABCDEFGHIJKLMNOPQR 1 BRIGHT 
+	INFE ST 1 BRIGHT A_CustomMissile ("OldschoolRocketSmokeTrailDarker", 32, 0, random (160, 210), 2, random (10, 90))
+	TNT1 AAA 4 A_CustomMissile ("OldschoolRocketSmokeTrailDarker", 14, 0, random (160, 210), 2, random (10, 90))
+	Stop
+	SpawnDirt:
+	AXEG A 0
+	AXEG A 0 A_CustomMissile ("BrownCloudSmallLong", 0, 0, random (0, 360), 2, random (10, 150))
+	TNT1 AA 0 A_CustomMissile ("DirtChunk3", 0, 0, random (0, 360), 2, random (30, 150))
+	TNT1 AA 0 A_CustomMissile ("DirtChunk4", 0, 0, random (0, 360), 2, random (30, 150))
+	AXEG A 0 A_CustomMissile ("MudDustSmall", 4, 0, random (0, 360), 2, random (30, 150))
+	AXEG A 0 A_SpawnItem("DirtRicochet")
+	Stop	
+	SpawnSand:
+	AXEG A 0
+	AXEG A 0 A_CustomMissile ("SandCloudSmallLong", 0, 0, random (0, 360), 2, random (10, 90))
+	AXEG A 0 A_CustomMissile ("SandCloudSmall", 0, 0, random (0, 360), 2, random (10, 90))
+	AXEG A 0 A_CustomMissile ("SandDustSmall", 4, 0, random (0, 360), 2, random (30, 150))
+	Stop	
+		
+	}
+}
+
+
+ACTOR ThrowedAxeStrong: ThrowedAxe
+{
+	+RIPPER
+	Damagetype "Saw"
+	Damage (random(35, 35))
+	Speed 60
+}
+
+
+ 
+ACTOR BrutalAxeOnWall: CustomInventory
+{
+ scale 0.5
+ +NOGRAVITY
+ +FLOAT
+    States
+    {
+
+	 Spawn:
+		AXET A 1
+		AXET A -1
+		Stop
+	Pickup:
+	    TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "Purist")
+	PickupNormal:	
+		TNT1 A 0 A_GiveInventory("BrutalAxe", 1)
+		Stop
+	Purist:
+	    TNT1 A 0 A_GiveInventory("Clip2", 10)
+		Stop
+    }
+}

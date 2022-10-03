@@ -1,0 +1,226 @@
+decal BloodSplat001nukage
+{
+pic BSPLNEW
+shade "11 ff 00"
+x-scale 0.35
+y-scale 0.35
+randomflipx
+randomflipy
+fullbright
+//translucent 0.9
+//lowerdecal BrutalBloodSmearSmall
+}
+
+decal BloodSplat002nukage
+{
+pic BSPLNEW2
+shade "11 ff 00"
+x-scale 0.35
+y-scale 0.35
+randomflipx
+randomflipy
+fullbright
+//translucent 0.9
+//lowerdecal BrutalBloodSmearSmall
+}
+
+
+decal BloodSplat003nukage
+{
+pic BSPLNEW3
+shade "11 ff 00"
+x-scale 0.35
+y-scale 0.35
+randomflipx
+randomflipy
+fullbright
+//translucent 0.9
+//lowerdecal BrutalBloodSmearSmall
+}
+
+decalgroup BloodSplatnukage
+{
+BloodSplat001nukage 6
+BloodSplat002nukage 6
+BloodSplat003nukage 6
+}
+
+
+
+
+
+
+
+decal BrutalBloodSmear1nukage
+{
+	pic BSPLNEW4
+	x-scale 0.4
+	y-scale 0.4
+	//translucent 0.9
+	shade "11 ff 00"
+	randomflipx
+	animator BrutalBloodSmearer
+	fullbright
+}
+
+decal BrutalBloodSmear2nukage
+{
+	pic BSPLNEW5
+	x-scale 0.4
+	y-scale 0.4
+	randomflipx
+	//translucent 0.9
+	shade "11 ff 00"
+	animator BrutalBloodSmearer
+	fullbright
+}
+
+decalgroup BrutalBloodSmearnukage
+{
+	BrutalBloodSmear1nukage	1
+	BrutalBloodSmear2nukage	1
+}
+
+
+
+decal BrutalBloodSmearSmall1nukage
+{
+	pic BSPLNEW8
+	x-scale 0.355
+	y-scale 0.355
+	randomflipx
+	//translucent 0.9
+	shade "11 ff 00"
+	animator BrutalBloodSmearerSmall
+	fullbright
+}
+
+decal BrutalBloodSmearSmall2nukage
+{
+	pic BSPLNEW7
+	x-scale 0.35
+	y-scale 0.35
+	randomflipx
+	//translucent 0.9
+	shade "11 ff 00"
+	animator BrutalBloodSmearerSmall
+	fullbright
+}
+
+decalgroup BrutalBloodSmearSmall
+{
+	BrutalBloodSmearSmall1nukage	1
+	BrutalBloodSmearSmall2nukage	1
+}
+
+
+
+/// +++++++++++++++++////
+/// nukage Blood
+/// +++++++++++++++++////
+
+decal BrutalBloodSplat01nukage
+{
+pic BSPLNEW
+x-scale 0.355
+y-scale 0.355
+randomflipx
+randomflipy
+shade "11 ff 00"
+//translucent 0.9
+fullbright
+}
+
+decal BrutalBloodSplat02nukage
+{
+pic BSPLNEW2
+x-scale 0.355
+y-scale 0.355
+randomflipx
+randomflipy
+shade "11 ff 00"
+//translucent 0.9
+fullbright
+}
+
+
+
+decalgroup BrutalBloodSplatnukage
+{
+BrutalBloodSplat01nukage 6
+BrutalBloodSplat02nukage 6
+}
+
+
+decalgroup BrutalBloodnukage
+{
+BrutalBloodSplat01nukage 6
+BrutalBloodSplat02nukage 6
+}
+
+
+
+
+decal BrutalBloodSuper01nukage
+{
+pic BSPLBIG1
+x-scale 0.45
+y-scale 0.45
+randomflipx
+randomflipy
+shade "11 ff 00"
+//translucent 0.9
+lowerdecal BrutalBloodSmearnukage
+fullbright
+}
+
+decal BrutalBloodSuper02nukage
+{
+pic BSPLBIG2
+x-scale 0.45
+y-scale 0.45
+randomflipx
+shade "11 ff 00"
+//translucent 0.9
+lowerdecal BrutalBloodSmearnukage
+fullbright
+}
+
+decalgroup BrutalBloodSupernukage
+{
+BrutalBloodSuper01nukage 6
+BrutalBloodSuper02nukage 6
+}
+
+//Add this to decaldef.bloodsplatters
+
+decal BrutalBloodGiant01nukage
+{
+pic BSPLBIG1
+x-scale 1.0
+y-scale 1.0
+randomflipx
+randomflipy
+shade "11 ff 00"
+//translucent 0.9
+lowerdecal BrutalBloodSmearnukage
+fullbright
+}
+
+decal BrutalBloodGiant02nukage
+{
+pic BSPLBIG2
+x-scale 1.0
+y-scale 1.0
+randomflipx
+shade "11 ff 00"
+//translucent 0.9
+lowerdecal BrutalBloodSmearnukage
+fullbright
+}
+
+decalgroup BrutalBloodGiantnukage
+{
+BrutalBloodGiant01nukage 6
+BrutalBloodGiant02nukage 6
+}

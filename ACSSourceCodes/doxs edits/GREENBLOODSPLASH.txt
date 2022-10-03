@@ -1,0 +1,279 @@
+// Blood dripping on screen by Sergeant_Mark_IV
+// Dripping blood graphics can be found inside Bleed.wad
+
+#library "greenbloodsplash"
+#include "zcommon.acs"
+
+script "ScreenGreenBlood0" (void)
+{
+if	(GetCvar("bd_ScreenFX") == 0)
+{
+
+SetHudSize(400,250,1);
+
+	delay(1);
+	setfont("GBLD1");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 73.1, 71.1, 0.3);
+	delay(4);
+	setfont("GBLD2");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 73.1, 71.1, 0.3);
+	delay(4);
+	setfont("GBLD3");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 73.1, 71.1, 0.3);
+	delay(4);
+	setfont("GBLD4");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 73.1, 71.1, 0.3);
+	delay(4);
+	setfont("GBLD5");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 73.1, 71.1, 0.3);
+	delay(4);
+	setfont("GBLD6");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 73.1, 71.1, 0.3);
+	delay(4);
+	setfont("GBLD7");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 73.1, 71.1, 0.3);
+	delay(4);
+	setfont("GBLD8");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 73.1, 71.1, 0.3);
+	delay(4);
+	setfont("GBLD9");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 73.1, 71.1, 0.3);
+	delay(4);
+	setfont("GBLD10");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 73.1, 71.1, 0.3);
+	delay(4);
+	setfont("GBLD11");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 73.1, 71.1, 0.3);
+	delay(4);
+	}
+	if	(GetCvar("bd_ScreenFX") == 1)
+	{
+		ACS_Execute(682, 0, 0, 0, 0);
+	}
+	
+}
+
+script "ScreenGreenBlood1" (void)
+{
+if	(GetCvar("bd_ScreenFX") == 0)
+{
+
+SetHudSize(400,250,1);
+
+	delay(2);
+	setfont("GBLD1");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 0.9, 30.9, 0.3);
+	delay(4);
+	setfont("GBLD2");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 0.9, 30.9, 0.3);
+	delay(4);
+	setfont("GBLD3");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 0.9, 30.9, 0.3);
+	delay(4);
+	setfont("GBLD4");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 0.9, 30.9, 0.3);
+	delay(4);
+	setfont("GBLD5");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 0.9, 30.9, 0.3);
+	delay(4);
+	setfont("GBLD6");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 0.9, 30.9, 0.3);
+	delay(4);
+	setfont("GBLD7");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 0.9, 30.9, 0.3);
+	delay(4);
+	setfont("GBLD8");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 0.9, 30.9, 0.3);
+	delay(4);
+	setfont("GBLD9");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 0.9, 30.9, 0.3);
+	delay(4);
+	setfont("GBLD10");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 0.9, 30.9, 0.3);
+	delay(4);
+	setfont("GBLD11");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 0.9, 30.9, 0.3);
+	delay(4);
+	}
+}
+
+script "ScreenGreenBlood2" (void)
+{
+if	(GetCvar("bd_ScreenFX") == 0)
+{
+
+SetHudSize(400,250,1);
+
+	delay(3);
+	setfont("GBLD1");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 263.1, 81.1, 0.2);
+	delay(4);
+	setfont("GBLD2");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 263.1, 81.1, 0.3);
+	delay(4);
+	setfont("GBLD3");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 263.1, 81.1, 0.3);
+	delay(4);
+	setfont("GBLD4");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 263.1, 81.1, 0.3);
+	delay(4);
+	setfont("GBLD5");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 263.1, 81.1, 0.3);
+	delay(4);
+	setfont("GBLD6");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 263.1, 81.1, 0.3);
+	delay(4);
+	setfont("GBLD7");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 263.9, 81.9, 0.3);
+	delay(4);
+	setfont("GBLD8");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 263.9, 81.9, 0.3);
+	delay(4);
+	setfont("GBLD9");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 263.9, 81.9, 0.3);
+	delay(4);
+	setfont("GBLD10");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 263.9, 81.9, 0.3);
+	delay(4);
+	setfont("GBLD11");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 263.9, 81.9, 0.3);
+	delay(4);
+	}
+}
+
+script "ScreenGreenBlood3" (void)
+{
+if	(GetCvar("bd_ScreenFX") == 0)
+{
+
+SetHudSize(400,250,1);
+
+	delay(4);
+	setfont("GBLD1");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 123.1, -11.1, 0.2);
+	delay(4);
+	setfont("GBLD2");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 123.1, -11.1, 0.3);
+	delay(4);
+	setfont("GBLD3");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 123.1, -11.1, 0.3);
+	delay(4);
+	setfont("GBLD4");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 123.1, -11.1, 0.3);
+	delay(4);
+	setfont("GBLD5");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 123.1, -11.1, 0.3);
+	delay(4);
+	setfont("GBLD6");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 123.1, -11.1, 0.3);
+	delay(4);
+	setfont("GBLD7");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 123.9, -11.9, 0.3);
+	delay(4);
+	setfont("GBLD8");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 123.9, -11.9, 0.3);
+	delay(4);
+	setfont("GBLD9");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 123.9, -11.9, 0.3);
+	delay(4);
+	setfont("GBLD10");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 123.9, -11.9, 0.3);
+	delay(4);
+	setfont("GBLD11");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 123.9, -11.9, 0.3);
+	delay(4);
+	}
+}
+
+
+
+script "ScreenGreenBlood4" (void)
+{
+if	(GetCvar("bd_ScreenFX") == 0)
+{
+
+SetHudSize(400,250,1);
+
+	delay(4);
+	setfont("GBLD1");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.1, 101.1, 0.2);
+	delay(4);
+	setfont("GBLD2");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.1, 101.1, 0.3);
+	delay(4);
+	setfont("GBLD3");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.1, 101.1, 0.3);
+	delay(4);
+	setfont("GBLD4");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.1, 101.1, 0.3);
+	delay(4);
+	setfont("GBLD5");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.1, 101.1, 0.3);
+	delay(4);
+	setfont("GBLD6");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.1, 101.1, 0.3);
+	delay(4);
+	setfont("GBLD7");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.9, 101.9, 0.3);
+	delay(4);
+	setfont("GBLD8");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.9, 101.9, 0.3);
+	delay(4);
+	setfont("GBLD9");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.9, 101.9, 0.3);
+	delay(4);
+	setfont("GBLD10");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.9, 101.9, 0.3);
+	delay(4);
+	setfont("GBLD11");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.9, 101.9, 0.3);
+	delay(4);
+	}
+}
+
+
+script "ScreenGreenBlood5" (void)
+{
+if	(GetCvar("bd_ScreenFX") == 0)
+{
+
+SetHudSize(400,250,1);
+
+	delay(4);
+	setfont("GBLD1");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.1, 11.1, 0.2);
+	delay(4);
+	setfont("GBLD2");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.1, 11.1, 0.3);
+	delay(4);
+	setfont("GBLD3");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.1, 11.1, 0.3);
+	delay(4);
+	setfont("GBLD4");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.1, 11.1, 0.3);
+	delay(4);
+	setfont("GBLD5");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.1, 11.1, 0.3);
+	delay(4);
+	setfont("GBLD6");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.1, 11.1, 0.3);
+	delay(4);
+	setfont("GBLD7");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.9, 11.9, 0.3);
+	delay(4);
+	setfont("GBLD8");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.9, 11.9, 0.3);
+	delay(4);
+	setfont("GBLD9");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.9, 11.9, 0.3);
+	delay(4);
+	setfont("GBLD10");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.9, 11.9, 0.3);
+	delay(4);
+	setfont("GBLD11");
+	hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 213.9, 11.9, 0.3);
+	delay(4);
+	}
+}
+
+

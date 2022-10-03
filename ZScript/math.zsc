@@ -1,0 +1,1135 @@
+// Credits: https://gist.github.com/itsmrpeck/be41d72e9d4c72d2236de687f6f53974
+class BDPMath Abstract
+{	
+	const PI = 3.14159265358;
+	const RAD = 180.0/PI;
+	const TWOPI = 2*PI;
+
+	// Lerps from angle a to b (both between 0.f and 360.f), taking the shortest path
+	static double LerpAngle(double a, double b, double lerpFactor) 
+	{
+		double result;
+		double diff = b - a;
+		if (diff < -180.f)
+		{
+			// lerp upwards past 360
+			b += 360.f;
+			result = Lerp(a, b, lerpFactor);
+			if (result >= 360.f)
+			{
+				result -= 360.f;
+			}
+		}
+		else if (diff > 180.f)
+		{
+			// lerp downwards past 0
+			b -= 360.f;
+			result = Lerp(a, b, lerpFactor);
+			if (result < 0.f)
+			{
+				result += 360.f;
+			}
+		}
+		else
+		{
+			// straight lerp
+			result = Lerp(a, b, lerpFactor);
+		}
+		return result;
+	}
+	
+	static Vector3 GetLocalPos(Actor a, Vector3 offset)
+	{
+		vector3 forwards  = (cos(-a.angle),      sin(-a.angle),      0);
+		vector3 sideways  = (cos(-a.angle - 90), sin(-a.angle - 90), 0);
+		vector3 upwards = (0,0,1);
+		vector3 offsetPos = a.pos + offset.x * forwards + offset.y * sideways + offset.z * upwards;
+		return offsetPos;
+	}
+	
+	play static void AlignToPlane(Actor a, double pitchAdjust = 0, double rollAdjust = 0, bool ceiling = false, double adjustSpeed = 2, bool ignorepitch = false, bool ignoreroll = false)
+	{
+		//Original code by ZZYZX & Nash Muhandes
+		if (!a) return;
+		double ceilingAdjust = 0;
+		Vector3 fnormal;
+		if (!ceiling)
+		{
+			fnormal = a.CurSector.FloorPlane.Normal;
+		}
+		else
+		{
+			fnormal = a.CurSector.CeilingPlane.Normal;
+			ceilingAdjust = 180.0;
+		}
+		Vector2 fnormalp1 = (fnormal.x != 0 || fnormal.y != 0) ? (fnormal.x, fnormal.y).Unit() : (0, 0);
+		Vector2 fnormalp2 = ((fnormal.x, fnormal.y).Length(), fnormal.z);
+		double dang = a.Angle;
+		double fang = atan2(fnormalp1.y, fnormalp1.x);
+		double fpitch = atan2(fnormalp2.x, fnormalp2.y);
+		double ddiff1 = sin(fang - (dang - pitchAdjust));
+		double ddiff2 = cos(fang - (dang - rollAdjust));
+		
+		double pitchTarget = (fpitch * ddiff2 - pitchAdjust) + ceilingAdjust;
+		double rollTarget = (-fpitch * ddiff1 - rollAdjust) + ceilingAdjust;
+		double angleTarget = dang + ceilingAdjust;
+		
+		if(adjustSpeed == 0)
+		{
+			adjustSpeed = 180;
+		}
+		
+		if(!ignorepitch)
+		{
+			if(a.Pitch < pitchTarget)
+			{
+				a.A_SetPitch(Clamp(a.pitch + adjustSpeed, a.pitch, pitchTarget));
+			}
+			else if(a.Pitch > pitchTarget)
+			{
+				a.A_SetPitch(Clamp(a.pitch - adjustSpeed, pitchTarget, a.pitch));
+			}
+		}
+		
+		if(!ignoreroll)
+		{
+			if(a.Roll < rollTarget)
+			{
+				a.A_SetRoll(Clamp(a.roll + adjustSpeed, a.roll, rollTarget));
+			}
+			else if(a.Roll > rollTarget)
+			{
+				a.A_SetRoll(Clamp(a.roll - adjustSpeed, rollTarget, a.roll));
+			}
+		}
+
+		if(a.Angle < angleTarget)
+		{
+			a.A_SetAngle(Clamp(a.angle + adjustSpeed, a.angle, angleTarget));
+		}
+		else if(a.Angle > angleTarget)
+		{
+			a.A_SetAngle(Clamp(a.angle - adjustSpeed, angleTarget, a.angle));
+		}
+	}
+	
+	// Spawn helpers
+	play static Actor FireProjectile(class<Actor> proj, vector3 pos, double angle, double pitch, double leftright = 0, double forwardback = 0, double updown = 0, double distance = 1.0, double speed = 0)
+	{
+		vector3 finalpos;
+		finalpos = V3Offset(angle, pitch, 0, forwardback, leftright, updown, distance);
+		finalpos = level.vec3offset(pos, finalpos);
+		let proj = Actor.Spawn(proj, finalpos);
+		if(proj)
+		{
+			if(!speed) speed = proj.default.Speed;
+			proj.angle = angle;
+			proj.pitch = pitch;
+			double cosp = cos(pitch);
+			proj.vel = (
+				cos(angle) * cosp,
+				sin(angle) * cosp,
+				-sin(pitch)
+			) * speed;
+		}
+		return proj;
+	}
+
+	play static void SpawnFX(class<Actor> type, vector3 frompos, double sangle, double amt, double maxdist, double ydist, double vel_angle = 0, double vel_pitch = 0, double vel_spd = 0, int rstyle = -1)
+	{
+		int adjustedAmt = max(amt * 1, 0);
+		for(int i = 0; i < adjustedAmt; i++)
+		{
+			double spawnang = frandom(0,180);
+			double spawndist = frandom(-maxdist, maxdist);
+			vector3 spawndir = (
+				cos(sangle + spawnang),
+				sin(sangle + spawnang),
+				0
+			) * spawndist;
+			
+			spawndir.z = frandom(-ydist,ydist);
+			let obj = Actor.Spawn(type, level.vec3offset(frompos, spawndir));
+			if(obj && vel_spd != 0)
+			{
+				double velang = frandom(-vel_angle,vel_angle);
+				vector3 veldir = (
+					cos(velang),
+					sin(velang),
+					sin(frandom(-vel_pitch,vel_pitch))
+				);
+				obj.vel = veldir * vel_spd;
+				obj.angle = (sangle + spawnang);
+			}
+			if(rstyle >= 0) obj.A_SetRenderStyle(obj.alpha, rstyle);
+		}
+	}
+
+	play static void ParticlesFX(Actor ptr, Color col = 0xFFF0E11A, double amt = 30, double size = 2, double spd = 5, vector3 pos_spread = (30,30,30), vector2 ang_spread = (90,30))
+	{
+		int adjustedAmt = max(amt * 1, 0);
+		for(int i = 0; i < adjustedAmt; i++)
+		{
+			double part_angle = (ptr.angle+180)+frandom(-ang_spread.x,ang_spread.x);
+			double part_pitch = ptr.pitch+frandom(-ang_spread.y,ang_spread.y);
+
+			vector3 partpos = (
+				cos(part_angle)*frandom(-pos_spread.x,pos_spread.x),
+				sin(part_angle)*frandom(-pos_spread.y,pos_spread.y),
+				sin(part_pitch)*frandom(-pos_spread.z,pos_spread.z)
+			);
+			
+			vector3 partvel = (
+				sin(part_angle)  * cos(part_pitch+90),
+				sin(part_angle)  * cos(part_pitch+90),
+				sin(part_pitch)) * spd;
+		
+			ptr.A_SpawnParticle(
+				col,SPF_FULLBRIGHT | SPF_RELATIVE,16,size,
+				part_angle,
+				partpos.x,partpos.y,partpos.z,
+				partvel.x,partvel.y,partvel.z
+			);
+		}
+	}
+	
+	play static void ExplodeEx(Actor src, double pow, double dist, double dmgfalloffmod = 1.0, double thrustMod = 1.0, Name damageType = "Explosive", double selfDamage = 0, bool damageBosses = true)
+	{
+		let it = ThinkerIterator.Create("Actor");
+		Actor act;
+		let shooter = src.target ? src.target : src;
+		while(act = Actor(it.Next()))
+		{
+			if(!act.bSHOOTABLE || !src.IsVisible(act, true)) continue;
+			if(!damageBosses && act.bBOSS) continue; 
+			
+			double todist = src.Distance2DSquared(act) - act.radius;
+			double dmgfalloff = pow * (1. - (1./(todist - (dist*dist))));
+			if(todist > dist*dist) continue; 
+			dmgfalloff *= dmgfalloffmod;
+			
+			vector3 forceDir = (src.pos - act.pos).Unit();
+			if(act == shooter) forceDir = VecFromAngles(shooter.angle, shooter.pitch, 0.5);
+			forceDir *= dmgfalloff * thrustMod;
+			act.vel -= (forceDir * 0.15);
+			
+			if(act == shooter) dmgfalloff *= selfDamage;
+			if(dmgfalloff > 0)
+				act.DamageMobJ(src, shooter, dmgfalloff * 1, damageType, 0, src.angle); 
+		}
+	}
+
+	static double DistFalloff(vector3 one, vector3 two, double maxdist)
+	{
+		double dist = (one-two).Length();
+		double distFrac = 1.0 - (dist / max(maxdist,1));
+		
+		return distFrac;
+	}
+
+	static double sign(double num)
+	{
+		return num < 0 ? -1 : 1;
+	}
+
+	// Generate forward facing vector from angle/pitch.
+	static vector3 VecFromAngles(double angle, double pitch, double mag = 1.)
+	{
+		double cosp = cos(pitch);
+		return (cos(angle)*cosp, sin(angle)*cosp, -sin(pitch)) * mag;
+	}
+
+	// Straight interpolate
+	static double Strp(double a, double b, double value, double dampen=0.7)
+	{	
+		double dampenv = value * (1-(dampen**(abs(a-b)/value)));
+		if(a < b) a += dampenv;
+		if(a > b) a -= dampenv;
+		if( abs(a-b) < dampenv) a = b;
+		return a;
+	}
+
+	// Linear interpolate
+	static double Lerp(double a, double b, double lerpFactor)
+	{
+		double result = ((1.f - lerpFactor) * a) + (lerpFactor * b);
+		return result;
+	}
+	
+	// Linear interpolate 3D vectors
+	static vector3 Lerp3D(vector3 a, vector3 b, double lerpfactor)
+	{
+		vector3 result = a;
+		result.x = Lerp(result.x,b.x,lerpfactor);
+		result.y = Lerp(result.y,b.y,lerpfactor);
+		result.z = Lerp(result.z,b.z,lerpfactor);
+		return result;
+	}
+	
+	// Determine if number v is in range of -r, r relative to t
+	clearscope static bool inRange(double v, double t, double r)
+	{
+		return (v >= t-r && v <= t+r);
+	}
+	
+	// Lerps from angle a to b (both between 0.f and 360.f), taking the shortest path
+	static double LerpDegrees(double a, double b, double lerpFactor) 
+	{
+		double result;
+		double diff = b - a;
+		if (diff < -180.f)
+		{
+			// lerp upwards past 360
+			b += 360.f;
+			result = Lerp(a, b, lerpFactor);
+			if (result >= 360.f)
+			{
+				result -= 360.f;
+			}
+		}
+		else if (diff > 180.f)
+		{
+			// lerp downwards past 0
+			b -= 360.f;
+			result = Lerp(a, b, lerpFactor);
+			if (result < 0.f)
+			{
+				result += 360.f;
+			}
+		}
+		else
+		{
+			// straight lerp
+			result = Lerp(a, b, lerpFactor);
+		}
+
+		return result;
+	}
+	
+	// Pitch between 2 vectors.
+	static double getPitchBetween(Vector3 one, Vector3 two)
+	{	
+		vector3 delta = ( one.x - two.x, one.y - two.y, one.z - two.z );
+		double pitchto = VectorAngle( sqrt(delta.y * delta.y + delta.x * delta.x), delta.z );
+		return pitchto;
+	}
+	
+	// Distance 3D on vectors, not actors.
+	static double Distance3D(vector3 one, vector3 two)
+	{
+		return (one-two).Length();
+	}
+	
+	// Distance 2D on vectors, not actors.
+	static float Distance2D(Vector2 one, Vector2 two)
+	{
+		return (one-two).Length();
+	}
+	
+	// Rotate vectors.
+	static Vector2 VRotate(Vector2 pos, double angle, bool invert=false)
+	{
+		if(invert)
+		{
+			double oldx = pos.x;
+			pos.x = pos.y;
+			pos.y = oldx;
+		}
+		return ( pos.y * cos(angle) - pos.x * sin(angle), 
+		         pos.y * sin(angle) + pos.x * cos(angle) );
+	}	
+	
+	// Clamp vectors.
+	static vector2, double ClampVector(vector2 dest, vector2 origin, double dist)
+	{
+		double fulldist = sqrt( (dest.x - origin.x)**2 + (dest.y - origin.y)**2 );
+		if(fulldist > dist) 
+		{
+			double vecangle = atan2(origin.y-dest.y, origin.x-dest.x);
+			return ( (origin.x-cos(vecangle)*dist), (origin.y-sin(vecangle)*dist) ), fulldist;
+		}
+		return dest, fulldist;
+	}
+	
+	// Offset vector position.
+	static Vector2 VOffset(double angle, double xoffs, double yoffs, double dist)
+	{
+		return ( xoffs * cos(angle) - yoffs * sin(angle),
+				 yoffs * cos(angle) + xoffs * sin(angle) )*dist;
+	}
+	
+	// Thanks to: Boondorl for the math here! 
+	static vector3 DiffToLocal(vector3 one, vector3 two, vector2 angles)
+	{
+		vector3 forward = (Actor.AngleToVector(angles.x, cos(angles.y)), -sin(angles.y));
+		vector3 right   = (Actor.AngleToVector(angles.x-90),0);
+		vector3 up      = (Actor.AngleToVector(angles.x, cos(angles.y-90)), -sin(angles.y-90));
+		
+		vector3 diff = level.Vec3Diff(two, one);
+		vector3 rel  = (diff dot forward, diff dot right, diff dot up);
+	
+		return rel;
+	}
+	
+	// 3D Vector offset. Utilizes Gutamatrix matrixes
+	static vector3 V3Offset(double fromangle, double frompitch, double fromroll, double forward, double leftright, double updown, double distance)
+    {	
+		let mat = BDPMatrix.fromEulerAngles(fromangle, frompitch, fromroll);
+		mat = mat.multiplyVector3((forward, -leftright, updown));
+		
+		return mat.asVector3(false) * distance;
+    }
+	
+	static vector3 RelativeV3Offset(Actor source, double angleoffs, double pitchoffs, double rolloffs, double forward, double leftright, double updown, double distance)
+    {
+		double a = source.angle + angleoffs;
+		double p = source.pitch + pitchoffs;
+		double r = source.roll  + rolloffs;
+		vector3 vec = V3Offset(a, p, r, forward, leftright, updown, distance);
+		
+		vector3 frompos = (source.pos.xy, source.pos.z + source.height * 0.5);
+		if(source.player) frompos.z = source.player.viewz;
+		
+		return level.vec3offset(frompos, vec);
+    }
+	
+	play static Actor Fire3DProjectile(Actor shooter, class<Actor> proj, double forward, double leftright, double updown, bool crosshairConverge = true, double angleoffs = 0, double pitchoffs = 0)
+	{
+		double a = shooter.angle + angleoffs;
+		double p = shooter.pitch + pitchoffs;
+		double r = shooter.roll;
+		let mat = BDPMatrix.fromEulerAngles(a, p, r);
+		mat = mat.multiplyVector3((forward, -leftright, updown));
+		vector3 offsetPos = mat.asVector3(false);
+		
+		vector3 shooterPos = (shooter.pos.xy, shooter.pos.z + shooter.height * 0.5);
+		if(shooter.player) shooterPos.z = shooter.player.viewz;
+		offsetPos = level.vec3offset(offsetPos, shooterPos);
+		
+		// Get velocity
+		if(shooter.player && crosshairConverge)
+		{
+			FLineTraceData lt;
+			shooter.LineTrace(
+				shooter.angle+angleoffs, 1024*1024, shooter.pitch+pitchoffs, 
+				0, shooter.player.viewz-shooter.pos.z, 0, data:lt
+			);
+			vector3 aimPos = lt.HitLocation;
+		
+			vector3 aimAngles = level.SphericalCoords(offsetPos, aimPos, (a, p));
+			
+			a -= aimAngles.x;
+			p -= aimAngles.y;
+		}
+		
+		mat = BDPMatrix.fromEulerAngles(a, p, r);
+		mat = mat.multiplyVector3((1.0,0,0));
+		
+		vector3 projVel = mat.asVector3(false) * GetDefaultByType(proj).Speed;
+		
+		// Spawn projectile
+		let proj = Actor.Spawn(proj, offsetPos);
+		if(proj)
+		{
+			proj.angle = a;
+			proj.pitch = p;
+			proj.roll = r;
+			proj.vel = projVel;
+		}
+		return proj;
+	}
+
+	// Intertial calculations for thrust on monsters.
+	static double GetInertia(double emass, double smallmass = 200)
+	{
+		// Deviation from small weight, 0 means no deviation.
+		double m = smallmass; // Base mass
+		double d = 0.15; // Mass dropoff
+		double x = (1. - (emass/m));
+		double y = -d*(x**2) + 1;
+		return clamp(y*0.75,0.1,1.0);
+	}
+	
+	// Credits: https://www.arduino.cc/reference/en/language/functions/math/map/
+	static double fmap(double x, double in_min, double in_max, double out_min, double out_max) 
+	{
+		return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+	}
+	
+	// Credits: https://stackoverflow.com/a/28037434
+	static double AngleDiff( double angle1, double angle2 )
+	{
+		double diff = ( angle2 - angle1 + 180 ) % 360 - 180;
+		return diff < -180 ? diff + 360 : diff;
+	}
+
+	play static bool CheckHeadshot(Actor source, Actor victim, double headsize = 8)
+	{
+        // Preform ray cast to determine where the shooter is aiming.
+        FLineTraceData lt;
+        source.LineTrace(source.angle,128,source.pitch,0,0,0,0,lt);
+        float dmgz = lt.HitLocation.z;
+        float headz    = (victim.pos.z + victim.height);
+		return dmgz <= headz && dmgz >= headz-headsize;
+	}
+	
+	play static vector3, Actor getPlayerAim(PlayerPawn plr)
+	{
+		FLineTraceData lt;
+		plr.LineTrace(plr.angle, 1024*1024, plr.pitch, 0, plr.player.viewz-plr.pos.z, 0, data:lt);
+		return lt.HitLocation, lt.HitActor;
+	}
+	
+	clearscope static vector3 SphereBetween(vector3 one, vector3 two)
+	{
+		vector3 diff = level.Vec3Diff(one, two);
+		return (
+			atan2(diff.y, diff.x),
+			atan2(diff.z, sqrt((diff.x*diff.x) + (diff.y*diff.y))),
+			diff.Length()
+		);
+	}
+		
+	/* Summary:
+    **  Simulates a damped spring.
+    **
+    ** Arguments:
+    **  p: Current position
+    **  r: Rest position
+    **  v: Current velocity
+    **  k: Spring coefficient
+    **  d: Damping coefficient
+    **
+    ** Returns:
+    **  The new velocity.
+    */
+    static double DampedSpring (double p, double r, double v, double k, double d) 
+	{
+        return -(d * v) - (k * (p - r));
+    }
+		
+	// Attempt to automatically insert linebreaks in string.
+	static string formatStringLnBreaks(String str, int lineLen)
+	{
+		// Split string into words.
+		Array<string> words;
+		string newline = "\n";
+		str.Split(words, " ");
+		
+		string outStr;
+		int carriage = 0;
+		for(int i = 0; i < words.Size(); i++)
+		{
+			string word = words[i];
+			bool manualNewLine = word.IndexOf(newline, 0) != -1;
+			
+			int len = word.Length() + 1; // Add " " space at start of new word.
+			carriage += len;
+			
+			if(manualNewLine) carriage = len-1;
+			if(carriage > lineLen) 
+			{
+				outStr = outStr .. "\n";
+				carriage = len-1;
+			}
+
+			outStr = String.Format("%s %s", outStr, word);
+		}
+		
+		return outStr;
+	}
+	 
+	// Not really math but useful stuff.
+	static bool, string parseStrElement(String type, String ln)
+	{
+		string lnLower = ln.MakeLower();
+		type = type.MakeLower();
+				
+		int element_S = lnLower.IndexOf(type);
+		int element_E = lnLower.IndexOf("\n", element_S);
+		if(element_S < 0 || element_E < 0) return false, "";
+		
+		string output = ln.Mid(element_S, element_E-element_S);
+		int strBegin = output.IndexOf("\"");
+		int strEnd = output.IndexOf("\"", strBegin+1);
+		
+		return true, output.Mid(strBegin+1, (strEnd-strBegin)-1);
+	}
+		 
+	static void getSkillsInfo(out Array<SkillInfo> skInfo)
+	{
+		// adwnawdlnkdawlknawdkln why isn't this just a feature??!?!!?!?!?
+		// ffs.
+		
+		skInfo.Clear();
+		for(int lump = -1; (lump = Wads.FindLump("MAPINFO", lump+1)) != -1;)
+		{
+			string data = Wads.ReadLump(lump);
+			string dataLower = data.MakeLower();
+	
+			// Look for `skill` keyword(s).
+			int skillIndex = 0;
+			int skillOffset = 0;
+			int loopCheck = 0;
+			while(skillIndex >= 0)
+			{
+				loopCheck++;
+				if(loopCheck > 100) 
+				{
+					console.printf("Error reading mapinfo.");
+					break;
+				}
+				
+				skillIndex = dataLower.IndexOf("skill", skillOffset);
+				if(skillIndex < 0) break;
+				
+				// Grab skill block.
+				int blockStart = dataLower.IndexOf("{", skillIndex);
+				int blockEnd = dataLower.IndexOf("}", skillIndex);
+				if(blockStart < 0 || blockEnd < 0) break;
+				
+				int blockLen = blockEnd - blockStart;
+				skillOffset = blockEnd+1; // Advance read "head".
+				
+				string skillData = data.Mid(blockStart, blockLen);
+				string skillDataLower = skillData.MakeLower();
+			
+				// Field to read from.
+				string skillPic;
+				string skillName;
+				string skillDesc;
+				
+				// Filter "confusing" fields.
+				int picName = skillDataLower.IndexOf("picname");
+				int className = skillDataLower.IndexOf("playerclassname");
+				bool gotStr;
+				
+				if(picName > -1)
+				{		
+					// Parse skillPic
+					[gotStr, skillPic] = parseStrElement("picname", skillData);
+					if(!gotStr) return;
+								
+					int picNameEnd = skillDataLower.IndexOf("\n", picName);
+					skillData.Remove(picName, picNameEnd-picName);
+				}
+				if(className > -1)
+				{
+					int classNameEnd = skillDataLower.IndexOf("\n", className);
+					skillData.Remove(picName, classNameEnd-className);
+				}
+				skillDataLower = skillData.MakeLower();
+				
+				// Get name
+				[gotStr, skillName] = parseStrElement("name", skillData);
+				if(!gotStr) return;
+				
+				// Localize name if needed.
+				bool specialName = skillName.IndexOf("$") >= 0; 
+				if(specialName) skillName = StringTable.Localize(skillName);
+				
+				// Get "desc" from `MustConfirm`
+				[gotStr, skillDesc] = parseStrElement("mustconfirm", skillData);
+				if(!gotStr) skillDesc = "";
+				
+				let curSkillInfo = new("SkillInfo");
+				curSkillInfo.displayName = skillName;
+				curSkillInfo.Description = skillDesc;
+				curSkillInfo.Pic = skillPic;
+						
+				skInfo.push(curSkillInfo);
+			}			
+		}
+	}
+	
+	const GT_ALL = 31;
+	static uint gameTypesToFlags(string types)
+	{
+		uint flags = 0;
+		Array<String> tokens;
+		Array<GameTypeInfo> gameTypes;
+		
+		string gtStr = types;
+		if(gtStr.Length() <= 0) return 0;
+		
+		gtStr.Replace(" ", "");
+		gtStr.Split(tokens, ",");
+		
+		uint notFound = tokens.Size();
+		if(tokens.Find("ALL") != notFound) return GT_ALL;
+		BDPMath.getGameTypes(gameTypes);
+		
+		for(int i = 0; i < gameTypes.Size(); i++)
+		{
+			if(tokens.Find(gameTypes[i].defName) != notFound)
+				flags |= !i ? 0 : (1 << (i-1));
+		}
+		
+		return flags;
+	}
+	
+	static void getGameTypes(out Array<GameTypeInfo> gtInfo)
+	{
+		gtInfo.Clear();
+		string defineKeyword = "gametype";
+		
+		for(int lump = -1; (lump = Wads.FindLump("GTDEFS", lump+1)) != -1;)
+		{
+			string data = Wads.ReadLump(lump);
+			string dataLower = data.MakeLower();
+	
+			// Look for `GameType` keyword(s).
+			int gtIndex = 0;
+			int gtOffset = 0;
+			int loopCheck = 0;
+			while(gtIndex >= 0)
+			{
+				loopCheck++;
+				if(loopCheck > 100) 
+				{
+					console.printf("Error reading GTDEFS.");
+					break;
+				}
+				
+				gtIndex = dataLower.IndexOf("gametype", gtOffset);
+				if(gtIndex < 0) break;
+						
+				// Grab gametype block.
+				int blockStart = dataLower.IndexOf("{", gtIndex);
+				int blockEnd = dataLower.IndexOf("}", gtIndex);
+				if(blockStart < 0 || blockEnd < 0) break;
+				
+				// Get defined name.
+				int nameStart = dataLower.IndexOf(" ", gtIndex)+1;
+				int nameEnd = blockStart-1;
+				int nameLen = nameEnd - nameStart;
+				
+				int blockLen = blockEnd - blockStart;
+				gtOffset = blockEnd+1; // Advance read "head".
+				
+				string gtData = data.Mid(blockStart, blockLen);
+				string gtDataLower = gtData.MakeLower();
+			
+				// Field to read from.
+				string gtDefName = data.Mid(nameStart, nameLen); 
+				gtDefName.Replace(String.Format("%c", 13), "");
+				string gtName;
+				string gtDesc;
+
+				bool exists;
+				string result;
+				[exists, gtName] = parseStrElement("name", gtData);
+				[exists, gtDesc] = parseStrElement("description", gtData);
+				
+				// Export data.
+				let curGameTypeInfo = new("GameTypeInfo");
+				curGameTypeInfo.displayName = gtName;
+				curGameTypeInfo.Description = gtDesc;
+				curGameTypeInfo.defName = gtDefName;
+				// console.printf("Type: %s\n Name: %s\n Description: %s\n\n", curGameTypeInfo.defName, curGameTypeInfo.displayName, curGameTypeInfo.Description);
+						
+				gtInfo.push(curGameTypeInfo);
+			}			
+		}
+	}
+	
+	static vector2 GetImageScaleToRes(string img, vector2 toRes, bool keepAspect = true)
+	{
+		let tex = TexMan.CheckForTexture(img);
+		vector2 size;
+		[size.x, size.y] = TexMan.GetSize(tex);
+
+		double def_aspect = toRes.x / toRes.y;
+		double aspect = 1.0;
+		
+		vector2 scaleto = (
+			toRes.x / size.x,
+			toRes.y / size.y
+		);
+		
+		if(keepAspect) aspect = (size.x / size.y) / (def_aspect);
+		size.x = scaleto.x * aspect;
+		size.y = scaleto.y;
+
+		return size;
+	}
+	
+	static double getMinimumImgScaleDown(string img, vector2 toRes)
+	{
+		let tex = TexMan.CheckForTexture(img);
+		vector2 size;
+		[size.x, size.y] = TexMan.GetSize(tex);
+		double aspect = (size.x / size.y);
+		
+		vector2 scaleto = (
+			toRes.x / size.x,
+			toRes.y / size.y
+		);
+		
+		return aspect > 1.0 ? scaleto.x : scaleto.y;
+	}
+	
+	static string GetGitBranch()
+	{
+		int lump = Wads.CheckNumForFullName("gitbranch.txt");
+		if(lump == -1) return "";
+		
+		return Wads.ReadLump(lump);
+	}
+	
+}
+
+class SkillInfo : Object
+{
+	string displayName;
+	string Description;
+	string Pic;
+}
+
+class GameTypeInfo : Object
+{
+	string defName;
+	string displayName;
+	string Description;
+}
+
+class ActorTracer : Object 
+{
+	Actor source;
+	Actor currentActor;
+	uint traceFlags;
+	double maxDist;
+	vector3 offs;
+	vector2 angleOffs;
+	
+	static ActorTracer Create(Actor source, double dist = 1024, uint flags = TRF_ALLACTORS, double fw = 0, double lr = 0, double ud = 0, double angleOffs = 0, double pitchOffs = 0)
+	{
+		let aTrace = new("ActorTracer");
+		if(aTrace)
+		{
+			aTrace.maxDist = dist;
+			aTrace.source = source;
+			aTrace.currentActor = source;
+			aTrace.offs = (fw, lr, ud);
+			if(source.player) aTrace.offs.z += (source.player.viewz - source.pos.z);			
+			
+			aTrace.traceFlags = flags;
+			aTrace.angleOffs = (angleOffs, pitchOffs);
+		}
+		return aTrace;
+	}
+	
+	play Actor Next(bool keepOffsets = true)
+	{
+		vector3 realOffs = (0,0,0);
+		if(currentActor == source || keepOffsets)
+			realOffs = offs;
+	
+		FLineTraceData lt;
+		currentActor.LineTrace(
+			source.angle + angleOffs.x, maxDist, 
+			source.pitch + angleOffs.y, 
+			traceFlags, 
+			realOffs.z, realOffs.x + source.radius, realOffs.y, 
+			lt
+		);
+		if(lt.HitActor == currentActor || lt.HitActor == source) return null;
+				
+		currentActor = lt.HitActor;
+		
+		return currentActor;
+	}
+}
+
+// Matrix library from Gutamatics (https://gitlab.com/Gutawer/gzdoom-gutamatics/-/blob/master/Gutamatics/Matrix.zsc)
+enum BDPVectorType {
+	BDPVector_Position,
+	BDPVector_Direction
+}
+
+class BDPMatrix {
+	private Array<double> values;
+	private int columns;
+	int rows;
+
+	/// Initialises a new Matrix.
+	BDPMatrix init(int columns, int rows) {
+		if (columns <= 0 || rows <= 0) {
+			throwAbortException("Error: <%p>.init(%d, %d) - Matrix needs to be at least 1 * 1", self, columns, rows);
+		}
+
+		self.rows = rows;
+		self.columns = columns;
+		values.resize(columns * rows);
+		for (int i = 0; i < values.size(); i++) {
+			values[i] = 0;
+		}
+
+		return self;
+	}
+
+	/// Initialises a new Matrix in a static context.
+	static BDPMatrix create(int columns, int rows) {
+		return new("BDPMatrix").init(columns, rows);
+	}
+
+	/// Returns an identity matrix.
+	static BDPMatrix identity(int dimension) {
+		BDPMatrix ret = BDPMatrix.create(dimension, dimension);
+		for (int i = 0; i < dimension; i++) {
+			ret.set(i, i, 1);
+		}
+		return ret;
+	}
+
+	/// Returns a rotation matrix from euler angles.
+	static BDPMatrix fromEulerAngles(double yaw, double pitch, double roll) {
+		BDPMatrix rYaw = BDPMatrix.identity(4);
+		double sYaw = sin(yaw);
+		double cYaw = cos(yaw);
+		rYaw.set(0, 0,  cYaw);
+		rYaw.set(0, 1, -sYaw);
+		rYaw.set(1, 0,  sYaw);
+		rYaw.set(1, 1,  cYaw);
+
+		BDPMatrix rPitch = BDPMatrix.identity(4);
+		double sPitch = sin(pitch);
+		double cPitch = cos(pitch);
+		rPitch.set(0, 0,  cPitch);
+		rPitch.set(2, 0, -sPitch);
+		rPitch.set(0, 2,  sPitch);
+		rPitch.set(2, 2,  cPitch);
+
+		BDPMatrix rRoll = BDPMatrix.identity(4);
+		double sRoll = sin(roll);
+		double cRoll = cos(roll);
+		rRoll.set(1, 1,  cRoll);
+		rRoll.set(1, 2, -sRoll);
+		rRoll.set(2, 1,  sRoll);
+		rRoll.set(2, 2,  cRoll);
+
+		// concatenate ypr to get the final matrix
+		BDPMatrix ret = rYaw.multiplyMatrix(rPitch);
+		ret = ret.multiplyMatrix(rRoll);
+		return ret;
+	}
+
+	/// Returns a rotation matrix from an axis and an angle.
+	static BDPMatrix fromAxisAngle(Vector3 axis, double angle) {
+		BDPMatrix ret = BDPMatrix.identity(4);
+		double c = cos(angle);
+		double s = sin(angle);
+		double x = axis.x;
+		double y = axis.y;
+		double z = axis.z;
+
+		ret.set(0, 0, (x * x * (1.0 - c) + c));
+		ret.set(0, 1, (x * y * (1.0 - c) - z * s));
+		ret.set(0, 2, (x * z * (1.0 - c) + y * s));
+		ret.set(1, 0, (y * x * (1.0 - c) + z * s));
+		ret.set(1, 1, (y * y * (1.0 - c) + c));
+		ret.set(1, 2, (y * z * (1.0 - c) - x * s));
+		ret.set(2, 0, (x * z * (1.0 - c) - y * s));
+		ret.set(2, 1, (y * z * (1.0 - c) + x * s));
+		ret.set(2, 2, (z * z * (1.0 - c) + c));
+
+		return ret;
+	}
+	
+	static BDPMatrix createTRSEuler(Vector3 translate, double yaw, double pitch, double roll, Vector3 scale) {
+		BDPMatrix translateMat = BDPMatrix.identity(4);
+		translateMat.set(0, 3, translate.x);
+		translateMat.set(1, 3, translate.y);
+		translateMat.set(2, 3, translate.z);
+		
+		BDPMatrix rotateMat = BDPMatrix.fromEulerAngles(yaw, pitch, roll);
+		
+		BDPMatrix scaleMat = BDPMatrix.identity(4);
+		scaleMat.set(0, 0, scale.x);
+		scaleMat.set(1, 1, scale.y);
+		scaleMat.set(2, 2, scale.z);
+		
+		BDPMatrix ret = translateMat.multiplyMatrix(rotateMat);
+		ret = ret.multiplyMatrix(scaleMat);
+		return ret;
+	}
+	
+	static BDPMatrix createTRSAxisAngle(Vector3 translate, Vector3 axis, double angle, Vector3 scale) {
+		BDPMatrix translateMat = BDPMatrix.identity(4);
+		translateMat.set(0, 3, translate.x);
+		translateMat.set(1, 3, translate.y);
+		translateMat.set(2, 3, translate.z);
+		
+		BDPMatrix rotateMat = BDPMatrix.fromAxisAngle(axis, angle);
+		
+		BDPMatrix scaleMat = BDPMatrix.identity(4);
+		scaleMat.set(0, 0, scale.x);
+		scaleMat.set(1, 1, scale.y);
+		scaleMat.set(2, 2, scale.z);
+		
+		BDPMatrix ret = translateMat.multiplyMatrix(rotateMat);
+		ret = ret.multiplyMatrix(scaleMat);
+		return ret;
+	}
+
+	/// Returns a view matrix.
+	static BDPMatrix view(Vector3 camPos, double yaw, double pitch, double roll) {
+		// all of this is basically lifted and converted from PolyRenderer::SetupPerspectiveMatrix(),
+		// so credit goes to Graf Zahl/dpJudas/whoever else
+		// pitch needs to be adjusted by the pixel ratio
+		float pixelRatio = level.pixelstretch;
+		double angx = cos(pitch);
+		double angy = sin(pitch) * pixelRatio;
+		double alen = sqrt(angx * angx + angy * angy);
+		double adjustedPitch = asin(angy / alen);
+		double adjustedYaw = yaw - 90;
+
+		// rotations
+		BDPMatrix rotR = BDPMatrix.fromAxisAngle((0, 0, 1), roll);
+		BDPMatrix rotP = BDPMatrix.fromAxisAngle((1, 0, 0), adjustedPitch);
+		BDPMatrix rotY = BDPMatrix.fromAxisAngle((0, -1, 0), adjustedYaw);
+		// pixel ratio scaling
+		BDPMatrix scale = BDPMatrix.identity(4);
+		scale.set(1, 1, pixelRatio);
+		// swapping y and z
+		BDPMatrix swapYZ = BDPMatrix.create(4, 4);
+		swapYZ.set(0, 0, 1);
+		swapYZ.set(1, 2, 1);
+		swapYZ.set(2, 1, -1);
+		swapYZ.set(3, 3, 1);
+		// translation
+		BDPMatrix translate = BDPMatrix.identity(4);
+		translate.set(0, 3, -camPos.x);
+		translate.set(1, 3, -camPos.y);
+		translate.set(2, 3, -camPos.z);
+
+		// concatenate them all to get a final matrix
+		BDPMatrix ret = rotR.multiplyMatrix(rotP);
+		ret = ret.multiplyMatrix(rotY);
+		ret = ret.multiplyMatrix(scale);
+		ret = ret.multiplyMatrix(swapYZ);
+		ret = ret.multiplyMatrix(translate);
+
+		return ret;
+	}
+
+	/// Returns a perspective matrix (same format as gluPerspective).
+	static BDPMatrix perspective(double fovy, double aspect, double zNear, double zFar) {
+		BDPMatrix ret = BDPMatrix.create(4, 4);
+		double f = 1 / tan(fovy / 2.0);
+		// x coord
+		ret.set(0, 0, f / aspect);
+		// y coord
+		ret.set(1, 1, f);
+		// z buffer coord
+		ret.set(2, 2, (zFar + zNear) / (zNear - zFar));
+		ret.set(2, 3, (2 * zFar * zNear) / (zNear - zFar));
+		// w (homogeneous coordinates)
+		ret.set(3, 2, -1);
+		return ret;
+	}
+
+	/// Gets the value at row, col.
+	double get(int row, int col) const {
+		return values[columns * row + col];
+	}
+
+	/// Sets the value at row, col.
+	void set(int row, int col, double val) {
+		values[columns * row + col] = val;
+	}
+
+	/// Adds two matrices and returns the result.
+	BDPMatrix addMatrix(BDPMatrix other) const {
+		if (rows != other.rows || columns != other.columns) {
+			throwAbortException("Error: <%p>.addMatrix(<%p>) - Matrices need to be equal size", self, other);
+		}
+		BDPMatrix ret = BDPMatrix.create(columns, rows);
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0; col < columns; col++) {
+				ret.set(row, col, get(row, col) + other.get(row, col));
+			}
+		}
+		return ret;
+	}
+
+	/// Multiplies the matrix by a scalar and returns the result.
+	BDPMatrix multiplyScalar(double scalar) const {
+		BDPMatrix ret = BDPMatrix.create(rows, columns);
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0; col < columns; col++) {
+				ret.set(row, col, get(row, col) * scalar);
+			}
+		}
+		return ret;
+	}
+
+	/// Multiplies two matrices and returns the result.
+	BDPMatrix multiplyMatrix(BDPMatrix other) const {
+		if (columns != other.rows) {
+			throwAbortException("Error: <%p>.multiplyMatrix(<%p>) - Matrix A columns needs to equal Matrix B rows", self, other);
+		}
+		BDPMatrix ret = BDPMatrix.create(other.columns, rows);
+		for (int row = 0; row < ret.rows; row++) {
+			for (int col = 0; col < ret.columns; col++) {
+				double val = 0;
+				for (int i = 0; i < columns; i++) {
+					val += get(row, i) * other.get(i, col);
+				}
+				ret.set(row, col, val);
+			}
+		}
+		return ret;
+	}
+
+	/// Multiplies this Matrix by a 2D vector.
+	BDPMatrix multiplyVector2(Vector2 vec, BDPVectorType type = BDPVector_Position) const {
+		BDPMatrix vec2Matrix = BDPMatrix.create(1, 3);
+		vec2Matrix.set(0, 0, vec.x);
+		vec2Matrix.set(1, 0, vec.y);
+		if (type == BDPVector_Position)       vec2Matrix.set(2, 0, 1);
+		else if (type == BDPVector_Direction) vec2Matrix.set(2, 0, 0);
+		else throwAbortException("Error: Invalid vector type for multiplyVector2 (%d)", type);
+		return multiplyMatrix(vec2Matrix);
+	}
+
+	/// Multiplies this Matrix by a 3D vector.
+	BDPMatrix multiplyVector3(Vector3 vec, BDPVectorType type = BDPVector_Position) const {
+		BDPMatrix vec3Matrix = BDPMatrix.create(1, 4);
+		vec3Matrix.set(0, 0, vec.x);
+		vec3Matrix.set(1, 0, vec.y);
+		vec3Matrix.set(2, 0, vec.z);
+		if (type == BDPVector_Position)       vec3Matrix.set(3, 0, 1);
+		else if (type == BDPVector_Direction) vec3Matrix.set(3, 0, 0);
+		else throwAbortException("Error: Invalid vector type for multiplyVector3 (%d)", type);
+		return multiplyMatrix(vec3Matrix);
+	}
+
+	/// Returns the Matrix in Vector2 form, optionally dividing by z.
+	Vector2 asVector2(bool divideZ = true) const {
+		if (columns != 1 || rows != 3) {
+			throwAbortException("Error: <%p>.asVector2() - Matrix needs to be 1 * 3", self);
+		}
+		if (divideZ) return (get(0, 0), get(1, 0)) / get(2, 0);
+		else         return (get(0, 0), get(1, 0));
+	}
+
+	/// Returns the Matrix in Vector3 form, optionally dividing by w.
+	Vector3 asVector3(bool divideW = true) const {
+		if (columns != 1 || rows != 4) {
+			throwAbortException("Error: <%p>.asVector3() - Matrix needs to be 1 * 4", self);
+		}
+		if (divideW) return (get(0, 0), get(1, 0), get(2, 0)) / get(3, 0);
+		else         return (get(0, 0), get(1, 0), get(2, 0));
+	}
+
+	/// Returns the number of columns.
+	int getColumns() const {
+		return columns;
+	}
+
+	/// Returns the number of rows.
+	int getRows() const {
+		return rows;
+	}
+}

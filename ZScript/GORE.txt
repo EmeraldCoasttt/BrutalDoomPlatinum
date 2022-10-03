@@ -1,0 +1,316 @@
+// Copyright 2006-2019 Nash Muhandes
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions
+// are met:
+//
+// 1. Redistributions of source code must retain the above copyright
+//    notice, this list of conditions and the following disclaimer.
+// 2. Redistributions in binary form must reproduce the above copyright
+//    notice, this list of conditions and the following disclaimer in the
+//    documentation and/or other materials provided with the distribution.
+// 3. The name of the author may not be used to endorse or promote products
+//    derived from this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+// IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+// IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+// NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+// THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+//===========================================================================
+//
+//
+//
+//===========================================================================
+
+
+class NashGoreStatics play
+{
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static double GetVelocity (Actor self)
+	{
+		return self.Vel.Length();
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static bool bIsOnFloor(Actor self)
+	{
+		return (self.Pos.Z <= self.FloorZ || self.bOnMobj);
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static void RandomXFlip(Actor self)
+	{
+		self.bSpriteFlip = RandomPick(false, true);
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static double RandomAngle4(void)
+	{
+		return RandomPick(0, 90, 180, 270);
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static bool CheckSky(Actor self)
+	{
+		if (NashGoreStatics.bIsOnfloor(self) && self.floorpic == skyflatnum)
+		{
+			return true;
+		}
+		else if ((self.Pos.Z >= (self.CeilingZ - 4)) && self.ceilingpic == skyflatnum)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	static bool CheckLiquid(Actor self)
+	{
+		if (self.GetFloorTerrain().IsLiquid)
+		{
+			return true;
+		}
+		else if (self.waterlevel > 0)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	
+
+	//===========================================================================
+	//
+	// AlignToPlane
+	// Original code written by ZZYZX
+	// To do: does not properly retrieve normals from 3D floors yet...
+	//
+	//===========================================================================
+
+	static void AlignToPlane(Actor self, double pitchAdjust = 0, bool ceiling = false)
+	{
+		if (!self) return;
+		Vector3 norm;
+		if (!ceiling)
+		{
+			norm = self.CurSector.FloorPlane.Normal;
+		}
+		else
+		{
+			norm = self.CurSector.CeilingPlane.Normal;
+		}
+		Vector2 norm_p1 = (norm.X != 0 || norm.Y != 0) ? (norm.X, norm.Y).Unit() : (0, 0);
+		Vector2 norm_p2 = ((norm.X, norm.Y).Length(), norm.Z);
+		double dang = self.Angle;
+		double fang = atan2(norm_p1.Y, norm_p1.X);
+		double fpitch = atan2(norm_p2.X, norm_p2.Y);
+		double ddiff1 = sin(fang - (dang - pitchAdjust));
+		double ddiff2 = cos(fang - dang);
+		self.Pitch = (fpitch * ddiff2 - pitchAdjust);
+		self.Roll = -fpitch * ddiff1;
+		self.Angle = dang;
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static bool CheckFloating(Actor self, bool ceiling)
+	{
+		// HAX!!!! If pitch and angle isn't flat, assume that the object is sloped on a plane
+		// This check will never work, therefore just skip it entirely
+		if (self.Pitch != 0 || self.Roll != 0) return false;
+
+		for (int x = 0; x < self.Radius * 2; x++)
+		{
+			for (int y = 0; y < self.Radius * 2; y++)
+			{
+				double zatx = (self.Pos.X - self.Radius) + x;
+				double zaty = (self.Pos.Y - self.Radius) + y;
+
+				// the sample points must actually be a different sector
+				Sector curSec = self.CurSector;
+				Sector testSec = Level.PointInSector((zatx, zaty));
+
+				// part of this actor is found to be floating!
+				if (!ceiling)
+				{
+					if (self.GetZAt(zatx, zaty, flags: GZF_ABSOLUTEPOS) < self.Pos.Z && curSec != testSec)
+					{
+						return true;
+					}
+				}
+				else
+				{
+					if (self.GetZAt(zatx, zaty, flags: GZF_ABSOLUTEPOS | GZF_CEILING) > (self.Pos.Z + 2) && curSec != testSec)
+					{
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+	}
+
+class NashGoreRealGibs : RealGibs
+{
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay
+		{
+			
+			
+				A_SpawnItemEx("NashGoreSquishyGibs", flags: SXF_TRANSFERTRANSLATION);
+				A_PlaySound("misc/gibbed");
+			
+
+			//Destroy();
+		}
+		  POL5 A 0;
+	POL5 A 0 A_SpawnItemEX("MediumBloodSpot");
+    POL5 A -1;
+    Stop;
+	}
+}
+class NashGoreSquishyGibs : RealGibs
+{
+	Name Spawnblood;
+	Property spawnblood : Spawnblood;
+	Default
+	{
+		+FORCEYBILLBOARD
+		NashGoreSquishyGibs.spawnblood "blood"; 
+	}
+
+	const SPRITE_HEIGHT = 49;
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	override void BeginPlay(void)
+	{
+		NashGoreStatics.RandomXFlip(self);
+		Super.BeginPlay();
+	}
+
+	override void Tick(void)
+	{
+		Super.Tick();
+		if (!bNoTimeFreeze && (isFrozen() || Level.isFrozen())) return;
+
+		double h = (CeilingZ - FloorZ);
+		double squishY = h / SPRITE_HEIGHT;
+		Scale.Y = 1.0 * squishY;
+
+		// split if stretched too far
+		if (squishY > 3.0)
+		{
+			A_Playsound("misc/gibbed");
+			for (int i = 0; i < h; i++)
+			{
+				A_SpawnItemEx(spawnblood,
+					0, 0, i,
+					frandom(-2, 2), frandom(-2, 2), frandom(-4, 4),
+					frandom(0, 360), 0, 215);
+			}
+			Destroy();
+			return;
+		}
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	States
+	{
+	Spawn:
+		SQSH A -1;
+		Stop;
+	}
+}
+
+class BlueSquishyGibs : NAshgoresquishygibs
+	{
+		Default
+		{
+			NashGoreSquishyGibs.spawnblood "blue_blood"; 
+			translation "168:191=192:207","16:47=240:247";
+		}
+	
+	
+	}
+	
+class GreenSquishyGibs : NAshgoresquishygibs
+	{
+		Default
+		{
+			NashGoreSquishyGibs.spawnblood "green_blood"; 
+			translation "168:191=112:127", "16:47=123:127";
+		}
+	
+	
+	}

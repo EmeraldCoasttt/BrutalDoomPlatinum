@@ -1,0 +1,7 @@
+sprite LASRA0, 7, 7 {
+	offset 3, 4
+	patch PLSEE0, 0, 0 {
+//		Translation "192:195=113:116", "224:224=112:112"
+		Translation "192:195=177:180", "224:224=176:176"
+	}
+}

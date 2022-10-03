@@ -1,0 +1,45 @@
+Class BrutalProjectile : Actor
+{
+	Default
+	{
+		Projectile;
+	}
+	
+	Override int specialmissilehit(actor Victim)
+	{
+		If(target && victim is "BaseHeadShot" && victim.tracer && victim.tracer == target)
+		{
+			Return 1;
+		
+		}
+		Else
+		{
+			Return -1;
+		}
+	
+	}
+
+}
+
+Class FastBrutalProjectile : Actor
+{
+	Default
+	{
+		Projectile;
+	}
+	
+	Override int specialmissilehit(actor Victim)
+	{
+		If(target && victim is "BaseHeadShot")
+		{
+			Return 1;
+		
+		}
+		Else
+		{
+			Return -1;
+		}
+	
+	}
+
+}

@@ -1,0 +1,215 @@
+CLASS BrutalZombie : Actor
+{
+	float VoicePitch;
+	Property VoicePitch : VoicePitch;
+	Default
+	{
+		BrutalZombie.VoicePitch 1.0;
+	}
+	Int VoiceTimer;
+	Int TargetTimer;
+	Int AlertAgainTimer;
+	int IdleTimer;
+	Int IdleTimerMax;
+	Int killedplayertics;
+	Actor lastticktarget;
+	bool hasseentarget;
+	bool killedplayer;
+	
+	Virtual void AlertZombies()
+	{
+		BlockThingsIterator CheckForZombies = BlockThingsIterator.create(Self,400); //256 can be whatever range around the actor.
+				Actor CurrentActor;
+				While (CheckForZombies.Next())
+					{
+						CurrentActor = CheckForZombies.Thing;
+						
+						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
+						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
+						If (CurrentActor && CurrentActor is "BrutalZombie")
+							{
+								currentactor.giveinventory("ResetIdleTimer",1);
+							}
+							
+					}
+					
+	}
+	
+	Virtual int IdleCheck()
+	{
+		If(target && target is "PlayerPawn" && !(target is "DemonPlayer") && checksight(target))
+			{
+				
+				Return 2;
+			}
+		Else If(target && target is "BDPNotMonster" && checksight(target))
+			{
+				
+				Return 2;
+			}
+		Else If(target && checksight(target))
+			{
+				
+				Return 1;
+				
+			}
+		Else
+			{
+				Return 0;
+			}
+	}
+	Virtual int IdleCheck2()
+	{
+		If(target && target is "PlayerPawn" && !(target is "DemonPlayer"))
+			{
+				
+				Return 2;
+			}
+		Else If(target && target is "BDPNotMonster")
+			{
+				
+				Return 2;
+			}
+		Else If(target)
+			{
+				
+				Return 1;
+				
+			}
+		Else
+			{
+				Return 0;
+			}
+	}
+	Virtual Void CheckZombies()
+	{
+	Idletimermax = 0;
+		BlockThingsIterator CheckForZombies = BlockThingsIterator.create(Self,100); //256 can be whatever range around the actor.
+				Actor CurrentActor;
+				While (CheckForZombies.Next())
+					{
+						CurrentActor = CheckForZombies.Thing;
+						
+						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
+						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
+						If (CurrentActor && CurrentActor is "BrutalZombie" && currentactor.health > 0)
+							{
+								Idletimermax = idletimermax + 1;
+							}
+							
+					}
+					
+					Idletimermax = (200 + (1500 * idletimermax));
+					//console.printf("%i",idletimermax);
+	}
+	override void beginplay()
+	{
+		CheckZombies();
+				Super.beginplay();
+	}
+	Override void tick()
+	{
+		bnoinfightspecies = false;
+		bdoharmspecies = true;
+		bdontharmspecies = false;
+		bdontharmclass = false;
+		//console.printf("%i",idletimer);
+		If(health > 0 && findinventory("KilledPlayer"))
+			{
+				Killedplayertics++;
+				If(killedplayertics > 35 && !killedplayer)
+				{
+					killedplayer = true;
+					A_startsound("ZKILL",2,0,1.0,ATTN_NONE,VoicePitch);
+					AlertZOmbies();
+				}
+				
+				If(killedplayertics > 400)
+				{
+					KilledPlayerTics = 0;
+					TakeInventory("killedPlayer",1);
+				}
+			}
+		If(health > 0 && !killedplayertics)
+		{
+			
+			VoiceTimer = voicetimer - 1;
+			If(idlecheck() == 0)
+			{
+				TargetTimer = TargetTimer + 1;
+				IdleTimer = idleTimer - 1;
+			}
+			Else
+			{
+				TargetTimer = 0;
+			}
+			AlertAgainTimer = AlertAgainTimer - 1;
+		
+			If(idlecheck() != 0 && (targettimer > 250 || AlertAgainTimer <= 0))
+			{
+				If(idlecheck() == 2)
+				{
+					A_startsound("ZALRT",2,0,1.0,ATTN_IDLE,VoicePitch);
+					AlertZombies();
+				}
+				If(idlecheck() == 1)
+				{
+					A_startsound("ZINFT",2,0,1.0,ATTN_IDLE,VoicePitch);
+				}
+				AlertAgainTimer = random(245,1050);
+			}
+			
+			If(target)
+			{
+				If(!lastticktarget)
+				{
+					If(idlecheck2() == 2)
+					{
+						A_startsound("ZALRT",2,0,1.0,ATTN_IDLE,VoicePitch);
+						AlertZombies();
+					}
+					If(idlecheck2() == 1)
+					{
+						A_startsound("ZINFT",2,0,1.0,ATTN_IDLE,VoicePitch);
+					}
+					AlertAgainTimer = random(245,1050);
+				}
+				lastticktarget = target;
+			}
+			Else
+			{
+				lastticktarget = null;
+			}
+			If(targettimer > 250 && idletimer == 0 && idlecheck() == 0)
+			{
+				A_startsound("ZIDL",2,0,1.0,ATTN_IDLE,VoicePitch);
+			}
+			
+			If (idletimer <= 0 || findinventory("ResetIdleTimer"))
+			{
+				CheckZombies();
+				takeinventory("Resetidletimer",1);
+				Idletimer = random(75, IdleTimerMax);
+				//console.printf("%i",idletimer);
+			}
+			
+			
+		}
+		Super.tick();
+	}
+	Action void A_ZPain()
+	{
+		Invoker.A_startsound("ZPAIN",2,0,1.0,ATTN_IDLE,Invoker.VoicePitch);
+		Invoker.VoiceTimer = 35;
+		If(invoker.idlecheck2() == 1)
+		{
+			invoker.AlertAgainTimer = random(15,245);
+		}
+	}
+	Action void A_ZScream()
+	{
+		Invoker.A_startsound("ZDIE",2,0,1.0,ATTN_IDLE,Invoker.VoicePitch);
+		
+	}
+
+}

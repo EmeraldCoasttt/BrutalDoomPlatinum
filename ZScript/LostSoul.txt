@@ -1,0 +1,184 @@
+
+//Adds special case for pain elemental players
+CLASS LostSoulBase : LostSoul
+	{
+		Override void tick()
+		{
+			If(target && target is "meatballplayer")
+				{
+				A_cleartarget();
+				Bfriendly = true;
+				Setstatelabel("see");
+				
+				}
+				Super.tick();
+		}
+	}
+	
+	//Thrown and punched lost souls
+	CLASS PoorLostSoul : actor
+	{
+	Default
+{
+	+bounceonceilings
+	+bounceonfloors
+	Radius 16;
+	Height 8;
+	Speed 22;
+    Fastspeed 26;
+	Damagefunction 200;
+	Projectile;
+    Scale 1.0;
+	+FORCEXYBILLBOARD;
+	damagetype "extremepunches";
+ExplosionRadius 70;
+ExplosionDamage 50;
+	+shootable;
+	+ismonster;
+	Health 100;
+	+buddha;
+	-countkill;
+	-noblockmap;
+	+noblood;
+	Alpha 1;
+	SeeSound "skull/melee";
+	DeathSound "skeleton/melee";
+	}
+	States
+	{
+	Spawn:
+        TNT1 A 0 A_spawnprojectile ("FlameTrails", 24, 0, 0, 0, 0);
+        LSOL B 2 BRIGHT A_SpawnItemEX("RedFlare",24);
+		Loop;
+	Death:
+    
+		LSOL F 2 BRIGHT;
+		LSOL G 2 BRIGHT;
+		//TNT1 A 0 A_Explode();
+	EXPL AAAAAAAAAAAAAAAAAAAAAAAA 0 A_spawnprojectile ("FlameTrails", 6, 0, random (0, 360), 2, random (0, 360));
+		EXPL A 0 A_SpawnItemEx("ExplosionParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 0);
+    TNT1 AAA 0 A_spawnprojectile ("LSpart1", 42, 0, random (0, 360), 2, random (0, 160));
+    TNT1 A 0 A_spawnprojectile ("LSpart3", 42, 0, random (0, 360), 2, random (0, 160));
+    TNT1 AAAA 0 A_spawnprojectile ("LSpart2", 42, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0;
+        LSOL HI 6;
+		Stop;
+		Stop;
+
+	}
+	
+		Action void A_friendchase(int chance = 2, int heightoffset = 30, string fogtype = "teleportationfog")
+			{
+				
+				If(random(1,256) <= chance)
+					{
+					
+						BlockThingsIterator CheckForplayers = BlockThingsIterator.create(invoker,5000); //256 can be whatever range around the actor.
+						Actor CurrentActor;
+						bool foundplayer;
+						While (CheckForplayers.Next())
+							{
+								CurrentActor = CheckForplayers.Thing;
+								If(currentactor && currentactor is 'meatballplayer' && !invoker.CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && !foundplayer)
+								{
+									invoker.A_spawnitemex(fogtype);
+									invoker.setorigin(currentactor.pos,false);
+									invoker.A_spawnitemex(fogtype);
+									vector3 savedpos = invoker.pos;
+									savedpos.z = (savedpos.z + heightoffset);
+									invoker.setorigin(savedpos,false);
+									foundplayer = true;
+								}
+							}
+							
+							
+					
+					}
+				
+				A_chase();
+			
+			
+			}
+}
+
+CLASS poorlostsoul2 : poorlostsoul
+	{
+		Default
+		{
+		Species "marines";
+		+thruspecies;
+		+mthruspecies;
+		+friendly;
+		SeeSound "none";
+		Damagefunction random(200,400);
+		}
+	}
+CLASS poorlostsoul3 : poorlostsoul2
+	{
+		Default
+		{
+		+seekermissile;
+		Speed 12;
+		attackSound "skull/melee";
+		Damagefunction random(200,400);
+		}
+		States
+		{
+			Spawn:
+			TNT1 A 0 A_spawnprojectile ("FlameTrails", 24, 0, 0, 0, 0);
+			LSOL B 2 BRIGHT 
+			{
+			A_SpawnItem("RedFlare",0,0);
+			}
+			TNT1 A 0 A_spawnprojectile ("FlameTrails", 24, 0, 0, 0, 0);
+			LSOL B 2 BRIGHT 
+			{
+			A_SpawnItem("RedFlare",0,0);
+			}
+			TNT1 A 0 A_spawnprojectile ("FlameTrails", 24, 0, 0, 0, 0);
+			LSOL B 2 BRIGHT 
+			{
+			A_SpawnItem("RedFlare",0,0);
+			}
+			TNT1 A 0 A_stop();
+			See:
+			LSOL A 2 BRIGHT A_FriendChase(10,0,"null");
+	    TNT1 A 0 A_SpawnItemEX ("RedFlareMedium", 24);
+		//LSOL A 0 A_spawnprojectile ("CoolAndNewFlameTrailsLongAlpha", 24, 0, random (0, 360), 2, random (0, 160))
+        LSOL A 0 A_spawnprojectile ("SoulTrails", 24, 0, random (0, 360), 2, random (0, 160));
+		LOOP;
+			Missile:
+			TNT1 A 0 A_facetarget();
+			TNT1 A 0 A_skullattack();
+			KeepMissile:
+			TNT1 A 0 A_spawnprojectile ("FlameTrails", 24, 0, 0, 0, 0);
+			LSOL B 2 BRIGHT 
+			{
+			A_SpawnItem("RedFlare",0,0);
+			A_SeekerMissile (4,8, SMF_LOOK);
+			}
+			Loop;
+			
+			Death:
+    
+		LSOL F 2 BRIGHT;
+		LSOL G 2 BRIGHT;
+		//TNT1 A 0 A_Explode();
+		TNT1 A 0
+			{
+				If(master && target && master is "meatballplayer" && target.health < 1)
+					{
+					Master.health = (master.health + 10);
+					}
+			}
+	EXPL AAAAAAAAAAAAAAAAAAAAAAAA 0 A_spawnprojectile ("FlameTrails", 6, 0, random (0, 360), 2, random (0, 360));
+		EXPL A 0 A_SpawnItemEx("ExplosionParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 0);
+    TNT1 AAA 0 A_spawnprojectile ("LSpart1", 42, 0, random (0, 360), 2, random (0, 160));
+    TNT1 A 0 A_spawnprojectile ("LSpart3", 42, 0, random (0, 360), 2, random (0, 160));
+    TNT1 AAAA 0 A_spawnprojectile ("LSpart2", 42, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0;
+        LSOL HI 6;
+		Stop;
+		Stop;
+		}
+	}

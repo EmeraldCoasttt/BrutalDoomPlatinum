@@ -1,0 +1,1032 @@
+//////////////////////////////////////////////////////////////
+///														   ///
+///				  Freezer canon			       			   ///
+///		script parts from BD's BFG10k & plasmagun		   ///
+//////////////////////////////////////////////////////////////
+ACTOR FreezerIsUnloaded: Inventory {Inventory.MaxAmount 1}
+
+ACTOR Freezer : BrutalWeapon
+{
+	Weapon.AmmoUse1 0
+	Weapon.AmmoUse2 0
+	Weapon.AmmoGive1 100
+	Weapon.AmmoGive2 50
+	Weapon.AmmoType1 "AmmoCell"
+	Weapon.AmmoType2 "FreezerAmmo"
+	Obituary "%o was put on ice by %k's FreezeThrower."
+    Inventory.PickupSound "PLSDRAW"
+	Inventory.Pickupmessage "You got the FreezeThrower! (Slot 6)"
+	+WEAPON.NOAUTOAIM
+	+WEAPON.NOALERT
+	+WEAPON.NOAUTOFIRE
+	+WEAPON.EXPLOSIVE
+	damagetype "Ice"
+	Weapon.SelectionOrder 1550
+	Inventory.AltHUDIcon "FRZRA0"
+	BrutalWeapon.weight 7
+	Tag "Freeze Thrower"
+	States
+	{
+	
+	SpawnSmoke:
+	TNT1 A 8
+	TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1,7)
+	TNT1 A 8
+	TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1,7)
+	TNT1 A 8
+	TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1,7)
+	TNT1 A 8
+	TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1,7)
+	TNT1 A 8
+	TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1,7)
+	stop
+	
+	
+	GrenadeThrowFlashNoAmmo:
+		TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"GrenadeThrowFlashUnloaded")
+	    FR1S JKLME 1 //A_WeaponReady(WRF_NOFIRE)
+		TNT1 A 22
+		 FR1S EMLKJ 1
+		Stop
+	GrenadeThrowFlashUnloaded:
+	    FR1S FGHIE 1 //A_WeaponReady(WRF_NOFIRE)
+		TNT1 A 22
+		FR1S EIHGF 1
+		Stop
+		
+	GrenadeThrowFlash:
+	    RAIL A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"GrenadeThrowFlashNoAmmo")
+        FR1S ABCDE 1 //A_WeaponReady(WRF_NOFIRE)
+		TNT1 A 22
+		FR1S EDCBA 1 //32 in total
+		Stop
+	
+	
+	
+	
+	KickingFlash:
+	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"KickingFlashNoAmmo")
+	FR1K ABCD 1
+	FR1K EFGE 2
+	FR1K DCBA 1 //16
+	Goto Ready
+
+	AirKickingFlash:
+	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"AirKickingFlashNoAmmo")
+	FR1K ABCD 1
+	FR1K EFGEF 2
+	FR1K DCBA 1 //18
+	Goto Ready
+	
+	 SlideKickingStart:
+		TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"SlideKickingStartNoAmmo")
+	    FR1K ABCD 1
+	    FR1K EEFFGGEEFFGGEEFFGGEEFFGGEEFFGGEEFFGG 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+		Goto Ready
+
+	 SlideKickingEnd:
+		TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"SlideKickingEndNoAmmo")
+		FR1K EEFFGG 1
+		FR1K DCBA 1
+	    Goto Ready
+		
+	KickingFlashNoAmmo:
+	TNT1 A 0 A_JumpIf(CountInv("FreezerIsUnloaded")==1,"KickingFlashUnloaded")
+	FR1K MNOP 1
+	FR1K Q 8
+	FR1K PONM 1 //16
+	Goto Ready
+
+	AirKickingFlashNoAmmo:
+	TNT1 A 0 A_JumpIf(CountInv("FreezerIsUnloaded")==1,"AirKickingFlashUnloaded")
+	FR1K MNOP 1
+	FR1K Q 10
+	FR1K PONM 1 //18
+	Goto Ready
+	
+	 SlideKickingStartNoAmmo:
+		TNT1 A 0 A_JumpIf(CountInv("FreezerIsUnloaded")==1,"SlideKickingStartUnloaded")
+	    FR1K MNOP 1
+	    FR1K QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+		Goto Ready
+
+	 SlideKickingEndNoAmmo:
+		TNT1 A 0 A_JumpIf(CountInv("FreezerIsUnloaded")==1,"SlideKickingEndUnloaded")
+		FR1K Q 6
+		FR1K PONM 1
+	    Goto Ready
+		
+	KickingFlashUnloaded:
+	FR1K HIJK 1
+	FR1K L 8
+	FR1K KJIH 1 //16
+	Goto Ready
+
+	AirKickingFlashUnloaded:
+	FR1K HIJK 1
+	FR1K L 10
+	FR1K KJIH 1 //18
+	Goto Ready
+	
+	 SlideKickingStartUnloaded:
+	    FR1K HIJK 1
+	    FR1K LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+		Goto Ready
+
+	 SlideKickingEndUnloaded:
+		FR1K L 6
+		FR1K KJIH 1
+	    Goto Ready	
+		
+		
+		Fuckyouflash:
+	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"FuckyouNoAmmo")
+	FR1K ABCD 1
+	FR1K EFGEFGEFGFG 2
+	FR1K DCBA 1 //30
+	Stop
+	
+	fuckyouNoAmmo:
+	TNT1 A 0 A_JumpIf(CountInv("FreezerIsUnloaded")==1,"fuckyouUnloaded")
+	FR1K MNOP 1
+	FR1K Q 22
+	FR1K PONM 1 //30
+	Stop
+	
+	FuckYouUnloaded:
+	FR1K HIJK 1
+	FR1K L 20
+	FR1K KJIH 1 //28
+	Stop
+		
+		
+	//FuckYouFlash:
+	//FR1K EFGHHIIJJHHIIHHIIJJHHIIJJGFE 1 //18
+	//stop
+	
+		
+	SelectAnimationNoAmmo:
+		TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"SelectAnimationUnloaded")
+	    FR1S EMLKJ 1 A_WeaponReady(WRF_NOFIRE)
+		Goto Ready3
+	SelectAnimationUnloaded:
+	    FR1S EIHGF 1 A_WeaponReady(WRF_NOFIRE)
+		Goto Ready3
+		
+	SelectAnimation:
+	ReturnFromNothing:
+	    RAIL A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"SelectAnimationNoAmmo")
+        FR1S EDCBA 1 A_WeaponReady(WRF_NOFIRE)
+		TNT1 A 0 A_PlaySound("RAILR1", 2)
+        
+		
+	Ready:
+	Ready3:
+		TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"ReadyNoAmmo")
+		RAIL A 0 A_PlaySound("PLSIDLE")
+		FR1D ABC 2 {
+		if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("FreezethrowerCrosshair"));}else{A_SetCrosshair(0);}
+			A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			//if (CountInv("StartDualWield") == 1) { return state("DualWield"); }
+			if (CountInv("GoFatality") == 1) { return state("Steady"); }
+									
+			if (CountInv("Kicking") == 1) {
+				if (CountInv("IsCrouching") == 1) {
+					return state("SlideKickingStart");
+				}
+				if (momZ != 0) {
+					return state("AirKickingFlash");
+				}
+				else {
+					return state("KickingFlash");
+				}
+			}
+
+			if (CountInv("Taunting") == 1) { return state("GoTaunt"); }
+			if (CountInv("swapriflespecial") == 1) { return state("PlaceFreezeBot"); }
+			if (CountInv("Salute1")==1 || CountInv("Salute2")==1) { return state("Salute"); }
+			if (CountInv("Reloading") == 1) { return state("Reload"); }
+			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
+			A_checksprint;
+			if (CountInv("Unloading") == 1) { return state("Unload"); }
+			if (CountInv("FreezerAmmo") == 0) { return state("ReadyNoAmmo"); }
+			return state("");
+		}
+		FR1D ABC 2 {
+			A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			//if (CountInv("StartDualWield") == 1) { return state("DualWield"); }
+			if (CountInv("GoFatality") == 1) { return state("Steady"); }
+									
+			if (CountInv("Kicking") == 1) {
+				if (CountInv("IsCrouching") == 1) {
+					return state("SlideKickingStart");
+				}
+				if (momZ != 0) {
+					return state("AirKickingFlash");
+				}
+				else {
+					return state("KickingFlash");
+				}
+			}
+
+			if (CountInv("Taunting") == 1) { return state("GoTaunt"); }
+			if (CountInv("Salute1")==1 || CountInv("Salute2")==1) { return state("Salute"); }
+			if (CountInv("Reloading") == 1) { return state("Reload"); }
+			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
+			if (CountInv("IsRunning") == 1) { return state("CheckSprint"); }
+			if (CountInv("Unloading") == 1) { return state("Unload"); }
+			if (CountInv("FreezerAmmo") == 0) { return state("ReadyNoAmmo"); }
+			if (CountInv("swapriflespecial") == 1) { return state("PlaceFreezeBot"); }
+			return state("");
+		}
+		Goto Ready3
+		
+	ReadyNoAmmo:
+		FR1D T 0 A_JumpIf(CountInv("FreezerIsUnloaded")==1,"ReadyUnloaded")
+		FR1D Q 1
+		{
+			A_WeaponReady(WRF_ALLOWRELOAD);
+			//if (CountInv("StartDualWield") == 1) { return state("DualWield"); }
+			if (CountInv("GoFatality") == 1) { return state("Steady"); }
+									
+			if (CountInv("Kicking") == 1) {
+				if (CountInv("IsCrouching") == 1) {
+					return state("SlideKickingStart");
+				}
+				if (momZ != 0) {
+					return state("AirKickingFlash");
+				}
+				else {
+					return state("KickingFlash");
+				}
+			}
+
+			if (CountInv("Taunting") == 1) { return state("GoTaunt"); }
+			if (CountInv("Salute1")==1 || CountInv("Salute2")==1) { return state("Salute"); }
+			if (CountInv("Reloading") == 1) { return state("Reload"); }
+			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
+			A_checksprint;
+			if (CountInv("Unloading") == 1) { return state("Unload"); }
+			if (CountInv("swapriflespecial") == 1) { return state("PlaceFreezeBot"); }
+			return state("");
+		}
+		loop
+	ReadyUnloaded:
+		FR1D T 1
+		{
+			A_WeaponReady(WRF_ALLOWRELOAD);
+			//if (CountInv("StartDualWield") == 1) { return state("DualWield"); }
+			if (CountInv("GoFatality") == 1) { return state("Steady"); }
+									
+			if (CountInv("Kicking") == 1) {
+				if (CountInv("IsCrouching") == 1) {
+					return state("SlideKickingStart");
+				}
+				if (momZ != 0) {
+					return state("AirKickingFlash");
+				}
+				else {
+					return state("KickingFlash");
+				}
+			}
+
+			if (CountInv("Taunting") == 1) { return state("GoTaunt"); }
+			if (CountInv("Salute1")==1 || CountInv("Salute2")==1) { return state("Salute"); }
+			if (CountInv("Reloading") == 1) { return state("Reload"); }
+			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
+			A_checksprint;
+			if (CountInv("Unloading") == 1) { return state("Unload"); }
+			if (CountInv("swapriflespecial") == 1) { return state("PlaceFreezeBot"); }
+			return state("");
+		}
+		Loop
+		
+		SprintOverlay:
+	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"sprintNoAmmo")
+	FR1K ABCD 1
+	SprintOverlay2:
+	RAIL A 0 A_PlaySound("PLSIDLE")
+	FR1K EFG 2
+	
+	LOOP
+	SprintNoAmmo:
+	TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"SprintUnloaded")
+	FR1K MNOPQ 1
+	WAIT
+	
+	SprintUnloaded:
+	FR1K HIJKL 1
+	WAIT
+	
+	ReturnFromSprint:
+	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"ReturnFromsprintNoAmmo")
+	FR1K DCBA 1 //16
+	Goto Ready
+	
+	ReturnFromSprintNoAmmo:
+	TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"ReturnFromSprintUnloaded")
+	FR1K PONM 1
+	Goto ready
+	
+	ReturnFromSprintUnloaded:
+	FR1K KJIH 1
+	Goto ready
+		
+		
+	DontNeedToReload:
+		RAIL A 0 A_JumpIfInventory("Zoomed",1,"Ready2")
+	Goto Ready+6
+	
+	Deselect: "####" A 0 A_TakeInventory("IsPlayingDoxMod",1)
+		RAIL A 0 A_Takeinventory("PowerLightAmp", 1)
+		RAIL A 0 A_Takeinventory("Zoomed",1)
+		RAIL A 0 A_TakeInventory("Fire2Activate",1)
+		RAIL A 0 A_Takeinventory("PressedTwice",1)
+		RAIL A 0 A_TakeInventory("PressedOnce",1)
+        RAIL A 0 A_ZoomFactor(1.0)
+		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1)
+		//NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+		"####" A 0 A_ClearOverlays(-2,-2)
+	    RAIL A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"DeselectNoAmmo")
+        FR1S ABCDE 1
+		TNT1 AAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		TNT1 A 1 A_Lower
+		Wait
+		
+	DeselectNoAmmo:
+		TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"DeselectUnloaded")
+	    FR1S JKLME 1
+		TNT1 AAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		TNT1 A 1 A_Lower
+		Wait
+		
+	DeselectUnloaded:
+	    FR1S FGHIE 1
+		TNT1 AAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		TNT1 A 1 A_Lower
+		Wait
+	
+		
+		
+		
+		
+		
+	Select:
+		TNT1 A 0
+		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+		Goto SelectFirstPersonLegs
+		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1) 
+		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("FreezethrowerCrosshair"));}else{A_SetCrosshair(0);}}
+		RAIL A 0 A_Giveinventory("RailGunSelected",1)
+	    TNT1 A 1 A_Raise
+		TNT1 AAAAAAAAAAAAAA 0 A_Raise
+		Goto SelectAnimation
+		
+	NoAmmo:
+		RIFG A 0
+		RIFG A 0 A_ZoomFactor(1.0)
+		TNT1 A 0 A_StopSound(1)
+		RAIL A 0  {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+		RIFG A 0 A_Takeinventory("Zoomed",1)
+		RIFG A 0 A_Takeinventory("ADSmode",1)
+		RIFG A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
+		TNT1 A 0 A_PlaySound("weapons/empty", 4)
+		NoAmmo2:
+		RIFG A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+	    RIFG A 0 A_JumpIfInventory("Taunting",1,"Taunt")
+		RIFG A 0 A_JumpIfInventory("Salute1", 1, "Salute")
+		RIFG A 0 A_JumpIfInventory("Salute2", 1, "Salute")
+		RIFG A 0 A_JumpIfInventory("IsRunning",1,"CheckSprint")
+		RIFG A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
+		RIFG A 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
+		R4FL T 0 A_JumpIfInventory("FreezerIsUnloaded",1,2)
+	    RAIL Q 0
+		FR1D "#" 5 A_WeaponReady(WRF_ALLOWRELOAD | WRF_NOFIRE)
+		RIFG A 0 A_JumpIfInventory("Reloading",1,"Reload")
+		RIFG A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
+		TNT1 A 0 A_JumpIf(GetCvar("bd_NoAutoReload")==1, "Ready3")
+		RIFG A 0 A_JumpIfInventory("AmmoCell",1,"Reload")
+		RIFG A 0 A_JumpIfInventory("FiredPrimary",1,"NoAmmo2")
+		Goto Ready3
+		
+		
+	
+	Fire:
+	    RAIL A 0
+		RAIL A 0 A_CheckIfAmmo("FreezerAmmo")
+		TNT1 AA 0
+		FR1D D 3
+		FR1D E 1
+	FireContinue:
+		FR1D EFF 1
+		FR1D G 1
+		RAIL A 0 A_Giveinventory("HasFreezerWeapon",1)
+		RAIL A 0 A_TakeAmmo("FreezerAmmo",1)
+		RAIL A 0 A_PlaySound("FRZFIRE", 1)
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("FreezerAmmo")<=10) { A_PlaySound("MagClick", 7); }}}
+		TNT1 AA 0 A_FireCustomMissile ("BluePlasmaParticleWeapon", random(-11,11), 0, -1, -3, 0, random(-7,14))
+		FR1D H 1 BRIGHT A_FireCustomMissile("CryoShot", frandom(0.9,-0.9),0, 0, -3, 0)
+	    //TNT1 A 0 A_FireCustomMissile ("PlasmaSmoke", 0, 0, 0, 2)
+		FR1D I 1 BRIGHT A_SetPitch(-1.5 + pitch, SPF_INTERPOLATE)
+		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
+		FR1D JKM 1 A_SetPitch(0.5 + pitch, SPF_INTERPOLATE)
+		"####" A 0 A_WeaponOffset(0,32)
+		RAIL A 0 A_CheckIfAmmo("FreezerAmmo",1,"GoToNoAmmo")
+		RAIL A 0 A_Refire("firecontinue")
+		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1)
+		Goto Ready3
+		
+	AltFire:
+	    RAIL A 0
+		RAIL A 0 A_CheckIfAmmo("FreezerAmmo",2)
+		TNT1 AA 0	
+		RAIL A 0 A_Giveinventory("HasFreezerWeapon",1)
+		RAIL A 0 A_TakeAmmo("FreezerAmmo",1)
+		FLMT A 0 A_PlaySound("IceLoop", 1, 1, 1)
+		TNT1 AA 0 A_FireCustomMissile ("BluePlasmaParticleWeapon", random(-45,45), 0, random(-2,2), random(-3,1), 0, random(-6,22))
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("FreezerAmmo")<=12) { A_PlaySound("MagClick", 7); }}}
+		NULL A 0 A_WeaponOffset(random(1,-1),32+random(-1,1))
+		FR1D R 1 BRIGHT A_FireCustomMissile("FreezeThrowerMissile", 0, 1, 0, -12, 0, 8)
+		//RAIL A 0 A_Takeinventory("FreezerAmmo",1)
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("FreezerAmmo")<=12) { A_PlaySound("MagClick", 7); }}}
+		NULL A 0 A_WeaponOffset(random(1,-1),32+random(-1,1))
+		FR1D S 1 BRIGHT// A_FireCustomMissile("FreezeThrowerMissile", frandom(0.9,-0.9),0, 0, -3, 0)
+		RAIL A 0 A_JumpIf(CountInv("FreezerAmmo")<2,"AltGoToNoAmmo")
+	//	RAIL A 0 A_JumpIfInventory("FreezerAmmo",2,2)
+	//	Goto NoAmmo
+		TNT1 AA 0	
+		RAIL A 0 A_Refire
+		NULL A 0 A_WeaponOffset(0,32)
+		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1)
+		TNT1 A 0 A_StopSound(1)
+		FLMT A 0 BRIGHT A_PlaySound("IceEnd", 1)
+		//R4FF DCCCCCCCDEEFFG 1 BRIGHT
+		FR1D KJJJKKLMNOPNOPNO 1 BRIGHT
+		TNT1 A 0 A_Overlay(3, "SpawnSmoke")
+		//TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1.5,7)
+		Goto Ready3		
+		
+	GoToNoAmmo:
+		TNT1 A 0 A_PlaySound("RAILRIP")
+		FR1D NOP 1
+		Goto Ready
+		
+	AltGoToNoAmmo:
+		FLMT A 0 BRIGHT A_PlaySound("IceEnd", 1)
+		FR1D KJJJKKLMNOPNOPNO 1 BRIGHT
+		TNT1 A 0 A_Overlay(3, "SpawnSmoke")
+		TNT1 A 0 A_PlaySound("RAILRIP")
+		FR1D NOP 1
+		Goto Ready
+		
+	Reload:	
+        RAIL A 0 A_Takeinventory("Reloading",1)
+		RAIL A 0 A_ZoomFactor(1.0)
+		RAIL A 0 A_Takeinventory("PowerLightAmp", 1)
+		RAIL A 0 A_Takeinventory("Zoomed",1)
+		RAIL A 0 A_JumpIfInventory("FreezerAmmo",50,"Ready")
+        RAIL A 0 A_JumpIfInventory("AmmoCell",10,3)
+        Goto Ready+6
+        TNT1 AAAA 0
+		RAIL A 0 A_JumpIfInventory("TurboReload", 1, "InsertBullets")
+		RAIL A 0 A_JumpIfinventory("FreezerIsUnloaded",1,"ReloadUnloaded")
+		RAIL A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"ReloadContinue")
+		TNT1 A 0 A_PlaySound("RAILRIP", 1)
+		FR1D NOP 1
+	ReloadContinue:
+		FRRL ABCDEFF 1
+		FRRL G 2	
+		FRRL G 1 offset(0,33)
+		FRRL G 1 offset(0,32)
+		FRRL G 1 offset(0,33)
+		FRRL G 1 offset(0,32)	
+		"####" A 0 A_PlaySound("RAILMAG2",1)
+		FRRL HIJKLLLMNOPP 1
+		TNT1 A 0 A_FireCustomMissile("EmptyFreezerMagSpawn",160,0,10,-8)
+		FRRL Q 4
+		FRRL RRSTUV 1
+		"####" A 0 A_PlaySound("RAILINSR")
+		FRRL WWXYYYYZZ 1
+		FRRL "[" 1
+		FRRL "\" 1
+		FRRL "]" 1
+		FR1D Q 6
+		"####" A 0 A_PlaySound("BEP")
+		FR1D PONPO 1
+		"####" Z 0 A_PlaySound("RAILON", 2)
+		SHTZ A 0 A_TakeInventory("Reloading",1)
+		Goto InsertBullets
+		
+	InsertBullets:	
+		"####" AAAA 0
+		"####" A 0 A_JumpIfInventory("FreezerAmmo",50,"FinishReload")
+		"####" A 0 A_JumpIfInventory("AmmoCell",1,3)
+		Goto FinishReload
+        "####" AAAAAA 0
+		"####" A 0 A_Giveinventory("FreezerAmmo",1)
+		"####" A 0 A_Takeinventory("AmmoCell",1)
+		Loop
+		
+	FinishReload:
+	    FR1D D 1
+		Goto Ready
+		
+	ReloadUnloaded:
+		FR1D VU 1
+		FRRL RRSTUV 1
+		"####" A 0 A_PlaySound("RAILINSR")
+		FRRL WWXYYYYZZ 1
+		FRRL "[" 1
+		FRRL "\" 1
+		FRRL "]" 1
+		FR1D Q 6
+		"####" A 0 A_PlaySound("BEP")
+		FR1D PONPO 1
+		"####" Z 0 A_PlaySound("RAILON", 2)
+		SHTZ A 0 A_TakeInventory("Reloading",1)
+		SHTZ A 0 A_TakeInventory("FreezerIsUnloaded",1)
+		RAIL A 0 A_Takeinventory("Unloading",1)
+		Goto InsertBullets
+		
+	Unload:
+	    RAIL A 0  {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+		RAIL A 0 A_Takeinventory("PowerLightAmp", 1)
+        RAIL A 0 A_Takeinventory("Unloading",1)
+		RAIL A 0 A_JumpIfInventory("FreezerAmmo",1,2)
+		Goto ReadyNoAmmo
+		TNT1 AA 0
+		RAIL A 0 A_Takeinventory("Zoomed",1)
+		RAIL A 0 A_ZoomFactor(1.0)
+		TNT1 A 0 A_PlaySound("RAILRIP", 1)
+		FR1D NOP 1
+		FRRL ABCDEFF 1
+		FRRL G 2	
+		FRRL G 1 offset(0,33)
+		FRRL G 1 offset(0,32)
+		FRRL G 1 offset(0,33)
+		FRRL G 1 offset(0,32)	
+		"####" A 0 A_PlaySound("RAILMAG2",1)
+		FRRL HIJKLLLMNOPP 1
+	//	FRRL Q 4
+		FR1D UV 1
+		RAIL A 0 A_Giveinventory("FreezerIsUnloaded",1)
+		RAIL A 0 A_Takeinventory("Unloading",1)
+	RemoveBullets:	
+		TNT1 AAAA 0
+		RAIL A 0 A_JumpIfInventory("FreezerAmmo",1,3)
+		Goto ReadyUnloaded
+        TNT1 AAAAAA 0
+		RAIL A 0 A_Takeinventory("FreezerAmmo",1)
+		RAIL A 0 A_Giveinventory("AmmoCell",1)
+		Loop	
+		
+ 	Spawn:
+		FRZR ABC 2
+		LOOP
+		
+	
+		
+	GoTaunt:
+		RAIL A 0
+		RAIL A 0 A_Light0
+		RAIL A 0 A_Takeinventory("Zoomed",1)
+		RAIL A 0 A_Takeinventory("PowerLightAmp", 1)
+        RAIL A 0 A_ZoomFactor(1.0)
+		Goto Taunt
+		
+	
+	PlaceFreezeBot:
+	TNT1 A 0 A_takeinventory("swapriflespecial",1)
+	TNT1 A 0 A_CheckIfAmmo("freezerammo",15)
+	TNT1 A 0
+		TNT1 A 0 A_overlay(6,"PlaceFreezeBot2")
+		
+	FR1K ABCD 1
+	FR1K EFGEFGEFGEFGEFG 2
+	FR1K DCBA 1
+	Goto ready
+	PlaceFreezeBot2:
+		TNT1 A 4
+		TNT1 A 0 A_playsound("freezebot/talk",7)
+		TNT1 A 0 A_playsound("foley/ASGDrumOut",8)
+		FR2R ABCDEFGHIJJJJJJJJJ 1
+		TNT1 A 0 A_takeAmmo("freezerammo",15)
+		TNT1 A 0 A_spawnitemex("freezebot",-40,-12,28,0,0,0,180)
+		FR2R KLMNOPQRST 1
+		Stop
+	}
+}
+
+
+ACTOR FreezerAmmo : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 50
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 50
+   Inventory.Icon "FRZRA0"
+}
+
+
+
+
+
+
+ACTOR EmptyFreezerMagSpawn
+{
+	Speed 20
+	PROJECTILE
+	+NOCLIP
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 1 A_CustomMissile("EmptyFreezerMag",1,-2,random(105,115),2,1)
+		Stop
+	}
+}
+
+
+ACTOR EmptyFreezerMag : basemagactor
+{
+   Scale 0.40
+   BounceFactor 0.5
+   SeeSound "weapons/smallmagdrop"
+   DeathSound "weapons/smallmagdrop"
+   BounceSound "weapons/smallmagdrop"
+   States
+   {
+   Spawn:
+     // TNT1 A 7 //A_PlaySound("NULL")
+	  FRZR E 4
+	  FRZR EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 4 A_SetRoll(Roll-45)
+      Stop
+   }
+}
+
+
+
+ACTOR Freezebot : BrutalFriend
+{
+	Game Doom
+	Health 150
+	Radius 16
+	Height 32
+	Mass 50
+	Speed 8
+	DeathHeight 4
+	VSpeed 2
+	FloatSpeed 3
+	BurnHeight 0
+	/*
+	PainChance 255
+	PainChance "Kick", 255
+	damagefactor "GibRemoving", 0.0 damagefactor "HangingHook", 0
+	PainChance "Avoid", 255
+	damagefactor "Fire", 0 damagefactor "sAW", 4.0 damagefactor "Cut", 4.0
+	*/
+	Monster
+	Species "Marines"
+    +NOBLOOD
+	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
+    damagefactor "Fatality", 5.0 damagefactor "PussyGrab", 50.0
+	damagefactor "TeleportRemover", 0.0
+	DamageFactor "CauseSplash", 0.0 DamageFactor "CauseObjectsToSplashSlime", 0.0 DamageFactor "CauseObjectsToSplashNukage", 0.0
+	DamageFactor "CauseObjectsToSplashBlood", 0.0 DamageFactor "CauseObjectsToSplashLava", 0.0
+	RenderStyle Normal
+	+FLOAT +NOGRAVITY +DONTFALL +NOICEDEATH +FLOATBOB
+	+FORCEXYBILLBOARD
+	
+	-NORADIUSDMG
+	+QUICKTORETALIATE
+    +DONTHURTSPECIES
+    +FIXMAPTHINGPOS 
+	+LOOKALLAROUND
+	+PUSHABLE
+	+SLIDESONWALLS
+	+CANNOTPUSH
+	-COUNTKILL
+	+DONTSPLASH
+	+FIXMAPTHINGPOS
+	+NORADIUSDMG
+	+USESPECIAL
+	+MTHRUSPECIES
+	+THRUSPECIES
+	+NOTAUTOAIMED
+	+SHOOTABLE
+	+NOBLOCKMONST
+	-solid
+ 
+	Activation THINGSPEC_Activate
+	
+	damagefactor "ExplosiveImpact", 3.0
+	damagefactor "Shrapnel", 3.0
+	damagefactor "Explosives", 3.0
+	DeathSound "FreezeBot/die"
+	Tag "Freezebot"
+    Scale 0.8
+	AttackSound "none"
+	//MaxStepHeight 52
+	//MaxDropOffHeight 52
+	ActiveSound "FreezeBot/Talk"
+	damagefactor "Cut", 0.1
+	damagefactor "Ice", 0.0
+	damagefactor "freeze", 0.0
+	damagefactor "frost", 0.0
+	damagefactor "FriendBullet", 0.0
+    damagefactor "Blood", 0.0    damagefactor "GreenBlood", 0.0    damagefactor "BlueBlood", 0.0    damagefactor "Taunt", 0.0    damagefactor "KillMe", 0.0
+    damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
+    damagefactor "Shrapnel", 0.0
+	damagefactor "SpawnMarine", 0.0
+	//DropItem "AmmoCell"
+	//damagefactor "HelperMarineFatallity", 0.0
+	SeeSound "None"
+	Obituary "%o has been frozen down by a FreezeBot."
+	Mass 50
+	+friendly
+	States
+	{
+	
+	
+	Spawn:
+		FZB1 A 0
+		FZB1 A 0 A_PlaySound("Freezebot/loop", 27,0.5,1)
+		TNT1 A 0 A_GiveInventory("TargetIsAMarine")
+		FZB1 A 2 BRIGHT A_Look
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5)
+		//FZB1 A 0 A_ChangeVelocity(0 ,0 ,5)
+		TNT1 AAAA 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		TNT1 AAAA 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		
+		Goto See
+		
+	ForgetTarget:
+		TNT1 A 0 A_ClearTarget
+		Goto See
+	
+	See:
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5)
+		TNT1 AAAA 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		TNT1 AAAA 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+			
+		
+		
+		
+		
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 AA 1 A_FriendChase
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5)
+		TNT1 AAAA 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		TNT1 AAAA 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 BB 1 A_FriendChase
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 BB 1 A_FriendChase
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5)
+		TNT1 AAAA 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		TNT1 AAAA 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 CC 1 A_FriendChase
+		
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 CC 1 A_FriendChase
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5)
+		TNT1 AAAA 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		TNT1 AAAA 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 DD 1 A_FriendChase
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 DD 1 A_FriendChase
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5)
+		TNT1 AAAA 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		TNT1 AAAA 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 AA 1 A_FriendChase
+	//	TNT1 A 0 A_Recoil(-1)
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5)
+		TNT1 AAAA 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.1, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		TNT1 AAAA 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.1, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		
+		FZB1 BB 1 A_FriendChase
+	//	TNT1 A 0 A_Recoil(-1)
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5)
+		TNT1 AAAA 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		TNT1 AAAA 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		
+		FZB1 CC 1 A_FriendChase
+	//	TNT1 A 0 A_Recoil(-1)
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5)
+		TNT1 AAAA 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		TNT1 AAAA 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		
+		FZB1 DD 1 A_FriendChase
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5)
+		TNT1 AAAA 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.1, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		TNT1 AAAA 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		Goto See
+	
+	
+	
+	Missile:
+		//TNT1 A 0 A_JumpIfInTargetInventory("TargetIsACyberdemon", 1, "CheckRetreat")
+		//TNT1 A 0 A_JumpIfInTargetInventory("TargetIsAMastermind", 1, "CheckRetreat")
+		//TNT1 A 0 A_JumpIfInTargetInventory("TargetIsABaronOfHell", 1, "CheckRetreat")
+		//TNT1 A 0 A_JumpIfInTargetInventory("TargetIsAMancubus", 1, "CheckRetreat")
+		
+		//TNT1 A 0 A_ChangeFlag("SOLID", 1)
+		//TNT1 A 0 A_JumpIfCloser(60, "MeleeAttack")
+		//TNT1 A 0 A_JumpIfCloser(200, "Retreat")
+		//TNT1 A 0 A_PlaySound("BEP", 2)
+		FZB1 A 0 BRIGHT A_SpawnItem ("BlueFlare", 0, 24)
+
+		FZB1 A 4 BRIGHT A_FaceTarget
+		FZB1 E 4 BRIGHT A_SpawnItem ("BlueFlare", 0, 24)
+		TNT1 A 0 A_Playsound ("FRZFIRE")
+        TNT1 A 0 A_CustomMissile ("CryoShotBot", 17, 0, 0, 0) 
+		//TNT1 A 0 A_CustomMissile ("IceTracer", 17, 0, 0, 0) 
+		FZB1 FF 2 BRIGHT A_SpawnItem ("BlueFlareMEdium", 0, 24)
+		FZB1 AA 2 BRIGHT A_SpawnItem ("BlueFlareMEdium", 0, 24)
+		TNT1 AAAA 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		TNT1 AAAA 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+
+		Goto See
+			
+	
+	Pain:
+        TNT1 AAA 0 A_CustomMissile ("SoulTrails", 12, 0, random (0, 360), 2, random (0, 160))
+		FZB1 A 3 BRIGHT
+        TNT1 A 0 A_Jump (128, 3)
+        Goto Avoid
+        TNT1 AAA 0
+        TNT1 AAA 0 A_CustomMissile ("SoulTrails", 12, 0, random (0, 360), 2, random (0, 160))
+		FZB1 A 1 BRIGHT A_Pain
+		Goto See
+
+	Avoid:
+         NULL A 0 A_FaceTarget
+         FZB1 A 6 A_FastChase
+       //FZB1 AA 0 A_CustomMissile ("SoulTrails", 24, 0, random (0, 360), 2, random (0, 160))
+		FZB1 A 0 BRIGHT A_SpawnItem ("BlueFlareMedium", 0, 24)
+
+         NULL A 0 A_FaceTarget
+         FZB1 A 6 BRIGHT A_FastChase
+       //FZB1 AA 0 A_CustomMissile ("SoulTrails", 24, 0, random (0, 360), 2, random (0, 160))
+		FZB1 A 0 BRIGHT A_SpawnItem ("BlueFlareMedium", 0, 24)
+
+         NULL A 0 A_FaceTarget
+         FZB1 A 6 BRIGHT A_FastChase
+       //FZB1 AA 0 A_CustomMissile ("SoulTrails", 24, 0, random (0, 360), 2, random (0, 160))
+		FZB1 A 0 BRIGHT A_SpawnItem ("BlueFlareMedium", 0, 24)
+
+         NULL A 0 A_FaceTarget
+         FZB1 A 6 BRIGHT A_FastChase
+       //FZB1 AA 0 A_CustomMissile ("SoulTrails", 24, 0, random (0, 360), 2, random (0, 160))
+		FZB1 A 0 BRIGHT A_SpawnItem ("BlueFlareMedium", 0, 24)
+
+		Goto Missile
+
+	Death:
+	TNT1 A 0 A_PlaySound("FreezeBot/Die",23)//, 3, 3)
+		FZB1 A 4 BRIGHT A_NoBlocking
+		TNT1 A 0 A_SpawnItemEx ("BluePlasmaParticleSpawner", 0, 0, -20)
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    TNT1 A 0 A_SpawnItemEx ("BlueFlare3",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        TNT1 AAAAA 0 A_CustomMissile ("BluePlasmaFireXL", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAA 0 A_CustomMissile ("BluePlasmaParticle", 0, 0, random (0, 360), 2, random (0, 90))
+		TNT1 AA 0 A_CustomMissile ("BluePlasmaParticle", 0, 0, random (0, 360), 2, random (0, 90))
+		TNT1 AA 0 A_CustomMissile ("RealisticFireSparks1Blue", 0, 0, random (0, 360), 2, random (0, 360))
+	    TNT1 AA 0 A_CustomMissile ("RealisticFireSparks1Blue", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AA 0 A_CustomMissile ("BigPlasmaParticleX", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AA 0 A_CustomMissile ("BigPlasmaParticleX", 0, 0, random (0, 360), 2, random (0, 360))
+        TNT1 A 0 A_ALertMonsters
+		TNT1 A 0 A_PlaySound("IceExplo",22)//, 3, 3)
+		
+			TNT1 AAA 0 A_CustomMissile ("MetalShard1", 5, 0, random (0, 360), 2, random (30, 160))
+		TNT1 AAA 0 A_CustomMissile ("MetalShard2", 25, 0, random (0, 360), 2, random (30, 160))
+		TNT1 AAA 0 A_CustomMissile ("MetalShard3", 35, 0, random (0, 360), 2, random (30, 160))
+		TNT1 A 0 A_PlaySound("DSBRK2",24)
+		TNT1 A 0 A_SpawnItem("CryoSmoke")
+		
+		//BXPL A 0 Bright A_ChangeFlag("ICEDAMAGE", 1)
+		//BXPL A 0 Bright A_ChangeFlag("NODAMAGETHRUST", 0)
+		BXPL A 0 Bright A_Explode(90,200)  
+		
+		//Freezerballs
+		
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -10, 0, -1, random(-20,20), random(-20,20), random(-20,40))
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -8, 0, -1, random(-20,20), random(-20,20), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -6, 0, -1, random(10,90), random(-20,20), random(-20,40))
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -4, 0, -1, random(-50,10), random(-20,10), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -2, 0, -1, random(-20,30), random(-20,40), random(-20,40))
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 0, 0, -1, random(-20,20), random(-20,30), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 1, 0, -1, random(-10,20), random(-20,40), random(-20,40))
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 2, 0, -1, random(-20,10), random(-20,20), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 4, 0, -1, random(-20,30), random(-20,20), random(-20,40))
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 6, 0, -1, random(-10,40), random(-20,40), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 8, 0, -1, random(-30,20), random(-20,40), random(-20,40))
+	   // BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 10, 0, -1, random(-25,25), random(-20,40), random(-20,40))
+		
+		BXPL AAAAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		BXPL AAAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		BXPL AAA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64)
+		BXPL AAA 0 Bright A_SpawnItemEx("FreezerTrailSparksSmall", random(5,-5), random(5,-5), random(5,-5), random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64)
+		BXPL AAAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		BXPL AA 0 Bright A_SpawnItemEx("CryoSmoke2", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64)
+		BXPL AAA 0 Bright A_SpawnItemEx("CryoSmoke2", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64)
+		BXPL AAAA 0 Bright A_SpawnItemEx ("IceShardsSpawner",random(-5,5),random(-5,5),-2,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		
+		BXPL ABCDEFGH 1 Bright
+		BXPL IJKLLM 1 Bright A_FadeOut(0.1)
+      
+		Stop
+	}
+}
+
+ACTOR FreezebotPathfinder
+{
+	Radius 32
+	Height 56
+	Speed 20
+	Health 4000
+	PainChance 255
+	MaxTargetRange 150
+	Monster
+	damagefactor "SpawnMarine", 8000.0
+	MaxDropOffHeight 1200
+	MaxStepHeight 1200
+	-COUNTKILL
+	+NOTARGET
+	+THRUACTORS
+	+MISSILEMORE
+	+MISSILEEVENMORE
+	+FASTER
+    +DONTSPLASH
+	-SHOOTABLE
+	-FRIENDLY
+	+NOCLIP
+	+LOOKALLAROUND
+	+NOINFIGHTING
+	States
+	{
+	Spawn:
+	Pain:
+    See:
+		TNT1 A 0 A_ChangeFlag("FRIENDLY", 0)
+		TNT1 A 0 A_ChangeFlag("NOCLIP", 1)
+		//TNT1 A 0 Thing_ChangeTID(0,98)
+		//TNT1 A 0 Thing_Hate(98, 0, 0)
+		TNT1 A 0
+		TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+		TNT1 AAAAA 1 A_Chase
+		//TNT1 A 0 Thing_Hate(98, 0, 0)
+		TNT1 A 0
+		TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1)
+		TNT1 A 1 A_FaceTarget
+		Loop
+
+	Missile:
+	    TNT1 A 0
+		TNT1 A 0 A_ChangeFlag("NOCLIP", 0)
+	    TNT1 A 0 A_Recoil(-4)
+		TNT1 A 1
+		TNT1 A 0 A_JumpIf(momx == 0, "CheckAgain")
+	SpawnMarine:	
+		TNT1 A 0 A_Scream
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItem("CryoSmoke")
+		TNT1 A 0 A_SpawnItemEx("Freezebot",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		Stop
+	CheckAgain:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIF(momy == 0, "See")
+		Goto SpawnMarine
+	}
+}
+
+

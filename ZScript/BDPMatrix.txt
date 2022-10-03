@@ -1,0 +1,92 @@
+/*
+   Coordinate Utility helper class.
+   Reproduces the old UnrealScript Get(Un)Axes functions, providing XYZ axis
+   vectors relative to an euler rotation (defaults to left-handed coords).
+
+   Copyright (c)2018-2021 Marisa Kirisame, UnSX Team
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to
+   deal in the Software without restriction, including without limitation the
+   rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+   sell copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in
+   all copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+   IN THE SOFTWARE.
+*/
+
+Class BDP_CoordUtil
+{
+	// In Tim Sweeney's own words: "transform by a pitch-yaw-roll rotation"
+	static Vector3, Vector3, Vector3 GetUnAxes( double pitch, double yaw, double roll, bool rhand = false )
+	{
+		Vector3 x = (1,0,0), y = (0,rhand?1:-1,0), z = (0,0,1);
+		Vector3 a, b, c;
+		// pitch and roll in gzdoom work in reverse compared to UE
+		pitch = -pitch;
+		roll = -roll;
+		// yaw
+		a = (cos(yaw),sin(yaw),0);
+		b = (-sin(yaw),cos(yaw),0);
+		c = (0,0,1);
+		x = (x dot a, x dot b, x dot c);
+		y = (y dot a, y dot b, y dot c);
+		z = (z dot a, z dot b, z dot c);
+		// pitch
+		a = (cos(pitch),0,sin(pitch));
+		b = (0,1,0);
+		c = (-sin(pitch),0,cos(pitch));
+		x = (x dot a, x dot b, x dot c);
+		y = (y dot a, y dot b, y dot c);
+		z = (z dot a, z dot b, z dot c);
+		// roll
+		a = (1,0,0);
+		b = (0,cos(roll),-sin(roll));
+		c = (0,sin(roll),cos(roll));
+		x = (x dot a, x dot b, x dot c);
+		y = (y dot a, y dot b, y dot c);
+		z = (z dot a, z dot b, z dot c);
+		return x, y, z;
+	}
+
+	// In Tim Sweeney's own words: "detransform by a pitch-yaw-roll rotation"
+	static Vector3, Vector3, Vector3 GetAxes( double pitch, double yaw, double roll, bool rhand = false )
+	{
+		Vector3 x = (1,0,0), y = (0,rhand?1:-1,0), z = (0,0,1);
+		Vector3 a, b, c;
+		// pitch and roll in gzdoom work in reverse compared to UE
+		pitch = -pitch;
+		roll = -roll;
+		// inverse roll
+		a = (1,0,0);
+		b = (0,cos(roll),sin(roll));
+		c = (0,-sin(roll),cos(roll));
+		x = (x dot a, x dot b, x dot c);
+		y = (y dot a, y dot b, y dot c);
+		z = (z dot a, z dot b, z dot c);
+		// inverse pitch
+		a = (cos(pitch),0,-sin(pitch));
+		b = (0,1,0);
+		c = (sin(pitch),0,cos(pitch));
+		x = (x dot a, x dot b, x dot c);
+		y = (y dot a, y dot b, y dot c);
+		z = (z dot a, z dot b, z dot c);
+		// inverse yaw
+		a = (cos(yaw),-sin(yaw),0);
+		b = (sin(yaw),cos(yaw),0);
+		c = (0,0,1);
+		x = (x dot a, x dot b, x dot c);
+		y = (y dot a, y dot b, y dot c);
+		z = (z dot a, z dot b, z dot c);
+		return x, y, z;
+	}
+}

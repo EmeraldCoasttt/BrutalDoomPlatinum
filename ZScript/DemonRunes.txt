@@ -1,0 +1,2067 @@
+
+
+CLASS RevGas : Ammo
+{
+	Default
+	{
+   Inventory.Amount 10;
+   Inventory.MaxAmount 10;
+   Ammo.BackpackAmount 10;
+   Ammo.BackpackMaxAmount 10;
+   Inventory.Icon "GSLNA0";
+   Inventory.PickupMessage "You got Gasoline.";
+   }
+}
+
+CLASS baronfeet : powerupgiver
+{
+	Default
+	{
+	+FLOATBOB;
+	FloatSpeed 1;
+	Inventory.PickupSound "misc/p_pkup";
+	Inventory.MaxAmount 0;
+	-COUNTITEM;
+	+INVENTORY.AUTOACTIVATE;
+	//+INVENTORY.ALWAYSPICKUP;
+	Powerup.Color "00 00 00", 0;
+	Powerup.Type "PowerIronFeet";
+	Powerup.Duration -999999;
+	}
+}
+
+CLASS DemonRuneSpawner : randomspawner
+	{
+	Default
+		{
+		
+		DropItem "DemonRuneRevenant";
+		DropItem "DemonRuneMancubus";
+		DropItem "DemonRuneBaron";
+		
+		
+		}
+	
+	
+	}
+
+CLASS DemonRuneRevenant : PowerupGiver
+{
+	Default
+	{
+	+FLOATBOB;
+	FloatSpeed 1;
+	Inventory.PickupMessage "Revenant Rune!";
+	Inventory.PickupSound "misc/p_pkup";
+	Inventory.MaxAmount 0;
+	+COUNTITEM;
+	+INVENTORY.AUTOACTIVATE;
+	//+INVENTORY.ALWAYSPICKUP;
+	+INVENTORY.BIGPOWERUP;
+	Powerup.Type "PowerTransformRevenant";
+	Powerup.Duration -999999;
+	}
+	States
+	{
+	Spawn:
+		DMRU AABBCCDD 2 Bright A_SpawnItemEX("RedFlareMedium",0,0,20);
+		loop;
+	}
+
+}
+
+
+CLASS PowerTransformRevenant : PowerMorph
+{
+	Default
+	{
+	PowerMorph.PlayerClass "RevenantPlayer";
+	}
+}
+
+
+
+
+CLASS DemonRuneMancubus : DemonRuneRevenant
+{
+	Default
+	{
+	Inventory.PickupMessage "Mancubus Rune!";
+	Powerup.Type "PowerTransformMancubus";
+	
+	}
+	States
+	{
+	Spawn:
+		DMRU KKLLMMNN 2 Bright A_SpawnItemEX("YellowFlareMedium",0,0,20);
+		loop;
+	}
+	
+
+}
+
+
+CLASS PowerTransformMancubus : PowerMorph
+{
+	Default
+	{
+	PowerMorph.PlayerClass "MancubusPlayer";
+	}
+}
+
+
+CLASS DemonRuneBaron : DemonRuneRevenant
+{
+	Default
+	{
+	Inventory.PickupMessage "Baron Of Hell Rune!";
+	Powerup.Type "PowerTransformBaron";
+	
+	}
+	
+	States
+	{
+	Spawn:
+		DMRU FFGGHHII 2 Bright A_SpawnItemEX("GreenFlareMedium",0,0,20);
+		loop;
+	}
+	
+
+}
+
+
+CLASS PowerTransformBaron : PowerMorph
+{
+	Default
+	{
+	PowerMorph.PlayerClass "BaronPlayer";
+	}
+}
+
+///* UNUSED
+CLASS DemonRuneMeatball : DemonRuneRevenant
+{
+	Default
+	{
+	
+	Powerup.Type "PowerTransformMeatBall";
+	
+	}
+	
+
+}
+
+
+CLASS PowerTransformMeatBall : PowerMorph
+{
+	Default
+	{
+	PowerMorph.PlayerClass "MeatBallPlayer";
+	}
+}
+//*/
+
+CLASS DemonPlayer : DoomPlayer
+{
+	int decayticks;
+	Property decayticks : decayticks;
+	string deadgibs;
+	Property deadgibs : deadgibs;
+	Default
+	{
+	Health 700;
+	+buddha;
+	Player.TeleportFreezeTime 0;
+	Player.runhealth 999;
+	demonplayer.decayticks 4;
+	demonplayer.deadgibs "DeadMarineArtifact";
+	 damagefactor "Head", 0.0;
+	damagefactor "FriendBullet", 0.0;
+    damagefactor "Taunt", 0.0;
+    damagefactor "KillMe", 0.0;
+	damagefactor "Shotgun", 0.7;
+    damagefactor "SSG", 5.0;
+    damagefactor "Shrapnel", 0.0;
+    damagefactor "Blood", 0.5;
+    damagefactor "BlueBlood", 0.5;
+    damagefactor "GreenBlood", 0.5;
+    damagefactor "MinorHead", 0.0;
+    damagefactor "Decaptate", 0.0;
+	damagefactor "MonsterKnocked", 0.0;
+	damagefactor "CancelTeleportFog", 0.0;
+	damagefactor "BHFTOnBarrel", 0.0;
+	damagefactor "GibRemoving", 0.0;
+	Species "marines";
+	damagefactor "HelperMarineFatallity", 0.0;
+	damagefactor "Leg", 0.0;
+	damagefactor "SpawnMarine", 0.0;
+	damagefactor "TeleportRemover", 0.0;
+	DamageFactor "CauseObjectsToSplash", 0.0;
+	damagefactor "drowning", 0.0;
+	}
+	int		DualTimer;
+	Int		SpecialTimer;
+	
+	Override void tick()
+	{
+	If(health > 700)
+	{
+	Health = 700;
+	}
+		if (level.time % decayticks == 0) 
+	{
+			If(health <= 1)
+			{
+			A_spawnitemex(deadgibs);
+			ACS_namedexecutealways("unmorphdemon",0,0,0,0);
+			}
+		Else
+		{
+		Health = (health - 1);
+		}
+	}
+	
+	
+	If(dualtimer >= 1)
+		{
+		Dualtimer = dualtimer - 1;
+		}
+		
+		If(specialtimer >= 1)
+		{
+		Specialtimer = specialtimer - 1;
+		}
+		
+		If(player.cmd.buttons & BT_USER3 && dualtimer <= 0)
+			{
+			dualtimer = 17;
+			giveinventory("startdualwield",1);
+			}
+		If(player.cmd.buttons & BT_USER4 && specialtimer <= 0)
+			{
+			specialtimer = 17;
+			giveinventory("swapriflespecial",1);
+			}
+
+	Super.tick();
+	}
+ 
+}
+
+
+CLASS RevenantPlayer : DemonPlayer
+{
+	Override void tick()
+	{
+	If (level.time % 35 == 0 && findinventory("jetpack_active"))
+	{
+//	A_takeinventory("revgas",1);
+	}
+	Else if (level.time % 35 == 0)
+	{
+	A_giveinventory("revgas",1);
+	}
+	
+	Super.tick();
+	}
+	Default
+	{
+	Player.soundclass "skelly";
+	Radius 16;
+	Height 56;
+	//Health 300;
+	demonplayer.deadgibs "DeadRevenantArtifact";
+	Scale 1.0;
+	Player.ViewHeight 65;
+	Player.AttackZOffset 19;
+	Player.JumpZ 9;
+	Player.MorphWeapon "RevenantWeapon";
+	PainSound "skeleton/pain";
+	DeathSound "skeleton/death";
+	Player.Face "D4R";
+	Species "Marines";
+	+NOSKIN;
+//	+PLAYERPAWN.CROUCHABLEMORPH;
+	+PICKUP;
+	Player.CrouchSprite "SKEL";
+	Speed 1.0;
+	//+buddha;
+	}
+	States
+	{
+	Spawn:
+		SKEL B 5;
+		Loop;
+	See:
+		SKEL ABCDEF 3;
+		Goto Spawn;
+		
+	Missile:
+		SKEL J 2 BRIGHT;
+
+		LOOP;
+		
+		Melee:
+		SKEL GHI 4;
+		Goto spawn;
+		
+	Pain:
+		SKEL L  2;
+		SKEL L  2 A_Pain();
+		Goto Spawn;
+	Death:
+		TNT1 A 0;
+		TNT1 A 0 A_TakeInventory("RevenantWeapon");
+		TNT1 A 0 A_Scream();
+		TNT1 A 0 A_NoBlocking();
+		SKEL MNOP 4;
+		SKEL Q -1;
+		Stop;
+	XDeath:
+		TNT1 A 0;
+		TNT1 A 0 A_TakeInventory("RevenantWeapon");
+		REDX A 1;
+		TNT1 A 0 A_Scream();
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_StartSound("misc/xdeath4");
+		TNT1 AAA 0 A_spawnprojectile ("XDeath1", 60, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AA 0 A_spawnprojectile ("XDeath2b", 60, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AA 0 A_spawnprojectile ("XDeath3b", 60, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_SpawnItem("MuchBlood2", 0, 50);
+		TNT1 AAA 0 A_spawnprojectile ("RevenantDust", 30, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAAA 0 A_spawnprojectile ("RevenantDust2", 30, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AA 0 A_spawnprojectile ("BigLSPart1", 37, 0, random (0, 360), 2, random (30, 150));
+		TNT1 AA 0 A_spawnprojectile ("BigLSPart2", 37, 0, random (0, 360), 2, random (30, 150));
+		TNT1 AAAAAAA 0 A_spawnprojectile ("RevenantPiece", 37, 0, random (0, 360), 2, random (30, 150));
+		TNT1 A 0 A_SpawnItemEX ("XDeadSkeleton22", 1);
+		TNT1 A 0 A_SpawnItemEX("HellishMissileLauncher", 0, 40);
+	    REDX ABCDEFGHIJK 3;
+		TNT1 A 0 A_SpawnItem("GrowingBloodPool");
+		REDX K -1;
+		Stop;	
+		}
+}
+
+
+
+
+CLASS MancubusPlayer : DemonPlayer
+{
+int airtime;
+
+
+Override void tick()
+{
+If(vel.Z != 0)
+{
+airtime = (airtime + 1);
+}
+
+super.tick();
+}
+Default
+	{
+	Radius 16;
+	Height 56;
+	//Health 300;
+	Player.soundclass "fatso";
+	
+	Scale 1.0;
+	Player.ViewHeight 65;
+	//Player.AttackZOffset 60;
+	Player.JumpZ 18;
+	Player.MorphWeapon "MancubusWeapon"; 
+	PainSound "fatso/pain";
+	DeathSound "fatso/death";
+	demonplayer.deadgibs "DeadMancubusArtifact";
+	Player.Face "MAN";
+	Species "Marines";
+	+NOSKIN;
+	//+PLAYERPAWN.CROUCHABLEMORPH;
+	+PICKUP;
+	Player.CrouchSprite "SKEL";
+	Speed 1.0;
+	//+buddha;
+	}
+	States
+	{
+	Spawn:
+		FATT BBBBB 1 A_JumpIf (vel.Z != 0, "IsJumpin");
+		Loop;
+	See:
+		FATT AAAAABBBBBCCCCCDDDDDEEEEEFFFFF 1 A_JumpIf (vel.Z != 0, "IsJumpin");
+		Goto Spawn;
+		
+	IsJumpin:
+		TNT1 A 0
+		{
+		bnopain = true;
+		}
+		NULL A 0  A_JumpIf (vel.Z == 0, "fallfinally");
+		FATR C 3;
+	    
+	    
+		LOOP;
+	FallFinally:
+		TNT1 A 0 
+		{
+		If(airtime > 15)
+		{
+		A_Startsound("CLAP",9);
+		A_Quake(4,12,0,800);
+		//TNT1 A 0 HealThing(100); //because it damages itself
+		A_Explode(200, 280, 0 , 0, 160);//, 0, 0, 0, "stomp")
+		}
+		bnopain = false;
+		Airtime = 0;
+		}
+		
+		FAT4 CDBA 5; //A_JumpIf (vel.Z != 0, "IsJumpin");
+		Goto Spawn;
+	Missile:
+		FATT H 1 BRIGHT A_JumpIf (vel.Z != 0, "IsJumpin");
+		LOOP;
+	Pain:
+		FATT J  2;
+		FATT J  2 A_Pain();
+		Goto Spawn;
+	Death:
+		TNT1 A 0;
+		TNT1 A 0 A_TakeInventory("RevenantWeapon");
+		TNT1 A 0 A_Scream();
+		TNT1 A 0 A_NoBlocking();
+		SKEL MNOP 4;
+		SKEL Q -1;
+		Stop;
+	XDeath:
+		TNT1 A 0;
+		TNT1 A 0 A_TakeInventory("RevenantWeapon");
+		REDX A 1;
+		TNT1 A 0 A_Scream();
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_StartSound("misc/xdeath4");
+		TNT1 AAA 0 A_spawnprojectile ("XDeath1", 60, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AA 0 A_spawnprojectile ("XDeath2b", 60, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AA 0 A_spawnprojectile ("XDeath3b", 60, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_SpawnItem("MuchBlood2", 0, 50);
+		TNT1 AAA 0 A_spawnprojectile ("RevenantDust", 30, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAAA 0 A_spawnprojectile ("RevenantDust2", 30, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AA 0 A_spawnprojectile ("BigLSPart1", 37, 0, random (0, 360), 2, random (30, 150));
+		TNT1 AA 0 A_spawnprojectile ("BigLSPart2", 37, 0, random (0, 360), 2, random (30, 150));
+		TNT1 AAAAAAA 0 A_spawnprojectile ("RevenantPiece", 37, 0, random (0, 360), 2, random (30, 150));
+		TNT1 A 0 A_SpawnItemEX ("XDeadSkeleton22", 1);
+		TNT1 A 0 A_SpawnItemEX("HellishMissileLauncher", 0, 40);
+	    REDX ABCDEFGHIJK 3;
+		TNT1 A 0 A_SpawnItem("GrowingBloodPool");
+		REDX K -1;
+		Stop;	
+		}
+}
+
+
+
+CLASS BaronPlayer : DemonPlayer
+{
+	Default
+	{
+	Player.soundclass "baron";
+	Radius 16;
+	Height 56;
+	Scale 1.15;
+	Player.ViewHeight 65;
+	Player.AttackZOffset 29;
+	Player.JumpZ 15;
+	Player.MorphWeapon "BaronWeapon";
+	PainSound "PSXDPN";
+	DeathSound "baron/death";
+	Player.ColorRange 112, 127;
+	Player.Face "D4B";
+	+NOSKIN;
+	+PICKUP;
+	-DONTTRANSLATE;
+	Species "Marines";
+	Player.CrouchSprite "BOSS";
+	 BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood";
+	BloodColor "DarkGreen";
+	+FORCERADIUSDMG;
+	demonplayer.deadgibs "DeadBaronArtifact";
+	}
+	States
+	{
+	Missile2:
+	BARO RRQQQQPPPPSSSTTTRRR 1;
+	Goto spawn;
+		Charge:
+		BRCG S 4;
+		TNT1 A 0 A_startSound("cyber/hoof",12);
+		BRCG T 4;
+		BRCG U 4;
+		TNT1 A 0 A_startSound("cyber/hoof",11);
+		BRCG V 4;
+		LOOP;
+
+
+	Spawn:
+		BOSS B 5;
+		Loop;
+	See:
+		BOSS A 4;
+		BOSS B 4;
+		
+		BOSS C 4;
+		BOSS D 4;
+
+		Goto Spawn;
+		
+	Melee:
+	Missile:
+		BOSS EFG 4;
+		Goto Spawn;
+	Pain:
+		BOSS H  2;
+		BOSS H  2 A_Pain();
+
+		Goto Spawn;
+	Death:
+		TNT1 A 0;
+		TNT1 A 0 A_TakeInventory("BaronWeapon");
+		BOSS I  8;
+		BOSS J  8 A_Scream();
+		BOSS K  8;
+		BOSS L  8 A_NoBlocking();
+		BOSS MN 8;
+		BOSS O -1;
+		Stop;
+		}
+}
+
+
+
+class MeatBallPlayer : DemonPlayer
+{
+    Property UpMove : upMove;
+
+
+    Default
+    {
+        Speed 39;
+        MeatBallPlayer.UpMove 1.0;
+		demonplayer.Decayticks 6;
+        +NoGravity
+        +RollSprite
+		+rollcenter
+		Player.MorphWeapon "MeatBallWeapon";
+		+thruspecies;
+		//Player.jumpz 0;
+		Radius 16;
+		Height 56;
+			Player.ColorRange 112, 127;
+			//player.startitem "meatballweapon";
+	Player.Face "STF";
+	+NOSKIN;
+	+PICKUP;
+	-DONTTRANSLATE;
+	Species "Marines";
+	Damagefactor 0.8;
+	//player.displayname "Pain Elemental";
+	//Player.CrouchSprite "BOSS";
+    }
+
+
+    const maxYaw = 65536.0;
+    const maxPitch = 65536.0;
+    const maxRoll = 65536.0;
+    const maxForwardMove = 12800;
+    const maxSideMove = 10240;
+    const maxUpMove = 768;
+    const stopFlying = -32768;
+
+    const trichordingCVar = "G_Trichording";
+
+
+    double upMove;
+    Quaternion targetRotation;
+
+
+    override void PostBeginPlay()
+    {
+        Super.PostBeginPlay();
+
+        bFly = true;
+        targetRotation.FromEulerAngle(angle, pitch, roll);
+    }
+
+
+    override void HandleMovement()
+    {
+	//a_logint(roll);
+	If(roll > 90 || roll < -90)
+		{
+			bxflip = true;
+		}
+	Else
+		{
+			bXflip = false;
+		}
+	Speed = 320 / ticrate;
+        if (reactionTime) --reactionTime;   // Player is frozen
+        else
+        {
+            CheckQuickTurn();
+            RotatePlayer();
+            MovePlayer();
+        }
+    }
+
+
+    override void CheckCrouch(bool totallyFrozen) {}
+    override void CheckPitch() {}
+
+
+    override void MovePlayer()
+    {
+        UserCmd cmd = player.cmd;
+
+        //if (IsPressed(BT_Jump)) cmd.upMove = maxUpMove;
+       // if (IsPressed(BT_Crouch)) cmd.upMove = -maxUpMove;
+       // if (cmd.upMove == stopFlying) cmd.upMove = 0;   // Can't stop flying
+
+       // if (cmd.forwardMove || cmd.sideMove || cmd.upMove)
+       // {
+            double scale = CmdScale();
+            double fm = 10;
+            double sm = 0;
+            double um = 0;
+
+            [fm, sm, um] = TweakSpeeds3(fm, sm, um);
+
+            Vector3 forward, right, up;
+            [forward, right, up] = GetAxes();
+
+            Vector3 wishVel = fm * forward + sm * right + um * up;
+
+            Accelerate(wishVel.Unit(), wishVel.Length(), 4.0);
+            BobAccelerate(wishVel.Unit(), wishVel.Length(), 4.0);
+
+            if (!(player.cheats & CF_PREDICTING)) PlayRunning();
+
+			if (player.cheats & CF_REVERTPLEASE)
+			{
+				player.cheats &= ~CF_REVERTPLEASE;
+				player.camera = player.mo;
+			}
+        //}
+    }
+
+
+    virtual void CheckQuickTurn()
+    {
+        UserCmd cmd = player.cmd;
+
+		if (JustPressed(BT_Turn180)) player.turnticks = turn180_ticks;
+
+        if (player.turnTicks)
+        {
+            --player.turnTicks;
+            cmd.yaw = 0.5 * 3640;
+        }
+    }
+
+
+    virtual void RotatePlayer()
+    {
+        // Find target rotation
+        UserCmd cmd = player.cmd;
+        double cmdYaw = cmd.yaw * 360 / maxYaw;
+        double cmdPitch = -cmd.pitch * 360 / maxPitch;
+        double cmdRoll = cmd.roll * 360 / maxRoll;
+
+        Quaternion input;
+        input.FromEulerAngle(cmdYaw, cmdPitch, cmdRoll);
+        Quaternion.Multiply(targetRotation, targetRotation, input);
+
+        // Interpolate to it
+        Quaternion r;
+        r.FromEulerAngle(angle, pitch, roll);
+
+        Quaternion.Slerp(r, r, targetRotation, 0.2);
+
+        double newAngle, newPitch, newRoll;
+        [newAngle, newPitch, newRoll] = r.ToEulerAngle();
+
+        A_SetAngle(newAngle, SPF_Interpolate);
+        A_SetPitch(newPitch, SPF_Interpolate);
+        A_SetRoll(newRoll, SPF_Interpolate);
+    }
+
+
+    virtual double, double, double TweakSpeeds3(double forward, double side, double up)
+    {
+        [forward, side] = TweakSpeeds(forward, side);
+
+        up *= upMove;
+
+        return forward, side, up;
+    }
+
+
+    virtual double CmdScale()
+    {
+        bool canStraferun = CVar.FindCVar(trichordingCVar).GetBool();
+        if (canStraferun) return speed;
+
+		UserCmd cmd = player.cmd;
+        double fm = double(cmd.forwardMove) / maxForwardMove;
+        double sm = double(cmd.sideMove) / maxSideMove;
+        double um = double(cmd.upMove) / maxUpMove;
+
+        double maxCmd = Max(Abs(fm), Abs(sm), Abs(um));
+        double total = (fm, sm, um).Length();
+
+        double scale = total ? speed * maxCmd / total : 0;
+
+        return scale;
+    }
+
+
+    virtual void Accelerate(Vector3 wishDir, double wishSpeed, double accel)
+    {
+        double currentSpeed = vel dot wishDir;
+
+        double addSpeed = wishSpeed - currentSpeed;
+        if (addSpeed <= 0) return;
+
+        double accelSpeed = Min(accel * wishSpeed, addSpeed);
+
+        vel += accelSpeed * wishDir;
+    }
+
+
+    virtual void BobAccelerate(Vector3 wishDir, double wishSpeed, double accel)
+    {
+        double currentSpeed = player.vel dot wishDir.xy;
+
+        double addSpeed = wishSpeed - currentSpeed;
+        if (addSpeed <= 0) return;
+
+        double accelSpeed = Clamp(accel * wishSpeed, 0, addSpeed);
+
+        player.vel += accelSpeed * wishDir.xy;
+    }
+
+
+    Vector3, Vector3, Vector3 GetAxes()
+    {
+        Quaternion r;
+        r.FromEulerAngle(angle, pitch, roll);
+
+        Vector3 forward = (1, 0, 0);
+        forward = r.Rotate(forward);
+
+        Vector3 right = (0, -1, 0);
+        right = r.Rotate(right);
+
+        Vector3 up = (0, 0, 1);
+        up = r.Rotate(up);
+
+        return forward, right, up;
+    }
+
+
+    bool IsPressed(int bt)
+    {
+        return player.cmd.buttons & bt;
+    }
+
+    bool JustPressed(int bt)
+    {
+        return (player.cmd.buttons & bt) && !(player.oldButtons & bt);
+    }
+	
+	States
+	{
+
+		Spawn:
+			PAIN A 5;
+			LOOP;
+
+		See:
+			PAIN AABBCC 3;
+			Goto spawn;
+		Melee:
+		Missile:
+				PAIN D 5;
+				PAIN E 5;
+				PAIN F 5 BRIGHT;
+				PAIN F 0 BRIGHT;
+				Goto Spawn;
+		Pain:
+				PAIN G 6;
+				PAIN G 6 A_Pain();
+				Goto Spawn;
+		Death:
+				TNT1 A 0;
+				TNT1 A 0 A_TakeInventory("BaronWeapon");
+				BOSS I  8;
+				BOSS J  8 A_Scream();
+				BOSS K  8;
+				BOSS L  8 A_NoBlocking();
+				BOSS MN 8;
+				BOSS O -1;
+				Stop;
+
+
+	}
+}
+
+//*/
+Class DemonWeapon : Doomweapon
+{
+Default
+{
+Weapon.BobRangeX 0.4;
+	Weapon.BobRangeY 0.4;
+	Weapon.BobSpeed 2.9;
+Weapon.BobStyle "InverseAlpha";
++inventory.undroppable;
++WEAPON.CHEATNOTWEAPON;
+}
+	Bool hasselected;
+
+action void A_SetCVAR(string cvartoset, int valuetoset)
+    {
+        CVar.GetCVar(cvartoset, Player).SetInt(valuetoset);
+    }
+  action bool JustPressed(int which) // "which" being any BT_* value, mentioned above or not
+    {
+        //return (player.cmd.buttons & which) && !(player.oldbuttons & which);
+        return player.cmd.buttons & which;
+    }
+    action bool JustReleased(int which)
+    {
+        return !(player.cmd.buttons & which) && (player.oldbuttons & which);
+    }
+	
+	
+	
+	
+		override void DoEffect() 
+		
+		{	
+			super.DoEffect();
+			let player = owner.player;
+  
+   
+			if (player && player.readyweapon) 
+			{
+				player.WeaponState |= WF_WEAPONBOBBING;
+			}
+		}
+		
+}
+
+
+CLASS RevenantWeapon : DemonWeapon
+{	
+
+
+
+
+	Default
+	{
+	Weapon.AmmoUse1 0;
+	Weapon.AmmoGive1 0;
+	Weapon.AmmoUse2 0;
+	Weapon.AmmoGive2 0;
+	//Weapon.ammotype1 "revgas";
+	+WEAPON.CHEATNOTWEAPON;
+	Tag "Rev Launchers";
+	}
+	
+	action void MoveSpeed(float pspeed, float psidemove)
+	{
+		DemonPlayer(self).Speed = pspeed;
+		DemonPlayer(self).SideMove1 = psidemove;
+		DemonPlayer(self).SideMove2 = psidemove;
+	}
+	States
+	{
+	
+	
+	Steady:	
+		TNT1 A 0;
+		TNT1 A 1  A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+		Goto Select;
+		
+	
+	
+		
+
+		
+	Spawn:
+		SHOT A -1;
+		Stop;
+		
+	CeaseMorph:
+		TNT1 A 0;
+		TNT1 A 0 A_TakeInventory("CeaseMorph", 1);
+		TNT1 A 0 ACS_NamedExecuteAlways("BDForceUnmorph");
+		TNT1 A 1;
+		Goto Ready;	
+		
+		
+		
+		
+		LaserMode:
+		TNT1 A 1 
+		{
+		FLineTraceData lasersight;
+LineTrace(angle, 4096, pitch, TRF_SOLIDACTORS|TRF_THRUHITSCAN, offsetz: player.viewz - pos.z, data: lasersight);
+vector3 targetpos = lasersight.HitLocation;
+if (lasersight.HitLine)
+{
+  vector2 wallnormal = (-lasersight.HitLine.delta.y,lasersight.HitLine.delta.x).unit();
+  if (!lasersight.LineSide)
+    wallnormal *= -1;
+  targetpos += (wallnormal * 18);
+}
+Spawn("GuidedLaser",targetpos);
+		//A_FireBullets(0, 0, 1, 0, "GuidedLaser", FBF_NORANDOMPUFFZ,9999,null,65);
+		}
+		Loop;
+	
+	
+	
+	
+	Steady:
+	TNT1 A 1;
+	Goto Ready;
+	
+
+	ReadyHands:
+		D4RW A 1 A_jumpifinventory("kicking",1,"kick");
+		Goto ReadyHands;
+	
+	
+	
+	kick:
+	TNT1 A 0 
+	{
+	invoker.owner.setstatelabel("melee");
+	}
+	TNT1 A 0 A_takeinventory("kicking",1);
+	D4RW BCD 1;
+	TNT1 A 0 A_startSound("skeleton/swing");
+	D4RW EFG 1;
+	TNT1 A 0 A_fireprojectile("MeleeStrike1Rev", 0, 0, 0, 10);
+	D4RW HIJKL 1;
+	TNT1 A 5;
+	D4RW DCB 1;
+	Goto readyhands;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	Ready:
+	Ready3:
+	Reload:
+	TNT1 A 0 
+	{
+	If(!invoker.hasselected)
+	{
+	invoker.hasselected = true;
+	A_StartSound("revup");
+	A_StartSound("skeleton/sight",14);
+	A_spawnitemex("DeadMarineArtifact");
+			{
+			If(getCVAR("bd_HellishLaserRockets")==true)
+			{
+			A_StartSound("RAILR1", 2);
+			A_Overlay(15, "lasermode");
+			}
+		}
+	     
+		A_Overlay(-20, "ReadyHands");
+		A_OverlayFlags(1, PSPF_ADDBOB, FALSE);
+		}
+		}
+		RVCG A 0 {
+			if (CountInv("Swapriflespecial") == 1) {
+				//ThrustTHingZ(0, 35, 0, 1);
+				A_Takeinventory("Swapriflespecial",1);
+				
+				If(getCVAR("bd_HellishLaserRockets")==true)
+				{
+				A_StartSound("BEP");
+				A_SetCVAR("bd_hellishLaserRockets",false);
+				A_Print("Laser Guided Rockets DeActivated");
+				A_StartSound("RAILRIP", 2);
+				A_ClearOverlays(15,15);
+				
+				}
+				Else
+				{
+				
+				A_StartSound("BEP");
+				A_Print("Laser Guided Rockets Activated");
+				A_SetCVAR("bd_HellishLaserRockets",true);
+				A_StartSound("RAILR1", 2);
+				A_Overlay(15,"LaserMode");
+				}
+				//A_Giveinventory("Jetpack_Active", 1);
+				//A_Overlay(4, "firehandslonger");
+				//A_Overlay(-4, "JetpackActive");
+				//A_Overlay(-5, "JetpackMovement");
+				//ACS_NamedExecuteAlways("JetpackMusic");
+				//SetAmmoType2(True, Gas);
+				//MoveSpeed(0.1, 0.01);
+			}
+		}
+		RVCG A 1 A_WeaponReady;
+		
+		RVCG A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+       // RVCG A 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
+ 
+		RVCG A 0 A_JumpIfInventory("Jetpack_Active",1,"Ready3");
+		RVCG A 0 {
+			if (CountInv("StartDualWield") == 1) {
+				ThrustTHingZ(0, 35, 0, 1);
+				//A_giveinventory("disabletilting",1);
+				A_Takeinventory("StartDualWield",1);
+				A_Giveinventory("Jetpack_Active", 1);
+			//	A_Overlay(4, "JetPackHandsStart");
+				A_Overlay(-4, "JetpackActive");
+				A_Overlay(-5, "JetpackMovement");
+				//ACS_NamedExecuteAlways("JetpackMusic");
+				//SetAmmoType2(True, Gas);
+				MoveSpeed(0.1, 0.01);
+			}
+			else if (CountInv("StartDualWield") == 1 && CountInv("RevGas") <= 0) {
+				A_Takeinventory("StartDualWield",1);
+				MoveSpeed(1, 1);
+				A_Print("Not Enough Fuel for Jetpack");
+			}
+		}
+		
+		
+		
+		
+		
+		Goto Ready3;
+	
+	JetpackActive:
+
+	TNT1 A 0 A_jumpifinventory("startdualwield",1,"jetpackdeactivate");
+		TNT1 A 1 {
+			A_StartSound("JETLOOP",6,CHANF_LOOPING);
+			A_SpawnItemEx("revflametrail",-5,12,20);
+			A_SpawnItemEx("revflametrail",-5,-12,20);
+			SetPlayerProperty(0,1,PROP_FLY);
+			
+			
+				
+				
+			
+			
+		}
+		TNT1 A 0;
+		Goto JetpackActive;
+		
+	JetpackDeActivate:
+	TNT1 A 0 
+	{
+	A_StartSound("JETEND",6);
+				
+				SetPlayerProperty(0,0,PROP_FLY);
+				A_Takeinventory("StartDualWield",1);
+				A_TakeInventory("Jetpack_Active", 1);
+				A_ClearOverlays(-5,-5);
+				MoveSpeed(1, 1);
+				}
+		TNT1 AAAAAA 1;
+		RVCG A 0 {
+			A_ClearOverlays(-4,-4);
+			//A_takeinventory("disabletilting",1);
+			//A_SetRoll(0);
+		}
+		Stop;
+	
+	
+	JetpackMovement:
+		TNT1 A 1; 
+		RVCG A 0 {
+			if (JustPressed(BT_JUMP)) {
+			SetPlayerProperty(0,0,PROP_FLY);
+			ThrustTHingZ(0, 30, 0, 1);
+			}
+			if (JustPressed(BT_CROUCH)) {
+				ThrustTHingZ(0, -7, 0, 1);
+			}
+			if (JustPressed(BT_FORWARD)) {
+				A_Recoil(-2);
+			}
+			if (JustPressed(BT_BACK)) {
+				A_Recoil(2);
+			}
+			if (JustPressed(BT_MOVERIGHT)) {
+				//ThrustThing(angle*256/360+192, 3, 1, 0);
+				ThrustThing(angle*256/360+192, 2, 1, 0);
+				//if (roll <= 6.0) {
+				//	roll += 1.0;
+				//}
+				//if (roll > -6.0 && roll <= 0.0) {
+				//	roll += 2.0;
+				//}
+			}
+			if (JustPressed(BT_MOVELEFT)) {
+				//ThrustThing(angle*256/360+64, 3, 1, 0);
+				ThrustThing(angle*256/360+64, 2, 1, 0);
+				//if (roll >= -6.0) {
+				//	roll += -1.0;
+				//}
+				//if (roll >= 0.0 && roll < 6.0) {
+				//	roll += -2.0;
+				//}
+			}
+		
+			
+		}
+		Goto JetpackMovement;
+		
+		
+		
+	
+		
+	Deselect: RVCG A 0 A_TakeInventory("IsPlayingDoxMod",1);
+		RVCG A 0 A_ClearOverlays(-2,-2);
+		RVCG A 0 A_Overlay(4, "DeselectAnimationHands");
+		RVCG NMLKJ 1 {
+			A_ClearOverlays(-5,-5);
+			//if (roll < 0) {
+			//	roll += 2.0;
+			//}
+			//if (roll > 0) {
+			//	roll -= 2.0;
+			//}
+			//A_SetRoll(roll);
+		}
+		RVCG A 0 {
+			//A_SetRoll(0);
+			if (CountInv("Jetpack_Active")==1) {
+				A_StartSound("JETEND",6);
+				SetPlayerProperty(0,0,PROP_FLY);
+				A_Takeinventory("StartDualWield",1);
+				A_TakeInventory("Jetpack_Active", 1);
+				A_ClearOverlays(-4,-4);
+				//SetAmmoType2(False, Gas);
+				MoveSpeed(1, 1);
+			}
+		}
+		RVCS A 0 A_Takeinventory("StartDualWield",1);
+		TNT1 AAAAAAAAAAAAAAAA 0 A_Lower();
+		TNT1 A 1 A_Lower();
+		Wait;
+	Select:
+		TNT1 A 0;
+		TNT1 A 0 A_StartSound("revup");
+		TNT1 A 0 A_StartSound("skeleton/sight",14);
+	TNT1 A 0 
+			{
+			If(getCVAR("bd_HellishLaserRockets")==true)
+			{
+			A_StartSound("RAILR1", 2);
+			A_Overlay(15,"LaserMode");
+			}
+		}
+	     
+		RVCG A 0 A_Overlay(4, "ReadyHands");
+		RVCG A 0 A_OverlayFlags(1, PSPF_ADDBOB, FALSE);
+		RVCG JKLMN 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		Goto Ready;
+	
+	SelectAnimationHands:
+
+		TNT1 A 0 A_giveinventory("yesimrevlauncher",1);
+		Goto ReadyHands;
+	DeselectAnimationHands:
+	TNT1 A 1;
+		Wait;
+		
+		
+    Spawn:
+        FATB D 1;
+        Loop;
+		
+	Fire:
+
+		RVCG A 0 A_StartSound("RLANSHOT", 1);
+		//"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("soulammo")<=6) { A_StartSound("MagClick", 7); }}}
+		RVCG A 0 A_ZoomFactor(0.99);
+		RVCG A 0 A_JumpIfInventory("RevenantRocketFire1823", 1, "OpenFire2");
+		RVCG A 0 A_GiveInventory("RevenantRocketFire1823", 1);
+		
+
+	    RVCG A 0 BRIGHT A_fireprojectile("Alerter", 0, 0, -1, 0);
+		RVCG AAAA 0 BRIGHT A_fireprojectile("ShotgunParticles", random(-12,12), 0, -15, 20, 0, random(-9,9));
+		RVCG AA 0 BRIGHT A_fireprojectile("ShotgunParticles2", random(-12,12), 0, -15, 20, 0, random(-9,9));
+		RVCG A 0 A_SetAngle(Angle+0.6, SPF_INTERPOLATE);
+		RVCG A 0 A_SetPitch(Pitch+0.4, SPF_INTERPOLATE);
+        RVCG B 1 BRIGHT 
+		{
+		if (GetCVAR("bd_HellishLaserRockets")==True) {
+				A_fireprojectile("revenantseekermissiles4", 0, 1, -15, 20);
+			}
+			Else
+			{
+		A_fireprojectile("revenantseekermissiles2", 0, 1, -15, 20);
+		}
+		}
+		RVCG A 0 A_ZoomFactor(1.0);
+		RVCG C 1 BRIGHT A_SetPitch(Pitch-0.4, SPF_INTERPOLATE);
+		RVCG DE 1 A_SetAngle(Angle-0.3, SPF_INTERPOLATE);
+			TNT1 A 0 
+	{
+	invoker.owner.setstatelabel("spawn");
+	}
+		RVCG A 3 A_fireprojectile("SmokeSpawner11",0,0,-26,30);
+
+		Goto Ready;
+		
+
+		
+	OpenFire2:
+	    RVCG A 0 A_TakeInventory("RevenantRocketFire1823", 1);
+
+	    RVCG AAAA 0 BRIGHT A_fireprojectile("ShotgunParticles", random(-12,12), 0, 15, 20, 0, random(-9,9));
+		RVCG AA 0 BRIGHT A_fireprojectile("ShotgunParticles2", random(-12,12), 0, 15, 20, 0, random(-9,9));
+	    RVCG A 0 BRIGHT A_fireprojectile("Alerter");
+		RVCG A 0 A_SetAngle(Angle-0.6, SPF_INTERPOLATE);
+		RVCG A 0 A_SetPitch(Pitch+0.4, SPF_INTERPOLATE);
+	    RVCG F 1 BRIGHT 
+		{
+		if (GetCVAR("bd_HellishLaserRockets")==True) {
+				A_fireprojectile("revenantseekermissiles4", 0, 1, 15, 20);
+			}
+			Else
+			{
+		A_fireprojectile("revenantseekermissiles2", 0, 1, 15, 20);
+		}
+		}
+		RVCG A 0 A_ZoomFactor(1.0);
+		RVCG G 1 BRIGHT A_SetPitch(pitch-0.4, SPF_INTERPOLATE);
+		RVCG HI 1 A_SetAngle(Angle+0.3, SPF_INTERPOLATE);
+			TNT1 A 0 
+	{
+	invoker.owner.setstatelabel("spawn");
+	}
+		RVCG A 3 A_fireprojectile("SmokeSpawner11",0,0,26,30);
+	
+		Goto Ready;
+		
+
+		
+	AltFire:
+	//	RVCG A 1
+	//	RVCG AA 1
+		RVCG AA 0;
+
+		
+		
+	    RVCG A 0 BRIGHT A_fireprojectile("Alerter", 0, 0, -1, 0);
+		//
+		RVCG A 0 A_startSOund("RLANSHOT", 1);
+		//"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("soulammo")<=6) { A_StartSound("MagClick", 7); }}}
+		RVCG A 0 A_ZoomFactor(0.98);
+		RVCG AA 0 BRIGHT A_fireprojectile("ShotgunParticles", random(-12,12), 0, -15, 20, 0, random(-9,9));
+		RVCG A 0 BRIGHT A_fireprojectile("ShotgunParticles2", random(-12,12), 0, -15, 20, 0, random(-9,9));
+		RVCG A 0 A_SetAngle(Angle+random(-1,1), SPF_INTERPOLATE);
+		RVCG A 0 A_SetPitch(Pitch+random(-1,1), SPF_INTERPOLATE);
+        RVCG B 1 BRIGHT
+		{
+		if (GetCVAR("bd_HellishLaserRockets")==True) {
+				A_fireprojectile("revenantseekermissiles4", 0, 1, -15, 20);
+			}
+			Else
+			{
+		A_fireprojectile("revenantseekermissiles3", 0, 1, -15, 20);
+		}
+		}
+		RVCG C 1 A_ZoomFactor(1.0);
+		//
+
+		RVCG A 0 A_StartSound("RLANSHOT");
+	//	"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("soulammo")<=6) { A_StartSound("MagClick", 7); }}}
+		RVCG A 0 A_ZoomFactor(0.98);
+		RVCG AAAA 0 BRIGHT A_fireprojectile("ShotgunParticles", random(-12,12), 0, 15, 20, 0, random(-9,9));
+		RVCG AA 0 BRIGHT A_fireprojectile("ShotgunParticles2", random(-12,12), 0, 15, 20, 0, random(-9,9));
+		RVCG A 0 A_SetAngle(Angle+random(-1,1), SPF_INTERPOLATE);
+		RVCG A 0 A_SetPitch(Pitch+random(-1,1), SPF_INTERPOLATE);
+		RVCG F 1 BRIGHT
+		{
+		if (GetCVAR("bd_HellishLaserRockets")==True) {
+				A_fireprojectile("revenantseekermissiles4", 0, 1, 15, 20);
+			}
+			Else
+			{
+		A_fireprojectile("revenantseekermissiles3", 0, 1, 15, 20);
+		}
+		}
+		RVCG G 1 A_ZoomFactor(1.0);
+		//
+		RVCG A 0 A_StartSound("RLANSHOT", 1);
+		//"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("soulammo")<=6) { A_StartSound("MagClick", 7); }}}
+		RVCG A 0 A_ZoomFactor(0.98);
+		RVCG AA 0 BRIGHT A_fireprojectile("ShotgunParticles", random(-12,12), 0, -15, 20, 0, random(-9,9));
+		RVCG A 0 BRIGHT A_fireprojectile("ShotgunParticles2", random(-12,12), 0, -15, 20, 0, random(-9,9));
+		RVCG A 0 A_SetAngle(Angle+random(-1,1), SPF_INTERPOLATE);
+		RVCG A 0 A_SetPitch(Pitch+random(-1,1), SPF_INTERPOLATE);
+		RVCG B 1 BRIGHT
+		{
+		if (GetCVAR("bd_HellishLaserRockets")==True) {
+				A_fireprojectile("revenantseekermissiles4", 0, 1, -15, 20);
+			}
+			Else
+			{
+		A_fireprojectile("revenantseekermissiles3", 0, 1, -15, 20);
+		}
+		}
+		RVCG C 1 A_ZoomFactor(1.0);
+		//
+		RVCG A 0 A_StartSound("RLANSHOT");
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("soulammo")<=6) { A_StartSound("MagClick", 7); }}}
+		RVCG A 0 A_ZoomFactor(0.98);
+		RVCG AAAA 0 BRIGHT A_fireprojectile("ShotgunParticles", random(-12,12), 0, 15, 20, 0, random(-9,9));
+		RVCG AA 0 BRIGHT A_fireprojectile("ShotgunParticles2", random(-12,12), 0, 15, 20, 0, random(-9,9));
+		RVCG A 0 A_SetAngle(Angle+random(-1,1), SPF_INTERPOLATE);
+		RVCG A 0 A_SetPitch(Pitch+random(-1,1), SPF_INTERPOLATE);
+		RVCG F 1 BRIGHT 
+		{
+		if (GetCVAR("bd_HellishLaserRockets")==True) {
+				A_fireprojectile("revenantseekermissiles4", 0, 1, 15, 20);
+			}
+			Else
+			{
+		A_fireprojectile("revenantseekermissiles3", 0, 1, 15, 20);
+		}
+		}
+		RVCG G 1 A_ZoomFactor(1.0);
+		//
+		RVCG W 3;
+		RVCG X 2;
+		TNT1 A 0 
+	{
+	invoker.owner.setstatelabel("spawn");
+	}
+		RVCG AAA 3
+		{
+		A_fireprojectile("SmokeSpawner11",0,0,-26,30);
+		A_fireprojectile("SmokeSpawner11",0,0,26,30);
+		}
+		Goto Ready;
+		
+		
+		
+
+	}
+}
+
+
+
+CLASS MancubusWeapon : DEMONWEAPON
+{
+
+Default
+	{
+	Weapon.AmmoUse1 0;
+	Weapon.AmmoGive1 0;
+	Weapon.AmmoUse2 0;
+	Weapon.AmmoGive2 0;
+	
+	Tag "FlameThrowers";
+	}
+	
+	
+	
+	States
+	{
+	Select:
+	TNT1 A 1 A_raise(24);
+	Goto ready;
+	
+		DeSelect:
+	TNT1 A 1 A_lower(24);
+	LOOP;
+	
+	Ready:
+	TNT1 A 0 
+	{
+	If(!invoker.hasselected)
+	{
+	invoker.hasselected = true;
+	A_StartSound("fatso/sight",14);
+	A_spawnitemex("DeadMarineArtifact");
+			
+	     
+		}
+		}
+	FLC2 A 1 A_WeaponReady();
+	LOOP;
+
+	DryFire:
+	TNT1 A 0 
+	{
+	invoker.owner.setstatelabel("spawn");
+	}
+	    FLC2 A 2 A_startSound("weapons/empty",CHAN_WEAPON);
+		Goto Ready;
+		
+	 Fire:
+        FLC2 A 0;
+		FLC2 A 0 A_JumpIf(waterlevel > 1, "DryFire");
+		
+	Fireball:	
+	    NULL A 0 A_StartSound("MANCFIRE");
+		TNT1 A 0 
+	{
+	A_overlay(2,"fire2");
+	//A_OverlayFlags(2, PSPF_FLIP, TRUE);	
+	//	A_OverlayFlags(2, PSPF_MIRROR, TRUE);
+	invoker.owner.setstatelabel("Missile");
+	}
+        FLC9 B 1 BRIGHT A_FIREPROJECTILE("BigFireBallWithGravity", 0, 0, -20, 22, random(-2,2));
+		FLC2 A 0 A_SetPitch(-2.0 + pitch, SPF_INTERPOLATE);
+	
+		TNT1 AAAAA 0 BRIGHT A_FIREPROJECTILE("Shotgunparticles2", random(-12,12), 0, -7, 18, 0, random(-9,9));
+		FLC9 A 0 A_FIREPROJECTILE("ShakeYourAssDouble", 0, 0, 0, 0);
+        FLC9 CD 1 BRIGHT A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
+		TNT1 A 0 
+	{
+	invoker.owner.setstatelabel("spawn");
+	}
+		FLC9 EFGH 1;
+		FLC2 A 5;
+		NULL A 0 A_ReFire;
+		//FLC2 A 5
+		Goto Ready;
+		
+		
+		Fire2:
+		  FLC9 I 1 BRIGHT A_FIREPROJECTILE("BigFireBallWithGravity", 0, 0, 20, 22, random(-2,2));
+		FLC2 A 0; //A_SetPitch(-2.0 + pitch, SPF_INTERPOLATE);
+	
+		TNT1 AAAAA 0 BRIGHT A_FIREPROJECTILE("Shotgunparticles2", random(-12,12), 0, 7, 18, 0, random(-9,9));
+		//FLC2 A 0 A_FIREPROJECTILE("ShakeYourAssDouble", 0, 0, 0, 0);
+        FLC9 JK 1 BRIGHT;// A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
+		FLC9 LMNO 1;
+		Stop;
+	
+    AltFire:
+        FLMT A 0;
+		FLMT A 0 A_JumpIf(waterlevel > 1, "DryFire");
+		
+	Flamethrower:
+	
+	TNT1 A 0 
+	{
+	invoker.owner.setstatelabel("missile");
+	}
+        FLMT A 0 BRIGHT A_FIREPROJECTILE("FlamethrowerMissile", 8, 1, -6, 22, 0, -8);
+		FLMT A 0 BRIGHT A_FIREPROJECTILE("FlamethrowerMissile", -8, 1, 6, 22, 0, -8);
+
+		TNT1 A 0 BRIGHT A_FIREPROJECTILE("ShotgunParticles", random(-12,12), 0, -7, 20, 0, random(-9,9));
+		TNT1 AA 0 BRIGHT A_FIREPROJECTILE("ShotgunParticles2", random(-12,12), 0, -7, 20, 0, random(-9,9));
+		TNT1 A 0 BRIGHT A_FIREPROJECTILE("ShotgunParticles", random(-12,12), 0, 5, 20, 0, random(-9,9));
+		TNT1 AA 0 BRIGHT A_FIREPROJECTILE("ShotgunParticles2", random(-12,12), 0, 5, 20, 0, random(-9,9));
+		FLMT A 0 A_startsound("FLAMER", CHAN_WEAPON, CHANF_LOOPING);
+
+		FLC2 PQ 1 BRIGHT A_SetAngle(random(1, -1) + angle, SPF_INTERPOLATE);
+		"####" A 0 
+		{
+		A_WeaponOffset(random(-1,1),32+random(0,1) );
+		
+			A_Recoil(2*cos(pitch));
+			if(invoker.owner.vel.z != 0) {
+				If(invoker.owner.vel.z < pitch/6)
+				{
+					invoker.owner.vel.z = (invoker.owner.vel.z + (pitch/6));
+				}
+				
+				If(invoker.owner.vel.z > pitch/6)
+				{
+				
+					invoker.owner.vel.z = (pitch/6);
+				}
+			}
+			else {
+				invoker.owner.vel.z = pitch/8;
+			}
+		
+		}
+		FLMT A 0 BRIGHT A_SetPitch(random(1, -1) + pitch, SPF_INTERPOLATE);
+		
+
+		FLMT A 0 BRIGHT A_FIREPROJECTILE("FlamethrowerMissileProper", 8, 1, -6, 22, 0, -8);
+		FLMT A 0 BRIGHT A_FIREPROJECTILE("FlamethrowerMissileProper", -8, 1, 6, 22, 0, -8);
+
+		TNT1 A 0 BRIGHT A_FIREPROJECTILE("ShotgunParticles", random(-12,12), 0, -7, 20, 0, random(-9,9));
+		TNT1 AA 0 BRIGHT A_FIREPROJECTILE("ShotgunParticles2", random(-12,12), 0, -7, 20, 0, random(-9,9));
+		TNT1 A 0 BRIGHT A_FIREPROJECTILE("ShotgunParticles", random(-12,12), 0, 5, 0, 20, random(-9,9));
+		TNT1 AA 0 BRIGHT A_FIREPROJECTILE("ShotgunParticles2", random(-12,12), 0, 5, 20, 0, random(-9,9));
+		FLMT A 0 A_startsound("FLAMER", CHAN_WEAPON, CHANF_LOOPING);
+
+		FLC2 PQ 1 BRIGHT;
+		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) );
+
+		FLMT A 0 BRIGHT A_FIREPROJECTILE("FlamethrowerMissileProper", 8, 1, -6, 22, 0, -8);
+		FLMT A 0 BRIGHT A_FIREPROJECTILE("FlamethrowerMissileProper", -8, 1, 6, 22, 0, -8);
+
+		TNT1 A 0 BRIGHT A_FIREPROJECTILE("ShotgunParticles", random(-12,12), 0, -7, 20, 0, random(-9,9));
+		TNT1 AA 0 BRIGHT A_FIREPROJECTILE("ShotgunParticles2", random(-12,12), 0, -7, 20, 0, random(-9,9));
+		TNT1 A 0 BRIGHT A_FIREPROJECTILE("ShotgunParticles", random(-12,12), 0, 5, 0, 20, random(-9,9));
+		TNT1 AA 0 BRIGHT A_FIREPROJECTILE("ShotgunParticles2", random(-12,12), 0, 5, 20, 0, random(-9,9));
+		FLMT A 0 A_startsound("FLAMER", CHAN_WEAPON, CHANF_LOOPING);
+
+		FLC2 PQ 1 BRIGHT;
+		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) );
+		TNT1 A 0 A_ReFire();
+		"####" A 0 A_WeaponOffset(0,32);
+	StopFlamethrower:
+	TNT1 A 0 
+	{
+	invoker.owner.setstatelabel("spawn");
+	}
+	    FLMG A 0 A_startsound("FLAMSTOP", CHAN_WEAPON);
+		FLC2 RRSTU 1;
+		FLC2 A 2;
+		Goto Ready;
+	
+	
+	
+	
+	}
+
+
+}
+
+
+
+
+
+
+CLASS BaronWeapon : DemonWeapon
+{
+	Default
+	{
+	+FORCERADIUSDMG;
+	
+	Tag "Baron";
+	}
+	States
+	{
+	
+	Horny:
+	HBRS E 1;
+	LOOP;
+	
+	Ready:
+		TNT1 A 0;
+	TNT1 A 0 
+	{
+	If(!invoker.hasselected)
+	{
+	invoker.hasselected = true;
+	A_StartSound("baron/sight",14);
+	A_spawnitemex("DeadMarineArtifact");
+	A_overlay(5,"horny");
+		A_OverlayFlags(5, PSPF_ADDBOB, FALSE);	
+	     
+		}
+		}
+		TNT1 A 0 A_JumpIfInventory("HasExplosiveBarrel", 1, "ReadyBarrel");
+		TNT1 A 0 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0 A_jumpifinventory("kicking",1,"dokick");
+		TNT1 A 0 A_jumpifinventory("startdualwield",1,"dualwield");
+		HBRG A 1 A_WeaponReady();
+		Loop;
+	
+	ReadyBarrel:
+		HBRC B 1 A_WeaponReady;
+		TNT1 A 0 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		Loop;
+		
+
+		
+	Steady:	
+		TNT1 A 0;
+		TNT1 A 1;
+		TNT1 A 0 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		Goto Ready;
+		
+	
+	Deselect:
+		HBRS CBA 1;
+		HBRG AAAAAAAAAAAA 0 A_Lower(24);
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 A_Lower(24);
+		Loop;
+	Select:
+		TNT1 A 1 A_Raise(24);
+		HBRG AAAAAAAAA 0 A_Raise(24);
+		Select2:
+		TNT1 A 0 A_startSound("baron/sight");
+		HBRS ABC 1;
+		Goto Ready;
+	MissileBarrel:
+	Fire:
+		TNT1 A 0;
+		
+		TNT1 A 0 A_JumpIfInventory("HasExplosiveBarrel", 1, "MissileBarrel");
+		HBRF ABCD 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		Fire1part2:
+		TNT1 A 0
+		{
+		A_OverlayFlags(1, PSPF_FLIP, TRUE);	
+		A_OverlayFlags(1, PSPF_MIRROR, TRUE);	
+		}
+		TNT1 A 0 A_jumpifcloser(200,"firemelee");
+		HBRN JKL 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0 A_fireprojectile("GreenPlasmaBallPlayerTransformed", 0,0,4,-4,0,0);
+		HBRN EF 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		
+
+		HBRN GHI 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0
+		{
+		A_OverlayFlags(1, PSPF_FLIP, FALSE);	
+		A_OverlayFlags(1, PSPF_MIRROR, FALSE);	
+		}
+		TNT1 A 3 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+			TNT1 A 0 A_refire("fire2");
+		HBRF DCBA 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+	
+		Goto Ready;
+		
+		Fire2:
+		TNT1 A 0 A_jumpifcloser(200,"firemelee2");
+	
+		HBRN JKL 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0 A_fireprojectile("GreenPlasmaBallPlayerTransformed", 0,0,-4,-4,0,0);
+		HBRN EF 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		
+
+		HBRN GHI 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+	
+		TNT1 A 3 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+			TNT1 A 0 A_refire("fire1part2");
+		HBRF DCBA 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+	
+		Goto Ready;
+		
+		
+		Firemelee:
+		HBRN ABC 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0 A_startsound("weapons/gswing");
+		TNT1 A 0 A_fireprojectile("MeleeStrike2Baron", 0, 0, 0, 1);
+		//TNT1 A 0 A_fireprojectile("GreenPlasmaBallPlayerTransformed", 0,0,4,-4,0,0);
+		HBRN EF 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		
+
+		HBRN GHI 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0
+		{
+		A_OverlayFlags(1, PSPF_FLIP, FALSE);	
+		A_OverlayFlags(1, PSPF_MIRROR, FALSE);	
+		}
+		TNT1 A 3 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0 A_refire("fire2");
+		HBRF DCBA 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		Goto ready;
+		
+		
+		Firemelee2:
+		HBRN ABC 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0 A_startsound("weapons/gswing");
+		TNT1 A 0 A_fireprojectile("MeleeStrike2Baron", 0, 0, 0, 1);
+		//TNT1 A 0 A_fireprojectile("GreenPlasmaBallPlayerTransformed", 0,0,4,-4,0,0);
+		HBRN EF 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		
+
+		HBRN GHI 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0
+		{
+		A_OverlayFlags(1, PSPF_FLIP, FALSE);	
+		A_OverlayFlags(1, PSPF_MIRROR, FALSE);	
+		}
+		TNT1 A 3 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0 A_refire("fire1part2");
+		HBRF DCBA 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		Goto ready;
+		
+		
+	
+		
+
+	
+	AltFire:
+	TNT1 A 0 
+	{
+		invoker.owner.setstatelabel("missile2");
+	A_overlay(2,"altfire2");
+	A_OverlayFlags(2, PSPF_FLIP, TRUE);	
+		A_OverlayFlags(2, PSPF_MIRROR, TRUE);	
+	}
+	HBRF ABCD 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+	
+		HBRN JKL 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0 
+		{
+		A_fireprojectile("GreenPlasmaBallPlayerTransformed", -7,0,0,-4,0,0);
+		A_fireprojectile("GreenPlasmaBallPlayerTransformed", 7,0,0,-4,0,0);
+		A_fireprojectile("GreenPlasmaBallPlayerTransformed", 0,0,0,-4,0,0);
+		}
+		HBRN EF 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		
+
+		HBRN GHI 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+	
+		TNT1 A 3 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		HBRF DCBA 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		HBRG AAAAAAAAAAAAAAAAAAAAAAAAA 1 A_weaponready(WRF_NOSECONDARY);
+		Goto Ready;
+		
+		
+	Altfire2:
+	
+	TNT1 A 4;
+	HBRN JKLEFGHI 1;
+	Stop;
+	
+	
+	
+	DoKick:
+	TNT1 A 0
+	{
+		invoker.owner.setstatelabel("missile");
+	 A_takeinventory("kicking",1);
+	 }
+	HBRF ABCD 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0
+		{
+		A_OverlayFlags(1, PSPF_FLIP, TRUE);	
+		A_OverlayFlags(1, PSPF_MIRROR, TRUE);	
+		}
+		HBRN ABC 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0 A_startsound("weapons/gswing");
+		TNT1 A 0 A_fireprojectile("MeleeStrike2Baron", 0, 0, 0, 1);
+		//TNT1 A 0 A_fireprojectile("GreenPlasmaBallPlayerTransformed", 0,0,4,-4,0,0);
+		HBRN EF 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		
+
+		HBRN GHI 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		TNT1 A 0
+		{
+		A_OverlayFlags(1, PSPF_FLIP, FALSE);	
+		A_OverlayFlags(1, PSPF_MIRROR, FALSE);	
+		}
+		TNT1 A 3 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+		HBRF DCBA 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+	
+		Goto Ready;
+		
+		
+		
+	Dualwield:
+	TNT1 A 0 A_takeinventory("startdualwield",1);
+	HBRF ABCD 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+	HBRS IHG 1;
+	TNT1 A 0 
+	{
+	invoker.owner.giveinventory("baroncharging",1);
+	setplayerproperty(0,1,0);
+	A_Startsound("baron/sight");
+	invoker.owner.bnopain = true;
+	invoker.owner.setstatelabel("charge");
+	A_recoil(-10);
+	} 
+	Charging:
+	
+	HBRS F 1
+	{
+	A_recoil(-4);
+	
+	//A_explode(100,62,0,false,62,0,0,null,"extremepunches");
+	A_fireprojectile("MeleeStrike2Baron2", 0, 0, 0, 1);
+	A_fireprojectile("MeleeStrike2Baron2", -20, 0, 0, 1);
+	A_fireprojectile("MeleeStrike2Baron2", 20, 0, 0, 1);
+	//invoker.owner.player.WeaponState |= WF_WEAPONBOBBING;
+			
+	}
+	TNT1 A 0 A_JumpIf(vel.x == 0 || vel.y == 0, "endcharge");
+	LOOP;
+	EndCharge:
+	TNT1 A 0 
+	{
+	A_fireprojectile("MeleeStrike2Baron3", 0, 0, 0, 1);
+	invoker.owner.takeinventory("baroncharging",1);
+	A_takeinventory("startdualwield",1);
+	A_Startsound("CLAP",9);
+		A_Quake(4,12,0,800);
+		FLineTraceData walluse;
+LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
+ if (walluse.HitType == TRACE_HitWall)
+            {
+               walluse.HitLine.Activate(self, 0, SPAC_Use);
+            }
+		//TNT1 A 0 HealThing(100); //because it damages itself
+		//A_Explode(200, 280, 0 , 0, 160);//, 0, 0, 0, "stomp")
+	A_recoil(14);
+	invoker.owner.vel.z = 14;
+	invoker.owner.setstatelabel("pain");
+	invoker.owner.bnopain = false;
+	setplayerproperty(0,0,0);
+	}
+	HBRF DCBA 1 A_JumpIfInventory("CeaseMorph", 1, "CeaseMorph");
+	Goto ready;
+	
+		
+	Spawn:
+		SHOT A -1;
+		Stop;
+		
+	CeaseMorph:
+		TNT1 A 0;
+		TNT1 A 0 A_TakeInventory("CeaseMorph", 1);
+		TNT1 A 0 ACS_NamedExecuteAlways("BDForceUnmorph");
+		TNT1 A 1;
+		Goto Ready;
+	}
+}
+//UNUSED
+///*
+CLASS MeatBallweapon : demonweapon
+{
+int firechannel;
+
+States
+{
+Deselect:
+		HBRS CBA 1;
+		HBRG AAAAAAAAAAAA 0 A_Lower(24);
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 A_Lower(24);
+		Loop;
+	Select:
+		TNT1 A 1 A_Raise(24);
+		HBRG AAAAAAAAA 0 A_Raise(24);
+		Select2:
+		TNT1 A 0 A_startSound("baron/sight");
+		HBRS ABC 1;
+		Goto Ready;
+		Ready:
+			D4PN A 0 
+	{
+	A_overlay(2,"lefthand");
+	A_OverlayFlags( 2, PSPF_FLIP, TRUE);	
+		A_OverlayFlags( 2, PSPF_MIRROR, TRUE);
+	If(!invoker.hasselected)
+	{
+	invoker.hasselected = true;
+	A_StartSound("pain/sight",14);
+	A_overlay(-4,"horny");
+	A_overlay(-5,"horny");
+	A_OverlayFlags( -5, PSPF_FLIP, TRUE);	
+		A_OverlayFlags( -5, PSPF_MIRROR, TRUE);
+		A_OverlayFlags( -4, PSPF_ADDBOB, FALSE);
+		A_OverlayFlags( -5, PSPF_ADDBOB, FALSE);
+	     
+		}
+		}
+		D4PN B 1 A_weaponready();
+		LOOP;
+		
+		LeftHand:
+		D4PN B 1;
+		LOOP;
+		
+		Fire:
+		D4PN A 0 
+		{
+		A_overlay(2,"lefthandfire");
+		A_OverlayFlags( 2, PSPF_FLIP, TRUE);	
+		A_OverlayFlags( 2, PSPF_MIRROR, TRUE);
+		
+		}//A_FireLostSOulBetter();
+	//	{
+	//	A_spawnitemex("lostsoulfriend",0,0,16,0,0,0,0,SXF_NOCHECKPOSITION | SXF_ISTRACER);
+	//	If(invoker.owner.tracer)
+	//	{
+	//	invoker.owner.tracer.setstatelabel("missile");
+	//	A_cleartracer();
+	//	}
+	//	}
+		D4PN BCDEF 1;
+		
+		Fire2:
+		D4PN A 0 
+		{
+		A_overlay(2,"lefthandfire2");
+		A_OverlayFlags( 2, PSPF_FLIP, TRUE);	
+		A_OverlayFlags( 2, PSPF_MIRROR, TRUE);
+		A_overlay(-4,"hornyfire");
+		A_overlay(-5,"hornyfire");
+		A_OverlayFlags( -5, PSPF_FLIP, TRUE);	
+		A_OverlayFlags( -5, PSPF_MIRROR, TRUE);
+		A_OverlayFlags( -4, PSPF_ADDBOB, FALSE);
+		A_OverlayFlags( -5, PSPF_ADDBOB, FALSE);
+		}
+		
+		TNT1 A 0 
+		{
+			If(invoker.firechannel == 0)
+				{
+					invoker.Firechannel = 15;
+				}
+			Else if(invoker.firechannel > 60)
+				{
+					invoker.Firechannel = 15;
+				}
+			invoker.Firechannel++;
+			Actor proj;
+			A_startsound("skull/melee", invoker.firechannel);
+			If(invoker.owner.roll > 90 || invoker.owner.roll < -90)
+			{
+				proj = A_fireprojectile("poorlostsoul2",0,false,0,20);
+			}
+			Else
+			{
+				proj = A_fireprojectile("poorlostsoul2",0,false,0,-20);
+			}
+			If(proj)
+				{
+					proj.brollsprite = true;
+					proj.brollcenter = true;
+					proj.roll = -invoker.owner.roll;
+					If(invoker.owner.roll > 90 || invoker.owner.roll < -90)
+						{
+							proj.bxflip = true;
+						}
+				}
+			
+		}
+		D4PN GGHH 1;
+		D4PN FFFFFFFFFFFFFFFF 1;
+		TNT1 A 0 A_refire("fire2");
+		D4PN EDC 1;
+		Goto ready;
+		
+		LefthandFire:
+		D4PN BCDEF 1;
+		LeftHandFire2:
+		D4PN GGHHFFFFFFFFFFFFFFFFFEDC 1;
+		Stop;
+		
+		
+		AltFire:
+		D4PN A 0 
+		{
+		A_overlay(2,"lefthandfire");
+		A_OverlayFlags( 2, PSPF_FLIP, TRUE);	
+		A_OverlayFlags( 2, PSPF_MIRROR, TRUE);
+		
+		}//A_FireLostSOulBetter();
+	//	{
+	//	A_spawnitemex("lostsoulfriend",0,0,16,0,0,0,0,SXF_NOCHECKPOSITION | SXF_ISTRACER);
+	//	If(invoker.owner.tracer)
+	//	{
+	//	invoker.owner.tracer.setstatelabel("missile");
+	//	A_cleartracer();
+	//	}
+	//	}
+		D4PN BCDEF 1;
+		
+		AltFire2:
+		D4PN A 0 
+		{
+		A_overlay(2,"altlefthandfire2");
+		A_OverlayFlags( 2, PSPF_FLIP, TRUE);	
+		A_OverlayFlags( 2, PSPF_MIRROR, TRUE);
+		A_overlay(-4,"hornyfire");
+		A_overlay(-5,"hornyfire");
+		A_OverlayFlags( -5, PSPF_FLIP, TRUE);	
+		A_OverlayFlags( -5, PSPF_MIRROR, TRUE);
+		A_OverlayFlags( -4, PSPF_ADDBOB, FALSE);
+		A_OverlayFlags( -5, PSPF_ADDBOB, FALSE);
+		}
+		
+		TNT1 A 0 
+		{
+			If(invoker.firechannel == 0)
+				{
+					invoker.Firechannel = 15;
+				}
+			Else if(invoker.firechannel > 60)
+				{
+					invoker.Firechannel = 15;
+				}
+			invoker.Firechannel++;
+			Actor proj;
+			A_startsound("skull/melee", invoker.firechannel);
+			If(invoker.owner.roll > 90 || invoker.owner.roll < -90)
+			{
+				proj = A_fireprojectile("poorlostsoul3",0,false,0,20);
+			}
+			Else
+			{
+				proj = A_fireprojectile("poorlostsoul3",0,false,0,-20);
+			}
+			If(proj)
+				{
+					proj.brollsprite = true;
+					proj.brollcenter = true;
+					proj.roll = -invoker.owner.roll;
+					proj.master = invoker.owner;
+					If(invoker.owner.roll > 90 || invoker.owner.roll < -90)
+						{
+							proj.bxflip = true;
+						}
+				}
+			
+		}
+		D4PN GGHH 1;
+		D4PN FFFFFFFFFFFF 1;
+		TNT1 A 0 A_refire("altfire2");
+		D4PN EDC 1;
+		Goto ready;
+		
+		AltLefthandFire:
+		D4PN BCDEF 1;
+		AltLeftHandFire2:
+		D4PN GGHHFFFFFFFFFFFFFEDC 1;
+		Stop;
+		
+		HornyFire:
+			D4PN IIJJ 1;
+		Horny:
+			D4PN A 1;
+			LOOP;
+		
+		
+
+}
+
+
+
+
+
+
+
+
+
+
+
+}
+//*/

@@ -1,0 +1,570 @@
+#library "commands"
+#include "zcommon.acs"
+
+Script "unmorphdemon" (VOID) NET
+{
+
+ Unmorphactor(0,TRUE);
+ GiveInventory("megasphere",1);
+ takeinventory("jetpack_active",1);
+
+}
+
+Script "UnmakerMorph" (VOID) NET
+{
+	int prevpitch;
+	prevpitch = GetActorPitch(0);
+
+ morphactor(0,"UnmakerPhaser","meatballplayer",6666666, MRF_FULLHEALTH | MRF_LOSEACTUALWEAPON | MRF_UNDOBYDEATH | MRF_UNDOBYDEATHFORCED | MRF_UNDOBYDEATHSAVES | MRF_UNDOALWAYS,"null","null");
+ setactorpitch(0,prevpitch);
+}
+
+Script "UnmakerUnmorph" (VOID) NET
+{
+
+ Unmorphactor(0,TRUE);
+ GiveInventory("UnmakerUnmorph",1);
+ takeinventory("jetpack_active",1);
+
+}
+
+script "UnmakerFear" (VOID)
+{
+setmugshotstate("Ouch");
+terminate;
+}
+
+
+Script 312 (void) NET
+{
+	While(CheckInventory("PowerInvulnerable") > 0)
+	{
+		Delay(1);
+	}
+	While(CheckInventory("GoFatality") > 0)
+	{
+		Delay(1);
+		if(GetActorProperty(0, APROP_INVULNERABLE) != 1)
+		{
+			SetActorProperty(0, APROP_INVULNERABLE, ON);
+		}
+	}
+	SetActorProperty(0, APROP_INVULNERABLE, OFF);
+}
+
+Script "PressKick" (VOID) NET
+{
+ GiveInventory("BDWeaponAction", 1);
+ GiveInventory("Kicking", 1);
+ GiveInventory("GoSpecial", 1);
+}
+
+Script "PressTaunt" (VOID) NET
+{
+ GiveInventory("BDWeaponAction", 1);
+ GiveInventory("Taunting", 1);
+ GiveInventory("GoSpecial", 1);
+}
+
+Script "PressReload" (VOID) NET
+{
+ GiveInventory("Reloading", 1);
+ GiveInventory("BDWeaponAction", 1);
+ GiveInventory("GoSpecial", 1);
+}
+
+/*
+Script 309 (VOID) NET
+{
+ GiveInventory("AmmoDroper", 1);
+ SetWeapon("AmmoDroper");
+}
+
+Script 310 (VOID) NET
+{
+	SetPlayerproperty(0, 1, PROP_INSTANTWEAPONSWITCH );
+	SetWeapon("BrutalPistol");
+	SetWeapon("ClassicPistol");
+	delay(5);
+	SetPlayerproperty(0, 0, PROP_INSTANTWEAPONSWITCH );
+}
+*/
+
+Script "PressUnload" (VOID) NET
+{
+ GiveInventory("BDWeaponAction", 1);
+ GiveInventory("Unloading", 1);
+ GiveInventory("GoSpecial", 1);
+}
+
+
+Script "PressFlashlight" (VOID) NET
+{
+ GiveInventory("SwitchFlashlight", 1);
+ GiveInventory("GoSpecial", 1);
+}
+
+
+Script "PressGrenade" (VOID) NET
+{
+ GiveInventory("BDWeaponAction", 1);
+ GiveInventory("TossGrenade", 1);
+ GiveInventory("GoSpecial", 1);
+}
+
+
+//TAUNTING
+/*
+Script 431 (VOID) NET
+{
+ GiveInventory("BDWeaponAction", 1);
+ GiveInventory("Salute1", 1);
+ GiveInventory("GoSpecial", 1);
+}
+
+Script 432 (VOID) NET
+{
+ GiveInventory("BDWeaponAction", 1);
+ GiveInventory("Salute2", 1);
+ GiveInventory("GoSpecial", 1);
+}
+
+
+Script 304 (VOID) NET
+{
+ GiveInventory("BDWeaponAction", 1);
+ GiveInventory("AdvTaunting", 1);
+ GiveInventory("GoSpecial", 1);
+}
+*/
+Script "PressOneLiner" (VOID) NET
+{
+ GiveInventory("OneLiner", 1);
+ GiveInventory("GoSpecial", 1);
+}
+
+//ROLLS
+/*
+Script 306 (VOID) NET
+{
+ GiveInventory("RollLeft", 1);
+ GiveInventory("GoSpecial", 1);
+}
+
+Script 307 (VOID) NET
+{
+ GiveInventory("RollRight", 1);
+ GiveInventory("GoSpecial", 1);
+}
+*/
+
+Script "PressDualWield" (VOID) NET
+{
+ GiveInventory("StartDualWield", 1);
+ GiveInventory("GoSpecial", 1);
+}
+
+
+Script "swapgrenades" (VOID) NET
+{
+
+ GiveInventory("Grenadeswapping", 1);
+
+}
+
+Script "swapberserkmode" (VOID) NET
+{
+	If(checkinventory("powerstrength"))
+		{
+		
+		If(checkinventory("nofatality"))
+			{
+				playsound(0,"bonecrack",25,0.4);
+				Takeinventory("nofatality",1);
+				print(s:"Rip and Tear!");
+			}
+		Else
+			{
+				playsound(0,"misc/xdeath5",25);
+				Giveinventory("nofatality",1);
+				print(s:"Smash!");
+			}
+		}
+	Else
+		{
+			print(s:"You aren't berserked!");
+		}
+
+}
+script "pressroll" (VOID) NET
+{
+	int x, y, ang;
+	IF(getactorproperty(0,APROP_HEALTH) > 0)
+		{
+		if (checkinventory("usedstamina") < 41)
+		{
+			PlaySound(0, "JMPBOOT", 71, 1.0, false, 0.4);
+			giveinventory("rollingstamina",1);
+						//thing_stop(0);
+						x = GetPlayerInput(-1, INPUT_FORWARDMOVE);
+						y = -GetPlayerInput(-1, INPUT_SIDEMOVE);
+						ang = getactorangle(0)+vectorangle(x, y);
+						//print(i:y);
+						if(x || y) ThrustThing (ang>>8, 64, 1, 0);
+						else ThrustThing (getactorangle(0)>>8, 64, 1, 0);
+						If(y == 0)
+						{
+							If(x > 1)
+							giveinventory("rollingleft",1);
+							else
+							giveinventory("rollingright",1);
+						}
+						Else
+						{
+							If(y > 1)
+							giveinventory("rollingleft",1);
+							else
+							{
+							giveinventory("rollingright",1);
+							}
+						}
+						//left is positive
+			Delay(35);
+			}
+		Else
+			{
+				PlaySound(0, "tired", 12, 1.0, false, 1.0);
+				Delay(10);
+			}
+		}
+		
+}
+
+//==================================================================================================
+//SPRINTING
+
+script "takesprint" ENTER
+{
+takeinventory("sprintbob",1);
+terminate;
+}
+
+script "CheckSprint" ENTER
+{
+
+ int buttonSpeed;
+
+ while (TRUE)
+ {
+   buttonSpeed = GetPlayerInput(-1, INPUT_BUTTONS);
+   
+if (buttonSpeed & BT_SPEED)
+{
+   if (checkinventory("istacticalclass") >= 1) { GiveInventory("IsRunning", 1); }
+   GiveInventory("IsRunning2", 1);
+   delay(1);
+   restart;
+}
+   TakeInventory("IsRunning", 1);
+   TakeInventory("IsRunning2", 1);
+   delay(4);
+ } 
+
+
+}
+
+
+script "CheckPrimary" ENTER
+{
+ int buttons;
+
+ while (TRUE)
+ {
+   buttons = GetPlayerInput(-1, INPUT_BUTTONS);
+
+if (buttons & BT_ALTATTACK)
+{
+	//Press Once Mode
+	if (GetCvar("bd_Aim") == 1 && checkinventory("PressedOnce") == 1) 
+	{ GiveInventory("PressedTwice", 1); GiveInventory("Fire2Activate",1); }
+	else { TakeInventory("Fire2Activate",1); }
+	
+	//BDv21 Mode   
+	if (GetCvar("bd_Aim") == 0 && checkinventory("PressedOnce") == 1) { GiveInventory("Fire2Activate",1); }
+	
+	//Hold Mode
+	if (GetCvar("bd_Aim") == 2) { GiveInventory("Fire2Activate",1); }
+
+
+	GiveInventory("FiredSecondary", 1);
+	delay(1);
+	restart;
+}
+   if (GetCvar("bd_Aim") == 1 || GetCvar("bd_Aim") == 0) { GiveInventory("PressedOnce",1); }
+   TakeInventory("FiredSecondary", 1);
+   delay(1);
+ }
+} 
+ 
+ 
+script "CheckSecondary" ENTER
+{ 
+ int buttons2;
+
+ while (TRUE)
+ {
+   buttons2 = GetPlayerInput(-1, INPUT_BUTTONS);
+   
+if (buttons2 & BT_ATTACK)
+{
+   GiveInventory("FiredPrimary", 1);
+   delay(1);
+   restart;
+}
+   TakeInventory("FiredPrimary", 1);
+   delay(4);
+ }
+}
+
+
+script "CheckDual" ENTER
+{ 
+ int buttons2;
+
+ while (TRUE)
+ {
+   buttons2 = GetPlayerInput(-1, INPUT_BUTTONS);
+   
+if (buttons2 & BT_USER3)
+{
+   GiveInventory("HoldingDual", 1);
+   delay(1);
+   restart;
+}
+   TakeInventory("HoldingDual", 1);
+   delay(4);
+ }
+}
+
+
+script "CheckSpecial" ENTER
+{ 
+ int buttons2;
+
+ while (TRUE)
+ {
+   buttons2 = GetPlayerInput(-1, INPUT_BUTTONS);
+   
+if (buttons2 & BT_USER4)
+{
+   GiveInventory("HoldingSpecial", 1);
+   delay(1);
+   restart;
+}
+   TakeInventory("HoldingSpecial", 1);
+   delay(4);
+ }
+}
+
+
+script "CheckCrouch" ENTER
+{ 
+ int buttons2;
+
+ while (TRUE)
+ {
+   buttons2 = GetPlayerInput(-1, INPUT_BUTTONS);
+   
+if (buttons2 & BT_CROUCH)
+{
+   GiveInventory("IsCrouching", 1);
+   delay(1);
+   restart;
+}
+   TakeInventory("IsCrouching", 1);
+   delay(4);
+ }
+}
+
+
+
+//Faster
+script 852 (void)
+{
+		 SetActorProperty (0, APROP_Speed, 2.4);
+		delay (12);
+		 SetActorProperty (0, APROP_Speed, 1.3); 
+}
+
+//Slower
+script 853 (void)
+{
+	SetActorProperty (0, APROP_Speed, 1.3);
+	delay (1);
+}
+
+script "fastplayer" (void)
+{
+		 SetActorProperty (0, APROP_Speed, 2.4);
+		delay (12);
+		takeinventory("sprintbob",1);
+		 SetActorProperty (0, APROP_Speed, 1.3); 
+}
+
+//Slower
+script "slowplayer" (void)
+{
+	SetActorProperty (0, APROP_Speed, 1.3);
+	delay (1);
+}
+
+
+
+//==================================================================================================
+  
+//drop ammO COUNTERS
+Script 396 (VOID) NET
+{
+ int ammoclip1 = CheckInventory("Clip1");
+ HudMessage(d:ammoclip1; HUDMSG_PLAIN, 0, CR_WHITE, 0.26, 0.72, 0.1, 2.0);
+ delay(1);
+ 
+ int ammoclip2 = CheckInventory("Clip2");
+ HudMessage(d:ammoclip2; HUDMSG_PLAIN, 0, CR_WHITE, 0.345, 0.72, 0.1, 2.0);
+ delay(1);
+ 
+ int ammoclip3 = CheckInventory("AmmoShell");
+ HudMessage(d:ammoclip3; HUDMSG_PLAIN, 0, CR_WHITE, 0.425, 0.72, 0.1, 2.0);
+ 
+ int ammoclip4 = CheckInventory("AmmoRocket");
+ HudMessage(d:ammoclip4; HUDMSG_PLAIN, 0, CR_WHITE, 0.490, 0.72, 0.1, 2.0);
+ 
+ int ammoclip5 = CheckInventory("AmmoCell");
+ HudMessage(d:ammoclip5; HUDMSG_PLAIN, 0, CR_WHITE, 0.570, 0.72, 0.1, 2.0);
+ delay(1);
+ 
+  int ammoclip6 = CheckInventory("Gas");
+ HudMessage(d:ammoclip6; HUDMSG_PLAIN, 0, CR_WHITE, 0.650, 0.72, 0.1, 2.0);
+ delay(1);
+ 
+   int ammoclip7 = CheckInventory("GrenadeAmmo");
+ HudMessage(d:ammoclip7; HUDMSG_PLAIN, 0, CR_WHITE, 0.720, 0.72, 0.1, 2.0);
+ delay(1);
+ 
+ 
+}  
+ 
+//INVISIBILITY
+Script 397 (VOID) NET
+{
+ delay(2100);
+ TakeInventory("IsInvisible", 1);
+}
+
+
+//RAILGUN AIMING
+Script 398 (VOID) NET
+{
+ delay(4200);
+ TakeInventory("HasInfraRed", 1);
+}
+
+Script 399 (VOID) NET
+{
+SetCVAR("chase", 1);
+delay(15);
+SetCVAR("chase", 0);
+}
+
+#define SKILL_REALISM        32
+#define SKILL_BLACKMETAL     31
+
+script 289 (void)
+{
+    if (GameSkill () == SKILL_BLACKMETAL)
+        SetActorProperty (0, APROP_Speed, 1.4);
+		
+		
+	 if (GameSkill () == SKILL_BLACKMETAL)	
+		GiveInventory("TurboReload", 1);
+}
+ 
+ 
+
+Script "MGGrenadeCheck"(VOID)
+{
+if (checkinventory("FiredMGGrenade") == 1) {
+setfont("NoGren");
+hudmessage(s:"A"; HUDMSG_PLAIN, 0, CR_UNTRANSLATED, 0.50, 0.90, 1.0);
+delay(5);
+}
+}
+
+Script "GetBerserkEffect" (VOID) NET
+{
+ FadeTo (255, 0, 0, 1.0, 0.25);
+ Delay(10);
+ FadeTo (255, 0, 0, 0.0, 4.0);
+} 
+
+//Boss guns
+Script "UseCyberDemonGun" (VOID)
+{
+giveinventory("cyberdemonsMissileLauncher",1);
+SetWeapon("CyberdemonsMissileLauncher");
+		terminate;
+}
+
+Script "UseMastermindGun" (VOID)
+{
+giveinventory("mastermindchaingun",1);
+SetWeapon("mastermindchaingun");
+		terminate;
+}
+Script "UseBossWeapon" (VOID)
+{
+	//Print(s:"\cjPress ", 
+//	k:"UseBossWeapon", 
+//	s:" \cjto activate the boss gun.");
+	if (checkinventory("CyberdemonsMissileLauncher") == 1) 
+		{
+		SetWeapon("CyberdemonsMissileLauncher");
+		terminate;
+		}
+	if (checkinventory("MastermindChaingun") == 1) 
+		{
+		SetWeapon("MastermindChaingun");
+		terminate;
+		}
+	Print(s:"\cjYou don't have any temporary weaponry!");
+	Delay(2);		
+} 
+
+Script "LogCyberdemonGunMessage" (VOID)
+{
+	Log(s:"\cjPress", 
+	s:"\cG ", 
+	k:"UseBossWeapon", 
+	s:" \cjto activate the boss gun.");
+	Delay(1);
+}
+
+/*
+Script "BerserkMessage" (VOID)
+{
+	Log(s:"\cjPress", 
+	s:"\cG ", 
+	k:"reload", 
+	
+	Log(s:"\cjOr",
+	
+	s:"\cG ", 
+	k:"bdreload",
+	
+	s:" \cjto change melee modes.");
+	Delay(1);
+}
+*/
+
+//        k:"+UseBossWeapon"
+

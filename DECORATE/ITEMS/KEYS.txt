@@ -1,0 +1,268 @@
+
+/////////////////////////
+Actor BDBlueCard : BDBaseKey Replaces BlueCard
+{
+	Tag "Blue Keycard"
+	SpawnID 85
+	Inventory.Pickupmessage "$GOTBLUECARD"
+	Inventory.Icon "STKEYS0"
+	BDBaseKey.keyid 0
+	States
+	{
+	Spawn:
+	TNT1 A 0
+	TNT1 A 0 A_SpawnItemEx("EvidenceCheckerBlueKey", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn2")
+	NULL A 0 A_Jump(128,2)
+	NULL A 0 A_ChangeFlag("XFLIP",1)
+	NULL A 0 A_Jump(255,"Spawn2","Spawn3","Spawn4","spawn5","spawn6")
+	Spawn2:
+		
+		BKEY A 10
+		BKEY B 10 bright
+		loop
+	Spawn3:
+		BKEY C 10
+		BKEY D 10 bright
+		loop
+	Spawn4:
+		BKEY E 10
+		BKEY E 10 bright
+		loop
+	Spawn5:
+		BKEY F 10
+		BKEY G 10 bright
+		loop
+	Spawn6:
+		BKEY H 10
+		BKEY I 10 bright
+		loop
+	Pickup:
+		TNT1 A 0 A_GiveInventory("BlueCard")
+		stop
+	}
+}
+
+Actor BDBlueSkull : BDBaseSkull Replaces BlueSkull
+{
+	Tag "Blue Skullkey"
+	SpawnID 90
+	Inventory.Pickupmessage "$GOTBLUESKUL"
+	Inventory.Icon "STKEYS3"
+	BDBaseKey.keyid 3
+	States
+	{
+	Spawn:
+	TNT1 A 0
+	TNT1 A 0 A_SpawnItemEx("EvidenceCheckerBlueSkull", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn2")
+	TNT1 A 0 A_jump(10,"spawn6")
+	TTN1 A 0 A_jump(90,"spawn2")
+	TNT1 A 0 A_jump(256,"spawn3","spawn4","spawn5")
+
+	Spawn2:
+	TNT1 A 0 A_setscale(0.82,0.82)
+		BSKU A 10
+		BSKU B 10 bright
+		loop
+	Spawn3:
+		BSKU C 10
+		BSKU D 10 bright
+		loop
+	Spawn4:
+	TNT1 A 0 A_setscale(0.82,0.82)
+		BSKU E 10
+		BSKU F 10 bright
+		loop
+	Spawn5:
+	TNT1 A 0 A_setscale(1.0,1.0)
+		BSKU G 10
+		BSKU H 10 bright
+		loop
+	Spawn6:
+	TNT1 A 0 A_setscale(0.72,0.72)
+		BSKU I 10
+		BSKU J 10 bright
+		loop
+	
+	Pickup:
+		TNT1 A 0 A_GiveInventory("BlueSkull")
+		stop
+	}
+}
+
+Actor BDRedCard : BDBaseKey Replaces RedCard
+{
+	Tag "Red Keycard"
+	SpawnID 86
+	Inventory.Pickupmessage "$GOTREDCARD"
+	Inventory.Icon "STKEYS2"
+	BDBaseKey.keyid 1
+	States
+	{
+	Spawn:
+	TNT1 A 0
+	TNT1 A 0 A_SpawnItemEx("EvidenceCheckerRedKey", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+    TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn2")
+	NULL A 0 A_Jump(128,2)
+	NULL A 0 A_ChangeFlag("XFLIP",1)
+	NULL A 0 A_Jump(255,"Spawn2","Spawn3","Spawn4","spawn5","spawn6")
+	Spawn2:
+		RKEY A 10
+		RKEY B 10 bright
+		loop
+	Spawn3:
+		RKEY C 10
+		RKEY D 10 bright
+		loop
+	Spawn4:
+		RKEY E 10
+		RKEY E 10 bright
+		loop
+		Spawn5:
+		RKEY F 10
+		RKEY G 10 bright
+		loop
+		Spawn6:
+		RKEY H 10
+		RKEY I 10 bright
+		loop
+	Pickup:
+		TNT1 A 0 A_GiveInventory("RedCard")
+		stop
+	}
+}
+
+Actor BDRedSkull : BDBaseSkull Replaces RedSkull
+{
+	Tag "Red Skullkey"
+	SpawnID 89
+	Inventory.Pickupmessage "$GOTREDSKUL"
+	Inventory.Icon "STKEYS5"
+	BDBaseKey.keyid 4
+	States
+	{
+	Spawn:
+		TNT1 A 0 
+		TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn2")
+	TNT1 A 0 A_jump(10,"spawn6")
+	TTN1 A 0 A_jump(90,"spawn2")
+	TNT1 A 0 A_jump(256,"spawn3","spawn4","spawn5")
+
+	Spawn2:
+	TNT1 A 0 A_setscale(0.82,0.82)
+		RSKU A 10
+		RSKU B 10 bright
+		loop
+	Spawn3:
+		RSKU C 10
+		RSKU D 10 bright
+		loop
+	Spawn4:
+	TNT1 A 0 A_setscale(0.82,0.82)
+		RSKU E 10
+		RSKU F 10 bright
+		loop
+	Spawn5:
+	TNT1 A 0 A_setscale(1.0,1.0)
+		RSKU G 10
+		RSKU H 10 bright
+		loop
+	Spawn6:
+	TNT1 A 0 A_setscale(0.72,0.72)
+		RSKU I 10
+		RSKU J 10 bright
+		loop
+	Pickup:
+		TNT1 A 0 A_GiveInventory("RedSkull")
+		stop
+	}
+}
+
+Actor BDYellowCard : BDBaseKey Replaces YellowCard
+{
+	Tag "Yellow Keycard"
+	SpawnID 87
+	Inventory.Pickupmessage "$GOTYELWCARD"
+	Inventory.Icon "STKEYS1"
+	BDBaseKey.keyid 2
+	States
+	{
+	Spawn:
+	TNT1 A 1 NoDelay
+	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn2")
+	TNT1 A 0 A_Jump(128,2)
+	TNT1 A 0 A_ChangeFlag("XFLIP",1)
+	TNT1 A 0 A_Jump(255,"Spawn2","Spawn3","Spawn4","spawn5","spawn6")
+	Spawn2:
+		YKEY A 10
+		YKEY B 10 bright
+		loop
+	Spawn3:
+		YKEY C 10
+		YKEY D 10 bright
+		loop
+	Spawn4:
+		YKEY E 10
+		YKEY E 10 bright
+		loop
+		Spawn5:
+		YKEY F 10
+		YKEY G 10 bright
+		loop
+		Spawn6:
+		YKEY H 10
+		YKEY I 10 bright
+		loop
+	Pickup:
+		TNT1 A 0 A_GiveInventory("YellowCard")
+		stop
+	}
+}
+
+Actor BDYellowSkull : BDBaseSkull Replaces YellowSkull
+{
+	Tag "Yellow Skullkey"
+	SpawnID 88
+	Inventory.Pickupmessage "$GOTYELWSKUL"
+	Inventory.Icon "STKEYS4"
+	BDBaseKey.keyid 5
+	States
+	{
+	Spawn:
+	TNT1 A 0
+	TNT1 A 0 A_SpawnItemEx("EvidenceCheckerYellowSkull", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn2")
+	TNT1 A 0 A_jump(10,"spawn6")
+	TTN1 A 0 A_jump(90,"spawn2")
+	TNT1 A 0 A_jump(256,"spawn3","spawn4","spawn5")
+
+	Spawn2:
+	TNT1 A 0 A_setscale(0.82,0.82)
+		YSKU A 10
+		YSKU B 10 bright
+		loop
+	Spawn3:
+		YSKU C 10
+		YSKU D 10 bright
+		loop
+	Spawn4:
+	TNT1 A 0 A_setscale(0.82,0.82)
+		YSKU E 10
+		YSKU F 10 bright
+		loop
+	Spawn5:
+	TNT1 A 0 A_setscale(1.0,1.0)
+		YSKU G 10
+		YSKU H 10 bright
+		loop
+	Spawn6:
+	TNT1 A 0 A_setscale(0.72,0.72)
+		YSKU I 10
+		YSKU J 10 bright
+		loop
+	Pickup:
+		TNT1 A 0 A_GiveInventory("YellowSkull")
+		stop
+	}
+}

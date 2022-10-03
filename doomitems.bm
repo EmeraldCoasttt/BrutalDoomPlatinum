@@ -1,0 +1,79 @@
+//MEDIKITS
+brightmap sprite MEDKG0 { map "brightmaps/doom/Actors/MEDKA0.png" }
+brightmap sprite MEDKK0 { map "brightmaps/doom/Actors/MEDKA0.png" }
+
+brightmap sprite MEDKI0 { map "brightmaps/doom/Actors/MEDKE0.png" }
+brightmap sprite MEDKM0 { map "brightmaps/doom/Actors/MEDKE0.png" }
+
+brightmap sprite MEDKH0 { map "brightmaps/doom/Actors/MEDKB0.png" }
+brightmap sprite MEDKL0 { map "brightmaps/doom/Actors/MEDKB0.png" }
+
+brightmap sprite MEDKJ0 { map "brightmaps/doom/Actors/MEDKF0.png" }
+brightmap sprite MEDKN0 { map "brightmaps/doom/Actors/MEDKF0.png" }
+// Cross big
+brightmap sprite MEDKO0 { map "brightmaps/doom/Actors/MEDKA0.png" }
+brightmap sprite MEDKS0 { map "brightmaps/doom/Actors/MEDKA0.png" }
+brightmap sprite MEDKW0 { map "brightmaps/doom/Actors/MEDKA0.png" }
+// Back big
+brightmap sprite MEDKQ0 { map "brightmaps/doom/Actors/MEDKE0.png" }
+brightmap sprite MEDKU0 { map "brightmaps/doom/Actors/MEDKE0.png" }
+brightmap sprite MEDKY0 { map "brightmaps/doom/Actors/MEDKE0.png" }
+//cross small
+brightmap sprite MEDKP0 { map "brightmaps/doom/Actors/MEDKB0.png" }
+brightmap sprite MEDKT0 { map "brightmaps/doom/Actors/MEDKB0.png" }
+brightmap sprite MEDKX0 { map "brightmaps/doom/Actors/MEDKB0.png" }
+//back big
+brightmap sprite MEDKR0 { map "brightmaps/doom/Actors/MEDKF0.png" }
+brightmap sprite MEDKV0 { map "brightmaps/doom/Actors/MEDKF0.png" }
+brightmap sprite MEDKZ0 { map "brightmaps/doom/Actors/MEDKF0.png" }
+
+
+//armor bonus
+brightmap sprite BON2B0 { map "brightmaps/doom/Actors/BON2B0.png" disablefullbright }
+brightmap sprite BON2C0 { map "brightmaps/doom/Actors/BON2C0.png" disablefullbright }
+brightmap sprite BON2D0 { map "brightmaps/doom/Actors/BON2D0.png" disablefullbright }
+
+brightmap sprite BON2F0 { map "brightmaps/doom/Actors/BON2B0.png" disablefullbright }
+brightmap sprite BON2G0 { map "brightmaps/doom/Actors/BON2C0.png" disablefullbright }
+brightmap sprite BON2H0 { map "brightmaps/doom/Actors/BON2D0.png" disablefullbright }
+
+brightmap sprite BON2J0 { map "brightmaps/doom/Actors/BON2B0.png" disablefullbright }
+brightmap sprite BON2K0 { map "brightmaps/doom/Actors/BON2C0.png" disablefullbright }
+brightmap sprite BON2L0 { map "brightmaps/doom/Actors/BON2D0.png" disablefullbright }
+
+brightmap sprite BON2N0 { map "brightmaps/doom/Actors/BON2N0.png" disablefullbright }
+brightmap sprite BON2O0 { map "brightmaps/doom/Actors/BON2O0.png" disablefullbright }
+brightmap sprite BON2P0 { map "brightmaps/doom/Actors/BON2P0.png" disablefullbright }
+
+
+//CELL AND CELLPACCS
+brightmap sprite CELLB0 { map "brightmaps/doom/Actors/CELLB0.png" disablefullbright }
+brightmap sprite CELLC0 { map "brightmaps/doom/Actors/CELLC0.png" disablefullbright }
+brightmap sprite CELLD0 { map "brightmaps/doom/Actors/CELLD0.png" disablefullbright }
+brightmap sprite CELLE0 { map "brightmaps/doom/Actors/CELLE0.png" disablefullbright }
+brightmap sprite CELLF0 { map "brightmaps/doom/Actors/CELLF0.png" disablefullbright }
+
+brightmap sprite CELPA0 { map "brightmaps/doom/Actors/CELPB0.png" disablefullbright }
+brightmap sprite CELPB0 { map "brightmaps/doom/Actors/CELPB0.png" disablefullbright }
+brightmap sprite CELPC0 { map "brightmaps/doom/Actors/CELPC0.png" disablefullbright }
+brightmap sprite CELPD0 { map "brightmaps/doom/Actors/CELPD0.png" disablefullbright }
+brightmap sprite CELPE0 { map "brightmaps/doom/Actors/CELPE0.png" disablefullbright }
+brightmap sprite CELPF0 { map "brightmaps/doom/Actors/CELPF0.png" disablefullbright }
+brightmap sprite CELPG0 { map "brightmaps/doom/Actors/CELPG0.png" disablefullbright }
+brightmap sprite CELPH0 { map "brightmaps/doom/Actors/CELPH0.png" disablefullbright }
+
+//THROWN EXPLOSIVE BARREL
+brightmap sprite TBRAA0 { map "brightmaps/doom/TBRAA0.png" disablefullbright }
+brightmap sprite TBRAB0 { map "brightmaps/doom/TBRAB0.png" disablefullbright }
+brightmap sprite TBRAC0 { map "brightmaps/doom/TBRAC0.png" disablefullbright }
+brightmap sprite TBRAD0 { map "brightmaps/doom/TBRAD0.png" disablefullbright }
+brightmap sprite TBRAE0 { map "brightmaps/doom/TBRAE0.png" disablefullbright }
+brightmap sprite TBRAF0 { map "brightmaps/doom/TBRAF0.png" disablefullbright }
+brightmap sprite TBRAG0 { map "brightmaps/doom/TBRAG0.png" disablefullbright }
+brightmap sprite TBRAH0 { map "brightmaps/doom/TBRAH0.png" disablefullbright }
+
+//barrel
+brightmap sprite BARIF0 { map "brightmaps/doom/Actors/BARBRI.png" }
+brightmap sprite BARIG0 { map "brightmaps/doom/Actors/BARBRI.png" }
+brightmap sprite BARIH0 { map "brightmaps/doom/Actors/BARBRI.png" }
+brightmap sprite BARII0 { map "brightmaps/doom/Actors/BARBRI.png" }

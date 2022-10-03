@@ -1,0 +1,308 @@
+CLASS NewAllMap : inventory replaces Allmap
+{
+Default
+{
+  -INVENTORY.FANCYPICKUPSOUND;
+  Inventory.PickupSound "items/computermap";
+  +COUNTITEM
+		+INVENTORY.ALWAYSPICKUP
+		Inventory.MaxAmount 0;
+		Inventory.PickupMessage "$GOTMAP";
+  }
+  
+  States
+	{
+	Spawn:
+		PMAP ABCDCB 6 Bright;
+		Loop;
+	}
+  Override void tick()
+	{	
+		
+		acs_namedexecutealways("areascantid",0,6);
+		Super.tick();
+	}
+	override bool TryPickup (in out Actor toucher)
+	{
+		level.allmap = true;
+		
+	
+	If(GetCvar("bd_allmapdx") == 0)
+	{
+	toucher.giveinventory("allthemap",1);
+	}
+	GoAwayAndDie ();
+		return true;
+		
+	
+	}
+}
+
+CLASS allthemap : powerupgiver
+	{
+		Default
+		{
+		Inventory.MaxAmount 0;
+		Powerup.duration  0x7FFFFFFF;
+		Powerup.type "powerscanner";
+		+inventory.autoactivate;
+		}
+		States
+		{
+		Spawn:
+		TNT1 A 1;
+		Loop;
+		}
+}
+
+
+
+class PowerShield : Powerup
+{
+	bool bhasplayedsound;
+	int damagetimer;
+	Default
+	{
+		Powerup.Duration 1;
+		Powerup.Color "00 00 FF", 0.5;
+		+INVENTORY.HUBPOWER
+	}
+	
+	override bool HandlePickup (Inventory item)
+	{
+		if (item.GetClass() == GetClass())
+		{ // Setting EffectTics to 0 will force Powerup's HandlePickup()
+		  // method to reset the tic count so you get the red flash again.
+			EffectTics = 0;
+		}
+		return Super.HandlePickup (item);
+	}
+
+	//===========================================================================
+	//
+	// APowerStrength :: DoEffect
+	//
+	//===========================================================================
+
+	override void Tick ()
+	{
+		// Strength counts up to diminish the fade.
+		EffectTics += 2;
+		Super.Tick();
+	}
+	
+	override void ModifyDamage (int damage, Name damageType, out int newdamage, bool passive, Actor inflictor, Actor source, int flags) {
+	
+	
+	if (owner && passive && damage > 0)
+	{
+	if(owner.countinv("basicarmor") > 0)
+	{
+	owner.a_startsound("StickyGrenade/Hit",125);
+	bhasplayedsound = false;
+	damagetimer = 240;
+	}
+	
+	
+	}
+	
+	}
+	
+	override void doeffect()
+	{
+	
+		
+		
+		damagetimer = (damagetimer - 1);
+		If(owner.countinv("basicarmor") < 21 && owner.countinv("basicarmor") > 0)
+		{
+		owner.a_startsound("mjoln3",126,CHANF_LOOPING);
+		}
+		else if(owner.countinv("basicarmor") < 1)
+		{
+		owner.a_startsound("mjoln2",126,CHANF_LOOPING);
+		}
+		else
+		{
+		owner.a_stopsound(126);
+		}
+		
+		If(damagetimer < 1 && owner && owner.countinv("basicarmor") < 50)
+		{
+			If(level.time % 1 == 0)
+			{
+			owner.giveinventory("mjolnirarmor", 1);
+			}
+			If(!bhasplayedsound)
+			{
+			//owner.a_startsound("mjoln",125,CHANF_NOSTOP);
+			owner.a_startsound("mjoln",125,CHANF_NOSTOP,1.0,ATTN_NORM,0.0,(owner.countinv("basicarmor") / 50.0 ));
+			bhasplayedsound = true;
+			}
+		}
+		//Else
+		//{
+		//owner.a_stopsound(125);
+		//}
+
+		If(owner)
+		{
+		let playerArmor = BasicArmor(owner.FindInventory('BasicArmor'));
+		playerArmor.SavePercent = 1.0;
+		}
+		
+		If(owner && owner.countinv("basicarmor") > 0)
+		{
+		owner.bnoblood = true;
+		}
+		Else if (owner)
+		{
+		owner.bnoblood = false;
+		}
+		
+		Super.doeffect();
+	}
+
+	//===========================================================================
+	//
+	// APowerStrength :: GetBlend
+	//
+	//===========================================================================
+	
+	Override void detachfromowner()
+	{
+	
+	owner.bnoblood = false;
+	super.detachfromowner();
+	}
+	
+	override color GetBlend ()
+	{
+		// slowly fade the berserk out
+		int cnt = 128 - (EffectTics>>3);
+
+		if (cnt > 0)
+		{
+			return Color(BlendColor.a*cnt/256,
+				BlendColor.r, BlendColor.g, BlendColor.b);
+		}
+		return 0;
+	}
+	
+}
+
+
+
+
+class mjolnirarmor : BasicArmorBonus
+{
+	Default
+	{
+		Radius 20;
+		Height 16;
+		Inventory.Pickupmessage "$GOTARMBONUS";
+		Inventory.Icon "ARM2A0";
+		Armor.Savepercent 100;
+		Armor.Saveamount 1;
+		Armor.Maxsaveamount 100;
+		+COUNTITEM
+		+INVENTORY.ALWAYSPICKUP
+	}
+	States
+	{
+	Spawn:
+		BON2 ABCDCB 6;
+		loop;
+	}
+}
+
+
+CLASS PowerAreaScan : Powerup
+{
+Default
+	{
+		Powerup.Duration -7;
+		Powerup.Color "11 FF 00", 0.9;
+		+INVENTORY.HUBPOWER
+	}
+	
+	override void Tick ()
+	{
+		// Strength counts up to diminish the fade.
+		EffectTics += 6;
+		Super.Tick();
+	}
+	
+	
+	override color GetBlend ()
+	{
+		// slowly fade the berserk out
+		int cnt = 128 - (EffectTics>>3);
+
+		if (cnt > 0)
+		{
+			return Color(BlendColor.a*cnt/256,
+				BlendColor.r, BlendColor.g, BlendColor.b);
+		}
+		return 0;
+	}
+
+}
+
+
+Class PowerTimeFreezerNu : PowerTimeFreezer
+{
+	int freezertics;
+	Default
+	{
+		+Inventory.NOSCREENBLINK;
+		Powerup.duration -60;
+	}
+	override void initeffect()
+	{
+		owner.A_startsound("TIMEFREZ",66,0,1.0,ATTN_NONE);
+		owner.giveinventory("PowerChronoEffect",1);
+		Super.initeffect();
+	}
+	override void doeffect()
+	{
+		Super.doeffect();
+		
+		Freezertics = freezertics + 1;
+		
+		
+		 S_ResumeSound(false);
+      S_PauseSound(false, true); // This will freeze music, but not sound effects.
+      if (Level.maptime & 1 || (Owner != null && Owner.player != null && Owner.player.cheats & CF_PREDICTING))
+      {
+         return;
+      }
+      Level.SetFrozen ( EffectTics > 4*32
+         || (( EffectTics > 3*32 && EffectTics <= 4*32 ) && ((EffectTics + 1) & 15) != 0 )
+         || (( EffectTics > 2*32 && EffectTics <= 3*32 ) && ((EffectTics + 1) & 7) != 0 )
+         || (( EffectTics >   32 && EffectTics <= 2*32 ) && ((EffectTics + 1) & 3) != 0 )
+         || (( EffectTics >    0 && EffectTics <= 1*32 ) && ((EffectTics + 1) & 1) != 0 ));
+		If(freezertics >= 1045)
+		{
+		DepleteorDestroy();
+		}
+	}
+
+}
+
+
+CLASS PowerChronoEffect : Powerup
+{
+Default
+	{
+		Powerup.Duration -30;
+		Powerup.Color "FF 6C 00";
+		+INVENTORY.HUBPOWER
+	}
+	
+
+	
+	
+	
+
+}

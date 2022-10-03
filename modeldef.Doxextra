@@ -1,0 +1,160 @@
+Model UnmakerTracer // Name of actor in DECORATE
+{ 
+   Path "Models/Projectiles" // Path to model in PK3
+   SKIN 0 "tracer2.tga" // Model index, model file
+   MODEL 0 "Tracer.md3" // Model index, texture (can be in any format supported by GZDoom)
+   Scale 16 9 5 // Scale values
+   PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+   
+   FrameIndex TRAC A 0 0 // The sprite lump, sprite frame, model index, frame number
+}
+
+Model UnmakerTracerStronger // Name of actor in DECORATE
+{ 
+   Path "Models/Projectiles" // Path to model in PK3
+   SKIN 0 "tracer2.tga" // Model index, model file
+   MODEL 0 "Tracer.md3" // Model index, texture (can be in any format supported by GZDoom)
+   Scale 16 9 5 // Scale values
+   PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+   
+   FrameIndex TRAC A 0 0 // The sprite lump, sprite frame, model index, frame number
+}
+
+Model NukeDamage // Name of actor in DECORATE
+{ 
+   Path "Models/Projectiles" // Path to model in PK3
+   SKIN 0 "NUKE.lmp" // Model index, model file
+   MODEL 0 "NukeShockwave.md3" // Model index, texture (can be in any format supported by GZDoom)
+   Scale 0.5 0.5 0.5 // Scale values
+   PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+   DONTCULLBACKFACES
+   FrameIndex NUKF A 0 0 // The sprite lump, sprite frame, model index, frame number
+}
+
+Model FlyingNail // Name of actor in DECORATE
+{ 
+   Path "Models" // Path to model in PK3
+   SKIN 0 "BD.PBNail.png" // Model index, model file
+   MODEL 0 "BD.PBNailout.md3" // Model index, texture (can be in any format supported by GZDoom)
+   Scale 10 10 10 // Scale values
+   //PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+   USEACTORPITCH
+ //  USEACTORROLL
+   offset 5 0 -5
+   AngleOffset 180
+   FrameIndex NAIL X 0 0 // The sprite lump, sprite frame, model index, frame number
+}
+
+Model DecorativeNail // Name of actor in DECORATE
+{ 
+   Path "Models" // Path to model in PK3
+   SKIN 0 "BD.PBNail.png" // Model index, model file
+   MODEL 0 "BD.PBNailout.md3" // Model index, texture (can be in any format supported by GZDoom)
+   Scale 10 10 10 // Scale values
+   //PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+   USEACTORPITCH
+ //  USEACTORROLL
+   offset 5 0 -5
+   AngleOffset 180
+   FrameIndex NAIL X 0 0 // The sprite lump, sprite frame, model index, frame number
+}
+
+Model HitSpark22     // Name of actor in DECORATE
+{
+   Path "Models/Projectiles"    // Path to model in PK3
+   Model 0 "tracer.md3"    // Model index, model file
+   Skin 0 "tracer3.png"     // Model index, texture (can be in any format supported by GZDoom)
+   Scale 1.5 1.5 6.0 // Scale values
+   PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+   FrameIndex SPKO S 0 0         // The sprite lump, sprite frame, model index, frame number
+}
+
+Model HitSpark23     // Name of actor in DECORATE
+{
+   Path "Models/Projectiles"    // Path to model in PK3
+   Model 0 "tracer.md3"    // Model index, model file
+   Skin 0 "tracer3.png"     // Model index, texture (can be in any format supported by GZDoom)
+   Scale 1.5 1.5 6.0 // Scale values
+   PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+   FrameIndex SPKO S 0 0         // The sprite lump, sprite frame, model index, frame number
+}
+Model HitSparkB      // Name of actor in DECORATE
+{
+   Path "Models/Projectiles"    // Path to model in PK3
+   Model 0 "tracer.md3"    // Model index, model file
+   Skin 0 "tracer3.png"     // Model index, texture (can be in any format supported by GZDoom)
+   Scale 1.5 1.5 6.0 // Scale values
+   PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+   FrameIndex SPKO S 0 0         // The sprite lump, sprite frame, model index, frame number
+}
+
+
+Model HitSpark22B     // Name of actor in DECORATE
+{
+   Path "Models/Projectiles"    // Path to model in PK3
+   Model 0 "tracer.md3"    // Model index, model file
+   Skin 0 "tracer3.png"     // Model index, texture (can be in any format supported by GZDoom)
+   Scale 1.5 1.5 6.0 // Scale values
+   PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+   FrameIndex SPKO S 0 0         // The sprite lump, sprite frame, model index, frame number
+}
+
+Model HitSpark23B     // Name of actor in DECORATE
+{
+   Path "Models/Projectiles"    // Path to model in PK3
+   Model 0 "tracer.md3"    // Model index, model file
+   Skin 0 "tracer3.png"  // Model index, texture (can be in any format supported by GZDoom)
+   Scale 1.5 1.5 6.0 // Scale values
+   PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+   FrameIndex SPKO S 0 0         // The sprite lump, sprite frame, model index, frame number
+}
+
+
+Model NEEDLE // Name of actor in DECORATE
+{ 
+   Path "Models/Projectiles" // Path to model in PK3
+   SKIN 0 "NEEDLE.png" // Model index, model file
+   MODEL 0 "NEEDLE.md3" // Model index, texture (can be in any format supported by GZDoom)
+   Scale 0.75 0.55 0.55 // Scale values
+   PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+   USEACTORPITCH
+   USEACTORROLL
+   offset 40 0 0
+   FrameIndex PBAL E 0 0 // The sprite lump, sprite frame, model index, frame number
+}
+
+Model VoidGrenadeVoid // Name of actor in DECORATE
+{ 
+   Path "Models/BloodSpot" // Path to model in PK3
+   Scale 70.0 70.0 0.5 // Scale values
+   ROTATING
+   rotation-speed 5.0
+  // Rotation-Center 0 0.3 0
+   offset 0 0 1
+   SKIN 0 "BHOLA0" // Model index, model file
+   MODEL 0 "bloodspot.md3" // Model index, texture (can be in any format supported by GZDoom)
+   
+   
+   SKIN 1 "VORXA0" // Model index, model file
+   MODEL 1 "bloodspot.md3" // Model index, texture (can be in any format supported by GZDoom)
+   
+   FrameIndex BHOL A 0 0 // The sprite lump, sprite frame, model index, frame number
+   FrameIndex BHOL B 0 0
+   FrameIndex BHOL C 0 0
+   //FrameIndex HEAD A 1 0 // The sprite lump, sprite frame, model index, frame number
+}
+
+
+
+Model cyberpentagram   // Name of actor in DECORATE
+{
+	ROTATING
+	Rotation-Speed 3.0
+   Path "models/bloodspot"    // Path to model in PK3
+   Model 0 "bloodspot.md3"    // Model index, model file
+   Skin 0 "PNTGA0.png"  // Model index, texture (can be in any format supported by GZDoom)
+   Scale 150.0 150.0 1.0            // Scale values
+   ZOffset 0.7
+   FrameIndex PNTG B 0 0         // The sprite lump, sprite frame, model index, frame number
+   FrameIndex PNTG C 0 0
+}

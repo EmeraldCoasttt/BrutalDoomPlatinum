@@ -1,0 +1,433 @@
+//ARTIFACTS
+object InvulnerabilitySphere_
+{
+    frame PINV { light INVULN }
+}
+
+object EnergySphere
+{
+    frame MEGA { light MegaSphereLight }
+}
+
+pulselight MegaSphereLight
+{
+    color 1.0 1.0 1.0
+    size 40
+    secondarySize 42
+    interval 2.0
+    offset 0 16 0
+}
+
+object SuperBlurSphere
+{
+    frame PINS { light BlurSphereLight }
+}
+ 
+pulselight BlurSphereLight
+{
+    color 1.0 0.0 0.0
+    size 40
+    secondarySize 42
+    interval 2.0
+    offset 0 16 0
+}
+
+object NightVision
+{
+	frame SVISC { light NightVisionLight }
+	frame SVISB { light NightVisionLight }
+	frame SVISA { light NightVisionLight }
+}
+ 
+pulselight NightVisionLight
+{
+    color 1.0 0.0 0.0
+    size 24
+    secondarySize 22
+    interval 2.0
+    offset 0 16 0
+}
+
+
+
+object DemonStrengthSigil
+{
+    frame DPRF { light StrengthSigilLight }
+}
+ 
+pulselight StrengthsigilLight
+{
+    color 1.0 0.0 0.0
+    size 26
+    secondarySize 28
+    interval 2.0
+    offset 0 16 0
+}
+
+object DemonBioSigil
+{
+    frame SIG3 { light BioSigilLight }
+}
+ 
+pulselight BiosigilLight
+{
+    color 0.0 1.0 0.0
+    size 26
+    secondarySize 28
+    interval 2.0
+    offset 0 16 0
+}
+object DemonQuakeSigil
+{
+    frame SIG2 { light QuakeSigilLight }
+}
+ 
+pulselight QuakesigilLight
+{
+    color 1.0 0.0 1.0
+    size 26
+    secondarySize 28
+    interval 2.0
+    offset 0 16 0
+}
+
+object DemonHasteSigil
+{
+    frame SIG4 { light HasteSigilLight }
+}
+
+pulselight hastesigilLight
+{
+    color 1.0 1.0 0.0
+    size 26
+    secondarySize 28
+    interval 2.0
+    offset 0 16 0
+}
+
+object DemonProtectionSigil
+{
+    frame SIG5 { light ProtectionSigilLight }
+}
+
+pulselight protectionsigilLight
+{
+    color 0.0 0.0 1.0
+    size 26
+    secondarySize 28
+    interval 2.0
+    offset 0 16 0
+}
+
+
+
+
+pulselight CHronosigilLight
+{
+    color 1.0 0.5 0.0
+    size 26
+    secondarySize 28
+    interval 2.0
+    offset 0 16 0
+}
+
+  
+
+
+//MONSTERZ
+flickerlight2 ZOMBIEATK
+{
+    color 1.0 0.8 0.2
+    size 36
+    secondarySize 48
+    interval 1
+	dontlightself 1
+    offset 0 40 0
+}
+
+
+object RifleZombie
+{
+    frame POSRF { light ZOMBIEATK }
+	frame ZRO1Z { light ZOMBIEATK }
+}
+
+object HelmetRifleZombie
+{
+    frame ZMV1F { light ZOMBIEATK }
+	frame ZRO2[ { light ZOMBIEATK }
+}
+
+object PistolZombie
+{
+    frame PSPOF { light ZOMBIEATK }
+}
+
+object PistolZombieHelmet
+{
+    frame 9OS2F { light ZOMBIEATK }
+}
+
+object ShotgunGuy1
+{
+    frame SPOSF { light ZOMBIEATK }
+	frame ZRO1] { light ZOMBIEATK }
+}
+
+object ShotgunGuyHelmet
+{
+    frame SP1SF { light ZOMBIEATK }
+	frame ZRO3[ { light ZOMBIEATK }
+}
+
+object SMGGuy
+{
+    frame PSS3F { light ZOMBIEATK }
+	frame ZRO1] { light ZOMBIEATK }
+}
+object DualPistolZombie
+{
+    frame DSPOF { light ZOMBIEATK }
+	frame DSPOH { light ZOMBIEATK }
+}
+object DualPistolZombieHelmet
+{
+    frame DPZHF { light ZOMBIEATK }
+    frame DPZHH { light ZOMBIEATK }
+}
+
+
+object ImpFireBallWeak
+{
+    frame BLHD { light IMPBALLsmol    }
+    frame FRFXA { light IMPBALLsmol    }
+    frame FRFXB { light IMPBALLsmol    }
+    frame FRFXC { light IMPBALLsmol    }
+    frame FRFXD { light IMPBALLsmol    }
+    frame FRFXE { light IMPBALL_X1    }
+    frame FRFXF { light IMPBALL_X1    }
+    frame FRFXG { light IMPBALL_X1    }
+    frame FRFXH { light IMPBALL_X2    }
+    frame FRFXI { light IMPBALL_X2    }
+
+}
+
+
+pointlight IMPBALLsmol
+{
+    color 1.0 0.5 0.0
+    size 32
+}
+
+
+//ITEMZ
+pulselight ArmorBonusGlow
+{
+    color 0.3 1.0 0.0
+    size 12
+    secondarySize 14
+    interval 0.1
+    offset 0 5 0
+	dontlightself 1
+}
+
+
+object ArmorShard
+{
+    frame BON2B { light ArmorBonusGlow  }
+	frame BON2C { light ArmorBonusGlow  }
+	frame BON2D { light ArmorBonusGlow  }
+	frame BON2J { light ArmorBonusGlow  }
+	frame BON2K { light ArmorBonusGlow  }
+	frame BON2L { light ArmorBonusGlow  }
+	frame BON2N { light ArmorBonusGlow  }
+	frame BON2O { light ArmorBonusGlow  }
+	frame BON2P { light ArmorBonusGlow  }
+}
+
+pulselight FatalityArmorBonusGlow
+{
+    color 1.0 0.0 0.0
+    size 12
+    secondarySize 14
+    interval 0.1
+    offset 0 5 0
+	dontlightself 1
+}
+
+object ArmorShardFatalityBonus
+{
+    frame BON2F { light FatalityArmorBonusGlow  }
+	frame BON2G { light FatalityArmorBonusGlow  }
+	frame BON2H { light FatalityArmorBonusGlow  }
+}
+object ArmorShardFatalityBonus2
+{
+    frame BON2F { light FatalityArmorBonusGlow  }
+	frame BON2G { light FatalityArmorBonusGlow  }
+	frame BON2H { light FatalityArmorBonusGlow  }
+}
+
+object Helmet1Armor
+{
+    frame BON2B { light ArmorBonusGlow  }
+	frame BON2C { light ArmorBonusGlow  }
+	frame BON2D { light ArmorBonusGlow  }
+}
+object Helmet1ArmorB
+{
+    frame BON2N { light ArmorBonusGlow  }
+	frame BON2O { light ArmorBonusGlow  }
+	frame BON2P { light ArmorBonusGlow  }
+}
+
+//Frozen railgun stuff
+pointlight IceShards
+{
+    color 0.8 0.9 1.0
+    size 18
+    offset 0 16 0
+}
+
+object IceShardsSpawner
+{
+   frame ISHT { light IceShards }
+}
+
+object IceShardsCeiling
+{
+   frame ISHC { light IceShards }
+}
+
+
+pointlight PLASMABALLSMALLer
+{
+    color 0.6 0.6 1.0
+    size 46
+}
+
+//GUN PROJECTILES
+object Plasma_Ball
+{
+    frame PLSS { light PLASMABALLSMALLer }
+    frame PBAL { light PLASMABALLSMALLer }
+}
+object PlasmaBall75
+{
+    frame PLSS { light PLASMABALLSMALLer }
+    frame PBAL { light PLASMABALLSMALLer }
+}
+object PlasmaBall99
+{
+    frame PLSS { light PLASMABALLSMALLer }
+    frame PBAL { light PLASMABALLSMALLer }
+}
+//
+flickerlight BFG10kLight
+{
+    color 0.1 1.0 0.0
+    size 50
+	secondarySize 60
+	chance 0.99
+}
+flickerlight BFG10kRedLight
+{
+    color 1.0 0.3 0.3
+    size 50
+	secondarySize 60
+	chance 0.99
+}
+flickerlight BFGEXPLOsmaller
+{
+    color 0.1 1.0 0.0
+    size 60
+	secondarySize 80
+	chance 0.99
+}
+flickerlight BFGEXPLOred
+{
+    color 1.0 0.6 0.6
+    size 140
+	secondarySize 180
+	chance 0.99
+}
+
+object BFGBallWithTracers
+{
+    frame BFS1A { light BFGBALL }
+    frame BFS1B { light BFGBALL }
+
+    frame BFE1A { light BFGEXPLO }
+    frame BFE1B { light BFGEXPLO }
+	frame BFE1C { light BFGEXPLO }
+	frame BFE1D { light BFGEXPLO }
+	frame BFE1E { light BFGEXPLO }
+}
+
+object BFG10K_Ball
+{
+    frame BFS1A { light BFG10kLight }
+    frame BFS1B { light BFG10kLight }
+
+    frame BFE1A { light BFGEXPLO }
+    frame BFE1B { light BFGEXPLO }
+	frame BFE1C { light BFGEXPLO }
+	frame BFE1D { light BFGEXPLO }
+	frame BFE1E { light BFGEXPLO }
+}
+/*
+object AlphaBFGBAll
+{
+    frame BFS1A { light BFG10kLight }
+    frame BFS1B { light BFG10kLight }
+
+    frame BFGBA { light BFGEXPLO }
+    frame BFGBB { light BFGEXPLO }
+	frame BFGBC { light BFGEXPLO }
+	frame BFGBD { light BFGEXPLO }
+	frame BFGBE { light BFGEXPLO }
+}
+
+object AlphaBFGBAll_RED
+{
+    frame BFS1C { light BFG10kRedLight }
+    frame BFS1D { light BFG10kRedLight }
+
+    frame BFGBA { light BFGEXPLOred }
+    frame BFGBB { light BFGEXPLOred }
+	frame BFGBC { light BFGEXPLOred }
+	frame BFGBD { light BFGEXPLOred }
+	frame BFGBE { light BFGEXPLOred }
+}
+*/
+
+
+
+
+
+Pulselight voidlight
+{
+	subtractive 1
+	dontlightself 1
+    color 0.7 0.01 0.7
+    size 1
+	dontlightactors 1
+	secondarySize 30
+	interval 2
+}
+
+
+
+
+object bigblacksmokevoid
+{
+    frame SMK1K { light VoidLight }
+	
+	
+	//frame BHOLC { light VoidLight2 }
+
+
+}
+
+
+

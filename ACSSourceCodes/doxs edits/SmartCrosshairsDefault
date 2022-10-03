@@ -1,0 +1,26 @@
+#library "SmartCrosshairsDefault"
+#include "zcommon.acs"
+
+Script "SmartCrosshairsDefault" (VOID)
+{
+SetCvar("PistolCrosshair",15);
+SetCvar("SMGCrosshair",22);
+SetCvar("MP40Crosshair",54);
+SetCvar("ASGCrosshair",46);
+SetCvar("ShotgunCrosshair",40);
+SetCvar("SSGCrosshair",9);
+SetCvar("LMGCrosshair",34);
+SetCvar("RifleCrosshair",24);
+SetCvar("MinigunCrosshair",79);
+SetCvar("MG42Crosshair",79);
+SetCvar("RLCrosshair",43);
+SetCvar("GLCrosshair",33);
+SetCvar("PlasmaCrosshair",39);
+SetCvar("RailgunCrosshair",50);
+SetCvar("BFGCrosshair",89);
+SetCvar("BFG10KCrosshair",78);
+SetCvar("UnmakerCrosshair",53);
+SetCvar("FlamecannonCrosshair",28);
+SetCvar("HMLCrosshair",76);
+Delay(1);
+}

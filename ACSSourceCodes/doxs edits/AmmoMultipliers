@@ -1,0 +1,71 @@
+#library "AmmoMultipliers"
+#include "zcommon.acs"
+
+Script "RestoreDefaultMagValues" (void)
+{
+//First the CVARS...
+SetCVAR("bd_PistolMag", 21);
+SetCVAR("bd_SMGmag", 41);
+SetCVAR("bd_MP40mag", 32);
+//slot 3
+SetCVAR("bd_ShotgunMag", 9);
+SetCVAR("bd_ASGmag", 16);
+//slot 4
+SetCVAR("bd_RifleMag", 31);
+SetCVAR("bd_NewNailgunMag", 50);
+//slot 5
+SetCVAR("bd_RocketMag", 6);
+//Slot 6
+SetCVAR("bd_PlasmaMag", 50);
+SetCVAR("bd_RailgunMag", 50);
+//... then the amounts themselves.
+//slot 2
+SetAmmoCapacity("BDPistolAmmo", 16);
+SetAmmoCapacity("BDDualPistolAmmo", 32);
+SetAmmoCapacity("BDSMGAmmo", 41);
+SetAmmoCapacity("BDDualSMGAmmo", 82);
+SetAmmoCapacity("MP40Ammo", 32);
+SetAmmoCapacity("DualMP40Ammo", 64);
+//slot 3
+SetAmmoCapacity("ShotgunAmmo", 9);
+SetAmmoCapacity("AssaultShotgunAmmo", 16);
+//slot 4
+SetAmmoCapacity("RifleAmmo", 31);
+SetAmmoCapacity("DoubleRifleAmmo", 62);
+SetAmmoCapacity("NailgunAmmo", 50);
+//slot 5
+SetAmmoCapacity("RocketRounds", 6);
+//slot 6
+SetAmmoCapacity("PlasmaAmmo", 50);			
+SetAmmoCapacity("DoublePlasmaAmmo", 100);
+SetAmmoCapacity("RailgunAmmo", 50);
+delay(1);
+}
+
+Script "SetNewMagValues" ENTER
+{
+//slot 2
+SetAmmoCapacity("BDPistolAmmo", GetCVAR("bd_PistolMag") );
+SetAmmoCapacity("BDDualPistolAmmo", GetCVAR("bd_PistolMag")*2 );
+SetAmmoCapacity("BDSMGAmmo", GetCVAR("bd_SMGmag") );
+SetAmmoCapacity("BDDualSMGAmmo", GetCVAR("bd_SMGmag")*2 );
+SetAmmoCapacity("MP40Ammo", GetCVAR("bd_MP40mag") );
+SetAmmoCapacity("DualMP40Ammo", GetCVAR("bd_MP40mag")*2 );
+//slot 3
+SetAmmoCapacity("ShotgunAmmo", GetCVAR("bd_ShotgunMag") );
+SetAmmoCapacity("AssaultShotgunAmmo", GetCVAR("bd_ASGMag") );
+//slot 4
+SetAmmoCapacity("RifleAmmo", GetCVAR("bd_RifleMag") );
+SetAmmoCapacity("DoubleRifleAmmo", GetCVAR("bd_RifleMag")*2 );
+SetAmmoCapacity("NailgunAmmo", GetCVAR("bd_NewNailgunMag") );
+//slot 5
+SetAmmoCapacity("RocketRounds", GetCVAR("bd_RocketMag") );
+//slot 6
+SetAmmoCapacity("PlasmaAmmo", GetCVAR("bd_PlasmaMag") );			
+SetAmmoCapacity("DoublePlasmaAmmo", GetCVAR("bd_PlasmaMag")*2 );
+SetAmmoCapacity("RailgunAmmo", GetCVAR("bd_RailgunMag") );
+delay(1);
+}
+
+
+

@@ -1,0 +1,47 @@
+#library "DOXOPTIONS"
+#include "zcommon.acs"
+
+
+Script "HoldAim" (VOID)
+{
+TakeInventory("Aiming0", 1);
+TakeInventory("Aiming1", 1);
+TakeInventory("Aiming2", 1);
+if	(GetCvar("bd_Aim") == 0) { GiveInventory("Aiming0", 1); }	//BDv21 Mode
+if	(GetCvar("bd_Aim") == 1) { GiveInventory("Aiming1", 1); }	//Press Once Mode
+if	(GetCvar("bd_Aim") == 2) { GiveInventory("Aiming2", 1); }	//Hold Mode 
+}
+
+Script "ScreenEffects" (VOID)
+{
+	TakeInventory("ScreenFX", 1);
+	
+	//if	(GetCvar("bd_ScreenFX") == 0) { delay(1); }	//Regular Mode
+	if	(GetCvar("bd_ScreenFX") == 1) { GiveInventory("ScreenFX",1); }	//BDv21 Mode
+	if	(GetCvar("bd_ScreenFX") == 2) { GiveInventory("ScreenFX",1); }	//Off Mode
+}
+
+Script "BloodSplashTrail" (VOID)
+{
+	TakeInventory("BloodTrail", 1);
+	if	(GetCvar("bd_BloodTrail") == 1 || GetCvar("bd_ScreenFX") == 1) { GiveInventory("BloodTrail",1); }
+}
+
+
+
+Script "DoxOptions" ENTER
+{
+	TakeInventory("NoSmartDualWield", 1);
+	TakeInventory("NoFancyShooting", 1);
+	TakeInventory("NoShotgunStrap", 1);
+	TakeInventory("NoPitch", 1);
+	
+	if	(GetCvar("bd_SmartDualWield") == 1) { GiveInventory("NoSmartDualWield", 1); }
+	if	(GetCvar("bd_FancyShooting") == 1) { GiveInventory("NoFancyShooting", 1); }
+	if	(GetCvar("bd_ShotgunStrap") == 1) { GiveInventory("NoShotgunStrap", 1); }
+	if	(GetCvar("bd_Pitch") == 1) { GiveInventory("NoPitch", 1); }
+	delay(1);
+	restart;
+}
+
+

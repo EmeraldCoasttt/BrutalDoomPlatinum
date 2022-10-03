@@ -1,0 +1,365 @@
+
+class Brutal_PlayerBase : PlayerPawn
+{
+	//=========================
+	//Common
+	
+	const BOB_MIN_REALIGN 	 = 0.25f;
+	const GROUND_DASH_COOLER = 18;
+	
+	//Movement General
+	bool	Pain;
+	double	ViewAngleDelta;
+	float	ActualSpeed;
+	float	MaxAirSpeed;
+	float 	MaxGroundSpeed;
+	float	MoveFactor;
+	int		AnimateJump;
+	int		ForceVelocity;
+	int		MoveType;
+	int		OldFloorZ;
+	playerinfo ZMPlayer;
+	vector2 OldVelXY;
+	vector3	Acceleration;
+	
+	//////////////////
+	
+	//Jumping
+	bool 	BlockJump;
+	bool	Jumped;
+	float	FloorAngle;
+	int		DoubleJumpCooler;
+	int		JumpSoundCooler;
+	
+	//Double Jump
+	bool	BlockDoubleJump;
+	bool	CanDoubleJump;
+	
+	//Elevator Jumps
+	float	ElevatorJumpBoost;
+	int		OldSecIndex;
+	
+	//////////////////
+	
+	//Double Tap
+	int		FirstTapTime;
+	int		FirstTapValue;
+	int		OldTapValue;
+	
+	//Dashing
+	float	WJumpSpeed;
+	int		DashNumber;
+	int		DashCooler;
+	
+	//Air Dashing
+	float	ADashTargetSpeed;
+	int		ADashCooler;
+	int		ADashFrictionDelay;
+	
+	//WallJump
+	int		CheckForWJump;
+	
+	//WallSlideMove
+	bool	CanWSlide;
+	int		CheckForWSlide;
+	vector2	WSlideVelocity;
+	
+	//Crouch Slide
+	bool	CanCSlide;
+	float	MaximumSlideSpeed;
+	float	QSlideDuration;
+	int		CSlideStartTime;
+	
+	//Ledge Grabbing
+	bool	LedgeGrabbed;
+	float	LedgeAngle;
+	int		LedgeHeight;
+	bool	LedgeCheck;
+	int		LedgeTime;
+	int		LedgeHeightMax;
+	int		LedgeHeightMin;
+	float	FrameTime;
+	double	velx;
+	double	vely;
+	double	velz;
+	weapon	ReselectWeapon;
+	
+	//Grappling Hook
+	actor	GrappledMonster;
+	actor	HookFired;
+	bool	Grappled;
+	float	PendulumLength;
+	vector3	GrappleVel;
+	vector3 Rope;
+	
+	//////////////////
+	
+	//View Bobbing
+	bool	PostLandingBob;
+	float	ZMBob;
+	
+	//Weapon bobbing
+	bool	DoBob;
+	double	BobTime;
+	double	HorizontalSway;
+	double	BobRange;
+	double 	OldTicFrac;
+	double	VerticalOffset;
+	
+	//=========================
+	//Painkiller only
+	
+	//Movement
+	bool	TrickFailed;
+	float	AirControl;
+	float	ActualMaxAirSpeed;
+	
+	//Jumping
+	float	TrickJumpAngle;
+	int		SmallerJumpHeight;
+	
+	//=========================
+	//Build Engine Only
+	
+	//Movement
+	bool	DeepWater;
+	float	LandingVelZ;
+	int		FVel;
+	int		SVel;
+	int		UVel;
+	
+	//Jumping
+	int		BuildJumpDelay;
+	
+	Default
+    {
+		Player.DisplayName "ZMovement Player";
+        PainChance 255;
+    }
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	////																						////
+	//// Non-Movement Stuff																		////
+	////																						////
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//Because GZDoom's Unit() returns NaN if a vector has no value
+	vector3 SafeUnit3(Vector3 VecToUnit)
+	{
+		if(VecToUnit.Length()) { VecToUnit /= VecToUnit.Length(); }
+		return VecToUnit;
+	}
+	
+	vector2 SafeUnit2(Vector2 VecToUnit)
+	{
+		if(VecToUnit.Length()) { VecToUnit /= VecToUnit.Length(); }
+		return VecToUnit;
+	}
+	
+	Override void HandleMovement() {
+		if(GetCvar("donotclimb") == 0) 
+		{
+			if(LedgeCheck)
+			{
+				LedgeReach();
+			}
+			if(LedgeGrabbed)
+			{
+				LedgeGrab();
+			}
+			LedgeGrabInitiator();
+		}
+		if(GetCVAR("donotdoublejump") == 0) 
+		{
+			//CheckJump();
+		}
+		super.HandleMovement();
+	}
+	
+	Override void Tick()
+    {
+		//if (GetCvar("bd_GenderFemale") == 1) {
+		if (CountInv("GenderFemale") == 1) {
+			SoundClass = "fplayer";
+		}
+		/*
+		if (CountInv("DoStrengthRuneAnim") == 1) {
+			TakeInventory("DoStrengthRuneAnim", 1);
+			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("DoStrengthRuneAnim"));
+		}
+		*/
+		super.Tick();
+    }
+	
+	
+	//////////////////////////////////////
+	// Ledge Grab						//
+	//////////////////////////////////////
+	
+	void LedgeGrabInitiator()
+	{
+		ZMPlayer = self.player;
+		
+		//Already ledge grabbing, no clipping, moving away from where you are looking, ceiling already too low for sure
+		if((pos.z <= floorz) || LedgeCheck || LedgeGrabbed || (ZMPlayer.Cheats & CF_NOCLIP2) || Vel.XY dot AngleToVector(Angle) <= 0 || CeilingZ <= Pos.Z + Height * 1.6f) { return; }
+		
+		//============================================
+		//Find ledge (if any)						//
+		//============================================
+		
+		FLineTraceData LedgeTrace;
+		Float TraceDistance = sqrt(2) * Radius + 1; //account for the fact that Doom's hitboxes are square
+		LineTrace(Angle, TraceDistance, 0, TRF_BLOCKSELF|TRF_THRUACTORS, Height * 1.2f, data: LedgeTrace);
+		Vector3 HitPos = LedgeTrace.HitLocation;
+		
+		Int LedgeCandidate;
+		if(LedgeTrace.HitType == TRACE_HitWall) //hit wall scenario
+		{
+			if(LedgeTrace.Hit3DFloor != NULL) //3D floor
+			{
+				LedgeCandidate = LedgeTrace.Hit3DFloor.Top.ZAtPoint(HitPos.XY);
+			}
+			else //regular wall
+			{
+				Line HitLine = LedgeTrace.HitLine;
+				if(HitLine.FrontSector != NULL && HitLine.FrontSector != CurSector)
+					LedgeCandidate = HitLine.FrontSector.FloorPlane.ZatPoint(HitPos.XY);
+				else if(HitLine.BackSector != NULL && HitLine.BackSector != CurSector)
+					LedgeCandidate = HitLine.BackSector.FloorPlane.ZatPoint(HitPos.XY);
+			}
+		}
+		else if(LedgeTrace.HitSector != CurSector)//tracer stopper mid air in a sector that is not the one where player currently is
+		{
+			LedgeCandidate = LedgeTrace.HitSector.NextLowestFloorAt(HitPos.X, HitPos.Y, HitPos.Z, FFCF_3DRESTRICT, 0);
+		}
+		else
+		{
+			return;
+		}
+		
+		//Check if the candidate ledge can suffice
+		if(LedgeCandidate > Pos.Z + Height * 0.6f && LedgeCandidate <= Pos.Z + Height * 1.2f)
+		{
+			Vector3 OrigPos = Pos;
+			SetXYZ((Pos.XY, LedgeCandidate));
+			if(!CheckMove(Pos.XY + 5.f * AngleToVector(Angle))) //not enough space, cancel everything :(
+			{
+				SetXYZ(OrigPos);
+				return;
+			}
+			SetXYZ(OrigPos);
+			LedgeHeight = LedgeCandidate;
+			LedgeHeightMin = (LedgeHeight - Height * 0.97f);
+			LedgeHeightMax = (LedgeHeight - Height * 0.751f);
+		}
+		else
+		{
+			return; //too high/low
+		}
+		
+		/*
+		LineTrace(Angle, TraceDistance, 0, TRF_BLOCKSELF|TRF_THRUACTORS|TRF_NOSKY, 0, data: LedgeTrace);
+		if (LedgeTrace.HitLine && LedgeTrace.hittype == TRACE_HITWALL) 
+		{
+			double lineangle = atan2(LedgeTrace.HitLine.delta.y, LedgeTrace.HitLine.delta.x); //angle of the line
+			double targangle = lineangle + 90; //this will be the angle of the player
+			
+			if(targangle < 0) 
+			{
+				targangle = -(targangle + 90);
+			}
+			if (LedgeTrace.LineSide)
+			{
+				targangle *= -1; //reverse it if you're facing the back side of the linedef
+			}
+			A_SetAngle(targangle,SPF_INTERPOLATE); //set player's angle
+		}
+		*/
+		
+		//============================================
+		//Abemus ledge, execute						//
+		//============================================
+		
+		//Switch to a weapon that forbids firing during the ledge grab
+		
+		/*
+		//Reset dash stuff just in case
+		//MaxAirSpeed = ADashTargetSpeed;
+		//DashCooler = ADashCooler = ADashTargetSpeed = WJumpSpeed = DashNumber = 0;
+		*/
+		
+		//Credit Cherno
+		//Console.Printf("Num: %f", LedgeHeight);
+		
+		velz = 8;
+		LedgeCheck = True;
+		
+		if(vel.length() < 5)
+		{
+			GiveInventory("Grabbing_A_Ledge", 1);
+		}
+		if(pos.z >= (LedgeHeightMin+20))
+		{
+			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("FinishClimb"));
+			
+			A_StopSound(CHAN_WEAPON);
+			A_Playsound("ledgeclimb");
+			LedgeAngle = Angle;
+			LedgeCheck = False;
+			LedgeGrabbed = True;
+			return;
+		}
+		if((player.readyweapon is "Melee_Attacks") || (player.readyweapon is "Chain_saw") || (player.readyweapon is "BrutalAxe"))
+		{
+			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("StainedLedgeClimb"));
+		}
+		else
+		{
+			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("LedgeClimb"));
+		}
+	}
+	
+	void LedgeReach()
+	{
+		LedgeTime++;
+		if(LedgeTime >= 30)
+		{
+			SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
+			LedgeGrabbed = LedgeTime = LedgeHeight = LedgeHeightMin = LedgeHeightMax = FrameTime = 0;
+		}
+	}
+	
+	void LedgeGrab()
+	{
+		if(Pos.Z >= LedgeHeight || !Vel.Length() || LedgeTime >= 35)
+		{
+			//End Ledge Grab
+			LedgeCheck = False;
+			SetOrigin((Pos.X, Pos.Y, LedgeHeight), True);
+			SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
+			
+			//Only if ledge grab was successful
+			if(LedgeTime >= 35) { return; }
+			LedgeGrabbed = LedgeTime = LedgeHeight = LedgeHeightMin = LedgeHeightMax = FrameTime = 0;
+			Vel = Vel.Length() ? (5.f * AngleToVector(LedgeAngle), -3) : (0, 0, 0); //push player forward and downward
+			A_PlaySound("*land", CHAN_BODY);
+		}
+		else
+		{
+			Vel = Vel.Length() ? (0, 0, 8) : (0, 0, 0);
+		}
+		
+		//Fail safe to unlock player movement if something goes wrong
+		LedgeTime++;
+		if(LedgeTime >= 35)
+		{
+			SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
+			LedgeGrabbed = LedgeTime = LedgeHeight = LedgeHeightMin = LedgeHeightMax = FrameTime = 0;
+		}
+		
+		//Sprite animation
+		PlayIdle();
+	}
+}

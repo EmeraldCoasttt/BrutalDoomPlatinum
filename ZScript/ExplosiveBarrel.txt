@@ -1,0 +1,42 @@
+CLASS Explosivebarrelbase : actor
+{
+	Action Void a_angerbaron()
+	{
+
+
+		BlockThingsIterator CheckForTracers = BlockThingsIterator.create(Self,456);
+		Actor CurrentActor; 
+		bool tracerfound;
+		tracerfound = false;
+		If(random(0,50) == 9)
+		{
+		While (CheckFortracers.Next())
+			{
+			CurrentActor = CheckFortracers.Thing;
+
+			If (CurrentActor && CurrentActor is "baronofhell2" && currentactor.health > 0 &&  CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && !tracerfound && currentactor.target && currentactor.checksight(currentactor.target) && !currentactor.findinventory("hasexplosivebarrel") && currentactor.target is "playerpawn")
+				{
+					tracer = currentactor;
+					If(tracer)
+					{
+		
+			
+						tracer.target = self;
+						
+						tracerfound = true;
+						tracer.setstatelabel ("Pain.CallingTheBaronAFaggot");
+						tracer = null;
+						
+						
+
+					}
+		
+		
+					// return ResolveState(null);
+		
+				}
+
+			}
+		}
+	}
+}

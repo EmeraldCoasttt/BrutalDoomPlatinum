@@ -1,0 +1,586 @@
+ACTOR DualRevolver : BrutalWeapon 
+{
+	Weapon.AmmoUse1 0
+	Weapon.AmmoGive1 0
+	Weapon.AmmoUse2 0
+	Weapon.AmmoGive2 0
+	Weapon.AmmoType1 "Clip1"
+	Weapon.AmmoType2 "BDDualRevolverAmmo"
+	weapon.selectionorder 500
+	Obituary "%o was shot down by %k's revolver."
+    AttackSound "None"
+    Inventory.PickupSound "REVDRY"
+	Inventory.Pickupmessage "You got the Revolver! Yee-haw! (slot 2)"
+    +WEAPON.NOAUTOAIM
+	+WEAPON.NOAUTOFIRE
+	+WEAPON.NOALERT
+	+WEAPON.NO_AUTO_SWITCH
+	+WEAPON.WIMPY_WEAPON
+    +FORCEXYBILLBOARD
+	+RIPPER
+	Weapon.SisterWeapon "DoxsRevolver"
+	+POWERED_UP
+	Scale 0.9
+	Tag "Revolver"
+	brutalweapon.handedness 2
+	States
+	{
+	
+	Grenadethrowflash:
+	  REVS DEFG 1
+	 TNT1 A 24
+	 REVS GFED 1
+	 Stop
+	
+	SprintOverlay:
+		RE3F EFGH 1
+		RE3F I 1 
+		WAIT
+	ReturnFromSprint:
+		RE3F HGFE 1
+		Goto ready
+
+	KickingFlash:
+	TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "KickingFlashNoAmmo")
+	RE3F EFGHIIIIIIIIHGFE 1
+	goto ready
+	
+	AirKickingFlash:
+	TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "AirKickingFlashNoAmmo")
+	    RE3F EFGHIIIIIIIIIIHGFE 1
+	    goto ready
+	
+	 SlideKickingStart:
+	 TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "SlideKickingStartNoAmmo")
+	    RE3F EFGHI 1
+	    RE3F IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEndnoammo");
+			}
+			return state("");
+		}
+	    goto ready
+
+	 SlideKickingEnd:
+	 TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "SlideKickingEndNoAmmo")
+	    RE3F IIIIIIHGFE 1 //10
+	    Stop
+		
+	KickingFlashNoAmmo:
+	RE3F JKLMNNNNNNNNMLKJ 1
+	goto ready
+	
+	AirKickingFlashNoAmmo:
+	    RE3F JKLMNNNNNNNNNNMLKJ 1
+	  goto ready
+	
+	 SlideKickingStartNoAmmo:
+	    RE3F JKLMN 1
+	    RE3F NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEndnoammo");
+			}
+			return state("");
+		}
+	   goto ready
+
+	 SlideKickingEndNoAmmo:
+	    RE3F NNNNNNMLKJ 1 //10
+	   goto ready
+		
+	Ready3:
+	Ready:
+	    TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "ReadyNoAmmo")
+     
+		REDF C 1 
+		{
+		A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RevolverCrosshair"));}else{A_SetCrosshair(0);}
+		}
+		Loop
+		
+	ReadyNoAmmo:
+	    REDF A 0 A_JumpIfInventory("BDRevolverAmmo",1,4)
+		REDF V 1 A_WeaponReadyDX(WRF_ALLOWRELOAD)
+		REDF A 0 A_checksprint
+		Loop	
+		TNT1 A 0 A_takeinventory("RevolverIsUnloaded",1)
+		Goto Ready
+		
+		
+	
+		
+	Deselect:
+	    TNT1 A 0 A_TakeInventory("RevolverContinueAlt",1)
+		TNT1 A 0 A_JumpIfinventory("RevolverDualWieldCheck",1, "DeselectToSingle")
+		TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "DeselectUnloaded")
+        REVS DEFG 1
+		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower
+		REDF A 0 A_TakeInventory("TossGrenade", 1)
+		TNT1 A 1 A_Lower
+		Wait
+		
+	DeselectUnloaded:
+	    REVS HIJK 1
+		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower
+		REDF A 0 A_TakeInventory("TossGrenade", 1)
+		TNT1 A 1 A_Lower
+		Wait
+	
+	DeselectToSingle:
+	    REDF A 0 A_TakeInventory("TossGrenade", 1)
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		Wait
+		
+	Select:
+	    TNT1 A 0
+		Goto SelectFirstPersonLegs
+		SelectContinue:
+		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RevolverCrosshair"));}else{A_SetCrosshair(0);}}
+		REDF A 0 A_Takeinventory("StartDualWield",1)
+		REDF A 0 A_Giveinventory("GoSpecial",1)
+		REDF A 0 A_Takeinventory("FistsSelected",1)
+		REDF A 0 A_Takeinventory("SawSelected",1)
+		REDF A 0 A_Takeinventory("ShotgunSelected",1)
+		REDF A 0 A_Takeinventory("SSGSelected",1)
+		REDF A 0 A_Takeinventory("MinigunSelected",1)
+		REDF A 0 A_Takeinventory("PlasmaGunSelected",1)
+		REDF A 0 A_Takeinventory("RocketLauncherSelected",1)
+		REDF A 0 A_Takeinventory("GrenadeLauncherSelected",1)
+		REDF A 0 A_Takeinventory("BFGSelected",1)
+		REDF A 0 A_Takeinventory("BFG10kSelected",1)
+		REDF A 0 A_Takeinventory("RailGunSelected",1)
+		REDF A 0 A_Takeinventory("SubMachineGunSelected",1)
+		REDF A 0 A_Takeinventory("RevenantLauncherSelected",1)
+		REDF A 0 A_Takeinventory("LostSoulSelected",1)
+		REDF A 0 A_Takeinventory("FlameCannonSelected",1)
+		REDF A 0 A_Takeinventory("HasBarrel",1)
+// 		TNT1 A 1
+// 		TNT1 A 1 A_Raise
+		TNT1 AAAAAAAAAAAAAAA 0 A_Raise
+		TNT1 A 0 A_JumpIfInventory("RevolverDualWieldCheck",1, "SelectAnimationFromSingle")
+		Goto SelectAnimation
+		
+	SelectAnimationFromSingle:
+		TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "SelectFromSingleUnloaded")
+	    REDF A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+        REDF A 0 A_PlaySound("REVCOCK")
+        REVS LMNO 1
+		REDF A 0 A_Takeinventory("StartDualWield",1)
+		REDF A 0 A_Takeinventory("RevolverDualWieldCheck",1)
+        REDF A 0 A_GunFlash
+		Goto Ready
+		
+	SelectFromSingleUnloaded:
+		//TNT1 A 1 A_JumpIfinventory("RevolverIsUnloaded",1, "SelectFromSingleUnloaded")
+	    REDF A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+        REDF A 0 A_PlaySound("REVCOCK")
+        REVS PQRS 1
+		REDF A 0 A_Takeinventory("StartDualWield",1)
+		REDF A 0 A_Takeinventory("RevolverDualWieldCheck",1)
+        REDF A 0 A_GunFlash
+		Goto Ready
+		
+		
+	SelectAnimation:
+	ReturnFromNothing:
+		TNT1 A 1 A_JumpIfinventory("RevolverIsUnloaded",1, "SelectUnloaded")
+	    REDF A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+        REDF A 0 A_PlaySound("REVCOCK")
+        REVS GFED 1
+		REDF A 0 A_Takeinventory("StartDualWield",1)
+        REDF A 0 A_GunFlash
+		Goto Ready
+
+    SelectUnloaded:
+		TNT1 A 1 
+	    REDF A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+        REDF A 0 A_PlaySound("REVCOCK")
+        REUS CBA 1
+		REDF A 0 A_Takeinventory("StartDualWield",1)
+        REDF A 0 A_GunFlash
+		Goto ReadyNoAmmo
+	
+    Fire:
+	    TNT1 A 0 A_JumpIfInventory("NowFireSecondRevolverUWU",1,"FireSecondGun")
+	    TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "NoAmmoFire")
+		REVO A 0 A_CHeckIfAmmo("BDRevolverAmmo",1,"FireSecondGun")
+        TNT1 AAAA 0
+	    REDF A 0 A_PlaySound("REVFIRE1")
+	    RE3F ABB 1
+		REDF A 0 A_AlertMonsters
+		
+		//RIFF A 0 A_FireCustomMissile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1))
+		TNT1 A 0 A_GiveInventory("NowFireSecondRevolverUWU",1)
+		REDF B 1 BRIGHT
+		REDF A 0 A_PlaySound("FARSHT", 6)
+        REDF A 0 A_PlaySound("REVFIRE2", 1)
+		//SHTN A 0 A_FireBullets (4, 3, 1, 110 , "RevolverPuff", FBF_NORANDOM)
+		REDF A 0 A_ZoomFactor(0.98)
+		TNT1 A 0 A_FireCustomMissile("RevolverTracer", frandom(-1,1), 0, 5, 0, 0, frandom(2,3))
+		//TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 7)// For poor PCs
+		TNT1 AAA 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, 5, 0, 0, random(-9,9))
+		TNT1 AA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 5, 0, 0, random(-9,9))
+		//TNT1 A 0 A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 14, -7, 0, random(-1,1))
+		REDF A 1 BRIGHT A_SetPitch(Pitch-3.6, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle-3, SPF_INTERPOLATE)
+		REDF A 0 A_ZoomFactor(1.0)
+		REDF A 0 A_TakeAmmo("BDRevolverAmmo",1)
+		REDF A 0 A_TakeAmmo("BDDualRevolverAmmo",1)
+		REDF G 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle+0.75, SPF_INTERPOLATE)
+		REDF G 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle+0.75, SPF_INTERPOLATE)
+		REDF H 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle+0.75, SPF_INTERPOLATE)
+		REDF JK 1 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+		TNT1 A 0 A_Refire
+		Goto Ready
+		
+	FireSecondGun:
+	    TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "NoAmmoFire")
+		REVO A 0 A_CHeckIfAmmo("BDDUALRevolverAmmo",1)
+        TNT1 AAAA 0
+	    REDF A 0 A_PlaySound("REVFIRE1")
+	    RE3F CDD 1
+		REDF A 0 A_AlertMonsters
+		
+		//RIFF A 0 A_FireCustomMissile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1))
+		TNT1 A 0 A_TakeInventory("NowFireSecondRevolverUWU",1)
+		REDF M 1 BRIGHT
+		REDF A 0 A_PlaySound("FARSHT", 6)
+        REDF A 0 A_PlaySound("REVFIRE2", 1)
+		//SHTN A 0 A_FireBullets (4, 3, 1, 110 , "RevolverPuff", FBF_NORANDOM)
+		REDF A 0 A_ZoomFactor(0.98)
+		TNT1 A 0 A_FireCustomMissile("RevolverTracer", frandom(-1,1), 0, -5, 0, 0, frandom(2,3))
+		TNT1 AAA 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, -5, 0, 0, random(-9,9))
+		TNT1 AA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, -5, 0, 0, random(-9,9))
+		//TNT1 A 0 A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, -14, -7, 0, random(-1,1))
+		REDF L 1 BRIGHT	A_SetPitch(Pitch-3.6, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle+3, SPF_INTERPOLATE)
+		REDF A 0 A_ZoomFactor(1.0)
+		REDF A 0 A_TakeAmmo("BDDualRevolverAmmo",1)
+        REDF Q 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle-0.75, SPF_INTERPOLATE)
+		REDF Q 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle-0.75, SPF_INTERPOLATE)
+		REDF R 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle-0.75, SPF_INTERPOLATE)
+		REDF TU 1 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+		TNT1 A 0 A_Refire
+		Goto Ready
+		
+	NoAmmoFire:
+	    REDF A 0 A_PlaySound("REVFIRE1")
+		REDF WXX 1
+		TNT1 A 0 A_PlaySound("REVDRY", 4)
+		REDF V 3
+		REDF A 0 A_PlaySound("REVFIRE1")
+		REDF YZZ 1   
+		TNT1 A 0 A_PlaySound("REVDRY", 4)
+		Goto ReadyNoAmmo
+		
+		
+		
+	NoAmmo:
+	    
+		RIFG A 0
+		RIFG A 0 A_ZoomFactor(1.0)
+		RIFG A 0 A_Takeinventory("Zoomed",1)
+		RIFG A 0 A_Takeinventory("ADSmode",1)
+		RIFG A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
+	NoAmmo2:
+	    TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "NoAmmoFire")
+		RIFG A 0 A_JumpIfInventory("Clip1",1,"Reload")
+	    REDF A 0 A_PlaySound("REVFIRE1")
+	    RE3F ABB 1
+		TNT1 A 0 A_PlaySound("REVDRY", 4)
+		REDF C 3
+		REDF A 0 A_PlaySound("REVFIRE1")
+	    RE3F CDD 1
+		TNT1 A 0 A_PlaySound("REVDRY", 4)
+		RIFG A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+	    RIFG A 0 A_JumpIfInventory("Taunting",1,"Taunt")
+		RIFG A 0 A_JumpIfInventory("Salute1", 1, "Salute")
+		RIFG A 0 A_JumpIfInventory("Salute2", 1, "Salute")
+		RIFG A 0 A_JumpIfInventory("IsRunning",1,"CheckSprint")
+		RIFG A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
+		RIFG A 0 
+		RIFG A 0 A_JumpIfInventory("Reloading",1,"Reload")
+		RIFG A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
+		TNT1 A 0 A_JumpIfInventory("NoAutoReload", 1, "Ready3")
+		RIFG A 0 A_JumpIfInventory("Clip1",1,"Reload")
+		RIFG A 0 A_JumpIfInventory("FiredPrimary",1,"NoAmmo2")
+		Goto Ready3
+	
+	
+	
+	ReloadUnloaded:
+	    REDF A 0 A_JumpIfInventory("BDRevolverAmmo",6,"Ready")
+	    REU1 A 0 //A_WeaponReady
+		REDF A 0 A_Takeinventory("ADSmode",1)
+        TNT1 AAA 0
+		REDF A 0 A_Takeinventory("Zoomed",1)
+        REDF A 0 A_ZoomFactor(1.0)
+		REDF A 0 A_GiveInventory ("Pumping", 1)
+		REDF A 0 A_Takeinventory("Reloading",1)
+		REDF A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
+		TNT1 AA 0
+		REDF A 0 A_Takeinventory("RevolverIsUnloaded",1)
+		REVS HIJK 1
+		REU4 KLMN 1 
+        REU1 HIJKLL 1
+		REU1 H 1
+		REDF A 0 A_PlaySound("REVOPEN")
+		REU1 MNOPPQR 1
+		REV2 EFGHHIII 1
+		REDF A 0 A_PlaySound("REVINSRT")
+		REV2 JKKKKJ 1
+		REV2 LMNOOO 1
+		REV3 ABDF 1
+		REDF A 0 A_PlaySound("REVCLOSE")
+		REV3 GHII 1
+		//REV3 JKLMN 1
+		REV6 STUVW 1
+		REDF A 0 A_Takeinventory("HasUnloaded",1)
+		TNT1 A 4
+		REU3 ACFG 1 
+        REU3 HIJKLL 1
+		REU3 H 1
+		REDF A 0 A_PlaySound("REVOPEN")
+		REU3 MNOPPQR 1
+		REV5 EFGHHIII 1
+		REDF A 0 A_PlaySound("REVINSRT")
+		REV5 JKKKKJ 1
+		REV5 LMNOOO 1
+		REV6 ABDF 1
+		REDF A 0 A_PlaySound("REVCLOSE")
+		REV6 GHII 1
+		REV6 JKLMN 1
+		REDF A 0 A_Takeinventory("HasUnloaded",1)
+		REVS GFED 1
+		Goto InsertBullets
+		
+    Reload:
+	    REDF A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
+	    REDF A 0 A_ZoomFactor(1.0)
+	    REDF A 0 A_Takeinventory("Reloading",1)
+	    TNT1 A 0 A_TakeInventory("RevolverContinueAlt",1)
+		REDF A 0 A_JumpIfInventory("BDRevolverAmmo",6,"Ready")
+        REDF A 0 A_JumpIfInventory("Clip1",1,2)
+        Goto NoAmmo
+        TNT1 AAA 0
+		REDF A 0 A_JumpIfinventory("RevolverIsUnloaded", 1, "ReloadUnloaded")
+		REDF A 0 A_GiveInventory ("Pumping", 1)
+		TNT1 AA 0
+		REDF A 0 A_Takeinventory("RevolverIsUnloaded",1)
+		REVS DEFG 1
+		TNT1 A 2
+		REV6 O 1 //A_WeaponReady
+        REV6 PQR 1 
+        REVR HIJKLL 1
+		REVR H 1
+		REDF A 0 A_PlaySound("REVOPEN")
+		REVR MNOPP 1
+		REVR QRSTTT 1
+		TNT1 AAAAAA 0 A_FireCustomMissile("RevolverCaseSpawn",random(70,90),0,1,-8)
+		REDF A 0 A_PlaySound("REVFLY")
+		REVR WXYUUU 1
+		REV2 ABCDDD 1
+		REV2 EFGHHIII 1
+		REDF A 0 A_PlaySound("REVINSRT")
+		REV2 JKKKKJ 1
+		REV2 LMNOOO 1
+		REV3 ABDF 1
+		REDF A 0 A_PlaySound("REVCLOSE")
+		REV3 GHII 1
+		//REV3 JKLMN 1
+		REV6 STUVW 1
+		REDF A 0 A_Takeinventory("HasUnloaded",1)
+		TNT1 A 4
+		REV4 CF 1 
+        REV4 GHIJKLL 1
+		REV4 H 1
+		REDF A 0 A_PlaySound("REVOPEN")
+		REV4 MNOPP 1
+		REV4 QRSTTT 1
+		TNT1 AAAAAA 0 A_FireCustomMissile("RevolverCaseSpawn",random(70,90),0,1,-8)
+		REDF A 0 A_PlaySound("REVFLY")
+		REV4 WXYUUU 1
+		REV5 ABCDDD 1
+		REV5 EFGHHIII 1
+		REDF A 0 A_PlaySound("REVINSRT")
+		REV5 JKKKKJ 1
+		REV5 LMNOOO 1
+		REV6 ABDF 1
+		REDF A 0 A_PlaySound("REVCLOSE")
+		REV6 GHII 1
+		REV6 JKLMN 1
+		TNT1 A 2
+		REVS GFED 1
+		REDF A 0 A_Takeinventory("HasUnloaded",1)
+		TNT1 A 0 A_TakeInventory("NowFireSecondRevolverUWU",1)
+		
+		
+		
+	TurboReload:
+		REDF A 0 A_Takeinventory("HasUnloaded",1)
+        PISS BA 0
+        Goto InsertBullets
+		
+	InsertBullets:
+		TNT1 AAAA 0
+		REDF A 0 A_JumpIfInventory("BDDualRevolverAmmo",12,15)
+		REDF A 0 A_JumpIfInventory("Clip1",1,3)
+		Goto Ready
+        TNT1 AAAAAA 0
+		REDF A 0 A_Giveinventory("BDRevolverAmmo",1)
+		SM2G A 0 A_Giveinventory("BDDualRevolverAmmo",1)
+		REDF A 0 A_Takeinventory("Clip1",1)
+		Goto InsertBullets
+		
+		TNT1 AAAAAAAAAA 0
+		REDF A 0 A_Takeinventory("Reloading",1)
+		
+		REDF A 0 A_Refire
+        Goto Ready
+		TNT1 AAAA 0
+		REDF A 0 A_Takeinventory("Reloading",1)
+		
+		REDF A 0 A_Refire
+        Goto Ready
+		
+	InsertBullets2:
+		TNT1 AAAA 0
+		REDF A 0 A_JumpIfInventory("BDDualRevolverAmmo",12,15)
+		REDF A 0 A_JumpIfInventory("Clip1",1,3)
+		Goto Ready
+        TNT1 AAAAAA 0
+		REDF A 0 A_Giveinventory("BDRevolverAmmo",1)
+		SM2G A 0 A_Giveinventory("BDDualRevolverAmmo",1)
+		REDF A 0 A_Takeinventory("Clip1",1)
+		Goto InsertBullets2
+		
+		TNT1 AAAAAAAAAA 0
+		REDF A 0 A_Takeinventory("Reloading",1)
+		REDF A 0 A_Refire
+        Goto Ready
+		TNT1 AAAA 0
+		REDF A 0 A_Takeinventory("Reloading",1)
+		
+		REDF A 0 A_Refire
+        Goto Ready	
+ 	Spawn:
+		PIST A 0
+		REDF Q -1
+		Stop
+		
+	Steady:
+		TNT1 A 1
+		Goto Ready	
+		
+		
+	Unload:
+		//REDF A 0 A_JumpIfInventory("BDRevolverAmmo",1,"RemoveBullets")
+		REVS DEFG 1
+		TNT1 A 4
+		REVR CF 1 
+        REVR GHIJKLL 1
+		REVR H 1
+		REDF A 0 A_PlaySound("REVOPEN")
+		REVR MNOPP 1
+		REVR QRSTTT 1
+		REDF A 0 A_PlaySound("REVFLY")
+		REVR WXYUUU 1 //after this start unload frames
+		REU2 ABCD 1
+		REDF A 0 A_PlaySound("REVCLOSE")
+		REU2 EFFF 1
+		REU5 PQRS 1
+		//REU2 GHIJ 1
+		REDF A 0 A_Takeinventory("HasUnloaded",1)
+		//REDF A 0 A_JumpIfInventory("BDRevolverAmmo",1,"RemoveBullets")
+		TNT1 A 4 //another gun
+		REDF A 0 A_Takeinventory("Unloading",1)
+// 		REDF A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "ReadyNoAmmo")
+// 		REDF A 0 A_JumpIfInventory("BDRevolverAmmo",1,2)
+// 		Goto UnloadNoReload
+		TNT1 A 0
+		REDF A 0 A_Giveinventory("RevolverIsUnloaded",1)
+		REV4 A 1 //A_WeaponReady
+		REDF A 0 A_Takeinventory("Unloading",1)
+        REV4 CF 1 
+        REV4 GHIJKLL 1
+		REV4 H 1
+		REDF A 0 A_PlaySound("REVOPEN")
+		REV4 MNOPP 1
+		REV4 QRSTTT 1
+		REDF A 0 A_PlaySound("REVFLY")
+		REV4 WXYUUU 1 //after this start unload frames
+		REU4 ABCD 1
+		REDF A 0 A_PlaySound("REVCLOSE")
+		REU4 EFFF 1
+		REU4 GHIJ 1
+		REDF A 0 A_Takeinventory("HasUnloaded",1)
+		TNT1 A 3
+		REVS KJIH 1
+		Goto RemoveBullets
+		
+
+//     UnloadNoReload:
+// 	    REDF A 0 A_Giveinventory("RevolverIsUnloaded",1)
+// 		REDF A 1 A_WeaponReady
+// 		REDF A 0 A_Takeinventory("Unloading",1)
+//         REVR CF 1
+//         REVR GHIJKLL 1
+// 		REVR H 1
+// 		REDF A 0 A_PlaySound("REVOPEN")
+// 		REVR MNOPP 1
+// 		REVR QRSTTT 1
+// 		TNT1 AAAAAA 0
+// 		TNT1 AAAAAA 0 A_FireCustomMissile("RevolverCaseSpawn",random(70,90),0,1,-8)
+// 		REDF A 0 A_PlaySound("REVFLY")
+// 		REVR WXYUUU 1 //after this start unload frames
+// 		REU2 ABCD 1
+// 		REDF A 0 A_PlaySound("REVCLOSE")
+// 		REU2 EFFF 1
+// 		REU2 GHIJ 1
+// 		REDF A 0 A_Takeinventory("HasUnloaded",1)
+// 		REDF A 0 A_JumpIfInventory("BDRevolverAmmo",1,"RemoveBullets")
+// 		Goto ReadyNoAmmo
+	
+	RemoveBullets:
+		TNT1 AAAA 0
+		REDF A 0 A_JumpIfInventory("BDDualRevolverAmmo",1,3)
+		Goto ReadyNoAmmo
+        TNT1 AAAAAA 0
+		REDF A 0 A_Takeinventory("BDRevolverAmmo",1)
+		REDF A 0 A_Takeinventory("BDDualRevolverAmmo",1)
+		REDF A 0 A_Giveinventory("Clip1",1)
+		Goto RemoveBullets
+		
+		TNT1 AAAAAAAAAA 0
+		REDF A 0 A_Takeinventory("Reloading",1)
+		
+		REDF A 0 A_Refire
+        Goto ReadyNoAmmo
+		TNT1 AAAA 0
+		REDF A 0 A_Takeinventory("Reloading",1)
+		
+		REDF A 0 A_Refire
+        Goto ReadyNoAmmo
+		
+	//UnloadNoReload:
+	    
+		
+	DualWield:
+	PIST F 0 A_takeinventory("dualrevolverselected",1)
+	TNT1 A 0 A_GiveInventory("RevolverDualWieldCheck",1)
+	tnt1 a 0 a_TAKEinventory("startdualwield",1)
+	TNT1 A 0 A_SelectWeapon("DoxsRevolver")
+	Goto instadeselect
+
+	}
+}
+
+ACTOR BDDualRevolverAmmo: Ammo {Inventory.MaxAmount 12 Inventory.Icon REVOT0}
+ACTOR NowFireSecondRevolverUWU: Inventory {Inventory.MaxAmount 12}

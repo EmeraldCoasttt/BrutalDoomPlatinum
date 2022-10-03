@@ -1,0 +1,40 @@
+CLASS BDBaseKey: CustomInventory
+{
+	int keyid; 
+	property keyid : keyid;
+	Default
+	{
+	BDBaseKey.keyid 0;
+	Radius 20;
+	Height 16;
+	+NOTDMATCH;
+	Scale 0.82;
+	Inventory.PickupSound "items/keycard";
+	}
+	states
+	{
+	Spawn:
+		TNT1 A 10;
+		loop;
+	Pickup:
+		TNT1 A 1;
+		stop;
+	}
+	
+	Override void beginplay()
+	{
+		acs_namedexecutealways("areascantid",0,keyid);
+		Super.beginplay();
+	}
+}
+
+CLASS BDBaseSkull: BDBaseKey
+{
+	Default
+	{
+	Inventory.PickupSound "items/skullkey";
+	}
+	
+}
+
+

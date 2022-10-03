@@ -1,0 +1,3100 @@
+Class Brutalweapon : DoomWeapon //Weapon
+{
+
+
+
+	int sprinttimer;
+	int Weight; 
+	property Weight : Weight;
+	int Handedness; 
+	property Handedness : Handedness;
+	bool lasttickfatality;
+	Bool offhandkick;
+	Property offhandkick : offhandkick;
+	Bool clearoverlays;
+	Property clearoverlays : clearoverlays;
+	Default
+	{
+	BrutalWeapon.Weight 5;
+	BrutalWeapon.Handedness 0;
+	Weapon.BobRangeX 0.4;
+	Weapon.BobRangeY 0.4;
+	Weapon.BobSpeed 2.9;
+	Weapon.BobStyle "InverseAlpha";
+	VisibleToPlayerClass "BDoomer", "Doomer2", "Doomer3", "TacticalDoomer";
+	Inventory.ForbiddenTo "Purist";
+	brutalweapon.clearoverlays TRUE;
+	
+	}
+	
+	int guntimertics;
+	Action void a_TakeAmmo(class<Inventory> ammotype, int ammoamount = 1)
+	{
+		If(!findinventory("PowerSpeed2"))
+		{
+			A_takeinventory(ammotype,ammoamount);
+		}
+	}
+	
+	action state A_WeaponZoom(statelabel label = "Aim1", statelabel label2 = "Aim2")
+	{
+		If(getcvar("BD_Aim") == 1)
+		{
+		giveinventory("Zoomies",1);
+		Return resolvestate(label2);
+		}
+		Else If(player.cmd.buttons & BT_ALTATTACK || getcvar("BD_Aim") == 2)
+		{
+		
+		Return ResolveState(label);
+		}
+		Else
+		{
+		giveinventory("Zoomies",1);
+		Return resolvestate(label2);
+		}
+	}
+	
+	action state A_WeaponZoom2(statelabel label = "Aim1", statelabel label2 = "Aim2")
+	{
+		If(FindInventory("Zoomies"))
+		{
+		Return resolvestate(label2);
+		}
+		Else 
+		{
+		Return resolvestate(label);
+		}
+	}
+	
+	action state A_CheckIfAmmo(class<Inventory> ammotype, int ammoamount = 1, statelabel label = "NoAmmo")
+	{
+		If(countinv(ammotype) >= ammoamount || findinventory("PowerSpeed2"))
+		{
+		Return ResolveState(null);
+		}
+		Else
+		{
+		Return resolvestate(label);
+		}
+	}
+	
+	action void A_trymeathook(int meathookrange = 256)
+	{
+	BlockThingsIterator CheckForTargets = BlockThingsIterator.create(Self,meathookrange); //256 can be whatever range around the actor.
+Actor CurrentActor; //A pointer to whatever actor the iterator is iterating through.
+	If(countinv("meathook") > 0)
+	{
+	While (CheckForTargets.Next() && countinv("meathook") > 0) 
+{
+    CurrentActor = CheckForTargets.Thing;
+    //If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
+    //Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
+    If ((CurrentActor && CurrentActor.bIsMonster && currentactor.bshootable && !currentactor.bfriendly && !currentactor.findinventory("isplayer") && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && !(currentactor is "ExplosiveBarrel1")) || (currentactor && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && currentactor.findinventory("isplayer") && currentactor != self))
+    {
+        target = currentactor;
+		If(target)
+		{
+		
+		
+		
+		vector3 targetpos = LevelLocals.SphericalCoords((pos.x,pos.y,player.viewz),target.pos+(0,0,target.default.height*0.5),(angle,pitch));    
+		if (abs(targetpos.x) <= 20 && abs(targetpos.y) <= 20)
+			{
+  //this will execute only if the Other actor's center is within 25 degrees from the center of the player's screet
+	
+		//A_customrailgun(8,0,"","",RGF_SILENT|RGF_NOPIERCING,1,20,"bfgpuff",0,0,0,0,1.0,1,"none",-10);
+		
+		A_spawnprojectile("hook",0);
+		A_takeinventory("meathook",1);
+		//A_fireprojectile("")
+		//A_takeinventory("meathook",1);
+		a_startsound("MHKSTRT",193,CHANF_DEFAULT,1,ATTN_NONE);
+		}
+		//Else A_cleartarget();
+		}
+		
+		
+		
+		
+    }
+	If (!target)
+	{
+	a_startsound("weapons/empty",190,CHANF_DEFAULT,1,ATTN_NONE);
+	}
+	//A_cleartarget();
+}
+	}
+	
+	
+	
+	
+	Else
+	{
+	a_startsound("weapons/empty",193,CHANF_DEFAULT,1,ATTN_NONE);
+	}
+	
+	
+	
+	}
+	
+	
+	//action void A_UnmakeLevel(int times=1){brutalweapon.UnmakeLevel(times);}
+	Action void A_UnmakeLevel(int times=1){
+	
+		for(int k=0;k<times;k++){
+		Bool foundsector;
+		Until(foundsector)
+		{
+			
+			sector thissector=level.sectors[random(0,level.sectors.size()-1)];
+			Vector3 sectorlocation;
+			Sectorlocation.x = thissector.centerspot.x;
+			Sectorlocation.y = thissector.centerspot.y;
+			sectorlocation.z = thissector.floorplane.ZAtPoint(thissector.centerspot);
+			If(LevelLocals.Vec3Diff(invoker.owner.pos, sectorlocation).Length() <= 700)
+			{
+				foundsector = true;
+				int dir=random(-3,3);
+				double zatpoint=thissector.floorplane.ZAtPoint(thissector.centerspot);
+				thissector.MoveFloor(dir,zatpoint,0,zatpoint>0?-1:1,false);
+				dir=random(-3,3);
+				zatpoint=thissector.ceilingplane.ZAtPoint(thissector.centerspot);
+				thissector.MoveCeiling(dir,zatpoint,0,zatpoint>0?-1:1,false);
+				thissector.changelightlevel(random(-random(3,4),3));
+				//then maybe add some textures
+				textureid shwal;
+				switch(random(0,4)){
+				case 1:
+					shwal=texman.checkfortexture("WALL63_2",texman.type_any);break;
+				case 2:
+					shwal=texman.checkfortexture("W94_1",texman.type_any);break;
+				case 3:
+					shwal=texman.checkfortexture("FIREBLU1",texman.type_any);break;
+				case 4:
+					shwal=texman.checkfortexture("SNAK"..random(7,8).."_1",texman.type_any);break;
+				default:
+					shwal=texman.checkfortexture("ASHWALL2",texman.type_any);break;
+			}
+			for(int i=0;i<thissector.lines.size();i++){
+				line lnn=thissector.lines[i];
+				for(int j=0;j<2;j++){
+					if(!lnn.sidedef[j])continue;
+					if(!lnn.sidedef[j].GetTexture(side.top))lnn.sidedef[j].SetTexture(side.top,shwal);
+					if(!lnn.sidedef[j].GetTexture(side.bottom))lnn.sidedef[j].SetTexture(side.bottom,shwal);
+				}
+			}
+			}
+		}
+		Foundsector = false;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	Action void a_kickflags()
+	{
+		If(invoker.owner.findinventory("hasagib") && !invoker.owner.findinventory("lostsoulfatality") || invoker.offhandkick && !invoker.owner.findinventory("lostsoulfatality"))
+			{
+				A_OverlayFlags(-602,PSPF_FLIP | PSPF_MIRROR,true);
+				A_OverlayFlags(-610,PSPF_FLIP | PSPF_MIRROR,true);
+				A_OverlayFlags(-607,PSPF_FLIP | PSPF_MIRROR,true);
+			}
+		Else
+			{
+				A_OverlayFlags(-602,PSPF_FLIP | PSPF_MIRROR,false);
+				A_OverlayFlags(-610,PSPF_FLIP | PSPF_MIRROR,false);
+				A_OverlayFlags(-607,PSPF_FLIP | PSPF_MIRROR,false);
+			}
+	}
+	
+	action state A_OverlayFadeOut(double value)
+		{
+		let psp = Player.FindPSprite(OverlayID());
+		if (!psp)
+			return ResolveState(null);
+		A_OverlayFlags(OverlayID(), PSPF_ALPHA|PSPF_FORCEALPHA, true);
+		psp.alpha -= value;
+		if (psp.alpha <= 0)
+			return ResolveState("Null"); //destroy the layer
+			return ResolveState(null);
+		}
+		
+	Action void a_takefatalitystuff()
+	{
+	A_takeinventory("hasagib",666);
+	A_takeinventory("hascacoeye",666);
+	A_takeinventory("lostsoulfatality",666);
+	A_takeinventory("hasbarrel",666);
+	A_takeinventory("shotgunguyhead",666);
+	A_takeinventory("hasimpfatality",666);
+	}
+	
+	Action void A_WeaponReadyDX(int dxflags = 0, bool kickflashes = true)
+		{
+			takeinventory("Zoomies",1);
+			A_weaponready(dxflags);
+			If(findinventory("hasagib"))
+			{
+			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('Chooseyourgib'));
+			}
+			
+			A_checksprint();
+			
+			State DualWield = player.ReadyWeapon.FindState('DualWield');
+			if (DualWield != NULL && (CountInv("StartDualWield") == 1))
+			{
+			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('DualWield'));
+			}
+			
+			State SpecialAction = player.ReadyWeapon.FindState('SpecialAction');
+			if (SpecialAction != NULL && (CountInv("SwapRifleSpecial") == 1))
+			{
+			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('SpecialAction'));
+			}
+			
+			State Reloading = player.ReadyWeapon.FindState('Reload');
+			if (Reloading != NULL && (CountInv("reloading") == 1))
+			{
+			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('Reload'));
+			}
+			
+			State Unloading = player.ReadyWeapon.FindState('Unload');
+			if (Unloading != NULL && (CountInv("Unloading") == 1))
+			{
+			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('Unload'));
+			}
+			
+			
+				if (CountInv("IsCrouching") == 1 && CountInv("Kicking") == 1 && kickflashes) {
+					player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('SlideKickingStart'));
+				}
+				
+				Else if (Vel.Z != 0 && CountInv("Kicking") == 1 && kickflashes) {
+					player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('AirKickingFlash'));
+				}
+				
+				else If (CountInv("Kicking") == 1 && kickflashes){
+					player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('KickingFlash'));
+				}
+				
+			
+			if (CountInv("Taunting") == 1) {player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('Taunt')); }
+			if (CountInv("Salute1") == 1 || CountInv("Salute2") == 1) {player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('Salute')); }
+			if (CountInv("TossGrenade") == 1) {player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('TossGrenade')); }
+			/*
+			if (CountInv("StartDualWield") == 1) { return resolvestate("DualWield"); }
+						
+			if (CountInv("Kicking") == 1) {
+				if (CountInv("IsCrouching") == 1) {
+					return resolvestate("SlideKickingStart");
+				}
+				if (momZ != 0) {
+					return resolvestate("AirKickingFlash");
+				}
+				else {
+					return resolvestate("KickingFlash");
+				}
+			}
+
+			if (CountInv("Taunting") == 1) { return resolvestate("Taunt"); }
+			if (CountInv("Reloading") == 1) { return resolvestate("Reload"); }
+			if (CountInv("Salute1") == 1 || CountInv("Salute2") == 1) { return resolvestate("Salute"); }
+			if (CountInv("TossGrenade") == 1) { return resolvestate("TossGrenade"); }
+			return resolvestate(null);
+			*/
+		
+		}
+	
+	Action void A_instaraise()
+
+	{
+    let psp = Player.FindPSprite(OverlayID()); //get pointer to current sprite layer;
+    if (psp)
+      psp.y = WEAPONTOP; //set offset immediately to the fully raised position;
+	}
+	
+    action bool JustPressed(int which) // "which" being any BT_* value, mentioned above or not
+    {
+        //return (player.cmd.buttons & which) && !(player.oldbuttons & which);
+        return player.cmd.buttons & which;
+    }
+    action bool JustReleased(int which)
+    {
+        return !(player.cmd.buttons & which) && (player.oldbuttons & which);
+    }
+	
+	action void MoveSpeed(float pspeed, float psidemove)
+	{
+		Brutal_PlayerBase(self).Speed = pspeed;
+		Brutal_PlayerBase(self).SideMove1 = psidemove;
+		Brutal_PlayerBase(self).SideMove2 = psidemove;
+	}
+	
+	//Credit Agent_Ash aka Jekyll Grim Payne and Boondorl
+	//Changes ammo type
+	action void SetAmmoType1(bool set, Class<Ammo> ammoclass)
+	{
+		if (set) 
+		{
+			invoker.ammotype1 = ammoclass;
+			invoker.ammo1 = Ammo(FindInventory(ammoclass));
+			return;
+		}
+		invoker.ammo1 = null;
+	}
+	action void SetAmmoType2(bool set, Class<Ammo> ammoclass)
+	{
+		if (set)
+		{
+			invoker.ammotype2 = ammoclass;
+			invoker.ammo2 = Ammo(FindInventory(ammoclass));
+			return;
+		}
+		invoker.ammo2 = null;
+	}
+	
+	//Credit Mikk0451
+	//Changes ammo icon only
+	action void ChangeAmmoIcon1(String AmmoIcon)
+	{
+		(findInventory(invoker.ammo1.GetClassName())).icon = texman.CheckForTexture(AmmoIcon, TexMan.Type_Any);
+	}
+	action void ChangeAmmoIcon2(String AmmoIcon)
+	{
+		(findInventory(invoker.ammo2.GetClassName())).icon = texman.CheckForTexture(AmmoIcon, TexMan.Type_Any);
+	}
+	
+	
+	action void LedgeReach(float HeightDecrease)
+	{
+		let plr = Brutal_PlayerBase(self);
+		plr.LedgeHeightMax = (plr.LedgeHeight - Height * HeightDecrease * 1.0f);
+		A_Stop();
+		SetOrigin((Pos.X, Pos.Y, plr.LedgeHeightMax), True);
+	}
+	//by Emerald
+	action void A_SetCVAR(string cvartoset, int valuetoset)
+    {
+        CVar.GetCVar(cvartoset, Player).SetInt(valuetoset);
+    }
+	
+	action void A_checksprint(statelabel sprintstate = "sprintoverlay")
+	{
+		If(player.cmd.buttons & BT_SPEED && invoker.sprinttimer < 1 && ( vel.x != 0 || vel.y != 0))
+		{
+			IF(GetPlayerInput(MODINPUT_FORWARDMOVE,-1)!=0 || GetPlayerInput(MODINPUT_SIDEMOVE,-1)!=0)
+				{
+				player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("startsprint"));
+					
+							
+						
+				}
+		}
+	}
+	
+	override void DoEffect() {
+  super.DoEffect();
+  
+  let player = owner.player;
+	
+  If(owner.findinventory("rollingstamina"))
+	{
+	If(owner.findinventory("istacticalclass"))
+		{
+		owner.A_GiveInventory("UsedStamina", weight * 9);
+		}
+		owner.takeinventory("rollingstamina",1);
+	
+	}
+  If(!owner.findinventory("grabbermodifier"))
+	{
+		owner.giveinventory("grabbermodifier",1);
+	}
+ /* If(owner.findinventory("bloodsplasherz"))
+	{
+		Owner.takeinventory("bloodsplasherz",1);
+		Int layeroffset = random(110,120);
+		player.SetPSprite(layeroffset,player.ReadyWeapon.FindState("bloodsplashred"));
+		owner.a_overlayoffset(layeroffset,random(-40,200),random(0,164));
+	
+	}*/
+	
+	Owner.takeinventory("grenadeammo",666);
+	If(owner.countinv("nadetype") == 3)
+		{
+			owner.giveinventory("grenadeammo",owner.countinv("ammovoidgrenade"));
+		}
+	Else If(owner.countinv("nadetype") == 2)
+		{
+			owner.giveinventory("grenadeammo",owner.countinv("ammopipebomb"));
+		}
+	Else If(owner.countinv("nadetype") == 1)
+		{
+			owner.giveinventory("grenadeammo",owner.countinv("ammoicegrenade"));
+		}
+	Else
+		{
+			owner.giveinventory("grenadeammo",owner.countinv("ammofraggrenade"));
+		}
+	If(owner.findinventory("hasagib") && !owner.findinventory("lostsoulfatality") || offhandkick && !owner.findinventory("lostsoulfatality"))
+		{
+			owner.giveinventory("footleft",1);
+		}
+	Else
+		{
+			owner.takeinventory("footleft",1);
+		}
+	
+	 If(owner.findinventory("hasbarrel") && owner.findinventory("gofatality") || owner.findinventory("lostsoulfatality") && owner.findinventory("gofatality"))
+   {
+    owner.takeinventory("pseq1",1);
+   owner.takeinventory("pseq2",1);
+   player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("chooseyourgib"));
+   owner.takeinventory("gofatality",1);
+   }
+
+   if(owner.GetCvar("bd_AlwaysBob") == true || owner.findinventory("sprintbob")) 
+		{
+  if (player && player.readyweapon) {
+    player.WeaponState |= WF_WEAPONBOBBING;
+		}
+  }
+   If(owner.findinventory("Gofatality"))
+   {
+  
+   owner.takeinventory("pseq1",1);
+   owner.takeinventory("pseq2",1);
+   lasttickfatality = true;
+ // owner.vel.x = 0;
+ // owner.vel.y = 0;
+	owner.pitch = 0;
+   owner.ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0);//Start Camera
+   player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("Idle"));
+   player.uncrouch();
+  // setplayerproperty(0,1,4);
+   
+   }
+   Else if (lasttickfatality)
+   {
+   lasttickfatality = false;
+    owner.ACS_NamedExecuteAlways("BDStopCamera", 0, 0, 0, 0);
+	//setplayerproperty(0,0,4);
+   }
+  //player.readyweapon.A_setcvar("throwabletype",0);
+  If(owner.findinventory("grenadeswapping"))
+	{
+	Owner.takeinventory("grenadeswapping",1);
+	
+	If(owner.player.readyweapon is "handgrenades")
+		{
+		owner.giveinventory("startdualwield",1);
+		}
+		Else if(owner.CountInv("NadeType") == 0)
+		{
+		owner.giveinventory("nadetype",1);
+		owner.A_startSound ("ICEGPRE2",92);
+		owner.A_Print("\cnFreeze grenades selected.",2);
+		}
+		Else if(owner.CountInv("NadeType") == 1)
+		{
+		owner.giveinventory("nadetype",1);
+		owner.A_startSound ("PIPESEL",92);
+		owner.A_Print("\ccPipebombs selected.",2);
+		}
+		Else if(owner.CountInv("NadeType") == 2)
+		{
+		owner.giveinventory("nadetype",1);
+		owner.A_startSound ("GRNPIN",92);
+		owner.A_Print("\ctVoid grenades selected.",2);
+		}
+		Else
+		{
+		owner.takeinventory("nadetype",666);
+		owner.A_startSound ("GRNPIN",92);
+		owner.A_Print("Cluster grenades selected.",2);
+		}
+	
+		
+	
+	}
+  
+  
+ If(sprinttimer > 0)
+ {
+ sprinttimer = sprinttimer - 1;
+ }
+  If(owner.findinventory("sprintbob"))
+  {
+	BobRangeX = 1.0;
+	BobRangeY = 1.0;
+	BobSpeed = 3.9;
+	//owner.speed = (owner.default.speed * 2);
+	
+	owner.acs_namedexecute("fastplayer",0,0,0,0);
+	//owner.takeinventory("sprintbob",1);
+  }
+ else
+  {
+	BobRangeX = 0.4;
+	BobRangeY = 0.4;
+	BobSpeed = 2.9;
+	//owner.takeinventory("sprintbob",1);
+	owner.acs_namedexecute("slowplayer",0,0,0,0);
+	//owner.speed = owner.default.speed;
+  }
+  
+ 
+  
+  if(GetCvar("smooth_mouse") == true ) 
+		{
+  if (player && player.readyweapon) {
+    player.WeaponState |= SPF_INTERPOLATE;
+		}
+  }
+  
+  //Hacky fix for weapon timers
+  If(owner.countinv("cyberdemonrockets") == 1 || owner.countinv("spiderchainguntimer") == 1)
+	{
+		guntimertics = (guntimertics + 1);
+		
+		If(guntimertics > 35)
+			{
+			owner.takeinventory("cyberdemonrockets",666);
+			owner.takeinventory("spiderchainguntimer",666);
+			}
+	}
+	Else
+	{
+		guntimertics = 0;
+	}
+	
+  //No more death overlaysssss
+  If(owner.health < 1)
+	{
+		owner.A_clearoverlays(-30,30);
+	}
+	
+  
+}
+	
+	
+	
+	States
+	{
+	
+		
+	
+	
+		Tripmineoverlay:
+			TNT1 A 10;
+			TRPM FEDCBBBB 1;
+			TRPM B 1
+				{
+				
+				FLineTraceData wallinmyway;
+				invoker.owner.LineTrace(invoker.owner.angle, 64, invoker.owner.pitch, 0, offsetz: 12, data: wallinmyway);
+				if (wallinmyway.HitType == TRACE_HitWall)
+				{
+					A_fireprojectile("TripMineProjectile",0,true,0,-4);
+					invoker.owner.takeinventory("rocketrounds",1);
+					return ResolveState("Placedsuccesfully");
+				}
+				Return resolvestate(null);
+				}
+			TRPM BBBMNOPQ 1;
+			//TNT1 A 10;
+			Stop;
+			
+			placedSuccesfully:
+			TRPM GGGGGHIJKL 1;
+			//TNT1 A 10;
+			Stop;
+			
+			
+			
+			Select:
+			Deselect:
+			Fire:
+			Ready:
+			TNT1 A 1 A_Jump(255, "Ready");
+			Loop;	
+		Stop;
+		instadeselect:
+		TNT1 A 0 A_lower();
+		Wait;
+		Ready3:
+			TNT1 A 1 A_Jump(255, "Ready3");
+			Loop;	
+			
+		StainedLedgeClimb:
+			3L1M A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4);
+			2L1M A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3);
+			1L1M A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2);
+		LedgeClimb:
+			CL1M A 0;
+			"####" A 0 
+			{
+			If(invoker.clearoverlays)
+				{
+				 A_clearoverlays(-30,30);
+				}
+			}
+			"####" A 0 A_overlay(5,"donothing");
+			
+			"####" A 0 A_ClearOverlays(6,6);
+			"####" A 0 A_takeinventory("sprintbob",1);
+			"####" A 0 A_Stop();
+			"####" A 0 A_ZoomFactor(1.0);
+			"####" A 0 A_GunFlash("LedgeGrabFlash");
+			"####" A 0 A_WeaponReady(WRF_NOFIRE|WRF_ALLOWRELOAD|WRF_NOSWITCH);
+			"####" A 0 SetPlayerProperty(0,1,PROP_TOTALLYFROZEN);
+			"####" A 0 
+			{
+			If(invoker.owner.findinventory("istacticalclass"))
+			{
+			invoker.owner.giveinventory("usedstamina",invoker.weight * 6);
+			}
+			A_Playsound("ledgeclimb",5);
+			}
+			"####" ABC 1 {
+				let plr = Brutal_PlayerBase(self);
+				
+				if(Pos.Z < (plr.LedgeHeight - Height * 0.78f))
+				{
+					A_SetPitch(pitch-pitch/2, SPF_INTERPOLATE);
+					Vel = Vel.Length() ? (0, 0, plr.velz) : (0, 0, 0);
+					//plr.velz--;
+				}
+				else if(Pos.Z < (plr.LedgeHeight - Height * 0.76f))
+				{
+					LedgeReach(0.751);
+
+					return ResolveState("LedgeReach");
+					
+				}
+				return ResolveState(null);
+			}
+		LedgeReach:
+			"####" D 1 {
+				let plr = Brutal_PlayerBase(self);
+				//if(Pos.Z >= (plr.LedgeHeight - Height * 0.78f) && Pos.Z < (plr.LedgeHeight - Height * 0.76f))
+				if(Pos.Z >= (plr.LedgeHeight - Height * 0.78f))
+				{
+					A_SetPitch(pitch-pitch/2, SPF_INTERPOLATE);
+					GiveInventory("Grabbing_A_Ledge", 1);
+					LedgeReach(0.751);
+				}
+				else if(Pos.Z < (plr.LedgeHeight - Height * 0.78f))
+				{
+					Vel = Vel.Length() ? (0, 0, plr.velz) : (0, 0, 0);
+				}
+			}
+			"####" A 0 A_JumpIf(CountInv("Grabbing_A_Ledge")==1, 1);
+			Goto LedgeReach;
+			
+			"####" E 1 {
+				let plr = Brutal_PlayerBase(self);
+				
+				plr.velz = 3.6;
+				A_SetPitch(0, SPF_INTERPOLATE);
+				LedgeReach(0.751);
+				A_StopSound(CHAN_WEAPON);
+				plr.LedgeAngle = Angle;
+				plr.LedgeCheck = False;
+				plr.LedgeGrabbed = True;
+			}
+			"####" F 1 {
+				A_SetPitch(pitch-0.5, SPF_INTERPOLATE);
+				Vel = Vel.Length() ? (0, 0, 0.5) : (0, 0, 0);
+			}
+			"####" G 1 {
+				let plr = Brutal_PlayerBase(self);
+				A_SetPitch(pitch+3, SPF_INTERPOLATE);
+				Vel = Vel.Length() ? (0, 0, plr.velz) : (0, 0, 0);
+			}
+			"####" HI 1 {
+				let plr = Brutal_PlayerBase(self);
+				A_SetPitch(pitch+4, SPF_INTERPOLATE);
+				Vel = Vel.Length() ? (0, 0, plr.velz) : (0, 0, 0);
+			}
+		FinishClimb:
+			3L1M A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4);
+			2L1M A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3);
+			1L1M A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2);
+			CL1M A 0;
+			"####" A 0 A_GunFlash("LedgeGrabFlash");
+			"####" JK 1 {
+				let plr = Brutal_PlayerBase(self);
+				
+				plr.velz = 3.6;
+				A_SetPitch(pitch-3, SPF_INTERPOLATE);
+				Vel = Vel.Length() ? (0, 0, plr.velz) : (0, 0, 0);
+			}
+			"####" LM 1 A_SetPitch(pitch-2, SPF_INTERPOLATE);
+			TNT1 AA 1 {
+				A_SetPitch(pitch-pitch/2, SPF_INTERPOLATE);
+				A_WeaponReady(WRF_NOSWITCH);
+			}
+			TNT1 A 0 A_SetPitch(0, SPF_INTERPOLATE);
+			TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
+			TNT1 A 0 TakeInventory("Grabbing_A_Ledge", 1);
+			TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 2);
+			TNT1 A 0 A_Overlay(-610, "FirstPersonLegsStand");
+			TNT1 A 0;
+			TNT1 A 0 A_jumpifinventory("hasagib",1,"Chooseyourgib");
+			//Goto Ready3;
+			TNT1 A 0
+			{
+			If(invoker is "hellishmissilelauncher")
+				{
+				 return resolvestate("ready");
+				}
+				Else
+				{
+				Return resolvestate(null);
+				}
+			}
+			TNT1 A 0 A_Jump(256,"ReturnFromNothing");
+			Goto Ready;
+			//Goto SelectAnimation;
+			
+			
+			
+			
+			InAVehicle:
+			TNT1 A 3;
+			Goto returnFromNothing;
+			
+			Donothing:
+	TNT1 A 0;
+	Stop;
+			StartSprint:
+		//TNT1 A 1 A_WeaponReady(WRF_NOFIRE)
+		TNT1 A 0 A_giveinventory("sprintbob",1);
+		TNT1 A 0 A_Takeinventory("Zoomed",1);
+		TNT1 A 0 A_Takeinventory("ADSmode",1);
+		TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_JumpIfInventory("UsedStamina", 40, "DontEvenSprint");
+		TNT1 A 0
+		{
+		Invoker.BobRangeX = Invoker.BobRangeX * 2;
+		Invoker.BobRangeY = Invoker.BobRangeY * 2;
+		Invoker.BobSpeed = Invoker.BobSpeed * 1.5;
+		player.SetPSprite(5,player.ReadyWeapon.FindState("SprintOverlay"));
+		}
+		
+		
+	
+	Sprinting:	
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(GetPlayerInput(MODINPUT_FORWARDMOVE,-1)!=0 || GetPlayerInput(MODINPUT_SIDEMOVE,-1)!=0, 1);
+		goto stopsprint;
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIfInventory("UsedStamina", 100, "StopSprintTired");
+		//PLAY A 0 ACS_ExecuteAlways(852, 0, 0, 0, 0);//Makes player faster.
+		TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, 2);
+		TNT1 A 0 
+		{
+		If(findinventory("istacticalclass"))
+		{
+		A_GiveInventory("UsedStamina", invoker.weight);
+		}
+		}
+		TNT1 A 0;
+		/*
+		TNT1 A 1 A_SetPitch(pitch -0.5, SPF_INTERPOLATE);
+		TNT1 A 1 A_SetPitch(pitch -0.5, SPF_INTERPOLATE);
+		TNT1 A 1 A_SetPitch(pitch -0.5, SPF_INTERPOLATE);
+		TNT1 A 1 A_SetPitch(pitch -0.5, SPF_INTERPOLATE);
+		TNT1 A 1 A_SetPitch(pitch -0.5, SPF_INTERPOLATE);
+		TNT1 A 1 A_SetPitch(pitch -0.5, SPF_INTERPOLATE);
+		TNT1 A 1 A_SetPitch(pitch -0.5, SPF_INTERPOLATE);
+		//TNT1 A 0 A_WeaponReady(WRF_NOBOB)
+		TNT1 A 0;
+		TNT1 A 0 A_GiveInventory("UsedStamina", invoker.weight);
+		TNT1 A 0 A_SpawnItemEx("FootStep", 0, 0, 2, 0, 0, -4);
+		TNT1 A 1 A_SetPitch(pitch +0.5, SPF_INTERPOLATE);
+		TNT1 A 1 A_SetPitch(pitch +0.5, SPF_INTERPOLATE);
+		TNT1 A 1 A_SetPitch(pitch +0.5, SPF_INTERPOLATE);
+		TNT1 A 1 A_SetPitch(pitch +0.5, SPF_INTERPOLATE);
+		TNT1 A 1 A_SetPitch(pitch +0.5, SPF_INTERPOLATE);
+		TNT1 A 1 A_SetPitch(pitch +0.5, SPF_INTERPOLATE);
+		TNT1 A 1 A_SetPitch(pitch +0.5, SPF_INTERPOLATE);
+		*/
+		//3,5 total
+		TNT1 A 1 
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch -0.9, SPF_INTERPOLATE);
+		}
+		TNT1 A 1 
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch -0.9, SPF_INTERPOLATE);
+		}
+		TNT1 A 1
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch -0.7, SPF_INTERPOLATE);
+		}
+		TNT1 A 1 
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch -0.5, SPF_INTERPOLATE);
+		}
+		TNT1 A 1
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch -0.3, SPF_INTERPOLATE);
+		}
+		TNT1 A 1
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch -0.2, SPF_INTERPOLATE);
+		}
+		TNT1 A 1 
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch -0.1, SPF_INTERPOLATE);
+		}
+		TNT1 A 1 
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch -0.1, SPF_INTERPOLATE);
+		}
+		//TNT1 A 0 A_WeaponReady(WRF_NOBOB)
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(GetPlayerInput(MODINPUT_FORWARDMOVE,-1)!=0 || GetPlayerInput(MODINPUT_SIDEMOVE,-1)!=0, 1);
+		goto stopsprint;
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_SPEED, 2);
+		goto stopsprint;
+		TNT1 AA 0;
+		TNT1 A 0 
+		{
+		If(findinventory("istacticalclass"))
+		{
+		A_GiveInventory("UsedStamina", invoker.weight);
+		}
+		}
+		TNT1 A 0 A_SpawnItemEx("FootStep", 0, 0, 2, 0, 0, -4);
+	TNT1 A 1 
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch +0.9, SPF_INTERPOLATE);
+		}
+		TNT1 A 1 
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch +0.9, SPF_INTERPOLATE);
+		}
+		TNT1 A 1
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch +0.7, SPF_INTERPOLATE);
+		}
+		TNT1 A 1 
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch +0.5, SPF_INTERPOLATE);
+		}
+		TNT1 A 1
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch +0.3, SPF_INTERPOLATE);
+		}
+		TNT1 A 1
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch +0.2, SPF_INTERPOLATE);
+		}
+		TNT1 A 1 
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch +0.1, SPF_INTERPOLATE);
+		}
+		TNT1 A 1 
+		{
+		A_giveinventory("sprintbob",1);
+		If(invoker.owner.getcvar("bd_sprintbob") == 0)
+		A_SetPitch(pitch +0.1, SPF_INTERPOLATE);
+		}
+		
+		//TNT1 A 0 A_WeaponReady(WRF_NOBOB)
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_SPEED, "Sprinting");
+		
+		Goto StopSprint;
+	StopSprintTired:
+	TNT1 A 1;
+	Stopsprinttired2:
+		TNT1 A 0
+		{
+		invoker.sprinttimer = 10;
+
+		}
+		
+		TNT1 A 0 A_takeinventory("sprintbob",1);
+		//PLAY A 0 ACS_ExecuteAlways(853, 0, 0, 0, 0);//Makes player slower.
+		TNT1 A 0 A_startSound("Tired", 21,CHANF_NOSTOP);
+		
+		TNT1 A 0
+		{
+
+		player.SetPSprite(5,player.ReadyWeapon.FindState("donothing"));
+		}
+			TNT1 A 0 
+		{
+		Return resolvestate("returnfromsprint");
+		}
+		Wait;
+		DontEvenSprint:
+		TNT1 A 0
+		{
+		invoker.sprinttimer = 10;
+
+		}
+		
+		TNT1 A 0 A_takeinventory("sprintbob",1);
+		//PLAY A 0 ACS_ExecuteAlways(853, 0, 0, 0, 0);//Makes player slower.
+		TNT1 A 0 A_startSound("Tired", 21,CHANF_NOSTOP);
+		
+		TNT1 A 0
+		{
+
+		player.SetPSprite(5,player.ReadyWeapon.FindState("donothing"));
+		}
+			TNT1 A 0 
+		{
+		Return resolvestate("ready");
+		}
+		Wait;
+	StopSprint:
+	tnt1 A 1;
+	TNT1 A 0 A_JumpIfInventory("UsedStamina", 60, "StopSprintTired");
+	TNT1 A 0
+		{
+		
+		player.SetPSprite(5,player.ReadyWeapon.FindState("donothing"));
+		}
+		TNT1 A 0 A_takeinventory("sprintbob",1);
+		
+		//PLAY A 0 ACS_ExecuteAlways(853, 0, 0, 0, 0);//Makes player slower.
+		TNT1 A 0 
+		{
+		Return resolvestate("returnfromsprint");
+		}
+		Wait;
+		
+	Idle:
+	TNT1 A 0 setplayerproperty(0,1,4);
+	TNT1 A 2;
+	TNT1 A 0 setplayerproperty(0,0,4);
+	TNT1 A 0 A_jumpifinventory("hasagib",1,"Chooseyourgib");
+	
+	TTN1 A 0 A_jump(256,"returnfromnothing");
+	returnFromNothing:
+	
+	GoingToReady:
+	SelectingAnimation:
+		  TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 2);
+		  TNT1 A 0 A_Overlay(-610, "FirstPersonLegsStand");
+		  TNT1 A 0;
+		  Returnfromsprint:
+		  TNT1 A 0 A_jumpifinventory("needstoselect",1,"selectfirstpersonlegs");
+		  TNT1 A 0 A_TakeInventory("BDWEaponACtion", 1);
+		  TNT1 A 0 A_TakeInventory("ExecuteDownedEnemy", 1);
+		  TNT1 A 0 A_TakeInventory("Kicking",1);
+		  TNT1 A 0 A_TakeInventory("Salute1", 1);
+		  TNT1 A 0 A_TakeInventory("Salute2", 1);
+		  TNT1 A 0 A_TakeInventory("Taunting",1);
+		  TNT1 A 0 A_TakeInventory("TossGrenade",1);
+		  TNT1 A 0 A_TakeInventory("IsRunning",1);
+		  TNT1 A 0 A_TakeInventory("Reloading",1);
+		  TNT1 A 0 A_jumpifinventory("hasagib",1,"Chooseyourgib");
+		  TNT1 A 0 A_Overlay(10, "Flash");
+		  TNT1 A 0 A_Jump(256, "Ready");
+		//   TNT1 A 0 A_Jump(256, "Ready");
+		  Loop;
+	
+	SelectFirstPersonLegs:		
+		TNT1 A 0;
+		//TNT1 A 1 Emma you fucking idiot
+		TNT1 A 0
+		{
+		
+		takeinventory("startdualwield",1);
+		takeinventory("swapriflespecial",1);
+		takeinventory("reloading",1);
+		takeinventory("unloading",1);
+		takeinventory("taunting",1);
+		takeinventory("tossgrenade",1);
+		takeinventory("salute1",1);
+		takeinventory("salute2",1);
+		takeinventory("kicking",1);
+		takeinventory("zoomed",1);
+		takeinventory("sprintbob",1);
+		A_zoomfactor(1.0);
+		
+		
+		
+		
+		//player.SetPSprite(10,player.ReadyWeapon.FindState("flash"));
+		A_overlay(-630,"flash");
+		  //A_WeaponOffset(0,32);
+		   A_GiveInventory("IsPlayingDoxMod",1);
+	  // player.SetPSprite(-2,player.ReadyWeapon.FindState("kickcheck"));
+	  A_overlay(-602,"kickcheck");
+		//giveInventory("IsPlayingDoxMod",1); 
+		TakeInventory("Fire2Activate",1); 
+		Takeinventory("PressedTwice",1); 
+		Takeinventory("needstoselect",1);
+		GiveInventory("PressedOnce",1); 
+		GiveInventory("SelectAnim",1);
+		Giveinventory("GoSpecial",1);
+		//yes, each weapon gets GoSpecial... except for dual weapons, but it's gonna be fine since I gave them back their "skins" upon switching.
+		//Slot 0
+		//Slot 1
+		Takeinventory("SwitchtoFist",1); 
+		Takeinventory("FistsSelected",1); 
+		Takeinventory("HasCutingWeapon",1); 
+		Takeinventory("SawSelected",1);
+		//Slot 2
+		Takeinventory("PistolSelected",1); 
+		Takeinventory("SubMachineGunSelected",1);
+		//Slot 3
+		Takeinventory("ShotgunSelected",1); 
+		Takeinventory("SSGSelected",1);
+		//Slot 4
+		Takeinventory("RifleSelected",1); 
+		Takeinventory("MinigunSelected",1);
+		//Slot 5	
+		Takeinventory("RocketLauncherSelected",1); 
+		Takeinventory("GrenadeLauncherSelected",1);
+		//Slot 6
+		Takeinventory("PlasmaGunSelected",1); 
+		Takeinventory("RailGunSelected",1);
+		//Slot 7
+		Takeinventory("BFGSelected",1); 
+		Takeinventory("BFG10kSelected",1);
+		//Slot 8
+		Takeinventory("RevenantLauncherSelected",1); 
+		Takeinventory("FlameCannonSelected",1);
+		//Blood on weapon
+		TakeInventory("PowerBloodOnVisor",1);	
+		TakeInventory("PowerBlueBloodOnVisor",1);	
+		TakeInventory("PowerGreenBloodOnVisor",1);
+		//Sum special weapon checks things
+		Takeinventory("HeavyAutomaticWeapon",1); 
+		Takeinventory("MinigunSelected",1); 
+		TakeInventory("RandomHeadExploder", 1); 
+		Takeinventory("HasPlasmaWeapon",1); 
+		Takeinventory("HasFreezerWeapon",1);
+		Takeinventory("yesimrevlauncher",1);
+		
+		
+		
+		If(getcvar("bd_Legs")==0)
+		{
+		a_overlay(-610,"firstpersonlegsstand");
+		//player.SetPSprite(-10,player.ReadyWeapon.FindState("firstpersonlegsstand"));
+		}
+		
+		}
+		TNT1 A 0 A_jumpifinventory("hasagib",1,"gibfromnothing");
+		TNT1 A 0 A_Jump(256, "SelectContinue");
+		Loop;
+		
+		
+	KickCheckButTakeKickAndIdk:
+		NULL A 0 A_TakeInventory("Kicking",1);
+		//TNT1 A 0 A_Overlay(1,"DoExecution")	
+		KickCheck:
+		TNT1 A 1;
+		TNT1 A 0 A_jumpifinventory("veh_manager",1,"kickcheckbuttakekickandidk");
+		TNT1 A 0 A_JumpIfInventory("Kicking",1,"DoKick");
+		/*
+		NULL A 0
+		{
+		If (countInv("ExecuteDownedEnemy")==1)
+		    {
+			A_Overlay(1,"DoExecution");//Return State ("DoExecution");
+			}
+		If (countInv("Kicking")==1)
+		    {
+			Return State ("DoKick");
+			}
+		Return State("");
+	    }
+		*/
+		//TNT1 A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
+		
+		Loop;
+		
+	SelectAnimation:
+	    "####" A 0 A_Jump(255, "Ready");
+		Loop;
+	Steady:
+		TNT1 A 1;
+		Goto GoingToReady;
+		
+	Ready3:
+		"####" A 0 A_Jump(255, "Ready");
+		Loop;
+	
+	//Ready:
+		"####" A 0 A_Jump(255, "Ready");
+		Loop;
+	
+	//Fire:
+		"####" A 0 A_Jump(255, "Ready");
+		Loop;
+		
+	//Deselect:
+		"####" A 0 A_Jump(255, "Ready");
+		Loop;
+		
+	//Select:
+		"####" A 0 A_Jump(255, "Ready");
+		Loop;
+		
+
+	
+	WEaponActions:
+		  TNT1 A 0;
+		  TNT1 A 0 A_TakeInventory("BDWEaponACtion", 1);
+		  TNT1 A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "DoExecution");
+		  //TNT1 A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return resolvestate("SlideKickingStart");	} if (vel.Z != 0) {	return resolvestate("AirKickingFlash");}else {	return resolvestate("KickingFlash");}	}return resolvestate(null);}
+		  TNT1 A 0 A_JumpIfInventory("Salute1", 1, "Salute");
+		  TNT1 A 0 A_JumpIfInventory("Salute2", 1, "Salute");
+		  TNT1 A 0 A_JumpIfInventory("Taunting",1,"Taunt");
+		  TNT1 A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade");
+		  TNT1 A 0 A_JumpIfInventory("IsRunning",1,"CheckSprint");
+		  TNT1 A 0 A_JumpIfInventory("Reloading",1,"Reload");
+		  TNT1 A 1;
+		  TNT1 A 0 A_Jump(255, "Ready");
+		  TNT1 A 1;
+		Loop;
+		
+	Tryuse:
+		TNT1 A 0;
+		TNT1 A 0 A_TakeInventory("PressedUse", 100);
+		RIFF A 0 A_FireProjectile("UseAttack", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("StealthAttack", 0, 0, 0, 0, 0, 0);
+		TNT1 A 1;
+		TNT1 A 0 A_JumpIfInventory("FlashlightOn", 1, "WaitFlashlightOn");
+		TNT1 A 0 A_JumpIfInventory("PressedUse", 1, "Interrupt");
+		Goto Flash;
+		
+	Interrupt:	
+		TNT1 A 0;
+		TNT1 A 0 A_TakeInventory("PRessedUse", 1);
+		TNT1 A 10;
+		TNT1 A 0 A_JumpIfInventory("PressedUse", 1, "Interrupt");
+		Goto Flash;
+		
+		
+	WaitFlashlightOn:	
+		TNT1 A 0;
+		TNT1 A 0 A_TakeInventory("PRessedUse", 1);
+		TNT1 A 1;
+		RIFF A 0 A_FireProjectile("FlashlightAlerter", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile2", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile3", 0, 0, 0, 0, 0, 0);
+		TNT1 A 1;
+		RIFF A 0 A_FireProjectile("FlashlightAlerter", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile2", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile3", 0, 0, 0, 0, 0, 0);
+		TNT1 A 1;
+		RIFF A 0 A_FireProjectile("FlashlightAlerter", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile2", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile3", 0, 0, 0, 0, 0, 0);
+		TNT1 A 0 A_JumpIfInventory("PressedUse", 1, "WaitFlashlightOn");
+		Goto Flash;	
+		
+	Flash:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIfInventory("SwitchFlashlight",1,"SwitchFlashlight");
+		TNT1 A 0 A_JumpIfInventory("FlashlightOn", 1, "FlashOn");
+		TNT1 A 1;
+		TNT1 A 0 A_JumpIfInventory("PressedUse", 1, "TryUse");
+		TNT1 A 1;
+		//TNT1 A 0 A_TakeInventory("UsedStamina", 1)
+		Goto Flash;
+	
+	FlashOn:
+	    TNT1 A 1 BRIGHT;
+		TNT1 A 0 A_SpawnItemEx("FlashlightSource", 32, 8, 30);
+		TNT1 A 0 A_JumpIfInventory("PressedUse", 1, "TryUse");
+		RIFF A 0 A_FireProjectile("FlashlightAlerter", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile2", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile3", 0, 0, 0, 0, 0, 0);
+		
+		TNT1 A 1 BRIGHT;
+		TNT1 A 0 A_SpawnItemEx("FlashlightSource", 32, 8, 30);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile2", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile3", 0, 0, 0, 0, 0, 0);
+		
+		TNT1 A 1 BRIGHT;
+		TNT1 A 0 A_SpawnItemEx("FlashlightSource", 32, 8, 30);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile2", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile3", 0, 0, 0, 0, 0, 0);
+		TNT1 A 0 A_JumpIfInventory("PressedUse", 1, "TryUse");
+		TNT1 A 1 BRIGHT;
+		TNT1 A 0 A_SpawnItemEx("FlashlightSource", 32, 8, 30);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile2", 0, 0, 0, 0, 0, 0);
+		RIFF A 0 A_FireProjectile("FlashlightProjectile3", 0, 0, 0, 0, 0, 0);
+		
+		//TNT1 A 0 A_TakeInventory("UsedStamina", 1)
+		
+		Goto Flash;
+		
+		
+	SwitchFlashlight:
+		TNT1 A 0;
+		TNT1 A 0 A_TakeInventory("SwitchFlashlight", 1);
+		TNT1 A 0 A_JumpIfInventory("FlashlightOn",1,"TurnFlashOff");
+		TNT1 A 0 A_Giveinventory("FlashlightOn",1);
+		TNT1 A 0 A_PlaySound("FLASHON", 5);
+		
+        Goto Flash;
+	TurnFlashOff:
+		TNT1 A 0 A_Takeinventory("FlashlightOn",1);
+		TNT1 A 0 A_Light0();
+		TNT1 A 0 A_PlaySound("FLASHOFF", 5);
+        Goto Flash;
+		
+		
+		
+	RifleBash:
+		TNT1 A 0;
+		TNT1 A 0 A_Takeinventory("Zoomed",1);
+        TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_Takeinventory("ADSmode",1);
+		
+		TNT1 A 0 A_PlaySound("KICK",69);
+		RIBA ACE 1;
+		RIFF A 0 A_FireProjectile("KickAttack", 0, 0, 0, 0);
+		RIBA G 5;
+		RIBA A 0 A_Takeinventory("Kicking",1);
+		RIBA FEDCBA 1;
+		TNT1 AAAA 1;
+		TNT1 A 0 A_JumpIfInventory("Kicking",1,"RifleBash");
+		TNT1 A 0 SetPlayerProperty(0,0,0);
+		TNT1 A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "DoExecution");
+		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady");
+		RIBA A 0 A_Takeinventory("Kicking",1);
+		Goto SelectingAnimation;
+
+		
+	FirstPersonLegsDissapearThoseFuckers:
+	TNT1 A 0;
+	stop;
+		
+	//First Person Legs in Doom (because, you know, "I'm not original"
+	//- from pain I think
+	
+	//You are original, PA1N, don't worry. <3
+	FirstPersonLegsKickRight:
+	    //
+		3TAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2TAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1TAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		STAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+		3TAN A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2TAN A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1TAN A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    STAN A 0;
+		"####" A 0 A_JumpIf(Height < 54, "FirstPersonLegsHide");
+		"####" A 0 A_JumpIfInventory("FPSLegChecker", 1, 2);
+		"####" C 1
+		{
+		A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+		}
+		Loop;
+		"####" D 1
+		{
+		A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+		}
+		Loop;
+	FirstPersonLegsKickLeft:
+	//
+		3TAL A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2TAL A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1TAL A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		STAL A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+		3TAL A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2TAL A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1TAL A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    STAL A 0;
+		"####" A 0 A_JumpIf(Height < 54, "FirstPersonLegsHide");
+		"####" A 0 A_JumpIfInventory("FPSLegChecker", 1, 2);
+		"####" D 1
+		{
+		A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+		}
+		Loop;
+		"####" C 1
+		{
+		A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+		}
+		Loop;
+		
+	FirstPersonLegsHide:
+		"####" Q 1 
+		{
+		A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+		}
+		Loop;
+		
+		FirstPersonLegsAirKick:
+		"####" A 0 A_JumpIf(Height < 54, "FirstPersonLegsHide");
+		"####" A 0 A_JumpIfInventory("FPSLegChecker", 1, 2);
+		JUMP G 1
+		{
+		A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+		}
+		Loop;
+		JUMP H 1
+		{
+		A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+		}
+		Loop;
+		
+	FirstPersonLegsStand:
+	//
+		3TAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2TAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1TAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		STAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+	//
+		3TAN A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2TAN A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1TAN A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    STAN N 0;
+        "####" A 0;
+		"####" A 0 A_JumpIf(GetCvar("bd_Legs")==1, "FirstPersonLegsDissapearThoseFuckers");
+		"####" A 0 A_JumpIf(vel.Z != 0, "FirstPersonLegsJump");
+		"####" A 0 A_JumpIf(vel.x > 0.8 || vel.x < -0.8 || vel.y > 0.8 || vel.y < -0.8, "FirstPersonLegsWalk1");
+		"####" A 0 A_JumpIf(Height < 54, "FirstPersonLegsCrouch");
+		"####" A 0 A_TakeInventory("LegsHasJumped",1);
+		"####" A 0 A_JumpIfInventory("FPSLegChecker", 1, 2);
+		"####" A 1 
+		{
+		A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+		}
+		Loop;
+		"####" A 0;
+		"####" A 0 A_JumpIf(Height < 54, "FirstPersonLegsCrouch");
+		"####" A 0 A_JumpIf(vel.Z != 0, "FirstPersonLegsJump");
+		"####" B 1 
+		{
+			A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+		}
+		Loop;
+		
+	FirstPersonLegsCrouch:
+		"####" A 0;
+		"####" A 0 A_PlaySound("IronSights", 0); //Sound when player crouches
+	FirstPersonLegsCrouchContinue:
+		"####" A 0 A_JumpIf(vel.Z != 0, "FirstPersonLegsJump");
+		"####" A 0 A_JumpIf(vel.x > 0.8 || vel.x < -0.8 || vel.y > 0.8 || vel.y < -0.8, "FirstPersonLegsWalk1");
+		"####" A 0 A_JumpIf(Height > 54, "FirstPersonLegsStand");
+		//
+		3ROU A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2ROU A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1ROU A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		CROU A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+		3ROU A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2ROU A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1ROU A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    CROU N 0;
+		"####" A 1 
+		{
+			A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+		}
+		Loop;
+		
+	FirstPersonLegsWalk1:
+		"####" A 0;
+		"####" A 0 A_JumpIfInventory("FPSLegChecker", 1, "FirstPersonLegsWalk2");
+		"####" A 0 A_JumpIf(vel.Z != 0, "FirstPersonLegsJump");
+		"####" A 0 A_JumpIf(Height < 54, "FirstPersonLegsCrouchWalk");
+		"####" A 0 A_GiveInventory("FPSLegChecker",1);
+		"####" A 0 A_TakeInventory("LegsHasJumped",1);
+		//
+		3ALK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2ALK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1ALK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		WALK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+		3ALK A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2ALK A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1ALK A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    WALK N 0;
+        "####" A 0;
+		"####" HIJKLM 1
+		{
+		A_kickflags();
+            A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+            A_OverlayOffset(-610, 0, (-pitch*2)+230);
+            return A_JumpIf(vel.Z != 0, "FirstPersonLegsJump");
+        }
+		"####" A 0 A_JumpIf(vel.x > 1 || vel.x < -1 || vel.y > 1 || vel.y < -1, 1);
+		Goto FirstPersonLegsWalkFinish1;
+		"####" NNOPQR 1 //8
+		{
+		A_kickflags();
+			
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+			return A_JumpIf(vel.Z != 0, "FirstPersonLegsJump");
+		}
+		Goto FirstPersonLegsWalk2;
+		
+	FirstPersonLegsWalkFinish1:
+	    //
+		3TAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2TAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1TAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		STAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+		3TAN A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+		2TAN A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+		1TAN A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+		STAN N 0;
+		"####" A 0;
+		"####" KLMN 1
+		{
+		A_kickflags();
+             A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+             A_OverlayOffset(-610, 0, (-pitch*2)+230);
+          }
+	Goto FirstPersonLegsStand;
+	
+	FirstPersonLegsWalk2:
+		"####" A 0;
+		"####" A 0 A_JumpIf(vel.Z < 0, "FirstPersonLegsJump");
+		"####" A 0 A_JumpIf(Height < 54, "FirstPersonLegsCrouchWalk");
+		"####" A 0 A_TakeInventory("FPSLegChecker",1);
+		"####" A 0 A_TakeInventory("LegsHasJumped",1);
+		//
+		3ALK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2ALK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1ALK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		WALK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+		3ALK A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2ALK A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1ALK A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    WALK N 0;
+        "####" A 0;
+		"####" STUVAB 1
+		{
+		A_kickflags();
+            A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+            A_OverlayOffset(-610, 0, (-pitch*2)+230);
+            return A_JumpIf(vel.Z != 0, "FirstPersonLegsJump");
+        }
+		"####" A 0 A_JumpIf(vel.x > 1 || vel.x < -1 || vel.y > 1 || vel.y < -1, 1);
+		Goto FirstPersonLegsWalkFinish2;
+		"####" CCDEFG 1
+		{
+		A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+			return A_JumpIf(vel.Z != 0, "FirstPersonLegsJump");
+			return A_JumpIf(Height > 54, "FirstPersonLegsStand");
+		}
+		Goto FirstPersonLegsWalk1;
+			
+	FirstPersonLegsWalkFinish2:
+	    //
+		3TAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2TAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1TAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		STAN A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+	    3TAN A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2TAN A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1TAN A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    STAN N 0;
+        "####" A 0;
+	    "####" GHIJ 1
+		{
+		A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+		}
+	   Goto FirstPersonLegsStand;
+	   
+	FirstPersonLegsCrouchWalk:
+	    "####" A 0 A_TakeInventory("FPSLegChecker",1);
+		"####" A 0 A_TakeInventory("LegsHasJumped",1);
+		//
+		3ROU A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2ROU A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1ROU A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		CROU A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+		3ROU A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2ROU A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1ROU A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    CROU N 0;
+        "####" A 0;
+		"####" ABCDE 1
+		{
+		A_kickflags();
+            A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+            A_OverlayOffset(-610, 0, (-pitch*2)+230);
+            return A_JumpIf(vel.Z != 0, "FirstPersonLegsJump");
+        }
+		"####" FGHIJKL 1
+		{
+		A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+			return A_JumpIf(vel.Z != 0, "FirstPersonLegsJump");
+			return A_JumpIf(Height > 54, "FirstPersonLegsStand");
+		}
+		Goto FirstPersonLegsStand;
+	   
+	   
+	FirstPersonLegsJump:
+	    //
+		3UMP A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2UMP A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1UMP A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		JUMP A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+		3UMP A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2UMP A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1UMP A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    JUMP N 0;
+        "####" A 0;
+	    "####" A 0 A_JumpIfInventory("FPSLegChecker", 1 ,"FirstPersonLegsJump2");
+		"####" A 0 A_JumpIfInventory("LegsHasJumped",1,"FirstPersonLegsContinueFalling");
+		"####" A 0 A_GiveInventory("LegsHasJumped",1);
+		"####" AB 1
+		{
+		A_kickflags();
+             A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+             A_OverlayOffset(-610, 0, (-pitch*2)+230);
+          }
+		"####" A 0;
+	FirstPersonLegsContinueFalling:
+		"####" CCCCC 1
+		{
+		A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+		}
+		Goto FirstPersonLegsStand;
+		
+	FirstPersonLegsJump2:
+		"####" A 0;
+		"####" A 0 A_JumpIfInventory("LegsHasJumped",1,"FirstPersonLegsContinueFalling2");
+		"####" A 0 A_GiveInventory("LegsHasJumped",1);
+		"####" DE 1
+		{
+		A_kickflags();
+             A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+             A_OverlayOffset(-610, 0, (-pitch*2)+230);
+          }
+	FirstPersonLegsContinueFalling2:
+		"####" FFFFF 1
+		{
+		A_kickflags();
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+230);
+		}
+		Goto FirstPersonLegsStand;
+
+
+	//YouCantKickWTF:
+	//TNT1 A 0 A_Print("You can't kick that high!",1)
+	//Goto GoingToReady
+	// of course .-.	
+	
+	DoKick:
+	TNT1 A 0 A_kickflags();
+		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "KickCheckButTakeKickAndIdk");
+		//FLMT A 0 A_JumpIf(pitch < -45, "YouCantKickWTF")
+		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
+		TNT1 A 0 A_Takeinventory("HasPlasmaWeapon",1);
+		TNT1 A 0 A_TAkeinventory("HasCutingWeapon",1);
+		TNT1 A 0 A_Takeinventory("Zoomed",1);
+		TNT1 A 0 A_Takeinventory("PowerLightAmp",1);
+		TNT1 A 0 A_giveinventory("kicking",1);
+        TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_Takeinventory("ADSmode",1);
+		TNT1 A 0
+		{
+			If(findinventory("powerstrength") && !findinventory("hasagib") && !findinventory("nofatality"))
+			{
+				/*
+				FLineTraceData checkgrab;
+				invoker.owner.LineTrace(angle, 160, -pitch, TRF_THRUACTORS, offsetz: -15, data: checkgrab);
+				 if (checkgrab.hitactor && checkgrab.hitactor is "tehlostsoul")
+				{
+					checkgrab.hitactor.a_noblocking();
+					checkgrab.hitactor.destroy();
+					giveinventory("lostsoulfatality",1);
+					giveinventory("gofatality",1);
+					giveinventory("hasagib",1);
+				}
+				Else if (checkgrab.hitactor && checkgrab.hitactor is "explosivebarrel1")
+				{
+					checkgrab.hitactor.a_noblocking();
+					checkgrab.hitactor.destroy();
+					giveinventory("hasbarrel",1);
+					giveinventory("gofatality",1);
+					giveinventory("hasagib",1);
+				}
+				*/
+				A_FireProjectile("CheckForGrabbable",0,0,0,-15);
+			}
+		}
+		TNT1 A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "KickCheckButTakeKickAndIdk");
+		// 1st person legs shit
+		TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 3);
+		TNT1 A 0 A_Overlay(-610,"FirstPersonLegsKickRight");
+		TNT1 A 0 A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+		TNT1 A 0;
+	    TNT1 A 0 A_JumpIf (vel.Z != 0, "AirKick");
+		TNT1 A 0 A_JumpIfInventory("IsCrouching", 1, "SlideAttack");
+		//Melee Kicks
+		TNT1 A 0 A_JumpIfInventory("PSeq1", 1, "KickRight"); //left swing
+		TNT1 A 0 A_JumpIfInventory("PSeq2", 1, "AirKick"); //Right swing
+		TNT1 A 0 A_JumpIfInventory("IsDoingUpper", 1, "KickRight"); //Uppercut
+	//	TNT1 A 0 A_JumpIfInventory("IsRunning", 1, "AirKick") //sprinting
+		
+		
+		NULL A 0
+		{ if(CountInv("IsPlayingDoxMod")==0)
+		  {
+		  A_GunFlash("KickingFlash");
+		  }
+		 Return resolveState(null);
+		}//"####" A 0 A_Overlay(1,"KickingFlash")
+		//TNT1 A 0 A_JumpIfInventory("RifleSelected", 1, "RifleBash")
+		TNT1 A 0 A_PlaySound("KICK",69);
+	//	TNT1 A 0 SetPlayerProperty(0,1,0);
+		//
+		3ICK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2ICK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1ICK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		KICK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+		3ICK A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2ICK A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1ICK A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    KICK N 0;
+        "####" A 0;
+		"####" BCD 1;
+		"####" A 0 {
+			
+				A_FireProjectile("MeleeAttack", 0, 0, 0, -7);
+		}
+		
+		"####" H 5;
+		"####" IGFED 1;
+		"####" A 0 A_Takeinventory("Kicking",1);
+		"####" CBA 1;
+		TNT1 A 0 SetPlayerProperty(0,0,0);
+		TNT1 A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "KickCheckButTakeKickAndIdk");
+//		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		RIBA A 0 A_Takeinventory("Kicking",1);
+		TNT1 A 0 A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+		TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 2);
+		TNT1 A 0 A_Overlay(-610, "FirstPersonLegsStand");
+		NULL A 0;
+	//	TNT1 A 3 A_Takeinventory("Kicking",1)
+	NULL A 0 A_JumpIfInventory("IsPlayingDoxMod",1,"KickCheck");
+		Goto Ready;
+	
+	
+	AirKick:
+	 //   TNT1 A 0 A_JumpIfInventory("PSeq2",1,2)
+		NULL A 0
+		{ if(CountInv("IsPlayingDoxMod")==0)
+		  {
+		  A_GunFlash("AirKickingFlash");
+		  }
+		 Return resolveState(null);
+		}		
+		// 1st person legs shit
+		TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 3);
+	//	TNT1 A 0 A_Overlay(-610,"FirstPersonLegsAirKick")
+	    TNT1 A 0 
+		{
+		if (CountInv("PSeq2")==1)
+		    {
+		    A_Overlay(-610,"FirstPersonLegsKickRight");
+			}
+			else
+			{
+		    A_Overlay(-610,"FirstPersonLegsAirKick");
+		    }
+			A_kickflags();
+		}
+		TNT1 A 0 A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+		//
+		TNT1 A 0
+		{
+		if (CountInv("PSeq2")==1)
+		    {
+			SetPlayerProperty(0,1,0);
+			}
+			else
+			{
+		    A_Recoil(-6);
+		    }
+			A_kickflags();
+		}
+				
+	    TNT1 A 0 A_jumpifinventory("PowerStrength",1,"SuperAirKick");
+		TNT1 A 0 A_PlaySound("KICK",69);
+		KIK4 AB 1;
+		//
+		3IK4 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2IK4 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1IK4 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		KIK4 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+		3IK4 A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2IK4 A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1IK4 A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    KIK4 N 0;
+        "####" A 0;
+		"####" CDE 1;
+		"####" A 0 {
+			A_recoil(-6);
+			
+				A_FireProjectile("MeleeAttackAir", 0, 0, 0, -31);
+			
+		}
+       // "####" O 3
+		"####" F 3;
+		//"####" A 0 A_Takeinventory("Kicking",1)
+		//"####" PQR 2
+		"####" GHIJKL 1;
+		"####" A 0 SetPlayerProperty(0,0,0);
+		"####" A 0 A_Takeinventory("Kicking",1);	
+		//"####" ST 2 //separated for fists kicks n shit
+		"####" MN 1;
+		KIK4 OP 1; //separated for fists kicks n shit
+		
+//		TNT1 A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
+//		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		RIBA A 0 A_Takeinventory("Kicking",1);
+		TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 2);
+		TNT1 A 0 A_Overlay(-610, "FirstPersonLegsStand");
+		NULL A 0;
+	//	TNT1 A 3 A_Takeinventory("Kicking",1)
+		NULL A 0 A_JumpIfInventory("IsPlayingDoxMod",1,"KickCheck");
+		Goto Ready;
+		
+	SlideKickLeftLeg:
+	    KIK5 AB 1
+		{
+		A_kickflags();
+			if(Pitch<=10)
+			{
+			A_kickflags();
+			A_OverlayFlags(-607, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-607, 0, (-pitch*2)+48);
+			}
+		}
+		//
+		3IK5 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2IK5 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1IK5 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		KIK5 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+		3IK5 A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2IK5 A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1IK5 A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    KIK5 N 0;
+	    "####" CDEEEEEEEEEEEEEEEEE 1
+		{
+		A_kickflags();
+			if(Pitch<=10)
+			{
+			A_OverlayFlags(-607, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-607, 0, (-pitch*2)+48);
+			}
+		}
+		stop;
+	SlideKickLeftLegFinish:
+        //
+		3IK5 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2IK5 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1IK5 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		KIK5 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+	    3IK5 A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2IK5 A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1IK5 A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    KIK5 N 0;
+		"####" EEEDC 1
+		{
+		A_kickflags();
+			if(Pitch<=10)
+			{
+			A_OverlayFlags(-607, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-607, 0, (-pitch*2)+50);
+			}
+		}
+		//"####" C 1 A_OverlayOffset(-610, 0, 32)
+		KIK5 BA 1;
+		stop;
+		
+	SlideKickRightLegOverlay:
+		KIK4 B 1
+		{
+		A_kickflags();
+			if(Pitch<=10)
+			{
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+48);
+			}
+		}
+		//
+		3IK4 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2IK4 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1IK4 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		KIK4 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+		3IK4 A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2IK4 A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1IK4 A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    KIK4 N 0;
+        "####" A 0;
+		"####" CEFFFFFFFFFFFFF 1
+		{
+		A_kickflags();
+			if(Pitch<=10)
+			{
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+48);
+			}
+		}
+		Goto SlideKickRightLegOverlayFinish;
+	SlideKickRightLegOverlayFinish:
+		//
+		3IK4 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+	    2IK4 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+	    1IK4 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		KIK4 A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+		3IK4 A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+	    2IK4 A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+	    1IK4 A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+	    KIK4 N 0;
+        "####" A 0;
+		"####" GHIJKLMN 1
+		{
+		A_kickflags();
+			if(Pitch<=10)
+			{
+			A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
+			A_OverlayOffset(-610, 0, (-pitch*2)+52);
+			}
+		}
+	//	"####" X 0 A_OverlayOffset(-610, 0, 32)
+		//"####"  1 
+		KIK4 OP 1;
+		Goto FirstPersonLegsStand;
+		//stop
+		
+		
+		
+	SlideAttack:
+		TNT1 A 0 SetPlayerProperty(0,1,0);
+		TNT1 A 0 A_PlaySound("KICK",69);
+		TNT1 A 0 A_Recoil (-6);
+		TNT1 A 0 A_PlaySound("SlideKickStart", 5);
+		NULL A 0
+		{ if(CountInv("IsPlayingDoxMod")==0)
+		  {
+		  A_GunFlash("SlideKickingStart");
+		  }
+		 Return resolveState(null);
+		}
+		NULL A 0 A_Overlay(-607,"SlideKickLeftLeg");
+		NULL A 0 A_Overlay(-610,"SlideKickRightLegOverlay");
+		TNT1 B 1 
+		{
+			if(Pitch>=10)
+			{
+			A_SetPitch(pitch-pitch/2, SPF_INTERPOLATE);
+			}
+		}
+		NULL CE 1 
+		{
+			if(Pitch>=10)
+			{
+			A_SetPitch(pitch-pitch/2, SPF_INTERPOLATE);
+			}
+		}
+		//A_SetPitch(pitch-pitch/2, SPF_INTERPOLATE)
+		"####" A 0; //A_SetPItch(10, SPF_INTERPOLATE)
+		
+		NULL FFFFFFFFFFFFF 1 
+		{
+			A_Recoil (-3);
+			//A_SetPItch(10);
+			if(Pitch>=10)
+				{
+				A_SetPItch(10);
+				}
+			
+			
+				A_FireProjectile("MeleeAttackSlide", 0, 0, 0, -7, FPF_NOAUTOAIM, (-pitch));
+			
+			
+			if (CountInv("KickHasHit") == 1) {
+				SetPlayerProperty(0,0,0);
+				return resolvestate("FinishSlideHitWall");
+				
+			}
+			
+			if (CountInv("IsCrouching") == 0) {
+				SetPlayerProperty(0,0,0);
+				return resolvestate("FinishSlide");
+			}
+			
+			//very hacky. Figure out a better method
+			A_GiveInventory("FrameTime", 1);
+		//	A_SetPitch(frandom(9.5,10.5));
+			if (CountInv("FrameTime") == 1) {
+				A_WeaponOffset(1,33);
+			}
+			if (CountInv("FrameTime") == 2) {
+				A_WeaponOffset(0,34);
+			}
+			if (CountInv("FrameTime") == 3) {
+				A_WeaponOffset(-1,33);
+			}
+			if (CountInv("FrameTime") == 4) {
+				A_TakeInventory("FrameTime", 4);
+				A_WeaponOffset(0,32);
+			}
+			return resolvestate(null);
+		}
+		"####" A 0 A_TakeInventory("KickHasHit", 1);
+		"####" A 0 SetPlayerProperty(0,0,0);
+		Goto FinishSlide;
+		
+	FinishSlideHitwall:
+		"####" A 0 A_Stop();
+	FinishSlide:	
+	    "####" A 0 A_Overlay(-607,"SlideKickLeftLegFinish");
+		"####" A 0 A_Overlay(-610,"SlideKickRightLegOverlayFinish");
+	    "####" A 0; //A_SetPitch(10)
+		"####" A 0 A_WeaponReady();
+		"####" A 0 A_PlaySound("SlideKickStop", 5);
+		"####" A 0
+		{ if(CountInv("IsPlayingDoxMod")==0)
+		  {
+		  A_GunFlash("SlideKickingEnd");
+		  }
+		 Return ResolveState(null);
+		}
+		TNT1 GHIJ 1 
+		{
+		if(Pitch>=10)
+				{
+				A_SetPItch(10);
+				}
+		}
+		//A_SetPitch(Pitch-1, SPF_INTERPOLATE)
+        "####" A 0 A_Takeinventory("Kicking",1); //separated for melee
+		TNT1 KLMN 1; //A_SetPitch(Pitch-1, SPF_INTERPOLATE)
+		TNT1 OP 1; //A_SetPitch(Pitch-1, SPF_INTERPOLATE)
+//		TNT1 A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
+//		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 2);
+		TNT1 A 0 A_Overlay(-610, "FirstPersonLegsStand");
+		NULL A 0;
+		NULL A 0 A_JumpIfInventory("IsPlayingDoxMod",1,"KickCheck");
+		Goto Ready;
+		
+
+     KickingFlash:
+	    TNT1 AAAAAAAAAAAAAAAA 1; //16
+	    stop;
+		
+     AirKickingFlash:
+	    TNT1 AAAAAAAAAAAAAAAAAA 1; //18
+	    stop;
+	
+	 SlideKickingStart:
+	    TNT1 AAAAA 1;
+	    TNT1 AA 17; //39 total
+	    Stop;
+
+	 SlideKickingEnd:
+	    TNT1 AAAAAAAAAA 1; //10
+	    Stop;
+		
+	TauntButLongerDelay:
+		TNT1 A 0 A_Takeinventory("Zoomed",1);
+        TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_Takeinventory("Taunting",1);
+		TNT1 A 0 A_GunFlash("FuckYouFlash");
+        TNT1 A 2;
+   Taunt:
+		TNT1 A 0 A_Takeinventory("Zoomed",1);
+        TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_Takeinventory("Taunting",1);
+		"####" A 0 A_jumpif(getCVAR("bd_AngledMachinegun")==true && invoker is "machinegun", "tauntnone");
+		"####" A 0 A_jumpif(invoker.handedness == 2, "tauntnone");
+		"####" A 0 A_GunFlash("FuckYouFlash");
+        TNT1 A 4;
+		6UCK A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4);
+		5UCK A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3);
+		4UCK A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2);
+		FUCK N 0;
+		"####" A 0;
+		"####" A 0;
+		
+		"####" A 0 BRIGHT A_FireProjectile("Taunter", 0, 0, -1, 0);
+		"####" A 0 BRIGHT A_FireProjectile("Taunter", -9, 0, -1, 0);
+		"####" A 0 BRIGHT A_FireProjectile("Taunter", 9, 0, -1, 0);
+		//"####" A 0 A_JumpIfInventory("GenderFemale", 1, "TauntFemale");
+		"####" A 0 A_Jump(256, "FuckYourself", "FhaccYoself", "GoFuckYourself", "GetOffScum");
+	
+		
+	FuckYourself:
+		"####" A 0 ACS_NamedExecute("InsultFuckYourself",0,0);
+        "####" B 0 A_PlaySound("FUCK1", 2);
+		Goto FinishTaunt;
+	FhaccYoself:
+		"####" A 0 ACS_NamedExecute("InsultFhaccYoself",0,0);
+        "####" B 0 A_PlaySound("FUCK3", 2);
+		Goto FinishTaunt;
+	GoFuckYourself:
+		"####" A 0 ACS_NamedExecute("InsultGoFuckYourself",0,0);
+        "####" B 0 A_PlaySound("FUCK4", 2);
+		Goto FinishTaunt;
+	GetOffScum:
+		"####" A 0 ACS_NamedExecute("InsultGetOffScum",0,0);
+        "####" B 0 A_PlaySound("FUCK2", 2);
+	FinishTaunt:
+		"####" A 0 A_jumpif(invoker.handedness == 1, "Finishtauntleft");
+		
+		
+        "####" ABCD 1 A_AlertMonsters();
+		"####" E 1;
+		"####" F 12;
+        "####" EDCBA 1;
+        TNT1 A 4 A_Takeinventory("Taunting",1);
+		TNT1 A 0 A_jumpifinventory("hasagib",1,"Chooseyourgib");
+		Goto GoingToReady;
+	FinishTauntLeft:
+	//"####" A 0 A_GunFlash("FuckYouFlash");
+        "####" GHIJ 1 A_AlertMonsters();
+		"####" K 1;
+		"####" L 12;
+        "####" KJIHG 1;
+        TNT1 A 4 A_Takeinventory("Taunting",1);
+		TNT1 A 0 A_jumpifinventory("hasagib",1,"Chooseyourgib");
+		Goto GoingToReady; 
+		
+	TauntNone:
+	6UCK A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4);
+		5UCK A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3);
+		4UCK A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2);
+		FUCK N 0;
+		"####" A 0;
+		"####" A 0;
+		"####" A 0 BRIGHT A_FireProjectile("Taunter", 0, 0, -1, 0);
+		"####" A 0 BRIGHT A_FireProjectile("Taunter", -9, 0, -1, 0);
+		"####" A 0 BRIGHT A_FireProjectile("Taunter", 9, 0, -1, 0);
+		//"####" A 0 A_JumpIfInventory("GenderFemale", 1, "TauntFemale");
+		"####" A 0 A_Jump(256, "FuckYourself2", "FhaccYoself2", "GoFuckYourself2", "GetOffScum2");
+		
+		FuckYourself2:
+		"####" A 0 ACS_NamedExecute("InsultFuckYourself",0,0);
+        "####" B 0 A_PlaySound("FUCK1", 2);
+		Goto FinishTauntnone;
+	FhaccYoself2:
+		"####" A 0 ACS_NamedExecute("InsultFhaccYoself",0,0);
+        "####" B 0 A_PlaySound("FUCK3", 2);
+		Goto FinishTauntnone;
+	GoFuckYourself2:
+		"####" A 0 ACS_NamedExecute("InsultGoFuckYourself",0,0);
+        "####" B 0 A_PlaySound("FUCK4", 2);
+		Goto FinishTauntnone;
+	GetOffScum2:
+		"####" A 0 ACS_NamedExecute("InsultGetOffScum",0,0);
+        "####" B 0 A_PlaySound("FUCK2", 2);
+	FinishTauntNone:
+		TNT1 A 0 A_Takeinventory("Taunting",1);
+		TNT1 A 0 A_jumpifinventory("hasagib",1,"Chooseyourgib");
+		Goto goingtoready;
+
+		
+		
+	
+		
+		
+		
+	Salute:
+	    TNT1 A 0 SetPlayerProperty(0,1,0);
+		TNT1 A 0 A_ALertMonsters();
+		NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0);//Start Camera
+		SALU ABCDEDCDEDCDEDCBA 4;
+		MARN A 0 ACS_NamedExecuteAlways("BDStopCamera", 0, 0, 0, 0);//Stop Camera
+		TNT1 A 0 A_TakeInventory("Salute1",1);
+		TNT1 A 0 A_TakeInventory("Salute2",1);
+		TNT1 A 0 SetPlayerProperty(0,0,0);
+		Goto GoingToReady;
+		
+		
+	TossPipebomb:
+		TNT1 A 0 A_jumpifinventory("AmmoPipeBomb",1,"ActuallyPipebomb");
+		TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"ActuallyPipebomb");
+		TNT1 A 0 A_print("Out of pipebombs");
+		Goto goingtoready;
+		ActuallyPipebomb:
+		TNT1 A 0 A_GunFlash("GrenadeThrowFlash");
+		TNT1 A 5;
+		NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb");
+		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
+		"----" A 0 A_Takeinventory("HasPlasmaWeapon",1);
+		TNT1 A 0 A_TAkeinventory("HasCutingWeapon",1);
+		TNT1 A 0 A_Takeinventory("Zoomed",1);
+		TNT1 A 0 A_Takeinventory("PowerLightAmp",1);
+        TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_Takeinventory("ADSmode",1);
+		TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "TossGrenadeClassic");
+	    TNT1 A 2; //20 frames left
+		//NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb")
+		DKPB PQRSTU 1;
+		DKPB FGHI 1;
+		TNT1 A 0 A_PlaySound("DukeThrw");
+		NULL A 0 A_GiveInventory("HasThrownPipebomb",1);
+        TNT1 A 0 
+		{
+		if(CountInv("TossGrenade")==1)
+			{
+			A_FireProjectile("PipebombThrownSlow",0,0,0,0);
+			}
+		else
+			{
+			A_FireProjectile("PipebombThrownQuickTossed",0,0,0,0);
+			}
+		}
+		BFGN A 0 A_TakeAmmo("AmmoPipeBomb", 1);
+		DKPB JKKKLLM 1;
+		DKPB NO 1;
+		TNT1 A 6;
+		NULL A 0 A_TakeInventory("TossGrenade",1);
+		Goto GoingToReady;
+	DetonateTossedPipebomb:
+		TNT1 A 0 A_GunFlash("GrenadeThrowFlash");
+		TNT1 A 5;
+		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
+		"----" A 0 A_Takeinventory("HasPlasmaWeapon",1);
+		TNT1 A 0 A_TAkeinventory("HasCutingWeapon",1);
+		TNT1 A 0 A_Takeinventory("Zoomed",1);
+		TNT1 A 0 A_Takeinventory("PowerLightAmp",1);
+        TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_Takeinventory("ADSmode",1);
+		TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "TossGrenadeClassic");
+	    TNT1 A 2;
+		DETO ABCCDDD 1;
+		TNT1 A 0 A_AlertMonsters(300);
+        DETO G 1 A_PlaySound("BEP");
+	    NULL A 0 A_TakeInventory("HasThrownPipebomb",1);
+	    TNT1 A 0 A_RadiusGive("NowBlowUpPleaseUwU",4096, RGF_ITEMS | RGF_MISSILES | RGF_NOSIGHT ,1,null,"ThrownPipebombs");
+	    TNT1 A 0;
+	    DETO G 2;
+	    DETO FFEED 1;
+		DETO CBA 1;
+		TNT1 A 7;
+		NULL A 0 A_TakeInventory("TossGrenade",1);
+	    Goto GoingToReady;
+		
+	TossGrenade:	
+		"----" "#" 0;
+		"----" "#" 0 A_TakeInventory("TossGrenade", 1);
+		"----" "#" 0 A_JumpIfInventory("HasThrownPipebomb",1,"detonatetossedpipebomb");
+		NULL A 0 A_JumpIf(CountInv("NadeType")==3,"TossVoidGrenade");
+		NULL A 0 A_JumpIf(CountInv("NadeType")==2,"TossPipebomb");
+		NULL A 0 A_JumpIf(CountInv("NadeType")==1,"TossGrenadeFreeze");
+		"----" "#" 0;
+		//NULL A 0 A_JumpIf(getCvar("bd_ThrowableType"),2,"TossPipebomb")
+	//	"----" "#" 0
+	//	{
+	//	If(CountInv("NadeType")==2)
+	//	  {
+	//	  A_Overlay(-5, "TossPipebomb");
+	//	  Return State("GoingToReady");
+	//	  }
+	//	Return State("");
+	
+	//	}
+		TossRegularGrenade:
+		TNT1 A 0 A_jumpifinventory("AmmoFragGrenade",1,"ActuallyTossGrenade");
+		TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"ActuallyTossGrenade");
+		TNT1 A 0 A_print("Out of cluster grenades");
+		Goto goingtoready;
+		ActuallyTossGrenade:
+		TNT1 A 0 A_GunFlash("GrenadeThrowFlash");
+		TNT1 A 5;
+		NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb");
+		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
+		"----" A 0 A_Takeinventory("HasPlasmaWeapon",1);
+		TNT1 A 0 A_TAkeinventory("HasCutingWeapon",1);
+		TNT1 A 0 A_Takeinventory("Zoomed",1);
+		TNT1 A 0 A_Takeinventory("PowerLightAmp",1);
+        TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_Takeinventory("ADSmode",1);
+		TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "TossGrenadeClassic");
+		
+		GRTH A 1 offset(0,32);
+		GRTH BCDE 1;
+		GRTH F 1;//3
+		GRTH G 1;//H 1
+		GRTH I 1;//3
+		TNT1 A 0 A_GiveInventory("FiredGrenade", 1);
+		TNT1 A 0 A_Giveinventory("Punching",1);
+		TNT1 A 0 A_Giveinventory("GoSpecial",1);
+		TNT1 A 0 A_PLaySound ("GRNPIN");
+		GRTH JKLMN 1;
+		TNT1 A 2 Offset(0,32);
+		TNT1 A 0 A_PLaySound ("CS16uwu");
+		TNT1 A 0 A_Jump(2,2);
+		TNT1 A 0 A_PLaySound ("GRNTOSS");
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIfInventory("TossGrenade", 1, "TossGrenadeGently");
+		//TNT1 A 0 A_Recoil(-2)
+		GRTH OP 1;
+		TNT1 A 0 A_TakeAmmo("AmmoFragGrenade", 1);
+		TNT1 A 0 A_FireProjectile("FakeGrenade", 0, 0, 0, 0, 0, 0);
+	    TNT1 A 0 A_TakeInventory("FiredGrenade", 1);
+		TNT1 A 0 A_FireProjectile("HandGrenade", 0, 0, 0, 0, 0, 0);
+		GRTH Q 1;
+		GRTH RSTU 1;
+		TNT1 A 5; //32 frames in total for a flash.
+		TNT1 A 0 A_TakeInventory("TossGrenade", 1);
+		TNT1 A 0 A_GunFlash();
+		Goto GoingToReady;	
+		
+	TossGrenadeGently:
+		2RTH AB 1;
+		TNT1 A 0 A_TakeAmmo("AmmoFragGrenade", 1);
+		TNT1 A 0 A_FireProjectile("FakeGrenadeAlt", 0, 0, 0, 0, 0, 0);
+	    TNT1 A 0 A_TakeInventory("FiredGrenade", 1);
+		TNT1 A 0 A_FireProjectile("HandGrenadeAlt", 0, 0, 0, 0, 0, 0);
+		2RTH C 1;
+		2RTH DEFG 1;
+		TNT1 A 5;//36 frames in total for a flash.
+		TNT1 A 0 A_TakeInventory("TossGrenade", 1);
+		TNT1 A 0 A_GunFlash();
+		Goto GoingToReady;	
+		
+		
+		
+	TossVoidGrenade:
+		TNT1 A 0 A_jumpifinventory("AmmoVoidGrenade",1,"ActuallyTossVoid");
+		TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"ActuallyTossVoid");
+		TNT1 A 0 A_print("Out of void grenades");
+		Goto goingtoready;
+		ActuallyTossVoid:
+		TNT1 A 0 A_GunFlash("GrenadeThrowFlash");
+		TNT1 A 5;
+		NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb");
+		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
+		"----" A 0 A_Takeinventory("HasPlasmaWeapon",1);
+		TNT1 A 0 A_TAkeinventory("HasCutingWeapon",1);
+		TNT1 A 0 A_Takeinventory("Zoomed",1);
+		TNT1 A 0 A_Takeinventory("PowerLightAmp",1);
+        TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_Takeinventory("ADSmode",1);
+		TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "TossGrenadeClassic");
+		4RTH A 1 offset(0,32);
+		4RTH BCEFGH 1;
+		TNT1 A 0 A_GiveInventory("FiredGrenade", 1);
+		TNT1 A 0 A_Giveinventory("Punching",1);
+		TNT1 A 0 A_Giveinventory("GoSpecial",1);
+		TNT1 A 0 A_PLaySound ("GRNPIN");
+		4RTH IJKLMN 1;
+		TNT1 A 2 Offset(0,32);
+		TNT1 A 0 A_PLaySound ("CS16uwu");
+		TNT1 A 0 A_Jump(2,2);
+		TNT1 A 0 A_PLaySound ("GRNTOSS");
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIfInventory("TossGrenade", 1, "TossVoidGrenadeGently");
+		//TNT1 A 0 A_Recoil(-2)
+		GRTH OP 1;
+		TNT1 A 0 A_TakeAmmo("AmmoVoidGrenade", 1);
+	//	TNT1 A 0 A_FireProjectile("FakeGrenade", 0, 0, 0, 0, 0, 0)
+	    TNT1 A 0 A_TakeInventory("FiredGrenade", 1);
+		TNT1 A 0 A_FireProjectile("VoidGrenade", 0, 0, 0, 0, 0, 0);
+		GRTH Q 1;
+		GRTH RSTU 1;
+		TNT1 A 5; //32 frames in total for a flash.
+		TNT1 A 0 A_TakeInventory("TossGrenade", 1);
+		TNT1 A 0 A_GunFlash();
+		Goto GoingToReady;			
+	TossVoidGrenadeGently:
+		4RTH OP 1;
+		TNT1 A 0 A_TakeAmmo("AmmoVoidGrenade", 1);
+	//	TNT1 A 0 A_FireProjectile("FakeGrenadeAlt", 0, 0, 0, 0, 0, 0)
+	    TNT1 A 0 A_TakeInventory("FiredGrenade", 1);
+		TNT1 A 0 A_FireProjectile("VoidGrenadeAlt", 0, 0, 0, 0, 0, 0);
+		2RTH C 1;
+		2RTH DEFG 1;
+		TNT1 A 5; //36 frames in total for a flash.
+		TNT1 A 0 A_TakeInventory("TossGrenade", 1);
+		TNT1 A 0 A_GunFlash();
+		Goto GoingToReady;	
+		
+		
+		
+	
+		
+	TossGrenadeFreeze:
+		TNT1 A 0 A_jumpifinventory("AmmoIceGrenade",1,"ActuallyTossFreeze");
+		TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"ActuallyTossFreeze");
+		TNT1 A 0 A_print("Out of freeze grenades");
+		Goto goingtoready;
+		ActuallyTossFreeze:
+		TNT1 A 0 A_GunFlash("GrenadeThrowFlash");
+		TNT1 A 5;
+		NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb");
+		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
+		"----" A 0 A_Takeinventory("HasPlasmaWeapon",1);
+		TNT1 A 0 A_TAkeinventory("HasCutingWeapon",1);
+		TNT1 A 0 A_Takeinventory("Zoomed",1);
+		TNT1 A 0 A_Takeinventory("PowerLightAmp",1);
+        TNT1 A 0 A_ZoomFactor(1.0);
+		TNT1 A 0 A_Takeinventory("ADSmode",1);
+		TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "TossGrenadeClassic");
+	    3RTH LMNOE 1;
+		TNT1 A 0 A_PLaySound ("ICEGPRE2");
+		3RTH F 3;
+		3RTH GHIJK 1;
+		//TNT1 A 0 A_SetCrosshair(0)
+		TNT1 A 2 Offset(0,32);
+		TNT1 A 0 A_PLaySound ("CS16uwu");
+		TNT1 A 0 A_Jump(2,2);
+		TNT1 A 0 A_PLaySound ("GRNTOSS");
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIfInventory("TossGrenade", 1, "TossGrenadeFreezeGently");
+		GRTH OP 1;
+		TNT1 A 0 A_TakeAmmo("AmmoIceGrenade", 1);
+		//TNT1 A 0 A_FireProjectile("FakeGrenade", 0, 0, 0, 0, 0, 0)
+	    TNT1 A 0 A_TakeInventory("FiredGrenade", 1);
+		TNT1 A 0 A_FireProjectile("FreezeNade", 0, 0, 0, 0, 0, 0);
+		GRTH Q 1;
+		GRTH RSTU 1;
+		TNT1 A 5; //32 frames in total for a flash.
+		TNT1 A 0 A_TakeInventory("TossGrenade", 1);
+		TNT1 A 0 A_GunFlash();
+		Goto GoingToReady;
+		
+	TossGrenadeFreezeGently:
+		2RTH LM 1;
+		TNT1 A 0 A_TakeAmmo("AmmoIceGrenade", 1);
+	//	TNT1 A 0 A_FireProjectile("FakeGrenadeAlt", 0, 0, 0, 0, 0, 0)
+	    TNT1 A 0 A_TakeInventory("FiredGrenade", 1);
+		TNT1 A 0 A_FireProjectile("FreezeNadeAlt", 0, 0, 0, 0, 0, 0);
+		2RTH C 1;
+		2RTH DEFG 1;
+		TNT1 A 5; //36 frames in total for a flash.
+		TNT1 A 0 A_TakeInventory("TossGrenade", 1);
+		TNT1 A 0 A_GunFlash();
+		Goto GoingToReady;	
+	/*	
+	BLoodSplashRed:
+		TNT1 A 10;
+		SBDR ABCDEFGHIJK 2;
+		Stop;
+	*/
+	BloodSplashRed:
+		TNT1 A 1
+		{
+		a_overlayflags(OverlayID(),PSPF_ADDWEAPON | PSPF_ADDBOB,false);
+		a_overlayoffset(OverlayID(),random(-180,180),random(-90,120));
+					
+						If(random(1,2)== 1)
+							{
+							a_overlayflags(OverlayID(),PSPF_FLIP,false);
+							}
+						Else
+							{
+							a_overlayflags(OverlayID(),PSPF_FLIP,true);
+							}
+		}
+		SBDR AAAABCDEFGHIJK 2;
+		
+		Stop;
+	BloodSplashGreen:
+		TNT1 A 1
+		{
+		a_overlayflags(OverlayID(),PSPF_ADDWEAPON | PSPF_ADDBOB,false);
+		a_overlayoffset(OverlayID(),random(-180,180),random(-90,120));
+					
+						If(random(1,2)== 1)
+							{
+							a_overlayflags(OverlayID(),PSPF_FLIP,false);
+							}
+						Else
+							{
+							a_overlayflags(OverlayID(),PSPF_FLIP,true);
+							}
+		}
+		SBDG AAAABCDEFGHIJK 2;
+		
+		Stop;
+		
+	BloodSplashBlue:
+		TNT1 A 1
+		{
+		a_overlayflags(OverlayID(),PSPF_ADDWEAPON | PSPF_ADDBOB,false);
+		a_overlayoffset(OverlayID(),random(-180,180),random(-90,120));
+					
+						If(random(1,2)== 1)
+							{
+							a_overlayflags(OverlayID(),PSPF_FLIP,false);
+							}
+						Else
+							{
+							a_overlayflags(OverlayID(),PSPF_FLIP,true);
+							}
+		}
+		SBDB AAAABCDEFGHIJK 2;
+		
+		Stop;
+	Gibfromnothing:
+		TNT1 A 0 A_giveinventory("needstoselect",1);
+	ChooseYourGib:
+	TNT1 A 0 A_gunflash("donothing");
+	TNT1 A 0 A_clearoverlays(-50,50);
+	TNT1 A 0 A_takeinventory("kicking",1);
+	TNT1 A 0 A_overlay(-602,"kickcheck");
+	TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 2);
+			TNT1 A 0 A_Overlay(-610, "FirstPersonLegsStand");
+		TNT1 A 0
+		{
+		A_weaponready(WRF_NOFIRE | WRF_NOSWITCH);
+			If(findinventory("lostsoulfatality"))
+			{
+				Return resolvestate("readysoul");
+			}
+			If(findinventory("hasbarrel"))
+			{
+				Return resolvestate("pickbarrel");
+			}
+			If(findinventory("hascacoeye"))
+			{
+				Return resolvestate("readycacoeye");
+			}
+			If(findinventory("hasimpfatality"))
+			{
+				Return resolvestate("readyimpfatality");
+			}
+			If(findinventory("shotgunguyhead"))
+			{
+				Return resolvestate("readyshotgunguyhead");
+			}
+			Return resolvestate(null);
+		}
+		
+		ReadyShotgunguyHEad:
+        //TNT1 A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+        PTG1 B 1 A_jumpif(invoker.owner.player.cmd.buttons & bt_attack, "shotgunguyheadfire");
+		LOOP;
+		
+	ReadyCacoEye:
+        //TNT1 A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+        PTG2 A 1 A_jumpif(invoker.owner.player.cmd.buttons & bt_attack, "Cacoeyefire");
+		LOOP;
+		
+	ReadyImpFatality:
+        //TNT1 A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+        PTG3 A 1 A_jumpif(invoker.owner.player.cmd.buttons & bt_attack, "impfatalityfire");
+		LOOP;	
+	
+	ReadyHearthFatality:
+        //TNT1 A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+        PTG3 B 1 A_WeaponReady();
+		Wait;
+		
+	ShotgunguyHeadFire:
+		PTG1 CDEFGHIJ 1;
+        TNT1 A 0 A_startSound("skeleton/swing");
+		TNT1 A 0 A_Giveinventory("Punching",1);
+        PTG1 K 1 A_Fireprojectile("SergeantHeadThrown", 0, 0, 0, 0);
+        PTG1 LMNOP 1;
+        TNT1 A 0 A_TakeFatalityStuff();
+		TNT1 A 3;
+		
+		TNT1 A 0
+		{
+		return resolvestate("returnfromnothing");
+		}
+		
+		
+	CacoEyeFire:
+		PTG2 BCDEFG 1;
+        TNT1 A 0 A_startSound("skeleton/swing");
+		TNT1 A 0 A_Takefatalitystuff();
+		TNT1 A 0 A_Giveinventory("Punching",1);
+        PTG2 H 1 A_Fireprojectile("ThrownCacodemonEyeBall", 0, 0, 0, 0);
+        PTG2 IJLMN 1;
+		TNT1 A 3;
+		
+	TNT1 A 0
+		{
+		return resolvestate("returnfromnothing");
+		}
+		
+	ImpFatalityFire:
+		PTG3 A 1;
+		PTG3 A 1 Offset(4, 34);
+		PTG3 A 1 Offset(8, 35);
+		PTG3 A 1 Offset(16, 37);
+		PTG3 A 1 Offset(32, 39);
+        TNT1 A 0 A_startSound("skeleton/swing");
+		TNT1 A 0 A_TakeFatalityStuff();
+		TNT1 A 0 A_Giveinventory("Punching",1);
+        PTG2 H 1 A_Fireprojectile("ThrowedImpDead", 0, 0, 0, 0);
+        PTG2 IJLMN 1;
+		TNT1 A 3 Offset(0, 32);
+		
+		TNT1 A 0
+		{
+		
+		return resolvestate("returnfromnothing");
+		}
+		
+		
+		ReadyBarrel:
+        //"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+		//"####" A 0 ACS_ExecuteAlways(294, 0, 0, 0, 0)//Makes player slower.
+        "####" C 1
+			{
+				
+				If(invoker.owner.player.cmd.buttons & bt_attack)
+					{
+						Return resolvestate("firebarrel");
+					}
+					If(invoker.owner.player.cmd.buttons & bt_altattack)
+					{
+						Return resolvestate("altfirebarrel");
+					}
+				Else If(invoker.owner.findinventory("impactmovessling"))
+					{
+						Return resolvestate("readybarrelshake");
+					}
+				Return resolvestate(null);
+			}
+		LOOP;
+	
+	PickBarrel:	
+		TNT1 A 0
+		{
+
+		}
+		//MARN A 0 ACS_ExecuteAlways(294, 0, 0, 0, 0)//Makes player slower.
+		3HRG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4);
+		2HRG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3);
+		1HRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2);
+		THRG N 0;
+		"####" A 0;
+        "####" C 1 offset(-12,48);
+		"####" C 1 offset(-9,42);
+		"####" C 1 offset(-7,39);
+		"####" C 1 offset(-4,36);
+		"####" C 1 offset(-2,33);
+	ReadyBarrelShake:
+        //"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+		//"####" A 0 ACS_ExecuteAlways(294, 0, 0, 0, 0)//Makes player slower.
+		"####" A 0 Offset(0, 32) A_TakeInventory("ImpactMovesSling", 1);
+        "####" DE 1 
+		{
+		 A_overlayoffset(PSP_WEAPON,0,32);
+		If(invoker.owner.player.cmd.buttons & bt_attack)
+					{
+						Return resolvestate("firebarrel");
+					}
+					If(invoker.owner.player.cmd.buttons & bt_altattack)
+					{
+						Return resolvestate("altfirebarrel");
+					}
+				Return resolvestate(null);
+		}
+		//"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+		"####" EDCBA 1 
+		{
+		If(invoker.owner.player.cmd.buttons & bt_attack)
+					{
+						Return resolvestate("firebarrel");
+					}
+					If(invoker.owner.player.cmd.buttons & bt_altattack)
+					{
+						Return resolvestate("altfirebarrel");
+					}
+				Return resolvestate(null);
+		}
+		//"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+		"####" ABC 1
+		{
+		If(invoker.owner.player.cmd.buttons & bt_attack)
+					{
+						Return resolvestate("firebarrel");
+					}
+					If(invoker.owner.player.cmd.buttons & bt_altattack)
+					{
+						Return resolvestate("altfirebarrel");
+					}
+				Return resolvestate(null);
+		}
+		//"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+		"####" A 0 A_JumpIfInventory("ImpactMovesSling", 1, "ReadyBarrelShake");
+		"####" DEEDCBA 2 
+		{
+		If(invoker.owner.player.cmd.buttons & bt_attack)
+					{
+						Return resolvestate("firebarrel");
+					}
+					If(invoker.owner.player.cmd.buttons & bt_altattack)
+					{
+						Return resolvestate("altfirebarrel");
+					}
+				Return resolvestate(null);
+		}
+		//"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+		"####" A 0 A_JumpIfInventory("ImpactMovesSling", 1, "ReadyBarrelShake");
+		"####" AB 3 
+		{
+		If(invoker.owner.player.cmd.buttons & bt_attack)
+					{
+						Return resolvestate("firebarrel");
+					}
+					If(invoker.owner.player.cmd.buttons & bt_altattack)
+					{
+						Return resolvestate("altfirebarrel");
+					}
+				Return resolvestate(null);
+		}
+		//"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+		"####" A 0 A_JumpIfInventory("ImpactMovesSling", 1, "ReadyBarrelShake");
+		Goto ReadyBarrel	;
+		
+	FireBarrel:
+	    3HRG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4);
+		2HRG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3);
+		1HRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2);
+		THRG N 0;
+		"####" A 0;
+		"####" C 1 offset(4,34);
+		"####" C 1 offset(24,41);
+		"####" C 1 offset(48,49);
+		"####" C 1 offset(56,51);
+		"####" C 1 offset(52,49);
+		"####" C 1 offset(36,41);
+		"####" C 1 offset(12,34);
+		"####" C 1 offset(-6,32);
+		"####" C 1 offset(-14,32);
+		THRF A 0 
+		{
+		A_fireprojectile("ThrowedBarrel", 0, 1, 0, 0);
+		}
+        TNT1 A 0 A_startSound("skeleton/swing");
+		TNT1 A 0 A_Giveinventory("Punching",1);
+		TNT1 A 0 A_TakeInventory("HasBarrel",1);
+		TNT1 A 0 A_TakeInventory("HasAGib",1);
+		//MARN A 0 ACS_ExecuteAlways(295, 0, 0, 0, 0)//Makes player have normal speed.
+        THRF ABCDEF 1;
+		TNT1 A 3 A_TakeInventory("StartDualWield", 1);
+	TNT1 A 0
+		{
+	 A_overlayoffset(PSP_WEAPON,0,32);
+		return resolvestate("returnfromnothing");
+		}
+		
+	AltFireBarrel:
+	    3HRG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4);
+		2HRG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3);
+		1HRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2);
+		THRG N 0;
+		"####" A 0;
+		"####" C 1 offset(-2,33);
+		"####" C 1 offset(-4,36);
+		"####" C 1 offset(-7,39);
+		"####" C 1 offset(-9,42);
+		"####" C 1 offset(-12,48);
+		THRF A 0 
+		{
+		
+		
+		A_SpawnItemEx ("ExplosiveBarrel1",40,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		
+		}
+		//MARN A 0 ACS_ExecuteAlways(295, 0, 0, 0, 0)//Makes player have normal speed.
+        TNT1 A 0 A_startSound("skeleton/swing");
+		TNT1 A 0 A_Giveinventory("Punching",1);
+		TNT1 A 0 A_TakeInventory("HasBarrel",1);
+		TNT1 A 0 A_TakeInventory("StartDualWield", 1);
+		TNT1 A 0 A_TakeInventory("HasAGib",1);
+		TNT1 A 0
+		{
+		 A_overlayoffset(PSP_WEAPON,0,32);
+		return resolvestate("returnfromnothing");
+		}
+		
+		ReadySoul: //every 7 frames spawn flame
+	    3HEA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4);
+		2HEA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3);
+		1HEA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2);
+		THEA N 0;
+		"####" A 0;
+        //"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+		"####" A 0 A_Jump(80, "ReadySoul2");
+        "####" ABBCCDD 1 BRIGHT A_jumpif(invoker.owner.player.cmd.buttons & bt_attack, "LSFIRE");
+        "####" A 0 A_fireprojectile("LostSoulOnHandFireSpawner",40,0,0,5);
+		//"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+        "####" DDDDDDD 1 BRIGHT A_jumpif(invoker.owner.player.cmd.buttons & bt_attack, "LSFIRE");
+		"####" A 0 A_fireprojectile("LostSoulOnHandFireSpawner",40,0,0,5);
+		//"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+		"####" CCBBAAA 1 BRIGHT A_jumpif(invoker.owner.player.cmd.buttons & bt_attack, "LSFIRE");
+		"####" A 0 A_fireprojectile("LostSoulOnHandFireSpawner",40,0,0,5);
+		Loop;
+		
+	ReadySoul2: //Poor soul tries to get away...
+        //"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+        "####" EHHIIII 1 BRIGHT A_jumpif(invoker.owner.player.cmd.buttons & bt_attack, "LSFIRE");
+        "####" A 0 A_fireprojectile("LostSoulOnHandFireSpawner",40,0,0,5);
+		//"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+        "####" IIHHGFE 1 BRIGHT A_jumpif(invoker.owner.player.cmd.buttons & bt_attack, "LSFIRE");
+		"####" A 0 A_fireprojectile("LostSoulOnHandFireSpawner",40,0,0,5);
+		//"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+		"####" EHHIIII 1 BRIGHT A_jumpif(invoker.owner.player.cmd.buttons & bt_attack, "LSFIRE");
+        "####" A 0 A_fireprojectile("LostSoulOnHandFireSpawner",40,0,0,5);
+		//"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+        "####" IIHHGFE 1 BRIGHT A_jumpif(invoker.owner.player.cmd.buttons & bt_attack, "LSFIRE");
+		"####" A 0 A_fireprojectile("LostSoulOnHandFireSpawner",40,0,0,5);
+		Goto ReadySoul;
+	
+			
+	LSFire:
+	    3HEF A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4);
+		2HEF A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3);
+		1HEF A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2);
+		THEF N 0;
+		"####" A 0;
+		"####" ABCD 1;
+        "####" A 0 A_PlaySound("skeleton/swing");
+		"####" A 0 A_Giveinventory("Punching",1);
+        "####" E 1 A_fireprojectile("PoorLostSoul", 0, 1, 0, 0);
+        "####" GHIJ 1;
+        "####" A 0 A_TakeInventory("LostSoulFatality",1);
+		"####" A 0 A_TakeInventory("hasagib",1);
+		TNT1 A 3;
+		TNT1 A 0
+		{
+		 
+		return resolvestate("returnfromnothing");
+		}
+				
+	}
+}
+
+
+
+CLASS BloodSplasher : Actor
+{
+	Default
+	{
+	
+    damagefactor "Trample", 0.0;
+	DamageType "Blood";
+	Health 1;
+	Radius 1;
+	Height 1;
+    Mass 1;
+	+NOCLIP;
+	+NOGRAVITY;
+	+ACTIVATEMCROSS;
+    +WINDTHRUST;
+    +NODAMAGETHRUST;
+    +PIERCEARMOR;
+	+BLOODLESSIMPACT;
+	DeathSound "None";
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_ClearTarget();
+		TNT1 A 0 A_Look();
+		TNT1 A 0 A_RadiusGive("BloodSplasherZ", 96, RGF_PLAYERS, 1);
+		TNT1 A 0 A_JumpIfInTargetInventory("BloodSplasherz", 1, "Blood");
+		 Stop;
+
+	Blood:
+		TNT1 A 0 A_TakeFromTarget("BloodSplasherz", 1);
+		TNT1 A 0 {A_GiveToTarget("BloodOnVisor",1);A_TakeFromTarget("PowerBlueBloodOnVisor",1);A_TakeFromTarget("PowerGreenBloodOnVisor",1);}
+		//TNT1 A 0 A_GiveToTarget("BloodOnVisor", 1)
+		TNT1 A 0 A_GiveToTarget("MeatAmmo", 1);
+		TNT1 A 0 A_JumpIf(GetCvar("bd_ScreenFX")>=1, "BloodSplashStop");
+	TNT1 A 0
+	{
+		If(target && target.player)
+			{
+			bool layerfound;
+			int i = 110;
+			
+			until (layerfound)
+				{
+				
+				If(!target.player.findpsprite(i))
+					{
+					
+					target.player.SetPSprite(i,target.player.ReadyWeapon.FindState("bloodsplashred"));
+					//target.a_overlayoffset(i,random(-180,180),random(-90,120));
+					layerfound = true;
+					
+					}
+				i++;
+				}
+			
+			}
+	}
+		 
+	BloodSplashStop:
+		TNT1 A 1;
+		//TNT1 A 0 A_Explode(3,250)
+		//TNT1 A 0 A_Explode(3,120)
+		Stop;
+		
+	}
+}
+
+CLASS TinyBloodSplasher : BloodSplasher
+{
+
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_ClearTarget();
+		TNT1 A 0 A_Look();
+		TNT1 A 0 A_JumpIf(GetCvar("bd_BloodTrail")==1, "BloodSplashStop");
+		TNT1 A 0 A_RadiusGive("BloodSplasherZ", 48, RGF_PLAYERS, 1);
+		TNT1 A 0 A_JumpIfInTargetInventory("BloodSplasherz", 1, "Blood");
+		TNT1 A 1;
+		 Stop;
+		
+	}
+}
+
+CLASS SuperBloodSplasher : BloodSplasher
+{
+
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_ClearTarget();
+		TNT1 A 0 A_Look();
+		TNT1 A 0 A_RadiusGive("BloodSplasherZ", 96, RGF_PLAYERS, 1);
+		TNT1 A 0 A_JumpIfInTargetInventory("BloodSplasherz", 1, "Blood");
+		Stop;
+	}
+}
+
+
+
+
+
+// Blue Blood
+CLASS BlueBloodSplasher : Bloodsplasher
+{
+
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_ClearTarget();
+		TNT1 A 0 A_Look();
+		TNT1 A 0 A_RadiusGive("BloodSplasherBlueBlood", 96, RGF_PLAYERS, 1);
+		TNT1 A 0 A_JumpIfInTargetInventory("BloodSplasherBlueBlood", 1, "BlueBlood");
+		Stop;
+
+	BlueBlood:
+		TNT1 A 0 A_TakeFromTarget("BloodSplasherBlueBlood", 1);
+		TNT1 A 0 {A_TakeFromTarget("PowerBloodOnVisor",1);A_GiveToTarget("BlueBloodOnVisor",1);A_TakeFromTarget("PowerGreenBloodOnVisor",1);}
+		//TNT1 A 0 A_GiveToTarget("BlueBloodOnVisor", 1)
+		TNT1 A 0 A_JumpIf(GetCvar("bd_ScreenFX")>=1, "BlueBloodSplashStop");
+	TNT1 A 0
+	{
+		If(target && target.player)
+			{
+			bool layerfound;
+			int i = 110;
+			
+			until (layerfound)
+				{
+				
+				If(!target.player.findpsprite(i))
+					{
+					
+					target.player.SetPSprite(i,target.player.ReadyWeapon.FindState("bloodsplashblue"));
+					//target.a_overlayoffset(i,random(-180,180),random(-90,120));
+					layerfound = true;
+					
+					}
+				i++;
+				}
+			
+			}
+	}
+		
+		 
+	BlueBloodSplashStop:
+		TNT1 A 1;
+		//TNT1 A 0 A_Explode(3,250)
+		//TNT1 A 0 A_Explode(3,120)
+		Stop;
+		
+	}
+}
+
+CLASS BlueSuperBloodSplasher : BlueBloodSplasher
+{
+
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_ClearTarget();
+		TNT1 A 0 A_Look();
+		TNT1 A 0 A_RadiusGive("BloodSplasherBlueBlood", 96, RGF_PLAYERS, 1);
+		TNT1 A 0 A_JumpIfInTargetInventory("BloodSplasherBlueBlood", 1, "BlueBlood");
+		Stop;
+	}
+}
+
+
+
+
+// Green Blood
+CLASS GreenBloodSplasher : bloodsplasher
+{
+
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_ClearTarget();
+		TNT1 A 0 A_Look();
+		TNT1 A 0 A_RadiusGive("BloodSplasherGreenBlood", 96, RGF_PLAYERS, 1);
+		TNT1 A 0 A_JumpIfInTargetInventory("BloodSplasherGreenBlood", 1, "GreenBlood");
+		Stop;
+
+	GreenBlood:
+		TNT1 A 0 A_TakeFromTarget("BloodSplasherGreenBlood", 1);
+		TNT1 A 0 {A_TakeFromTarget("PowerBloodOnVisor",1);A_TakeFromTarget("PowerBlueBloodOnVisor",1);A_GiveToTarget("GreenBloodOnVisor",1);}
+	//	TNT1 A 0 A_GiveToTarget("GreenBloodOnVisor", 1)
+		TNT1 A 0 A_JumpIf(GetCvar("bd_ScreenFX")>=1, "GreenBloodSplashStop");
+	TNT1 A 0
+	{
+		If(target && target.player)
+			{
+			bool layerfound;
+			int i = 110;
+			
+			until (layerfound)
+				{
+				
+				If(!target.player.findpsprite(i))
+					{
+					
+					target.player.SetPSprite(i,target.player.ReadyWeapon.FindState("bloodsplashgreen"));
+					//target.a_overlayoffset(i,random(-180,180),random(-90,120));
+					layerfound = true;
+					
+					}
+				i++;
+				}
+			
+			}
+	}
+		
+		 
+	GreenBloodSplashStop:
+		TNT1 A 1;
+		//TNT1 A 0 A_Explode(3,250)
+		//TNT1 A 0 A_Explode(3,120)
+		Stop;
+	}
+}
+
+CLASS GreenSuperBloodSplasher : GreenBloodSplasher
+{
+
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_ClearTarget();
+		TNT1 A 0 A_Look();
+		TNT1 A 0 A_RadiusGive("BloodSplasherGreenBlood", 96, RGF_PLAYERS, 1);
+		TNT1 A 0 A_JumpIfInTargetInventory("BloodSplasherGreenBlood", 1, "GreenBlood");
+		Stop;
+	}
+}

@@ -1,0 +1,46 @@
+#library "INSULTMUGSHOTS"
+#include "zcommon.acs"
+
+script "InsultFuckYourself" (VOID)
+{
+setmugshotstate("FuckYourself");
+delay(35);
+}
+
+script "InsultFhaccYoself" (VOID)
+{
+setmugshotstate("FhaccYoself");
+delay(35);
+}
+
+script "InsultGoFuckYourself" (VOID)
+{
+setmugshotstate("GoFuckYourself");
+delay(35);
+}
+
+script "InsultGetOffScum" (VOID)
+{
+setmugshotstate("GetOffScum");
+delay(35);
+}
+
+//minigun death
+script "MinigunFaceReset" (VOID)
+{
+setmugshotstate("MinigunMugshotReset");
+delay(35);
+}
+
+script "MinigunRipsFaceOff" (VOID)
+{
+setmugshotstate("MonsterMinigunRip");
+delay(35);
+}
+
+script "UnmakerFear" (VOID)
+{
+setmugshotstate("Ouch");
+delay(1);
+terminate;
+}

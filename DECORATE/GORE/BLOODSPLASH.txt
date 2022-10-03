@@ -1,0 +1,28 @@
+/*
+Actor BloodSplasherz : Inventory	//exists in the BD token file, but its quite messy
+{
+inventory.maxamount 1
+}
+*/
+
+Actor BloodSplasherBlueBlood : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor BloodSplasherGreenBlood : Inventory
+{
+inventory.maxamount 1
+}
+
+
+
+// Red Blood
+
+
+
+
+
+
+
+

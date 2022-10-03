@@ -1,0 +1,319 @@
+class BDPGMMatrix4 {
+	double values[4][4];
+
+	/// Initialises a new Matrix4 in a static context.
+	static BDPGMMatrix4 create() {
+		return new("BDPGMMatrix4");
+	}
+
+	/// Returns an identity matrix.
+	static BDPGMMatrix4 identity() {
+		let ret = BDPGMMatrix4.create();
+		ret.values[0][0] = 1;
+		ret.values[1][1] = 1;
+		ret.values[2][2] = 1;
+		ret.values[3][3] = 1;
+		return ret;
+	}
+
+	/// Returns a rotation matrix from euler angles.
+	static BDPGMMatrix4 fromEulerAngles(double yaw, double pitch, double roll) {
+		BDPGMMatrix4 rYaw = BDPGMMatrix4.identity();
+		double sYaw = sin(yaw);
+		double cYaw = cos(yaw);
+		rYaw.values[0][0] = cYaw;
+		rYaw.values[0][1] = -sYaw;
+		rYaw.values[1][0] = sYaw;
+		rYaw.values[1][1] = cYaw;
+
+		BDPGMMatrix4 rPitch = BDPGMMatrix4.identity();
+		double sPitch = sin(pitch);
+		double cPitch = cos(pitch);
+		rPitch.values[0][0] = cPitch;
+		rPitch.values[2][0] = -sPitch;
+		rPitch.values[0][2] = sPitch;
+		rPitch.values[2][2] = cPitch;
+
+		BDPGMMatrix4 rRoll = BDPGMMatrix4.identity();
+		double sRoll = sin(roll);
+		double cRoll = cos(roll);
+		rRoll.values[1][1] = cRoll;
+		rRoll.values[1][2] = -sRoll;
+		rRoll.values[2][1] = sRoll;
+		rRoll.values[2][2] = cRoll;
+
+		// concatenate ypr to get the final matrix
+		BDPGMMatrix4 ret = rYaw.multiplyMatrix(rPitch);
+		ret = ret.multiplyMatrix(rRoll);
+		return ret;
+	}
+
+	/// Returns a rotation matrix from an axis and an angle.
+	static BDPGMMatrix4 fromAxisAngle(Vector3 axis, double angle) {
+		BDPGMMatrix4 ret = BDPGMMatrix4.identity();
+		double c = cos(angle);
+		double s = sin(angle);
+		double x = axis.x;
+		double y = axis.y;
+		double z = axis.z;
+
+		ret.values[0][0] = (x * x * (1.0 - c) + c);
+		ret.values[0][1] = (x * y * (1.0 - c) - z * s);
+		ret.values[0][2] = (x * z * (1.0 - c) + y * s);
+		ret.values[1][0] = (y * x * (1.0 - c) + z * s);
+		ret.values[1][1] = (y * y * (1.0 - c) + c);
+		ret.values[1][2] = (y * z * (1.0 - c) - x * s);
+		ret.values[2][0] = (x * z * (1.0 - c) - y * s);
+		ret.values[2][1] = (y * z * (1.0 - c) + x * s);
+		ret.values[2][2] = (z * z * (1.0 - c) + c);
+
+		return ret;
+	}
+
+	/// Converts back from the rotation matrix to euler angles.
+	double, double, double rotationToEulerAngles() {
+		if (BDPGMGlobalMaths.closeEnough(values[2][0], -1)) {
+			double x = 90;
+			double y = 0;
+			double z = atan2(values[0][1], values[0][2]);
+			return z, x, y;
+		}
+		else if (BDPGMGlobalMaths.closeEnough(values[2][0], 1)) {
+			double x = -90;
+			double y = 0;
+			double z = atan2(-values[0][1], -values[0][2]);
+			return z, x, y;
+		}
+		else {
+			float x1 = -asin(values[2][0]);
+			float x2 = 180 - x1;
+
+			float y1 = atan2(values[2][1] / cos(x1), values[2][2] / cos(x1));
+			float y2 = atan2(values[2][1] / cos(x2), values[2][2] / cos(x2));
+
+			float z1 = atan2(values[1][0] / cos(x1), values[0][0] / cos(x1));
+			float z2 = atan2(values[1][0] / cos(x2), values[0][0] / cos(x2));
+
+			if ((abs(x1) + abs(y1) + abs(z1)) <= (abs(x2) + abs(y2) + abs(z2))) {
+				return z1, x1, y1;
+			}
+			else {
+				return z2, x2, y2;
+			}
+		}
+	}
+	
+	static BDPGMMatrix4 createTRSEuler(Vector3 translate, double yaw, double pitch, double roll, Vector3 scale) {
+		BDPGMMatrix4 translateMat = BDPGMMatrix4.identity();
+		translateMat.values[0][3] = translate.x;
+		translateMat.values[1][3] = translate.y;
+		translateMat.values[2][3] = translate.z;
+		
+		BDPGMMatrix4 rotateMat = BDPGMMatrix4.fromEulerAngles(yaw, pitch, roll);
+		
+		BDPGMMatrix4 scaleMat = BDPGMMatrix4.identity();
+		scaleMat.values[0][0] = scale.x;
+		scaleMat.values[1][1] = scale.y;
+		scaleMat.values[2][2] = scale.z;
+		
+		BDPGMMatrix4 ret = translateMat.multiplyMatrix(rotateMat);
+		ret = ret.multiplyMatrix(scaleMat);
+		return ret;
+	}
+	
+	static BDPGMMatrix4 createTRSAxisAngle(Vector3 translate, Vector3 axis, double angle, Vector3 scale) {
+		BDPGMMatrix4 translateMat = BDPGMMatrix4.identity();
+		translateMat.values[0][3] = translate.x;
+		translateMat.values[1][3] = translate.y;
+		translateMat.values[2][3] = translate.z;
+		
+		BDPGMMatrix4 rotateMat = BDPGMMatrix4.fromAxisAngle(axis, angle);
+		
+		BDPGMMatrix4 scaleMat = BDPGMMatrix4.identity();
+		scaleMat.values[0][0] = scale.x;
+		scaleMat.values[1][1] = scale.y;
+		scaleMat.values[2][2] = scale.z;
+		
+		BDPGMMatrix4 ret = translateMat.multiplyMatrix(rotateMat);
+		ret = ret.multiplyMatrix(scaleMat);
+		return ret;
+	}
+
+	/// Returns a view matrix.
+	static BDPGMMatrix4 view(Vector3 camPos, double yaw, double pitch, double roll) {
+		// all of this is basically lifted and converted from PolyRenderer::SetupPerspectiveMatrix(),
+		// so credit goes to Graf Zahl/dpJudas/whoever else
+		// pitch needs to be adjusted by the pixel ratio
+		float pixelRatio = level.pixelstretch;
+		double angx = cos(pitch);
+		double angy = sin(pitch) * pixelRatio;
+		double alen = sqrt(angx * angx + angy * angy);
+		double adjustedPitch = asin(angy / alen);
+		double adjustedYaw = 90 - yaw;
+
+		// rotations
+		let cz = cos(roll);
+		let sz = sin(roll);
+		let cx = cos(adjustedPitch);
+		let sx = sin(adjustedPitch);
+		let cy = cos(adjustedYaw);
+		let sy = sin(adjustedYaw);
+
+		let rot = BDPGMMatrix4.create();
+		rot.values[0][0] = cz * cy - sz * sx * sy;
+		rot.values[0][1] = -sz * cx;
+		rot.values[0][2] = cz * sy + sz * sx * cy;
+
+		rot.values[1][0] = sz * cy + cz * sx * sy;
+		rot.values[1][1] = cz * cx;
+		rot.values[1][2] = sz * sy - cz * sx * cy;
+
+		rot.values[2][0] = -cx * sy;
+		rot.values[2][1] = sx;
+		rot.values[2][2] = cx * cy;
+
+		rot.values[3][3] = 1.0;
+
+		// pixel ratio scaling
+		BDPGMMatrix4 scale = BDPGMMatrix4.identity();
+		scale.values[1][1] = pixelRatio;
+		// swapping y and z
+		BDPGMMatrix4 swapYZ = BDPGMMatrix4.create();
+		swapYZ.values[0][0] = 1;
+		swapYZ.values[1][2] = 1;
+		swapYZ.values[2][1] = -1;
+		swapYZ.values[3][3] = 1;
+		// translation
+		BDPGMMatrix4 translate = BDPGMMatrix4.identity();
+		translate.values[0][3] = -camPos.x;
+		translate.values[1][3] = -camPos.y;
+		translate.values[2][3] = -camPos.z;
+
+		// concatenate them all to get a final matrix
+		BDPGMMatrix4 ret = rot.multiplyMatrix(scale);
+		ret = ret.multiplyMatrix(swapYZ);
+		ret = ret.multiplyMatrix(translate);
+
+		return ret;
+	}
+
+	/// Returns a perspective matrix (same format as gluPerspective).
+	static BDPGMMatrix4 perspective(double fovy, double aspect, double zNear, double zFar) {
+		BDPGMMatrix4 ret = BDPGMMatrix4.create();
+		double f = 1 / tan(fovy / 2.0);
+		// x coord
+		ret.values[0][0] = f / aspect;
+		// y coord
+		ret.values[1][1] = f;
+		// z buffer coord
+		ret.values[2][2] = (zFar + zNear) / (zNear - zFar);
+		ret.values[2][3] = (2 * zFar * zNear) / (zNear - zFar);
+		// w (homogeneous coordinates)
+		ret.values[3][2] = -1;
+		return ret;
+	}
+
+	/// Returns a world->clip coords matrix from the passed args.
+	static BDPGMMatrix4 worldToClip(Vector3 viewPos, double yaw, double pitch, double roll, double FOV) {
+		double aspect = Screen.getAspectRatio();
+		double fovy = BDPGMGlobalMaths.fovHToY(FOV);
+		BDPGMMatrix4 view = BDPGMMatrix4.view(viewPos, yaw, pitch, roll);
+		// 5 & 65535 are what are used internally, so they're used here for consistency
+		BDPGMMatrix4 perp = BDPGMMatrix4.perspective(fovy, aspect, 5, 65535);
+		BDPGMMatrix4 worldToClip = perp.multiplyMatrix(view);
+		return worldToClip;
+	}
+
+	/// Adds two matrices and returns the result.
+	BDPGMMatrix4 addMatrix(BDPGMMatrix4 other) const {
+		BDPGMMatrix4 ret = BDPGMMatrix4.create();
+		ret.values[0][0] = values[0][0] + other.values[0][0];
+		ret.values[0][1] = values[0][1] + other.values[0][1];
+		ret.values[0][2] = values[0][2] + other.values[0][2];
+		ret.values[0][3] = values[0][3] + other.values[0][3];
+		ret.values[1][0] = values[1][0] + other.values[1][0];
+		ret.values[1][1] = values[1][1] + other.values[1][1];
+		ret.values[1][2] = values[1][2] + other.values[1][2];
+		ret.values[1][3] = values[1][3] + other.values[1][3];
+		ret.values[2][0] = values[2][0] + other.values[2][0];
+		ret.values[2][1] = values[2][1] + other.values[2][1];
+		ret.values[2][2] = values[2][2] + other.values[2][2];
+		ret.values[2][3] = values[2][3] + other.values[2][3];
+		ret.values[3][0] = values[3][0] + other.values[3][0];
+		ret.values[3][1] = values[3][1] + other.values[3][1];
+		ret.values[3][2] = values[3][2] + other.values[3][2];
+		ret.values[3][3] = values[3][3] + other.values[3][3];
+		return ret;
+	}
+
+	/// Multiplies the matrix by a scalar and returns the result.
+	BDPGMMatrix4 multiplyScalar(double scalar) const {
+		BDPGMMatrix4 ret = BDPGMMatrix4.create();
+		ret.values[0][0] = values[0][0] * scalar;
+		ret.values[0][1] = values[0][1] * scalar;
+		ret.values[0][2] = values[0][2] * scalar;
+		ret.values[0][3] = values[0][3] * scalar;
+		ret.values[1][0] = values[1][0] * scalar;
+		ret.values[1][1] = values[1][1] * scalar;
+		ret.values[1][2] = values[1][2] * scalar;
+		ret.values[1][3] = values[1][3] * scalar;
+		ret.values[2][0] = values[2][0] * scalar;
+		ret.values[2][1] = values[2][1] * scalar;
+		ret.values[2][2] = values[2][2] * scalar;
+		ret.values[2][3] = values[2][3] * scalar;
+		ret.values[3][0] = values[3][0] * scalar;
+		ret.values[3][1] = values[3][1] * scalar;
+		ret.values[3][2] = values[3][2] * scalar;
+		ret.values[3][3] = values[3][3] * scalar;
+		return ret;
+	}
+
+	/// Multiplies two matrices and returns the result.
+	BDPGMMatrix4 multiplyMatrix(BDPGMMatrix4 other) const {
+		BDPGMMatrix4 ret = BDPGMMatrix4.create();
+		for (int row = 0; row < 4; row++) {
+			ret.values[row][0] =
+				values[row][0] * other.values[0][0] +
+				values[row][1] * other.values[1][0] +
+				values[row][2] * other.values[2][0] +
+				values[row][3] * other.values[3][0];
+
+			ret.values[row][1] =
+				values[row][0] * other.values[0][1] +
+				values[row][1] * other.values[1][1] +
+				values[row][2] * other.values[2][1] +
+				values[row][3] * other.values[3][1];
+
+			ret.values[row][2] =
+				values[row][0] * other.values[0][2] +
+				values[row][1] * other.values[1][2] +
+				values[row][2] * other.values[2][2] +
+				values[row][3] * other.values[3][2];
+
+			ret.values[row][3] =
+				values[row][0] * other.values[0][3] +
+				values[row][1] * other.values[1][3] +
+				values[row][2] * other.values[2][3] +
+				values[row][3] * other.values[3][3];
+		}
+		return ret;
+	}
+
+	/// Multiplies this Matrix by a 3D vector.
+	Vector3 multiplyVector3(Vector3 vec, BDPGMVectorType type = BDPGMVector_Position, bool divideW = true) const {
+		let vecW = (type == BDPGMVector_Position) ? 1.0 : 0.0;
+
+		let ret = (
+			values[0][0] * vec.x + values[0][1] * vec.y + values[0][2] * vec.z + values[0][3] * vecW,
+			values[1][0] * vec.x + values[1][1] * vec.y + values[1][2] * vec.z + values[1][3] * vecW,
+			values[2][0] * vec.x + values[2][1] * vec.y + values[2][2] * vec.z + values[2][3] * vecW
+		);
+
+		if (divideW) {
+			let retW  = values[3][0] * vec.x + values[3][1] * vec.y + values[3][2] * vec.z + values[3][3] * vecW;
+			ret /= retW;
+		}
+
+		return ret;
+	}
+}

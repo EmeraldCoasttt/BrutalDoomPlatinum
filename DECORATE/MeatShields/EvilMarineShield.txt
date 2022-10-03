@@ -1,0 +1,233 @@
+ACTOR EvilMarineShield : Rifle
+{
+	Weapon.AmmoUse1 1
+	Weapon.AmmoGive1 30
+	Weapon.AmmoUse2 0
+	Weapon.AmmoGive2 0
+	Weapon.AmmoType1 "BDPistolAmmo"
+	Weapon.AmmoType2 "MeatAmmo"
+	+WEAPON.NOAUTOFIRE
+	States
+	{
+	Ready:
+			TNT1 A 0 A_Takeinventory("IsFiringThisShitOut",1)
+		MSHG A 2 A_WeaponReady
+		TNT1 A 0 A_SpawnItemEx("MeatShield", 15, 0, 15, 0)
+		TNT1 A 0 A_JumpIfInventory("MeatAmmo", 100, 4)
+		TNT1 A 0 A_AlertMonsters
+        Loop
+		TNT1 AAA 0
+		Goto Destroy
+	Deselect:
+        Goto AltFire
+	Select:
+		TNT1 A 0 A_Giveinventory("GoSpecial",1)
+	    TNT1 A 0 A_TakeInventory("MeatAmmo", 100)
+		TNT1 A 0 A_Raise
+		Wait
+	Fire:
+	    TNT1 A 0
+        TNT1 A 0 A_JumpIfInventory("BDPistolAmmo", 1, 1)
+		Goto AltFire
+		TNT1 A 0 A_AlertMonsters
+		TNT1 A 0 A_SpawnItemEx("MeatShield", 15, 0, 15, 0)
+		TNT1 A 0 A_FireCustomMissile("YellowFlareSpawn",-5,0,0,0)
+		TNT1 A 0 A_PlaySound("PFIRE")
+        TNT1 A 0 A_FireCustomMissile("SmokeSpawner",0,0,0,5)
+		TNT1 A 0 A_FireCustomMissile("MeatShieldTracer", random(3,-3), 0, 3, 0)
+		TNT1 A 0 A_TakeInventory("BDPistolAmmo", 1)
+		MSHF A 1 BRIGHT
+		MSHF BC 1
+		MSHG A 1
+		Goto Ready
+
+    AltFire:
+		GRZ5 D 1 offset(-4, 32)
+		GRZ5 D 1 offset(-9, 33)
+		GRZ5 D 1 offset(-16, 34)
+		GRZ5 D 2 offset(-24, 35)
+		GRZ5 D 3 offset(-36, 48)
+		GRZ5 D 1 offset(-24, 35)
+		GRZ5 B 1 offset(-16, 34)
+		GRZ5 B 1 offset(-9, 33)
+		GRZ5 B 1 offset(-1, 32)
+        TNT1 A 0 A_PlaySound("skeleton/swing")
+		TNT1 A 0 A_FireCustomMissile("ThrowedEvilMarine", 0, 0, 0, 0)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasEvilMarineShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+        THEF B 4 
+        THEF C 4 
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		THEF D 4
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("EvilMarineShield",1)
+		Goto Ready
+ 	Spawn:
+		8876 A -1
+		Stop
+	Destroy:
+	    TNT1 A 0
+		TNT1 A 0 A_SpawnItem("MeatDeath")
+		MSHG DEFGHII 5
+		TNT1 A 0 A_TakeInventory("GoSpecial",1)
+		TNT1 A 0 A_TakeInventory("GotMeatShield", 1)
+		TNT1 A 0 A_TakeInventory("HasEvilMarineShield",1)
+		TNT1 A 0 A_Giveinventory("Punching",1)
+		TNT1 A 0 A_TakeInventory("EvilMarineShield",1)
+		Goto Ready
+	}
+}
+ACTOR ThrowedEvilMarine: ThrowedZman
+{
+Translation "112:127=[64,64,64]:[0,0,0]"
+Species "None"
+-THRUSPECIES
+-MTHRUSPECIES
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_Playsound("BIGSCRE", 1)
+	Flying:
+        X725 H 3
+		TNT1 A 0 A_ChangeFlag("THRUGHOST", 0)
+		X725 GFEDCBA 3
+		Loop
+		
+    Death:
+		TNT1 A 0
+		TNT1 A 0 A_StopSound(1)
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_CheckCeiling("HitCeil")
+		TNT1 A 0 A_JumpIfHealthLower(-40, "Death.Gibs")
+		TNT1 A 0 A_JumpIfHealthLower(1, "Death.Chaingun")
+		X725 A 2
+		NULL AA 0 A_CustomMissile ("XDeath1", 0, 0, random (0, 360), 2, random (0, 160))
+	    TNT1 A 0 A_SpawnItem("MuchBlood2")
+		NULL A 0 A_CustomMissile ("ThrowedEvilMarineRicochet", 0, 0, 0, 2, 38)
+		Stop
+	
+	HitCeil:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItem("MuchBlood2")
+		NULL A 0 A_CustomMissile ("ThrowedEvilMarineRicochet", 0, 0, 0, 2, -5)
+		Stop
+		
+	Crashing:
+		TNT1 A 0 A_StopSound(1)
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SpawnItem("MuchBlood2")
+		NULL AA 0 A_CustomMissile ("XDeath1", 0, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_SpawnItemEx("ADoomedSpaceMarine", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
+		TNT1 A 3
+		Stop
+		
+	Death.Melee:
+	Death.Fatality:
+	Death.ExtremePunches:
+	Death.Kick:
+		TNT1 A 0 A_StopSound(1)
+		TNT1 A 0 A_NoBlocking
+		NULL A 0 A_CustomMissile ("ThrowedEvilMarineRicochet", 0, 0, 180, 2, 32)
+		Stop
+	
+	Death.Gibs:
+	Death.Explosives:
+	Death.Chaingun:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItem("SargeXDeath")
+		Stop
+	}
+}
+
+
+
+ACTOR ThrowedEvilMarineRicochet: ThrowedEvilMarine
+{
+    +BOUNCEONWALLS
+	+THRUGHOST
+	+BOUNCEONACTORS
+	Radius 12
+	Height 14
+	WallBounceFactor 0.6
+	Speed 10
+	States
+	{
+	Spawn:
+        X725 H 2
+		TNT1 A 0 A_ChangeFlag("THRUGHOST", 0)
+		X725 GFEDCBA 2
+		Loop
+    Death:
+		TNT1 A 0
+		TNT1 A 0 A_StopSound(1)
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_JumpIfHealthLower(-40, "Death.Gibs")
+		TNT1 A 0 A_JumpIfHealthLower(1, "Death.Chaingun")
+	Goto Crashing
+	}
+}
+
+
+
+
+ACTOR ExtremePunchedEvilMarine: ThrowedEvilMarine
+{
+	Radius 12
+	Height 14
+	Speed 30
+	+THRUGHOST
+	States
+	{
+	Spawn:
+        PLAY HH 2 A_CustomMissile ("Brutal_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 90))
+		TNT1 A 0 A_ChangeFlag("THRUGHOST", 0)
+		Loop
+    Death:
+		TNT1 A 0
+		TNT1 A 0 A_CheckFloor("Floor")
+		TNT1 A 0 A_CheckCeiling("Floor")
+		TNT1 A 0 A_SetAngle(angle-180)
+		TNT1 A 0 A_Stop
+		TNT1 A 0 A_ChangeFlag("LOWGRAVITY", 1)
+		TNT1 AA 0 A_CustomMissile ("XDeath2", 32, 0, random (170, 190), 2, random (0, 0))
+		TNT1 AA 0 A_CustomMissile ("XDeath3", 32, 0, random (170, 190), 2, random (0, 0))
+		TNT1 A 0 A_SpawnItem("Muchblood2", 0, 40)
+		
+	    TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (150, 210), 2, random (0, 40))
+		TNT1 AA 0 A_CustomMissile ("XDeathArm1", 32, 0, random (170, 190), 2, random (0, 40))
+		TNT1 A 0 A_CustomMissile ("XDeathZombieManHead", 32, 0, random (170, 190), 2, random (0, 40))
+        TNT1 A 0 A_XScream
+		TNT1 A 0 A_NoBlocking
+        ZZD1 EEEEEFF 6
+		TNT1 A 0 A_ChangeFlag("LOWGRAVITY", 0)
+		ZZD1 GH 6
+		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
+		ZZD1 H 0
+		TNT1 A 0 A_GiveToTarget("SoulAmmo", 10)
+		TNT1 A 0 A_SpawnItem("DeadZombiemanJustLegsAreLeft2")
+		TNT1 A -1
+        Stop
+		
+	Floor:	
+		TNT1 AA 0 A_CustomMissile ("XDeath1", 35, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_Recoil(-30)
+		POS4 ABCD 3 A_CustomMissile ("Brutal_LiquidBlood3", 15, 0, random (0, 360), 2, random (0, 40))
+		POS4 EFGHIJ 3 A_JumpIf((MomY == 0), "DSFStop")
+		Goto DSFStop+1
+		
+	DSFStop:
+		TNT1 A 0 A_SpawnItem("Ploft3")
+		TNT1 A 0 A_Stop
+		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
+		TNT1 A 0 A_CustomMissile ("SuperWallRedBlood", 2, 0, random (170, 190), 2, random (0, 0))
+		POS4 J 0
+		TNT1 A 0 A_SpawnItem("DeadZombiemanShotguntotheFace1")
+		TNT1 A 0 A_GiveToTarget("SoulAmmo", 10)
+		TNT1 A -1
+		Stop
+	}
+}

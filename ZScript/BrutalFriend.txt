@@ -1,0 +1,37 @@
+	CLASS BrutalFriend : BDPNotMonster
+		{
+			Action void A_friendchase(int chance = 2, int heightoffset = 30, string fogtype = "teleportationfog")
+			{
+				
+				If(random(1,256) <= chance)
+					{
+					
+						BlockThingsIterator CheckForplayers = BlockThingsIterator.create(invoker,5000); //256 can be whatever range around the actor.
+						Actor CurrentActor;
+						bool foundplayer;
+						While (CheckForplayers.Next())
+							{
+								CurrentActor = CheckForplayers.Thing;
+								If(currentactor && currentactor is 'playerpawn' && !invoker.CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && !foundplayer)
+								{
+									invoker.A_spawnitemex(fogtype);
+									invoker.setorigin(currentactor.pos,false);
+									invoker.A_spawnitemex(fogtype);
+									vector3 savedpos = invoker.pos;
+									savedpos.z = (savedpos.z + heightoffset);
+									invoker.setorigin(savedpos,false);
+									foundplayer = true;
+								}
+							}
+					
+					}
+				
+				A_chase();
+			
+			
+			}
+
+
+
+
+		}

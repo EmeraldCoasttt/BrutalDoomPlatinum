@@ -1,0 +1,323 @@
+ACTOR CyberdemonsMissileLauncher : BrutalWeapon
+{
+	Weapon.AmmoUse1 0
+	Weapon.AmmoGive1 0
+	Weapon.AmmoUse2 0
+	Weapon.AmmoGive2 0
+	Weapon.AmmoType1 "CyberdemonRockets"
+	weapon.selectionorder 3800
+	Obituary "%o was blown up by %k's Cyberdemon missile launcher. Ouch!"
+    AttackSound "None"
+    Inventory.PickupSound "BFGREADY"
+	Inventory.Pickupmessage "You shouldn't be seeing this!"
+    +WEAPON.NOAUTOAIM
+	+WEAPON.NOAUTOFIRE
+	+WEAPON.NOALERT
+	+WEAPON.NO_AUTO_SWITCH
+	+WEAPON.WIMPY_WEAPON
+	+WEAPON.CHEATNOTWEAPON
+	+INVENTORY.UNDROPPABLE
+    +FORCEXYBILLBOARD
+	Scale 0.9
+	Tag "Cyberdemon's Missile Launcher"
+	inventory.althudicon "CYGGE0"
+	BrutalWeapon.weight 15
+	States
+	{
+	GrenadeThrowFlash:
+	CYBF LMNO 1 BRIGHT 
+	TNT1 A 32
+	CYBF ONML 1 BRIGHT //36 in total
+	stop
+	
+	KickingFlash:
+	CYBF PQRSTUTUTUTUSRQP 1 BRIGHT 
+	Goto Ready
+	
+	AirKickingFlash:
+	CYBF PQRSTUTUTUTUTUSRQP 1 BRIGHT 
+	    Goto Ready
+	
+	 SlideKickingStart:
+	    CYBF PQRS 1 BRIGHT 
+	    CYBF TUTUTUTUTUTUTUTUTUTUTUTUTUTUTUTUTUTUTUTUTUTUTUTUTU 1 BRIGHT { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		} //39 total
+	    Goto Ready
+
+	 SlideKickingEnd:
+	    CYBF TUTUTUSRQP 1 BRIGHT 
+	    Goto Ready
+	FuckYouFlash:
+	CYBF PQRS 1 BRIGHT  //28
+	CYBF TUTUTUTUTUTUTUTUTUTUTU 1 BRIGHT 
+	CYBF SRQP 1 BRIGHT 
+	stop
+	
+	SprintOverlay:
+	CYBF IJ 1 BRIGHT 
+	LOOP
+	
+	GunExplodes:
+	    CYBF IJIJIJ 1 A_WeaponOffset(random(-3,3), 32+random(-3,3))
+		NULL A 0 A_FireProjectile("TempGunExplosionSpawner", 0, 0, 0, 0, -2)
+		NULL A 0 A_WeaponOffset(0,32)
+		
+		//CYBF X 70
+		2YBF ABCDD 1
+		2YBF E 12
+		2YBF EFGHIJJ 1
+		2YBF K 8
+		2YBF LMNOPQ 1
+		TNT1 A 2
+	//	NULL A 0 A_SelectWeapon("Melee_Attacks")
+		TNT1 A 1 A_TakeInventory("CyberdemonsMissileLauncher",1)
+		TNT1 A 3 A_WeaponReady
+		TNT1 A 3
+		loop
+	Ready3:
+	Ready:
+		TNT1 A 0 A_JumpIf(CountInv("CyberdemonRockets")==0,"GunExplodes")
+        CYBF I 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
+        CYBF I 0 A_JumpIfInventory("Taunting",1,"Taunt")
+		CYBF I 0 A_JumpIfInventory("Salute1", 1, "Salute")
+		CYBF I 0 A_JumpIfInventory("Salute2", 1, "Salute")
+		CYBF I 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+		CYBF IJ 1 BRIGHT A_WeaponReadyDX(WRF_NOSWITCH)
+		CYBF I 0 A_checksprint
+		Loop
+		
+	
+	Deselect:
+		NULL A 0 A_TakeInventory("IsPlayingDoxMod",1)
+       // CYBF LMNO 1 BRIGHT
+	   // TNT1 A 0 A_TakeInventory("CyberdemonsMissileLauncher",1)
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		CYBF I 0 A_TakeInventory("TossGrenade", 1)
+		CYBF I 0 A_TakeInventory("Reloading", 1)
+		CYBF I 0 A_TakeInventory("Unloading", 1)
+		CYBF I 0 A_Takeinventory("StartDualWield",1)
+		TNT1 A 1 A_Lower
+		Wait
+		
+		
+	Select:
+	NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("MP40Crosshair"));}else{A_SetCrosshair(0);}}
+		Goto SelectFirstPersonLegs
+		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1) 
+		TNT1 A 1
+		NULL A 0 A_GiveInventory("CybieRocketTimer",1)
+		TNT1 AAAAAAAAAAAAAAA 0 A_Raise	
+		
+	SelectAnimation:
+	ReturnFromNothing:
+	    CYBF I 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+        CYBF I 0 A_PlaySound("CYCANUP")
+        CYBF ONML 1 BRIGHT  //A_WeaponReady(WRF_NOFIRE)
+        CYBF I 0 A_GunFlash
+		Goto Ready
+
+    Fire:
+        TNT1 AAAA 0
+		CYBF I 0 A_AlertMonsters
+		CYBF I 0 A_ZoomFactor(0.99)
+		TNT1 A 0 A_PlaySound("DSCANFIR",1)
+	//	TNT1 A 0  A_jumpif(Pitch < -45,"FireUp")
+		CYBF A 1 BRIGHT A_FireCustomMissile("CyberBallsPlayer", random(-2,2), 0, 0, 0, 0, frandom(-0.5,0.5))
+		CyberRecoil:
+		CYBF I 0 A_ZoomFactor(1.0)
+		TNT1 A 0 A_SetAngle(Angle+random(-2,2), SPF_INTERPOLATE)
+        CYBF B 1 BRIGHT A_SetPitch(pitch-2, SPF_INTERPOLATE)
+		CYBF C 1 A_SetPitch(pitch-1, SPF_INTERPOLATE)
+		CYBF D 1 BRIGHT A_FireCustomMissile("SmokeSpawner11",0,0,0,7)
+		CYBF D 1 BRIGHT A_SetPitch(pitch+0.6, SPF_INTERPOLATE)
+		CYBF EFG 1 BRIGHT A_SetPitch(pitch+0.8, SPF_INTERPOLATE)
+		CYBF H 1 BRIGHT
+		CYBF I 1 BRIGHT A_FireCustomMissile("SmokeSpawner11",0,0,0,7)
+		CYBF J 1 BRIGHT 
+		TNT1 A 0 A_JumpIf(CountInv("CyberdemonRockets")==0,"GunExplodes")
+		CYBF I 0 A_REfire
+		Goto Ready
+		
+		
+	AltFire:
+		TNT1 AAAA 0
+		//TNT1 A 0  A_jumpif(Pitch > -45,"CantAltFire")
+		CYBF I 0 A_AlertMonsters
+		CYBF I 0 A_ZoomFactor(0.99)
+		TNT1 A 0 A_PlaySound("DSCANFIR",1)
+		CYBF A 1 BRIGHT A_FireCustomMissile("CyberFireUp1player", random(-2,2), 0, 0, -20, 0, frandom(-0.5,0.5))
+		TNT1 A 0 A_spawnitemex("cyberfireup2player",0,0,0,0,0,0,0,SXF_SETMASTER | SXF_NOCHECKPOSITION)
+		Goto CyberRecoil
+	
+	CantAltFire:
+		TNT1 A 0 A_Print("Aim higher!",1)
+		Goto Ready
+	/*
+	AltFire:
+        TNT1 AAAA 0
+		CYBF I 0 A_AlertMonsters
+		CYBF I 0 A_ZoomFactor(0.99)
+		TNT1 A 0 A_PlaySound("DSCANFIR",1)
+		CYBF A 1 BRIGHT A_FireCustomMissile("CyberBallsPlayer", 0, 0, 0, 0, 0, 0)
+		CYBF I 0 A_ZoomFactor(1.0)
+		TNT1 A 0 A_SetAngle(Angle+random(-2,2), SPF_INTERPOLATE)
+        CYBF B 1 BRIGHT A_SetPitch(pitch-2, SPF_INTERPOLATE)
+		CYBF C 1 A_SetPitch(pitch-1, SPF_INTERPOLATE)
+		CYBF D 1 BRIGHT A_SetPitch(pitch+0.6, SPF_INTERPOLATE)
+		CYBF EFG 1 BRIGHT A_SetPitch(pitch+0.8, SPF_INTERPOLATE)
+		
+        TNT1 AAAA 0
+		CYBF I 0 A_AlertMonsters
+		CYBF I 0 A_ZoomFactor(0.99)
+		TNT1 A 0 A_PlaySound("DSCANFIR",1)
+		CYBF A 1 BRIGHT A_FireCustomMissile("CyberBallsPlayer", -5, 0, 0, 0, 0, 0)
+		CYBF I 0 A_ZoomFactor(1.0)
+		TNT1 A 0 A_SetAngle(Angle+random(-2,2), SPF_INTERPOLATE)
+        CYBF B 1 BRIGHT A_SetPitch(pitch-2, SPF_INTERPOLATE)
+		CYBF C 1 A_SetPitch(pitch-1, SPF_INTERPOLATE)
+		CYBF D 1 BRIGHT A_SetPitch(pitch+0.6, SPF_INTERPOLATE)
+		CYBF EFG 1 BRIGHT A_SetPitch(pitch+0.8, SPF_INTERPOLATE)
+		
+        TNT1 AAAA 0
+		CYBF I 0 A_AlertMonsters
+		CYBF I 0 A_ZoomFactor(0.99)
+		TNT1 A 0 A_PlaySound("DSCANFIR",1)
+		CYBF A 1 BRIGHT A_FireCustomMissile("CyberBallsPlayer", 5, 0, 0, 0, 0, 0)
+		CYBF I 0 A_ZoomFactor(1.0)
+		//CYBF I 0 A_Takeinventory("CyberdemonRockets",1)
+		TNT1 A 0 A_SetAngle(Angle+random(-2,2), SPF_INTERPOLATE)
+        CYBF B 1 BRIGHT A_SetPitch(pitch-2, SPF_INTERPOLATE)
+		CYBF C 1 A_SetPitch(pitch-1, SPF_INTERPOLATE)
+		CYBF D 1 BRIGHT A_SetPitch(pitch+0.6, SPF_INTERPOLATE)
+		CYBF EFG 1 BRIGHT A_SetPitch(pitch+0.8, SPF_INTERPOLATE)
+		
+        TNT1 AAAA 0
+		CYBF I 0 A_AlertMonsters
+		CYBF I 0 A_ZoomFactor(0.99)
+		TNT1 A 0 A_PlaySound("DSCANFIR",1)
+		CYBF A 1 BRIGHT A_FireCustomMissile("CyberBallsPlayer", 0, 0, 0, 0, 0, 0)
+		CYBF I 0 A_ZoomFactor(1.0)
+		//CYBF I 0 A_Takeinventory("CyberdemonRockets",1)
+		TNT1 A 0 A_SetAngle(Angle+random(-2,2), SPF_INTERPOLATE)
+        CYBF B 1 BRIGHT A_SetPitch(pitch-2, SPF_INTERPOLATE)
+		CYBF C 1 A_SetPitch(pitch-1, SPF_INTERPOLATE)
+		CYBF D 3 BRIGHT
+		CYBF D 1 BRIGHT A_SetPitch(pitch+0.6, SPF_INTERPOLATE)
+		CYBF EEFFGG 1 BRIGHT A_SetPitch(pitch+0.4, SPF_INTERPOLATE)
+        TNT1 A 0 A_FireCustomMissile("SmokeSpawner11",0,0,0,7)
+		CYBF HHJ 1 BRIGHT  
+		CYBF IJIJIJ 1 BRIGHT A_JumpIf(CountInv("CyberdemonRockets")==0,"GunExplodes")
+		TNT1 A 0 A_FireCustomMissile("SmokeSpawner11",0,0,0,7)
+		TNT1 A 0 A_ReFire
+		Goto Ready	
+	*/
+ 	Spawn:
+		CYBF A 0
+		CYGG E -1
+		Stop
+	Steady:
+		TNT1 A 1
+		Goto Ready	
+	}
+}
+
+ACTOR CyberdemonRockets : Ammo
+{
+   Inventory.Amount 0
+   Inventory.MaxAmount 30
+   Inventory.Icon "CYBFW0"
+}
+
+ACTOR CyberBallsPlayer: FastProjectile
+{
+	Radius 10
+	Height 8
+	Projectile
+	Speed 90
+    Damage (random (250, 250))
+	DamageType Extreme
+    Gravity 0.00
+    Decal "Scorch"
+	Renderstyle Add
+    -NOGRAVITY
+	+EXTREMEDEATH
+	+THRUGHOST
+	Scale 1.7
+    SeeSound "none"
+    //SeeSound "RLANSHOT"
+	DeathSound "Explosion"
+	Obituary "%o was blown up by %k's Cyberdemon missile launcher. Ouch!"
+	Species "Marines"
+	+THRUSPECIES
+	+MTHRUSPECIES
+	States
+	{
+	Spawn:
+	    TNT1 A 0
+		TNT1 A 0 ACS_NamedExecuteAlways("BDCheckJanitor", 0, 0, 0, 0)//Check Effects
+		
+	Spawn1:
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "SpawnUnderwater")
+	    WYVB A 1 Bright A_SpawnItem("RedFlareSmall22",0,0)
+		TNT1 A 0 A_CustomMissile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-30, 30))
+		TNT1 A 0 A_JumpIfInventory("lowgraphicsmode", 1, "SpawnCheap")
+		Loop
+		
+	SpawnCheap:
+	    TNT1 A 0
+	    WYVB A 1 Bright A_SpawnItem("RedFlareSmall22",0,0)
+		Loop
+	
+	
+	SpawnUnderwater:
+	    WYVB A 1 Bright A_SpawnItem("YellowFlareSmall",0,0)
+        TNT1 A 0 A_CustomMissile ("BUBULZ", 0, 0, random (0, 360), 2, random (0, 180))
+		Goto Spawn1
+		
+	Death:
+		EXPL A 1 A_Explode(80,200)
+        EXPL A 0 Radius_Quake (2, 8, 0, 15, 0)
+        TNT1 A 0 //A_AlertMonsters
+        TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("RocketExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        TNT1 AAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180))
+        TNT1 AAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAAAAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 360), 2, random (0, 360))
+        TNT1 AAAAAAA 0 A_CustomMissile ("MediumExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
+        TNT1 A 1
+		TNT1 A 0 A_PlaySound("FAREXPL", 3)
+		//TNT1 A 3 A_CustomMissile ("HeavyExplosionSmoke", 2, 0, random (0, 360), 2, random (0, 360))
+		Stop
+	}
+}
+
+ACTOR TempGunExplosionSpawner
+{
+	Projectile
+	Speed 30
+	states
+	{
+		Spawn:
+			TNT1 A 1
+		Goto Death
+		Death:
+			EXPL A 0 Radius_Quake (4, 30, 0, 15, 0)
+			TNT1 A 0 A_PlaySound("CYCANEXP")
+			TNT1 A 0 A_SpawnItem("WhiteShockwaveSmall")
+			EXPL A 0 A_CustomMissile ("ExplosionSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		//	TNT1 A 0 A_SpawnItemEx ("MinigunExplosion",0,0,13,0,0,0,0,SXF_NOCHECKPOSITION,0)
+			TNT1 AAA 0 A_CustomMissile ("BDExplosionparticles", 0, 0, random (0, 360), 2, random (0, 360))
+			TNT1 AA 0 A_CustomMissile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (0, 90))
+			EXPL A 0
+			TNT1 AAAA 0 A_CustomMissile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
+			stop
+	}
+}

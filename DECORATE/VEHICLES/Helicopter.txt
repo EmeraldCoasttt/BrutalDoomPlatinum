@@ -1,0 +1,941 @@
+//Sergeant Mark IV's vehicles.
+//If you want to modify and reuse this on your wad, please ask me first.
+
+Actor HeliBase1
+{
+Scale 1.0
++FORCEXYBILLBOARD
++NOGRAVITY
++NOINTERACTION
++NOTIMEFREEZE
+States
+{
+Spawn:
+TNT1 A 0
+HEL1 A 1
+Stop
+}}
+
+Actor HeliBase2: HeliBase1
+{
+States
+{
+Spawn:
+TNT1 A 0
+HEL1 B 1
+Stop
+}}
+
+Actor HeliBase3: HeliBase1
+{
+States
+{
+Spawn:
+TNT1 A 0
+HEL1 C 1
+Stop
+}}
+
+Actor HeliBase4: HeliBase1
+{
+States
+{
+Spawn:
+TNT1 A 0
+HEL1 D 1
+Stop
+}}
+
+
+Actor HeliBase8
+{
+States
+{
+Spawn:
+TNT1 A 0
+HEL1 A 8
+Stop
+}}
+
+
+
+ACTOR attackhelicopter: Tank 7262
+{
+    Scale 1.0
+	Radius 36
+	Height 96
+	+SOLID
+	+USESPECIAL
+	MONSTER
+	-COUNTKILL
+	+SHOOTABLE
+	+LOOKALLAROUND
+	+THRUACTORS
+	+NOINFIGHTING
+	+NORADIUSDMG
+	-COUNTKILL
+	MaxTargetRange 120
+	PainChance "Repair", 255
+	BloodType "TankBlood", "TankBlood", "TankBlood"
+	Activation THINGSPEC_Activate | THINGSPEC_ThingTargets | THINGSPEC_NoDeathSpecial
+	Mass 9999
+	Speed 0
+	Health 400
+	
+    States
+    {
+    Spawn:
+	    HELA A 0
+		TNT1 A 1
+		TNT1 A 0 Thing_ChangeTID(0, 261)
+		TNT1 A 0 ACS_NamedExecuteAlways("BDSetNewTankDirection", 0, 0, 0, 0)//Check vehicle initial angle.
+		TNT1 A 1 A_ChangeFlag("FRIENDLY", 0)
+		TNT1 A 0 A_SpawnItem("HeliBase8")
+		TNT1 A 5 
+		TNT1 A 0 Thing_ChangeTID(0, 0)
+		TNK1 C 0 A_ChangeFlag("THRUACTORS", 0)
+		TNT1 A 0 A_ChangeFlag("FRIENDLY", 1)
+		Goto StandingHere
+		
+	  StandingHere:
+		TNT1 A 7
+		TNT1 A 0 A_SpawnItem("HeliBase8")
+		TNT1 A 0 A_SpawnItem("StationedVehicleCheckRepairs")
+		Loop
+		
+	Active:
+		TNT1 A 0 
+		TNT1 A 0 A_TakeFromTarget("PowerInvulnerable", 1)
+		TNT1 A 0 A_GiveToTarget("CeaseMorph", 1)
+		//TNT1 A 0 A_Look
+		TNT1 A 0 Thing_ChangeTID(0, 261)
+		TNT1 A 0 ACS_namedExecuteAlways("GetVehiclePreviousHealth", 0, 0, 0, 0)//Check Vehicle Health	
+		//TNT1 A 0 A_Chase("","",CHF_DONTMOVE )
+		TNT1 A 0 A_GiveToTarget("CheckingMorphingPlayerHealth", 1)
+		HELA A 3
+		TNT1 A 0 A_GiveToTarget("attackhelicopterMorpher", 1)
+		TNT1 A 0 A_GiveToTarget("HeavyMachinegunAmmo", 999)
+		TNT1 A 0 A_GiveToTarget("HelicopterRocketAmmo", 2000)
+		TNT1 A 0 A_GiveToTarget("HelicopterMissileAmmo", 8)
+		TNT1 A 0 Thing_ChangeTID(0, 261)
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 1
+		TNT1 A 0 A_ChangeFlag("USESPECIAL", 0)
+		TNT1 A 10
+		TNT1 A 0 Thing_ChangeTID(0, 0)
+		TNT1 A 1
+		Stop
+	Death:	
+	TNT1 A 1
+	TNT1 A 0 A_SpawnItem("BigExplosion1112")
+	TNT1 A 0 A_PlaySound("weapons/explode")
+	TNT1 A 0 A_PlaySound("EXPLOSIO", 3)
+	TNT1 A 0 A_Scream
+	NULL AAAAAA 0 A_CustomMissile ("MetalShard1", 96, 0, random (0, 360), 2, random (0, 180))
+	NULL AAAAAA 0 A_CustomMissile ("MetalShard2", 96, 0, random (0, 360), 2, random (0, 180))
+	NULL AAAAAAAAA 0 A_CustomMissile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360))
+	TNT1 A 0 A_SpawnItem("DestroyedArmouredVehicle")
+	ELEC A 0 A_Explode(100, 250)
+	TNT1 A 15
+	TNT1 A 0
+	Stop	
+	
+		Pain.Repair:
+		 TNT1 A 0
+		 TNT1 A 0 A_ChangeFLag("NOPAIN", 1)
+		 TNT1 A 0 HealThing(5)
+		 HELA A 1
+		 TNT1 A 0 HealThing(5)
+		 TNT1 A 0 A_ChangeFLag("NOPAIN", 0)
+		 Goto StandingHere
+	}
+}
+
+ACTOR AttackHelicopterRealism: AttackHelicopter
+{
+Health 4000
+}
+
+ACTOR attackhelicopterUsed: attackhelicopter
+{
+    States
+    {
+	Spawn:
+		TNT1 A 0
+	    TNT1 A 1
+		TNT1 A 0 ACS_namedExecuteAlways("BDSetBaseAngle", 0, 0, 0, 0)//SpawnVehicleBase
+		TNT1 A 0 Thing_ChangeTID(0, 261)
+		TNT1 A 1 A_ChangeFlag("FRIENDLY", 0)
+		TNT1 A 5 
+		TNT1 A 0 Thing_ChangeTID(0, 0)
+		TNK1 C 0 A_ChangeFlag("THRUACTORS", 0)
+		TNT1 A 0 A_ChangeFlag("FRIENDLY", 1)
+		TNT1 A 0 ACS_NamedExecuteAlways("BDCHeckOnline")
+		Goto StandingHere
+	
+	IsOnline:
+		TNT1 A 0
+		TNT1 A 1
+		//TNT1 A 0 A_TAkeInventory("attackhelicopterBaseDirection", 500)
+		Goto StandingHere
+		
+	
+	
+	Active:
+		TNT1 A 0 
+		TNT1 A 0 A_TakeFromTarget("PowerInvulnerable", 1)
+		TNT1 A 0 A_GiveToTarget("CeaseMorph", 1)
+		TTR1 A 0 A_ChangeFlag("FRIENDLY", 0)
+		TNT1 A 0 Thing_ChangeTID(0, 261)
+		TNT1 A 0 ACS_namedExecuteAlways("GetVehiclePreviousHealth", 0, 0, 0, 0)//Check Vehicle Health
+		//TNT1 A 0 A_Chase("","",CHF_DONTMOVE )
+		TNT1 A 0 A_GiveToTarget("CheckingMorphingPlayerHealth", 1)
+		TNT1 A 3
+		TNT1 A 0 A_GiveToTarget("attackhelicopterMorpher", 1)
+		TNT1 A 0 Thing_ChangeTID(0, 261)
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 1
+		TNT1 A 0 A_ChangeFlag("USESPECIAL", 0)
+		TNT1 A 10
+		TNT1 A 0 Thing_ChangeTID(0, 0)
+		Stop
+	}
+}
+
+	
+
+
+ACTOR PowerattackhelicopterSwitch : PowerMorph {PowerMorph.PlayerClass "Playerattackhelicopter"}
+
+
+
+ACTOR attackhelicopterMorpher : CustomInventory 
+{
+  States
+  {
+  PickUp:
+  TNT1 A 1
+  TNT1 A 0 ACS_namedExecuteAlways("BDEnterTank", 0, 0, 0, 0)//Get into attackhelicopter
+  TNT1 A 0 A_GiveInventory("attackhelicopterMorphActivation")
+  TNT1 A 0 A_SpawnItem("CancelTeleportFog")
+  TNT1 A 1
+  Stop
+  }
+ }
+ 
+
+
+ACTOR attackhelicopterMorphActivation : PowerupGiver
+{
+  Powerup.Type "PowerattackhelicopterSwitch"
+  Powerup.Duration 252000
+  +INVENTORY.AUTOACTIVATE
+  +INVENTORY.ALWAYSPICKUP
+  Inventory.MaxAmount 1
+  Health 100
+  GibHealth 1
+  Mass 9999
+  Height 96
+  Radius 32
+  States
+  {
+  Spawn:
+  TNT1 A 100
+  Stop
+  
+  PickUp:
+  TNT1 A 1
+  TNT1 A 1
+  Stop
+  }
+ }
+ 
+ 
+
+
+ACTOR Playerattackhelicopter : PlayerTank
+{
+	Speed 0.1
+	Player.SideMove 0.01
+	+FLOAT
+	+FLOATBOB
+	Scale 1.0
+	Radius 36
+	Height 96
+	Mass 9999
+	PainChance 0
+	PainChance "HitGround", 255
+	Health 400
+	player.viewheight	90
+    player.attackzoffset 40
+	MaxStepHeight 64
+	Player.MorphWeapon "attackhelicopterGun"
+	damagefactor "HitGround", 3.0
+	States
+	{
+	
+	ExitVehicle:
+		TNT1 A 0
+		TNT1 A 0 SetPlayerProperty(0,1,4)
+		TNT1 A 0 A_StopSound(6)
+		TNT1 A 0 A_PlaySound("HELSTOP", 4)
+		TNT1 A 0 ThrustThingZ(0,-20,0,1)
+		HEL1 ABABAB 1 A_SetPitch(0)
+		TNT1 A 0 ThrustThingZ(0,-20,0,1)
+	    HEL1 ABC 1 A_CheckFloor("IsExiting")
+		TNT1 A 0 ThrustThingZ(0,-30,0,1)
+	    HEL1 ABC 1 A_CheckFloor("IsExiting")
+		TNT1 A 0 ThrustThingZ(0,-40,0,1)
+		
+		HEL1 ABC 1 A_CheckFloor("IsExiting")
+		TNT1 A 0 ThrustThingZ(0,-40,0,1)
+		HEL1 ABC 1 A_CheckFloor("IsExiting")
+		TNT1 A 0 ThrustThingZ(0,-40,0,1)
+		HEL1 ABC 1 A_CheckFloor("IsExiting")
+		TNT1 A 0 ThrustThingZ(0,-40,0,1)
+		HEL1 ABC 1 A_CheckFloor("IsExiting")
+		TNT1 A 0 ThrustThingZ(0,-40,0,1)
+		HEL1 ABC 1 A_CheckFloor("IsExiting")
+		TNT1 A 0 ThrustThingZ(0,-40,0,1)
+		HEL1 ABC 1 A_CheckFloor("IsExiting")
+		TNT1 A 0 ThrustThingZ(0,-40,0,1)
+		
+	   IsExiting:
+		HEL1 ABC 2
+		TNT1 A 0 ThrustThingZ(0,-50,0,1)
+		HEL1 ABC 3
+		TNT1 A 0 ThrustThingZ(0,-60,0,1)
+		HEL1 ABC 4
+		TNT1 A 0 ThrustThingZ(0,-60,0,1)
+		HEL1 ABC 5
+		TNT1 A 0 ThrustThingZ(0,-20,0,1)
+		TNT1 A 0 SetPlayerProperty(0,0,4)
+		TNT1 A 0 A_TAKEiNVENTORY("PowerFlight", 1)
+	
+		TNT1 A 0 A_TakeInventory("PressedUse", 1)
+	
+		TNT1 A 0 A_SpawnItemEx ("TransferPlayerOutOfVehicle", 100, 150, 5)
+		
+		HEL1 A 3
+	
+		TNT1 A 0 A_JumpIfInventory("CanLeaveVehicle", 1, "CanExit")
+		TNT1 A 0 A_Print("Can't leave from this direction", 1)
+		Goto Stay
+	
+	CanExit:
+		TNT1 A 0
+		TNT1 A 2
+		TNT1 A 0 A_TakeInventory("PressedUse", 1)
+		TNT1 A 0 A_TakeInventory("HelicopterIsFlying", 1)
+		TNT1 A 0 A_TakeInventory("CanLeaveVehicle", 1)
+		TNT1 A 0 ACS_NamedExecuteAlways("BDLeaveTank")
+		TNT1 A 0 A_SpawnItemEx ("attackhelicopterUsed", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		Goto FinishExit
+
+	FinishExit:
+		TNT1 A 0 A_TakeInventory("PressedUse", 1)
+		TNT1 AAA 10 A_TakeInventory("PressedUse", 1)
+		TNT1 A 0 A_TakeInventory("PressedUse", 1)
+		Goto Stay
+		
+	
+	Spawn2: //Taking Off
+		HELA A 1
+	    TNT1 A 0 A_TakeInventory("PressedUse", 1)
+		TNT1 A 0 A_TakeInventory("PressedJump", 1)
+		TNT1 A 0 A_TakeInventory("TurnRight", 1)
+		TNT1 A 0 A_TakeInventory("TurnLeft", 1)
+		TNT1 A 0 A_TakeInventory("Accelerate", 1)
+		TNT1 A 0 A_TakeInventory("BackPedal", 1)
+		HEL1 A 1
+		TNT1 A 0 A_TakeInventory("PressedUse", 1)
+		TNT1 A 0 A_TakeInventory("FiredTankMainGun", 1)
+		TNT1 A 0 SetPlayerProperty(0,1,4)
+		TNT1 A 0 A_PlaySound("HELSTAR", 1)
+		TNT1 A 0 A_ChangeFlag("NOPAIN", 1)
+		HEL1 ABC 6
+		HEL1 ABC 5
+		HEL1 ABC 4
+		HEL1 ABC 3
+		TNT1 A 0 A_GIVEiNVENTORY("PowerFlight", 1)
+		TNT1 A 0 ThrustThingZ(0,25,0,1)
+		HEL1 ABC 2
+		TNT1 A 0 ThrustThingZ(0,25,0,1)
+		HEL1 ABCABC 1
+		TNT1 A 0 ThrustThingZ(0,25,0,1)
+		HEL1 AB 1
+		TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
+		TNT1 A 0 A_GiveInventory("HelicopterIsFlying", 1)
+		TNT1 A 0 A_TakeInventory("PressedUse", 1)
+		TNT1 A 0 SetPlayerProperty(0,0,4)
+	Goto Stay
+	
+	
+	See:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItem("HeliBase1")
+		Goto Stay
+	
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("HelicopterIsFlying", 1, "Stay")
+		Goto Spawn2
+		
+	Stay:
+		HEL1 ABC 1
+		TNT1 A 0 A_CustomMissile ("HelicopterHitDetection", 70, 0, 0, 2, 0)
+		TNT1 A 0 A_CustomMissile ("HelicopterHitDetection", 70, 0, 90, 2, 0)
+		TNT1 A 0 A_CustomMissile ("HelicopterHitDetection", 70, 0, 45, 2, 0)
+		TNT1 A 0 A_CustomMissile ("HelicopterHitDetection", 70, 0, 135, 2, 0)
+		TNT1 A 0 A_CustomMissile ("HelicopterHitDetection", 70, 0, 180, 2, 0)
+		TNT1 A 0 A_CustomMissile ("HelicopterHitDetection", 70, 0, 225, 2, 0)
+		TNT1 A 0 A_CustomMissile ("HelicopterHitDetection", 70, 0, 270, 2, 0)
+		TNT1 A 0 A_CustomMissile ("HelicopterHitDetection", 70, 0, 315, 2, 0)
+		TNT1 A 0 A_CustomMissile ("HelicopterHitDetectionGround", 0, 0, 0, 2, -45)
+		TNT1 A 0 A_JumpIfInventory("PressedUse", 1, "ExitVehicle")
+		TNT1 A 0 A_PlaySound("HELILOP", 6, 1, 1)
+		TNT1 A 0 A_PlaySound("HELILOP2", 7, 1, 1)
+		TNT1 A 0 A_GIVEiNVENTORY("PowerFlight", 1)
+		TNT1 A 0 A_JumpIfInventory("Accelerate", 1, "GoUp")
+		TNT1 A 0 A_JumpIfInventory("Backpedal", 1, "GoDown")
+		NULL A 0 A_JumpIf (pitch > 5, "Forward")
+		NULL A 0 A_JumpIf (pitch < -5, "Backward")
+		Loop
+		
+	Forward:
+		HEL1 A 0
+		NULL A 0 A_JumpIf (pitch > 270, "BackwardZandro")
+		TNT1 A 0 A_JumpIfInventory("Backpedal", 1, "GoDownAccel")
+		TNT1 A 0 A_Recoil(-pitch/3)
+		HEL1 ABC 1 A_Recoil(-1)
+		TNT1 A 0 A_JumpIfInventory("Accelerate", 1, "GoUpAccel")
+		TNT1 A 0 A_JumpIfInventory("Backpedal", 1, "GoDownAccel")
+		HEL1 ABC 1 A_Recoil(-1)
+		TNT1 A 0 A_JumpIfInventory("Accelerate", 1, "GoUpAccel")
+		TNT1 A 0 A_JumpIfInventory("Backpedal", 1, "GoDownAccel")
+		Goto Stay
+		
+	Backward:
+		HEL1 A 0
+		TNT1 A 0 A_Recoil(-pitch/3)
+		HEL1 ABC 1 A_Recoil(1)
+		TNT1 A 0 A_JumpIfInventory("Accelerate", 1, "GoUpBack")
+		TNT1 A 0 A_JumpIfInventory("Backpedal", 1, "GoDownBack")
+		HEL1 ABC 1 A_Recoil(1)
+		TNT1 A 0 A_JumpIfInventory("Accelerate", 1, "GoUpBack")
+		TNT1 A 0 A_JumpIfInventory("Backpedal", 1, "GoDownBack")
+		Goto Stay
+		
+		//Zandronum calculates pitch up differently, using the same system as GZDoom slingshots the helicopter forward
+	BackwardZandro:
+		HEL1 A 0
+		TNT1 A 0 A_Recoil(2)
+		HEL1 ABC 1 A_Recoil(1)
+		TNT1 A 0 A_JumpIfInventory("Accelerate", 1, "GoUpBack")
+		TNT1 A 0 A_JumpIfInventory("Backpedal", 1, "GoDownBack")
+		HEL1 ABC 1 A_Recoil(1)
+		TNT1 A 0 A_JumpIfInventory("Accelerate", 1, "GoUpBack")
+		TNT1 A 0 A_JumpIfInventory("Backpedal", 1, "GoDownBack")
+		Goto Stay	
+		
+		
+	GoUp:	
+		HEL1 A 0
+		TNT1 A 0 A_TakeInventory("Accelerate", 1)
+		TNT1 A 0 A_TakeInventory("BACKPEDAL", 1)
+		TNT1 A 0 ThrustTHingZ(0, 20, 0, 1)
+		HEL1 ABC 1
+		NULL A 0 A_JumpIf (pitch > 5, "Forward")
+		NULL A 0 A_JumpIf (pitch < -5, "Backward")
+		TNT1 A 0 A_JumpIfInventory("PressedUse", 1, "ExitVehicle")
+		TNT1 A 0 A_JumpIfInventory("Accelerate", 1, "GoUp")
+		TNT1 A 0 A_JumpIfInventory("Backpedal", 1, "GoDown")
+		Goto Stay
+		
+	GoUpAccel:	
+		HEL1 A 0
+		TNT1 A 0 A_TakeInventory("Accelerate", 1)
+		TNT1 A 0 A_TakeInventory("BACKPEDAL", 1)
+		TNT1 A 0 ThrustTHingZ(0, 10, 0, 1)
+		HEL1 ABC 1 A_Recoil(-2)
+		NULL A 0 A_JumpIf (pitch > 5, "Forward")
+		NULL A 0 A_JumpIf (pitch < -5, "Backward")
+		TNT1 A 0 A_JumpIfInventory("PressedUse", 1, "ExitVehicle")
+		TNT1 A 0 A_JumpIfInventory("Accelerate", 1, "GoUp")
+		TNT1 A 0 A_JumpIfInventory("Backpedal", 1, "GoDown")
+		Goto Stay
+		
+	//
+	GoUpBack:	
+		HEL1 A 0
+		TNT1 A 0 A_TakeInventory("Accelerate", 1)
+		TNT1 A 0 A_TakeInventory("BACKPEDAL", 1)
+		TNT1 A 0 ThrustTHingZ(0, 10, 0, 1)
+		HEL1 ABC 1 A_Recoil(3)
+		NULL A 0 A_JumpIf (pitch > 5, "Forward")
+		NULL A 0 A_JumpIf (pitch < -5, "Backward")
+		TNT1 A 0 A_JumpIfInventory("PressedUse", 1, "ExitVehicle")
+		TNT1 A 0 A_JumpIfInventory("Accelerate", 1, "GoUp")
+		TNT1 A 0 A_JumpIfInventory("Backpedal", 1, "GoDown")
+		Goto Stay	
+		
+		
+		
+	GoDown:	
+		HEL1 A 0
+		TNT1 A 0 A_TakeInventory("Accelerate", 1)
+		TNT1 A 0 A_TakeInventory("BACKPEDAL", 1)
+		TNT1 A 0 ThrustTHingZ(0, -25, 0, 1)
+		HEL1 ABC 1
+		NULL A 0 A_JumpIf (pitch > 5, "Forward")
+		NULL A 0 A_JumpIf (pitch < -5, "Backward")
+		TNT1 A 0 A_JumpIfInventory("PressedUse", 1, "ExitVehicle")
+		TNT1 A 0 A_JumpIfInventory("Accelerate", 1, "GoUp")
+		TNT1 A 0 A_JumpIfInventory("Backpedal", 1, "GoDown")
+		Goto Stay
+		
+	//When pressing W while looking down	
+	GoDownAccel:	
+		HEL1 A 0
+		TNT1 A 0 A_TakeInventory("Accelerate", 1)
+		TNT1 A 0 A_TakeInventory("BACKPEDAL", 1)
+		TNT1 A 0 ThrustTHingZ(0, -15, 0, 1)
+		HEL1 ABCABC 1 A_Recoil(-1)
+		NULL A 0 A_JumpIf (pitch > 5, "Forward")
+		NULL A 0 A_JumpIf (pitch < -5, "Backward")
+		TNT1 A 0 A_JumpIfInventory("PressedUse", 1, "ExitVehicle")
+		TNT1 A 0 A_JumpIfInventory("Accelerate", 1, "GoUp")
+		TNT1 A 0 A_JumpIfInventory("Backpedal", 1, "GoDown")
+		Goto Stay	
+		
+	//When pressing S while looking down	
+	GoDownBack:	
+		HEL1 A 0
+		TNT1 A 0 A_TakeInventory("Accelerate", 1)
+		TNT1 A 0 A_TakeInventory("BACKPEDAL", 1)
+		TNT1 A 0 ThrustTHingZ(0, -30, 0, 1)
+		HEL1 ABCABC 1 A_Recoil(2)
+		NULL A 0 A_JumpIf (pitch > 5, "Forward")
+		NULL A 0 A_JumpIf (pitch < -5, "Backward")
+		TNT1 A 0 A_JumpIfInventory("PressedUse", 1, "ExitVehicle")
+		TNT1 A 0 A_JumpIfInventory("Accelerate", 1, "GoUp")
+		TNT1 A 0 A_JumpIfInventory("Backpedal", 1, "GoDown")
+		Goto Stay		
+		
+	Pain.HitGround:
+		PLAY G 0
+		TNT1 A 0 ThrustThingZ(0,60,0,1)
+		HEL1 A 1 A_Pain
+		Goto Stay
+	
+		
+	Death:
+	XDeath:
+	TNT1 A 0
+	
+	TNT1 A 0 A_StopSound(6)
+	TNT1 A 0 A_StopSound(7)
+	TNT1 A 0 A_TakeInventory("AttackhelicopterGun", 1)
+	TNT1 A 0 SetPlayerProperty(0,0,4)
+	TNT1 A 0 A_PlaySound("HELSTOP", 6)
+	TNT1 A 0 A_ChangeFlag("QUARTERGRAVITY", 1)
+	
+	falling:
+	TNT1 A 0 A_Scream
+	TNT1 A 0 A_ClearTarget
+	TNT1 A 0 A_NoBlocking
+	HEL1 AB 1 A_CustomMissile ("FlamethrowerFireParticles", 32, 0, random (0, 360), 2, random (0, 180))
+	TNT1 A 0 A_SetAngle(10 + angle)
+	HEL1 CD 1 A_CustomMissile ("FlamethrowerFireParticles", 32, 0, random (0, 360), 2, random (0, 180))
+	TNT1 A 0 A_SetAngle(10 + angle)
+	TNT1 A 0 A_CheckFloor("Crashed")
+	Loop
+	
+	Crashed:
+	TNT1 A 0 A_SpawnItem("BigExplosion1112")
+	TNT1 A 0 A_PlaySound("weapons/explode")
+	TNT1 A 0 A_PlaySound("EXPLOSIO", 3)
+	
+	NULL AAAAAA 0 A_CustomMissile ("MetalShard1", 96, 0, random (0, 360), 2, random (0, 180))
+	NULL AAAAAA 0 A_CustomMissile ("MetalShard2", 96, 0, random (0, 360), 2, random (0, 180))
+	NULL AAAAAAAAA 0 A_CustomMissile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360))
+	TNT1 A 0 A_StopSound(6)
+	ELEC A 0 A_Explode(100, 250)
+	TNT1 A 0 A_SpawnItem("DestroyedAircraft")
+	8762 A 500
+	8762 A 2000
+	8762 A -1
+	Stop
+	
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Vehicle's weapons and misc
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ACTOR attackhelicopterGun : DoomWeapon
+{
+	Game Doom
+	Weapon.SelectionOrder 1900
+	Weapon.AmmoUse1 0
+	Weapon.AmmoGive1 0
+	Weapon.AmmoUse2 0
+	Weapon.AmmoGive2 0
+	Weapon.AmmoType2 "HelicopterRocketAmmo"
+	Weapon.AmmoType1 "HeavyMachinegunAmmo"
+	Obituary "$OB_MPPISTOL"
+	+WEAPON.AMMO_OPTIONAL
+	+WEAPON.ALT_AMMO_OPTIONAL
+	//+WEAPON.NOAUTOFIRE
+	Inventory.Pickupmessage "$PICKUP_PISTOL_DROPPED"
+	Tag "$TAG_PISTOL"
+	States
+	{
+	
+		
+	Spawn:
+		LAUN A -1
+		Stop
+		
+	
+	Ready:
+		HELH A 1
+		HELH A 1
+		HELH A 100
+		TNT1 A 0 A_TakeInventory("PressedUse", 1)
+		TNT1 A 0 A_TakeInventory("TossGrenade", 1)
+		TNT1 A 0 A_TakeInventory("FiredPrimary", 1)
+		TNT1 A 0 A_TakeInventory("FiredSecondary", 1)
+		TNT1 A 0 A_Print("Weapons Online", 2)
+		TNT1 A 0 A_GunFlash
+	Ready2:
+		HELH A 2 A_WeaponReady(1)
+		TNT1 A 0 A_JumpIfInventory("HeliIsLeft", 1, "KeepLeft")
+		TNT1 A 0 A_JumpIfInventory("HeliIsRight", 1, "KeepRight")
+		TNT1 A 0 A_JumpIfInventory("TurnLeft", 1, "TurnLeft")
+		TNT1 A 0 A_JumpIfInventory("TurnRight", 1, "TurnRight")
+		Loop
+		
+	TurnLeft:
+		TNT1 A 0 ACS_NamedExecuteAlways("HeliRollLeft", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("HeliIsLeft", 1)
+		HELH AA 1 ThrustThing(angle*256/360+64, 1, 1, 0)
+		HELH AAAAAA 1 ThrustThing(angle*256/360+64, 2, 1, 0)
+	KeepLeft:	
+		HELH A 1 A_WeaponReady(1)
+		TNT1 A 0 ThrustThing(angle*256/360+64, 2, 1, 0)
+		TNT1 A 0 A_JumpIfInventory("TurnLeft", 1, "KeepLeft")
+		TNT1 A 0 A_TakeInventory("HeliIsLeft", 1)
+		TNT1 A 0 ACS_NamedExecuteAlways("HeliStopLeft", 0, 0, 0, 0)
+		HELH AAAAAA 1 ThrustThing(angle*256/360+64, 3, 0, 0)
+		HELH AA 1 ThrustThing(angle*256/360+64, 1, 0, 0)
+		Goto Ready2
+		
+	
+	TurnRight:
+		TNT1 A 0 ACS_NamedExecuteAlways("HeliRollRight", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("HeliIsRight", 1)
+		HELH AA 1 ThrustThing(angle*256/360+192, 1, 1, 0)
+		HELH AAAAAA 1 ThrustThing(angle*256/360+192, 2, 1, 0)
+	KeepRight:	
+		HELH A 1 A_WeaponReady(1)
+		TNT1 A 0 ThrustThing(angle*256/360+192, 2, 0, 0)
+		TNT1 A 0 A_JumpIfInventory("TurnRight", 1, "KeepRight")
+		TNT1 A 0 A_TakeInventory("HeliIsRight", 1)
+		TNT1 A 0 ACS_NamedExecuteAlways("HeliStopRight", 0, 0, 0, 0)
+		HELH AAAAAA 1 ThrustThing(angle*256/360+192, 3, 0, 0)
+		HELH AA 1 ThrustThing(angle*256/360+192, 1, 0, 0)
+		Goto Ready2
+		
+	
+	
+	NotReady:
+		TNT1 A 1 //A_GiveInventory("attackhelicopterReady", 1)
+		Goto Ready2
+		
+	Deselect:
+		TNT1 A 1 A_Lower
+		TNT1 A 0 SetPlayerProperty(0,0,4)
+		Loop
+	Select:
+		HELH AAAAAAAAAAAA 0 A_Raise
+		TNT1 A 0 SetPlayerProperty(0,1,4)
+		TNT1 A 1 A_TakeInventory("PressedUse", 1)
+		TNT1 A 1 A_TakeInventory("PressedJump", 2)
+		HELH AAA 1 A_Raise
+		HELH A 1 A_TakeInventory("PressedUse", 1)
+		HELH A 1 A_TakeInventory("PressedJump", 2)
+		HELH A 1 A_TakeInventory("TurnLeft", 2)
+		HELH A 1 A_TakeInventory("TurnRight", 2)
+		TNT1 A 0
+		Goto Ready2
+		
+		
+	
+	NoAmmo:
+		HELH A 1
+		TNT1 A 0 A_Print("Ammunition Depleted", 2)
+		Goto FLash 
+			
+	NoRocket:
+		HELH A 1
+		TNT1 A 0 A_Print("Rockets Depleted", 2)
+		Goto FLash 
+		
+	NoMissile:
+		HELH A 1
+		TNT1 A 0 A_Print("Missiles Depleted", 2)
+		Goto FLash 	
+	
+	
+	Fire:
+		HELH A 0
+		TNT1 A 0 A_JumpIfInventory("HeliIsLeft", 1, "KeepLeft")
+		TNT1 A 0 A_JumpIfInventory("HeliIsRight", 1, "KeepRight")
+		TNT1 A 0 A_JumpIfInventory("TurnLeft", 1, "TurnLeft")
+		TNT1 A 0 A_JumpIfInventory("TurnRight", 1, "TurnRight")
+		HELH A 1
+		Goto Ready2
+		
+
+	Flash:
+		TNT1 A 1
+		//MISG A 0 A_FireCustomMissile("HelicopterSpeedController")
+		TNT1 A 0 A_JumpIfInventory("PressedUse", 1, "LightEnd")
+		TNT1 A 0 A_JumpIfInventory("FiredPrimary", 1, "Cannon")
+		TNT1 A 0 A_JumpIfInventory("FiredSecondary", 1, "Rocket1")
+		TNT1 A 0 A_JumpIfInventory("TossGrenade", 1, "Missile1")
+		NULL A 0 A_JumpIf (pitch > 40, "TooLowCheck1")
+		Loop
+	
+	Rocket1:	
+		TNT1 A 0
+		TNT1 A 0 A_TakeInventory("FIredSecondary", 1)
+		TNT1 A 0 A_JumpIfInventory("HelicopterRocketAmmo", 1, 1)
+		Goto NoRocket
+		TNT1 A 0 A_PlaySound("MISLFIRE", 1)
+		TNT1 A 0 A_TakeInventory("HelicopterRocketAmmo", 1)
+		
+		TNT1 A 0 A_JumpIfInventory("Token1", 1, "Rocket2")
+		
+		MISG A 0 A_FireCustomMissile("AssaultHelicopterRocket", 0, 1, -40, -40, 0, 1)
+		HELH A 1 BRIGHT 
+		TNT1 A 0 A_GiveInventory("Token1", 1)
+		HELH AA 4
+		TNT1 A 0 A_TakeInventory("FIredPrimary", 1)
+		TNT1 A 0 A_TakeInventory("FIredSecondary", 1)
+		NULL A 0 A_JumpIf (pitch > 40, "TooLowCheck1")
+		Goto Flash
+		
+	Rocket2:	
+		TNT1 A 0
+		MISG A 0 A_FireCustomMissile("AssaultHelicopterRocket", 0, 1, 40, -40, 0, 1)
+		HELH A 1 BRIGHT 
+		TNT1 A 0 A_TakeInventory("Token1", 1)
+		HELH AA 4
+		TNT1 A 0 A_TakeInventory("FIredPrimary", 1)
+		TNT1 A 0 A_TakeInventory("FIredSecondary", 1)
+		NULL A 0 A_JumpIf (pitch > 40, "TooLowCheck1")
+		Goto Flash	
+		
+		
+		
+	Missile1:	
+		TNT1 A 0
+		TNT1 A 0 A_TakeInventory("TossGrenade", 1)
+		TNT1 A 0 A_JumpIfInventory("HelicopterMissileAmmo", 1, 1)
+		Goto NoMissile
+		TNT1 A 0 A_PlaySound("MISLFIRE", 1)
+		TNT1 A 0 A_TakeInventory("HelicopterMissileAmmo", 1)
+		
+		TNT1 A 0 A_JumpIfInventory("Token1", 1, "Missile2")
+		
+		MISG A 0 A_FireCustomMissile("AssaultHelicopterMissile", 0, 1, -60, -30, 0, 1)
+		HELH A 1 BRIGHT 
+		TNT1 A 0 A_GiveInventory("Token1", 1)
+		HELH AA 4
+		TNT1 A 0 A_TakeInventory("TossGrenade", 1)
+		NULL A 0 A_JumpIf (pitch > 40, "TooLowCheck1")
+		Goto Flash
+		
+	Missile2:	
+		TNT1 A 0
+		MISG A 0 A_FireCustomMissile("AssaultHelicopterMissile", 0, 1, 60, -30, 0, 1)
+		HELH A 1 BRIGHT 
+		TNT1 A 0 A_TakeInventory("Token1", 1)
+		HELH AA 4
+		TNT1 A 0 A_TakeInventory("TossGrenade", 1)
+		NULL A 0 A_JumpIf (pitch > 40, "TooLowCheck1")
+		Goto Flash		
+		
+	
+	Cannon:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("HeavyMachinegunAmmo", 1, 1)
+		Goto NoAmmo
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNT1 A 0 A_TakeInventory("HeavyMachinegunAmmo", 1)
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 0, 0, 0, 0, 0)
+		TNT1 A 0 A_FireCustomMissile("AutoCannonProjectile", 0, 0, 0, -35, 0, 1)
+		TNT1 AA 0 A_FireCustomMissile("HeavyMachinegunFlash", 0, 0, 0, -35)
+		HELH A 1 A_GiveInventory("TankReady", 1)
+		HELH AA 1 A_GiveInventory("TankReady", 1)
+		NULL A 0 A_JumpIf (pitch > 40, "TooLowCheck1")
+		Goto Flash
+		
+	TooLowCheck1:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(pitch < 90, "TooLow")
+		Goto Flash
+		
+		
+	TooLow:
+		TNT1 A 0 A_SetPitch(39)
+		NULL A 0 A_JumpIf (pitch > 40, "TooLowCheck1")
+		Goto Flash	
+		
+		
+	
+	LightEnd:
+		TNT1 A 10
+		Stop	
+		
+	}
+}
+
+
+
+Actor AssaultHelicopterRocket: Rocket2
+{
+Speed 100
++FORCERADIUSDMG
+Scale 1.0
+Damage (random (400, 400))
+States
+	{
+	Spawn:
+
+		MISL A 0
+		TNT1 A 0 A_PlaySound("DSRLAUN")
+		TNT1 A 0 A_PlaySound("DSRLAUN", 1)
+		TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast2", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast3", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames1", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames2", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames3", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames4", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		MISL AAAA 1 BRIGHT A_CustomMissile("BackblastFlames4", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+	 Live:	
+		MISL A 1 BRIGHT A_SpawnItem("PlasmaSmoke")
+		TNT1 A 0 A_CustomMissile("PlasmaSmoke", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		Loop
+	Death:
+        EXPL A 0 Radius_Quake (3, 8, 0, 15, 0)//(intensity, duration, damrad, tremrad, tid)
+		TNT1 A 0 A_CustomMissile("ExplosionSplashSpawner")
+        TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        TNT1 AAAAAA 0 A_CustomMissile ("BDExplosionparticles", 0, 0, random (0, 360), 2, random (40, 90))
+		TNT1 AAAA 0 A_CustomMissile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (0, 90))
+		TNT1 AAAA 0 A_CustomMissile ("ExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AA 0 A_SpawnItemEx ("GrenadeExplosion",0,0,13,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0
+		TNT1 A 2
+		TNT1 A 0 A_SpawnItemEx ("LiquidExplosionEffectSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_PlaySound("FAREXPL", 3)
+		TNT1 A 15
+		TNT1 A 0 A_PlaySound("distantexp", 5)
+		Stop	
+	}
+}
+
+
+
+
+Actor EnemyHelicopterRocket: Rocket2
+{
+Speed 75
+Scale 1.0
++DONTHURTSPECIES
+Species "AttackHelicopterZombie"
+States
+	{
+	Spawn:
+
+		MISL A 0
+		TNT1 A 0 A_PlaySound("MISFAR", 2)
+		TNT1 A 0 A_PlaySound("DSRLAUN", 1)
+		TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast2", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast3", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames1", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames2", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames3", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames4", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		MISL AAAA 1 BRIGHT A_CustomMissile("BackblastFlames4", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+	 Live:	
+		MISL A 1 BRIGHT A_SpawnItem("PlasmaSmoke")
+		TNT1 A 0 A_CustomMissile("PlasmaSmoke", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		Loop
+	}
+}
+
+
+
+
+Actor AssaultHelicopterMissile: AssaultHelicopterRocket
+{
+Speed 100
++SEEKERMISSILE
++SCREENSEEKER
+Scale 1.6
+MaxTargetRange 2000
+Damage (random (500, 500))
+States
+	{
+	Spawn:
+
+		MISL A 0
+		TNT1 A 0 A_PlaySound("MISFAR", 2)
+		TNT1 A 0 A_PlaySound("DSRLAUN", 1)
+		TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast2", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast3", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		MISL AAA 1 BRIGHT A_CustomMissile("BackblastFlames4", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		MISL AAA 1 BRIGHT A_CustomMissile("BackblastFlames3", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		MISL AAA 1 BRIGHT A_CustomMissile("BackblastFlames2", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+	 Live:	
+		MISL A 1 BRIGHT A_SpawnItem("YellowFlare")
+		TNT1 A 0 A_CustomMissile("BackblastFlames2", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
+		TNT1 A 0 A_SeekerMissile (4,8, SMF_LOOK)
+		Loop
+	}
+}
+
+
+
+
+ACTOR MechHommingMissile: AssaultHelicopterRocket
+{
+	Damage (random (350, 380))
+	+SCREENSEEKER
+	+SEEKERMISSILE
+	
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SeekerMissile (4,8, SMF_LOOK)
+		MISL I 1 Bright
+		Loop
+	}
+}

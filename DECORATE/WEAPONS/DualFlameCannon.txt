@@ -1,0 +1,212 @@
+//Changes made:
+//select, deselect
+ACTOR DualFlameCannon : BrutalWeapon
+{
+	Height 20
+	Weapon.SelectionOrder 3680
+	Weapon.AmmoUse 0
+	Weapon.AmmoGive 20
+	Weapon.AmmoType "Gas"
+	Weapon.SisterWeapon "FlameCannon"
+    Inventory.PickupSound "FLMDRAW"
+	+WEAPON.NOAUTOAIM
+	+WEAPON.EXPLOSIVE
+	+WEAPON.NO_AUTO_SWITCH
+	+POWERED_UP
+	BrutalWeapon.weight 15
+	+INVENTORY.UNDROPPABLE
+	+Inventory.untossable
+	Inventory.PickupMessage "hi, i'm a message you're not supposed to see!"
+	Tag "Mancubus FlameCannon"
+	Inventory.AltHUDIcon "MANAH0"
+	brutalweapon.handedness 2
+	States
+	{
+	
+	SprintOverlay:
+	FLC3 ABCDE 1
+	WAIT
+	ReturnFromSprint:
+	FLC3 DCBA 1
+	Goto ready
+	
+	GrenadeThrowFlash:
+	FLC2 VWXYZ 1
+	TNT1 A 22
+	FLC2 ZYXWV 1//32 in total
+	stop
+	
+	
+	
+	KickingFlash:
+	FLC3 ABCDEEEEEEEEDCBA 1
+	Goto Ready
+	AirKickingFlash:
+	FLC3 ABCDEEEEEEEEEEDCBA 1
+	Goto Ready
+	
+	 SlideKickingStart:
+	    FLC3 ABCDE 1
+		FLC3 EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+		Goto Ready
+
+	 SlideKickingEnd:
+	    FLC3 DEEEEEDCBA 1
+	    Goto Ready
+		
+
+		
+	
+		
+	Ready:
+	Ready3:
+		FLC2 A 1 A_WeaponReadyDX
+		Goto Ready3
+		
+	
+		
+	DryFire:
+	    FLC2 A 2 A_PlaySound("weapons/empty")
+		Goto Ready
+	
+	Deselect: "####" A 0 A_TakeInventory("IsPlayingDoxMod",1)
+	"####" A 0 A_ClearOverlays(-2,-2)
+	    TNT1 A 0 A_StopSound(CHAN_WEAPON)
+		TNT1 A 0 A_TakeInventory("TossGrenade", 1)
+		FLC2 VWXYZ 1
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		TNT1 A 1 A_Lower
+		Loop
+	Select:
+		TNT1 A 0
+		Goto SelectFirstPersonLegs
+		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1)
+		
+		
+		TNT1 A 1
+		TNT1 A 0 A_Giveinventory("FlameCannonSelected",1)
+		TNT1 AAAAAAAAAAAAAAA 0 A_Raise
+		Goto SelectAnimation
+		
+	SelectAnimation:
+	ReturnFromNothing:
+		TNT1 A 0 A_PlaySound("FLMDRAW")
+		FLC2 ZYXWV 1 A_WeaponReady(WRF_NOFIRE)
+		Goto Ready
+		
+    Spawn:
+        MANA H 1
+        Loop
+		
+	 Fire:
+        FLC2 A 0
+		FLC2 A 0 A_JumpIf(waterlevel > 1, "DryFire")
+        FLC2 A 0 A_JumpIfInventory("Gas", 14, "Fireball")
+		FLC2 A 0 A_JumpIfInventory("PowerSpeed2", 1, "Fireball")
+		FLC2 A 0 A_StopSound(CHAN_WEAPON)
+		Goto DryFire
+		
+	Fireball:	
+	    NULL A 0 A_playSound("MANCFIRE")
+        FLC2 B 1 BRIGHT A_FireCustomMissile("BigFireBallWithGravity", random(-3,-7), 0, -20, -6, random(-2,2))
+		FLC2 A 0 A_SetPitch(-2.0 + pitch, SPF_INTERPOLATE)
+		FLC2 A 0 A_TakeAmmo("Gas", 7)
+		TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 12)// For poor PCs
+		TNT1 AAAAA 0 BRIGHT A_FireCustomMissile("Shotgunparticles2", random(-12,12), 0, -7, -2, 0, random(-9,9))
+		FLC2 A 0 A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0)
+        FLC2 CD 1 BRIGHT A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE)
+		FLC2 EFGH 1
+		NULL A 0 A_playSound("MANCFIRE")
+        FLC2 I 1 BRIGHT A_FireCustomMissile("BigFireBallWithGravity", random(3,7), 0, 20, -6, random(-2,2))
+		FLC2 A 0 A_SetPitch(-2.0 + pitch, SPF_INTERPOLATE)
+		FLC2 A 0 A_TakeAmmo("Gas", 7)
+		TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 12)// For poor PCs
+		TNT1 AAAAA 0 BRIGHT A_FireCustomMissile("Shotgunparticles2", random(-12,12), 0, 5, -2, 0, random(-9,9))
+		FLC2 A 0 A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0)
+        FLC2 JK 1 BRIGHT A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE)
+		FLC2 LMNO 1
+		NULL A 0 A_ReFire
+		//FLC2 A 5
+		Goto Ready
+	
+    AltFire:
+        FLMT A 0
+		FLMT A 0 A_JumpIf(waterlevel > 1, "DryFire")
+        FLMT A 0 A_JumpIfInventory("Gas", 3, "Flamethrower")
+		FLC2 A 0 A_JumpIfInventory("PowerSpeed2", 1, "Flamethrower")
+		FLMT A 0 A_StopSound(CHAN_WEAPON)
+		Goto DryFire
+		
+	Flamethrower:
+        FLMT A 0 BRIGHT A_FireCustomMissile("FlamethrowerMissile", 5, 1, -6, -8, 0, 8)
+		FLMT A 0 BRIGHT A_FireCustomMissile("FlamethrowerMissile", -5, 1, 6, -8, 0, 8)
+		TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 4)// For poor PCs
+		TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, -7, 0, 0, random(-9,9))
+		TNT1 AA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, -7, 0, 0, random(-9,9))
+		TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, 5, 0, 0, random(-9,9))
+		TNT1 AA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 5, 0, 0, random(-9,9))
+		FLMT A 0 A_PlaySound("FLAMER", CHAN_WEAPON, 1, 1)
+		FLMT A 0 A_TakeAmmo("Gas", 3)
+		FLC2 PQ 1 BRIGHT A_SetAngle(random(1, -1) + angle, SPF_INTERPOLATE)
+		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
+		FLMT A 0 BRIGHT A_SetPitch(random(1, -1) + pitch, SPF_INTERPOLATE)
+		
+		FLMT A 0 A_CheckIfAmmo("Gas", 3, "StopFlamethrower")
+		
+		
+		FLMT A 0 BRIGHT A_FireCustomMissile("FlamethrowerMissileProper", 5, 1, -6, -8, 0, 8)
+		FLMT A 0 BRIGHT A_FireCustomMissile("FlamethrowerMissileProper", -5, 1, 6, -8, 0, 8)
+		TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 4)// For poor PCs
+		TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, -7, 0, 0, random(-9,9))
+		TNT1 AA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, -7, 0, 0, random(-9,9))
+		TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, 5, 0, 0, random(-9,9))
+		TNT1 AA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 5, 0, 0, random(-9,9))
+		FLMT A 0 A_PlaySound("FLAMER", CHAN_WEAPON, 1, 1)
+		FLMT A 0 A_TakeAmmo("Gas", 3)
+		FLC2 PQ 1 BRIGHT
+		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
+		FLMT A 0 A_CheckIfAmmo("Gas", 3, "StopFlamethrower")
+		
+		
+		FLMT A 0 BRIGHT A_FireCustomMissile("FlamethrowerMissileProper", 5, 1, -6, -8, 0, 8)
+		FLMT A 0 BRIGHT A_FireCustomMissile("FlamethrowerMissileProper", -5, 1, 6, -8, 0, 8)
+		TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 4)// For poor PCs
+		TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, -7, 0, 0, random(-9,9))
+		TNT1 AA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, -7, 0, 0, random(-9,9))
+		TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, 5, 0, 0, random(-9,9))
+		TNT1 AA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 5, 0, 0, random(-9,9))
+		FLMT A 0 A_PlaySound("FLAMER", CHAN_WEAPON, 1, 1)
+		FLMT A 0 A_TakeAmmo("Gas", 3)
+		FLC2 PQ 1 BRIGHT
+		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
+		TNT1 A 0 A_ReFire
+		"####" A 0 A_WeaponOffset(0,32)
+	StopFlamethrower:
+	    FLMG A 0 A_PlaySound("FLAMSTOP", CHAN_WEAPON)
+		FLC2 RRSTU 1
+		FLC2 A 2
+		Goto Ready
+		
+	DualWield:
+		PIST F 0 A_takeinventory("dualflamerselected",1)
+		PIST F 0 A_Takeinventory("StartDualWield",1)
+		PIST F 0 A_Takeinventory("Zoomed",1)
+		PIST F 0 A_Takeinventory("ADSmode",1)
+		PIST F 0 A_TakeInventory("TossGrenade", 1)
+		PIST F 0 A_TakeInventory("Kicking",1)
+        PIST F 0 A_TakeInventory("Taunting",1)
+        PIST F 0 A_TakeInventory("Reloading",1)
+		PIST F 0 A_TakeInventory("Unloading",1)
+		PIST F 0 A_TakeInventory("Salute1", 1)
+		PIST F 0 A_TakeInventory("Salute2", 1)
+        PIST F 0 A_ZoomFactor(1.0)
+		PIST F 0 A_SelectWEapon("FlameCannon")
+		Goto Ready
+		
+	}
+}

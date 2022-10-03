@@ -1,0 +1,16 @@
+//WeaponInfo lump
+//All letters need to be lowercase without spaces
+//value 1 is what actor you want to spawn
+//value 2 is what actor you want to replace
+//value 3 is rarity, possible values are 1, 2, and 3
+//lower values are less rare
+
+shotgunspawner,shotgun,1
+ssgspawnerreplacer,supershotgun,1
+chaingunspawnerreplacer,chaingun,1
+RLSPAWNERREPLACER,rocketlauncher,1
+chainsawspawner,chainsaw,1
+plasmagunreplacer,plasmarifle,1
+bfgreplacer,bfg,1
+
+

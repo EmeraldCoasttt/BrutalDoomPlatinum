@@ -1,0 +1,107 @@
+
+Class revjetpack : Inventory {
+	
+	protected int dur; //this will hold the current value of duration
+	int duration; //this will hold max duration
+	property duration : duration; //this turns the variable above into a property
+	Default {
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		inventory.maxamount 1;
+		//This controls how long the jetpack lasts in seconds
+		revjetpack.duration 7;
+	}
+	
+	//this is called when the revenant is given the item
+	Override void Postbeginplay()
+    {
+    Owner.bfloatbob = TRUE;
+    Owner.bfloat = TRUE;
+    Owner.bnogravity = true;
+    Owner.a_giveinventory("revtoken",1);
+    Owner.a_startsound("JETLOOP",6,CHANF_LOOPING);
+    
+    }
+	
+	//this is called when the item is taken from the revenant
+	Override void detachfromowner()
+    {
+    Owner.bfloatbob = false;
+    Owner.bfloat = false;
+    Owner.bnogravity = false;
+    Owner.a_takeinventory("revtoken",1);
+    Owner.a_stopsound(6);
+    Owner.a_startsound("JETEND",6);
+    
+    }
+
+	//Items that don't spawn in the world don't need their Tick. Emptying it will actually help performace:
+	Override void Tick() {}
+	
+	//This function is executed every tic by items while they're in an actor's inventory:
+	Override void DoEffect() {
+		super.DoEffect();
+		if (owner.isFrozen())
+			return;
+		//if they die this makes sure they stop flying
+		if (owner.health <= 0) {		
+			DepleteOrDestroy();
+			return;
+		}
+		
+		
+		//increments duration and destroys the item when duration is at max
+		if (level.time % 35 == 0) {
+			if (dur < duration)
+				dur++;
+			else {
+				DepleteOrDestroy();
+				return;
+			}
+		}
+
+		//every tick a stream of fire is spawned at either shoulder
+			owner.A_SpawnItemEx(
+				"revflametrail",
+				xofs:-5,
+				yofs:-12,
+				zofs:12
+				
+			);
+				owner.A_SpawnItemEx(
+				"revflametrail",
+				xofs:-5,
+				yofs:12,
+				zofs:12
+				);
+
+
+		
+	}
+}
+
+Class revflametrail: Actor {
+	Default {
+		+NOINTERACTION
+		+BRIGHT
+		renderstyle 'Add';
+		//Alpha 0.9;
+		//turns it upside down
+		+yflip;
+		
+	}
+	Override void PostBeginPlay() {
+		Super.PostBeginPlay();
+		scale.x *= frandom(0.01,0.2); //randomize horizontal scale a bit
+		scale.y *= frandom(0.6,0.7); //randomize vertical scale a bit
+		
+		bSPRITEFLIP = random(0,1); //randomly set or not set SPRITEFLIP flag
+	}
+	States {
+	Spawn:
+	//flamethrower particle sprite, if it's too short for your tastes add "B" to the frame
+	TNT1 A 0;
+	NF4R A 1 BRIGHT;
+		stop;
+	}
+}

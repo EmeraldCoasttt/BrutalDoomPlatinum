@@ -1,0 +1,2768 @@
+#library "SpawnMarines"
+#include "zcommon.acs"
+
+Int MarineSpawnCounter = 0;
+World Int 1: NumberOfAlliesFist;
+World Int 2: NumberOfAlliesSaw;
+World Int 3: NumberOfAlliesSMG;
+World Int 4: NumberOfAlliesShotgun;
+World Int 5: NumberOfAlliesSSG;
+World Int 6: NumberOfAllies;
+World Int 7: NumberOfAlliesMinigun;
+World Int 8: NumberOfAlliesRocket;
+World Int 9: NumberOfAlliesGrenade;
+World Int 10: NumberOfAlliesPlasmagun;
+World Int 11: NumberOfAlliesRailgun;
+World Int 12: NumberOfAlliesBFG;
+World Int 13: NumberOfAlliesBFG10K;
+World Int 14: NumberOfAlliesHML;
+World Int 15: NumberOfAlliesFlame;
+
+World Int 16: BlackNumberOfAlliesFist;
+World Int 17: BlackNumberOfAlliesSaw;
+World Int 18: BlackNumberOfAlliesSMG;
+World Int 19: BlackNumberOfAlliesShotgun;
+World Int 20: BlackNumberOfAlliesSSG;
+World Int 21: BlackNumberOfAllies;
+World Int 22: BlackNumberOfAlliesMinigun;
+World Int 23: BlackNumberOfAlliesRocket;
+World Int 24: BlackNumberOfAlliesGrenade;
+World Int 25: BlackNumberOfAlliesPlasmagun;
+World Int 26: BlackNumberOfAlliesRailgun;
+World Int 27: BlackNumberOfAlliesBFG;
+World Int 28: BlackNumberOfAlliesBFG10K;
+World Int 29: BlackNumberOfAlliesHML;
+World Int 30: BlackNumberOfAlliesFlame;
+
+//Bloodwolf333's stuff
+SCRIPT "CheckForSpawningMarines" ENTER
+{
+if ((MarineSpawnCounter == 0) && (PlayerCount() >= 1))
+	{
+		ACS_NamedExecute("BDSpawnMarines",0);
+	}
+	else
+	{
+		NumberOfAlliesFist = 0;
+		NumberOfAlliesSaw = 0;
+		NumberOfAlliesSMG = 0;
+		NumberOfAlliesShotgun = 0;
+		NumberOfAlliesSSG = 0;
+		NumberOfAllies = 0;
+		NumberOfAlliesMinigun = 0;
+		NumberOfAlliesRocket = 0;
+		NumberOfAlliesGrenade = 0;
+		NumberOfAlliesPlasmagun = 0;
+		NumberOfAlliesRailgun = 0;
+		NumberOfAlliesBFG = 0;
+		NumberOfAlliesBFG10K = 0;
+		NumberOfAlliesHML = 0;
+		NumberOfAlliesFlame = 0;
+		
+		BlackNumberOfAlliesFist = 0;
+		BlackNumberOfAlliesSaw = 0;
+		BlackNumberOfAlliesSMG = 0;
+		BlackNumberOfAlliesShotgun = 0;
+		BlackNumberOfAlliesSSG = 0;
+		BlackNumberOfAllies = 0;
+		BlackNumberOfAlliesMinigun = 0;
+		BlackNumberOfAlliesRocket = 0;
+		BlackNumberOfAlliesGrenade = 0;
+		BlackNumberOfAlliesPlasmagun = 0;
+		BlackNumberOfAlliesRailgun = 0;
+		BlackNumberOfAlliesBFG = 0;
+		BlackNumberOfAlliesBFG10K = 0;
+		BlackNumberOfAlliesHML = 0;
+		BlackNumberOfAlliesFlame = 0;
+	}
+}
+
+
+SCRIPT "BDSpawnMarines" (void)//ENTER
+{
+	//Fist Marines
+	Switch (NumberOfAlliesFist)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		 If (NumberOfAlliesFist < 0)
+        {
+            NumberOfAlliesFist = 0;
+        }
+        Else
+        {
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Fist", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Saw Marines
+	Switch (NumberOfAlliesSaw)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		 If (NumberOfAlliesSaw < 0)
+        {
+            NumberOfAlliesSaw = 0;
+        }
+        Else
+        {
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Saw", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//SMG Marines
+	Switch (NumberOfAlliesSMG)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		 If (NumberOfAlliesSMG < 0)
+        {
+            NumberOfAlliesSMG = 0;
+        }
+        Else
+        {
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SMG", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Shotgun Marines
+	Switch (NumberOfAlliesShotgun)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		 If (NumberOfAlliesShotgun < 0)
+        {
+            NumberOfAlliesShotgun = 0;
+        }
+        Else
+        {
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Shotgun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//SSG Marines
+	Switch (NumberOfAlliesSSG)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (NumberOfAlliesSSG < 0)
+        {
+            NumberOfAlliesSSG = 0;
+        }
+        Else
+        {
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_SSG", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Rifle Marines
+	Switch (NumberOfAllies)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (NumberOfAllies < 0)
+        {
+            NumberOfAllies = 0;
+        }
+        Else
+        {
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rifle", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Minigun Marines
+	Switch (NumberOfAlliesMinigun)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (NumberOfAlliesMinigun < 0)
+        {
+            NumberOfAlliesMinigun = 0;
+        }
+        Else
+        {
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Minigun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Grenade Marines
+	Switch (NumberOfAlliesGrenade)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (NumberOfAlliesGrenade < 0)
+        {
+            NumberOfAlliesGrenade = 0;
+        }
+        Else
+        {
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Grenade", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Rocket Marines
+	Switch (NumberOfAlliesRocket)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (NumberOfAlliesRocket < 0)
+        {
+            NumberOfAlliesRocket = 0;
+        }
+        Else
+        {
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Rocket", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Plasmagun Marines
+	Switch (NumberOfAlliesPlasmagun)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (NumberOfAlliesPlasmagun < 0)
+        {
+            NumberOfAlliesPlasmagun = 0;
+        }
+        Else
+        {
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Plasmagun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Railgun Marines
+	Switch (NumberOfAlliesRailgun)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (NumberOfAlliesRailgun < 0)
+        {
+            NumberOfAlliesRailgun = 0;
+        }
+        Else
+        {
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Railgun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//BFG Marines
+	Switch (NumberOfAlliesBFG)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (NumberOfAlliesBFG < 0)
+        {
+            NumberOfAlliesBFG = 0;
+        }
+        Else
+        {
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//BFG10K Marines
+	Switch (NumberOfAlliesBFG10K)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (NumberOfAlliesBFG10K < 0)
+        {
+            NumberOfAlliesBFG10K = 0;
+        }
+        Else
+        {
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_BFG10K", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//HML Marines
+	Switch (NumberOfAlliesHML)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (NumberOfAlliesHML < 0)
+        {
+            NumberOfAlliesHML = 0;
+        }
+        Else
+        {
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_HML", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Flame Marines
+	Switch (NumberOfAlliesFlame)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (NumberOfAlliesFlame < 0)
+        {
+            NumberOfAlliesFlame = 0;
+        }
+        Else
+        {
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("Marine_Flame", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+	//////////////////////////////////
+	//Darker variants
+	//////////////////////////////////
+
+	//SMG BlackMarines
+	Switch (BlackNumberOfAlliesSMG)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		 If (BlackNumberOfAlliesSMG < 0)
+        {
+            BlackNumberOfAlliesSMG = 0;
+        }
+        Else
+        {
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SMG", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Shotgun BlackMarines
+	Switch (BlackNumberOfAlliesShotgun)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		 If (BlackNumberOfAlliesShotgun < 0)
+        {
+            BlackNumberOfAlliesShotgun = 0;
+        }
+        Else
+        {
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Shotgun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//SSG BlackMarines
+	Switch (BlackNumberOfAlliesSSG)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (BlackNumberOfAlliesSSG < 0)
+        {
+            BlackNumberOfAlliesSSG = 0;
+        }
+        Else
+        {
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_SSG", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Rifle BlackMarines
+	Switch (BlackNumberOfAllies)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (BlackNumberOfAllies < 0)
+        {
+            BlackNumberOfAllies = 0;
+        }
+        Else
+        {
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rifle", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Minigun BlackMarines
+	Switch (BlackNumberOfAlliesMinigun)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (BlackNumberOfAlliesMinigun < 0)
+        {
+            BlackNumberOfAlliesMinigun = 0;
+        }
+        Else
+        {
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Minigun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Grenade BlackMarines
+	Switch (BlackNumberOfAlliesGrenade)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (BlackNumberOfAlliesGrenade < 0)
+        {
+            BlackNumberOfAlliesGrenade = 0;
+        }
+        Else
+        {
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Grenade", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Rocket BlackMarines
+	Switch (BlackNumberOfAlliesRocket)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (BlackNumberOfAlliesRocket < 0)
+        {
+            BlackNumberOfAlliesRocket = 0;
+        }
+        Else
+        {
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Rocket", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Plasmagun BlackMarines
+	Switch (BlackNumberOfAlliesPlasmagun)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (BlackNumberOfAlliesPlasmagun < 0)
+        {
+            BlackNumberOfAlliesPlasmagun = 0;
+        }
+        Else
+        {
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Plasmagun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Railgun BlackMarines
+	Switch (BlackNumberOfAlliesRailgun)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (BlackNumberOfAlliesRailgun < 0)
+        {
+            BlackNumberOfAlliesRailgun = 0;
+        }
+        Else
+        {
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Railgun", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//BFG BlackMarines
+	Switch (BlackNumberOfAlliesBFG)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (BlackNumberOfAlliesBFG < 0)
+        {
+            BlackNumberOfAlliesBFG = 0;
+        }
+        Else
+        {
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//BFG10K BlackMarines
+	Switch (BlackNumberOfAlliesBFG10K)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (BlackNumberOfAlliesBFG10K < 0)
+        {
+            BlackNumberOfAlliesBFG10K = 0;
+        }
+        Else
+        {
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_BFG10K", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//HML BlackMarines
+	Switch (BlackNumberOfAlliesHML)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (BlackNumberOfAlliesHML < 0)
+        {
+            BlackNumberOfAlliesHML = 0;
+        }
+        Else
+        {
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_HML", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+
+	//Flame BlackMarines
+	Switch (BlackNumberOfAlliesFlame)
+	{
+		Case 0:
+		break;
+
+		Case 1:
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 2:
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 3:
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 4:
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		break;
+
+		Case 5:
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 6:
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 7:
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		break;
+
+		Case 8:
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		break;
+
+		Default:
+		If (BlackNumberOfAlliesFlame < 0)
+        {
+            BlackNumberOfAlliesFlame = 0;
+        }
+        Else
+        {
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)-32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0), GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0)+32, GetActorY(0)+32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0), GetActorY(0)-32, GetActorZ(0), 0, 0);
+		Spawn("BlackMarine_Flame", GetActorX(0), GetActorY(0)+32, GetActorZ(0), 0, 0);
+		}
+		break;
+	}
+	MarineSpawnCounter++;
+}
+
+
+Script "AddMarineFist" (VOID) NET
+{
+	NumberofAlliesFist++;
+}
+
+Script "RemoveMarineFist" (VOID) NET
+{
+	NumberofAlliesFist--;
+}
+
+Script "AddMarineSaw" (VOID) NET
+{
+	NumberofAlliesSaw++;
+}
+
+Script "RemoveMarineSaw" (VOID) NET
+{
+	NumberofAlliesSaw--;
+}
+
+Script "AddMarineSMG" (VOID) NET
+{
+	NumberofAlliesSMG++;
+}
+
+Script "RemoveMarineSMG" (VOID) NET
+{
+	NumberofAlliesSMG--;
+}
+
+Script "AddMarineShotgun" (VOID) NET
+{
+	NumberofAlliesShotgun++;
+}
+
+Script "RemoveMarineShotgun" (VOID) NET
+{
+	NumberofAlliesShotgun--;
+}
+
+Script "AddMarineSSG" (VOID) NET
+{
+	NumberofAlliesSSG++;
+}
+
+Script "RemoveMarineSSG" (VOID) NET
+{
+	NumberofAlliesSSG--;
+}
+
+Script "AddMarine" (VOID) NET
+{
+	NumberofAllies++;
+}
+
+Script "RemoveMarine" (VOID) NET
+{
+	NumberofAllies--;
+}
+
+Script "AddMarineMinigun" (VOID) NET
+{
+	NumberofAlliesMinigun++;
+}
+
+Script "RemoveMarineMinigun" (VOID) NET
+{
+	NumberofAlliesMinigun--;
+}
+
+Script "AddMarineRocket" (VOID) NET
+{
+	NumberofAlliesRocket++;
+}
+
+Script "RemoveMarineRocket" (VOID) NET
+{
+	NumberofAlliesRocket--;
+}
+
+Script "AddMarineGrenade" (VOID) NET
+{
+	NumberofAlliesGrenade++;
+}
+
+Script "RemoveMarineGrenade" (VOID) NET
+{
+	NumberofAlliesGrenade--;
+}
+
+Script "AddMarinePlasmagun" (VOID) NET
+{
+	NumberofAlliesPlasmagun++;
+}
+
+Script "RemoveMarinePlasmagun" (VOID) NET
+{
+	NumberofAlliesPlasmagun--;
+}
+
+Script "AddMarineRailgun" (VOID) NET
+{
+	NumberofAlliesRailgun++;
+}
+
+Script "RemoveMarineRailgun" (VOID) NET
+{
+	NumberofAlliesRailgun--;
+}
+
+Script "AddMarineBFG" (VOID) NET
+{
+	NumberofAlliesBFG++;
+}
+
+Script "RemoveMarineBFG" (VOID) NET
+{
+	NumberofAlliesBFG--;
+}
+
+Script "AddMarineBFG10K" (VOID) NET
+{
+	NumberofAlliesBFG10K++;
+}
+
+Script "RemoveMarineBFG10K" (VOID) NET
+{
+	NumberofAlliesBFG10K--;
+}
+
+Script "AddMarineHML" (VOID) NET
+{
+	NumberofAlliesHML++;
+}
+
+Script "RemoveMarineHML" (VOID) NET
+{
+	NumberofAlliesHML--;
+}
+
+Script "AddMarineFlame" (VOID) NET
+{
+	NumberofAlliesFlame++;
+}
+
+Script "RemoveMarineFlame" (VOID) NET
+{
+	NumberofAlliesFlame--;
+}
+//Darker variants
+Script "BlackAddMarineFist" (VOID) NET
+{
+	BlackNumberOfAlliesFist++;
+}
+
+Script "BlackRemoveMarineFist" (VOID) NET
+{
+	BlackNumberOfAlliesFist--;
+}
+
+Script "BlackAddMarineSaw" (VOID) NET
+{
+	BlackNumberOfAlliesSaw++;
+}
+
+Script "BlackRemoveMarineSaw" (VOID) NET
+{
+	BlackNumberOfAlliesSaw--;
+}
+
+Script "BlackAddMarineSMG" (VOID) NET
+{
+	BlackNumberOfAlliesSMG++;
+}
+
+Script "BlackRemoveMarineSMG" (VOID) NET
+{
+	BlackNumberOfAlliesSMG--;
+}
+
+Script "BlackAddMarineShotgun" (VOID) NET
+{
+	BlackNumberOfAlliesShotgun++;
+}
+
+Script "BlackRemoveMarineShotgun" (VOID) NET
+{
+	BlackNumberOfAlliesShotgun--;
+}
+
+Script "BlackAddMarineSSG" (VOID) NET
+{
+	BlackNumberOfAlliesSSG++;
+}
+
+Script "BlackRemoveMarineSSG" (VOID) NET
+{
+	BlackNumberOfAlliesSSG--;
+}
+
+Script "BlackAddMarine" (VOID) NET
+{
+	BlackNumberOfAllies++;
+}
+
+Script "BlackRemoveMarine" (VOID) NET
+{
+	BlackNumberOfAllies--;
+}
+
+Script "BlackAddMarineMinigun" (VOID) NET
+{
+	BlackNumberOfAlliesMinigun++;
+}
+
+Script "BlackRemoveMarineMinigun" (VOID) NET
+{
+	BlackNumberOfAlliesMinigun--;
+}
+
+Script "BlackAddMarineRocket" (VOID) NET
+{
+	BlackNumberOfAlliesRocket++;
+}
+
+Script "BlackRemoveMarineRocket" (VOID) NET
+{
+	BlackNumberOfAlliesRocket--;
+}
+
+Script "BlackAddMarineGrenade" (VOID) NET
+{
+	BlackNumberOfAlliesGrenade++;
+}
+
+Script "BlackRemoveMarineGrenade" (VOID) NET
+{
+	BlackNumberOfAlliesGrenade--;
+}
+
+Script "BlackAddMarinePlasmagun" (VOID) NET
+{
+	BlackNumberOfAlliesPlasmagun++;
+}
+
+Script "BlackRemoveMarinePlasmagun" (VOID) NET
+{
+	BlackNumberOfAlliesPlasmagun--;
+}
+
+Script "BlackAddMarineRailgun" (VOID) NET
+{
+	BlackNumberOfAlliesRailgun++;
+}
+
+Script "BlackRemoveMarineRailgun" (VOID) NET
+{
+	BlackNumberOfAlliesRailgun--;
+}
+
+Script "BlackAddMarineBFG" (VOID) NET
+{
+	BlackNumberOfAlliesBFG++;
+}
+
+Script "BlackRemoveMarineBFG" (VOID) NET
+{
+	BlackNumberOfAlliesBFG--;
+}
+
+Script "BlackAddMarineBFG10K" (VOID) NET
+{
+	BlackNumberOfAlliesBFG10K++;
+}
+
+Script "BlackRemoveMarineBFG10K" (VOID) NET
+{
+	BlackNumberOfAlliesBFG10K--;
+}
+
+Script "BlackAddMarineHML" (VOID) NET
+{
+	BlackNumberOfAlliesHML++;
+}
+
+Script "BlackRemoveMarineHML" (VOID) NET
+{
+	BlackNumberOfAlliesHML--;
+}
+
+Script "BlackAddMarineFlame" (VOID) NET
+{
+	BlackNumberOfAlliesFlame++;
+}
+
+Script "BlackRemoveMarineFlame" (VOID) NET
+{
+	BlackNumberOfAlliesFlame--;
+}
+

@@ -1,0 +1,53 @@
+#library "dbljump"
+#include "zcommon.acs"
+
+// Code by Agent ME
+// Free to use/edit/distribute, just give some credit.
+
+// The code should technically use MODINPUT_OLDBUTTONS instead of INPUT_OLDBUTTONS, but there seems to be
+// a glitch with the former right now. http://forum.zdoom.org/viewtopic.php?t=21037
+// INPUT_OLDBUTTONS works as well in this case anyway.
+
+script "DoubleJumpScript" enter
+{
+	int maxDblJumps = 1;
+	int dblJumpThrust = 30;
+
+	int lastZ = GetActorZ(0);
+	int olderZ;
+	int counter = 0;
+	int x, y, ang;
+	
+	while( true )
+	{
+		olderZ = lastZ;
+		lastZ = GetActorZ(0);
+		delay(1);
+		 
+		if((GetActorZ(0) - GetActorFloorZ(0)) != 0) {
+			if(GetCVAR("donotdoublejump") == 0 && (GetPlayerInput(-1, MODINPUT_BUTTONS) & BT_JUMP) && !(GetPlayerInput(-1, INPUT_OLDBUTTONS) & BT_JUMP)  && (GetActorProperty(0, APROP_HEALTH) >= 1))
+			{
+				if( (GetActorZ(0) > lastZ) && (lastZ <= olderZ) )
+				{
+					counter = 0;
+				} else {
+					if(counter < maxDblJumps)
+					{
+						thing_stop(0);
+						x = GetPlayerInput(-1, INPUT_FORWARDMOVE);
+						y = -GetPlayerInput(-1, INPUT_SIDEMOVE);
+						ang = getactorangle(0)+vectorangle(x, y);
+						if(x || y) ThrustThing (ang>>8, 16, 1, 0);
+						ThrustThingZ(0, dblJumpThrust, 0, 0);
+						//ActivatorSound("JMPBOOT",127);
+						PlaySound(0, "JMPBOOT", 71, 1.0, false, 0.4);
+						counter++;
+					}
+				}
+			} 
+		}
+		else if( (olderZ == lastZ) && (lastZ == GetActorZ(0)) ) {	
+			counter = 0;	
+		}
+	}
+}

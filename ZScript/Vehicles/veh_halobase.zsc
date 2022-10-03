@@ -1,0 +1,164 @@
+class BDPVehCamera : VehCamera
+{
+	double dist_xy, dist_z;
+	double zmin, zmax;
+	Actor source;
+	Actor followact;
+
+	override void UpdatePos(bool moving)
+	{
+		if(!base) return;
+		if(!source) return;
+		if(!followact) followact = base;
+		
+		double maxdist = dist_xy;
+		FLineTraceData lndata;
+		followact.LineTrace(source.angle,dist_xy,0,TRF_THRUACTORS|TRF_THRUBLOCK|TRF_ABSOFFSET,dist_z+sin(source.pitch),0,0,lndata);
+		if( lndata.HitType == lndata.TRACE_HitWall    || 
+		    lndata.HitType == lndata.TRACE_HitCeiling || 
+			lndata.HitType == TRACE_HitFloor			  ) 
+		{
+			maxdist = lndata.Distance;
+		}		
+		
+		double a = source.angle;
+		double p = source.pitch;
+		vector3 followpos = (
+			cos(a) * cos(p),
+			sin(a) * cos(p),
+			-sin(p)
+		) * maxdist;
+		followpos.z += dist_z;
+		followpos.z = clamp(followpos.z, zmin, zmax);
+		
+		vector3 topos = level.vec3offset(followact.pos, followpos + relposoffs);
+		vector3 curpos = BDPMath.Lerp3D(pos, topos, 0.65);
+		curpos.z += base.GetBobOffset();
+		
+		let BDPveh = BDPVehicle(base);
+		if(BDPveh)
+		{
+			FLineTraceData lt;
+			LineTrace(angle, 2048, pitch, 0, offsetforward:16, data:lt);
+			BDPveh.aimActor = lt.HitActor;
+		}
+		
+		A_SetAngle(a, SPF_INTERPOLATE);
+		A_SetPitch(p, SPF_INTERPOLATE);
+		SetOrigin(curpos, true);
+	}
+}
+
+class BDPVehicle : VehBase
+{
+	double veharmor;
+	Property Armored : veharmor;
+	Actor aimActor;
+	
+	Default
+	{
+		Mass 800;
+		Radius 32;
+		Height 16;
+		Scale 10.0;
+		+VehBase.FALLINGPITCH;
+		+SOLID;
+		+INTERPOLATEANGLES;
+		+SHOOTABLE;
+		+NOFRICTION;
+		+NOBLOCKMONST;
+		+canpass;
+		MaxStepHeight 36;
+		Gravity 0.3;
+		BloodType "TankBlood", "TankBlood", "TankBlood";
+		Damagefactor "Trample",0.0;
+		Damagefactor "HeadKicker",0.0;
+		Damagefactor "Taunt", 0.0;
+		Damagefactor "Stealth", 0.0;
+	}
+	
+	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
+	{
+		int diff = veharmor-damage;
+		if(diff > 0)
+		{
+			console.printf("%s", inflictor.getclassname());
+			veharmor -= damage;
+			return 0;
+		}
+		else
+		{
+			veharmor = 0;
+			return super.DamageMobJ(inflictor, source, damage, mod, flags, angle);
+		}
+	}
+	
+	virtual BDPVehCamera SetupBDPCamera(class<BDPVehCamera> cam = "BDPVehCamera", double dist = 50, double offs_oz = 50, double zmin = 50, double zmax = 80, bool setcam = true)
+	{
+		let vehcam = BDPVehCamera(SetupCamera(camtype:cam, setcam:setcam));	
+		if(vehcam)
+		{
+			vehcam.dist_xy = dist;
+			vehcam.dist_z = offs_oz;
+			vehcam.zmin = zmin;
+			vehcam.zmax = zmax;
+			vehcam.source = driver;
+		}
+		return vehcam;
+	}
+	
+	virtual void DoCollisionDamage(double knockback = 1.0, double dmgmod = 30, Sound hitsound = "")
+	{
+		// Process enemies to run over.
+		if(vel.length() > 3)
+		{
+			let act_it = ThinkerIterator.Create();
+			Actor roadkill;
+			while(roadkill = Actor(act_it.Next()))
+			{
+				if( roadkill == self   || 
+				    roadkill == driver || 
+				   !roadkill.bSHOOTABLE  ) continue;
+				if(!CanCollideWith(roadkill, false)) continue;
+				
+				double closedist = (roadkill.radius+radius) * 2.0;
+				if( roadkill.health >= 0 && Distance3DSquared(roadkill) <= closedist*closedist)
+				{
+					vector3 hitdiff = level.SphericalCoords(pos, roadkill.pos, (angle, pitch));
+					double hitang = angle - hitdiff.x;
+					
+					if(abs(hitdiff.x) > 30) continue;
+					
+					vector2 hitdir = (cos(hitang), sin(hitang));
+					double force = BDPMath.GetInertia(roadkill.mass) * vel.length() * 1.5;
+					double massmod = (mass/300.0);
+					
+					//vel.xy -= hitdir * vel.length() * knockback;
+					If(!roadkill.bdontthrust && roadkill.mass < 9999)
+					{
+						roadkill.Thrust(force, angle - hitdiff.x);
+					}
+					roadkill.DamageMobj(self, self, vel.length() * dmgmod * massmod, "extremepunches", 0, hitang);
+					if(hitsound) A_StartSound(hitsound, flags:CHANF_OVERLAP);
+				}
+			}
+		}
+	}
+	
+	Action void A_DoGroundFX()
+	{
+		A_spawnitemex("bikefootstep",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION);
+		
+	}
+	
+	States
+	{
+		Spawn:
+			MODL A 1;
+		loop;
+		
+		Death:
+			MODL A -1;
+		stop;
+	}
+}

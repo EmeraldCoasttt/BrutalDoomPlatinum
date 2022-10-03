@@ -1,0 +1,21 @@
+//Ledge climbing stuff
+//Ledge Climb
+$random ledgeclimb {CLIMB_1 CLIMB_2 ClIMB_3}
+
+CLIMB_1 CLIMB_1
+CLIMB_2 CLIMB_2
+ClIMB_3 ClIMB_3
+
+//Double Jump
+DBLJUMP DBLJUMP
+$random JMPBOOT { JMPBOT1 JMPBOT2}
+JMPBOT1 JMPBOT1
+JMPBOT2 JMPBOT2
+
+
+NukageDrip DSLVSIZ2
+$limit NukageDrip 40
+
+MJOLN MJOLN
+MJOLN2 MJOLN2
+MJOLN3 MJOLN3

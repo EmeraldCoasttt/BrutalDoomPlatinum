@@ -1,0 +1,1154 @@
+//Changes made:
+//select,deselect, no longer pulls you towards your target but thats gonna get removed because... zandronum.
+ACTOR SawDirection: Inventory {Inventory.MaxAmount 1}
+ACTOR SSawPuff2Smaller: SSawPuff2
+{
+decal "SawHorizontalSmaller"
+}
+Actor Chain_saw : BrutalWeapon
+{
+	weapon.selectionorder 2200
+	Weapon.UpSound "none"
+	weapon.readysound "weapons/chainsaw/idle"
+    +WEAPON.NOAUTOAIM
+	+WEAPON.AXEBLOOD
+	//+WEAPON.NO_AUTO_SWITCH
+	+WEAPON.MELEEWEAPON
+	+FORCEXYBILLBOARD
+	Inventory.PickupMessage "You got your Chainsaw back! (Slot 1)"
+	Weapon.KickBack 0
+	BrutalWeapon.weight 7
+	Tag "Chainsaw"
+	Inventory.PickupSound "weapons/chainsaw/draw"
+	Inventory.AltHUDIcon "CSAWA0"
+	scale 0.8
+	//brutalweapon.handedness 2
+states
+	{
+	/*
+	FuckYouFlash:
+	SAW3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    SAW4 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    SAW2 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" A 0 A_FireCustomMissile("SmokeSpawner",0,0,0,5)
+		"####" ABAB 2
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" A 0 A_FireCustomMissile("SmokeSpawner",0,0,0,5)
+		"####" ABAB 2
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" A 0 A_FireCustomMissile("SmokeSpawner",0,0,0,5)
+		"####" ABAB 2
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" A 0 A_FireCustomMissile("SmokeSpawner",0,0,0,5)
+		"####" ABA 2
+		Stop
+		*/
+	
+	LedgeClimb: //It's here so only stainable weapons can show stained fists.
+		TNT1 A 0 A_WeaponReady
+		TNT1 A 0 A_Playsound("ledgeclimb")
+		3L1M A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    2L1M A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    1L1M A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+	    CL1M N 0
+		"####" ABCD 1 A_SetPitch(pitch-pitch/2, SPF_INTERPOLATE)
+		"####" A 0 A_SetPitch(0, SPF_INTERPOLATE)
+		//"####" EF 1 A_SetPitch(pitch-0.5, SPF_INTERPOLATE)
+		"####" E 1
+		"####" FF 1 A_SetPitch(pitch-0.5, SPF_INTERPOLATE)
+		"####" G 1 A_SetPitch(pitch+3, SPF_INTERPOLATE)
+		"####" HI 1 A_SetPitch(pitch+4, SPF_INTERPOLATE)
+		"####" JK 1 A_SetPitch(pitch-3, SPF_INTERPOLATE)
+		"####" LM 1  A_SetPitch(pitch-2, SPF_INTERPOLATE)
+		TNT1 A 0 A_TakeInventory("Climbed_Ledge", 5000)
+		TNT1 A 0 A_TakeInventory("Grabbing_A_Ledge", 5000)
+		TNT1 AA 1 A_SetPitch(pitch-1, SPF_INTERPOLATE)
+		TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 2)
+		TNT1 A 0 A_Overlay(-610, "FirstPersonLegsStand")
+		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN)
+		Goto Ready3
+	
+	GrenadeThrowFlash:
+	SAWG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"GrenadeRed")
+    SAWG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"GrenadeBlue")
+    SAWG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"GrenadeGreen")
+	SAWY BCDE 1
+	TNT1 A 24
+	SAWY EDCB 1//32 in total
+	stop
+	GrenadeRed:
+	SAWY IHGF 1
+	TNT1 A 24
+	SAWY FGHI 1//32 in total
+	stop
+	GrenadeBlue:
+	SAWY NMLK 1
+	TNT1 A 24
+	SAWY KLMN 1//32 in total
+	stop
+	GrenadeGreen:
+	SAWY SRQP 1
+	TNT1 A 24
+	SAWY PQRS 1//32 in total
+	stop
+	
+	KickingFlash:
+	SRWG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+	SGWG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+	SBWG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+	SAWG A 0
+	"####" CDEF 1
+	"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+	"####" GGHH 1
+	"####" A 0 A_StopSound(4)
+	"####" A 0 A_StopSound(1)
+	"####" GGHH 1
+	"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+	"####" FEDC 1
+	Goto Ready
+	
+	
+	AirKickingFlash:
+	SRWG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+	SGWG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+	SBWG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+	SAWG A 0
+	"####" CDEF 1
+	"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+	"####" GGHH 1
+	"####" A 0 A_StopSound(4)
+	"####" A 0 A_StopSound(1)
+	"####" GGHH 1
+	"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+	"####" GGFE 1
+	//"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+	"####" DC 1
+	Goto Ready
+	
+	
+	 SlideKickingStart:
+	    SRWG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		SGWG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		SBWG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		SAWG A 0
+	    "####" CDEF 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+	//	Goto Ready
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+	    "####" GGHHGGHH 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+	//	Goto Ready
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" GGHHGGHH 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+	//	Goto Ready
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" GGHHGGHH 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+	//	Goto Ready
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" GGHHGGHH 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+	//	Goto Ready
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" GGHH 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+	//	Goto Ready
+		
+	 SlideKickingEnd:
+	    SRWG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		SGWG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		SBWG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		SAWG A 0
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+	    "####" GGHHGGFE 1
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" DC 1 //10
+	    Goto Ready
+
+	
+	//FuckYouFlash:
+	//SH69 PQRSTTTTTTTTTTTTTTTTTTTSRQP 1//28 total
+	//stop
+		
+	FuckYouFlash:
+	    SRWG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		SGWG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		SBWG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		SAWG A 0
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+	    "####" CDEFGGHHG 1
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" GHHGGHHG 1
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" GHHGGHHGGF 1
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" EDC 1 //10
+	    Stop
+		
+		
+	Spawn:
+		CSAW A 1
+		CSAW A -1
+		Stop	
+	
+	PuristGun:
+		TNT1 A 1
+		SAWG A 0 A_GiveInventory("ClassicSaw", 1)
+		SAWG A 0 A_TakeInventory("Chain_Saw", 1)
+		TNT1 A 10
+		Goto Ready
+		
+	
+	Select:
+		TNT1 A 0 
+		Goto SelectFirstPersonLegs
+		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1) 
+		SAWG A 0 A_Giveinventory("GoSpecial",1)
+		TNT1 A 0 A_SetCrosshair(41)
+			
+		TNT1 AAAAAAAAAAAAAA 0 A_Raise
+		Goto SelectAnimation
+		
+	SelectAnimation:
+		TNT1 A 1 
+		SAWG A 0 A_Giveinventory("HasCutingWeapon",1)
+		SAWG A 0 A_Giveinventory("sawSelected",1)
+	    TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		ReturnFromNothing:
+		SAWG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"SelectRed")
+    SAWG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"SelectBlue")
+    SAWG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"SelectGreen")
+		SAWY EDCBA 1 A_WeaponReadyDX(WRF_NOFIRE)
+		SelectPart2:
+		SAWG A 0 A_PlaySound("DSSAWZIP", 1)
+		 3AWS A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    2AWS A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    0AWS A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		SAWS A 0
+        "####" ABCDEFEDCB 1 A_WeaponReadyDX(WRF_NOFIRE)
+		"####" A 2 A_playsound("weapons/chainsaw/draw", 3)
+		"####" I 1
+		Goto REady
+		
+		Selectred:
+		SAWY FGHI 1 A_WeaponReadyDX(WRF_NOFIRE)
+		Goto selectpart2
+		
+		Selectblue:
+		SAWY KLMN 1 A_WeaponReadyDX(WRF_NOFIRE)
+		Goto selectpart2
+		
+		Selectgreen:
+		SAWY PQRS 1 A_WeaponReadyDX(WRF_NOFIRE)
+		Goto selectpart2
+		
+	DeselectToFists:
+	AXEG A 0 A_Takeinventory("PowerBloodOnVisor",1)
+	AXEG A 0 A_Takeinventory("PowerBlueBloodOnVisor",1)
+	AXEG A 0 A_Takeinventory("PowerGreenBloodOnVisor",1)
+	AXEG A 0 A_Takeinventory("HasCutingWeapon",1)
+	TNT1 AAAAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+	wait
+		
+	InstantDeselect:	    
+	    TNT1 A 1 A_TakeInventory("QuickSwitchSSG",1)
+		TNT1 A 3 A_StopSound
+		TNT1 A 0 A_StopSound(0)
+		NULL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_lower
+		wait
+		
+	Deselect: "####" A 0 A_TakeInventory("IsPlayingDoxMod",1)
+	    TNT1 A 0 A_JumpIfInventory("SwitchingDualModes", 1, "DeselectToFists")
+		TNT1 A 0 A_JumpIfInventory("QuickSwitchSSG",1,"InstantDeselect")
+		"####" A 0 A_ClearOverlays(-2,-2)
+	    SAWG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"DeselectRed")
+        SAWG A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"DeselectBlue")
+        SAWG A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"DeselectGreen")
+	    SAWY ABCDE 1
+		Goto DeselectEnd
+	DeselectRed:
+	    SAWY JIHGF 1
+		Goto DeselectEnd
+	DeselectBlue:
+	    SAWY ONMLK 1	
+		Goto DeselectEnd
+	DeselectGreen:
+	    SAWY TSRQP 1
+		Goto DeselectEnd
+	DeselectEnd:
+		TNT1 A 0 A_SetCrosshair(0)
+		SAWG A 0 A_StopSound(6)
+		AXEG A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		AXEG A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
+		AXEG A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
+		SAWG A 0 A_TakeInventory("HasCutingWeapon",1)
+		SAWG A 0 A_StopsoundEx("Weapon")
+		SAWG AAAAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		wait
+		
+    StrapIdle:
+	Ready2:
+    Steady:
+	TNT1 A 1
+	Goto Ready
+	
+	
+	Reload:
+	    3AWS A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    2AWS A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    0AWS A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		SAWS A 0
+		"####" A 0 A_PlaySound("DSSAWZIP", 1)
+	    "####" IABCDEFEDCB 1 A_WeaponReady(WRF_NOFIRE)
+		"####" A 3 A_playsound("weapons/chainsaw/draw", 3)
+		"####" I 1
+		"####" A 0 A_TakeInventory("Reloading",1)
+		Goto Ready
+	
+	Ready:
+	Ready3:
+	ReadyToFire:
+		TNT1 A 0 A_Giveinventory("HasCutingWeapon",1)
+		TNT1 A 0 A_StopSound(4)
+		TNT1 A 0 A_StopSound(1)
+		TNT1 A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		TNT1 A 0 A_FireCustomMissile("SmokeSpawner",0,0,0,5)
+		
+		SAW3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
+	    SAW4 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
+	    SAW2 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
+		SAWG A 0 A_checksprint
+		
+		"####" ABAB 2 {
+			A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			return state("");
+		}
+		"####" "#" 0 A_Jump(96,"Ready")
+		SSW3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"Ready.BloodDrip")
+	    SSW4 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"Ready.BloodDrip")
+	    SSW2 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"Ready.BloodDrip")
+		Goto Ready
+		
+	Ready.BloodDrip:
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" A 0 A_FireCustomMissile("SmokeSpawner",0,0,0,5)
+		"####" CDEF 2 {
+			A_WeaponReadyDX;
+			if (CountInv("StartDualWield") == 1) { return state("DualWield"); }
+						
+			if (CountInv("Kicking") == 1) {
+				if (CountInv("IsCrouching") == 1) {
+					return state("SlideKickingStart");
+				}
+				if (momZ != 0) {
+					return state("AirKickingFlash");
+				}
+				else {
+					return state("KickingFlash");
+				}
+			}
+
+			if (CountInv("Taunting") == 1) { return state("Taunt"); }
+			if (CountInv("Reloading") == 1) { return state("Reload"); }
+			if (CountInv("Salute1") == 1 || CountInv("Salute2") == 1) { return state("Salute"); }
+			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
+			return state("");
+		}
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" GHIJ 2 {
+			A_WeaponReadyDX;
+			if (CountInv("StartDualWield") == 1) { return state("DualWield"); }
+						
+			if (CountInv("Kicking") == 1) {
+				if (CountInv("IsCrouching") == 1) {
+					return state("SlideKickingStart");
+				}
+				if (momZ != 0) {
+					return state("AirKickingFlash");
+				}
+				else {
+					return state("KickingFlash");
+				}
+			}
+
+			if (CountInv("Taunting") == 1) { return state("Taunt"); }
+			if (CountInv("Reloading") == 1) { return state("Reload"); }
+			if (CountInv("Salute1") == 1 || CountInv("Salute2") == 1) { return state("Salute"); }
+			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
+			return state("");
+		}
+		"####" A 0 {
+			
+		}
+		Goto Ready
+	
+	//SawDirection is used as a checker for which direction to attack from.
+    Fire:
+	    TNT1 A 0 A_JumpIfInventory("SawDirection",1,"Fire2")
+		CSR1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA1 A 0
+		"####" A 0 A_StopSound(6)
+		"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		"####" STU 1
+	FireNoStartup:
+		"####" A 0 A_Giveinventory("HasCutingWeapon",1)
+		"####" A 0 A_PlaySound("weapons/chainsaw/loop",1)
+		"####" AB 1
+		"####" A 0 A_PlaySound("weapons/chainsaw/draw", 4)
+		"####" AAA 0 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN , 100, 32,0)
+		"####" C 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		"####" A 0
+		{
+		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinueRed"); }
+		If(CountInv("ChainsawHitBlue")==1) {Return State("FireContinueBlue"); }
+		If(CountInv("ChainsawHitGreen")==1) {Return State("FireContinueGreen"); }
+		Return State("");}
+		
+		"####" D 1 A_FireCustomMissile("SawDamageHorizontal", 0, 0, 0, 0)
+		"####" A 0
+		{
+		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinueRed"); }
+		If(CountInv("ChainsawHitBlue")==1) {Return State("FireContinueBlue"); }
+		If(CountInv("ChainsawHitGreen")==1) {Return State("FireContinueGreen"); }
+		Return State("");}
+		"####" E 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		"####" A 0 
+		{
+		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinueRed"); }
+		If(CountInv("ChainsawHitBlue")==1) {Return State("FireContinueBlue"); }
+		If(CountInv("ChainsawHitGreen")==1) {Return State("FireContinueGreen"); }
+		Return State("");}
+		"####" F 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		"####" A 0 
+		{
+		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinueRed"); }
+		If(CountInv("ChainsawHitBlue")==1) {Return State("FireContinueBlue"); }
+		If(CountInv("ChainsawHitGreen")==1) {Return State("FireContinueGreen");}
+		Return State("");}
+		"####" GHI 1 
+		"####" A 0 	{A_GiveInventory("QuickSwitchSSG",1); A_GiveInventory("SawDirection",1);}
+		"####" ZZ 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		"####" A 0 A_ReFire("Fire2NoStartup")
+		"####" A 0 A_TakeInventory("QuickSwitchSSG",1)
+		"####" XWV 1
+		Goto Ready//FireEnd
+	Fire2:
+		CSR1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA1 A 0
+		"####" A 0 A_StopSound(6)
+		"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		"####" VWX 1
+	Fire2NoStartup:
+		"####" A 0 A_Giveinventory("HasCutingWeapon",1)
+		"####" A 0 A_playsound("weapons/chainsaw/loop",1)
+		"####" JK 1
+		"####" A 0 A_PlaySound("weapons/chainsaw/draw", 4)
+		"####" AAA 0 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 100, 32,0)
+		"####" L 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		"####" A 0
+		{
+		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinue2Red"); }
+		If(CountInv("ChainsawHitBlue")==1) {Return State("FireContinue2Blue"); }
+		If(CountInv("ChainsawHitGreen")==1) {Return State("FireContinue2Green"); }
+		Return State("");}
+		
+		"####" M 1 A_FireCustomMissile("SawDamageHorizontal", 0, 0, 0, 0)
+		"####" A 0
+		{
+		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinue2Red"); }
+		If(CountInv("ChainsawHitBlue")==1) {Return State("FireContinue2Blue"); }
+		If(CountInv("ChainsawHitGreen")==1) {Return State("FireContinue2Green"); }
+		Return State("");}
+		"####" N 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		"####" A 0 
+		{
+		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinue2Red"); }
+		If(CountInv("ChainsawHitBlue")==1) {Return State("FireContinue2Blue"); }
+		If(CountInv("ChainsawHitGreen")==1) {Return State("FireContinue2Green"); }
+		Return State("");}
+		"####" O 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		"####" A 0 
+		{
+		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinue2Red"); }
+		If(CountInv("ChainsawHitBlue")==1) {Return State("FireContinue2Blue"); }
+		If(CountInv("ChainsawHitGreen")==1) {Return State("FireContinue2Green"); }
+		Return State("");} 
+		"####" PQR 1
+		"####" A 0 	{A_GiveInventory("QuickSwitchSSG",1); A_TakeInventory("SawDirection",1);}
+		"####" ZZ 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		"####" A 0 A_ReFire("FireNoStartup")
+		"####" A 0 A_TakeInventory("QuickSwitchSSG",1)
+		"####" UTS 1
+		Goto Ready//FireEnd
+		
+	FireRed:
+	FireBlue:
+	FireGreen:
+		"####" A 0
+		"####" AAA 0 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 90, 32,0)
+		"####" H 1
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+		"####" I 1 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 90, 32,0)
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+		"####" J 1 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 90, 1,0)
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+		"####" K 1 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 90, 32,0)
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+		"####" L 1
+	FireEnd:
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+		TNT1 A 0 A_GiveInventory("QuickSwitchSSG",1)
+		TNT1 AA 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		NULL A 0 A_TakeInventory("QuickSwitchSSG",1)
+		CSR1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA1 A 0
+		"####" MNO 1 
+		"####" A 0 A_ReFire("Fire")
+		Goto readytofire
+			
+	FireContinueRed:
+		CSR3 A 0
+		"####" A 0 ACS_Execute(680, 0, 0, 0, 0)
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
+		Goto FireContinue
+	FireContinueBlue:
+		CSB3 A 0
+		"####" A 0 ACS_Execute(683, 0, 0, 0, 0)
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
+		Goto FireContinue
+	FireContinueGreen:
+		CSG3 A 0
+		"####" A 0 ACS_Execute(682, 0, 0, 0, 0)
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		Goto FireContinue
+	FireContinue:
+		CSR3 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB3 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA3 A 0
+		"####" A 0
+		"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		"####" A 0 A_PlaySound("weapons/chainsaw/loop", 4)	
+		"####" ABCD 1 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN, 90, 1,0)
+	//	"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+	//	"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+	//	"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+	    "####" A 0
+		{
+		if(CountInv("ChainsawHitRed")==1) {A_ReFire("FireContinueRed"); }
+		if(CountInv("ChainsawHitBlue")==1) {A_ReFire("FireContinueBlue"); }
+		if(CountInv("ChainsawHitGreen")==1) {A_ReFire("FireContinueGreen"); }
+		}
+		CSR1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA3 A 0
+		"####" A 0
+		"####" EFGHI 1
+		"####" A 0 { A_GiveInventory("SawDirection",1); A_GiveInventory("QuickSwitchSSG",1); }
+		"####" ZZ 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		"####" A 0 A_TakeInventory("QuickSwitchSSG",1)
+		"####" A 0 A_ReFire("Fire2NoStartup")
+		"####" A 0 A_StopSound(4)
+		"####" XWV 1
+		goto readytofire
+		
+	FireContinue2Red:
+		CSR3 A 0
+		"####" A 0 ACS_Execute(680, 0, 0, 0, 0)
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
+		Goto FireContinue2
+	FireContinue2Blue:
+		CSB3 A 0
+		"####" A 0 ACS_Execute(683, 0, 0, 0, 0)
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
+		Goto FireContinue2
+	FireContinue2Green:
+		CSG3 A 0
+		"####" A 0 ACS_Execute(682, 0, 0, 0, 0)
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		Goto FireContinue2
+	FireContinue2:
+		CSR3 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB3 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA3 A 0
+		"####" A 0
+		"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		"####" A 0 A_PlaySound("weapons/chainsaw/loop", 4)	
+		"####" EFGH 1 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN, 90, 1,0)
+	//	"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinue2Red")
+	//	"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinue2Blue")
+	//	"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinue2Green")
+	    "####" A 0
+		{
+		if(CountInv("ChainsawHitRed")==1) {A_ReFire("FireContinue2Red"); }
+		if(CountInv("ChainsawHitBlue")==1) {A_ReFire("FireContinue2Blue"); }
+		if(CountInv("ChainsawHitGreen")==1) {A_ReFire("FireContinue2Green"); }
+		}
+		CSR1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA3 A 0
+		"####" A 0
+		"####" MNOPQR 1
+		"####" A 0 { A_TakeInventory("SawDirection",1); A_GiveInventory("QuickSwitchSSG",1); }
+		"####" ZZ 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		"####" A 0 A_TakeInventory("QuickSwitchSSG",1) 
+		"####" A 0 A_ReFire("FireNoStartup")
+		"####" A 0 A_StopSound(4)
+		"####" UTS 1
+		goto readytofire
+		
+	AltFire:
+		CSR2 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG2 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB2 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA2 A 0
+		"####" A 0
+	//	"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
+	//	"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
+	//	"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		"####" ABCD 1
+	AltFireLoop:
+	    CSR2 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG2 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB2 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA2 A 0
+		"####" A 0	
+		"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		"####" A 0 A_PlaySound("weapons/chainsaw/loop",1)
+		"####" E 1 { A_WeaponOffset( random(3,-3) , 32+random(3,-3), 0);	A_Saw("", "", 1, "SSawPuff2Smaller", SF_NOPULLIN | SF_NOTURN, 80, 2,1); }
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "AltContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "AltContinueGreen")
+		"####" E 1 { A_WeaponOffset( random(3,-3) , 32+random(3,-3), 0);	A_Saw("", "", 1, "SSawPuff2Smaller", SF_NOPULLIN | SF_NOTURN, 80, 2,1); }
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "AltContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "AltContinueGreen")
+	AltFireLoop2:
+		"####" E 1 { A_WeaponOffset( random(3,-3) , 32+random(3,-3), 0);	A_Saw("", "", 1, "SSawPuff2Smaller", SF_NOPULLIN | SF_NOTURN, 80, 2,1); }
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "AltContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "AltContinueGreen")
+		"####" E 1 { A_WeaponOffset( random(3,-3) , 32+random(3,-3), 0);	A_Saw("", "", 1, "SSawPuff2Smaller", SF_NOPULLIN | SF_NOTURN, 80, 2,1); }
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "AltContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "AltContinueGreen")
+		"####" A 0 A_ReFire("AltFireLoop")
+        "####" A 0 A_TakeInventory("ChainsawHitRed", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		"####" DCBA 1
+		goto readytofire
+	
+	AltContinueRed:
+		CSR2 A 0
+		"####" A 0 ACS_Execute(680, 0, 0, 0, 0)
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
+		Goto AltContinue
+	AltContinueBlue:
+		CSB2 A 0
+		"####" A 0 ACS_Execute(683, 0, 0, 0, 0)
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
+		Goto AltContinue
+	AltContinueGreen:
+		CSG2 A 0
+		"####" A 0 ACS_Execute(682, 0, 0, 0, 0)
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		Goto AltContinue
+	AltContinue:
+		CSR2 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG2 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB2 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA2 A 0		
+		"####" A 0 A_playsound("weapons/chainsaw/loop",1)
+		"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		"####" FG 1
+		{
+		A_WeaponOffset( random(3,-3) , 32+random(3,-3), 0);
+		A_Saw("", "", 1, "SSawPuff2Smaller", SF_NOPULLIN | SF_NOTURN, 80, 2,1);
+		}
+		"####" A 0 A_JumpIf( CountInv("ChainsawHitRed")==0 && CountInv("ChainsawHitBlue")==0 && CountInv("ChainsawHitGreen")==0, "AltFireLoop2")
+		"####" HI 1
+		{
+		A_WeaponOffset( random(3,-3) , 32+random(3,-3), 0);
+		A_Saw("", "", 1, "SSawPuff2Smaller", SF_NOPULLIN | SF_NOTURN, 80, 2,1);
+		}
+		"####" A 0 
+		{
+	    if(CountInv("ChainsawHitRed")==1) { A_ReFire("AltContinueRed"); }
+		if(CountInv("ChainsawHitBlue")==1) { A_ReFire("AltContinueBlue"); }
+		if(CountInv("ChainsawHitGreen")==1) { A_ReFire("AltContinueGreen"); }
+		}
+		"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		"####" A 0 A_ReFire("AltFireLoop")
+		"####" DCBA 1
+		goto readytofire
+		
+		
+		
+		
+/*
+	Fire:
+		CSR1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA1 A 0
+		"####" A 0 A_StopSound(6)
+		"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		"####" A 0 A_Giveinventory("HasCutingWeapon",1)
+		"####" A 0 A_playsound("weapons/chainsaw/loop",1)
+		"####" ABCD 1
+		"####" A 0 A_PlaySound("weapons/chainsaw/draw", 4)
+		"####" EFG 1
+		"####" A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"FireRed")
+		"####" A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"FireGreen")
+		"####" A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"FireBlue")
+		"####" A 0
+		"####" AAA 0 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 100, 32,0)
+		"####" H 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		"####" A 0
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+		"####" I 1
+		"####" J 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+		"####" K 1 A_FireCustomMissile("SawDamageHorizontal", 0, 0, 0, 0)
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+		"####" L 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		Goto FireEnd
+	FireRed:
+	FireBlue:
+	FireGreen:
+		"####" A 0
+		"####" AAA 0 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 90, 32,0)
+		"####" H 1
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+		"####" I 1 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 90, 32,0)
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+		"####" J 1 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 90, 1,0)
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+		"####" K 1 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 90, 32,0)
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+		"####" L 1
+	FireEnd:
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+		TNT1 A 0 A_GiveInventory("QuickSwitchSSG",1)
+		TNT1 AA 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		NULL A 0 A_TakeInventory("QuickSwitchSSG",1)
+		CSR1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA1 A 0
+		"####" MNO 1 
+		"####" A 0 A_ReFire("Fire")
+		Goto readytofire
+		
+		
+	FireContinueRed:
+		CSR1 A 0
+		"####" A 0 ACS_Execute(680, 0, 0, 0, 0)
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
+		Goto FireContinue
+	FireContinueBlue:
+		CSB1 A 0
+		"####" A 0 ACS_Execute(683, 0, 0, 0, 0)
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
+		Goto FireContinue
+	FireContinueGreen:
+		CSG1 A 0
+		"####" A 0 ACS_Execute(682, 0, 0, 0, 0)
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		Goto FireContinue
+	FireContinue:
+		CSR1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA1 A 0
+		"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		"####" A 0 A_PlaySound("weapons/chainsaw/loop", 4)	
+		"####" RSTU 1 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 90, 1,0)
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "FireContinueRed")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "FireContinueBlue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "FireContinueGreen")
+		"####" IJ 1
+		"####" KLM 1
+		TNT1 A 4
+		CSR1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG1 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB1 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA1 A 0
+		"####" MNO 1
+		"####" A 0 A_ReFire
+		"####" A 0 A_StopSound(4)
+		goto readytofire
+*/
+		
+	/*	
+	AltFire:
+		CSR2 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG2 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB2 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA2 A 0
+		"####" A 0 A_playsound("weapons/chainsaw/loop",1)
+		"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		"####" ABCDDEEEF 1
+		"####" A 0 A_PlaySound("weapons/chainsaw/draw", 4)
+		"####" GHI 1
+		"####" A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"AltFire2Red")
+		"####" A 0
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinue2Red")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "AltContinue2Blue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "AltContinue2Green")
+		"####" AAA 0 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 80, 0,16)
+		"####" AAAA 0 A_FireCustomMissile("SawDamageVertical", 0, 0, 0, random(-10,10))
+		"####" J 1
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinue2Red")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "AltContinue2Blue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "AltContinue2Green")
+		"####" M 1
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinue2Red")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "AltContinue2Blue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "AltContinue2Green")
+		"####" N 1
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinue2Red")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "AltContinue2Blue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "AltContinue2Green")
+		"####" O 1
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinue2Red")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "AltContinue2Blue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "AltContinue2Green")
+		TNT1 A 0 A_GiveInventory("QuickSwitchSSG",1)
+		TNT1 AA 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		NULL A 0 A_TakeInventory("QuickSwitchSSG",1)
+		CSR2 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG2 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB2 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA2 A 0
+		"####" PQ 1
+		goto readytofire
+	AltFire2Red:
+		TNT1 AAA 0 A_Saw("", "", 0, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 90, 0,16)
+		CSR2 J 1
+		SAWG A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinue2Red")
+		CSR2 MNO 1 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinue2Red")
+		SAWG A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinue2Red")
+		SAWG A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "AltContinue2Blue")
+		SAWG A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "AltContinue2Green")
+		TNT1 A 0 A_GiveInventory("QuickSwitchSSG",1)
+		TNT1 AA 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		NULL A 0 A_TakeInventory("QuickSwitchSSG",1)
+		CSR2 PQ 1
+		goto readytofire	
+	
+		
+	AltContinue2Red:
+		SAWG A 0
+		SAWG A 0 A_TakeInventory("ChainsawHitRed", 1)
+		SAWG A 0 A_TakeInventory("ChainsawHitBlue", 1)
+		SAWG A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		CSR2 JK 1 A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 90, 0,16)
+		CSR2 L 1 A_Saw("", "", 2, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 90, 0,16)
+		NULL A 0 ACS_Execute(680, 0, 0, 0, 0)
+		SAWG A 0 A_PlaySound("weapons/chainsaw/draw", 4)
+		SAWG A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinue2Red")
+		CSR2 MNO 1 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinue2Red")
+		TNT1 A 0 A_GiveInventory("QuickSwitchSSG",1)
+		TNT1 AA 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		NULL A 0 A_TakeInventory("QuickSwitchSSG",1)
+		CSR2 PQ 1
+		//Goto Ready.Blood
+		goto readytofire
+	AltContinue2Blue:
+		CSB2 A 0
+		"####" A 0 ACS_Execute(683, 0, 0, 0, 0)
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerGreenBloodOnVisor",1)
+		Goto AltContinue2
+	AltContinue2Green:
+		CSG2 A 0
+		"####" A 0 ACS_Execute(682, 0, 0, 0, 0)
+		"####" A 0 A_TakeInventory("PowerBlueBloodOnVisor",1)
+		"####" A 0 A_TakeInventory("PowerBloodOnVisor",1)
+		Goto AltContinue2
+	AltContinue2:
+		CSR2 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG2 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB2 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA2 A 0
+		"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
+		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		"####" J 1 A_FireCustomMissile("SawDamageVertical", 0, 0, 0, 0)
+		"####" K 1
+		"####" J 1 A_FireCustomMissile("SawDamageVertical", 0, 0, 0, 0)
+		"####" K 1
+		"####" A 0 A_PlaySound("weapons/chainsaw/draw", 4)
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinue2Red")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "AltContinue2Blue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "AltContinue2Green")
+		"####" M 1
+		"####" A 0 A_FireCustomMissile("SawDamageVertical", 0, 0, 0, 0)
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinue2Red")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "AltContinue2Blue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "AltContinue2Green")
+		"####" N 1
+		"####" A 0 A_FireCustomMissile("SawDamageVertical", 0, 0, 0, 0)
+		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "AltContinue2Red")
+		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "AltContinue2Blue")
+		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "AltContinue2Green")
+		"####" O 1
+		"####" A 0 A_FireCustomMissile("SawDamageVertical", 0, 0, 0, 0)
+		TNT1 A 0 A_GiveInventory("QuickSwitchSSG",1)
+		TNT1 AA 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		NULL A 0 A_TakeInventory("QuickSwitchSSG",1)
+		CSR2 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG2 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB2 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA2 A 0
+		"####" PQ 1
+		goto readytofire
+		*/
+		
+		
+		
+		
+	SprintOverlay:
+		
+		
+		SAW3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"SprintOverlay2")
+	    SAW4 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"SprintOverlay2")
+	    SAW2 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,"SprintOverlay2")
+		SAWG A 0 
+		SprintOverlay2:
+		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		"####" ABAB 2 
+		
+		"####" A 0 A_FireCustomMissile("SmokeSpawner",0,0,0,5)
+		LOOP
+	
+		
+		
+	DualWield:
+	    CSR4 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
+		CSG4 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
+		CSB4 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
+		CSA4 A 0
+	   "####" B 1
+	   "####" X 0 A_PlaySound("foley/GLUpwardsToClose",10,0.7)
+	   "####" CDEF 1
+	  DualWieldHold:
+	  "####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+	  "####" A 0 A_FireCustomMissile("SmokeSpawner",0,0,15,12)
+	   "####" FFIIFFII 1 A_JumpIf(CountInv("holdingdual")==0,"DualWieldThrow")
+	   "####" A 0 A_jumpifinventory("holdingdual",1,"DualWieldHold")
+	   DualWieldThrow:
+		"####" GH 1//CD 1
+		TNT1 A 0 A_TakeInventory("StartDualWield", 1)
+		//CSA1 FG 1
+	    AXEG A 0 A_PlaySound("weapons/gswing", 1)
+		//AXEG A 0 A_JumpIfInventory("PowerStrength", 1, "StrongThrow")
+		AXEG A 0 A_FireCustomMissile("ThrowedChainsaw", 0, 0, 0, 0)
+		ContinueAltThrow:
+		AXEZ ABC 1
+		{
+		A_SetAngle(Angle+2, SPF_INTERPOLATE);
+		A_SetPitch(Pitch+1, SPF_INTERPOLATE);
+		}
+		AXEZ D 1
+		{
+		A_SetAngle(Angle+1, SPF_INTERPOLATE);
+		A_SetPitch(Pitch+0.5, SPF_INTERPOLATE);
+		}
+		AXEZ E 1
+		{
+		A_SetAngle(Angle+0.5, SPF_INTERPOLATE); //7,5
+		A_SetPitch(Pitch+0.2, SPF_INTERPOLATE); //3,7
+		}
+		AXEZ E 2
+		AXEZ E 1
+		{
+		A_SetAngle(Angle-0.5, SPF_INTERPOLATE);
+		A_SetPitch(Pitch-0.2, SPF_INTERPOLATE);
+		}
+		AXEZ EEF 1
+		{
+		A_SetAngle(Angle-2, SPF_INTERPOLATE);
+		A_SetPitch(Pitch-1, SPF_INTERPOLATE);
+		}
+		AXEZ G 1
+		{
+		A_SetAngle(Angle-1, SPF_INTERPOLATE);
+		A_SetPitch(Pitch-0.5, SPF_INTERPOLATE);
+		}
+		AXEZ HI 1
+		TNT1 A 0
+		TNT1 A 1 A_jumpifinventory("PowerSpeed2",1,"ReturnFromNothing")
+		TNT1 A 0 A_GiveInventory("SwitchingDualModes",1)
+		TNT1 A 0 A_GiveInventory("iJustThrowedMySaw",1)
+		TNT1 A 0 A_SelectWeapon("Melee_Attacks")
+		Goto instadeselect
+		
+		
+	}
+}
+
+
+
+
+
+ACTOR SawDamageHorizontal: FastProjectile
+{
+	Radius 22
+	Height 2
+	DamageType Cut
+	Projectile 
+	+FORCEXYBILLBOARD
+	+EXTREMEDEATH
+	+BLOODSPLATTER
+	RenderStyle Add
+//	Decal "BulletDecalNew1"
+	Alpha 0.6
+    Damage (random(5,6))
+    Speed 28
+	//HitObituary "$OB_IMPHIT"
+	SeeSound "none"
+	DeathSound "none"
+	Decal "none"
+//	decal "SawHorizontal"
+	Species "Marines"
+	+THRUSPECIES
+	+MTHRUSPECIES
+	States
+	{
+	Spawn:
+		TNT1 A 0 BRIGHT
+        TNT1 A 1 //A_PlaySound("weapons/gswing")
+		Stop
+	Death:
+			SAWG A 0
+			//SAWG A 0 A_SpawnItem("SSAwPuff")
+			//SAWG A 0 A_PlaySound("DSSAWAL", 1)
+			TNT1 A 1 Radius_Quake(2, 3, 0, 4, 0)
+			TNT1 A 10
+			Stop
+	XDeath:
+		SAWG A 0
+		TNT1 A 1 Radius_Quake(2, 3, 0, 4, 0)
+		SAWG A 0 A_PlaySound("CSAWFLESH", 1)
+		TNT1 A 10
+		Stop
+	}
+}
+
+ACTOR SawDamageHorizontal2: SawDamageHorizontal
+{
+	-BLOODSPLATTER
+	+BLOODLESSIMPACT
+}
+
+ACTOR SawDamageVertical: SawDamageHorizontal
+{
+	DamageType Saw
+    Damage (random(7,8))
+	decal "SawVertical"
+}
+
+
+ACTOR SawDamageVertical2: SawDamageVertical
+{
+	-BLOODSPLATTER
+	+BLOODLESSIMPACT
+}
+
+ACTOR iJustThrowedMySaw: Inventory {Inventory.maxAmount 1}

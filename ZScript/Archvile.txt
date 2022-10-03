@@ -1,0 +1,93 @@
+
+
+	CLASS BaseArchvile : archvile
+	{
+	
+	
+		Override void tick()
+		{
+			
+			If(getcvar("bd_archvileteleport") == 0 && !findinventory("imteleporting"))
+				{
+				
+				
+				painchance = random(70,140);
+				bnopain = false;
+				
+				}
+			Else
+			{
+			//console.printf("Homosexual");
+			painchance = 10;
+			}
+			Super.tick();
+		}
+	
+		Action void a_vileteleport()
+		{
+			//A_wander();
+			angle = frandom(0,360);
+			A_spawnitemex("randomTinyBurningPiece");
+			A_recoil(-15);
+			A_checkforresurrection(resolvestate("stayteleported"));
+			
+		}
+		
+		Action void a_vileteleport2()
+		{
+			//A_wander();
+			angle = frandom(0,360);
+			A_spawnitemex("randomTinyBurningPiece");
+			A_recoil(-6);
+			
+		}
+	
+	}
+	
+	
+	CLASS ArchvileFirewall : actor
+	{
+		Default
+		{
+		+Shootable;
+		Health 105;
+		Radius 32;
+		Height 72;
+		Damagefactor "Railgun", 0.3;
+		Scale 0.3;
+		Renderstyle "add";
+		+noblood;
+		+nogravity;
+		+dontthrust;
+		//+solid;
+		Species "archviles";
+		+thruspecies;
+		+dontrip;
+		+stoprails;
+		}
+		
+		
+		States
+		{
+			Spawn:
+				TNT1 ABABABABABABABABABABABABABABABABABABABABABABABABBABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABA 1 BRIGHT NODELAY
+				{
+					A_spawnprojectile("FlameTrailsLonger", 0, 0, random (0, 360), 2, random (-70, -120));
+				}
+			Death:
+					TNT1 AA 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+	TNT1 A 0 A_spawnprojectile ("BDExplosionparticles", 0, 0, random (0, 360), 2, random (-40, -90));
+	TNT1 A 0 A_spawnprojectile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (-40, -90));
+	TNT1 A 0 A_spawnprojectile ("BDExplosionparticles3", 10, 0, random (0, 360), 2, random (-40, -90));
+	EXPL A 0 A_spawnprojectile ("FlamethrowerFireParticles", 6, 0, random (0, 360), 2, random (0, -90));
+	//FRFX ZZZ 0 BRIGHT A_spawnprojectile ("BigBlackSmoke", 2, 0, random (0, 360), 2, random (0, 30))
+	//TNT1 A 2 A_SpawnItem("BurningGroundLowDamage")
+	TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15));
+	TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35));
+	TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35));
+	TNT1 AA 20 A_spawnprojectile ("BigBlackSmoke", 0, 0, random (0, 360), 2, random (-40, -160));
+	Stop;
+		}
+	
+	
+	}

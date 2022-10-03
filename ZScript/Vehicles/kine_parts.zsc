@@ -1,0 +1,198 @@
+class Segment : Actor
+{
+	vector3 endoffs, endpos;
+	bool flipped;
+	bool onground;
+	Segment parent;
+	
+	double angleoffs, pitchoffs;
+	bool followangle, followpitch;
+	Property FollowAngles : followangle, followpitch;
+	Property AngleOffsets : angleoffs, pitchoffs;
+	
+	Default
+	{	
+		Radius 5;
+		Height 5;
+		-SOLID;
+		+NOGRAVITY;
+		Segment.FollowAngles true, true;
+		Segment.AngleOffsets 0, 0;
+	}
+	
+	static Segment Setup(class<Segment> type, vector3 pos, vector2 angles)
+	{
+		let seg = Segment(Spawn(type, pos));
+		if(seg) 
+		{
+			seg.angleoffs += angles.x;
+			seg.pitchoffs += angles.y;
+			seg.GetEndPos();
+		}
+		return seg;
+	}
+	
+	void Attach(Segment parent)
+	{
+		parent.GetEndPos();
+		SetOrigin(parent.endpos, true);
+		FollowPos(parent.pos, true);
+		self.parent = parent;
+	}
+	
+	vector3 clampz(vector3 frompos)
+	{
+		if( (frompos.z+height) <   floorz ) frompos.z =   floorz-height;
+		if( (frompos.z-height) > ceilingz ) frompos.z = ceilingz+height;
+		return frompos;
+	}
+	
+	virtual void FollowPos(vector3 target, bool forcefollow = false)
+	{
+		vector3 dir = level.Vec3Diff(pos, target);
+		vector2 dirangles = (
+			atan2(dir.y, dir.x),
+			atan2(sqrt(dir.x**2 + dir.y**2), dir.z)
+		);
+		
+		if( followangle || forcefollow ) 
+			angle = dirangles.x + angleoffs;
+		else
+			angle = angleoffs;
+			
+		if( followpitch || forcefollow ) 
+			pitch = dirangles.y + pitchoffs;
+		else
+			pitch = pitchoffs;
+		
+		double len = (pos - endpos).Length();
+		dir = dir.Unit() * -len;
+		MovePos(level.vec3offset(target, dir));
+	}
+	
+	void MovePos(vector3 topos)
+	{
+		SetOrigin(topos, true);
+		GetEndPos();
+	}
+	
+	virtual vector3 GetEndOffs()
+	{
+		return (25,0,0);
+	}
+	
+	void GetEndPos()
+	{
+		vector3 localoffs = GetEndOffs();
+		if(flipped) localoffs.y *= -1;
+		
+		vector3 worldoffs = BDPMath.V3Offset(angle+angleoffs,pitch+pitchoffs - 90,roll, localoffs.x,localoffs.y,localoffs.z, 1.0);
+		endpos = level.vec3offset(pos, worldoffs); 
+	}
+	
+	void DrawPoints()
+	{
+		let p1 = Spawn("PointTest", pos);
+		let p2 = Spawn("PointTest", endpos);
+		if(p1) p1.SetShade(0xFF0000FF); // A (Blue)
+		if(p2) p2.SetShade(0xFFFF0000); // B (Red)
+	}
+	
+	override void Tick()
+	{
+		super.Tick();
+		bInvisible = GetAge() <= 2;
+		onground = ((pos.z <= floorz) || (pos.z-height <= floorz) || bOnMobj || bMBFBouncer);
+		GetEndPos();
+		
+// 		DrawPoints();
+	}
+	
+	States
+	{
+		Spawn:
+			MODL A -1;
+		stop;
+	}
+}
+
+class KineLimb : Actor
+{
+	vector3 fixedpos;
+	vector3 followpos;
+	Array<Segment> segs;
+	
+	Default
+	{
+		-SOLID;
+		+NOGRAVITY;
+	}
+	
+	override void PostBeginPlay()
+	{
+		super.PostBeginPlay();
+		
+		fixedpos = pos;
+		followpos = pos;
+		OnCreate();
+	}
+	
+	virtual void Update() {}
+	virtual void OnCreate() {}
+	
+	Segment AddSegment(class<Segment> type = "Segment", vector2 viewoffs = (0,0), bool flipx = false)
+	{	
+		uint end = segs.Size();
+		let seg = Segment.Setup(type, pos, (angle+viewoffs.x,pitch+viewoffs.y));
+		if(flipx) seg.flipped = true;
+		segs.Push(seg);
+		
+		if(end > 0) 
+			seg.Attach(segs[end-1]);
+		else
+			seg.FollowPos(followpos);
+
+		return seg;
+	}
+	
+	override void Tick()
+	{
+		super.Tick();
+		if(segs.Size() <= 0) return;
+		
+		if(!bInvisible)
+		{
+			uint end = segs.Size()-1;
+			segs[end].FollowPos(followpos);
+			for(int i = end-1; i >= 0; i--) segs[i].FollowPos(segs[i+1].pos);
+			
+			segs[0].MovePos(fixedpos);
+			for(int i = 1; i <= end; i++) segs[i].MovePos(segs[i-1].endpos);
+		}
+		Update();
+	}
+	
+	
+	States
+	{
+		Spawn:
+			TNT1 A -1;
+		stop;
+	}
+}
+
+class PointTest : Actor
+{
+	Default
+	{
+		RenderStyle "AddShaded";
+		+NOINTERACTION;
+	}
+	
+	States
+	{
+		Spawn:
+			PLSS A 2;
+		stop;
+	}
+}

@@ -1,0 +1,125 @@
+#include doomwalls.bm
+#include doommonsters.bm
+#include doomweapons.bm
+#include doomitems.bm
+
+
+brightmap sprite BARIA0
+{
+	map "brightmaps/doom/Actors/BARBRI.png"
+}
+
+brightmap sprite BARIB0
+{
+	map "brightmaps/doom/Actors/BARBRI.png"
+}
+
+brightmap sprite BARIC0
+{
+	map "brightmaps/doom/Actors/BARBRI.png"
+}
+
+brightmap sprite BARID0
+{
+	map "brightmaps/doom/Actors/BARBRI.png"
+}
+
+brightmap sprite FBARA0 { map "brightmaps/doom/Actors/FBARA0.png" }
+brightmap sprite FBARB0 { map "brightmaps/doom/Actors/FBARB0.png" }
+brightmap sprite FBARC0 { map "brightmaps/doom/Actors/FBARC0.png" }
+brightmap sprite FBARD0 { map "brightmaps/doom/Actors/FBARD0.png" }
+brightmap sprite FBARE0 { map "brightmaps/doom/Actors/FBARE0.png" }
+brightmap sprite FBARF0 { map "brightmaps/doom/Actors/FBARF0.png" }
+brightmap sprite FBARG0 { map "brightmaps/doom/Actors/FBARG0.png" }
+brightmap sprite FBARH0 { map "brightmaps/doom/Actors/FBARH0.png" }
+
+brightmap sprite THRGA0
+{
+	map "brightmaps/doom/Weapons/THRGAB.png"
+}
+
+brightmap sprite THRGE0
+{
+	map "brightmaps/doom/Weapons/THRGEB.png"
+}
+
+brightmap sprite THRGB0
+{
+	map "brightmaps/doom/Weapons/THRGBB.png"
+}
+
+brightmap sprite THRGC0
+{
+	map "brightmaps/doom/Weapons/THRGCB.png"
+}
+
+brightmap sprite THRGD0
+{
+	map "brightmaps/doom/Weapons/THRGDB.png"
+}
+
+brightmap sprite CBRAB0
+{
+	map "brightmaps/doom/Actors/LABRABR1.png"
+}
+
+brightmap sprite CBRAC0
+{
+	map "brightmaps/doom/Actors/LABRABR3.png"
+}
+
+brightmap sprite CBRAD0
+{
+	map "brightmaps/doom/Actors/LABRABR4.png"
+}
+
+brightmap sprite CBRAE0
+{
+	map "brightmaps/doom/Actors/LABRABR2.png"
+}
+
+
+brightmap sprite BURBA0
+{
+	map "brightmaps/doom/Actors/BURBAB1.png"
+}
+
+brightmap sprite BURBB0
+{
+	map "brightmaps/doom/Actors/BURBAB2.png"
+}
+
+brightmap sprite BURBC0
+{
+	map "brightmaps/doom/Actors/BURBAB3.png"
+}
+
+
+
+
+brightmap texture LITEBLU3
+{
+	map "brightmaps/LITB3.PNG"
+}
+
+
+
+brightmap Texture SPACM1
+{
+   map "brightmaps/SPACOM1B.png"
+}
+
+brightmap Texture SPACM2
+{
+   map "brightmaps/SPACOM1B.png"
+}
+
+brightmap Texture SPACM3
+{
+   map "brightmaps/SPACOM1B.png"
+}
+
+brightmap Texture SPACM4
+{
+   map "brightmaps/SPACOM1B.png"
+}

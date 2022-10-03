@@ -1,0 +1,650 @@
+	
+	
+	
+	
+	class BDPNotMonster : Actor
+	{
+	
+	}
+	
+	
+	
+	class DoxBDHandler : EventHandler
+	{
+	
+	
+	
+	override void CheckReplacement(ReplaceEvent e)
+	{
+	if (e.Replacee == "RealGibs") 
+		{
+		E.replacement = "nashgorerealgibs";
+		
+		}
+	If(bd_disabledecorations == FALSE)
+		{
+		
+		if (e.Replacee == "RedTorch") 
+			{
+			E.replacement = "TallTorch_Red";
+			}
+		if (e.Replacee == "GreenTorch") 
+			{
+			E.replacement = "TallTorch_Green";
+			}
+		if (e.Replacee == "BlueTorch") 
+			{
+			E.replacement = "TallTorch_Blue";
+			}
+		if (e.Replacee == "ShortRedTorch") 
+			{
+			E.replacement = "ShortTorch_Red";
+			}
+		if (e.Replacee == "ShortGreenTorch") 
+			{
+			E.replacement = "ShortTorch_Green";
+			}
+		if (e.Replacee == "ShortBlueTorch") 
+			{
+			E.replacement = "ShortTorch_Blue";
+			}
+		if (e.Replacee == "Candelabra") 
+			{
+			E.replacement = "Candelabra1";
+			}
+		if (e.Replacee == "Candlestick") 
+			{
+			E.replacement = "Candlestick1";
+			}
+		if (e.Replacee == "BurningBarrel") 
+			{
+			E.replacement = "BurningBarrel1";
+			}
+		if (e.Replacee == "TechLamp") 
+			{
+			E.replacement = "TechLamp1";
+			}
+		if (e.Replacee == "TechLamp2") 
+			{
+			E.replacement = "TechLamp21";
+			}
+		if (e.Replacee == "Column") 
+			{
+			E.replacement = "Column1";
+			}
+		if (e.Replacee == "HeadsOnAStick") 
+			{
+			E.replacement = "ImpaledSkulls";
+			}
+		if (e.Replacee == "HeadOnAStick") 
+			{
+			E.replacement = "ImpaledHead";
+			}
+		if (e.Replacee == "TallGreenColumn") 
+			{
+			E.replacement = "BDTallGreenColumn";
+			}
+		if (e.Replacee == "ShortGreenColumn") 
+			{
+			E.replacement = "BDShortGreenColumn";
+			}
+		if (e.Replacee == "TallRedColumn") 
+			{
+			E.replacement = "BDTallRedColumn";
+			}
+		if (e.Replacee == "ShortRedColumn") 
+			{
+			E.replacement = "BDShortRedColumn";
+			}
+		if (e.Replacee == "SkullColumn") 
+			{
+			E.replacement = "BDSkullColumn";
+			}
+		if (e.Replacee == "HeartColumn") 
+			{
+			E.replacement = "BDHeartColumn";
+			}
+		if (e.Replacee == "TorchTree") 
+			{
+			E.replacement = "TorchTree2";
+			}
+		if (e.Replacee == "BigTree") 
+			{
+			E.replacement = "Big_tree";
+			}
+		if (e.Replacee == "Stalagtite") 
+			{
+			E.replacement = "StalagtiteReplacer";
+			}
+		if (e.Replacee == "Stalagmite") 
+			{
+			E.replacement = "StalagmiteReplacer";
+			}
+		if (e.Replacee == "EvilEye") 
+			{
+			E.replacement = "EvilEyeReplacer";
+			}
+		if (e.Replacee == "DeadMarine") 
+			{
+			E.replacement = "VeryDeadMarine";
+			}
+		if (e.Replacee == "GibbedMarine") 
+			{
+			E.replacement = "VeryVeryDeadMarine";
+			}
+		if (e.Replacee == "GibbedMarineExtra") 
+			{
+			E.replacement = "VeryVeryDeadMarine2";
+			}
+		if (e.Replacee == "DeadStick") 
+			{
+			E.replacement = "DeadDeadStick";
+			}
+		if (e.Replacee == "LiveStick") 
+			{
+			E.replacement = "LiveStickSpawner";
+			}
+		if (e.Replacee == "BloodyTwitch") 
+			{
+			E.replacement = "BloodyTwitchSpawner";
+			}
+		if (e.Replacee == "Meat2") 
+			{
+			E.replacement = "hangingbodySpawner";
+			}
+		if (e.Replacee == "meat4") 
+			{
+			E.replacement = "hangingPairOfLegsSpawner";
+			}
+		if (e.Replacee == "Nonsolidmeat2") 
+			{
+			E.replacement = "NSHangingBody";
+			}
+		if (e.Replacee == "NonSolidMeat4") 
+			{
+			E.replacement = "NSHangingPairOflegs";
+			}
+		if (e.Replacee == "Meat3") 
+			{
+			E.replacement = "hangingDeadGuyNoLegSpawner";
+			}
+		if (e.Replacee == "Meat5") 
+			{
+			E.replacement = "hangingLeg";
+			}
+		if (e.Replacee == "NonSolidMeat3") 
+			{
+			E.replacement = "NSHangingDeadGuyNoLeg";
+			}
+		if (e.Replacee == "Nonsolidmeat5") 
+			{
+			E.replacement = "NSHangingLeg";
+			}
+		if (e.Replacee == "NonSolidTwitch") 
+			{
+			E.replacement = "DeadNonSolidTwitch";
+			}
+		if (e.Replacee == "hangNoGuts") 
+			{
+			E.replacement = "DeadHangNoGuts";
+			}
+		if (e.Replacee == "HangBNoBrain") 
+			{
+			E.replacement = "DeadHangBNoBrain";
+			}
+		if (e.Replacee == "HangTLookingDown") 
+			{
+			E.replacement = "DeadHangTLookingDown";
+			}
+		if (e.Replacee == "HangTLookingUp") 
+			{
+			E.replacement = "DeadHangTLookingUp";
+			}
+		if (e.Replacee == "HangTSkull") 
+			{
+			E.replacement = "DeadHangTSkull";
+			}
+		if (e.Replacee == "HangTNoBrain") 
+			{
+			E.replacement = "DeadHangTNoBrain";
+			}
+		if (e.Replacee == "ColonGibs") 
+			{
+			E.replacement = "ColonGibs2";
+			}
+		if (e.Replacee == "SmallBloodPool") 
+			{
+			E.replacement = "SmallBloodPool2";
+			}
+		if (e.Replacee == "BrainStem") 
+			{
+			E.replacement = "BrainStem2";
+			}
+		if (e.Replacee == "Gibs") 
+			{
+			E.replacement = "Gibs2";
+			}
+		if (e.Replacee == "DeadCacodemon") 
+			{
+			E.replacement = "DeadCacodemonSpawner";
+			}
+		if (e.Replacee == "DeadDemon") 
+			{
+			E.replacement = "DeadDemonSpawner";
+			}
+		if (e.Replacee == "DeadZombieman") 
+			{
+			E.replacement = "DeadZombiemanSpawner";
+			}
+		if (e.Replacee == "DeadDoomImp") 
+			{
+			E.replacement = "DeadImpSpawner";
+			}
+		if (e.Replacee == "DeadShotgunGuy") 
+			{
+			E.replacement = "DeadShotgunGuySpawner";
+			}
+		
+		}
+	}
+	override void worldthingspawned(Worldevent e)
+	{
+		If(e.thing && e.thing.bismonster && !e.thing.findinventory("monsterinventory"))
+			{
+			e.thing.giveinventory("monsterinventory",1);
+			}
+		if(e.thing && level.mapname != 'TITLEMAP' && !e.thing.findinventory("nottitlemap") && e.thing is "playerpawn")
+			{
+			e.thing.giveinventory("nottitlemap",1);
+			}
+	}
+	
+	
+	override void worldthingdamaged(Worldevent e)
+	{	
+		
+		If(e.damagetype == "taunt" && !e.thing.findinventory("thisreallypissesmeoff") && e.thing.bismonster)
+		{
+		e.thing.bmissilemore = true;
+		//e.thing.bmissileevenmore = true;
+		e.thing.speed = (e.thing.speed * 1.5);
+		e.thing.bnopain = true;
+		e.thing.bnoinfighting = TRUE;
+		e.thing.giveinventory("pissedarmor",1);
+		e.thing.A_giveinventory("thisreallypissesmeoff",(e.thing.health / 70));
+		}
+		
+		If(e.thing.findinventory("thisreallypissesmeoff") && e.thing.health < 1)
+		{
+		for(int i = e.thing.countinv("thisreallypissesmeoff"); i > 0; i--)
+		{
+		If(random(1,4) == 1)
+		{
+		e.thing.A_SpawnItemEx("ArmorShardFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
+		}
+		Else
+		{
+		e.thing.A_SpawnItemEx("HealthPlusFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
+		}
+		}
+		e.thing.takeinventory("thisreallypissesmeoff",100);
+		}
+		//{
+		
+		/*
+		If(e.damagetype == "extremepunches" && e.thing.health < 1 && e.thing.bismonster)
+		{
+		//for(int i = (1 + (e.thing.getspawnhealth() / 20)); i > 0; i--)
+		//{
+		e.thing.A_SpawnItemEx("HealthPlusFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
+		e.thing.A_SpawnItemEx("ArmorShardFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
+		If(e.thing.getspawnhealth() > 200)
+		{
+		e.thing.A_SpawnItemEx("HealthPlusFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
+		e.thing.A_SpawnItemEx("ArmorShardFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
+		e.thing.A_SpawnItemEx("HealthPlusFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
+		e.thing.A_SpawnItemEx("ArmorShardFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
+		}
+		//}
+		}
+		*/
+		
+		if (e.thing.bismonster && e.damagetype != "desintegrate" && e.thing.health < 1 && e.thing.target && !e.thing.findinventory("extractedsoul"))
+			{
+			e.thing.a_giveinventory("extractedsoul",1);
+			e.thing.a_giveinventory("soulammo",1,AAPTR_TARGET);
+			
+				
+			If(e.thing.target is "demonplayer")
+			{
+			e.thing.target.health = (e.thing.target.health + 10);
+			}
+			}
+	
+		If(e.thing.health < 1 && e.damagetype == "BlackHole")
+		{
+		//e.thing.bcountkill
+		e.thing.brollsprite = true;
+		e.thing.brollcenter = true;
+		e.thing.a_scream();
+		e.thing.tics = -1;
+		e.Thing.binvulnerable = true;
+		e.thing.bsolid = false;
+		e.thing.bshootable = false;
+		e.thing.giveinventory("voiddamage",1);
+		e.thing.a_stop();
+		if(e.thing.player)
+		{
+		e.thing.giveinventory("disabletilting",1);
+		e.thing.a_startsound("BIGSCRE",7);
+		e.thing.acs_namedexecutealways("bdstartcamera",0,0,0,0);
+		}
+		}
+	}
+	
+	}
+	
+	
+	
+	CLASS GrabberModifier : Inventory
+	{
+		Default
+		{
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		inventory.maxamount 1;
+		}
+		
+		Override void modifydamage(int damage, name damagetype, out int newdamage, bool passive, actor inflictor, actor source, int flags)
+			{
+				If(!passive && inflictor && inflictor.findinventory("grabberdamage"))
+					{
+						Newdamage = (damage * 8.0);
+					}
+			}
+	}
+	
+	CLASS GrabbedMonsterDamage : Inventory
+	{
+		Default
+		{
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		inventory.maxamount 1;
+		}
+		
+		Override void modifydamage(int damage, name damagetype, out int newdamage, bool passive, actor inflictor, actor source, int flags)
+			{
+				If(!passive)
+					{
+						Newdamage = (damage * 1.5);
+					}
+			}
+	}
+	
+	
+		CLASS pissedarmor : powerprotection
+		{
+			Default
+			{
+				inventory.maxamount 1;
+				damagefactor "normal", 0.5;
+				powerup.duration -44444444;
+		
+			}
+		}
+	
+	
+	
+	
+	Class voiddamage : inventory
+	{
+	 int dur;
+	 bool flipped;
+	 int newroll;
+		Default
+		{
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		inventory.maxamount 1;
+		}
+		Override void postbeginplay()
+		{
+		super.postbeginplay();
+		If(random(0,100) > 50)
+		{
+		flipped = true;
+		}
+		Else
+		{
+		flipped = false;
+		}
+		newroll = frandom(9,35);
+		}
+		Override void doeffect()
+		{
+		If(owner)
+		{
+		(dur++);
+		owner.tics = -1;
+		Owner.scale = (owner.scale * 0.95);
+		If(flipped)
+		{
+		owner.roll = (owner.roll + newroll);
+		}
+		Else 
+		{
+		owner.roll = (owner.roll - newroll);
+		}
+		If(owner.player)
+		{
+		owner.player.viewheight = (owner.player.viewheight * 0.95);
+		}
+		If( dur > 100)
+		{
+		owner.roll = 0;
+		Owner.a_bossdeath();
+		if(owner is "commanderkeen")
+		{
+		owner.a_keendie();
+		}
+		If(owner is "cyberdemonboss" || owner is "supermastermind")
+		{
+		If(owner is "greatcyberdemon")
+		{
+		return;
+		}
+		owner.a_braindie();
+		}
+		If(!owner.player)
+		{
+		Owner.destroy();
+		}
+		Else
+		{
+		owner.binvisible = true;
+		}
+		
+		Depleteordestroy();
+		}
+		}
+		super.doeffect();
+		}
+	}
+	
+	
+	
+	
+	
+	Class DontRedirect : inventory
+	{
+		Default
+		{
+		inventory.maxamount 1;
+		}
+		//Items that don't appear in the world don't need their tick 
+		//It may help performance to override it? Idk if that's actually true
+		Override void tick()
+		{}
+	}
+	
+	
+	//hacky solution to keep decorate compatibility
+	Class chattertimer : inventory
+	{
+		Default
+		{
+		inventory.maxamount 666;
+		}
+		Override void tick()
+		{}
+	}
+	
+	
+	
+	
+	Class AlliedMarineBase : SwitchableDecoration
+	{
+		Int chattertimer;
+	
+		Override void postbeginplay()
+		{
+		super.postbeginplay();
+		//This'll be important if you decide to use tehrealsalt's blurspheres so we can check for this token
+		giveinventory("dontredirect",1);
+		giveinventory("chattertimer",5);
+		}
+		
+		Override void tick()
+		{
+		Super.tick();
+		takeinventory("chattertimer",1);
+		If(target && target is "Explosivebarrelbase")
+		{
+		A_cleartarget();
+		}
+		}
+		
+		action void A_MarineChatter( int TalkChance = 25, bool InCombat = false)
+		{
+			
+			If(frandom(0,255) < TalkChance && !findinventory("chattertimer"))
+			{
+				giveinventory("chattertimer",220); //Puts a delay before another line can be said
+				
+				If(target && !target.findinventory("isplayer"))
+				{
+				A_startsound("MRNAT");
+				}
+				Else
+				{
+				A_startsound("MRNWC");
+				}
+			}
+		}
+		
+	}
+	
+	
+//Boss weapons times
+
+Class CybieRocketTimer : Inventory {
+	protected int dur; //this will hold the current value of duration
+	int duration; //this will hold max duration
+	property duration : duration; //this turns the variable above into a property
+	string guntotake; //this is what weapon you want it to take
+	property guntotake : guntotake; //this turns the string into a property
+	string ammotogive; //this is what weapon you want it to take
+	property ammotogive : ammotogive; //this turns the string into a property
+	Default {
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		inventory.maxamount 1;
+		CybieRocketTimer.duration 30;
+		CybieRocketTimer.guntotake "Cyberdemonsmissilelauncher";
+		CybieRocketTimer.ammotogive "CyberdemonRockets";
+	}
+
+
+	
+	//Items that don't spawn in the world don't need their Tick. Emptying it will actually help performace:
+	Override void Tick() {}
+	
+	
+	Override void postbeginplay()
+	{
+	super.postbeginplay();
+	If(owner)
+	{
+	owner.bnoradiusdmg = TRUE;
+	owner.Takeinventory(ammotogive,999);
+	owner.giveinventory(ammotogive, duration);
+	}
+	}
+	
+	//This function is executed every tic by items while they're in an actor's inventory:
+	Override void DoEffect() {
+		super.DoEffect();
+		if (!owner || owner.isFrozen())
+			return;
+		
+		/*
+			This simple modulo operation allows us to do something every 35 tics (i.e. second)
+			We'll increase the value of dur until it reaches duration, then remove the item.
+		*/
+		if (level.time % 35 == 0) {
+			if (dur < duration)
+			{
+				If(!owner.findinventory("gofatality") && !owner.findinventory("hasagib"))
+					{
+						owner.Takeinventory(ammotogive,1);
+						dur++;
+					}
+			}
+			else {
+		//	owner.takeinventory(guntotake,1);
+			owner.bnoradiusdmg = FALSE;
+				DepleteOrDestroy();
+				
+				return;
+			}
+		}
+		
+	}
+}
+	
+	
+	
+	//Using inheritence so you can use this for the mastermind's chaingun
+	
+	Class MastermindBulletTimer : CybieRocketTimer
+		{
+			Default
+			{
+			CybieRocketTimer.guntotake "mastermindchaingun";
+			CybieRocketTimer.ammotogive "SpiderChaingunTimer";
+			
+			}
+	
+		}
+		
+		Class monsterinventory : inventory
+	{
+
+		Default
+		{
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		inventory.maxamount 1;
+		}
+		
+		Override void doeffect()
+			{
+				If(owner && owner.target && owner.target.findinventory("gofatality"))
+					{
+						Owner.a_cleartarget();
+					}
+				Super.doeffect();
+			}
+	}
+

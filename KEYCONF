@@ -1,0 +1,131 @@
+clearplayerclasses
+addplayerclass BDoomer
+addplayerclass Doomer2 
+addplayerclass Doomer3 
+addplayerclass TacticalDoomer 
+
+
+weaponsection "Brutal_Doom"
+
+setslot 1 DSweap Melee_Attacks BrutalAxe Chain_Saw ClassicFist ClassicSaw
+setslot 2 BrutalPistol BrutalSMG DoxsRevolver ClassicPistol ClassicSMG MP40 //forcefully disables the revolver
+setslot 3 Shot_Gun SSG AssaultShotgun ClassicShotgun ClassicSSG
+setslot 4 Rifle MiniGun Machinegun ClassicChaingun
+setslot 5 Rocket_Launcher GrenadeLauncher ClassicRocketLauncher NukeLauncher
+setslot 6 Plasma_Gun RailGun Freezer ClassicPlasmaRifle
+setslot 7 BIG_FUCKING_GUN BFG10k Unmaker  VanillaBFG9000
+setslot 8 HellishMissileLauncher FlameCannon
+setslot 9 Flamethrower2 HandGrenades
+//setslot 0 AmmoDroper
+
+   addkeysection "BrutalDoom - Advanced Actions" BrutalDoomActions    
+   
+   addmenukey "Kick" kickem
+   alias kickem "pukename PressKick"
+   defaultbind Q kickem
+
+   addmenukey "Reload" reload
+   alias reload "pukename PressReload"
+   defaultbind R reload
+   
+   addMenuKey "Dual Wield/Special Action" "+user3"
+  
+   addMenuKey "Special Action 2" "+user4"
+   
+   addmenukey "Flashlight" flashlightswitch
+   alias flashlightswitch "pukename PressFlashlight"
+   defaultbind F flashlightswitch
+   
+
+
+	addmenukey "Toss Grenade" grenadetoss
+   alias grenadetoss "pukename PressGrenade"
+   defaultbind G grenadetoss
+   
+   addmenukey "Swap Grenades" swapgrenade
+   defaultbind I swapgrenade
+   alias swapgrenade "pukename swapgrenades"
+   
+   addmenukey "Swap Berserk Modes" swapberserk
+   defaultbind B swapberserk
+   alias swapberserk "pukename swapberserkmode"
+   
+   addmenukey "Unload Gun" unreloader
+   alias unreloader "pukename PressUnload"
+   
+   //addmenukey "Open Ammo Drop Menu" selectammodroper
+  // alias selectammodroper "puke 309"
+  
+   addmenukey "Scan area" scanner
+   alias scanner "pukename areascan" 
+   
+  // addmenukey "Quick Pull Pistol" quickpistol
+ //  alias quickpistol "puke 310"
+    addmenukey "Roll" rodirection
+  alias rodirection "pukename pressroll"
+   defaultbind C rodirection
+   
+   
+   //addmenukey "Use boss weapon" UseBossWeapon
+   //alias UseBossWeapon "pukename UseBossWeapon"
+   //defaultbind M UseBossWeapon
+   
+
+   addkeysection "Brutal Doom - Interactions" BrutalDoomInteractions  
+
+  
+   addmenukey "Offend" brutaltaunt
+   alias brutaltaunt "pukename PressTaunt"
+   defaultbind H brutaltaunt
+   
+  // addmenukey "Wave(1)" wave1
+  // alias wave1 "puke 431"
+ //  defaultbind V wave1
+
+ //  addmenukey "Wave(2)" wave2
+ //  alias wave2 "puke 432"
+  // defaultbind N wave2
+   
+  // addmenukey "Advanced Taunt" advtaunt
+  // alias advtaunt "puke 304"
+  // defaultbind J advtaunt
+   
+   addmenukey "One-Liners" oneliner
+   alias oneliner "pukename OneLiner"
+   defaultbind K oneliner
+   
+  // addmenukey "Dual Wield/Special Action" dual
+  // alias dual "puke 308"
+ //  defaultbind X dual
+   
+ //  addmenukey "Special Action 2" swapSpecial
+ //  alias swapSpecial "give swapRifleSpecial"
+ 
+
+   
+   
+ //  addmenukey "Select Ammo Drop" selectammodrop
+  // alias selectammodrop "puke 309"
+ //  defaultbind O selectammodrop
+   
+
+   
+   addkeysection "Brutal Doom - Cheats" BrutalDoomAdvMoves              // here too
+
+  // addmenukey "Roll Left" roleft
+  // alias roleft "puke 306"
+ //  defaultbind Z roleft
+   
+   
+//   addmenukey "Roll Right" roright
+//   alias roright "puke 307"
+ //  defaultbind C roright
+	
+   
+      addmenukey "Slow motion toggle" SlowMoBind
+   alias SlowMoBind "i_timescale 0.3; rebind SlowMoBind2"
+   alias SlowMoBind2 "i_timescale 1; rebind SlowMoBind"
+   defaultbind kp1 SlowMoBind
+   
+    addmenukey "Give Everything" giveit
+   alias giveit "Give All"

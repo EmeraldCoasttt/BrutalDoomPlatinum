@@ -1,0 +1,98 @@
+CLASS CyberFireUp2 : Actor
+	{
+	Default
+		{
+		Obituary "$OB_CYBORG";
+		+noblockmap;
+		}
+	States
+		{
+		Spawn:
+			TNT1 A 15 NODELAY;
+			TNT1 A 0
+				{
+				If(master && master.target)
+					{
+						vector3 masterspawn2 = master.target.pos;
+						masterspawn2.z = (masterspawn2.z + 10);
+						master.spawn("cyberpentagram",master.target.pos);
+						let ballspawn = master.spawn("cyberballsupspawn",masterspawn2);
+						If(ballspawn)
+							{
+								Ballspawn.vel.z = 50;
+							}
+						//master.target.a_spawnitemex("cyberpentagram",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION);
+						//master.target.A_spawnitemex("cyberballsupspawn",0,0,10,0,0,50,0,SXF_NOCHECKPOSITION);
+					}
+				}
+			Stop;
+		
+		}
+	
+	}
+	
+	
+	
+CLASS CyberFireUp2Player : Actor
+	{
+	Default
+		{
+		Obituary "$OB_CYBORG";
+		+noblockmap;
+		}
+	States
+		{
+		Spawn:
+			TNT1 A 25 NODELAY;
+			TNT1 A 0
+				{
+				bool foundtracer;
+					If(master)
+						{
+							//A_SpawnItemEx("BFGTrailParticle", Random(-13, 13), Random(-13, 13), Random(0, 18), Random(1, 3), 0, (0.1)*Random(-10, 10), Random(-20, 20), 128);
+			//bool bfounddest;
+				BlockThingsIterator CheckFortracers = BlockThingsIterator.create(Self,1000); //256 can be whatever range around the actor.
+				Actor CurrentActor;
+				
+				While (CheckFortracers.Next())
+					{
+						CurrentActor = CheckFortracers.Thing;
+						
+						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
+						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
+						If (CurrentActor && CurrentActor.bismonster && currentactor.health > 0 && !currentactor.bfriendly && !currentactor.findinventory("cyberdemonsmissilelauncher") && !foundtracer && master.checksight(currentactor))
+							{
+								Tracer = currentactor;
+								
+								
+								 foundtracer = true;
+								 vector3 tracerspawn2 = tracer.pos;
+								 tracerspawn2.x = (tracerspawn2.x + frandom(-40,40));
+								 tracerspawn2.y = (tracerspawn2.y + frandom(-40,40));
+								 master.spawn("cyberpentagram",tracerspawn2);
+						tracerspawn2.z = (tracerspawn2.z + 10);
+						
+						let ballspawn = master.spawn("cyberballsupspawnplayer",tracerspawn2);
+						If(ballspawn)
+							{
+								Ballspawn.vel.z = 50;
+							}
+			
+							}
+					}
+						
+						}
+						If(!foundtracer)
+						{
+						return resolvestate("spawn");
+						}
+						Else
+						{
+						return resolvestate("null");
+						}
+				}
+			Stop;
+		
+		}
+	
+	}

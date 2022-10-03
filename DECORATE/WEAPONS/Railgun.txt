@@ -1,0 +1,1373 @@
+//Changes made:
+//select,deselect
+/*
+ACTOR RailGun : BrutalWeapon
+{
+	Weapon.AmmoUse1 0
+	Weapon.AmmoUse2 0
+	Weapon.AmmoGive1 0
+	Weapon.AmmoGive2 0
+	Weapon.AmmoType1 "AmmoCell"
+	Weapon.AmmoType2 "RailgunAmmo"
+	Obituary "%o was pierced by %k's Railgun."
+    Inventory.PickupSound "PLSDRAW"
+	Inventory.Pickupmessage "You got the Railgun! (Slot 6)"
+	+WEAPON.NOAUTOAIM
+	+WEAPON.NOALERT
+	+WEAPON.NOAUTOFIRE
+	+WEAPON.EXPLOSIVE
+	damagetype "Railgun"
+	Weapon.SelectionOrder 1550
+	Inventory.AltHUDIcon "SRCGA0"
+	BrutalWeapon.weight 7
+	States
+	{
+	
+	SpawnSmoke:
+	TNT1 A 8
+	TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1,7)
+	TNT1 A 8
+	TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1,7)
+	TNT1 A 8
+	TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1,7)
+	TNT1 A 8
+	TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1,7)
+	TNT1 A 8
+	TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1,7)
+	stop
+	
+	GrenadeThrowFlash:
+	//R4FS A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	RAIS A 0
+	"####" BCDE 1
+	TNT1 A 24
+	//R4FS A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	RAIS A 0
+	"####" EDCB 1//32 in total
+	stop
+	
+	KickingFlash:
+	RAIL A 0 A_JumpIfInventory("HasUnloadedRG", 1, "KickUnloaded")
+	RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,1)
+	Goto KickNoAmmo
+//	R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+    RAIL A 0
+	"####" EFGHIJHIJHIJHGFE 1
+	Goto Ready
+	
+	KickUnloaded:
+//	R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	RAIL A 0
+	"####" LMNOPPPPPPPPONML 1
+	Goto Ready
+	
+	KickNoAmmo:
+//	R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	RAIL A 0
+	"####" QRSTUUUUUUUUTSRQ 1
+	Goto Ready
+	
+	AirKickingFlash:
+	RAIL A 0 A_JumpIfInventory("HasUnloadedRG", 1, "AirKickUnloaded")
+	RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,1)
+	Goto AirKickNoAmmo
+//	R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIL A 0
+	"####" EFGHHIIJJHHIIJJGFE 1 //18
+	Goto Ready
+	
+	AirKickUnloaded:
+//	R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	RAIL A 0
+	"####" LMNOPPPPPPPPPPPONML 1 //18
+	Goto Ready
+	
+	AirKickNoAmmo:
+//	R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	RAIL A 0
+	"####" QRSTUUUUUUUUUUUTSRQ 1 //18
+	Goto Ready
+	
+	 SlideKickingStart:
+	 RAIL A 0 A_JumpIfInventory("HasUnloadedRG", 1, "SlideKickUnloaded")
+	RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,1)
+	Goto SlideKickNoAmmo
+//	    R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIL A 0
+	    "####" EFGHI 1
+	    "####" HHIIJJHHIIJJHHIIJJHHIIJJHHIIJJHHIIJJHHIIJJ 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+		Goto Ready
+		
+		SlideKickUnloaded:
+//		R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	    RAIL A 0
+	    "####" LMNOP 1
+	    "####" PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+		Goto Ready
+		
+		SlideKickNoAmmo:
+//		R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	    RAIL A 0
+	    "####" QRSTU 1
+	    "####" UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU 1 { //39 total
+			if (CountInv("Kicking") == 0) {
+				return state("SlideKickingEnd");
+			}
+			return state("");
+		}
+		Goto Ready
+
+	 SlideKickingEnd:
+	  RAIL A 0 A_JumpIfInventory("HasUnloadedRG", 1, "SlideEndUnloaded")
+	  RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,1)
+	  Goto SlideEndNoAmmo
+//	    R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIL A 0
+	    "####" IJJHHIIGFE 1 //10
+	    Goto Ready
+		SlideEndUnloaded:
+//		R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	    RAIL A 0
+	    "####" PPPPPPONML 1 //10
+	    Goto Ready
+		SlideEndNoAmmo:
+//		R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	    RAIL A 0
+	    "####" UUUUUUTSRQ 1 //10
+	    Goto Ready
+		
+	FuckYouFlash:
+	RAIL A 0 A_JumpIfInventory("HasUnloadedRG", 1, "FuckYouFlashUnloaded")
+	RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,1)
+	Goto FuckYouFlashEmpty
+//	R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	RAIL A 0
+	"####" EFGHHIIJJHHIIHHIIJJHHIIJJHHGFE 1 //18
+	stop
+	
+	FuckYouFlashUnloaded:
+	RAIL LMNOPPPPPPPPPPPPPPPPPPPPPPPONML 1 //18
+	stop
+	
+	FuckYouFlashEmpty:
+	RAIL QRSTUUUUUUUUUUUUUUUUUUUUUUUTSRQ 1 //18
+	stop		
+		
+	SelectAnimationNoAmmo:
+//	    R4FS A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	    RAIS A 0
+	    "####" EFGH 1 A_WeaponReady(WRF_NOFIRE)
+		RAIL A 0 A_JumpIfInventory("HasUnloadedRG",1,"SelectAnimationUnloaded")
+//		R4FS A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	    RAIS A 0
+		"####" I 1
+		Goto Ready3
+		SelectAnimationUnloaded:
+		TNT1 A 0
+//		R4FS A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	    RAIS A 0
+		"####" J 1
+		Goto Ready3
+		
+		
+	SelectAnimation:
+	ReturnFromNothing:
+	    RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,2)
+		Goto SelectAnimationNoAmmo
+		TNT1 A 0
+//		R4FS A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	    RAIS A 0
+        "####" EDCBA 1 A_WeaponReady(WRF_NOFIRE)
+		TNT1 A 0 A_PlaySound("RAILR1", 2)
+        
+		
+	Ready:
+	Ready3:
+		RAIL A 0 A_JumpIfInventory("Zoomed",1,"Ready2")
+		RAIL A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
+//		R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	    RAIL A 0
+		"####" A 2 {
+			A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		//	if (CountInv("StartDualWield") == 1) { return state("DualWield"); }
+			if (CountInv("GoFatality") == 1) { return state("Steady"); }
+									
+			if (CountInv("Kicking") == 1) {
+				if (CountInv("IsCrouching") == 1) {
+					return state("SlideKickingStart");
+				}
+				if (momZ != 0) {
+					return state("AirKickingFlash");
+				}
+				else {
+					return state("KickingFlash");
+				}
+			}
+
+			if (CountInv("Taunting") == 1) { return state("GoTaunt"); }
+			if (CountInv("Salute1")==1 || CountInv("Salute2")==1) { return state("Salute"); }
+			if (CountInv("Reloading") == 1) { return state("Reload"); }
+			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
+			A_checksprint;
+			if (CountInv("Unloading") == 1) { return state("Unload"); }
+			if (CountInv("RailgunAmmo") == 0) { return state("ReadyNoAmmo"); }
+			return state("");
+		}
+		RAIL A 0 A_PlaySound("PLSIDLE")
+//		R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	    RAIL A 0
+		"####" A 2 {
+			A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			//if (CountInv("StartDualWield") == 1) { return state("DualWield"); }
+			if (CountInv("GoFatality") == 1) { return state("Steady"); }
+									
+			if (CountInv("Kicking") == 1) {
+				if (CountInv("IsCrouching") == 1) {
+					return state("SlideKickingStart");
+				}
+				if (momZ != 0) {
+					return state("AirKickingFlash");
+				}
+				else {
+					return state("KickingFlash");
+				}
+			}
+
+			if (CountInv("Taunting") == 1) { return state("GoTaunt"); }
+			if (CountInv("Salute1")==1 || CountInv("Salute2")==1) { return state("Salute"); }
+			if (CountInv("Reloading") == 1) { return state("Reload"); }
+			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
+			if (CountInv("IsRunning") == 1) { return state("CheckSprint"); }
+			if (CountInv("Unloading") == 1) { return state("Unload"); }
+			if (CountInv("RailgunAmmo") == 0) { return state("ReadyNoAmmo"); }
+			return state("");
+		}
+		Goto Ready3
+		
+		
+		
+	SprintOverlay:
+//		RAIL A 0 A_JumpIfInventory("HasUnloadedRG", 1, "KickUnloaded")
+	RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,1)
+	Goto SprintNoAmmo
+//	R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+    RAIL A 0
+	RAIL EFGHIJHI 1
+	SprintPart2:
+	RAIL JHI 1
+	LOOP
+	
+	SprintUnloaded:
+//	R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	RAIL A 0
+	"####" LMNOP 1
+	WAIT
+	
+	SprintNoAmmo:
+//	R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	RAIL A 0
+	"####" QRSTU 1
+	WAIT
+	
+	ReturnFromSprint:
+	RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,1)
+	Goto ReturnSprintNoAmmo
+//	R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+    RAIL A 0
+	RAIL GFE 1
+	GOTO Ready
+	
+	ReturnSprintUnloaded:
+//	R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	RAIL A 0
+	"####" PONM 1
+	Goto Ready
+	
+	ReturnSprintNoAmmo:
+//	R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	RAIL A 0
+	"####" TSRQ 1
+	Goto ready
+		
+		
+		
+	Ready2:
+		RAIL A 0 A_JumpIfInventory("Aiming2",1,"HoldAim")
+		SNIP A 1 BRIGHT A_WeaponReady(WRF_ALLOWRELOAD)
+		RAIL A 0 A_JumpIfInventory("Unloading",1,"Unload")
+		RAIL A 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
+        RAIL A 0 A_JumpIfInventory("Taunting",1,"GoTaunt")
+		RAIL A 0 A_JumpIfInventory("Salute1", 1, "Salute")
+		RAIL A 0 A_JumpIfInventory("Salute2", 1, "Salute")
+		RAIL A 0 A_JumpIfInventory("Reloading",1,"Reload")
+		RAIL A 0 A_JumpIfInventory("IsRunning",1,"CheckSprint")
+		RAIL A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+		RAIL A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
+		Loop
+		
+	ReadyNoAmmo:
+//	    R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIL A 0
+		"####" V 1 A_WeaponReady(WRF_ALLOWRELOAD)
+		RAIL A 0 A_JumpIfInventory("HasUnloadedRG", 1, "ReadyUnloaded")
+		RAIL A 0 A_JumpIfInventory("IsRunning",1,"CheckSprint")
+		RAIL A 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
+        RAIL A 0 A_JumpIfInventory("Taunting",1,"GoTaunt")
+		RAIL A 0 A_JumpIfInventory("Salute1", 1, "Salute")
+		RAIL A 0 A_JumpIfInventory("Salute2", 1, "Salute")
+		RAIL A 0 A_JumpIfInventory("Reloading",1,"Reload")
+		RAIL A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+		Loop	
+	
+	ReadyUnloaded:
+//	    R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIL A 0
+		"####" W 1 A_WeaponReady(WRF_ALLOWRELOAD)
+		RAIL A 0 A_JumpIfInventory("IsRunning",1,"CheckSprint")
+		RAIL A 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
+        RAIL A 0 A_JumpIfInventory("Taunting",1,"GoTaunt")
+		RAIL A 0 A_JumpIfInventory("Salute1", 1, "Salute")
+		RAIL A 0 A_JumpIfInventory("Salute2", 1, "Salute")
+		RAIL A 0 A_JumpIfInventory("Reloading",1,"Reload")
+		RAIL A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+		Loop	
+		
+	DontNeedToReload:
+		RAIL A 0 A_JumpIfInventory("Zoomed",1,"Ready2")
+	Goto Ready+6
+	
+	Deselect: "####" A 0 A_TakeInventory("IsPlayingDoxMod",1)
+		RAIL A 0 A_Takeinventory("PowerLightAmp", 1)
+		RAIL A 0 A_Takeinventory("Zoomed",1)
+		RAIL A 0 A_TakeInventory("Fire2Activate",1)
+		RAIL A 0 A_Takeinventory("PressedTwice",1)
+		RAIL A 0 A_TakeInventory("PressedOnce",1)
+        RAIL A 0 A_ZoomFactor(1.0)
+		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1)
+		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+		"####" A 0 A_ClearOverlays(-2,-2)
+	    RAIL A 0 A_JumpIfInventory("QuickSwitchSSG",1,"DeselectNoAmmo")	
+		RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,2)
+		Goto DeselectNoAmmo
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound("RAILRIP", 1)
+//		R4FS A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	    RAIS A 0
+        "####" ABCDE 1
+		TNT1 AAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		TNT1 A 1 A_Lower
+		Wait
+		
+	DeselectNoAmmo:
+	TNT1 A 0 A_TakeInventory("QuickSwitchSSG",1)
+	    RAIL A 0 A_JumpIfInventory("HasUnloadedRG",1,"DeselectUnloaded")
+//		R4FS A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	    RAIS A 0
+	    "####" IHGFE 1
+		TNT1 AAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		TNT1 A 1 A_Lower
+		Wait
+		
+	DeselectUnloaded:
+	TNT1 A 0
+//	    R4FS A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	    RAIS A 0
+	    "####" JHGFE 1
+		TNT1 AAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		TNT1 A 1 A_Lower
+		Wait
+	
+		
+		
+		
+		
+		
+	Select:
+		TNT1 A 0
+		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+		Goto SelectFirstPersonLegs
+		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1) 
+	    TNT1 A 1 A_Raise
+		RAIL A 0 A_Giveinventory("RailGunSelected",1)
+		TNT1 AAAAAAAAAAAAAA 0 A_Raise
+		Goto SelectAnimation
+		
+	NoAmmo:
+		RIFG A 0
+		RIFG A 0 A_ZoomFactor(1.0)
+		RAIL A 0  {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+		RIFG A 0 A_Takeinventory("Zoomed",1)
+		RIFG A 0 A_Takeinventory("ADSmode",1)
+		RIFG A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
+		TNT1 A 0 A_PlaySound("weapons/empty", 4)
+		NoAmmo2:
+		RIFG A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+	    RIFG A 0 A_JumpIfInventory("Taunting",1,"Taunt")
+		RIFG A 0 A_JumpIfInventory("Salute1", 1, "Salute")
+		RIFG A 0 A_JumpIfInventory("Salute2", 1, "Salute")
+		RIFG A 0 A_JumpIfInventory("IsRunning",1,"CheckSprint")
+		RIFG A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
+		RIFG A 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
+//		R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+	    RAIL A 0
+		"####" V 5 A_WeaponReady(WRF_ALLOWRELOAD | WRF_NOFIRE)
+		RIFG A 0 A_JumpIfInventory("Reloading",1,"Reload")
+		RIFG A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
+		TNT1 A 0 A_JumpIf(GetCvar("bd_NoAutoReload")==1, "Ready3")
+		RIFG A 0 A_JumpIfInventory("AmmoCell",1,"Reload")
+		RIFG A 0 A_JumpIfInventory("FiredPrimary",1,"NoAmmo2")
+		Goto Ready3
+		
+		
+	Fire:
+	    RAIL A 0
+//		TNT1 A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,"CryoFire")
+		RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,2)
+		Goto NoAmmo
+		TNT1 AA 0
+		RAIL A 0 A_FireCustomMissile("RailgunTrailEffectMissile", 0, 0, 0, 0)
+		RAIL A 0 A_FireCustomMissile("RailgunProjectile", 0, 1, 0, 0)
+		//RAIL A 0 A_RailAttack(400, 0, 0, "none", "none", RGF_FULLBRIGHT, 1, "RailgunPuff2")
+		RAIL A 0 A_RailAttack(400, 0, 0, "Blue", "Blue", RGF_FULLBRIGHT, 1, "RailgunPuff2",0,0,0,0,1.2,2,"BluePlasmaParticleWeaponRailgun")
+		TNT1 AAAAAAAAAA 0 A_FireCustomMissile ("BluePlasmaParticleWeapon", random(-60,60), 0, -1, -3, 0, random(-6,70))
+	    TNT1 A 0 A_FireCustomMissile ("PlasmaSmoke", 0, 0, 0, 2)
+		RAIL A 0 A_PlaySound("RAILF1", 1)
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("RailgunAmmo")<=20) { A_PlaySound("MagClick", 7); }}}
+		RAIL A 0 A_Takeinventory("RailgunAmmo",10)
+		RAIL A 0 A_SetPitch(-8.0 + pitch, SPF_INTERPOLATE)
+		//RAIL A 0 A_Recoil(1*cos(pitch))
+		SHTZ A 0 
+		{
+		A_Recoil(2*cos(pitch));
+		  if(momZ != 0)
+		  {
+		  ThrustThingZ(0,pitch/2,0,1);
+		  }
+		else
+		  {
+		  ThrustThingZ(0,pitch/3,0,1);
+		  }
+		}
+		RAIL A 0 A_ZoomFactor(0.7)
+		RAIL A 0 A_JumpIfInventory("Zoomed",1,"ZoomedRecoil")
+		RAIL A 0 A_ZoomFactor(0.8)
+        RAIF A 1 BRIGHT A_AlertMonsters
+		RAIL A 0 A_ZoomFactor(0.9)
+		RAIL A 0 A_ZoomFactor(1.0)
+		RAIF B 1 BRIGHT
+		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
+		RAIF C 1 BRIGHT
+		
+		RAIF D 1
+		RAIF D 1
+		RAIF D 1 A_SetPitch(3.0 + pitch, SPF_INTERPOLATE)
+		RAIF E 1 A_SetPitch(2.0 + pitch, SPF_INTERPOLATE)
+		RAIF EFG 1 A_SetPitch(1.0 + pitch, SPF_INTERPOLATE)
+		RAIF HH 1
+		"####" A 0 A_WeaponOffset(0,32)
+		RAIF I 1
+		RAIF I 5
+		RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,1)
+		Goto NoMoreAmmoRip
+		RAIF JK 1 
+		//RAIF A 0 A_PlaySound("RAILR1", 2)
+		TNT1 A 0 A_PLaySound("PLSCOOL", 3)
+		RAIF KKK 1 
+		TNT1 A 0 A_FireCustomMissile("SmokeSpawner11",0,0,-1.5,7)
+		RAIF K 2 
+		RAIF KK 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		TNT1 A 0 A_FireCustomMissile("SmokeSpawner11",0,0,-1.5,7)
+		RAIF KKKK 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		RAIF KJ 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		RAIL A 0 A_PlaySound("BEPBEP", 2)
+		2AIR ZYXXYZZZ 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		RAIF L 1 BRIGHT A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		RAIL D 1 BRIGHT A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		RAIL A 0 A_JumpIfInventory("Fire2Activate",1,"AltFire")
+		//TNT1 A 0 A_TakeInventory("Fire2Activate",1)
+		RAIL A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
+		RAIL A 0 A_Refire
+		Goto Ready3
+		
+	NoMoreAmmoRip:
+	RAIL A 0 A_PlaySound("RAILRIP", 1)
+	2AIR ZYX 1
+	2AIR A 0 A_FireCustomMissile("SmokeSpawner11",0,0,0,7)
+	RAIL VV 2 
+	TNT1 A 0 A_FireCustomMissile("SmokeSpawner11",0,0,0,7)
+	RAIL V 5 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+	Goto NoAmmo
+		
+	NoMoreAmmoRipFrosty:
+	RAIL A 0 A_PlaySound("RAILRIP", 1)
+	7AIR ZYX 1
+	"####" A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,0,7)
+	R4FL VV 2 
+	TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,0,7)
+	R4FL V 5 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+	Goto NoAmmo
+		
+	CryoFire:
+	    RAIL A 0
+		RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,2)
+		Goto NoAmmo
+		TNT1 AA 0	
+		RAIL A 0 A_Giveinventory("HasFreezerWeapon",1)
+		RAIL A 0 A_Takeinventory("RailgunAmmo",1)
+		RAIL A 0 A_PlaySound("FRZFIRE", 1)
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("RailgunAmmo")<=10) { A_PlaySound("MagClick", 7); }}}
+		TNT1 AA 0 A_FireCustomMissile ("BluePlasmaParticleWeapon", random(-11,11), 0, -1, -3, 0, random(-7,14))
+		R4FF A 1 BRIGHT A_FireCustomMissile("CryoShot", frandom(0.9,-0.9),0, 0, -3, 0)
+	    //TNT1 A 0 A_FireCustomMissile ("PlasmaSmoke", 0, 0, 0, 2)
+		R4FF B 1 BRIGHT A_SetPitch(-1.5 + pitch, SPF_INTERPOLATE)
+		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
+		R4FF CD 1
+		R4FF EFG 1 A_SetPitch(0.5 + pitch, SPF_INTERPOLATE)
+		R4FL BC 1
+		"####" A 0 A_WeaponOffset(0,32)
+		RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,2)
+		Goto NoMoreAmmoRipFrosty
+		TNT1 AA 0	
+		RAIL A 0 A_Refire
+		//RAIL A 0 A_Takeinventory("HasFreezerWeapon",1)
+		Goto Ready3
+		
+	CryoFireAlt:
+	    RAIL A 0
+		RAIL A 0 A_JumpIfInventory("RailgunAmmo",2,2)
+		Goto NoAmmo
+		TNT1 AA 0	
+		RAIL A 0 A_Giveinventory("HasFreezerWeapon",1)
+		RAIL A 0 A_Takeinventory("RailgunAmmo",1)
+		FLMT A 0 A_PlaySound("IceLoop", 1, 1, 1)
+		TNT1 AA 0 A_FireCustomMissile ("BluePlasmaParticleWeapon", random(-45,45), 0, random(-2,2), random(-3,1), 0, random(-6,22))
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("RailgunAmmo")<=12) { A_PlaySound("MagClick", 7); }}}
+		R4FF T 1 BRIGHT A_FireCustomMissile("FreezeThrowerMissile", 0, 1, 0, -12, 0, 8)
+		//TNT1 A 0 A_SetPitch(frandom(-0.6,0.6) + pitch, SPF_INTERPOLATE)
+		//TNT1 A 0 A_SetAngle(frandom(-0.6,0.6) + angle, SPF_INTERPOLATE)
+		//RAIL A 0 A_Takeinventory("RailgunAmmo",1)
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("RailgunAmmo")<=12) { A_PlaySound("MagClick", 7); }}}
+		R4FF U 1 BRIGHT// A_FireCustomMissile("FreezeThrowerMissile", frandom(0.9,-0.9),0, 0, -3, 0)
+		RAIL A 0 A_Takeinventory("RailgunAmmo",1)
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("RailgunAmmo")<=12) { A_PlaySound("MagClick", 7); }}}
+		R4FF V 1 BRIGHT A_FireCustomMissile("FreezeThrowerMissile", 0, 1, 0, -12, 0, 8)
+		//RAIL A 0 A_Takeinventory("RailgunAmmo",1)
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("RailgunAmmo")<=12) { A_PlaySound("MagClick", 7); }}}
+		R4FF W 1 BRIGHT// A_FireCustomMissile("FreezeThrowerMissile", frandom(0.9,-0.9),0, 0, -3, 0)
+		RAIL A 0 A_JumpIfInventory("RailgunAmmo",2,2)
+		Goto NoMoreAmmoRipFrosty
+		TNT1 AA 0	
+		RAIL A 0 A_Refire
+		TNT1 A 0 A_StopSound(1)
+		FLMT A 0 BRIGHT A_PlaySound("IceEnd", 1)
+		R4FF DCCCCCCCDEEFFG 1 BRIGHT
+		TNT1 A 0 A_Overlay(3, "SpawnSmoke")
+		//TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1.5,7)
+		Goto Ready3
+		
+	FireZoomed:
+	    RAIL A 0
+		//TNT1 A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,"CryoFire")
+		RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,2)
+		Goto NoAmmo
+		TNT1 AA 0
+		RAIL A 0 A_FireCustomMissile("RailgunTrailEffectMissile", 0, 0, 0, 0)
+		//RAIL A 0 A_FireCustomMissile("RailgunProjectile", 0, 1, 0, 0)
+		//RAIL A 0 A_RailAttack(400, 0, 0, "none", "none", RGF_FULLBRIGHT, 1, "RailgunPuff2")
+		RAIL A 0 A_RailAttack(200, 0, 0, "Blue", "Blue", RGF_FULLBRIGHT, 1, "RailgunPuff2",0,0,0,0,1.2,2,"BluePlasmaParticleWeaponRailgun")
+		TNT1 AAAAAAAAAA 0 A_FireCustomMissile ("BluePlasmaParticleWeapon", random(-60,60), 0, -1, -3, 0, random(-6,70))
+	    TNT1 A 0 A_FireCustomMissile ("PlasmaSmoke", 0, 0, 0, 2)
+		RAIL A 0 A_PlaySound("RAILF1", 1,0.5)
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("RailgunAmmo")<=20) { A_PlaySound("MagClick", 7); }}}
+		RAIL A 0 A_Takeinventory("RailgunAmmo",10)
+		RAIL A 0 A_SetPitch(-3.0 + pitch, SPF_INTERPOLATE)
+		//RAIL A 0 A_Recoil(1*cos(pitch))
+		//SHTZ A 0 
+		//{
+		//A_Recoil(2*cos(pitch));
+		//  if(momZ != 0)
+		//  {
+		//  ThrustThingZ(0,pitch/2,0,1);
+		//  }
+		//else
+		//  {
+		//  ThrustThingZ(0,pitch/3,0,1);
+		//  }
+		//}
+		RAIL A 0 A_ZoomFactor(0.7)
+		
+		
+		
+	ZoomedRecoil:
+		SNIP A 1// BRIGHT// A_AlertMonsters
+		RAIL A 0 A_ZoomFactor(5.0)
+		RAIL A 0 A_SetPitch(1.0 + pitch, SPF_INTERPOLATE)
+		SNIP AAA 1 A_FireCustomMissile("SmokeSpawner",0,0,0,5)
+		SNIP AA 1 A_SetPitch(1.0 + pitch, SPF_INTERPOLATE)
+		RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,2)
+		Goto NoAmmo
+		TNT1 AA 0
+		TNT1 A 0 
+		SNIP AAAAAA 1 
+		RAIL A 0 A_PlaySound("RAILR1", 2) 
+		RAIL A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		SNIP AAAAAAAAAAAAAAAA 2
+		RAIL A 0 A_PlaySound("BEPBEP", 2)
+		Goto StillAiming
+	
+	ZoomedRecoilHold:
+		SNIP AAAAAA 1
+		RAIL A 0 A_PlaySound("RAILR1", 2) 
+		RAIL A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+		SNIP AAAAAAAAAAAAAAAA 2
+		RAIL A 0 A_PlaySound("BEPBEP", 2)
+		SNIP A 1 //A_Refire
+		RAIL A 0 A_JumpIfInventory("Aiming1",1,"HoldEnd1")
+		RAIL A 0 A_JumpIfInventory("Aiming0",1,"HoldEnd")
+		RAIL A 0 A_JumpIfInventory("FiredSecondary",1,"HoldAim")
+		SNIP A 0 //A_Refire
+		Goto NoAim
+	HoldEnd1:
+		RAIL A 0 A_JumpIfInventory("PressedOnce",1,"HoldDown1")
+		Goto Ready2
+	HoldDown1:
+		RAIL A 0 A_JumpIfInventory("PressedTwice",1,"NoAim")
+		Goto Ready2
+		
+	HoldEnd:
+		RAIL A 0 A_JumpIfInventory("PressedTwice",1,"HoldDown")
+		RAIL A 0 A_JumpIfInventory("Fire2Activate",1,"HoldDown")
+		Goto Ready2
+	HoldDown:
+		RAIL A 0 A_Giveinventory("PressedTwice",1)
+		RAIL A 0 A_JumpIfInventory("FiredSecondary",1,"HoldAim")
+		Goto NoAim
+		
+	
+	SuddenStopAim:
+		RAIL A 0
+		RAIL A 0 A_ZoomFactor(1.0)
+		RAIL A 0 A_Takeinventory("Zoomed",1)
+		RAIL A 0 A_Takeinventory("PowerLightAmp", 1)
+		RAIL A 0 A_TakeInventory("Fire2Activate",1)
+		RAIL A 0 A_Takeinventory("PressedTwice",1)
+		RAIL A 0 A_TakeInventory("PressedOnce",1)
+		RAIZ AB 1
+		RAIL DDDDDD 1
+		RAIL A 0 A_PlaySound("RAILR1", 2)
+		RAIL DDDDDDDDDDDDDDDD 2
+		RAIL A 0 A_PlaySound("BEPBEP", 2)
+		RAIL A 0 A_TakeInventory("Fire2Activate",1)
+		Goto Ready
+		
+	SuddenStopAim2:
+		RAIL A 0
+		RAIL A 0 A_ZoomFactor(1.0)
+		RAIL A 0 A_Takeinventory("Zoomed",1)
+		RAIL A 0 A_Takeinventory("PowerLightAmp", 1)
+		RAIL A 0 A_TakeInventory("Fire2Activate",1)
+		RAIL A 0 A_Takeinventory("PressedTwice",1)
+		RAIL A 0 A_TakeInventory("PressedOnce",1)
+		RAIZ AB 1
+		RAIL DDDDDDDDDDDDDDDD 2
+		RAIL A 0 A_PlaySound("BEPBEP", 2)
+		RAIL A 0 A_TakeInventory("Fire2Activate",1)
+		Goto Ready	
+
+    AltFire:
+        RAIL A 0
+	//	TNT1 A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,"CryoFireAlt")
+		TNT1 A 0 A_SetCrosshair(41)
+		//RAIL A 0 ACS_NamedExecuteAlways("HoldAim")
+		//RAIL A 0 A_JumpIfInventory("Zoomed",1,"NoAim")
+		//RAIL A 0 A_Giveinventory("Zoomed",1)
+        RAIL A 0 A_ZoomFactor(5.0)
+		SMGG A 0 A_PlaySound("ADSIN")
+        RAIZ AB 1 BRIGHT
+		TNT1 A 0 A_jumpifinventory("dontlightscope",1,2)
+		RAIL A 0 A_GiveInventory("PowerLightAmp", 1)
+		SNIP A 3
+		StillAiming:
+		TNT1 A 0 A_jumpifinventory("firedsecondary",1,"Aim1")
+		Goto Aim2
+		Aim1:
+			SMGG A 0 A_ZoomFactor(5.0)
+			SNIP A 1 A_weaponready(WRF_NOSECONDARY | WRF_NOPRIMARY)
+			TNT1 A 0 A_jumpifinventory("reloading",1,"reload")
+			TNT1 A 0 A_jumpifinventory("startdualwield",1,"togglelightamp")
+			TNT1 A 0 A_jumpifinventory("firedprimary",1,"FireZoomed")
+			TNT1 A 0 A_jumpifinventory("firedsecondary",1,"Aim1")
+			Goto noaim
+		Aim2:
+			SMGG A 0 A_ZoomFactor(5.0)
+			SNIP A 1 A_weaponready(WRF_NOSECONDARY | WRF_NOPRIMARY)
+			TNT1 A 0 A_jumpifinventory("reloading",1,"reload")
+			TNT1 A 0 A_jumpifinventory("startdualwield",1,"togglelightamp")
+			TNT1 A 0 A_jumpifinventory("firedprimary",1,"FireZoomed")
+			TNT1 A 0 A_jumpifinventory("firedsecondary",1,"NoAim")
+			LOOP
+	Togglelightamp:
+	TNT1 A 0
+	{
+	A_takeinventory("startdualwield",1);
+	If(findinventory("dontlightscope"))
+	{
+	takeinventory("dontlightscope",1);
+	giveinventory("powerlightamp",1);
+	}
+	Else
+	{
+	giveinventory("dontlightscope",1);
+	takeinventory("powerlightamp",1);
+	}
+	A_startsound("BEP",1);
+	}
+	Goto StillAiming
+		
+		
+	NoAim:
+	    NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+	    RAIL A 0 A_ZoomFactor(1.0)
+	    RAIL A 0 A_Takeinventory("PowerLightAmp", 1)
+		SMGG A 0 A_PlaySound("ADSOUT")
+        RAIZ BA 1 BRIGHT
+		RAIL A 0 A_Light0
+		RAIL A 0 A_Takeinventory("Zoomed",1)
+		RAIL A 0 A_TakeInventory("Fire2Activate",1)
+		RAIL A 0 A_Takeinventory("PressedTwice",1)
+		RAIL A 0 A_TakeInventory("PressedOnce",1)
+        Goto Ready
+		
+		
+	Inspect:
+	    TNT1 A 0 A_PlaySound("PLSIDLE", 1, 1, 1)
+	//	6AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,"InspectFrozen")
+	    RAII BCD 1 BRIGHT A_WeaponReady
+		RAII HIJK 1 BRIGHT A_WeaponReady
+		RAII L 1 BRIGHT offset(0,32)
+		RAII L 1 BRIGHT offset(0,33)
+		RAII M 1 BRIGHT offset(0,32)
+		RAII M 1 BRIGHT offset(0,33)
+		RAII N 1 BRIGHT offset(0,32)
+		RAII N 1 BRIGHT offset(0,33)
+		RAII L 1 BRIGHT offset(0,32)
+		RAII L 1 BRIGHT offset(0,33)
+		RAIR A 0 A_PlaySound("RAILSCP1")
+		RAII M 1 BRIGHT offset(0,32)	
+		//RAIR A 0 A_PlaySound("RAILMAG1")
+		RAII OP 1 BRIGHT A_WeaponReady
+		RAII QRSQRSQRS 2 BRIGHT A_WeaponReady
+		RAII TUU 1 BRIGHT A_WeaponReady
+		RAII VWXVWXVWXVWX 2 BRIGHT A_WeaponReady
+		RAII YZ 1 BRIGHT A_WeaponReady
+		2AII A 1 BRIGHT A_WeaponReady
+		2AII BCD 2 BRIGHT A_WeaponReady
+		2AII EF 1 BRIGHT A_WeaponReady
+		RAIL A 0 A_PlaySound("RAILSCP2")
+		//RAIL A 0 A_PlaySound("RAILINSR")
+		2AII GHIJKL 1 BRIGHT A_WeaponReady
+		RAII LMNLMN 2 BRIGHT A_WeaponReady	
+		RAII KJIHDCBA 1 BRIGHT A_WeaponReady
+		SHTZ A 0 A_TakeInventory("Reloading",1)
+		Goto Ready
+		
+	InspectFrozen:
+	    R4FI ABCD 1 A_WeaponReady
+		R4FI EFDEF 2 A_WeaponReady //idle after lifting down
+		R4FI GHI 1 A_WeaponReady 
+		//TNT1 A 0 A_PlaySound("IceKnocc")
+		XXXX X 0 A_StartSound("foley/RailgunIceSlap",10)
+		TNT1 A 0 A_PlaySound("IceKnocc")
+		R4FI JKLMN 1 A_WeaponReady
+		R4FI OOPPN 1 A_WeaponReady//idle after first knocc
+		//TNT1 A 0 A_PlaySound("IceKnocc")
+		XXXX X 0 A_StartSound("foley/RailgunIceSlap",10)
+		TNT1 A 0 A_PlaySound("IceKnocc")
+		R4FI JKLMN 1 A_WeaponReady
+		R4FI OOPPNNOOP 1 A_WeaponReady//idle after second knocc
+		R4FI QRST 1 A_WeaponReady
+		R4FI EFFD 1 A_WeaponReady
+		R4FI DCBA 1 A_WeaponReady
+		SHTZ A 0 A_TakeInventory("Reloading",1)
+		Goto Ready
+		
+		
+		Reload:
+	    RAIL A 0  {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+		
+        RAIL A 0 A_Takeinventory("Reloading",1)
+		RAIL A 0 A_ZoomFactor(1.0)
+		RAIL A 0 A_Takeinventory("PowerLightAmp", 1)
+		RAIL A 0 A_Takeinventory("Zoomed",1)
+		RAIL A 0 A_JumpIfInventory("RailgunAmmo",getCVAR("bd_RailgunMag"),"Inspect")
+        RAIL A 0 A_JumpIfInventory("AmmoCell",10,3)
+        Goto Ready+6
+        TNT1 AAAA 0
+		
+		RAIL A 0 A_JumpIfInventory("TurboReload", 1, "InsertBullets")
+		RAIL A 0 A_JumpIfInventory("HasUnloadedRG",1, "ReloadUnloaded")
+		RAIR A 0 A_JumpIfInventory("RailgunAmmo",1,2)
+		Goto ReloadEmpty
+		RAIR A 0
+		//6AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIR A 0
+		"####" X 0 A_PlaySound("foley/RailgunRippingMagMovement",10)
+		"####" ABCDEFG 1 BRIGHT
+		"####" H 1 BRIGHT
+		"####" H 1 BRIGHT offset(0,33)
+		"####" I 1 BRIGHT offset(0,32)
+		"####" I 1 BRIGHT offset(0,33)
+		"####" J 1 BRIGHT offset(0,32)
+		"####" J 1 BRIGHT offset(0,33)
+		"####" H 1 BRIGHT offset(0,32)
+		"####" H 1 BRIGHT offset(0,33)
+		"####" K 1 BRIGHT offset(0,32)
+		"####" A 0 A_PlaySound("RAILMAG1",1)
+		"####" L 1
+		"####" MNOPQRSTUVWX 1
+		"####" A 0 A_FireCustomMissile("PlasmaCaseSpawn",-30,0,-11,-24)
+		"####" Y 5
+		"####" Z 1
+		//7AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		2AIR A 0
+		"####" X 0 A_PlaySound("foley/RailgunInsectCellMovement",10)
+		"####" ABC 1
+		"####" D 4
+		"####" EFGHI 1
+		"####" A 0 A_PlaySound("RAILINSR")
+		Goto InsertBullets
+		"####" J 3
+		"####" KLMNOPQRSTUV 1
+	//	R4FF A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIF A 0
+		"####" MNOPQRS 1
+		//7AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		2AIR A 0
+		"####" W 3
+		"####" A 0 A_PlaySound("BEPBEP", 2)
+		"####" XYZZZYX 1 
+		"####" A 0 A_Takeinventory("HasUnloadedRG", 1)
+	"####" A 0 A_GiveInventory("QuickSwitchSSG",1)
+		"####" W 8 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+	"####" A 0 A_TakeInventory("QuickSwitchSSG",1)
+		"####" Z 1 A_PlaySound("RAILON", 2)
+		//R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIL A 0
+		"####" D 1 BRIGHT
+		SHTZ A 0 A_TakeInventory("Reloading",1)
+		Goto InsertBullets
+		
+	ReloadUnloaded:
+	   // 8AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		3AIR A 0
+		"####" MNOP 1
+		//6AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIR A 0
+		"####" Y 5
+		"####" Z 1
+		//7AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		2AIR A 0
+		"####" X 0 A_PlaySound("foley/RailgunInsectCellMovement",10)
+		"####" ABC 1
+		"####" D 4
+		"####" EFGHI 1
+		"####" A 0 A_PlaySound("RAILINSR")
+		Goto InsertBullets
+		"####" J 3
+		"####" KLMNOPQRSTUV 1
+		//R4FF A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIF A 0
+		"####" MNOPQRS 1
+		//7AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		2AIR A 0
+		"####" W 3
+		"####" A 0 A_PlaySound("BEPBEP", 2)
+		"####" XYZZZYX 1
+		"####" A 0 A_Takeinventory("HasUnloadedRG", 1)
+	"####" A 0 A_GiveInventory("QuickSwitchSSG",1)
+		"####" W 8 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+	"####" A 0 A_TakeInventory("QuickSwitchSSG",1)
+		"####" Z 1
+		//R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIL A 0
+		"####" D 1 A_PlaySound("RAILON", 2)
+		SHTZ A 0 A_TakeInventory("Reloading",1)
+		Goto InsertBullets
+		
+	ReloadEmpty:
+	    TNT1 A 0 A_StopSound(1)
+	   // 8AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		3AIR A 0
+		"####" X 0 A_PlaySound("foley/RailgunRippingMagMovement",10)
+	    "####" ABCDEFG 1
+	    "####" H 1
+		"####" H 1 offset(0,33)
+		"####" I 1 offset(0,32)
+		"####" K 1 offset(0,32)
+		"####" A 0 A_PlaySound("RAILMAG2")
+		"####" L 1
+		//6AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIR A 0
+		"####" MNOPQRSTUVWX 1
+		"####" Y 5
+		"####" Z 1
+		//7AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		2AIR A 0
+		"####" X 0 A_PlaySound("foley/RailgunInsectCellMovement",10)
+		"####" ABC 1
+		"####" D 4
+		"####" EFGHI 1
+		"####" A 0 A_PlaySound("RAILINSR")
+		Goto InsertBullets
+		"####" J 3
+		"####" KLMNOPQRSTUV 1
+		//R4FF A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIF A 0
+		"####" MNOPQRS 1
+		//7AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		2AIR A 0
+		"####" W 3
+		"####" A 0 A_PlaySound("BEPBEP", 2)
+		"####" XYZZZYX 1
+		"####" W 8
+		"####" Z 1
+		//R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIL A 0
+		"####" D 1 A_PlaySound("RAILON", 2)
+		RAIL A 0 A_Takeinventory("HasUnloadedRG", 1)
+		SHTZ A 0 A_TakeInventory("Reloading",1)
+		Goto InsertBullets	
+		
+	InsertBullets:	
+		"####" AAAA 0
+		"####" A 0 A_JumpIfInventory("RailgunAmmo",getCVAR("bd_RailgunMag"),"FinishReload")
+		"####" A 0 A_JumpIfInventory("AmmoCell",1,3)
+		Goto FinishReload
+        "####" AAAAAA 0
+		"####" A 0 A_Giveinventory("RailgunAmmo",1)
+		"####" A 0 A_Takeinventory("AmmoCell",1)
+		Loop
+		
+	FinishReload:
+	    "####" J 3
+		"####" KLMNOPQRSTUV 1
+		//R4FF A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIF A 0
+		"####" MNOPQRS 1
+		//7AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		2AIR A 0
+		"####" W 3
+		"####" A 0 A_PlaySound("BEPBEP", 2)
+		"####" XYZZZYX 1
+		"####" A 0 A_Takeinventory("HasUnloadedRG", 1)
+	"####" A 0 A_GiveInventory("QuickSwitchSSG",1)
+		"####" W 8 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
+	"####" A 0 A_TakeInventory("QuickSwitchSSG",1)
+		"####" Z 1
+		//R4FL A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIL A 0
+		"####" D 1 A_PlaySound("RAILON", 2)
+		SHTZ A 0 A_TakeInventory("Reloading",1)
+		Goto Ready
+		
+	Unload:
+	    RAIL A 0  {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+		RAIL A 0 A_Takeinventory("PowerLightAmp", 1)
+        RAIL A 0 A_Takeinventory("Unloading",1)
+		RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,2)
+		Goto ReadyUnloaded
+		TNT1 AA 0
+		RAIL A 0 A_Takeinventory("Zoomed",1)
+		RAIL A 0 A_ZoomFactor(1.0)
+        RAIL A 0 A_JumpIfInventory("AmmoCell",10,3)
+        Goto Ready+6
+        TNT1 AAAA 0
+		//6AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		RAIR A 0
+		"####" ABCDEFG 1
+		"####" H 1
+		"####" H 1 offset(0,33)
+		"####" I 1 offset(0,32)
+		"####" I 1 offset(0,33)
+		"####" J 1 offset(0,32)
+		"####" J 1 offset(0,33)
+		"####" H 1 offset(0,32)
+		"####" H 1 offset(0,33)
+		"####" K 1 offset(0,32)
+		"####" A 0 A_PlaySound("RAILMAG1",1)
+		"####" L 1
+		"####" MNOPQRSTUVWX 1
+		//8AIR A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,2)
+		3AIR A 0
+		"####" PONM 1
+		RAIL A 0 A_Giveinventory("HasUnloadedRG",1)
+	RemoveBullets:	
+		TNT1 AAAA 0
+		RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,3)
+		Goto ReadyUnloaded
+        TNT1 AAAAAA 0
+		RAIL A 0 A_Takeinventory("RailgunAmmo",1)
+		RAIL A 0 A_Giveinventory("AmmoCell",1)
+		Loop	
+		
+ 	Spawn:
+		SRCG A -1
+		Stop
+		
+	
+		
+	GoTaunt:
+		RAIL A 0
+		RAIL A 0 A_Light0
+		RAIL A 0 A_Takeinventory("Zoomed",1)
+		RAIL A 0 A_Takeinventory("PowerLightAmp", 1)
+        RAIL A 0 A_ZoomFactor(1.0)
+		Goto Taunt
+		
+//	DualWield:
+	TNT1 A 0
+	PIST F 0 A_Takeinventory("StartDualWield",1)
+	//TNT1 A 0 A_JumpIf(getCVAR("bd_FrozenRailgun")==true,"DisableFreezer")
+	//TNT1 A 0 A_GiveInventory("HasFrozenRailgun",1)
+	NULL A 0 A_SetCVAR("bd_FrozenRailgun",true)
+	RAFR EFG 1 BRIGHT
+	TNT1 A 0 A_PlaySound("FreezeON",1)
+    RAFR HIJKLMNO 1 BRIGHT
+	PIST F 0 A_Takeinventory("StartDualWield",1)
+	Goto Ready
+	DisableFreezer:
+	//TNT1 A 0 A_TakeInventory("HasFrozenRailgun",1)
+	NULL A 0 A_SetCVAR("bd_FrozenRailgun",false)
+    RAFR O 1 BRIGHT
+	TNT1 A 0 A_PlaySound("FreezeOF",1)
+	RAFR NMLKJIHGFE 1 BRIGHT
+	PIST F 0 A_Takeinventory("StartDualWield",1)
+	Goto Ready
+	}
+}
+*/
+
+Actor Dontlightscope : inventory
+{
+Inventory.maxamount 1
+}
+
+
+ACTOR RailgunProjectile
+{
+	
+	Radius 2
+	Height 2
+	Speed 80
+	Damage (random(0, 0))
+    DamageType Railgun
+	Projectile
+	+RANDOMIZE
+	+MISSILE
+	+FORCERADIUSDMG
+	+THRUACTORS
+	Species "Marines"
+	Scale 1.0
+	var int user_railangle;
+	
+	renderstyle ADD
+	alpha 0.90
+	Scale 0.10
+	DeathSound "weapons/plasmax"
+	//SeeSound "PLSM9"
+    SeeSound "None"
+	Obituary "$OB_MPPLASMARIFLE"
+	BounceCOunt 3
+	//MissileType "WhiteShockwave"
+	States
+	{
+	DM:
+		RAIL A 0
+		RAIL A 0 A_ChangeFLag("THRUSPECIES", 0)
+		RAIL A 0 A_ChangeFLag("MTHRUSPECIES", 0)
+		Goto Spawn1
+	
+	Spawn:
+		TNT1 A 0
+		RAIL A 0 A_FaceTarget
+		RAIL A 0 A_SetUserVar("user_railangle", angle)
+		RAIL A 0 A_SpawnItem("WhiteShockwave")
+		RAIL A 0 ACS_NamedExecuteAlways("CheckIfDM", 0, 0, 0, 0)//Check if Coop
+		
+		TNT1 C 1 BRIGHT A_SpawnItem("WhiteShockwave")
+		
+
+	Spawn1:
+        TNT1 C 1 BRIGHT A_SpawnItem("WhiteShockwave")
+		RAIL A 0 A_SpawnItem("WhiteShockwave")
+		RAIL A 0 A_CheckFloor("Death")
+		RAIL A 0 A_CustomMissile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-30, 30))
+		Loop
+	
+
+	Death:
+	Melee:
+	Xdeath:
+		TNT1 AAAA 0 A_SpawnItemEx("BluePlasmaParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+		TNT1 AA 0 A_SpawnItem("WhiteShockwave")
+        TNT1 AAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180))
+        TNT1 AAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAAAAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 360), 2, random (0, 360))
+        EXPL AAAAA 0 A_CustomMissile ("ExplosionSmokeFast22", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAA 0 A_CustomMissile ("FireworkSFXType2", 2, 0, random (0, 360), 2, random (10, 80))
+		RAIL A 0 A_SpawnItemEx ("DetectFloorCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		RAIL A 0 A_SpawnItemEx ("DetectCeilCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		RAIL A 0 A_CustomMissile ("BluePlasmaFire", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAA 0 A_CustomMissile ("BluePlasmaParticle", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 ABE 0 BRIGHT A_SpawnItem("BlueFlare" ,0)
+		Death:
+	Melee:
+	Xdeath:
+		Stop
+		Stop
+	}
+}
+
+aCTOR rAILGUNpENETRATOR1
+{
+	PROJECTILE
+	+Missile
+	+NOCLIP
+	Radius 2
+	Height 2
+	Speed 60
+	Damagetype "Extreme"
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			RAIL A 0 A_CheckFloor("XDeath")
+			RAIL A 0 A_Checkceiling("XDeath")
+			TNT1 A 0 A_Explode(100, 100)
+			TNT1 A 1
+			TNT1 A 0 A_Explode(100, 100)
+			RAIL A 0 BRIGHT A_CustomMissile("RailgunPenetrator", 0, 0, 0, 2, momz)
+			Stop
+		XDeath:
+			RAIL A 0
+			Stop
+	}
+}
+
+
+aCTOR rAILGUNpENETRATOR1B: rAILGUNpENETRATOR1
+{
+	Speed 40
+}
+		
+
+
+
+actor RailgunTracerTrail
+{
+    Scale 0.2
+    RenderStyle Add
+    Alpha 0.9
+    +NOINTERACTION
+    +CLIENTSIDEONLY
+	+FORCEXYBILLBOARD
+    States
+    {
+    Spawn:
+        PBAL A 2 BRIGHT
+        stop
+    }
+}
+
+Actor RailgunPenetrationParticle
+{
++THRUACTORS
++CLIENTSIDEONLY
++MISSILE
++NOGRAVITY
+States
+	{
+		Spawn:
+			
+			TNT1 A 15
+			TNT1 AAAA 0 A_CustomMissile ("OldschoolRocketSmokeTrailDarker", 2, 0, random (160, 210), 2, random (-30, 30))
+			Stop
+}}
+
+
+
+Actor RailgunTrailEffectMissile: FastProjectile
+{
+damage (random(0, 0))
+Decal "Scorch"
+DamageType Railgun
++NODAMAGETHRUST
+Radius 1
+Height 1
+Scale 0.2
+Speed 999
+-SKYEXPLODE
++ripper
+
+MissileType "RailgunTrailEffect"
+States
+{
+	Spawn:
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 //A_SpawnItem("RailgunTrailEffect")
+		Stop
+		
+Death:
+		RAIL A 0
+		TNT1 B 0
+		RAIL A 0 A_SpawnItemEx ("Footstep91",0,0, 40,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 B 1 
+		RAIL A 0 A_SpawnItemEx ("ExplosionSplashSpawner", 0, 0, 0)
+        RAIL A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    RAIL A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 AA 0 A_CustomMissile ("SparkXNoModel", 2, 0, random (0, 360), 2, random (0, 360))
+		RAIL A 0 A_SpawnItem("RailgunFlameTrails")
+		
+		EXPL A 0 Radius_Quake (3, 8, 0, 15, 0)
+	    RAIL A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        RAIL A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        TNT1 AAA 0 A_CustomMissile ("BDExplosionparticles", 0, 0, random (0, 360), 2, random (40, 90))
+		TNT1 AA 0 A_CustomMissile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (40, 90))
+		TNT1 AA 0 A_CustomMissile ("BDExplosionparticles3", 10, 0, random (0, 360), 2, random (40, 90))
+		TNT1 AAA 0 A_CustomMissile ("ExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
+        RAIL A 0 A_SpawnItemEx ("RocketExplosion",0,0,13,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 2
+		RAIL A 0 A_SpawnItemEx ("LiquidExplosionEffectSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		RAIL A 0 A_PlaySound("FAREXPL", 3)
+		TNT1 A 15
+		RAIL A 0 A_PlaySound("distantexp", 5)
+		Stop
+}
+}
+
+
+Actor RailgunTrailEffect
+{
++THRUACTORS
++CLIENTSIDEONLY
++MISSILE
++NOGRAVITY
+States
+	{
+		Spawn:
+			//TNT1 AAAA 0 A_CustomMissile ("RailgunTrailParticle", 2, 0, random (0, 360), 2, random (0, 360))
+			RAIL A 0
+			RAIL A 0 A_SpawnItem("RailgunFlameTrailsBlue")
+			TNT1 A 12
+			TNT1 AAAA 0 A_CustomMissile ("OldschoolRocketSmokeTrailDarker", 2, 0, random (160, 210), 2, random (-30, 30))
+			Stop
+}}
+
+Actor RailgunPenetrator: MarineTracer
+{
+damage (random(50, 60))
+//Decal "BulletDecalNew1"
+Decal "Scorch"
+DamageType Extreme
+Radius 4
+Height 4
+Scale 0.2
++MISSILE
++RIPPER
+Speed 80
+-SKYEXPLODE
+MissileType "RailgunPenetrationParticle"
+States
+{
+	Spawn:
+		TNT1 A 0
+		RAIL A 0 A_CustomMissile("SpawnBulletDecalBackwards", 0, 0, 0)
+		TNT1 A 10
+		
+		sTOP
+		
+Death:
+	RAIL A 0
+    TNT1 A 1
+	RAIL A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    RAIL A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    RAIL A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        TNT1 AAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180))
+        TNT1 AAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAAAAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 0, 0, random (0, 360), 2, random (0, 360))
+        EXPL AAAAA 0 A_CustomMissile ("ExplosionSmokeFast22", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 0 A_Explode(50, 100)
+	RAIL A 0 A_SpawnItemEx ("DetectFloorCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	RAIL A 0 A_SpawnItemEx ("DetectCeilCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	RAIL A 0 A_CustomMissile ("BluePlasmaFire", 0, 0, random (0, 360), 2, random (0, 360))
+	TNT1 AAAAA 0 A_CustomMissile ("BluePlasmaParticle", 0, 0, random (0, 360), 2, random (0, 360))
+	TNT1 ABCDE 2 BRIGHT A_SpawnItem("BlueFlare" ,0)
+    TNT2 AAAAAAAAA 9 A_CustomMissile ("PlasmaSmoke", 1, 0, random (0, 360), 2, random (0, 160))
+	Stop
+	
+DeathSpecial:	
+	
+    Stop
+XDEath:
+RAIL A 0
+//RAIL A 0 A_Explode(2, 5)
+TNT1 A 1
+Stop	
+}
+}
+
+
+
+
+Actor FrozenSmokeSpawner
+{
+    Speed 25
+    +NOCLIP
+    States
+    {
+    Spawn:
+		TNT1 A 0
+		NULL A 0 A_CustomMissile ("FrozenSmoke", -10, 0, random(1,-1), 2, 90)
+		//TNT1 A 8
+		//NULL A 0 A_CustomMissile ("FrozenSmoke", -10, 0, random(1,-1), 2, 90)
+        Stop
+    }
+}
+
+ACTOR FrozenSmoke: ExplosionSmoke
+{
+ 
+	Alpha 0.01
+	RenderStyle Add
+	XScale 0.12
+	YScale 0.15
+	Speed 1
+    States
+    {
+    Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Stap")
+		smk2 CCCCC 1 A_FadeIn(0.1)
+		smk2 C 2
+		smk2 CCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.04)
+		Goto Death
+	Death:
+		TNT1 A 0
+		Stop
+	Stap:		
+		TNT1 A 0
+		Stop
+    }
+}
+
+
+

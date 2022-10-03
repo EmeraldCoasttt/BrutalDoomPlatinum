@@ -1,0 +1,293 @@
+
+
+CLASS BASEHEADSHOT : ACTOR
+{
+	bool hasticked;
+	int damagetoactor;
+	
+	name damagetypetoactor;
+	
+	int offsetx; 
+	property offsetx : offsetx;
+	
+	int offsety; 
+	property offsety : offsety;
+	
+	int offsetz; 
+	
+	property offsetz : offsetz;
+	
+	string damagetypeX; 
+	property damagetypeX: damagetypeX;
+	
+	int explodeydamage; 
+	property explodeydamage : explodeydamage;
+	
+	Default
+	{
+		+buddha;
+		+shootable;
+		+nogravity;
+		Radius 16;
+		Height 22;
+		+thruspecies;
+		baseheadshot.offsetx 0;
+		baseheadshot.offsety 0;
+		baseheadshot.offsetz 64;
+		baseheadshot.explodeydamage 80;
+		baseheadshot.damagetypex "HEAD";
+		//+nevertarget;
+		+noradiusdmg;
+		/*
+		Damagefactor "Ice",0.0;
+		Damagefactor "Frost",0.0;
+		Damagefactor "Freeze",0.0;
+		
+		Damagefactor "Fire",0.0;
+		*/
+		
+	}
+	
+	Override void tick()
+	{	
+		If(tracer && !hasticked)
+			{
+				tracer.takeinventory("killheadshottargets",1);
+				hasticked = true;
+				
+			}
+		If(!tracer || tracer.health < 1 || tracer.findinventory("killheadshottargets"))
+		{
+			If(tracer)
+			{
+			tracer.takeinventory("killheadshottargets",1);
+			}
+			Destroy();
+		}
+		Else
+		{
+		Species = tracer.species;
+		A_warp(AAPTR_tracer,offsetx,offsety,offsetz,0,WARPF_NOCHECKPOSITION);
+		}
+	}
+	
+	
+	Override int takespecialdamage(actor inflictor, actor source, int damage, name damagetype)
+	{
+	IF(damagetype == "plasma" || damagetype == "ice" || damagetype == "frost" || damagetype == "freeze" || damagetype == "desintegrate" || damagetype == "explosiveimpact" || damagetype == "fire")
+	{
+	
+	damagetoactor = damage;
+		damagetypetoactor = damagetype;
+	}
+		Else
+	{
+		
+	
+	damagetypetoactor = damagetypex;
+		If(damagetype == "precise" || damagetype == "railgun" || damagetype == "Revolver")
+		{
+			damagetoactor = (damage * 1.8);
+		}
+		Else
+		{
+			damagetoactor = (damage * 1.2);
+		}
+	}
+	If(tracer && tracer != inflictor)
+	{
+	A_damagetracer(damagetoactor,damagetypetoactor,0,null,"none",AAPTR_TARGET);
+		If(tracer && tracer.health < 1 && damagetypetoactor == "head")
+			{
+				a_startsound("HEADSHOT",1,0);
+				If(damagetype == "railgun" || damagetype == "Revolver")
+				{
+					spawn("WhiteShockwave",pos);
+					A_Explode(80,150,0,FALSE,0,0,10,"BulletPuff","Head");
+					a_startsound("HEADSHOT",1,0,1.0,ATTN_NONE);
+				}
+			}
+	}
+	
+	
+	
+	return -1;
+	}
+
+	
+	States
+	{
+		Spawn:
+			TNT1 A 1;
+			LOOP;
+	}
+}
+
+
+
+CLASS CYBERHEADSHOT : BASEHEADSHOT
+{
+
+	Default
+	{
+		baseheadshot.offsetz 110;
+		Species "cyberdemon";
+		+dontrip;
+	}
+
+}
+
+
+CLASS ZOMBIEHEADSHOT : BASEHEADSHOT
+{
+
+	Default
+	{
+		baseheadshot.offsetz 40;
+		radius 8;
+		height 16;
+	}
+	
+	Override void tick()
+	{
+		If(tracer)
+		{
+			offsetz = tracer.height;
+		}
+		SUper.tick();
+	}
+
+}
+
+CLASS REVHEADSHOT : BASEHEADSHOT
+{
+
+	Default
+	{
+		baseheadshot.offsetz 60;
+		radius 8;
+		height 16;
+		Species "boners";
+	}
+
+}
+
+CLASS VILEHEADSHOT : BASEHEADSHOT
+{
+
+	Default
+	{
+		Damagefactor "Railgun", 0.6;
+		baseheadshot.offsetz 56;
+		radius 8;
+		height 16;
+	}
+
+}
+
+CLASS FATSOHEADSHOT : BASEHEADSHOT
+{
+
+	Default
+	{
+		baseheadshot.offsetz 56;
+		radius 12;
+		height 16;
+	}
+
+}
+
+
+CLASS KNIGHTHEADSHOT : BASEHEADSHOT
+{
+
+	Default
+	{
+		baseheadshot.offsetz 55;
+		radius 10;
+		height 16;
+		BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood";
+		BloodColor "DarkGreen";
+		Species "nobles";
+	}
+
+}
+
+CLASS BARONHEADSHOT : BASEHEADSHOT
+{
+
+	Default
+	{
+		baseheadshot.offsetz 60;
+		radius 12;
+		height 18;
+		BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood";
+		bloodcolor "darkgreen";
+		Species "nobles";
+	}
+
+}
+
+CLASS CACOHEADSHOT : BASEHEADSHOT
+{
+
+	Default
+	{
+		baseheadshot.offsetz 32;
+		baseheadshot.offsetx 24;
+		bloodtype "Blue_Blood", "BlueSawBlood", "BlueSawBlood";
+		bloodcolor "blue";
+		radius 14;
+		height 14;
+		+dontrip;
+		Species "cacodemon";
+	}
+
+}
+
+
+
+CLASS RIotShieldGuyShield : BASEHEADSHOT
+{
+	Default
+	{
+		
+		Radius 16;
+		Height 44;
+		baseheadshot.offsetz 0;
+		baseheadshot.offsetx 24;
+		Bloodtype "Hitpuff", "Hitpuff", "hitpuff";
+	
+	}
+	
+	Override void tick()
+	{
+		If(!tracer || tracer.health < 1)
+		{
+			A_dropitem("mp40drop2");
+			Destroy();
+		}
+		Else
+		{
+		Species = tracer.species;
+		A_warp(AAPTR_tracer,offsetx,offsety,offsetz,0,WARPF_NOCHECKPOSITION);
+		}
+	}
+	
+	Override int takespecialdamage(actor inflictor, actor source, int damage, name damagetype)
+	{
+
+	damagetoactor = (damage * 0.05);
+	damagetypetoactor = damagetype;
+
+	If(tracer && tracer != inflictor)
+	{
+	A_damagetracer(damagetoactor,damagetypetoactor,0,null,"none",AAPTR_TARGET);
+	tracer.target = inflictor;
+	}
+	
+	
+	
+	return -1;
+	}
+}

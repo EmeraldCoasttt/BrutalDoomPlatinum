@@ -1,0 +1,150 @@
+decal ShotgunSlugDecal
+{
+	pic BULDE1
+	x-scale 0.9
+	y-scale 0.9
+	translucent 0.9
+	shade "0 0 0"
+	randomflipx
+}
+
+//frozen decals
+decal IceScorch 
+{
+	pic SCORCH1
+	shade "white"
+	x-scale 1.25
+	y-scale 1.25
+	randomflipx
+	randomflipy
+	fullbright
+}
+
+decal IceScorchSmaller
+{
+	pic SCORCH1
+	shade "white"
+	x-scale 0.75
+	y-scale 0.75
+	randomflipx
+	randomflipy
+	fullbright
+}
+
+decal BFGAlphaScorch
+{
+	pic SCORCH1
+	shade "00 00 00"
+	x-scale 0.9
+	y-scale 0.9
+	randomflipx
+	randomflipy
+}
+
+//MELEE
+decal Crack1smol
+{
+	pic BFGLITE1
+	shade "00 00 00"
+	x-scale 0.60
+	y-scale 0.60
+	randomflipy
+	randomflipx
+}
+
+decal Crack2smol
+{
+	pic BFGLITE2
+	x-scale 0.60
+	y-scale 0.60
+	shade "00 00 00"
+	randomflipy
+	randomflipx
+}
+
+decalgroup CrackSmol
+{
+	Crack1smol	1
+	Crack2smol	1
+}
+
+decal SawVerticalThrown
+{
+	pic SawVert
+	shade "00 00 00"
+	x-scale 0.2
+	y-scale 0.8
+	randomflipy
+	randomflipx
+}
+
+decal Crack1Melee
+{
+	pic BFGLITE1
+	shade "00 00 00"
+	x-scale 0.30
+	y-scale 0.30
+	randomflipy
+	randomflipx
+}
+
+decal Crack2Melee
+{
+	pic BFGLITE2
+	x-scale 0.30
+	y-scale 0.30
+	shade "00 00 00"
+	randomflipy
+	randomflipx
+}
+
+decalgroup CrackMelee
+{
+	Crack1Melee	1
+	Crack2Melee	1
+}
+
+decal AxeVertical
+{
+	pic BULDE1
+	translucent 0.8
+	shade "00 00 00"
+	x-scale 0.2
+	y-scale 2.0
+	randomflipy
+	randomflipx
+}
+
+decal AxeHorizontal
+{
+	pic BULDE1
+	translucent 0.8
+	shade "00 00 00"
+	x-scale 4.0
+	y-scale 0.2
+	randomflipy
+	randomflipx
+}
+
+
+decal SawHorizontal
+{
+	pic BULDE1
+	translucent 0.6
+	shade "00 00 00"
+	x-scale 5.0
+	y-scale 0.2
+	randomflipy
+	randomflipx
+}
+
+decal SawHorizontalSmaller
+{
+	pic BULDE1
+	translucent 0.6
+	shade "00 00 00"
+	x-scale 2.0
+	y-scale 0.2
+	randomflipy
+	randomflipx
+}

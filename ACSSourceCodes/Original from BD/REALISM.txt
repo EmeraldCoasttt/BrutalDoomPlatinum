@@ -1,0 +1,19 @@
+#include "zcommon.acs"
+
+
+
+
+
+
+
+
+script 294 (void)
+{
+        SetActorProperty (0, APROP_Speed, 0.40);
+}
+
+
+script 295 (void)
+{
+        SetActorProperty (0, APROP_Speed, 1.0);
+}

@@ -1,0 +1,1267 @@
+
+ACTOR ZombieMainBattleTank 9951
+{
+	//$category "BD Monsters"
+    YScale 1.8
+	XScale 1.9
+	Game Doom
+    GibHealth 25
+	damagefactor "Avoid", 0.0
+	damagefactor "Fire", 0.0
+	damagefactor "Flames", 0.0
+	PainChance "Kick", 255
+	damagefactor "Head", 5.0
+	damagefactor "Stomp", 0.0
+	damagefactor "GibRemoving", 0.0
+	damagefactor "TeleportRemover", 0.0
+	DamageFactor "CauseObjectsToSplash", 0.0
+	damagefactor "Railgun", 1.8
+	damagefactor "Desintegrate", 3.0
+    Health 5000
+	+NOICEDEATH
+	BloodType "TankBlood", "TankBlood", "TankBlood"
+    damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
+    
+    damagefactor "Shrapnel", 0.4
+	damagefactor "Explosive", 1.5
+	Obituary "%o was destroyed by a zombie-seized tank."
+	MaxStepHeight 24
+	MaxDropOffHeight 32
+	Speed 1
+	Height 100
+	Radius 64
+	Mass 99999
+	Painchance 10
+	Painchance "Explosive", 150
+	MONSTER
+	+BOSS
+	+DONTHURTSPECIES
+	+MTHRUSPECIES
+	+SLIDESONWALLS
+	+NORADIUSDMG
+	+DONTRIP
+	Species "EnemyTank"
+	States
+	{
+	/////////////////////
+	
+	Halt://Use a script to give RocketAmmo to a tank to stop.
+	    TNK1 B 0
+		TNT1 A 0 A_PlaySound("TANK2", 4, 1, 1)
+		TNK1 BBBBB 5 A_SpawnItemEx ("TankEngineWeakSpot" , -70, 0, 0, 0, 0, 0, angle, SXF_ABSOLUTEANGLE | SXF_ABSOLUTEVELOCITY)
+		TNT1 A 0 A_JumpIfInventory("RocketAMmo", 1, "Halt")
+		Goto Rolling
+		
+	Spawn:
+		TNK1 B 0
+	    TNT1 A 0 A_SpawnItemEx ("KillTreads",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_SETMASTER | SXF_ABSOLUTEANGLE)
+		TNK1 B 1
+	Goto Standby
+	Standby:
+	Idle:
+	    TNK1 B 0
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+	    TNK1 B 4 A_Look
+		TNT1 A 0 A_SpawnItemEx ("TankEngineWeakSpot" , -50, 0, 0, 0, 0, 0, angle, SXF_ABSOLUTEANGLE | SXF_ABSOLUTEVELOCITY)
+	    Loop
+		
+	
+	
+	See:
+		TNK1 A 1
+		TNT1 A 0 A_PlaySound("juggernaut/engine", 4, 1, 1)
+		TNK1 A 1 A_Chase("","")
+		TNT1 A 0 A_SpawnItemEx ("EnemyTnkTreadsDamage" , 100, 0, 0, 0, 0, 0, angle, SXF_ABSOLUTEANGLE | SXF_ABSOLUTEVELOCITY)
+		TNT1 A 0 A_CheckSight("RollingCantSee")
+	Goto Rolling
+	
+	Rolling:
+		TNT1 A 0 A_SpawnItemEx("TnkStep", 0, 0, 8, 0, 0, 0, angle, SXF_ABSOLUTEANGLE)
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 B 1 A_Recoil(-1)
+		TNK1 B 1 A_FaceTarget(3)
+		TNT1 A 0 A_JumpIfInventory("RifleAMmo", 1, "TurnLeft")
+		TNT1 A 0 A_JumpIfInventory("ShotgunAmmo", 1, "TurnRight")
+		TNT1 A 0 A_JumpIfInventory("RocketAMmo", 1, "Halt")
+		
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 D 1 A_Recoil(-1)
+		TNK1 D 1 A_FaceTarget(3)
+		TNT1 A 0 A_CustomMissile ("TankCheckLeft", 32, 0, -64, 2, 0)
+		TNT1 A 0 A_CustomMissile ("TankCheckRight", 32, 0, 64, 2, 0)
+		
+		TNT1 A 0 A_SpawnItemEx ("EnemyTnkTreadsDamage" , 100, 0, 0, 0, 0, 0, angle, SXF_ABSOLUTEANGLE | SXF_ABSOLUTEVELOCITY)
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 E 1 A_Recoil(-1)
+		TNK1 E 1 A_FaceTarget(3)
+		TNT1 A 0 A_CheckSight("RollingCantSee")
+		TNT1 A 0 A_CustomMissile ("TankCheckLeft", 32, 0, -64, 2, 0)
+		TNT1 A 0 A_CustomMissile ("TankCheckRight", 32, 0, 64, 2, 0)
+		TNT1 A 0 A_Jump(32, "TurnLeft", "TurnRight")
+		Loop
+		
+	TurnLeft:
+		TNT1 A 0 A_SpawnItemEx("TnkStep", 0, 0, 8, 0, 0, 0, angle, SXF_ABSOLUTEANGLE)
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 B 1 A_Recoil(-1)
+		TNT1 A 0 A_JumpIfInventory("RocketAMmo", 1, "Halt")
+		TNK1 B 1 A_SetAngle(angle+6)
+		
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 D 1 A_Recoil(-2)
+		TNK1 D 1 A_SetAngle(angle+6)
+		
+		TNT1 A 0 A_SpawnItemEx ("EnemyTnkTreadsDamage" , 100, 0, 0, 0, 0, 0, angle, SXF_ABSOLUTEANGLE | SXF_ABSOLUTEVELOCITY)
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 E 1 A_Recoil(-2)
+		TNK1 E 1 A_SetAngle(angle+6)
+		
+		
+		TNT1 A 0 A_SpawnItemEx("TnkStep", 0, 0, 8, 0, 0, 0, angle, SXF_ABSOLUTEANGLE)
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 B 1 A_Recoil(-1)
+		TNK1 B 1 A_SetAngle(angle+6)
+		
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 D 1 A_Recoil(-2)
+		TNK1 D 1 A_SetAngle(angle+6)
+		
+		TNT1 A 0 A_SpawnItemEx ("EnemyTnkTreadsDamage" , 100, 0, 0, 0, 0, 0, angle, SXF_ABSOLUTEANGLE | SXF_ABSOLUTEVELOCITY)
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 E 1 A_Recoil(-2)
+		TNK1 E 1 A_SetAngle(angle+6)
+		TNT1 A 0 A_TakeInventory("ShotgunAmmo", 10)
+		TNT1 A 0 A_TakeInventory("RifleAmmo", 10)
+		Goto Rolling
+		
+		
+	TurnRight:
+	Missile:
+		TNT1 A 0 A_SpawnItemEx("TnkStep", 0, 0, 8, 0, 0, 0, angle, SXF_ABSOLUTEANGLE)
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 B 1 A_Recoil(-1)
+		TNT1 A 0 A_JumpIfInventory("RocketAMmo", 1, "Halt")
+		TNK1 B 1 A_SetAngle(angle-6)
+		
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 D 1 A_Recoil(-2)
+		TNK1 D 1 A_SetAngle(angle-6)
+		
+		TNT1 A 0 A_SpawnItemEx ("EnemyTnkTreadsDamage" , 100, 0, 0, 0, 0, 0, angle, SXF_ABSOLUTEANGLE | SXF_ABSOLUTEVELOCITY)
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 E 1 A_Recoil(-2)
+		TNK1 E 1 A_SetAngle(angle-6)
+		
+		TNT1 A 0 A_SpawnItemEx("TnkStep", 0, 0, 8, 0, 0, 0, angle, SXF_ABSOLUTEANGLE)
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 B 1 A_Recoil(-1)
+		TNK1 B 1 A_SetAngle(angle-6)
+		
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 D 1 A_Recoil(-2)
+		TNK1 D 1 A_SetAngle(angle-6)
+		
+		TNT1 A 0 A_SpawnItemEx ("EnemyTnkTreadsDamage" , 100, 0, 0, 0, 0, 0, angle, SXF_ABSOLUTEANGLE | SXF_ABSOLUTEVELOCITY)
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 E 1 A_Recoil(-2)
+		TNK1 E 1 A_SetAngle(angle-6)
+		TNT1 A 0 A_TakeInventory("ShotgunAmmo", 10)
+		TNT1 A 0 A_TakeInventory("RifleAmmo", 10)
+		Goto Rolling	
+		
+		
+	RollingCantSee:
+		TNT1 A 0 A_SpawnItemEx("TnkStep", 0, 0, 8, 0, 0, 0, angle, SXF_ABSOLUTEANGLE)
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 B 1 A_Chase("","")
+		TNK1 B 1 A_Recoil(-1)
+		
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 D 1 A_Recoil(-1)
+		TNK1 D 1 A_Chase("","")
+		
+		TNT1 A 0 A_SpawnItemEx ("EnemyTnkTreadsDamage" , 100, 0, 0, 0, 0, 0, angle, SXF_ABSOLUTEANGLE | SXF_ABSOLUTEVELOCITY)
+		TNT1 A 0 //A_SpawnItemEx ("ZombieMainBattleTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_ABSOLUTEVELOCITY | SXF_ABSOLUTEANGLE)
+		TNK1 E 1 A_Recoil(-1)
+		TNK1 E 1 A_Recoil(-1)
+		TNT1 A 0 A_Jump(16, "Missile")
+		TNT1 A 0 A_CheckSight("RollingCantSee")
+		Goto See	
+		
+		
+	Pain:	
+	    TNT1 A 0
+	    TNK1 B 2
+		TNK1 B 2 A_Pain
+		Goto Rolling
+		
+		
+	///////////////////////
+	Death:
+	TNT1 A 1
+	TNT1 A 0 A_StopSound(4)
+	TNT1 A 0 A_SpawnItem("BigExplosion1112")
+	TNT1 A 0 A_PlaySound("weapons/explode")
+	TNT1 A 0 A_PlaySound("EXPLOSIO", 3)
+	TNT1 A 0 A_ChangeFlag("USESPECIAL", 0)
+	TNT1 A 0 A_KillChildren
+	TNT1 A 0 A_Scream
+	TNT1 A 0 A_BossDeath
+	TNT1 A 0 A_SpawnItem("TankExplode")
+	ELEC A 0 A_Explode(100, 250)
+	TNT1 A 15 A_NoBlocking
+	TNT1 A 0
+	Stop	
+	    
+	}
+} 
+
+
+
+
+
+ACTOR TankCheckLeft: FastProjectile
+{
+	DamageType None
+	Damage (random (0, 0))
+	+THRUACTORS
+	Radius 2
+	Height 2
+	Speed 60
+	States
+	{
+		Spawn:
+			TNT1 A 2
+			Stop
+		Death:
+		    TNT1 A 1
+			TNT1 A 0 A_GiveToTarget("RifleAmmo", 1)
+			TNT1 A 1
+			Stop
+		Xdeath:
+			TNT1 A 0
+			TNT1 A 1
+			Stop
+			}
+}
+
+
+
+ACTOR TankCheckRight: TankCheckLeft
+{
+States
+{
+		Death:
+		    TNT1 A 1
+			TNT1 A 0 A_GiveToTarget("ShotgunAmmo", 1)
+			TNT1 A 1
+			Stop
+}}
+
+
+
+
+
+
+
+
+Actor ZombieMainBattleTankBody1
+{
+MONSTER
++FORCEXYBILLBOARD +DONTSPLASH
++THRUACTORS +NOGRAVITY
++NOCLIP +NOBLOOD +NOPAIN 
++MISSILEMORE +MISSILEEVENMORE
+damage 0
+radius 2
+height 2
+speed 0
+Scale 1.2
+Health 99999
+Mass 99999
+MinMissileChance 1
+states
+	{
+	Spawn:
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_Look
+	    Loop
+		
+	See:
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_Chase("","")
+		
+		
+	See2:	
+		TNKZ TTTTTT 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(6)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(6)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(6)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(6)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(6)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+
+		
+	Missile:
+		TNT1 A 0
+		TNT1 A 0 A_CheckSight("See")
+		TNT1 A 0
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ TTTTTTT 0 A_Chase("Machinegun","Machinegun")
+		Goto See2
+		
+	Machinegun:
+		
+		TNT1 A 0
+		TNT1 A 0 A_CheckSight("See")
+		TNT1 A 0 A_JumpIfInTargetInventory("IsInATank", 1, "Cannon")
+		TNT1 A 0 A_Jump(114, "Cannon")
+		TNKZ T 1 A_FaceTarget
+		
+		TNT1 A 0 A_CustomMissile("HeavyMachinegunProjectileEnemy", 100, 24, random(-4, 4), 0)
+		TNT1 AAA 0 A_CustomMissile("HeavyMachinegunFlash", 100, 24, 0, 0)
+		TNT1 A 0 A_CustomMissile("YellowFlareSmall", 100, 24, 0, 0)
+		TNT1 A 0 A_CustomMissile("RifleCaseSpawn", 100, 24, 0, 0)
+		
+		
+		TNKZ TTTT 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("HeavyMachinegunProjectileEnemy", 100, 24, random(-4, 4), 0)
+		TNT1 AAA 0 A_CustomMissile("HeavyMachinegunFlash", 100, 24, 0, 0)
+		TNT1 A 0 A_CustomMissile("YellowFlareSmall", 100, 24, 0, 0)
+		TNT1 A 0 A_CustomMissile("RifleCaseSpawn", 100, 24, 0, 0)
+		
+		
+		TNKZ TTTT 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("HeavyMachinegunProjectileEnemy", 100, 24, random(-4, 4), 0)
+		TNT1 AAA 0 A_CustomMissile("HeavyMachinegunFlash", 100, 24, 0, 0)
+		TNT1 A 0 A_CustomMissile("YellowFlareSmall", 100, 24, 0, 0)
+		TNT1 A 0 A_CustomMissile("RifleCaseSpawn", 100, 24, 0, 0)
+		
+		
+		TNKZ TTTT 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("HeavyMachinegunProjectileEnemy", 100, 24, random(-4, 4), 0)
+		TNT1 AAA 0 A_CustomMissile("HeavyMachinegunFlash", 100, 24, 0, 0)
+		TNT1 A 0 A_CustomMissile("YellowFlareSmall", 100, 24, 0, 0)
+		TNT1 A 0 A_CustomMissile("RifleCaseSpawn", 100, 24, 0, 0)
+		
+		
+		TNKZ TTTT 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("HeavyMachinegunProjectileEnemy", 100, 24, random(-4, 4), 0)
+		TNT1 AAA 0 A_CustomMissile("HeavyMachinegunFlash", 100, 24, 0, 0)
+		TNT1 A 0 A_CustomMissile("YellowFlareSmall", 100, 24, 0, 0)
+		TNT1 A 0 A_CustomMissile("RifleCaseSpawn", 100, 24, 0, 0)
+		
+		TNKZ TTTT 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("HeavyMachinegunProjectileEnemy", 100, 24, random(-4, 4), 0)
+		TNT1 AAA 0 A_CustomMissile("HeavyMachinegunFlash", 100, 24, 0, 0)
+		TNT1 A 0 A_CustomMissile("YellowFlareSmall", 100, 24, 0, 0)
+		TNT1 A 0 A_CustomMissile("RifleCaseSpawn", 100, 24, 0, 0)
+		
+		
+		TNKZ TTTT 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("HeavyMachinegunProjectileEnemy", 100, 24, random(-4, 4), 0)
+		TNT1 AAA 0 A_CustomMissile("HeavyMachinegunFlash", 100, 24, 0, 0)
+		TNT1 A 0 A_CustomMissile("YellowFlareSmall", 100, 24, 0, 0)
+		TNT1 A 0 A_CustomMissile("RifleCaseSpawn", 100, 24, 0, 0)
+		
+		
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		Goto See
+		
+		
+		
+		
+	Cannon:
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(6)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ AAA 0 A_Chase("","")
+		TNKZ T 1 A_FaceTarget
+		
+		
+		TNT1 A 0 A_PlaySound("TANKF", 1)
+		TNT1 A 0 A_CustomMissile("EnemyTankShell", 70, 0, random(-5, 5), 0)
+		TNT1 A 0 A_CustomMissile("TankFireEffect", 70, 0, 0, 0)
+	
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		Goto Machinegun
+		
+Death:
+    TNT1 A 0
+    Stop
+XDeath:
+TNT1 A 0
+Stop
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+ACTOR ZombieArtilleryTank : ZombieMainBattleTank 9950
+{
+    Health 4000
+	States
+	{
+	Spawn:
+		TNK1 B 1
+	    TNT1 A 0 A_SpawnItemEx ("KillTreads",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("ZombieArtilleryTankBody1", 0, 0, 0, velx, vely, velz, angle, SXF_SETMASTER | SXF_ABSOLUTEANGLE)
+	Goto Standby
+	
+		    
+	}
+} 
+
+
+
+
+
+Actor ZombieArtilleryTankBody1: ZombieMainBattleTankBody1
+{
+states
+	{
+	Spawn:
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_Look
+	    Loop
+		
+	See:
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_Chase("","")
+		
+		
+	See2:	
+		TNKZ TTTTTT 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(6)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(6)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(6)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(6)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(6)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+
+		
+	Missile:
+		TNT1 A 0
+		TNT1 A 0 A_CheckSight("See")
+		TNT1 A 0
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ TTTTTTtttT 0 A_Chase("Machinegun","Machinegun")
+		Goto See2
+		
+	Machinegun:
+	
+		TNT1 A 0
+		TNT1 A 0 A_CheckSight("See")
+		TNT1 A 0 A_Jump(64, "Cannon")
+		TNKZ T 1 A_FaceTarget
+		
+		
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 180)
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 0)
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, 40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, 40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 2 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, -40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, -40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 180)
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 0)
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, 40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, 40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 2 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, -40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, -40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 180)
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 0)
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, 40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, 40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 2 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, -40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, -40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 180)
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 0)
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, 40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, 40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 2 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, -40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, -40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 180)
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 0)
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, 40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, 40, 60)
+		TNKZ T 2 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, -40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, -40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		
+		
+		
+		//FIRE AGAIN
+		
+		
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 180)
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 0)
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, 40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, 40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 2 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, -40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, -40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 180)
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 0)
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, 40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, 40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 2 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, -40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, -40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 180)
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 0)
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, 40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, 40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 2 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, -40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, -40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 180)
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 0)
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, 40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, 40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 2 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, -40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, -40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 180)
+		TNT1 A 0 A_SpawnItemEx("AutoCannonCaseSpawn", 0, 0, 40, 0, 0, 0, 0)
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, 40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, 40, 60)
+		TNKZ T 2 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 80, -40, random(-4, 4), 0)
+		TNT1 A 0 A_SpawnItemEx("AutocannonMuzzle2", 80, -40, 60)
+		TNT1 A 0 A_PlaySound("ACANO1", 1)
+		TNT1 A 0 A_PlaySound("FARCAN1", 4)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		
+		//
+		
+		
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNT1 A 0 A_Jump(128, "Machinegun")
+		Goto See
+		
+		
+		
+		
+	Cannon:
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(6)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ AAA 0 A_Chase("","")
+		TNKZ T 1 A_FaceTarget
+		
+		
+		TNT1 A 0 A_PlaySound("TANKF", 1)
+		TNT1 A 0 A_PlaySound("MISFAR", 2)
+		TNT1 A 0 A_CustomMissile("TankMissile2", 90, -50, 0, 0)
+	
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		
+		
+		TNT1 A 0 A_PlaySound("TANKF", 1)
+		TNT1 A 0 A_PlaySound("MISFAR", 2)
+		TNT1 A 0 A_CustomMissile("TankMissile2", 90, 50, 0, 0)
+	
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+		TNKZ T 1 A_FaceTarget(12)
+		TNKZ T 1 A_Warp(AAPTR_MASTER, 0, 0, 0, 0, WARPF_USECALLERANGLE )
+
+		Goto Machinegun
+		
+Death:
+    TNT1 A 0
+    Stop
+XDeath:
+TNT1 A 0
+Stop
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+ACTOR ZombieHelicopter 9953
+{
+	Game Doom
+	Health 1000
+	Radius 56
+	Height 96
+	Mass 400
+	Speed 3
+	PainChance 128
+	BloodType "TankBlood", "TankBlood", "TankBlood"
+	PainChance "HitGround", 255
+	Monster
+	+FLOAT +NOGRAVITY +FLOATBOB
+	+DONTRIP +DONTHURTSPECIES
+	Species "AttackHelicopterZombie"
+	damagefactor "Railgun", 2.0
+	DamageFactor "TankShell", 2.0
+	Obituary "%o was destroyed by a zombie-seized helicopter."
+	States
+	{
+	Spawn:
+		HELZ ABCD 1 A_Look
+		Loop
+	See:
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound("HELILOP", 6, 1, 1)
+		TNT1 A 0 A_PlaySound("HELILOP2", 7, 1, 1)
+		HELZ A 1 A_Chase
+		HELZ A 1 A_Chase("","")
+		HELZ B 1 A_Chase
+		HELZ B 1 A_Chase("","")
+		HELZ C 1 A_Chase
+		HELZ C 1 A_Chase("","")
+		HELZ D 1 A_Chase
+		HELZ D 1 A_Chase("","")
+		HELZ A 1 A_Chase
+		HELZ A 1 A_Chase("","")
+		HELZ B 1 A_Chase
+		HELZ B 1 A_Chase("","")
+		HELZ C 1 A_Chase
+		HELZ C 1 A_Chase
+		HELZ D 1 A_Chase
+		HELZ D 1 A_Chase
+		HELZ A 0 A_Recoil(-1)
+		TNT1 A 0 A_JumpIfCloser(900, "fallBack")
+		Loop
+	FallBack:
+		HELZ ABCD 1
+		HELZ A 0 A_Recoil(-4)
+		HELZ ABCD 1
+		HELZ A 0 A_Recoil(-4)
+		HELZ ABCD 1
+		HELZ A 0 A_Recoil(-4)
+	Missile:
+		TNT1 A 0
+		TNT1 A 0 A_Jump(128, "Machinegun")
+		HELZ ABCDABCDABCDABCD 1 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("EnemyHelicopterRocket", 15, -42, random(-3, 3), 0)
+		HELZ ABCDABCD 1 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("EnemyHelicopterRocket", 15, 42, random(-3, 3), 0)
+		HELZ ABCDABCDABCDABCD 1 A_FaceTarget
+		Goto See
+	
+	Machinegun:
+		HELZ ABCD 1 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 40, 0, random(-2, 2), 0)
+		TNT1 A 0 A_CustomMissile("AutocannonMuzzle2", 40, 0, random(-2, 2), 0)
+		HELZ ABCD 1 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 40, 0, random(-2, 2), 0)
+		TNT1 A 0 A_CustomMissile("AutocannonMuzzle2", 40, 0, random(-2, 2), 0)
+		HELZ ABCD 1 A_FaceTarget
+		TNT1 A 0 A_PlaySound("TANKMG", 1)
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 40, 0, random(-2, 2), 0)
+		TNT1 A 0 A_CustomMissile("AutocannonMuzzle2", 40, 0, random(-2, 2), 0)
+		HELZ ABCD 1 A_FaceTarget
+		TNT1 A 0 A_PlaySound("TANKMG", 1)
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 40, 0, random(-2, 2), 0)
+		TNT1 A 0 A_CustomMissile("AutocannonMuzzle2", 40, 0, random(-2, 2), 0)
+		HELZ ABCD 1 A_FaceTarget
+		TNT1 A 0 A_PlaySound("TANKMG", 1)
+		TNT1 A 0 A_CustomMissile("AutoCannonProjectileEnemy", 40, 0, random(-2, 2), 0)
+		TNT1 A 0 A_CustomMissile("AutocannonMuzzle2", 40, 0, random(-2, 2), 0)
+		HELZ ABCD 1 A_FaceTarget
+		Goto See
+	
+	Pain:
+		HELZ ABCD 1
+		Goto See
+		
+	Pain.HitGround:
+		PLAY G 0
+		TNT1 A 0 ThrustThingZ(0,10,0,1)
+		TNT1 A 0 A_SpawnItem("HeliBase1")
+		HELZ A 1 A_Pain
+		Goto See	
+		
+	Death:	
+	TNT1 A 0
+	TNT1 A 0 A_Stop
+	TNT1 A 0 A_Recoil(-3)
+	TNT1 A 0 A_StopSound(6)
+	TNT1 A 0 A_StopSound(7)
+	TNT1 A 0 A_TakeInventory("AttackhelicopterGun", 1)
+	TNT1 A 0 ACS_ExecuteAlways(871, 0, 0, 0, 0)
+	TNT1 A 0 SetPlayerProperty(0,0,4)
+	TNT1 A 0 A_PlaySound("HELSTOP", 6)
+	TNT1 A 0 A_ChangeFlag("QUARTERGRAVITY", 1)
+	
+	falling:
+	TNT1 A 0 A_Scream
+	TNT1 A 0 A_ClearTarget
+	TNT1 A 0 A_NoBlocking
+	HEL1 AB 1 A_CustomMissile ("FlamethrowerFireParticles", 32, 0, random (0, 360), 2, random (0, 180))
+	TNT1 A 0 A_SetAngle(10 + angle)
+	HEL1 CD 1 A_CustomMissile ("FlamethrowerFireParticles", 32, 0, random (0, 360), 2, random (0, 180))
+	TNT1 A 0 A_SetAngle(10 + angle)
+	TNT1 A 0 A_CheckFloor("Crashed")
+	Loop
+	
+	Crashed:
+	TNT1 A 0 A_SpawnItem("BigExplosion1112")
+	TNT1 A 0 A_PlaySound("weapons/explode")
+	TNT1 A 0 A_PlaySound("EXPLOSIO", 3)
+	
+	NULL AAAAAA 0 A_CustomMissile ("MetalShard1", 96, 0, random (0, 360), 2, random (0, 180))
+	NULL AAAAAA 0 A_CustomMissile ("MetalShard2", 96, 0, random (0, 360), 2, random (0, 180))
+	NULL AAAAAAAAA 0 A_CustomMissile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360))
+	TNT1 A 0 A_StopSound(6)
+	ELEC A 0 A_Explode(100, 250)
+	TNT1 A 0 A_SpawnItem("DestroyedAircraft")
+	8762 A 500
+	8762 A 2000
+	8762 A -1
+	Stop
+	}
+}
+
+
+
+
+
+
+ACTOR ZombieMech 9954
+{
+	Game Doom
+	Health 3000
+	Scale 1.3
+	Radius 48
+	Height 160
+	Mass 1000
+	Speed 16
+	PainChance 20
+	Monster
+	MinMissileChance 160
+	+BOSS
+	+FULLVOLACTIVE
+	+MISSILEMORE
+	+FLOORCLIP
+	+NORADIUSDMG
+	+DONTMORPH
+	+BOSSDEATH
+	BloodType "TankBlood", "TankBlood", "TankBlood"
+	SeeSound "none"
+	PainSound "none"
+	DeathSound "none"
+	ActiveSound "none"
+	Obituary "%o was destroyed by a zombie-seized Mech."
+	States
+	{
+	Spawn:
+		MEKE A 5 A_Look
+		Loop
+	See:
+		MEKE BBB 2 A_Chase
+		TNT1 A 0 A_SpawnItemEx ("EnemyTnkTreadsDamage" , 100, 0, 0, 0, 0, 0, angle, SXF_ABSOLUTEANGLE | SXF_ABSOLUTEVELOCITY)
+		TNT1 A 0 A_PlaySound("MECHWLK", 15)
+		MEKE CCC 2 A_Chase
+		TNT1 A 0 A_SpawnItemEx ("EnemyTnkTreadsDamage" , 100, 0, 0, 0, 0, 0, angle, SXF_ABSOLUTEANGLE | SXF_ABSOLUTEVELOCITY)
+		MEKE DDD 2
+		MEKE EEE 2 A_Chase
+		TNT1 A 0 A_SpawnItemEx ("EnemyTnkTreadsDamage" , 100, 0, 0, 0, 0, 0, angle, SXF_ABSOLUTEANGLE | SXF_ABSOLUTEVELOCITY)
+		TNT1 A 0 A_PlaySound("MECHWLK", 15)
+		MEKE FFF 2 A_Chase
+		TNT1 A 0 A_SpawnItemEx ("EnemyTnkTreadsDamage" , 100, 0, 0, 0, 0, 0, angle, SXF_ABSOLUTEANGLE | SXF_ABSOLUTEVELOCITY)
+		MEKE GGG 2
+		Loop
+	Missile:
+		TNT1 A 0
+		MEKE AAA 5 A_FaceTarget
+		TNT1 A 0 A_JUmp(256, "Machinegun", "Machinegun", "Rockets", "Rockets", "Plasma", "Mortar")
+		
+	Machinegun:
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound("TANKMG", 1)
+		TNT1 A 0 A_CustomMissile("HeavyMachinegunProjectileEnemy", 100, 82, random(-11, 11), 0)
+		TNT1 A 0 A_CustomMissile("HeavyMachinegunProjectileEnemy", 100, -82, random(-11, 11), 0)
+		TNT1 Aa 0 A_CustomMissile("HeavyMachinegunFlash", 100, 82, 0, 0)
+		TNT1 Aa 0 A_CustomMissile("HeavyMachinegunFlash", 100, -82, 0, 0)
+		TNT1 A 0 A_CustomMissile("RifleCaseSpawn", 72, 42, 0, 0)
+		TNT1 A 0 A_CustomMissile("RifleCaseSpawn", 72, -42, 180, 0)
+		TNT1 A 0 A_GiveInventory("JuggernautMachinegunAmmo", 1)
+		TNT1 A 0 A_JumpIfInventory("JuggernautMachinegunAmmo", 30, "stopfiring")
+		MEKE A 1 A_FaceTarget
+		TNT1 A 0 A_PlaySound("TANKMG", 1)
+		MEKE A 1 A_FaceTarget
+		Loop
+	
+	Rockets:
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound("MISLFIRE", 1)
+		TNT1 A 0 A_CustomMissile("JuggernautROcket", 120, -72, random(-9, 9), 0)
+		TNT1 A 0 A_CustomMissile("TankFireEffect", 120, -72, 0, 0)
+		MEKE A 8 A_FaceTarget
+		TNT1 A 0 A_PlaySound("MISLFIRE", 1)
+		TNT1 A 0 A_CustomMissile("JuggernautROcket", 120, 72, random(-9, 9), 0)
+		TNT1 A 0 A_CustomMissile("TankFireEffect", 120, 72, 0, 0)
+		MEKE A 8 A_FaceTarget
+		TNT1 A 0 A_PlaySound("MISLFIRE", 1)
+		TNT1 A 0 A_CustomMissile("JuggernautROcket", 120, -72, random(-9, 9), 0)
+		TNT1 A 0 A_CustomMissile("TankFireEffect", 120, -72, 0, 0)
+		MEKE A 8 A_FaceTarget
+		TNT1 A 0 A_PlaySound("MISLFIRE", 1)
+		TNT1 A 0 A_CustomMissile("JuggernautROcket", 120, 72, random(-9, 9), 0)
+		TNT1 A 0 A_CustomMissile("TankFireEffect", 120, 72, 0, 0)
+		MEKE A 16 A_FaceTarget
+		Goto See
+		
+	PLasma:
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound("BIGPLSM1", 1)
+		TNT1 A 0 A_CustomMissile("heavyplasmaProjectileEnemy", 100, 64, random(-3, 3), 0)
+		TNT1 Aa 0 A_CustomMissile("heavyplasmaFlash", 100, 64, 0, 0)
+		MEKE A 4 A_FaceTarget
+		TNT1 A 0 A_CustomMissile("heavyplasmaProjectileEnemy", 100, -64, random(-3, 3), 0)
+		TNT1 Aa 0 A_CustomMissile("heavyplasmaFlash", 100, -64, 0, 0)
+		MEKE A 4 A_FaceTarget
+		TNT1 A 0 A_GiveInventory("JuggernautMachinegunAmmo", 1)
+		TNT1 A 0 A_JumpIfInventory("JuggernautMachinegunAmmo", 4, "stopfiring")
+		MEKE A 4 A_FaceTarget
+		Loop
+		
+	Mortar:
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound("MISLFIRE", 1)
+		TNT1 A 0 A_CustomMissile("MechMortar", 140, -72, random(-9, 9), 0)
+		TNT1 A 0 A_CustomMissile("TankFireEffect", 140, -72, 0, 0)
+		MEKE A 8 A_FaceTarget
+		MEKE A 16 A_FaceTarget
+		Goto See	
+		
+	
+	StopFiring:
+		MEKE A 3
+		TNT1 A 0 A_TakeInventory("JuggernautMachinegunAmmo", 999)
+		Goto See
+		
+		
+	Pain:
+		MEKE B 1 A_Pain
+		Goto See
+	Death:	
+		TNT1 A 1
+		TNT1 A 0 A_ChangeFlag("USESPECIAL", 0)
+		TNT1 A 0 A_SpawnItem("BigExplosion1112")
+		TNT1 A 0 A_PlaySound("weapons/explode")
+		TNT1 A 0 A_PlaySound("EXPLOSIO", 3)
+		TNT1 A 0 A_Scream
+		NULL AAAAAA 0 A_CustomMissile ("MetalShard1", 96, 0, random (0, 360), 2, random (0, 180))
+		NULL AAAAAA 0 A_CustomMissile ("MetalShard2", 96, 0, random (0, 360), 2, random (0, 180))
+		NULL AAAAAAAAA 0 A_CustomMissile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 0 A_SpawnItem("DestroyedArmouredVehicle")
+		ELEC A 0 A_Explode(100, 250)
+		TNT1 A 15
+		TNT1 A 0
+		Stop	
+	}
+}
+

@@ -1,0 +1,979 @@
+
+class Brutal_PlayerBase : PlayerPawn
+{
+	//=========================
+	//Common
+	
+	const BOB_MIN_REALIGN 	 = 0.25f;
+	const GROUND_DASH_COOLER = 18;
+	
+	//Movement General
+	bool	Pain;
+	double	ViewAngleDelta;
+	float	ActualSpeed;
+	float	MaxAirSpeed;
+	float 	MaxGroundSpeed;
+	float	MoveFactor;
+	int		AnimateJump;
+	int		ForceVelocity;
+	int		MoveType;
+	int		OldFloorZ;
+	playerinfo ZMPlayer;
+	vector2 OldVelXY;
+	vector3	Acceleration;
+	
+	//////////////////
+	
+	//Jumping
+	bool 	BlockJump;
+	bool	Jumped;
+	float	FloorAngle;
+	int		DoubleJumpCooler;
+	int		JumpSoundCooler;
+	
+	//Double Jump
+	bool	BlockDoubleJump;
+	bool	CanDoubleJump;
+	
+	//Elevator Jumps
+	float	ElevatorJumpBoost;
+	int		OldSecIndex;
+	
+	//////////////////
+	
+	//Double Tap
+	int		FirstTapTime;
+	int		FirstTapValue;
+	int		OldTapValue;
+	
+	//Dashing
+	float	WJumpSpeed;
+	int		DashNumber;
+	int		DashCooler;
+	
+	//Air Dashing
+	float	ADashTargetSpeed;
+	int		ADashCooler;
+	int		ADashFrictionDelay;
+	
+	//WallJump
+	int		CheckForWJump;
+	
+	//WallSlideMove
+	bool	CanWSlide;
+	int		CheckForWSlide;
+	vector2	WSlideVelocity;
+	
+	//Crouch Slide
+	bool	CanCSlide;
+	float	MaximumSlideSpeed;
+	float	QSlideDuration;
+	int		CSlideStartTime;
+	
+	//Ledge Grabbing
+	bool	LedgeGrabbed;
+	float	LedgeAngle;
+	int		LedgeHeight;
+	bool	LedgeCheck;
+	int		LedgeTime;
+	int		LedgeHeightMax;
+	int		LedgeHeightMin;
+	float	FrameTime;
+	double	velx;
+	double	vely;
+	double	velz;
+	weapon	ReselectWeapon;
+	
+	//Grappling Hook
+	actor	GrappledMonster;
+	actor	HookFired;
+	bool	Grappled;
+	float	PendulumLength;
+	vector3	GrappleVel;
+	vector3 Rope;
+	
+	//////////////////
+	
+	//View Bobbing
+	bool	PostLandingBob;
+	float	ZMBob;
+	
+	//Weapon bobbing
+	bool	DoBob;
+	double	BobTime;
+	double	HorizontalSway;
+	double	BobRange;
+	double 	OldTicFrac;
+	double	VerticalOffset;
+	
+	//=========================
+	//Painkiller only
+	
+	//Movement
+	bool	TrickFailed;
+	float	AirControl;
+	float	ActualMaxAirSpeed;
+	
+	//Jumping
+	float	TrickJumpAngle;
+	int		SmallerJumpHeight;
+	
+	//=========================
+	//Build Engine Only
+	
+	//Movement
+	bool	DeepWater;
+	float	LandingVelZ;
+	int		FVel;
+	int		SVel;
+	int		UVel;
+	
+	int		DualTimer;
+	Int		SpecialTimer;
+	
+	//Jumping
+	int		BuildJumpDelay;
+	
+	
+	//Saved morph stuff
+	int PreMorphArmor;
+	float PreMorphArmorPercent;
+	int PreMorphHealth;
+	
+	bool notvoodoo;
+	bool previouschasecam;
+	
+	Default
+    {
+		Player.DisplayName "ZMovement Player";
+        PainChance 255;
+    }
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	////																						////
+	//// Non-Movement Stuff																		////
+	////																						////
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//Because GZDoom's Unit() returns NaN if a vector has no value
+	vector3 SafeUnit3(Vector3 VecToUnit)
+	{
+		if(VecToUnit.Length()) { VecToUnit /= VecToUnit.Length(); }
+		return VecToUnit;
+	}
+	
+	vector2 SafeUnit2(Vector2 VecToUnit)
+	{
+		if(VecToUnit.Length()) { VecToUnit /= VecToUnit.Length(); }
+		return VecToUnit;
+	}
+	
+	Override int takespecialdamage(Actor inflictor, Actor source, int damage, Name damagetype)
+		{
+			If(source is "BDPBIKE" && !findinventory("veh_manager"))
+				{
+					damage = 0;
+					SetStateLabel("pain.bikelaunch");
+					
+				}
+				
+			return super.TakeSpecialDamage(inflictor, source, damage, damagetype);
+				
+		
+		
+		}
+	
+	Override void playerthink()
+		{
+		Super.playerthink();
+		
+		
+	//	If(player.morphtics == 0)
+	//{
+	
+//	}
+		
+		
+		//giveinventory("meathook",1);
+		If (self is "tacticaldoomer")
+		{
+		Giveinventory("istacticalclass",1);
+		}
+		Else
+		{
+		Giveinventory("isnottacticalclass",1);
+		}
+		If(dualtimer >= 1)
+		{
+		Dualtimer = dualtimer - 1;
+		}
+		
+		If(specialtimer >= 1)
+		{
+		Specialtimer = specialtimer - 1;
+		}
+		
+		If(health < 1)
+		{
+		A_stopsound(125);
+		A_stopsound(126);
+		}
+		
+		If(player.cmd.buttons & BT_USER3 && dualtimer <= 0)
+			{
+			dualtimer = 17;
+			giveinventory("startdualwield",1);
+			}
+		If(player.cmd.buttons & BT_USER4 && specialtimer <= 0)
+			{
+			specialtimer = 17;
+			giveinventory("swapriflespecial",1);
+			}
+		If(player.cmd.buttons & BT_ATTACK)
+			{
+			giveinventory("firedprimary",1);
+			}
+	
+		
+		}
+	
+	
+	Override void HandleMovement() { 
+	
+		
+		notvoodoo = true;
+		
+		if(GetCvar("donotclimb") == 0) 
+		{
+			If(countinv("usedstamina") < 50)
+			{
+				if(LedgeCheck)
+				{	
+					LedgeReach();
+				
+				
+				}
+			}
+			if(LedgeGrabbed)
+			{
+				LedgeGrab();
+			}
+			LedgeGrabInitiator();
+		}
+		if(GetCVAR("donotdoublejump") == 0) 
+		{
+			//CheckJump();
+		}
+		if(GrappleVel.Length())
+			{
+				takeinventory("meathook",1);
+				GrapplingMove();
+			}
+		Else
+			{
+				giveinventory("meathook",1);
+			}
+			
+		super.HandleMovement();
+		
+	}
+	
+	
+	
+	bool HookLOS()
+	{
+		Float LOSPitch = atan2(Rope.XY.Length(), Rope.Z) - 90;
+		Float LOSAngle = VectorAngle(Rope.X, Rope.Y);
+		FLineTraceData LOSCheck; LineTrace(LOSAngle, Rope.Length(), LOSPitch, TRF_SOLIDACTORS|TRF_BLOCKSELF, Height / 2.f, data: LOSCheck);
+		
+		if(GrappledMonster != Null && LOSCheck.HitActor == GrappledMonster) { return true; }
+		
+		return LOSCheck.Distance == Rope.Length();
+	}
+	
+	void GrapplingMove()
+	{
+		/*if(!brutal_playerbase.OnGround) */{ Grappled = True; }
+		
+		//Fun is over kids, go home
+		if(bNOGRAVITY || Rope.Length() <= 4.f * Radius || !CheckMove(Pos.XY + Vel.XY))
+		{
+			StopHook();
+			return;
+		}
+		
+		
+		Usercmd cmd = player.cmd;
+			GrappleVel = SafeUnit3(Rope) * GrappleVel.Length();
+			If(cmd.sidemove)
+			{
+			Vel = GrappleVel;
+			Acceleration.XY = RotateVector((((cmd.forwardmove) / 1000), - (cmd.sidemove) / 500), Angle);
+			double currentVel = vel.length();
+			vel.xy = (vel.xy + acceleration.xy);
+			if (vel.length() < currentVel)
+			{
+			StopHook();
+			}
+			}
+			Else
+			{
+			Vel = GrappleVel;	
+			}
+	}
+	
+			
+		void StopHook()
+	{
+		Rope = GrappleVel = (0, 0, 0);
+		PendulumLength = 0;
+		GrappledMonster = Null;
+	}
+		
+		//QuakeHandleMove();
+		
+		//Sprite animation
+		//Super.handlemovement();
+	
+	
+	Override void Tick()
+    {
+	If(findinventory("veh_manager"))
+		{
+		SetPlayerProperty(0,0,0);
+		player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('InAVehicle'));
+		SetStateLabel("invehicle");
+		bpickup = false;
+		}
+		Else
+		{
+		bpickup = true;
+	if (level.time % 2 == 0)
+	{
+	takeinventory("usedstamina",1);
+	}
+		//if (GetCvar("bd_GenderFemale") == 1) {
+		//if (CountInv("GenderFemale") == 1) {
+		//	SoundClass = "fplayer";
+		//}
+		If(CountInv("RollingRight") == 1)
+		{
+		player.cheats |= CF_CHASECAM;
+		SetStateLabel("rollingright");
+		bforcexybillboard = TRUE;
+		}
+		If(CountInv("RollingLeft") == 1)
+		{
+		player.cheats |= CF_CHASECAM;
+		SetStateLabel("rollingLeft");
+		bforcexybillboard = TRUE;
+		}
+		If(CountInv("RollFinished") == 1)
+		{
+		player.cheats &= ~CF_CHASECAM;
+		takeinventory("rollfinished",1);
+		bforcexybillboard = FALSE;
+		}
+		if (CountInv("ExecuteDownedEnemy") == 1)
+        {
+           TakeInventory("ExecuteDownedEnemy", 10);
+		   TakeInventory("GoSpecial", 10);
+            player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("DoExecution"));
+		//	TakeInventory("ExecuteDownedEnemy", 1);
+		//   TakeInventory("GoSpecial", 1);
+			SetStateLabel("SpecialChecker");
+        }
+		
+		/*
+		if (CountInv("DoStrengthRuneAnim") == 1) {
+			TakeInventory("DoStrengthRuneAnim", 1);
+			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("DoStrengthRuneAnim"));
+		}
+		*/
+		
+		If(player && notvoodoo && findinventory("nottitlemap"))
+			{
+				
+		
+			let playerArmor = BasicArmor(FindInventory('BasicArmor'));
+			If(player && findinventory('ReturnUnmorphStuffPlease'))
+				{
+				takeinventory('ReturnUnmorphStuffPlease',1);
+				
+					playerarmor.amount = PreMorpharmor;
+					playerArmor.SavePercent = PreMorphArmorPercent;
+					a_sethealth(premorphhealth);
+				}
+	
+		
+			PreMorphArmor = playerarmor.amount;
+			PreMorphArmorPercent =	playerArmor.SavePercent;
+			PreMorphHealth = health;
+			
+			}
+			
+		}
+		super.Tick();
+    }
+	
+	
+	//////////////////////////////////////
+	// Ledge Grab						//
+	//////////////////////////////////////
+	
+	void LedgeGrabInitiator()
+	{
+		ZMPlayer = self.player;
+		
+		//Already ledge grabbing, no clipping, moving away from where you are looking, ceiling already too low for sure
+		if((pos.z <= floorz) || LedgeCheck || LedgeGrabbed || (ZMPlayer.Cheats & CF_NOCLIP2) || Vel.XY dot AngleToVector(Angle) <= 0 || CeilingZ <= Pos.Z + Height * 1.6f) { return; }
+		
+		//============================================
+		//Find ledge (if any)						//
+		//============================================
+		
+		FLineTraceData LedgeTrace;
+		Float TraceDistance = sqrt(2) * Radius + 1; //account for the fact that Doom's hitboxes are square
+		LineTrace(Angle, TraceDistance, 0, TRF_BLOCKSELF|TRF_THRUACTORS, Height * 1.2f, data: LedgeTrace);
+		Vector3 HitPos = LedgeTrace.HitLocation;
+		
+		Int LedgeCandidate;
+		if(LedgeTrace.HitType == TRACE_HitWall) //hit wall scenario
+		{
+			if(LedgeTrace.Hit3DFloor != NULL) //3D floor
+			{
+				LedgeCandidate = LedgeTrace.Hit3DFloor.Top.ZAtPoint(HitPos.XY);
+			}
+			else //regular wall
+			{
+				Line HitLine = LedgeTrace.HitLine;
+				if(HitLine.FrontSector != NULL && HitLine.FrontSector != CurSector)
+					LedgeCandidate = HitLine.FrontSector.FloorPlane.ZatPoint(HitPos.XY);
+				else if(HitLine.BackSector != NULL && HitLine.BackSector != CurSector)
+					LedgeCandidate = HitLine.BackSector.FloorPlane.ZatPoint(HitPos.XY);
+			}
+		}
+		else if(LedgeTrace.HitSector != CurSector)//tracer stopper mid air in a sector that is not the one where player currently is
+		{
+			LedgeCandidate = LedgeTrace.HitSector.NextLowestFloorAt(HitPos.X, HitPos.Y, HitPos.Z, FFCF_3DRESTRICT, 0);
+		}
+		else
+		{
+			return;
+		}
+		
+		//Check if the candidate ledge can suffice
+		if(LedgeCandidate > Pos.Z + Height * 0.6f && LedgeCandidate <= Pos.Z + Height * 1.2f)
+		{
+			Vector3 OrigPos = Pos;
+			SetXYZ((Pos.XY, LedgeCandidate));
+			if(!CheckMove(Pos.XY + 5.f * AngleToVector(Angle))) //not enough space, cancel everything :(
+			{
+				SetXYZ(OrigPos);
+				return;
+			}
+			SetXYZ(OrigPos);
+			LedgeHeight = LedgeCandidate;
+			LedgeHeightMin = (LedgeHeight - Height * 0.97f);
+			LedgeHeightMax = (LedgeHeight - Height * 0.751f);
+		}
+		else
+		{
+			return; //too high/low
+		}
+		
+		/*
+		LineTrace(Angle, TraceDistance, 0, TRF_BLOCKSELF|TRF_THRUACTORS|TRF_NOSKY, 0, data: LedgeTrace);
+		if (LedgeTrace.HitLine && LedgeTrace.hittype == TRACE_HITWALL) 
+		{
+			double lineangle = atan2(LedgeTrace.HitLine.delta.y, LedgeTrace.HitLine.delta.x); //angle of the line
+			double targangle = lineangle + 90; //this will be the angle of the player
+			
+			if(targangle < 0) 
+			{
+				targangle = -(targangle + 90);
+			}
+			if (LedgeTrace.LineSide)
+			{
+				targangle *= -1; //reverse it if you're facing the back side of the linedef
+			}
+			A_SetAngle(targangle,SPF_INTERPOLATE); //set player's angle
+		}
+		*/
+		
+		//============================================
+		//Abemus ledge, execute						//
+		//============================================
+		
+		//Switch to a weapon that forbids firing during the ledge grab
+		
+		/*
+		//Reset dash stuff just in case
+		//MaxAirSpeed = ADashTargetSpeed;
+		//DashCooler = ADashCooler = ADashTargetSpeed = WJumpSpeed = DashNumber = 0;
+		*/
+		
+		//Credit Cherno
+		//Console.Printf("Num: %f", LedgeHeight);
+		
+		velz = 8;
+		LedgeCheck = True;
+		
+		if(vel.length() < 5)
+		{
+			GiveInventory("Grabbing_A_Ledge", 1);
+		}
+		if(pos.z >= (LedgeHeightMin+20))
+		{
+			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("FinishClimb"));
+			
+			A_StopSound(CHAN_WEAPON);
+			A_Playsound("ledgeclimb");
+			LedgeAngle = Angle;
+			LedgeCheck = False;
+			LedgeGrabbed = True;
+			return;
+		}
+		if((player.readyweapon is "Melee_Attacks") || (player.readyweapon is "Chain_saw") || (player.readyweapon is "BrutalAxe"))
+		{
+			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("StainedLedgeClimb"));
+		}
+		else
+		{
+			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("LedgeClimb"));
+		}
+	}
+	void LedgeReach()
+	{
+		LedgeTime++;
+		if(LedgeTime >= 30)
+		{
+			SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
+			LedgeGrabbed = LedgeTime = LedgeHeight = LedgeHeightMin = LedgeHeightMax = FrameTime = 0;
+		}
+	}
+	
+	void LedgeGrab()
+	{
+		if(Pos.Z >= LedgeHeight || !Vel.Length() || LedgeTime >= 35)
+		{
+			//End Ledge Grab
+			LedgeCheck = False;
+			SetOrigin((Pos.X, Pos.Y, LedgeHeight), True);
+			SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
+			
+			//Only if ledge grab was successful
+			if(LedgeTime >= 35) { return; }
+			LedgeGrabbed = LedgeTime = LedgeHeight = LedgeHeightMin = LedgeHeightMax = FrameTime = 0;
+			Vel = Vel.Length() ? (5.f * AngleToVector(LedgeAngle), -3) : (0, 0, 0); //push player forward and downward
+			A_PlaySound("*land", CHAN_BODY);
+		}
+		else
+		{
+			Vel = Vel.Length() ? (0, 0, 8) : (0, 0, 0);
+		}
+		
+		//Fail safe to unlock player movement if something goes wrong
+		LedgeTime++;
+		if(LedgeTime >= 35)
+		{
+			SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
+			LedgeGrabbed = LedgeTime = LedgeHeight = LedgeHeightMin = LedgeHeightMax = FrameTime = 0;
+		}
+		
+		//Sprite animation
+		PlayIdle();
+	}
+}
+
+
+Class Hook : Actor
+{
+	Default
+	{
+		+FORCEXYBILLBOARD;
+		+HITMASTER;
+		+MISSILE;
+		+NOGRAVITY;
+		+NOTELEPORT;
+		//+alwayspuff;
+		+puffonactors;
+		+NOTONAUTOMAP;
+		+THRUSPECIES;
+		//+seekermissile;
+		//+screenseeker;
+		//+doombounce;
+		//+bounceonfloors;
+		//+bounceonwalls;
+		+dontcorpse;
+		+explodeonwater;
+		//+noclip;
+		Damagefunction 0;
+		+nodamagethrust;
+		Height 4;
+		Radius 10;
+		Speed 1;
+		Species "Hook";
+		+puffgetsowner;
+	//	+forcepain; 
+		//bouncefactor 0.1;
+		+NOTIMEFREEZE;
+	}
+	
+	vector3 HookToPlayer;
+	vector3	HookToMonster;
+	int		MonsterSpeed;
+	int		MonsterFloatSpeed;
+	float maxdistnew;
+	//bool bisflaming;
+	
+	vector3 SafeUnit3(Vector3 VecToUnit)
+	{
+		if(VecToUnit.Length()) { VecToUnit /= VecToUnit.Length(); }
+		return VecToUnit;
+	}
+	
+	vector2 SafeUnit2(Vector2 VecToUnit)
+	{
+		if(VecToUnit.Length()) { VecToUnit /= VecToUnit.Length(); }
+		return VecToUnit;
+	}
+	
+	Override void Tick()
+	{
+		//bool isflaming = false;
+		Let HookOwner = brutal_playerbase(Target);
+		if(HookOwner)
+		{
+			Vector3 WaistPos = (HookOwner.Pos.X, HookOwner.Pos.Y, HookOwner.Pos.Z + HookOwner.Height / 2.f); // player position
+			HookToPlayer = Pos - WaistPos; //hook-to-player vector
+			
+		}
+		
+		Super.Tick();
+		
+		UpdateTrail();
+	}
+	
+	void UpdateTrail()
+	{
+		int b;
+		for(b = 1; b <= 14; b++)
+		{
+			ActorIterator BallOfSteele = Level.CreateActorIterator(84115 + b);
+			Actor Ball = BallOfSteele.Next();
+			
+			if(Ball != Null)
+			{
+				//Set trail velocity
+				Vector3 TargetPos = Pos - (HookToPlayer * b / 15.f);
+				Ball.Vel = TargetPos - Ball.Pos;
+			}
+		}
+	}
+	
+	void InitiateGrapple(Bool Monster)
+	{
+		Let HookOwner = brutal_playerbase(Target);
+		
+		Float	PushLength = 4 * 5.5;
+		Vector3 HookPush = SafeUnit3(HookToPlayer) * PushLength;
+		Float 	HookSpeed = max((HookPush).Length(), PushLength);
+		HookOwner.Rope = HookToPlayer; //needed for the LOS check
+		
+		//Check hook is still in sight
+		//if(!HookOwner.HookLOS())
+		//{
+		//	SetState(FindState("DespawnHook"));
+		//	return;
+		//}
+		
+		//Stop any eventual wall slides
+		/*
+		HookOwner.StopWSlide();
+		
+		//Stop dashing stuff
+		HookOwner.ADashCooler = HookOwner.ADashTargetSpeed = 0;
+		
+		//Initiate hook
+		*/
+		HookSpeed = HookOwner.MaxAirSpeed = min(HookSpeed, 24);
+		HookOwner.Vel = HookOwner.GrappleVel = HookSpeed * SafeUnit3(HookPush);
+		
+		//Hooking monsters specific
+		if(Monster)
+		{
+			Let Monster = Actor(Master);
+			If(!monster.bnoblood)
+			{
+			Monster.spawnblood(pos,angle,1);
+			}
+			monster.a_pain();
+			brutal_playerbase(Target).GrappledMonster = Monster;
+			SetMonsterSpeed(False);
+			A_PlaySound("HookMeat", 7);
+		}
+		else
+		{
+			A_PlaySound("HookWall", 7);
+		}
+	}
+	
+	void SetMonsterSpeed(Bool Reset)
+	{
+		Let Monster = Actor(Master);
+		/*
+		if(!Reset)
+		{
+			MonsterSpeed = Monster.Speed;
+			MonsterFloatSpeed = Monster.FloatSpeed;
+			Monster.Speed = Monster.FloatSpeed = 0;
+		}
+		else
+		{
+			Monster.Speed = MonsterSpeed;
+			Monster.FloatSpeed = MonsterFloatSpeed;
+		}
+		*/
+	}
+	
+	void SpawnTrail()
+	{
+		int h;
+		for(h = 1; h <= 14; h++)
+		{
+			
+			A_SpawnItemEx("HookTrail",0,0,0,0,0,0,0,SXF_ISTRACER|SXF_SETTARGET|SXF_ORIGINATOR|SXF_NOCHECKPOSITION);
+			
+			
+			Let SlaveTrail = HookTrail(Tracer);
+			SlaveTrail.ChangeTid(84115 + h);
+		}
+	}
+	
+	
+	
+
+	
+	States
+	{
+	//====================================
+	//Hook is traveling through space
+	Spawn:
+		OCLW A 0 NoDelay
+		{
+			Let HookOwner = brutal_playerbase(Target);
+			A_AlertMonsters();
+			
+			 if (target && target.target)
+			 {//ensure that the shooter even has a target
+            SetOrigin(target.target.pos+(0,0,target.target.height*0.5),false);
+			target.a_cleartarget();
+			}
+			SpawnTrail();
+			//HookOwner.a_takeinventory("meathook",1);
+			
+		}
+	Looper:
+		OCLW A 1
+		{
+			//a_seekermissile(365,365,SMF_LOOK);
+			Let HookOwner = brutal_playerbase(Target);
+			//target.giveinventory("meathook",1);
+			//Despawn if no geometry was found
+			/*
+			if(HookToPlayer.Length() >= 1300.f || !HookOwner)
+			{
+				SetState(FindState("Death"));
+				return;
+			}
+			*/
+		}
+		Goto despawnhook;
+	
+	//====================================
+	//Hook hit a wall or ceiling
+
+	
+	
+	TillDeathDoesUsApart:
+		OCLW A 1
+		{
+			Let HookOwner = brutal_playerbase(Target);
+			if(!HookOwner.GrappleVel.Length() || !HookOwner)
+			{
+				SetState(FindState("DespawnHook"));
+				return;
+			}
+			
+			if(HookOwner)
+		{
+			Vector3 WaistPos = (HookOwner.Pos.X, HookOwner.Pos.Y, HookOwner.Pos.Z + HookOwner.Height / 2.f); // player position
+			HookToPlayer = Pos - WaistPos; //hook-to-player vector
+			
+			
+		}
+		
+		
+		UpdateTrail();
+			
+			HookOwner.Rope = HookToPlayer;
+		}
+		Loop;
+		
+	//====================================
+	//Hit actor
+	XDeath:
+	//Melee:
+		OCLW A 1
+		{
+
+			
+			Let HookOwner = brutal_playerbase(Target);
+			//SpawnTrail();
+			Let Monster = Actor(Master);
+			
+		
+			
+			InitiateGrapple(True); 
+			maxdistnew = HookToPlayer.length();
+		}
+	
+	TillXDeathDoesUsApart:
+		OCLW A 1
+		{
+			Let HookOwner = brutal_playerbase(Target);
+			Let Monster = Actor(Master);
+			If (monster)
+			{
+			setorigin(monster.pos+(0,0,monster.height*0.5),TRUE);
+			}
+			
+			if(!HookOwner || !HookOwner.GrappleVel.Length() || !Monster || Monster.health <=0)
+			{
+				return resolvestate("despawnhook");
+			}
+			
+			
+				if(HookOwner)
+		{
+			Vector3 WaistPos = (HookOwner.Pos.X, HookOwner.Pos.Y, HookOwner.Pos.Z + HookOwner.Height / 2.f); // player position
+			HookToPlayer = Pos - WaistPos; //hook-to-player vector
+			
+			
+			
+			
+		}
+		
+		
+		UpdateTrail();
+			
+			
+			a_startsound("MHKLOOP",194,CHANF_LOOPING,0.5,ATTN_NONE);
+			/*
+			if (monster.FindState('Pain.meathook') && !monster.bdormant && !monster.bnopain && !monster.findinventory("glorykillme") && !monster.findinventory("enemyisarchvile"))
+			{
+			Monster.setstatelabel("pain.meathook");
+			}
+			Else if (monster.FindState('Pain') && !monster.bdormant && !monster.bnopain && !monster.findinventory("glorykillme") && !monster.findinventory("enemyisarchvile"))
+			{
+			Monster.setstatelabel("pain");
+			}
+			*/
+			
+			
+			Vel = Monster.Vel;
+			HookOwner.Rope = HookToPlayer;
+			Return resolvestate(null);
+		}
+		Loop;
+		
+	//====================================
+	//Die Monster! You don't belong in this world
+	Death:
+	OCLW AAA 0
+		{
+			Let HookOwner = brutal_playerbase(Target);
+			if(HookOwner)
+			{
+			//	HookOwner.a_giveinventory("canfiremeathook",1);
+				HookOwner.StopHook();
+			//	HookOwner.a_giveinventory("meathook",1);
+				//HookOwner.a_startsound("weapons/empty",194,CHANF_DEFAULT,1,ATTN_NONE);
+			}
+			a_stopsound(194);
+			Let Monster = Actor(Master);
+			if(Monster && MonsterSpeed) { SetMonsterSpeed(True); }
+		}
+		Stop;
+		
+	DespawnHook:
+		OCLW A 0
+		{
+			Let HookOwner = brutal_playerbase(Target);
+			if(HookOwner)
+			{
+				HookOwner.StopHook();
+			//	HookOwner.a_giveinventory("canfiremeathook",1);
+			//	HookOwner.a_giveinventory("meathook",1);
+				HookOwner.a_startsound("MHKSTP",194,CHANF_DEFAULT,1,ATTN_NONE);
+			}
+			a_stopsound(194);
+			Let Monster = Actor(Master);
+			if(Monster && MonsterSpeed) { SetMonsterSpeed(True); }
+		}
+		Stop;
+	}
+}
+
+Class HookTrail : Actor
+{
+	Default
+	{
+		+FORCEXYBILLBOARD;
+		+MISSILE;
+		+NOGRAVITY;
+		+NOTELEPORT;
+		+NOTONAUTOMAP;
+		+THRUSPECIES;
+		+ExplodeOnWater;
+		Radius 2;
+		Height 4;
+		Scale 0.5;
+		Species "HookTrail";
+		+NOTIMEFREEZE;
+	}
+	
+	States
+	{
+		Spawn:
+		Looper:
+			TEND A 1
+			{
+				if(!Hook(Target))
+				{
+					SetState(FindState("DespawnTrail"));
+					return;
+				}
+				
+			
+			}
+			Loop;
+			
+		Death:
+			TEND A 1
+			{
+				if(!Hook(Target))
+				{
+					SetState(FindState("DespawnTrail"));
+					return;
+				}
+			}
+			Loop;
+			
+		DespawnTrail:
+			Stop;
+	}
+}

@@ -1,0 +1,222 @@
+
+
+
+//NEEDLER NEEDLER NEEDLER -Emerald
+
+
+
+Class Needle : actor
+	{
+	
+	
+	vector3 hitofs;
+		
+		float rdepth;
+		float rwidth;
+		float rheight;
+		float savedpitch;
+	
+		bool bvictim; 
+		int needlecountneeded;
+		int rollspeed;
+		bool flaretick;
+		
+	Default
+		{
+			renderstyle 'add';
+			Projectile;
+			//-nogravity
+			Speed 22;
+			Radius 4;
+			//Gravity 0.3;
+			Height 4;
+			Scale 0.1;
+			Damagefunction 0;
+			+seekermissile
+			+rollsprite;
+			//+bloodsplatter;
+			Seesound "NDLRFIRE";
+			Deathsound "NDLRDIE";
+			//+hittracer;
+			+bounceonfloors;
+			//+bounceonwalls;
+			+bounceonceilings;
+			+bright;
+			//bouncecount 2;
+			//Translation "PLASMAPINK";
+			+rollsprite;
+			Obituary "%o was needled by %k's Gauss Cannon.";
+		}
+		Override void postbeginplay()
+		{
+		Super.postbeginplay();
+		A_setroll(random(0,360));
+		}
+		
+		
+		Override int SpecialMissileHit(Actor victim) 
+		{
+
+			if (victim && victim.bshootable && victim.health > 0 && !victim.binvulnerable && victim != target)
+			{
+				tracer = victim;
+				hitofs = victim.pos - hitofs;
+				bvictim = true;
+				rdepth = frandom(-0.89,0.89);
+				rwidth = frandom(-0.89,0.89);
+				rheight = frandom(0.1,0.89);
+				savedpitch = frandom(-70,70);
+				If(victim.findinventory("combine") && victim.countinv("needlecount") < 12)
+				{
+				victim.takeinventory("combine",1);
+				}
+				//if(victim.getspawnhealth() < 200 && !victim.bfrightened)
+				//{
+				//victim.bfrightened = true;
+				//victim.speed = (victim.speed*1.7);
+				//}
+				
+				
+			
+	
+			}
+		return -1;
+		}
+		
+		
+		
+		States
+		{
+		Spawn:
+		PBAL E 1 BRIGHT 
+		{
+		A_seekermissile(2,4,SMF_LOOK,50,1);
+		A_SpawnItemEX("PINKFlareTiny");
+		}
+		Loop;
+		
+		
+		
+		
+		Death:
+		Xdeath:
+		TNT1 A 0;
+		TNT1 A 0 
+		{
+		If(!tracer)
+		{
+		setstatelabel("stuck");
+		}
+		Else if(tracer)
+		{
+		tracer.giveinventory("needlecount",1);
+		}
+		}
+		
+		Stuck:
+		PBAL EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1
+		{
+		If(!tracer && bvictim)
+		{
+		setstatelabel("Explode");
+		}
+		if(tracer) 
+			{
+			//needlecountneeded = (tracer.health*0.19);
+			If(tracer.health > 0)
+			{
+			Warp(tracer,tracer.radius*rdepth,tracer.radius*rwidth,tracer.height*rheight,tracer.angle,WARPF_NOCHECKPOSITION);
+			A_facetracer();
+			pitch = savedpitch;
+				If(tracer.health < 150)
+				{
+				tracer.giveinventory("frightenedfromneedle",1);
+				tracer.bfrightened = true;
+				}
+				Else if(tracer.findinventory("frightenedfromneedle"))
+				{
+				tracer.takeinventory("frightenedfromneedle",1);
+				tracer.bfrightened = false;
+				}
+			}
+			Else {setstatelabel("explode");}
+			If(tracer.countinv("needlecount") > 8 || tracer.findinventory("combine"))
+				{
+				//Tracer.bfrightened = false;
+				tracer.giveinventory("combine",1);
+				tracer.takeinventory("needlecount",1);
+				tracer.a_startsound("NDLRCMBN",71);
+				A_damagetracer(frandom(8,20),"explosiveimpact", 0,null,"none",AAPTR_DEFAULT);
+				A_radiusthrust(300,250);
+				A_setroll(random(0,360));
+				A_spawnitemex("combinedamage");
+				//A_explode(10,250,XF_EXPLICITDAMAGETYPE,TRUE,0,0,0,"bulletpuff","EXPLOSIVEIMPACT");
+				Radius_Quake (3, 8, 0, 15, 0);//(intensity, duration, damrad, tremrad, tid)
+				a_setrenderstyle(0.9, STYLE_ADD);
+				float rscale = frandom(0.2,1.0);
+				A_setscale(rscale,rscale);
+				//rollspeed = frandom(-5,5);
+				setstatelabel("explodefromcombine");
+				}
+			}
+			
+		//	If(flaretick)
+			//	{
+				//	flaretick = false;
+					A_SpawnItemEX("PINKFlareTiny");
+			//	}
+			//Else
+			//	{
+			//		flaretick = true;
+			//	}
+		} 
+		TNT1 A 0
+		{
+			
+		if(tracer)
+		{
+		tracer.takeinventory("needlecount",1);
+		A_damagetracer(frandom(10,20),"bullet", 0,null,"none",AAPTR_DEFAULT);
+		}
+		}
+		
+		goto explode;
+		Explodefromcombine:
+		
+		//TNT1 AAAAA 0 A_spawnitemex("pinkplasmaparticle",0,0,0,frandom(-14,14),frandom(-14,14),frandom(-14,14),frandom(0,360),SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_startsound("NDLRXPL",9);
+		TNT1 A 0; 
+		TNT1 AAAAAA 0 A_spawnprojectile ("HitSparkB", 2, 0, random (0, 360), 2, random (30, 360));
+	TNT1 AAAA 0 A_spawnprojectile ("HitSpark22B", 2, 0, random (0, 360), 2, random (30, 360));
+	TNT1 AAAA 0 A_spawnprojectile ("HitSpark23B", 2, 0, random (0, 360), 2, random (30, 360));
+	//TNT1 A 0 A_settranslation("plasmaPINK");
+	//PLSE AAABBBCCC 1 BRIGHT 
+	//{
+	//roll = (roll + rollspeed);
+	//A_FADEIN(0.07);
+	//}
+	//PLSE DDDEEEFFF 1 BRIGHT 
+	//{
+	//roll = (roll + rollspeed);
+	//A_fadeout(0.07);
+	//}
+	 FIR8 ABCDEFGHIJKLMNOP 1 Bright A_spawnitemex("pinkflaremedium");
+	STOP;
+		Explode:
+		TNT1 A 0;
+		TNT1 A 0;
+	
+		TNT1 A 0 A_startsound("NDLRXPL",9);
+		TNT1 A 0; 
+		TNT1 AAAAAA 0 A_spawnprojectile ("HitSparkB", 2, 0, random (0, 360), 2, random (30, 360));
+	TNT1 AAAA 0 A_spawnprojectile ("HitSpark22B", 2, 0, random (0, 360), 2, random (30, 360));
+	TNT1 AAAA 0 A_spawnprojectile ("HitSpark23B", 2, 0, random (0, 360), 2, random (30, 360));
+
+		
+
+		TNT1 A 30;
+		STOP;
+		
+		}
+	
+	}

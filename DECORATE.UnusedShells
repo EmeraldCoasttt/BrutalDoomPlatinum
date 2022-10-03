@@ -1,0 +1,58 @@
+//These shells are super varied, but they caused some fps drops. 7 fps difference on my end, but I can't risk it...
+//I'm leaving this here for later. Perhaps I'll have some use for it.
+
+
+/*
+ACTOR AmmoShellButSpawns4 : Ammo Replaces AmmoShell
+{
+	Game Doom
+	SpawnID 12
+	Inventory.PickupMessage "$GOTSHELLS"
+	Inventory.Amount 4
+	Inventory.MaxAmount 50
+	Ammo.BackpackAmount 8
+	Ammo.BackpackMaxAmount 100
+	Inventory.Icon "SHELA0"
+	Inventory.Pickupsound "SHELPK1"
+	Scale 0.9
+	States
+	{
+	Spawn:
+	TNT1 A 1
+    TNT1 AAAA 0 A_SpawnItemEx ("SingleShell",random(7,-7),random(7,-7),0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS ,0, tid)
+    stop
+	}
+}
+
+ACTOR SingleShell : CustomInventory
+{
+	Inventory.PickupMessage "Picked up a shotgun shell."
+	Inventory.Pickupsound "SHELPK1"
+	Scale 0.9
+	Radius 10
+    Height 6
+	States
+	{
+	Spawn:
+	TNT1 A 1
+		TNT1 A 0 A_Jump(256,"Spawn1","Spawn2","Spawn3","Spawn4")
+		loop
+	Spawn1:
+		SHEL B -1
+		Stop
+		Spawn2:
+		SHEL C -1
+		Stop
+		Spawn3:
+		SHEL D -1
+		Stop
+		Spawn4:
+		SHEL E -1
+		Stop
+		
+	Pickup:
+	TNT1 A 0 A_GiveInventory("AmmoShell",1)
+	stop
+	}
+}
+*/
