@@ -37,7 +37,7 @@ CLASS BrutalZombie : Actor
 	
 	Virtual int IdleCheck()
 	{
-		If(target && target is "PlayerPawn" && !(target is "DemonPlayer") && checksight(target))
+		If(target && target is "PlayerPawn" && !(target is "DemonPlayer") && checksight(target) && !target.findinventory("GoFatality"))
 			{
 				
 				Return 2;
@@ -47,7 +47,7 @@ CLASS BrutalZombie : Actor
 				
 				Return 2;
 			}
-		Else If(target && checksight(target))
+		Else If(target && checksight(target) && !target.findinventory("GoFatality"))
 			{
 				
 				Return 1;
@@ -60,7 +60,7 @@ CLASS BrutalZombie : Actor
 	}
 	Virtual int IdleCheck2()
 	{
-		If(target && target is "PlayerPawn" && !(target is "DemonPlayer"))
+		If(target && target is "PlayerPawn" && !(target is "DemonPlayer") && !target.findinventory("GoFatality"))
 			{
 				
 				Return 2;
@@ -70,7 +70,7 @@ CLASS BrutalZombie : Actor
 				
 				Return 2;
 			}
-		Else If(target)
+		Else If(target && !target.findinventory("GoFatality")) 
 			{
 				
 				Return 1;
