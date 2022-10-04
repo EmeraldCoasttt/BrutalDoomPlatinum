@@ -212,6 +212,7 @@ user int bd_RocketMag  = 6;
 //Slot 6
 user int bd_PlasmaMag  = 50;
 user int bd_RailgunMag  = 50;
+user int bd_FreezerMag = 50;
 
 //MES texturing
 server int Dox_MEStextureReplacements  = 0;
@@ -234,6 +235,7 @@ server bool bd_needlegun = false;
 
 user bool bd_AlwaysBob = false;
 
+user int bd_LegacyMinigunFire = 0;
 
 server bool G_Trichording = false;
 

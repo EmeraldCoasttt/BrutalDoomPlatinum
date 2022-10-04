@@ -559,7 +559,8 @@ Slider "Nailgun", "bd_NewNailgunMag", 12, 500, 1
 Slider "Rocket Launcher", "bd_RocketMag", 2, 60, 1
 
 Slider "Plasmagun", "bd_PlasmaMag", 12, 500, 1
-Slider "Railgun", "bd_RailgunMag", 20, 500, 1
+Slider "Railgun", "bd_RailgunMag", 2, 50, 1
+Slider "Freezethrower", "bd_FreezerMag", 12, 500, 1
 }
 
 
