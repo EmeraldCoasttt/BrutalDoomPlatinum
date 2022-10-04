@@ -502,7 +502,7 @@ ACTOR MiniGun : BrutalWeapon
 	        TNT1 A 0 A_JumpIf(GetCvar("bd_LegacyMinigunFire")==1, "LegacyFire")
 	        CHAG A 0 A_JumpIfInventory("Spin",1,"Hold")		
 			CHAG A 0 A_PlaySound("CHAINSTA")
-		NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoFire")
+			NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoFire")
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			CHAG A 0 A_PlaySound("FARMGN", 5)
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
@@ -956,7 +956,7 @@ ACTOR MiniGun : BrutalWeapon
      LegacyFire:
 			CHAG A 0
 			CHAG A 0 A_JumpIfInventory("Spin",1,"LegacyHold")
-		NULL A 0 A_JumpIf(CountInv("Clip2")==0,"LegacyFireNoAmmo")
+			NULL A 0 A_CheckIfAmmo("Clip2",1,"LegacyHoldNoAmmo")
 			CHAG A 0 A_PlaySound("CHAINSTA", 5)
 			CHAG A 0 BRIGHT A_FireCustomMissile("Alerter", 0, 0, 0, 0)
 			CHAG BC 1
