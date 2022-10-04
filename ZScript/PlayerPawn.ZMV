@@ -130,6 +130,7 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	int		DualTimer;
 	Int		SpecialTimer;
+	Int		ReloadTimer;
 	
 	//Jumping
 	int		BuildJumpDelay;
@@ -215,6 +216,11 @@ class Brutal_PlayerBase : PlayerPawn
 		Specialtimer = specialtimer - 1;
 		}
 		
+		If(reloadtimer >= 1)
+		{
+		reloadtimer = reloadtimer - 1;
+		}
+		
 		If(health < 1)
 		{
 		A_stopsound(125);
@@ -230,6 +236,11 @@ class Brutal_PlayerBase : PlayerPawn
 			{
 			specialtimer = 17;
 			giveinventory("swapriflespecial",1);
+			}
+		If(player.cmd.buttons & BT_RELOAD && reloadtimer <= 0)
+			{
+			reloadtimer = 17;
+			giveinventory("reloading",1);
 			}
 		If(player.cmd.buttons & BT_ATTACK)
 			{

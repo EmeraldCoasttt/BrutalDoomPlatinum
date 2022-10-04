@@ -164,7 +164,7 @@ CLASS Railgun : Brutalweapon
 				Wait;
 		Ready:
 			
-			RAIL A 1 A_weaponreadyDX();
+			RAIL A 1 A_weaponreadyDX(WRF_ALLOWRELOAD);
 			LOOP;
 			
 		Fire:
