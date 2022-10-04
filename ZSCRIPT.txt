@@ -2,43 +2,59 @@ Version "3.8"
 
 #include "ZScript/math.zsc"
 #include "ZScript/PlayerPawn.ZMV"
-#include "ZScript/WeaponBase.txt"
-#include "ZScript/RevenantJetpack.txt"
-#include "Zscript/WeaponSpawners.txt"
 #include "ZScript/DoxUtilities.txt"
 #include "ZScript/Projectiles.txt"
-#include "Zscript/Chainsaw.txt"
-#include "Zscript/SuperShotgun.txt"
-#include "Zscript/Needler.txt"
-#include "Zscript/voidgrenades.txt"
-#include "Zscript/ExplosiveBarrel.txt"
 #include "Zscript/DemonRunes.txt"
-#include "Zscript/StickyGrenade.txt"
 #include "Zscript/Keyes.txt"
 #include "Zscript/Artifacts.txt"
-#include "Zscript/MinigunTurret.txt"
-#include "Zscript/Archvile.txt"
-#include "Zscript/TripMine.txt"
-#include "Zscript/Railgun.txt"
-#include "Zscript/BFG.txt"
-#include "Zscript/Unmaker.txt"
-#include "Zscript/RiotShield.txt"
 #include "Zscript/HeadShots.txt"
-#include "Zscript/Melee.txt"
-#include "Zscript/Zombie.txt"
-#include "Zscript/BrutalFriend.txt"
 #include "Zscript/GORE.txt"
-#include "Zscript/LostSoul.txt"
-#include "Zscript/Spiders.txt"
-#include "Zscript/Cyberdemon.txt"
+
+#include "Zscript/Weapons/WeaponBase.txt"
+#include "Zscript/Weapons/WeaponSpawners.txt"
+
+//Slot 1
+#include "Zscript/Weapons/Slot1/Chainsaw.txt"
+#include "Zscript/Weapons/Slot1/Melee.txt"
+//Slot 2
+#include "Zscript/Weapons/Slot2/RiotShield.txt"
+//Slot 3
+#include "Zscript/Weapons/Slot3/SuperShotgun.txt"
+//Slot 4
+#include "Zscript/Weapons/Slot4/MinigunTurret.txt"
+//Slot 5
+#include "Zscript/Weapons/Slot5/StickyGrenade.txt"
+#include "Zscript/Weapons/Slot5/TripMine.txt"
+//Slot 6
+#include "Zscript/Weapons/Slot6/Needler.txt"
+#include "Zscript/Weapons/Slot6/Railgun.txt"
+//Slot 7
+#include "Zscript/Weapons/Slot7/BFG.txt"
+#include "Zscript/Weapons/Slot7/Unmaker.txt"
+//Slot 8
+#include "Zscript/Weapons/Slot8/RevenantJetpack.txt"
+//Slot 9
+#include "Zscript/Weapons/Slot9/VoidGrenades.txt"
+
+#include "Zscript/Monsters/ExplosiveBarrel.txt"
+#include "Zscript/Monsters/Archvile.txt"
+#include "Zscript/Monsters/Zombie.txt"
+#include "Zscript/Monsters/LostSoul.txt"
+#include "Zscript/Monsters/Spiders.txt"
+#include "Zscript/Monsters/Cyberdemon.txt"
+#include "Zscript/Monsters/BrutalFriend.txt"
+
 #include "ZScript/Vehicles/Kinematics/kine_parts.zsc" 
 #include "ZScript/Vehicles/veh_parts.zsc"
 #include "ZScript/Vehicles/veh_halobase.zsc"
 #include "ZScript/Vehicles/veh_ghost.zsc"
+
 #include "Zscript/BDPMatrix.txt"
 #include "Zscript/BDPGutamatics/Include.zsc"
+
 #include "zscript/6dof/quaternion.zs"
 #include "zscript/6dof/roll_handler.zs"
+
 #include "zscript/TiltPlusPlus/TiltPlusPlus.zc"
 #include "zscript/TiltPlusPlus/TiltPlusPlusMenu.zc"
 
