@@ -1,14 +1,16 @@
 ACTOR MG42 : BrutalWeapon
 {
 	Game Doom
-	Weapon.SelectionOrder 1
 	Weapon.AmmoUse 0
 	Weapon.AmmoGive 600
 	Weapon.AmmoType "BuzzsawAmmo"
+	Inventory.PickupSound "weapons/shotgr"
 	Inventory.PickupMessage "You got the MG42 (Slot 4)"
 	Obituary "%o was cut in half by %k's MG42"
+    +WEAPON.NOAUTOAIM
+    +WEAPON.NOALERT
+	+WEAPON.NOAUTOFIRE
 	+WEAPON.CHEATNOTWEAPON
-	+WEAPON.NOAUTOAIM
 	Scale 0.8
 	BrutalWeapon.weight 10
 	States
@@ -27,7 +29,7 @@ ACTOR MG42 : BrutalWeapon
 
 	FuckYouFlash:
 	HBUS Z 1
-	2BUS ABCDDDDDDDDDDDDDDDDDDDDDDCBA 1
+	2BUS ABCDDDDDDDDDDDDDDDDDDDDDDDCBA 1
 	HBUS Z 1
 	stop	
 	

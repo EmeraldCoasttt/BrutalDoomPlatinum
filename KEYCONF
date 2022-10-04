@@ -10,7 +10,7 @@ weaponsection "Brutal_Doom"
 setslot 1 Melee_Attacks BrutalAxe Chain_Saw ClassicFist ClassicSaw //Demonslayer has been disabled
 setslot 2 BrutalPistol BrutalSMG DoxsRevolver ClassicPistol ClassicSMG MP40 //forcefully disables the revolver
 setslot 3 Shot_Gun SSG AssaultShotgun ClassicShotgun ClassicSSG
-setslot 4 Rifle MiniGun Machinegun MG42 ClassicChaingun
+setslot 4 Rifle MiniGun Machinegun ClassicChaingun MG42
 setslot 5 Rocket_Launcher GrenadeLauncher ClassicRocketLauncher //NukeLauncher Useless weapon 
 setslot 6 Plasma_Gun RailGun Freezer ClassicPlasmaRifle
 setslot 7 BIG_FUCKING_GUN BFG10k Unmaker  VanillaBFG9000
