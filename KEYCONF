@@ -7,15 +7,15 @@ addplayerclass TacticalDoomer
 
 weaponsection "Brutal_Doom"
 
-setslot 1 DSweap Melee_Attacks BrutalAxe Chain_Saw ClassicFist ClassicSaw
+setslot 1 Melee_Attacks BrutalAxe Chain_Saw ClassicFist ClassicSaw //Demonslayer has been disabled
 setslot 2 BrutalPistol BrutalSMG DoxsRevolver ClassicPistol ClassicSMG MP40 //forcefully disables the revolver
 setslot 3 Shot_Gun SSG AssaultShotgun ClassicShotgun ClassicSSG
-setslot 4 Rifle MiniGun Machinegun ClassicChaingun
-setslot 5 Rocket_Launcher GrenadeLauncher ClassicRocketLauncher NukeLauncher
+setslot 4 Rifle MiniGun Machinegun ClassicChaingun MG42
+setslot 5 Rocket_Launcher GrenadeLauncher ClassicRocketLauncher //NukeLauncher Useless weapon 
 setslot 6 Plasma_Gun RailGun Freezer ClassicPlasmaRifle
 setslot 7 BIG_FUCKING_GUN BFG10k Unmaker  VanillaBFG9000
 setslot 8 HellishMissileLauncher FlameCannon
-setslot 9 Flamethrower2 HandGrenades
+setslot 9 HandGrenades //Flamethrower2 has been removed
 //setslot 0 AmmoDroper
 
    addkeysection "BrutalDoom - Advanced Actions" BrutalDoomActions    

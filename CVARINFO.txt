@@ -102,6 +102,7 @@ server int bd_LegStainingOptions = 0;
 //Very customizable weapon spawns.
 server int bd_SpawnAxe = 1;
 server int bd_SpawnSMG = 0; 
+server int bd_SpawnMP40 = 0;
 server int bd_SpawnRevolver = 1; 
 server int bd_SpawnASG = 1;
 server int bd_SpawnMachinegun = 1;
@@ -110,6 +111,7 @@ server int bd_SpawnRailgun = 1;
 server int bd_SpawnFreezer = 1;
 server int bd_SpawnBFG10K = 1;
 server int bd_SpawnUnmaker = 1;
+server int bd_SpawnMG42 = 1;
 
 //Monster gun spawns
 server int bd_SpawnPistolDrop = 1;
@@ -212,6 +214,7 @@ user int bd_RocketMag  = 6;
 //Slot 6
 user int bd_PlasmaMag  = 50;
 user int bd_RailgunMag  = 50;
+user int bd_FreezerMag = 50;
 
 //MES texturing
 server int Dox_MEStextureReplacements  = 0;
@@ -234,6 +237,7 @@ server bool bd_needlegun = false;
 
 user bool bd_AlwaysBob = false;
 
+user int bd_LegacyMinigunFire = 0;
 
 server bool G_Trichording = false;
 
