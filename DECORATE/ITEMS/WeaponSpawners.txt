@@ -272,7 +272,7 @@ ACTOR ShotgunSpawner: CustomInventory
 		TNT1 A -1
 		Stop			
 	SpawnMP40:
-		TNT1 A 0 A_JumpIf(GetCvar("bd_Spawnmp40")==0, "Spawn")
+	TNT1 A 0 A_JumpIf(GetCvar("bd_Spawnmp40")==0, "Spawn")
 		TNT1 A 0 A_SpawnItemEx ("MP40Spawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_TRANSFERSPECIAL|SXF_TRANSFERAMBUSHFLAG,0, tid)
 		TNT1 A 1
 		TNT1 A -1
@@ -283,7 +283,7 @@ ACTOR ShotgunSpawner: CustomInventory
 		TNT1 A -1
 		Stop	
 		
-	Spawnpistol:
+			 Spawnpistol:
 		TNT1 A 0 A_JumpIf(GetCvar("bd_Spawnpistol")==0, "Spawn")//Check if that weapon is disabled.
 		TNT1 A 0 A_JumpIfInventory("brutalpistol",1,"spawnpistol2",AAPTR_PLAYER1)
 		TNT1 A 0 A_SpawnItemEx ("pistolspawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_TRANSFERSPECIAL|SXF_TRANSFERAMBUSHFLAG,0, tid)
@@ -1065,10 +1065,11 @@ actor BFGReplacer : BasicWeaponPickup// Replaces BFG9000
 	 Spawn:
 		BFUG A 0
 		BFUG A 0 Thing_ChangeTID(0,736)
-		XXXX X 0 A_JumpIf(GetCvar("bd_SpawnUnmaker")==0&&GetCvar("bd_SpawnBFG10K")==0&&GetCvar("bd_SpawnBFG")==0&&GetCvar("bd_SpawnMG42")==0, "SpawnAmmo")
+		XXXX X 0 A_JumpIf(GetCvar("bd_SpawnUnmaker")==0&&GetCvar("bd_SpawnBFG10K")==0&&GetCvar("bd_SpawnBFG")==0, "SpawnAmmo")
 		MARN A 0 A_JumpIf(GetCvar("bd_disablenewguns")==1, "Vanilla")//Check if advanced decorations are disabled.
 		BFUG A 3
 		
+		//TNT1 A 0 A_JumpIfInventory("NaziVerificate1", 1, "MG42")
 		TNT1 A 0 A_Jump(94, "BFG10K","Unmaker")
 		
 	Vanilla:	
@@ -1095,7 +1096,7 @@ actor BFGReplacer : BasicWeaponPickup// Replaces BFG9000
 		Stop
 
 	MG42:
-		TNT1 A 1 A_JumpIf(GetCvar("bd_SpawnMG42")==0, "Spawn1")//Check if that weapon is disabled.
+		TNT1 A 0
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
 		TNT1 A 0 A_ChangeFlag("THRUACTORS", 1)
 		TNT1 A 0 A_ChangeFlag("NOTARGET", 1)

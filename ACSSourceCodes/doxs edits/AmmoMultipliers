@@ -39,7 +39,6 @@ SetAmmoCapacity("RocketRounds", 6);
 SetAmmoCapacity("PlasmaAmmo", 50);			
 SetAmmoCapacity("DoublePlasmaAmmo", 100);
 SetAmmoCapacity("RailgunAmmo", 50);
-SetAmmoCapacity("FreezerAmmo", 50);	
 delay(1);
 }
 
@@ -65,7 +64,6 @@ SetAmmoCapacity("RocketRounds", GetCVAR("bd_RocketMag") );
 SetAmmoCapacity("PlasmaAmmo", GetCVAR("bd_PlasmaMag") );			
 SetAmmoCapacity("DoublePlasmaAmmo", GetCVAR("bd_PlasmaMag")*2 );
 SetAmmoCapacity("RailgunAmmo", GetCVAR("bd_RailgunMag") );
-SetAmmoCapacity("FreezerAmmo", GetCVAR("bd_FreezerMag") );
 delay(1);
 }
 
