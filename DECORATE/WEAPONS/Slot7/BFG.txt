@@ -40,7 +40,7 @@ Actor AlphaBFGBAll : SuperBFGBall
  
  Death:
     BFGN A 0
-	BFGN A 0 A_Explode(35,150,1,1)
+	BFGN A 0 A_Explode(35,150,0,1)
 	Goto Death2
 	
  Death2:	
@@ -87,7 +87,7 @@ Actor AlphaBFGBAll_RED : SuperBFGBall
  
  Death:
     BFGN A 0
-	BFGN A 0 A_Explode(35,150,1,1)
+	BFGN A 0 A_Explode(35,150,0,1)
 	Goto Death2
 	
  Death2:	
@@ -121,7 +121,7 @@ Actor AlphaBFGBAll2 : AlphaBFGBAll
 	{
 	 Death:
     BFGN A 0
-	BFGN A 0 A_Explode(100,200,1,1)
+	BFGN A 0 A_Explode(100,200,0,1)
 	Goto Death2
 	}
 }
