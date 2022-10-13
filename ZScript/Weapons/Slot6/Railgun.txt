@@ -216,7 +216,7 @@ CLASS Railgun : Brutalweapon
 				{
 						Return resolvestate("ReloadFromPump");
 				}
-				Else If(countinv("nurailgunammo") < 5 && countinv("AmmoCell") > 9 && countinv("reloading") > 0)
+				Else If(countinv("nurailgunammo") < 5 && countinv("AmmoCell") > 9 && A_pressedreload())
 				{
 						takeinventory("reloading",1);
 						Return resolvestate("ReloadFromPump");

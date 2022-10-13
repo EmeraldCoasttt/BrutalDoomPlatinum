@@ -192,7 +192,13 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	
 	
 	
-	
+	Action Bool A_PressedReload()
+	{
+		If(countinv("reloading") > 0 || player.cmd.buttons & BT_ATTACK)
+			Return TRUE;
+		Else
+			Return FALSE;
+	}
 	
 	
 	
