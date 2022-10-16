@@ -118,7 +118,7 @@ ACTOR Rocket_Launcher : BrutalWeapon Replaces RocketLauncher
 		Goto Ready
 	
 	LaserMode:
-		TNT1 A 1 A_FireBullets(0, 0, 1, 0, "GuidedLaser", FBF_NORANDOMPUFFZ)
+		TNT1 A 1 A_SpawnLaser("guidedlaser")
 		Loop
 		
 	SpecialAction: 

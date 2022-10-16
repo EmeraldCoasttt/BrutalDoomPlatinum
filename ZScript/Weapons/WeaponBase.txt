@@ -28,6 +28,32 @@ Class Brutalweapon : DoomWeapon //Weapon
 	}
 	
 	int guntimertics;
+	
+	
+	Action void a_SpawnLaser(class<Actor> Spawntype)
+	{
+		FLineTraceData lasersight;
+		LineTrace(angle, 4096, pitch, TRF_SOLIDACTORS|TRF_THRUHITSCAN, offsetz: player.viewz - pos.z, data: lasersight);
+		vector3 targetpos = lasersight.HitLocation;
+		if (lasersight.HitLine)
+		{
+			vector2 wallnormal = (-lasersight.HitLine.delta.y,lasersight.HitLine.delta.x).unit();
+			if (!lasersight.LineSide)
+			wallnormal *= -1;
+			targetpos += (wallnormal * 18);
+		}
+		if (lasersight.hittype == trace_hitceiling)
+				{
+					targetpos.z -= 13;
+				}
+		if (lasersight.hittype == trace_hitfloor)
+				{
+					targetpos.z += 13;
+				}
+		Spawn(spawntype,targetpos);
+	
+	}
+	
 	Action void a_TakeAmmo(class<Inventory> ammotype, int ammoamount = 1, bool take = true)
 	{
 		If(!findinventory("PowerSpeed2") && take)

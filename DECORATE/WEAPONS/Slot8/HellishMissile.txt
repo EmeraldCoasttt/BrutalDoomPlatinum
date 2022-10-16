@@ -24,7 +24,7 @@ ACTOR HellishMissileLauncher : BrutalWeapon
 	LaserMode:
 		TNT1 A 1 
 		{
-		A_FireBullets(0, 0, 1, 0, "GuidedLaser", FBF_NORANDOMPUFFZ);
+		A_SpawnLaser("GuidedLaser");
 		}
 		Loop
 	
