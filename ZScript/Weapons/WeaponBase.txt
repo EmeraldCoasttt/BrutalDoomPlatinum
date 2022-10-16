@@ -28,11 +28,15 @@ Class Brutalweapon : DoomWeapon //Weapon
 	}
 	
 	int guntimertics;
-	Action void a_TakeAmmo(class<Inventory> ammotype, int ammoamount = 1)
+	Action void a_TakeAmmo(class<Inventory> ammotype, int ammoamount = 1, bool take = true)
 	{
-		If(!findinventory("PowerSpeed2"))
+		If(!findinventory("PowerSpeed2") && take)
 		{
 			A_takeinventory(ammotype,ammoamount);
+		}
+		Else if(!findinventory("powerspeed2"))
+		{
+			A_giveinventory(ammotype,ammoamount);
 		}
 	}
 	
