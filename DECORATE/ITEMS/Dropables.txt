@@ -148,31 +148,8 @@ Height 0
 }
 
 
-ACTOR DropedMinigun
-{
-	scale 0.8
-	speed 6
-	health 1
-	radius 16
-	height 3
-	Gravity 1.1
-	damage 0
-	+ROLLSPRITE
-	+ROLLCENTER	
-	+THRUACTORS
-	+MISSILE
-	+NOTELEPORT
-	+NOBLOCKMAP
-	+BLOODLESSIMPACT 
-	+FORCEXYBILLBOARD
-	+NODAMAGETHRUST
-	+MOVEWITHSECTOR
-	+CORPSE
-	-DONTSPLASH
-	Mass 1
-	BounceType Doom
-	Bouncefactor 0.4
-	WallBounceFactor 0.2	
+ACTOR DropedMinigun : DropedRifle
+{	
     States
     {
 
@@ -233,31 +210,8 @@ Height 0
 	}
 }
 
-ACTOR DropedShotgun 
-{
-	scale 0.7
-	speed 6
-	health 1
-	radius 16
-	height 4
-	Gravity 0.9
-	damage 0
-	+THRUACTORS
-	+MISSILE
-	+NOTELEPORT
-	+NOBLOCKMAP
-	+BLOODLESSIMPACT 
-	+FORCEXYBILLBOARD
-	+ROLLSPRITE
-	+ROLLCENTER	
-	+NODAMAGETHRUST
-	+MOVEWITHSECTOR
-	+CORPSE
-	-DONTSPLASH
-	Mass 1
-	BounceType Doom
-	Bouncefactor 0.4
-	WallBounceFactor 0.2	
+ACTOR DropedShotgun : DropedRifle 
+{	
     States
     {
 
@@ -318,31 +272,8 @@ actor PistolDrop
 	}
 }
 
-ACTOR DropedPistol
-{
-	scale 0.7
-	speed 6
-	health 1
-	radius 8
-	height 2
-	Gravity 0.9
-	damage 0
-	+THRUACTORS
-	+MISSILE
-	+NOTELEPORT
-	+NOBLOCKMAP
-	+BLOODLESSIMPACT 
-	+FORCEXYBILLBOARD
-	+ROLLSPRITE	
-	+ROLLCENTER	
-	+NODAMAGETHRUST
-	+MOVEWITHSECTOR
-	+CORPSE
-	-DONTSPLASH
-	Mass 1
-	BounceType Doom
-	Bouncefactor 0.4
-	WallBounceFactor 0.2	
+ACTOR DropedPistol : DropedRifle
+{	
     States
     {
 
@@ -409,31 +340,8 @@ Height 0
 	}
 }
 
-ACTOR DropedSMG
-{
-	scale 0.7
-	speed 6
-	health 1
-	radius 10
-	height 3
-	Gravity 0.9
-	damage 0
-	+THRUACTORS
-	+MISSILE
-	+NOTELEPORT
-	+NOBLOCKMAP
-	+BLOODLESSIMPACT 
-	+FORCEXYBILLBOARD
-	+ROLLSPRITE
-	+ROLLCENTER	
-	+NODAMAGETHRUST
-	+MOVEWITHSECTOR
-	+CORPSE
-	-DONTSPLASH
-	Mass 1
-	BounceType Doom
-	Bouncefactor 0.4
-	WallBounceFactor 0.2	
+ACTOR DropedSMG : DropedRifle
+{	
     States
     {
 
