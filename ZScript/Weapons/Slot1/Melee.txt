@@ -213,6 +213,7 @@ CLASS Meleeattackslide : MeleeAttack
 		MeleeAttack.berserkdamage 55;
 		//MeleeAttack.pickbarrel FALSE;
 		//MeleeAttack.dofatality FALSE;
+		MeleeAttack.uppercut TRUE;
 		Speed 40;
 			}
 			
