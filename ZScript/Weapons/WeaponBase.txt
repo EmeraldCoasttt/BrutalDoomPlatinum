@@ -29,6 +29,23 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	int guntimertics;
 	
+	action state A_CheckFire(statelabel Fire = "Fire", statelabel AltFire = "AltFire")
+	{
+		If(player.cmd.buttons & BT_ATTACK)
+		{
+			return resolvestate(fire);
+		}
+		Else if (player.cmd.buttons & BT_ALTATTACK)
+		{
+			return resolvestate(altfire);
+		}
+		Else 
+		{
+			return resolvestate(null);
+		}
+	
+	
+	}
 	
 	Action void a_SpawnLaser(class<Actor> Spawntype)
 	{
@@ -94,6 +111,26 @@ Class Brutalweapon : DoomWeapon //Weapon
 		Else 
 		{
 		Return resolvestate(label);
+		}
+	}
+	
+	action state A_WeaponZoom3(statelabel label = "NoAim")
+	{
+		If(FindInventory("Zoomies") && player.cmd.buttons & BT_ALTATTACK)
+		{
+			Return resolvestate(label);
+		}
+		Else If(FindInventory("Zoomies"))
+		{
+		Return resolvestate(null);
+		}
+		Else if(player.cmd.buttons & BT_ALTATTACK)
+		{
+			Return resolvestate(null);
+		}
+		Else 
+		{
+			Return resolvestate(label);
 		}
 	}
 	
@@ -224,7 +261,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	
 	Action Bool A_PressedReload()
 	{
-		If(countinv("reloading") > 0 || player.cmd.buttons & BT_ATTACK)
+		If(countinv("reloading") > 0 || player.cmd.buttons & BT_RELOAD)
 			Return TRUE;
 		Else
 			Return FALSE;
