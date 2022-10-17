@@ -512,7 +512,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 		PLSF MNOP 1
 		{
 		if (CountInv("Reloading") == 1) { return state("Reload"); }
-		A_WeaponReady(WRF_NOFIRE|WRF_ALLOWRELOAD|WRF_NOSWITCH|WRF_DISABLESWITCH);
+		A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH|WRF_DISABLESWITCH);
 		A_WeaponOffset( random(-2,2),32+random(-2,2) );
 		A_PlaySound("PLSFULL", 6, 0.8, 1);
 		return state("");
