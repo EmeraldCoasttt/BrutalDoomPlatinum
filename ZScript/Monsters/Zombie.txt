@@ -120,7 +120,7 @@ CLASS BrutalZombie : Actor
 				If(killedplayertics > 35 && !killedplayer)
 				{
 					killedplayer = true;
-					A_startsound("ZKILL",2,0,1.0,ATTN_NONE,VoicePitch);
+					A_startsound("ZKILL",2,0,1.0,ATTN_IDLE,VoicePitch);
 					AlertZOmbies();
 				}
 				
