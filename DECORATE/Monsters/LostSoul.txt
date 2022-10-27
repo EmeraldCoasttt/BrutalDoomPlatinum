@@ -63,7 +63,9 @@ ACTOR TehLostSoul: LostSoulBase Replaces LostSoul
 	damagefactor "Shrapnel", 3.0
 	damagefactor "Explosives", 3.0
 	damagefactor "shotgun", 2.0
-	DamageFactor "Freeze",2.0
+	DamageFactor "Freeze",3.0
+	DamageFactor "Ice",3.0
+	DamageFactor "Frost",3.0
 	DamageFactor "Extremepunches",2.0
 	Tag "Lost Soul"
     Alpha 1

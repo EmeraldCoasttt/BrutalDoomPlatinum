@@ -64,6 +64,9 @@
 		+thruspecies;
 		+dontrip;
 		+stoprails;
+		DamageFactor "Freeze",3.0;
+		DamageFactor "Ice",3.0;
+		DamageFactor "Frost",3.0;
 		}
 		
 		
