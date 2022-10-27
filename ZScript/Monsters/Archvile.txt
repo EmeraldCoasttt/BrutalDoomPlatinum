@@ -22,14 +22,104 @@
 			}
 			Super.tick();
 		}
+		
+		Action state a_vilechecktarget()
+		{
+			bool cantseeplayer;
+			If(random(1,70) > 50)
+				{
+					If(target && !checksight(target))
+					{
+						cantseeplayer = true;
+						
+					}
+				}
+			If(!cantseeplayer) 
+			{
+				return resolvestate(null);
+			}
+			Else
+			{
+				return resolvestate("teleportawaysee");
+			}
+		}
+		
+		Action state a_viletryteleport(statelabel TeleportState = "doteleport")
+		{
+			Int teleportcount;
+			bool teleportsuccess;
+			Actor viletarget;
+			while(!teleportsuccess && teleportcount < 30)
+			{
+			FLineTraceData lasersight;
+				LineTrace(frandom(0,365), 1000, frandom(0,365), TRF_THRUACTORS | TRF_BLOCKSELF, offsetz: 64, data: lasersight);
+				vector3 targetpos = lasersight.HitLocation;
+				if (lasersight.HitLine)
+				{
+					vector2 wallnormal = (-lasersight.HitLine.delta.y,lasersight.HitLine.delta.x).unit();
+					if (!lasersight.LineSide)
+					wallnormal *= -1;
+					targetpos += (wallnormal * 18);
+				}
+				if (lasersight.hittype == trace_hitceiling)
+				{
+					targetpos.z -= 13;
+				}
+				VileTarget = Spawn("Viletarget",targetpos);
+				
+					If(viletarget && distance2d(viletarget) > 300)
+					{
+						teleportsuccess = true;
+						//console.printf("teleportsuccessful");
+						tracer = viletarget;
+						viletarget.tracer = self;
+					}
+					Else
+					{
+						If(viletarget)
+						viletarget.destroy();
+						//console.printf("TeleportFailed");
+						teleportcount++;
+					}
+				}
+				If(tracer && tracer is "viletarget" && teleportsuccess)
+				{
+					Return resolvestate(teleportstate);
+				}
+				Else
+				{
+					Return resolvestate(null);
+				}
+		
+		}
 	
-		Action void a_vileteleport()
+		Action state a_vileteleport(statelabel teleportback = "teleportback")
 		{
 			//A_wander();
-			angle = frandom(0,360);
+			
 			A_spawnitemex("randomTinyBurningPiece");
-			A_recoil(-15);
 			A_checkforresurrection(resolvestate("stayteleported"));
+			A_facetracer();
+			vector3 movepos = Vec3Angle(34,angle,0);
+			If (checkmove(Vec2Angle(34,angle),PCM_NOACTORS))
+			{
+				setorigin(movepos,TRUE);
+			}
+			Else if(!checkblock())
+			{
+				if(tracer)
+				tracer.Destroy();
+				Return resolvestate(teleportback);
+				
+			}
+			If(tracer && distance2d(tracer) <= 32 && !checkblock())
+			{
+				if(tracer)
+				tracer.Destroy();
+				Return resolvestate(teleportback);
+			}
+			
+			Return resolvestate(null);
 			
 		}
 		
@@ -94,3 +184,38 @@
 	
 	
 	}
+	
+	CLASS VileTarget : ACTOR
+{ 
+	Default
+	{
+		Decal "None";
+		Mass 1;
+		Radius 1;
+		Height 2;
+		gravity 500.0;
+		+NOBLOCKMAP;
+		+BLOODLESSIMPACT;
+		+ALWAYSPUFF;
+		+PUFFONACTORS;
+		+DONTSPLASH;
+		+FORCEXYBILLBOARD;
+	}
+	
+	Override void tick()
+	{
+		
+		If ( tracer && tracer.tracer != self )
+		{
+			Destroy();
+		}
+		Super.tick();
+	}
+	
+    States
+    {
+	Spawn:
+		TNT1 A 1;
+		LOOP;
+	}
+}
