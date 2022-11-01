@@ -102,6 +102,7 @@ ACTOR BDoomer : Doomer
 	Player.StartItem "NuRailgunAmmo", 5
 	Player.StartItem "PlasmaAmmo", 50
 	Player.StartItem "DoublePlasmaAmmo", 100
+	player.StartItem "Nuke", 1
 	Player.StartItem "IsPlayer", 1
 	Player.StartItem "HandGrenades", 1
 	Player.StartItem "GrenadeAmmo", 2
@@ -147,6 +148,7 @@ ACTOR Doomer2 : Doomer
 	Player.StartItem "NuRailgunAmmo", 5
 	Player.StartItem "PlasmaAmmo", 50
 	Player.StartItem "DoublePlasmaAmmo", 100
+	player.StartItem "Nuke", 1
 	Player.StartItem "IsPlayer", 1
 	Player.StartItem "HandGrenades", 1
 	Player.StartItem "GrenadeAmmo", 2
@@ -251,6 +253,7 @@ ACTOR Doomer3 : Doomer
 	Player.StartItem "GrenadeAmmo", 2
 	Player.StartItem "JustStartedGame", 1
 	Player.StartItem "NeverSelectedShotgun", 1
+	player.StartItem "Nuke", 1
 	
 	Player.StartItem "IsNOTTacticalClass", 1
 	DamageFactor "KillMeBot", 0.0
@@ -356,6 +359,7 @@ ACTOR TacticalDoomer : Doomer
 	Player.StartItem "IsTacticalClass", 1
 	Player.StartItem "NoAutoReload", 1	
 	Player.StartItem "AmmoDroper"
+	player.StartItem "Nuke", 1
 	Species "Marines"
 	States
 	{
