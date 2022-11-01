@@ -815,6 +815,21 @@ SPIPAIN1 SPIPAIN1
 SPIPAIN2 SPIPAIN2
 CYBPAIN CYBPAIN
 
+fatso/act DSMANACT
+
+knight/active DSKNTACT
+knight/pain DSKNTPAI
+
+baron/active DSBRACT
+
+caco/pain DSCACPAI
+caco/active DSCACACT
+
+pain/active DSPEACT
+
+skull/active DSSKLIDL
+skull/pain DSSKLPN
+
 PSXDPN PSXDPN
 
 CYBTAT CYBTAT
