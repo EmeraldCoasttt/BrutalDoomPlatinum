@@ -29,6 +29,46 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	int guntimertics;
 	
+	//Lewisk3 :3
+	
+	action Actor A_BDPMelee(double range = 200,int force = 32, bool doHitThrust = true)
+	{
+		
+		return DoBDPMelee(self, range,force,doHitThrust);
+	}
+	
+	static Actor DoBDPMelee(Actor source, double range = 128,int force = 16, bool doHitThrust = true)
+	{	
+		FLineTraceData lt;
+		double aimz = source.player ? source.player.viewheight : (source.height * 0.5);
+		source.LineTrace(source.angle, range, source.pitch, 0, aimz, data:lt);
+		Actor victim = lt.HitActor;
+		int aimCheck = -6;
+		while (aimCheck++ < 6 && !victim)
+		{
+			source.LineTrace(source.angle + (aimCheck * 8), range, source.pitch, 0, aimz, data:lt);
+			victim = lt.hitActor;
+		}
+		
+		if(victim && victim.bSHOOTABLE) 
+		{
+			
+			vector3 victimAngles = level.sphericalCoords(victim.pos, source.pos, (victim.angle, victim.pitch));
+			
+		
+			double inertia = BDPMath.GetInertia(victim.mass);
+			source.A_Quake(2,3,0,20,"");
+			
+			if(doHitThrust)
+			{
+				source.vel *= 0;
+				source.vel -= BDPMath.VecFromAngles(source.angle, source.pitch, -(source.distance3d(victim) * 0.25));	
+			}
+					
+		}
+		return victim;
+	}
+	
 	action state A_CheckFire(statelabel Fire = "Fire", statelabel AltFire = "AltFire")
 	{
 		If(player.cmd.buttons & BT_ATTACK)
@@ -1815,10 +1855,10 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 	    2ICK A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
 	    1ICK A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
 	    KICK N 0;
-        "####" A 0;
+        "####" A 0 A_BDPmelee();
 		"####" BCD 1;
 		"####" A 0 {
-			
+				
 				A_FireProjectile("MeleeAttack", 0, 0, 0, -7);
 		}
 		
@@ -1877,7 +1917,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		    }
 			A_kickflags();
 		}
-				
+		TNT1 A 0 A_BDPmelee(400);
 	    TNT1 A 0 A_jumpifinventory("PowerStrength",1,"SuperAirKick");
 		TNT1 A 0 A_PlaySound("KICK",69);
 		KIK4 AB 1;
