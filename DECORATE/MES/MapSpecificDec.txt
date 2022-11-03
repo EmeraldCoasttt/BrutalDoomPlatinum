@@ -1590,7 +1590,7 @@ states
 
 
 
-Actor BDECChairModern: BDECChairSimple
+Actor BDECChairModern: BDECChairSimple 25864
 {
 states
 	{
@@ -1754,7 +1754,7 @@ ACTOR BDECCeilLamp: BDECcagedlight
 
 
 
-ACTOR BDECCeilLampLong: BDECCeilLamp
+ACTOR BDECCeilLampLong: BDECCeilLamp 25863
 {
 	Height 80
 	Radius 12
@@ -1834,7 +1834,7 @@ States
 }
 
 
-ACTOR BDECAntenna1 : BDdecorationBase2
+ACTOR BDECAntenna1 : BDdecorationBase2 25860
 {
 	Height 96
 	Radius 42
@@ -2343,7 +2343,7 @@ ACTOR BDECShipColision6: BDECShipColision1
 
 
 
-ACTOR BDECAlarm : BDdecorationBase2
+ACTOR BDECAlarm : BDdecorationBase2 25862
 {
 Radius 8
 Height 12
@@ -2527,7 +2527,7 @@ States
  Stop
 }}
 
-ACTOR BDECLargeBlood
+ACTOR BDECLargeBlood 25865
 {
 Radius 1
 Height 1
@@ -2595,7 +2595,7 @@ States
 }
 
 
-ACTOR BDECLargeFireFocus
+ACTOR BDECLargeFireFocus 25861
 {
 Radius 1
 Height 1
@@ -3473,7 +3473,7 @@ ACTOR D2MAP13SecretExit: BDdecorationBase
 
 
 
-ACTOR BDECDestroyableWindowAdd3: BDdecorationBase
+ACTOR BDECDestroyableWindowAdd3: BDdecorationBase 25867
 {
  +THRUACTORS
  States
@@ -3720,7 +3720,7 @@ Actor BDECWIndowGlass2: BDECWIndowGlass1
 }
 
 
-ACTOR BDECDestroyableWindow2Add3: BDdecorationBase //Add 3 windows of size 96
+ACTOR BDECDestroyableWindow2Add3: BDdecorationBase 25866//Add 3 windows of size 96
 {
  +THRUACTORS
  States

@@ -1,3 +1,5 @@
+//Code adapted from Doom Delta
+
 Class BDP_MapEnhancer : LevelPostProcessor
 {
 	protected void Apply( Name checksum, String mapname )
@@ -5,6 +7,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 		Console.printf("%s", level.getchecksum());
 		switch ( checksum )
 		{
+			//e1m1
 			case 'b49f7a6c519757d390d52667db7d8793':
 				Levellocals.ChangeSky(TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any),TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any));
 				levellocals.ReplaceTextures("FLOOR7_1", "MFLR8_2",0);
@@ -19,6 +22,52 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				levellocals.ReplaceTextures("STONE2", "BUNKER05",0);
 				levellocals.ReplaceTextures("CEIL3_1", "METAL51",0);
 				levellocals.ReplaceTextures("CEIL3_2", "METAL51",0);
+				
+				//Replace
+				for ( int i = 0; i < GetThingCount(); i++ )
+				{
+					switch ( GetThingEdNum(i) )
+					{
+						case 35:
+						SetThingEdNum(i,25855);
+						break;
+					}
+				}
+				
+				//Spawn
+				//Antennae
+				AddThing(25860,(-256, -3552, -999));
+				AddThing(25860,(-384, -2976, -999));
+				//Pelican
+				AddThing(13845,(2296, -3328, -999),270);
+				AddThing(25861,(2120, -3384, 94),270);
+				//Klaxon
+				AddThing(25862,(800, -3232, -999));
+				AddThing(25862,(2688, -2656, -999));
+				AddThing(25862,(3424, -3776, -999));
+				//Ceiling Lamp
+				AddThing(25863,(3008, -3840, -999));
+				AddThing(25863,(2944, -2848, -999));
+				//Chair
+				AddThing(25864,(1696, -2288, -999),180);
+				AddThing(25864,(1696, -2288, -999),180);
+				AddThing(25864,(2032, -2144, -999),90);
+				AddThing(25864,(2240, -2144, -999),90);
+				AddThing(25864,(2448, -2144, -999),45);
+				AddThing(25864,(2472, -2312, -999));
+				AddThing(25864,(1688, -2728, -999),180);
+				//Blood
+				AddThing(25865,(1504, -2496, -999));
+				AddThing(25865,(1000, -3296, -999));
+				AddThing(25865,(1072, -3264, -999));
+				//Windows 98
+				AddThing(15846,(1360, -3312, 999),180);
+				AddThing(15846,(1360, -3152, 999),180);
+				AddThing(25866,(2744, -3236, 999),180);
+				AddThing(25867,(-224, -3128, 999),270);
+				AddThing(25867,(-224, -3336, 999),90);
+				AddThing(15846,(-328, -3264, 999),180);
+				AddThing(15846,(-328, -3200, 999),180);
 				
 				Break;
 		}
