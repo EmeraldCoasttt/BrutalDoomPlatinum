@@ -7,6 +7,8 @@ Version "3.8"
 #include "Zscript/HeadShots.txt"
 #include "Zscript/GORE.txt"
 
+#include "Zscript/MapEnhancement.txt"
+
 #include "Zscript/Items/Artifacts.txt"
 #include "Zscript/Items/DemonRunes.txt"
 #include "Zscript/Items/Keyes.txt"

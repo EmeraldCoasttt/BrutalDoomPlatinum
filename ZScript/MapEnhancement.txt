@@ -1,0 +1,26 @@
+Class BDP_MapEnhancer : LevelPostProcessor
+{
+	protected void Apply( Name checksum, String mapname )
+	{
+		Console.printf("%s", level.getchecksum());
+		switch ( checksum )
+		{
+			case 'b49f7a6c519757d390d52667db7d8793':
+				Levellocals.ChangeSky(TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any),TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any));
+				levellocals.ReplaceTextures("FLOOR7_1", "MFLR8_2",0);
+				levellocals.ReplaceTextures("BROWN144", "CLIFF05B",0);
+				levellocals.ReplaceTextures("BROWN144", "CLIFF05B",0);
+				levellocals.ReplaceTextures("FLOOR4_1", "METAL51",0);
+				levellocals.ReplaceTextures("FLOOR4_5", "METAL51",0);
+				levellocals.ReplaceTextures("BROWN1", "METAL24",  texman.NOT_BOTTOM);
+				levellocals.ReplaceTextures("BROWN1", "LIT05S",0);
+				levellocals.ReplaceTextures("BROWN96", "METAL22",0);
+				levellocals.ReplaceTextures("LITE2", "METAL24B",0);
+				levellocals.ReplaceTextures("STONE2", "BUNKER05",0);
+				levellocals.ReplaceTextures("CEIL3_1", "METAL51",0);
+				levellocals.ReplaceTextures("CEIL3_2", "METAL51",0);
+				
+				Break;
+		}
+	}
+}

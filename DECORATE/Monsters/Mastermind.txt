@@ -178,9 +178,9 @@ DropItem "Demonstrengthrune", 25
     Spawn:
 		SPID A 0
 		TNT1 A 0 A_GiveInventory("TargetIsAMastermind")
-		TNT1 A 0 A_JumpIf(x == 1600, "ReplaceForBOSS")
-		TNT1 A 0 A_JumpIf(x == -2720, "ReplaceForMotherdemon1")
-		TNT1 A 0 A_JumpIf(x == 0, "ReplaceForMotherdemon2")
+	//	TNT1 A 0 A_JumpIf(x == 1600, "ReplaceForBOSS")
+	//	TNT1 A 0 A_JumpIf(x == -2720, "ReplaceForMotherdemon1")
+	//	TNT1 A 0 A_JumpIf(x == 0, "ReplaceForMotherdemon2")
 		TNT1 A 0 ACS_NamedExecuteAlways("BDCHeckClassicMonsters", 0, 0, 0, 0)//Check if Vanilla Mode is activated
 		Goto Stand
 	

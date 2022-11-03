@@ -1300,7 +1300,6 @@ ACTOR ChainsawSpawned: CustomInventory //Replaces Chainsaw
 
 	 Spawn:
 		TNT1 A 0
-		TNT1 A 0 A_SpawnItemEx("EvidenceCheckerChainsaw", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 		CSAW A 10
 		TNT1 A 0 A_ChangeFlag("THRUACTORS", 0)
 		CSAW A -1
@@ -1352,11 +1351,12 @@ actor ChainsawSpawner : BasicWeaponPickup //Replaces Chainsaw
 
 	 Spawn:
 		BFUG A 0
+		//TNT1 A 0 A_SpawnItemEx("EvidenceCheckerChainsaw", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 		XXXX X 0 A_JumpIf(GetCvar("bd_SpawnSaw")==0&&GetCvar("bd_SpawnAxe")==0, "SpawnAmmo")
 		MARN A 0 A_JumpIf(GetCvar("bd_disablenewguns")==1, "Vanilla")//Check if advanced decorations are disabled.
 		TNT1 A 1
-		TNT1 A 0 A_JumpIfInventory("Chain_Saw",1,2,AAPTR_PLAYER1)
-		Goto Spawn1
+		//TNT1 A 0 A_JumpIfInventory("Chain_Saw",1,2,AAPTR_PLAYER1)
+		//Goto Spawn1
 		TNT1 A 0
 		TNT1 A 0 A_Jump(128, "Axe")
 		

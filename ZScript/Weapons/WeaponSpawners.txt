@@ -379,7 +379,7 @@
 		}
 		
 		
-		if (e.Replacee == "chainsaw") 
+		if (e.Replacee == "chainsaw")
 		{
 			If(!rarity)
 			{
