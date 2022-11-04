@@ -199,22 +199,11 @@ OptionMenu "DoxMESSettings"
   StaticText "Improves several maps with better textures,"
   StaticText  "new decorations and sometimes new enemies."
   StaticText " "
+   Option "PSX Monsters", "bd_PSXMonsters", "Enable/Disable"
+  StaticText "Adds PSX Monster placements"
+  StaticText " "
   
-  Option "Mapset selected", "dox_MEStextureReplacements", "MEStextureReplacements"
-  StaticText "Select which mapset MES will additionaly change textures for"
-  StaticText "(alongside vanilla Doom textures.)"
-  StaticText "Does nothing when MES is disabled."
-  StaticText "Playing a mapset with this option not properly set might cause glitches.", "Red"
-  StaticText "Supported mapsets:"
-  StaticText "- IWADs", "gray"
-  StaticText "- Going Down", "gray"
-  StaticText "- Back To Saturn X Episode 1", "gray"
-  StaticText "- Back To Saturn X Episode 2", "gray"
-  StaticText "- Epic", "gray"
-  StaticText "- Epic2", "gray"
-  StaticText "- Scythe2", "gray"
-  StaticText "- Sunlust", "gray"
-  StaticText "- Alien Vendetta", "gray"
+  
 }
 
 

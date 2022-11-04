@@ -23,6 +23,8 @@ server int bd_allmapdx = 0;
 
 server int bd_disablemapenhancements = 0;
 
+server int bd_PSXMonsters = 1;
+
 server int bd_disablenewguns = 0;
 
 server int bd_disablenewenemies = 0;
