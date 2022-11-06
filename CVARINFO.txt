@@ -51,7 +51,7 @@ user int bd_rocketbackblast = 1;
 
 server int bd_voxeldec = 1;
 
-
+server int bd_newliquids = 1;
 
 
 //Dox's CVARS

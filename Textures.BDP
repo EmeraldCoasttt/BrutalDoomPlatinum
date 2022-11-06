@@ -1,0 +1,19 @@
+WallTexture "DBRAIN1", 64, 32
+{
+	Patch "RWDM11A", 0, 0
+}
+
+WallTexture "DBRAIN2", 64, 32
+{
+	Patch "RWDM11B", 0, 0
+}
+
+WallTexture "DBRAIN3", 64, 32
+{
+	Patch "RWDM11C", 0, 0
+}
+
+WallTexture "DBRAIN4", 64, 32
+{
+	Patch "RWDM11D", 0, 0
+}

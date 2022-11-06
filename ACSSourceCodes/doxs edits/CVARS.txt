@@ -200,6 +200,7 @@ SCRIPT "BDInitiate" OPEN
 	ReplaceTextures ("BLOOD2", "BLOOD1");
 }	
 */
+/*
 SCRIPT "BDInitiate" OPEN
 {
     Delay(16);//Allow DYNAMICLEV scripts to run first
@@ -218,7 +219,7 @@ SCRIPT "BDInitiate" OPEN
 	ReplaceTextures ("BLOOD3", "BLOOD1");
 	ReplaceTextures ("BLOOD2", "BLOOD1");
 	*/
-	
+	/*
 	    ReplaceTextures ("BFALL1", "BDBFALL1");//Internal Animated Wall(Doom2)
 		ReplaceTextures ("BFALL2", "BDBFALL1");//Internal Animated Wall(Doom2)
 		ReplaceTextures ("BFALL3", "BDBFALL1");//Internal Animated Wall(Doom2)
@@ -265,6 +266,7 @@ SCRIPT "BDInitiate" OPEN
 		ReplaceTextures ("SLIME07", "BDSLIME2");//Doom2
 		ReplaceTextures ("SLIME08", "BDSLIME2");//Doom2
 		*/
+		/*
 		ReplaceTextures ("SLIME05", "BDSLIME1");//Doom2
 		ReplaceTextures ("SLIME07", "BDSLIME1");//Doom2
 		ReplaceTextures ("SLIME06", "BDSLIME1");//Doom2
@@ -390,6 +392,7 @@ SCRIPT "BDInitiate" OPEN
 		ReplaceTextures ("WFALL4", "BDWFALL1");//Internal Animated Wall(Plutonia)
 	  }
 	  */
+	  /*
 	  if (GetCvar("Dox_MEStextureReplacements") == 2) //Going Down
 	  {
 		ReplaceTextures ("MFALL1", "CRFAL01");//Going Down Slime Fall
@@ -437,6 +440,7 @@ SCRIPT "BDInitiate" OPEN
 		ReplaceTextures ("ECEIL15", "SANDS1");//Epic Sand
 		ReplaceTextures ("ETEX34", "SANDS2");//Epic Sand
 	*/
+	/*
 	    ReplaceTextures ("DSAND1", "SANDS2");//Epic2
 		ReplaceTextures ("DSAND2", "SANDS2");//Epic2
 		ReplaceTextures ("DSAND3", "SANDS1");//Epic2
@@ -448,6 +452,7 @@ SCRIPT "BDInitiate" OPEN
 		ReplaceTextures ("SLIME07", "LAVAFL");//Epic Lava
 		ReplaceTextures ("SLIME08", "LAVAFL");//Epic Lava
 		*/
+		/*
 	  }
 	  if (GetCvar("Dox_MEStextureReplacements") == 6) //Epic2
 	  {
@@ -494,6 +499,7 @@ SCRIPT "BDInitiate" OPEN
 		ReplaceTextures ("SLUDGE03", "BDSLIME2");//Sunlust Sludge
 		ReplaceTextures ("SLUDGE04", "BDSLIME2");//Sunlust Sludge	
 	*/
+	/*
 		ReplaceTextures ("DBRAIN1", "LAVAFL");//Sunlust
 		ReplaceTextures ("DBRAIN2", "LAVAFL");//Sunlust
 		ReplaceTextures ("DBRAIN3", "LAVAFL");//Sunlust
@@ -547,7 +553,7 @@ SCRIPT "BDInitiate" OPEN
 		ReplaceTextures("TLITE6_6", "LITGEN9C");
 	}
 }
-
+*/
 
 
 

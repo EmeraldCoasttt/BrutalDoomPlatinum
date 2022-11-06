@@ -5,10 +5,80 @@ Class BDP_MapEnhancer : LevelPostProcessor
 	protected void Apply( Name checksum, String mapname )
 	{
 		Console.printf("%s", level.getchecksum());
+		
+		//Liquids
+		If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
+		{
+			//Simplification
+			LevelLocals.ReplaceTextures ("NUKAGE3", "NUKAGE1",0);
+			LevelLocals.ReplaceTextures ("NUKAGE2", "NUKAGE1",0);
+			LevelLocals.ReplaceTextures ("SLIME04", "SLIME01",0);
+			LevelLocals.ReplaceTextures ("SLIME03", "SLIME01",0);
+			LevelLocals.ReplaceTextures ("SLIME02", "SLIME01",0);
+			LevelLocals.ReplaceTextures ("SLIME08", "SLIME05",0);
+			LevelLocals.ReplaceTextures ("SLIME06", "SLIME05",0);
+			LevelLocals.ReplaceTextures ("SLIME07", "SLIME05",0);
+			LevelLocals.ReplaceTextures ("BLOOD3", "BLOOD1",0);
+			LevelLocals.ReplaceTextures ("BLOOD2", "BLOOD1",0);
+			
+			//Replace
+			LevelLocals.ReplaceTextures ("BFALL1", "BDBFALL1",0);//Internal Animated Wall(Doom2)
+			LevelLocals.ReplaceTextures ("BFALL2", "BDBFALL1",0);//Internal Animated Wall(Doom2)
+			LevelLocals.ReplaceTextures ("BFALL3", "BDBFALL1",0);//Internal Animated Wall(Doom2)
+			LevelLocals.ReplaceTextures ("BFALL4", "BDBFALL1",0);//Internal Animated Wall(Doom2)
+			LevelLocals.ReplaceTextures ("BLOOD1", "BDBLOOD1",0);//Doom
+			LevelLocals.ReplaceTextures ("BLOOD2", "BDBLOOD1",0);//Doom
+			LevelLocals.ReplaceTextures ("BLOOD3", "BDBLOOD1",0);//Doom
+			LevelLocals.ReplaceTextures ("DBRAIN1", "LFALL01",0);//Internal Animated Wall(Doom2)
+			LevelLocals.ReplaceTextures ("DBRAIN2", "LFALL01",0);//Internal Animated Wall(Doom2)
+			LevelLocals.ReplaceTextures ("DBRAIN3", "LFALL01",0);//Internal Animated Wall(Doom2)
+			LevelLocals.ReplaceTextures ("DBRAIN4", "LFALL01",0);//Internal Animated Wall(Doom2)
+			LevelLocals.ReplaceTextures("FLAT2", "FLAT2B",0);//Doom
+			LevelLocals.ReplaceTextures("FLAT5", "METAL53",0);//Doom
+			LevelLocals.ReplaceTextures("FLOOR0_1", "METAL54",0);//Doom
+			LevelLocals.ReplaceTextures("FLOOR0_3", "METAL55",0);//Doom
+			LevelLocals.ReplaceTextures("FLOOR3_3", "METAL56",0);//Doom
+			LevelLocals.ReplaceTextures("FLOOR5_2", "METAL52",0);//Doom
+			LevelLocals.ReplaceTextures("FLOOR5_3", "METAL52",0);//Doom
+			LevelLocals.ReplaceTextures("FWATER1", "BDFWATER",0);//Doom
+			LevelLocals.ReplaceTextures("FWATER2", "BDFWATER",0);//Doom
+			LevelLocals.ReplaceTextures("FWATER3", "BDFWATER",0);//Doom
+			LevelLocals.ReplaceTextures("FWATER4", "BDFWATER",0);//Doom
+			LevelLocals.ReplaceTextures("GRASS1", "BDGRASS1",0);//Doom2
+			LevelLocals.ReplaceTextures("GRASS2", "BDGRASS2",0);//Doom2
+			LevelLocals.ReplaceTextures("GRNLITE1", "GRNLIT1B",0);//Doom2
+			LevelLocals.ReplaceTextures ("LAVA1", "LAVAFL",0);//Doom
+			LevelLocals.ReplaceTextures ("LAVA2", "LAVAFL",0);//Doom
+			LevelLocals.ReplaceTextures ("LAVA3", "LAVAFL",0);//Doom
+			LevelLocals.ReplaceTextures ("LAVA4", "LAVAFL",0);//Doom
+			LevelLocals.ReplaceTextures ("NUKAGE1", "BDNUKE1",0);//Doom
+			LevelLocals.ReplaceTextures ("NUKAGE2", "BDNUKE1",0);//Doom
+			LevelLocals.ReplaceTextures ("NUKAGE3", "BDNUKE1",0);//Doom
+			LevelLocals.ReplaceTextures ("SFALL1", "BDSFALL1",0);//Internal Animated Wall(Doom2)
+			LevelLocals.ReplaceTextures ("SFALL2", "BDSFALL1",0);//Internal Animated Wall(Doom2)
+			LevelLocals.ReplaceTextures ("SFALL3", "BDSFALL1",0);//Internal Animated Wall(Doom2)
+			LevelLocals.ReplaceTextures ("SFALL4", "BDSFALL1",0);//Internal Animated Wall(Doom2)
+			LevelLocals.ReplaceTextures ("SLIME01", "BDSLIME1",0);//Doom2
+			LevelLocals.ReplaceTextures ("SLIME02", "BDSLIME1",0);//Doom2
+			LevelLocals.ReplaceTextures ("SLIME03", "BDSLIME1",0);//Doom2
+			LevelLocals.ReplaceTextures ("SLIME04", "BDSLIME1",0);//Doom2
+			LevelLocals.ReplaceTextures ("SLIME05", "BDSLIME2",0);//Doom2
+			LevelLocals.ReplaceTextures ("SLIME06", "BDSLIME2",0);//Doom2
+			LevelLocals.ReplaceTextures ("SLIME07", "BDSLIME2",0);//Doom2
+			LevelLocals.ReplaceTextures ("SLIME08", "BDSLIME2",0);//Doom2
+			LevelLocals.ReplaceTextures ("STEP04", "BDSTEP04",0);//Doom
+			LevelLocals.ReplaceTextures ("WFALL1", "BDWFALL1",0);//Internal Animated Wall(Plutonia)
+			LevelLocals.ReplaceTextures ("WFALL2", "BDWFALL1",0);//Internal Animated Wall(Plutonia)
+			LevelLocals.ReplaceTextures ("WFALL3", "BDWFALL1",0);//Internal Animated Wall(Plutonia)
+			LevelLocals.ReplaceTextures ("WFALL4", "BDWFALL1",0);//Internal Animated Wall(Plutonia)
+		}
 		switch ( checksum )
 		{
 			//e1m1
+			//doomu
 			case 'b49f7a6c519757d390d52667db7d8793':
+			//doom
+			case '3cb5fae83b470a9accd9b9b2102447df':
 				
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) {
 				Levellocals.ChangeSky(TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any),TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any));
@@ -24,6 +94,9 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				levellocals.ReplaceTextures("STONE2", "BUNKER05",0);
 				levellocals.ReplaceTextures("CEIL3_1", "METAL51",0);
 				levellocals.ReplaceTextures("CEIL3_2", "METAL51",0);
+				
+			//	line_setblocking(458,0,BLOCKF_MONSTERS);
+			
 				
 				//Replace
 				//Candelabra
@@ -70,8 +143,10 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				If(CVar.GetCvar("BD_PSXMonsters").getint() == 1)
 				{
 				//PSX
-				AddThing(71,(3616,-3520,104),270);
-				SetThingEdNum(90,65);
+				setlineflags(458,0,line.ML_BLOCKMONSTERS);
+				setlineflags(464,0,line.ML_BLOCKMONSTERS);
+				AddThing(71,(3644,-3136,104),135);
+				SetThingEdNum(87,65);
 				}
 				
 				Break;
