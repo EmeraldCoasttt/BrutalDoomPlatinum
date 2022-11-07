@@ -18,7 +18,6 @@ ACTOR Mancubus : Fatso Replaces Fatso
 	PainChance "SSG", 255
 	PainChance "Railgun", 255
 	DamageFactor "SSG", 0.1
-	ActiveSound "fatso/active"
 	Radius 24
 	Height 60
     GibHealth 30
