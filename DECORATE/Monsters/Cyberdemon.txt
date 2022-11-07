@@ -11,6 +11,7 @@ ACTOR TheCyberdemon: Cyberdemon Replaces Cyberdemon
 	+NOICEDEATH
     Health 5000
     damagefactor "Crush", 20.0
+    	ActiveSound "cyber/active"
 	PainSound "CYBPAIN"
 	MaxStepHeight 24
 	MaxDropOffHeight 32
