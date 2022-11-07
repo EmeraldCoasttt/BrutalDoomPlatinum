@@ -31,8 +31,7 @@ ACTOR HellKnight2 : HellKnight Replaces HellKnight
 	DamageFactor "CauseSplash", 0.0 DamageFactor "CauseObjectsToSplashSlime", 0.0 DamageFactor "CauseObjectsToSplashNukage", 0.0
 	DamageFactor "CauseObjectsToSplashBlood", 0.0 DamageFactor "CauseObjectsToSplashLava", 0.0
 	damagefactor "SSG", 0.5	damagefactor "Avoid", 0.0	damagefactor "TeleportRemover", 0.0
-	ActiveSound "knight/active"
-	PainSound "knight/pain"
+	PainSound "PSXDPN"
 	Game Doom
 	DeathHeight 0
 	BurnHeight 0

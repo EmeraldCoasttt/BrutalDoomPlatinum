@@ -20,7 +20,6 @@ ACTOR BaronofHell2 : BaronofHell Replaces BaronofHell
 	damagefactor "DontCallTheBaron", 0.0
 	DamageFactor "CauseSplash", 0.0 DamageFactor "CauseObjectsToSplashSlime", 0.0 DamageFactor "CauseObjectsToSplashNukage", 0.0
 	DamageFactor "CauseObjectsToSplashBlood", 0.0 DamageFactor "CauseObjectsToSplashLava", 0.0
-	ActiveSound "baron/active"
 	PainSound "PSXDPN"
 	damagefactor "Fatality", 3.0
 	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
