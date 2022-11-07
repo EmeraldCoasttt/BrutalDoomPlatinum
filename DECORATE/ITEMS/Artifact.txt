@@ -285,6 +285,7 @@ Inventory.InterHubAmount 3
 Inventory.icon "SIG2A0"
 	Inventory.maxamount 3
 	Inventory.PickupMessage "You got the Demon Quake Sigil!"
+	Tag "Demon Quake Sigil"
 	Inventory.PickupSound "sigil/pickup"
 	Inventory.usesound "sigil/quake"
 	+inventory.invbar
@@ -311,6 +312,7 @@ Inventory.InterHubAmount 3
 Inventory.icon "SIG5A0"
 	Inventory.maxamount 3
 	Inventory.PickupMessage "You got the Demon Protection Sigil!"
+	Tag "Demon Protection Sigil"
 	Inventory.PickupSound "sigil/pickup"
 	Inventory.usesound "sigil/protection"
 	+inventory.invbar
@@ -344,6 +346,7 @@ Inventory.InterHubAmount 3
 Inventory.icon "SIG3A0"
 	Inventory.maxamount 3
 	Inventory.PickupMessage "You got the Demon Bio Sigil!"
+	Tag "Demon Bio Sigil"
 	Inventory.PickupSound "sigil/pickup"
 	Inventory.usesound "sigil/bio"
 	+inventory.invbar
@@ -393,6 +396,7 @@ Inventory.InterHubAmount 3
 Inventory.icon "SIG4A0"
 	Inventory.maxamount 3
 	Inventory.PickupMessage "You got the Demon Haste Sigil!"
+	Tag "Demon Haste Sigil"
 	Inventory.PickupSound "sigil/pickup"
 	Inventory.usesound "sigil/haste"
 	+inventory.invbar
@@ -415,6 +419,7 @@ Actor DemonChronoSigil : PowerupGiver
 {
 	
 		Inventory.PickupMessage "You got the Demon Chrono Sigil!"
+		Tag "Demon Chrono Sigil"
 		Inventory.Icon "SIG6A0"
 		Inventory.MaxAmount 3
 		Powerup.Type "PowerTimeFreezerNu"
@@ -454,6 +459,7 @@ ACTOR DemonStrengthSigil : custominventory
 	Inventory.icon "SIG1A0"
 	Inventory.maxamount 3
 	Inventory.PickupMessage "You got the Demon Strength Sigil!"
+	Tag "Demon Strength Sigil"
 	Inventory.PickupSound "sigil/pickup"
 	Inventory.usesound "misc/p_pkup"
 	+inventory.invbar
@@ -489,6 +495,7 @@ Inventory.useSound "BFGREADY"
  +inventory.invbar
  inventory.icon "SIG1C0"
  Inventory.PickupMessage "You got the Cyberdemon's missile launcher!"
+ Tag "Cyberdemon's Missile Launcher"
  Mass 1
     States
     {
@@ -529,6 +536,7 @@ Game Doom
  Inventory.PickupSound "ROCKPKUP"
   Inventory.useSound "ROCKPKUP"
  Inventory.PickupMessage "You got the Spider Mastermind's Chaingun!" 
+ Tag "Mastermind's Chaingun"
  Mass 1
  +inventory.invbar
  inventory.icon "SIG1B0"

@@ -11,6 +11,7 @@ ACTOR HandGrenades : BrutalWeapon
     AttackSound "None"
     Inventory.PickupSound "AmmoAPIN"
 	Inventory.Pickupmessage "You got a Hand Grenade! (Slot 9)"
+	Tag "Hand Grenades"
 	BrutalWeapon.Weight 2
     +WEAPON.NOAUTOAIM
     +WEAPON.NOALERT

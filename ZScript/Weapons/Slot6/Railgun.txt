@@ -166,7 +166,25 @@ CLASS Railgun : Brutalweapon
 			TNT1 A 0 A_jumpifinventory("railchambered",1,"Pumping");
 			RAIL A 1 A_weaponreadyDX(WRF_ALLOWRELOAD);
 			LOOP;
+
+		Fidget:
+			TNT1 A 0 A_overlay(-5,"pumpinghandlol");
+			RAIL FGHI 1;
 			
+			RAIL JKLMNYYOO 1 A_WeaponReadyDX();
+			TNT1 A 0 A_overlay(-5,"pumpinghandlol2");
+			RAIL OOOO 1 A_WeaponReadyDX();
+			TNT1 A 0 A_PlaySound("RAILMAG2", 5);
+			RAIL PR 1 A_WeaponReadyDX();
+			RAIL UUUUUUUUU/*UUUUUUUUUU*/ 1 A_WeaponReadyDX();
+			TNT1 A 0 A_PlaySound("RAILINSR", 5);
+			RAIL UUUUUTTSRQP 1 A_WeaponReadyDX();
+			TNT1 A 0 A_overlay(-5,"pumpinghandlol2reverse");
+			RAIL OOOOONMLKJ 1 A_WeaponReadyDX();
+			TNT1 A 0 A_overlay(-5,"pumpinghandlolreverse");
+			RAIL IHGF 1 A_WeaponReadyDX();
+			Goto ready;
+
 		Fire:
 			TNT1 A 0 A_jumpifinventory("railchambered",1,"Pumping");
 			TNT1 A 0 A_CheckIfAmmo("nurailgunammo");
@@ -278,7 +296,7 @@ CLASS Railgun : Brutalweapon
 					}
 				Else
 					{
-						Return resolvestate("Ready");
+						Return resolvestate("Fidget");
 					}
 			}
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol");
@@ -665,9 +683,39 @@ CLASS Railgun : Brutalweapon
 		Spawn:
 			SRCG A 1;
 			LOOP;
-	
-	
-	
+
+		Unload:
+			RAIL A 1 A_WeaponReady();
+			RAIL A 0 A_ZoomFactor(1.0);
+			RAIL A 0 A_Takeinventory("Unloading",1);
+			RAIL A 0 A_Takeinventory("ADSmode",1);
+			RAIL A 0 A_Takeinventory("Zoomed",1);
+			RAIL A 0 A_JumpIfInventory("NuRailgunAmmo",1,1);
+			Goto Ready;
+		RemoveBullets:
+			TNT1 A 0 A_overlay(-5,"pumpinghandlol");
+			RAIL FGHI 1;
+			
+			RAIL JKLMNYYOO 1;
+			TNT1 A 0 A_overlay(-5,"pumpinghandlol2");
+			RAIL OOOO 1;
+			RAIL A 0 A_JumpIfInventory("NuRailgunAmmo",1,1);
+			Goto FinishUnload;
+			TNT1 A 0 A_PlaySound("RAILMAG2", 5);
+			RAIL PR 1;
+			RAIL TWWV 1;
+			RAIL A 0 A_Takeinventory("NuRailgunAmmo",1);
+			RAIL A 0 A_Giveinventory("AmmoCell",10);
+			RAIL UUUUUUUUU/*UUUUUUUUUU*/ 1;
+			TNT1 A 0 A_PlaySound("RAILINSR", 5);
+			RAIL UUUUUTTSRQP 1;
+			Goto RemoveBullets+19;
+		FinishUnload:
+			TNT1 A 0 A_overlay(-5,"pumpinghandlol2reverse");
+			RAIL OOOOONMLKJ 1;
+			TNT1 A 0 A_overlay(-5,"pumpinghandlolreverse");
+			RAIL IHGF 1;
+			Goto Ready;
 	}
 	
 }
