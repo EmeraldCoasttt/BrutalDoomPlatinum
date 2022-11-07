@@ -176,7 +176,7 @@ CLASS Railgun : Brutalweapon
 			RAIL OOOO 1 A_WeaponReadyDX();
 			TNT1 A 0 A_PlaySound("RAILMAG2", 5);
 			RAIL PR 1 A_WeaponReadyDX();
-			RAIL UUUUUUUUU/*UUUUUUUUUU*/ 1 A_WeaponReadyDX();
+			RAIL TWWVUUUUUUUUU/*UUUUUUUUUU*/ 1 A_WeaponReadyDX();
 			TNT1 A 0 A_PlaySound("RAILINSR", 5);
 			RAIL UUUUUTTSRQP 1 A_WeaponReadyDX();
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol2reverse");
