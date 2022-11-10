@@ -558,12 +558,11 @@ ACTOR Rifle : BrutalWeapon
 	DualWield:
 		RIFL C 1
 		RIFL C 0 A_Takeinventory("StartDualWield",1)
-		TNT1 A 0 A_JumpIfInventory("UseBashInstead",1,"Bash")
+		//TNT1 A 0 A_JumpIfInventory("UseBashInstead",1,"Bash")
 		//RIFL C 0 A_JumpIfInventory("IsTacticalClass", 1, "NoDual")//Tactical mode cant dual
 		RIFL C 0 A_JumpIfInventory("DualRifles", 1, "GetDual")
-		//RIFL C 0 A_Print("You must have two rifles to dual wield!",2)
-		//Goto Ready
-		Goto Bash
+		RIFL C 0 A_Print("You must have two rifles to dual wield!",2)
+		Goto Ready
 	
 	NoDual:
 		RIFL C 1
@@ -742,11 +741,8 @@ ACTOR Rifle : BrutalWeapon
 	Goto Ready
 	
 	specialaction:
-	"####" A 0 A_JumpIfInventory("UseBashInstead",1,"ReturnToDualWield")
-	"####" A 0 A_GiveInventory("UseBashInstead",1)
 	"####" A 0 A_TakeInventory("swapRifleSpecial",1)
-	"####" A 0 A_Print("Rifle bash selected",1)
-	Goto Ready
+	Goto Bash
 	ReturnToDualWield:
 	"####" A 0 A_TakeInventory("UseBashInstead",1)
 	"####" A 0 A_TakeInventory("swapRifleSpecial",1)
