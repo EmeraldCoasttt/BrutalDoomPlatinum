@@ -3755,7 +3755,7 @@ States
 	}
 }
 
-Actor BDECWaterfallIndoor
+Actor BDECWaterfallIndoor 25868
 {
 +THRUACTORS
 Radius 4

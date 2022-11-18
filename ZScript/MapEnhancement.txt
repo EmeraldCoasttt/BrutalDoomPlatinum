@@ -2,6 +2,7 @@
 
 Class BDP_MapEnhancer : LevelPostProcessor
 {
+	
 	protected void Apply( Name checksum, String mapname )
 	{
 		Console.printf("%s", level.getchecksum());
@@ -150,6 +151,79 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				}
 				
 				Break;
+			//e1m2	
+			case '81a4cc5136cbfa49345654190a626c09':
+			
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) {
+				Levellocals.ChangeSky(TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any),TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any));
+				LevelLocals.ReplaceTextures("FLOOR7_1", "MFLR8_2",0);
+				LevelLocals.ReplaceTextures("BROWN144", "CLIFF05B",0);
+				LevelLocals.ReplaceTextures("BROWN144", "CLIFF05B",0);
+				LevelLocals.ReplaceTextures("FLOOR4_1", "METAL51",0);
+				LevelLocals.ReplaceTextures("FLOOR4_5", "METAL51",0);
+				LevelLocals.ReplaceTextures("BROWN1", "METAL24",0);
+				LevelLocals.ReplaceTextures("LITE2", "METAL24B",0);
+				LevelLocals.ReplaceTextures("STONE2", "BUNKER05",0);
+				LevelLocals.ReplaceTextures("CEIL3_1", "METAL51",0);
+				LevelLocals.ReplaceTextures("STEP6", "LIT05S",0);
+				LevelLocals.ReplaceTextures("STEP5", "LIT05S",0);
+				LevelLocals.ReplaceTextures("CEIL3_2", "METAL51",0);
+				LevelLocals.ReplaceTextures("STEP5", "STEP1",0);
+				
+				//Spawn
+				//Lightposts
+				AddThing(11033,(2368, -640, -999),80);
+				AddThing(11033,(1344, -704, -999),80);
+				AddThing(11033,(2496, 480, -999),80);
+				AddThing(11033,(2464, 1408, -999),80);
+				AddThing(11033,(1504, 1600, -999),80);
+				AddThing(11033,(-2432, 1440, -999),80);
+				AddThing(11033,(-2656, 1056, -999),80);
+				//Windows 2000
+				AddThing(15846, (1400, 968, 999), 270); //Key Area Windows
+				AddThing(25866, (1576, 788, 999), 180);
+				AddThing(25866, (1396, -264, 999), 270);
+				AddThing(25866, (1576, -84, 999), 180);
+				AddThing(25867, (1800, 352, 999), 180);
+				AddThing(25867, (1664, 456, 999), 90);
+				AddThing(25867, (1664, 248, 999), 90);
+				AddThing(25867, (-2224, 832, 999), 0); //Chainsaw Area Windows
+				AddThing(25866, (-2224, 1048, 999), 0);
+				AddThing(25867, (-1944, 1076, 999), 0);
+				AddThing(25867, (-2080, 1160, 999), 90);
+				AddThing(15846, (-596, 2204, 999), 45); //Exit Room
+				AddThing(15846, (-268, 2204, 999), 135);
+				AddThing(15846, (-596, 2468, 999), 315);
+				AddThing(15846, (-268, 2468, 999), 225);
+				AddThing(25867, (-400, 2500, 999), 90);
+				AddThing(25867, (-400, 2172, 999), 90);
+				//Water sfx
+				AddThing(25868, (-916, 1268, 999), 90);
+				AddThing(25868, (-428, 1268, 999), 90);
+				AddThing(25868, (-432, 880, 999), 90);
+				
+				}
+				Break;
 		}
 	}
 }
+
+/*
+	BDEC EdNums
+	
+	BDECPlantPot 25855
+	BDECAntenna1 25860
+	BDECUacShip 13845
+	BDECLargeFireFocus 25861
+	BDECAlarm 25862
+	BDECCeilLampLong 25863
+	BDECChairModern 25864
+	BDECLargeBlood 25865
+	BDECDestroyableWindow2 15846
+	BDECDestroyableWindow2Add3 25866
+	BDECDestroyableWindowAdd3 25867
+	BDECDestroyableWindow1 15846
+	BDECLightPost 11033
+	BDECWaterfallIndoor 25868
+
+*/
