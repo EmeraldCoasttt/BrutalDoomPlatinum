@@ -36,7 +36,7 @@ ACTOR MG42 : BrutalWeapon
 		Wait
 		
 	Returnfromsprintnoammo:
-		2BUS JFGHIJ 1
+		2BUS FGHIJ 1
 		Goto IdleNoAmmo		
 
 	FuckYouFlash:
