@@ -16,15 +16,28 @@ ACTOR MG42 : BrutalWeapon
 	{
 
 	SprintOverlay:
-	HBUS Z 1
-	2BUS ABCD 1
-	2BUS D 1
-	Wait
+		TNT1 A 0 A_JumpIfInventory("BuzzsawAmmo",1,1)
+		Goto SprintNoAmmo	
+		HBUS Z 1
+		2BUS ABCD 1
+		2BUS D 1
+		Wait
 	
 	Returnfromsprint:
-	2BUS DCBA 1
-	HBUS Z 1
-	Goto ready
+		TNT1 A 0 A_JumpIfInventory("BuzzsawAmmo",1,1)
+		Goto Returnfromsprintnoammo	
+		2BUS DCBA 1
+		HBUS Z 1
+		Goto ready
+
+	SprintNoAmmo:
+		2BUS FGHIJ 1
+		2BUS J 1
+		Wait
+		
+	Returnfromsprintnoammo:
+		2BUS JFGHIJ 1
+		Goto IdleNoAmmo		
 
 	FuckYouFlash:
 		TNT1 A 0 A_JumpIfInventory("BuzzsawAmmo",1,1)
@@ -32,13 +45,13 @@ ACTOR MG42 : BrutalWeapon
 		HBUS Z 1
 		2BUS ABCDDDDDDDDDDDDDDDDDDDDDDCBA 1
 		HBUS Z 1
-		stop
+		Goto Ready
 
 	FuckNoAmmo:
 		2BUS FGHI 1
 		2BUS J 22
 		2BUS IHGF 1
-		Stop
+		Goto IdleNoAmmo
 		
 	GrenadeThrowFlash:
 	HBUS GHIJ 1
@@ -58,7 +71,7 @@ ACTOR MG42 : BrutalWeapon
 		2BUS FGHI 1
 		2BUS J 8
 		2BUS IHGF 1
-		Stop		
+		Goto IdleNoAmmo		
 		
 	AirKickingFlash:
 		TNT1 A 0 A_JumpIfInventory("BuzzsawAmmo",1,1)
@@ -72,7 +85,7 @@ ACTOR MG42 : BrutalWeapon
 		2BUS FGHI 1
 		2BUS J 10
 		2BUS IHGF 1
-		Stop
+		Goto IdleNoAmmo
 	
 	 SlideKickingStart:
 		TNT1 A 0 A_JumpIfInventory("BuzzsawAmmo",1,1)
