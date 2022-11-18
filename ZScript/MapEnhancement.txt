@@ -7,6 +7,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 	{
 		Console.printf("%s", level.getchecksum());
 		
+		
 		//Liquids
 		If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
 		{
@@ -96,6 +97,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				levellocals.ReplaceTextures("CEIL3_1", "METAL51",0);
 				levellocals.ReplaceTextures("CEIL3_2", "METAL51",0);
 				
+				
 			//	line_setblocking(458,0,BLOCKF_MONSTERS);
 			
 				
@@ -170,6 +172,10 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				LevelLocals.ReplaceTextures("CEIL3_2", "METAL51",0);
 				LevelLocals.ReplaceTextures("STEP5", "STEP1",0);
 				
+				//Replace
+				SetThingEdNum(20,25869);
+				
+				
 				//Spawn
 				//Lightposts
 				AddThing(11033,(2368, -640, -999),80);
@@ -201,6 +207,23 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				AddThing(25868, (-916, 1268, 999), 90);
 				AddThing(25868, (-428, 1268, 999), 90);
 				AddThing(25868, (-432, 880, 999), 90);
+				//Console.printf("%s", levelpostprocessor.getthingcount());
+				
+				
+				If(CVar.GetCvar("BD_PSXMonsters").getint() == 1)
+				{
+				//PSX
+				
+				//Chaingunners
+				AddThing(65,(-1535,1375,999),270,MODES_ALL | MTF_AMBUSH);
+				AddThing(65,(0,864,999),270);
+				AddThing(65,(2238,1279,999),225,MODES_ALL | MTF_AMBUSH);
+				AddThing(65,(-2080,800,999),270,MODES_ALL | MTF_AMBUSH);
+				
+				//Spectres
+				AddThing(58,(-544,896,999),180,MODES_ALL | MTF_AMBUSH);
+				AddThing(58,(-800,1248,999),270,MODES_ALL | MTF_AMBUSH);
+				}
 				
 				}
 				Break;
@@ -225,5 +248,6 @@ Class BDP_MapEnhancer : LevelPostProcessor
 	BDECDestroyableWindow1 15846
 	BDECLightPost 11033
 	BDECWaterfallIndoor 25868
+	EnergyArmor 25869
 
 */
