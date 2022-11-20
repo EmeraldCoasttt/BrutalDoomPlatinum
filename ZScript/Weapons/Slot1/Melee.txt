@@ -12,6 +12,8 @@ CLASS MeleeAttack : Actor
 	Property splatterblood : splatterblood;
 	Bool uppercut;
 	Property uppercut : uppercut;
+	bool bonushealth;
+	Property bonushealth : bonushealth;
 	Default
 	{
 		Radius 12;
@@ -61,6 +63,17 @@ CLASS MeleeAttack : Actor
 				}
 			If(target && target.findinventory("powerstrength"))
 				{
+					If(victim && victim.bismonster && bonushealth)
+					{
+						If(random(1,2) == 1)
+						{
+							A_dropitem("HealthPlusFatalityBonus");
+						}
+						Else
+						{
+							A_dropitem("ArmorShardFatalityBonus");
+						}
+					}
 					//A_startsound("footmeat",3);
 					Damagetype = "Fatality";
 					If(target && target.findinventory("nofatality") || target && target.findinventory("hasagib") || !dofatality) {Damagetype = "ExtremePunches";}
@@ -325,6 +338,7 @@ CLASS MeleeAttackLeft : MeleeAttack
 				MeleeAttack.berserkdamage 75;
 				DamageType "Melee";
 				MeleeAttack.splatterblood TRUE;
+				MeleeAttack.bonushealth TRUE;
 			}
 		States
 			{
