@@ -716,20 +716,7 @@ ACTOR RailgunAmmo : Ammo
    Ammo.BackpackAmount 0
    Inventory.Icon "SRCGA0"
    Ammo.BackpackMaxAmount 5
-}
-
-
-ACTOR NuRailgunAmmo : Ammo
-{
-   Inventory.Amount 0
-   Inventory.MaxAmount 5
-   Ammo.BackpackAmount 0
-   Inventory.Icon "SRCGA0"
-   Ammo.BackpackMaxAmount 5
-}
-
-		
-		
+}	
 
 ACTOR GrenadeAmmo : Ammo
 {
@@ -954,9 +941,9 @@ ACTOR BDPistolAmmo : Ammo
 ACTOR BDDualPistolAmmo : Ammo
 {
    Inventory.Amount 0
-   Inventory.MaxAmount 32
+   Inventory.MaxAmount 42
    Ammo.BackpackAmount 0
-   Ammo.BackpackMaxAmount 32
+   Ammo.BackpackMaxAmount 42
    Inventory.Icon PISTH0
 }
 
