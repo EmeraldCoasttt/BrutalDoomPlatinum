@@ -213,7 +213,7 @@ user int bd_NewNailgunMag  = 50;
 user int bd_RocketMag  = 6;
 //Slot 6
 user int bd_PlasmaMag  = 50;
-user int bd_RailgunMag  = 5;
+user int bd_RailgunMag  = 50;
 
 //MES texturing
 server int Dox_MEStextureReplacements  = 0;

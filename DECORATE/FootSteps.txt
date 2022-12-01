@@ -99,7 +99,7 @@ ACTOR BDoomer : Doomer
 	Player.StartItem "GLAmmo", 1
 	Player.StartItem "RocketRounds", 6
 	//slot 6
-	Player.StartItem "RailgunAmmo", 5
+	Player.StartItem "NuRailgunAmmo", 5
 	Player.StartItem "PlasmaAmmo", 50
 	Player.StartItem "DoublePlasmaAmmo", 100
 	player.StartItem "Nuke", 1
@@ -145,7 +145,7 @@ ACTOR Doomer2 : Doomer
 	Player.StartItem "GLAmmo", 1
 	Player.StartItem "RocketRounds", 6
 	//slot 6
-	Player.StartItem "RailgunAmmo", 5
+	Player.StartItem "NuRailgunAmmo", 5
 	Player.StartItem "PlasmaAmmo", 50
 	Player.StartItem "DoublePlasmaAmmo", 100
 	player.StartItem "Nuke", 1
@@ -245,7 +245,7 @@ ACTOR Doomer3 : Doomer
 	Player.StartItem "GLAmmo", 1
 	Player.StartItem "RocketRounds", 6
 	//slot 6
-	Player.StartItem "RailgunAmmo", 5
+	Player.StartItem "NuRailgunAmmo", 5
 	Player.StartItem "PlasmaAmmo", 50
 	Player.StartItem "DoublePlasmaAmmo", 100
 	Player.StartItem "IsPlayer", 1
@@ -348,7 +348,7 @@ ACTOR TacticalDoomer : Doomer
 	Player.StartItem "GLAmmo", 1
 	Player.StartItem "RocketRounds", 6
 	//slot 6
-	Player.StartItem "RailgunAmmo", 5
+	Player.StartItem "NuRailgunAmmo", 5
 	Player.StartItem "PlasmaAmmo", 50
 	Player.StartItem "DoublePlasmaAmmo", 100
 	Player.StartItem "IsPlayer", 1

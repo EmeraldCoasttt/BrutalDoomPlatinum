@@ -17,11 +17,11 @@ SetCVAR("bd_NewNailgunMag", 50);
 SetCVAR("bd_RocketMag", 6);
 //Slot 6
 SetCVAR("bd_PlasmaMag", 50);
-SetCVAR("bd_RailgunMag", 5);
+SetCVAR("bd_RailgunMag", 50);
 //... then the amounts themselves.
 //slot 2
 SetAmmoCapacity("BDPistolAmmo", 16);
-SetAmmoCapacity("BDDualPistolAmmo", 42);
+SetAmmoCapacity("BDDualPistolAmmo", 32);
 SetAmmoCapacity("BDSMGAmmo", 41);
 SetAmmoCapacity("BDDualSMGAmmo", 82);
 SetAmmoCapacity("MP40Ammo", 32);
@@ -38,7 +38,7 @@ SetAmmoCapacity("RocketRounds", 6);
 //slot 6
 SetAmmoCapacity("PlasmaAmmo", 50);			
 SetAmmoCapacity("DoublePlasmaAmmo", 100);
-SetAmmoCapacity("RailgunAmmo", 5);
+SetAmmoCapacity("RailgunAmmo", 50);
 delay(1);
 }
 
