@@ -75,7 +75,7 @@ ACTOR Doomer : Brutal_PlayerBase Replaces DoomPlayer //PlayerPawn Replaces DoomP
 	Player.StartItem "GLAmmo", 1
 	Player.StartItem "RocketRounds", 6
 	//slot 6
-	Player.StartItem "NuRailgunAmmo", 5
+	Player.StartItem "RailgunAmmo", 5
 	Player.StartItem "PlasmaAmmo", 50
 	Player.StartItem "DoublePlasmaAmmo", 100
 	Player.StartItem "IsPlayer", 1
