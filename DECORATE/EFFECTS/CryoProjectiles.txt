@@ -167,6 +167,41 @@ Actor IceTracer
   }
 }
 
+ACTOR CryoTracer : FastProjectile
+{
+	Radius 2
+	Height 2
+	Speed 140
+	Damage 0
+	Damagetype "Ice"
+	Projectile
+	RenderStyle Add
+	Alpha 0.9
+	+FORCERADIUSDMG
+	+NODAMAGETHRUST
+	+NoExtremeDeath
+	DeathSound "weapons/cryobowhit"
+	MissileType "CryoTrail"
+	MissileHeight 8
+	Decal "IceScorch"
+	+FORCEXYBILLBOARD
+	Species "Marines"
+	+THRUSPECIES
+	+MTHRUSPECIES
+	States
+	{
+	Spawn:
+		BSHT A 0 Bright A_SpawnItemEx("FreezerTrailSparksSmall", random(3,-3), 0, random(3,-3), 0, 0, 0, 0, 128, 0) 
+		BSHT A 1 Bright A_SpawnItem("PlasmaFlare",0,0)
+		TNT1 A 0 A_CustomMissile("BlueFlareSpawn",0,0,0,0)
+		Loop
+	Death:	
+
+		TNT1 A 0
+		Stop
+	}
+}
+
 ACTOR CryoShot : FastProjectile
 {
 	Radius 4
@@ -200,6 +235,28 @@ ACTOR CryoShot : FastProjectile
 		BXPL A 0 Bright A_StopSound(CHAN_BODY)
 		BXPL A 0 Bright A_ChangeFlag("ICEDAMAGE", 1)
 		BXPL A 0 Bright A_ChangeFlag("NODAMAGETHRUST", 0)
+		//BXPL A 0 Bright A_Explode(7, 8, 0) 
+		//BXPL A 0 Bright A_Explode(14, 16, 0)
+		BXPL AAA 0 Bright A_SpawnItemEx("MiniCryoSmoke1", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
+		BXPL AA 0 Bright A_SpawnItemEx("FreezerTrailSparksSmall", random(5,-5), 0, random(5,-5), random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64)
+		BXPL A 0 Bright A_SpawnItemEx("MiniCryoSmoke1", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64)
+		BXPL A 0 Bright A_SpawnItemEx ("IceShardsSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		BXPL ABCDEFGH 1 Bright
+		BXPL IJKLLM 1 Bright A_FadeOut(0.1)
+		Stop
+	}
+}
+
+Actor CryoPuff : HitPuff
+{
+	Damagetype "Ice"
+	RenderStyle Add
+	Alpha 0.9
+	Decal "IceScorch"
+	States
+	{
+	Spawn:
+	Melee:
 		//BXPL A 0 Bright A_Explode(7, 8, 0) 
 		//BXPL A 0 Bright A_Explode(14, 16, 0)
 		BXPL AAA 0 Bright A_SpawnItemEx("MiniCryoSmoke1", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION)
