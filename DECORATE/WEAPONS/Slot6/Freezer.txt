@@ -430,11 +430,13 @@ ACTOR Freezer : BrutalWeapon
 	    RAIL A 0
 		RAIL A 0 A_CheckIfAmmo("FreezerAmmo")
 		TNT1 AA 0
+		/*
 		FR1D D 3
 		FR1D E 1
 	FireContinue:
 		FR1D EFF 1
 		FR1D G 1
+		*/
 		RAIL A 0 A_Giveinventory("HasFreezerWeapon",1)
 		RAIL A 0 A_TakeAmmo("FreezerAmmo",1)
 		RAIL A 0 A_PlaySound("FRZFIRE", 1)
@@ -447,7 +449,7 @@ ACTOR Freezer : BrutalWeapon
 		FR1D JKM 1 A_SetPitch(0.5 + pitch, SPF_INTERPOLATE)
 		"####" A 0 A_WeaponOffset(0,32)
 		RAIL A 0 A_CheckIfAmmo("FreezerAmmo",1,"GoToNoAmmo")
-		RAIL A 0 A_Refire("firecontinue")
+		//RAIL A 0 A_Refire("fire")
 		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1)
 		Goto Ready3
 		
