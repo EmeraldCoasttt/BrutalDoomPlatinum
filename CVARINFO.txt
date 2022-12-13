@@ -112,6 +112,8 @@ server int bd_SpawnRailgun = 1;
 server int bd_SpawnFreezer = 1;
 server int bd_SpawnBFG10K = 1;
 server int bd_SpawnUnmaker = 1;
+server int bd_SpawnMP40 = 1;
+server int bd_SpawnMG42 = 1;
 
 //Monster gun spawns
 server int bd_SpawnPistolDrop = 1;
