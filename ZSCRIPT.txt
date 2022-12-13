@@ -29,6 +29,7 @@ Version "3.8"
 #include "Zscript/Weapons/Slot5/StickyGrenade.txt"
 #include "Zscript/Weapons/Slot5/TripMine.txt"
 //Slot 6
+#include "Zscript/Weapons/Slot6/Freezer.txt"
 #include "Zscript/Weapons/Slot6/Needler.txt"
 #include "Zscript/Weapons/Slot6/Railgun.txt"
 //Slot 7

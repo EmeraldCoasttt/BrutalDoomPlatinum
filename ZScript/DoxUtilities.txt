@@ -262,6 +262,19 @@
 	
 	override void worldthingdamaged(Worldevent e)
 	{	
+	
+		If(e.damagetype == "ice" || e.damagetype == "frost" || e.damagetype == "Freeze")
+		{
+			If(e.inflictor is "cryobite"){}
+			Else If(e.thing.bismonster)
+			{
+				If(e.inflictor is "freezethrowermissile" || e.inflictor is "freezenadeexplosion")
+				{
+					e.thing.takeinventory("CryoBite",1);
+					e.thing.giveinventory("CryoBite",1);
+				}
+			}
+		}
 		
 		If(e.damagetype == "taunt" && !e.thing.findinventory("thisreallypissesmeoff") && e.thing.bismonster)
 		{

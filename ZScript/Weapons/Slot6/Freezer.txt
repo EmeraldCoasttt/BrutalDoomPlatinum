@@ -1,0 +1,65 @@
+Class CryoBite : Inventory {
+
+	protected int dur; //this will hold the current value of duration
+	int duration; //this will hold max duration
+	property duration : duration; //this turns the variable above into a property
+	Default {
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		inventory.maxamount 1;
+		CryoBite.duration 8;
+	}
+	override void postbeginplay()
+	{
+	owner.a_startsound("ICEBRK2",624,CHANF_LOOPING,1.0,ATTN_NORM,0.0);
+	duration = random(6,9);
+	super.postbeginplay();
+
+	}
+	override void detachfromowner()
+	{
+	owner.a_stopsound(624);
+	Super.detachfromowner();
+	}
+	
+	
+	//Items that don't spawn in the world don't need their Tick. Emptying it will actually help performace:
+	Override void Tick() {}
+	
+	//This function is executed every tic by items while they're in an actor's inventory:
+	Override void DoEffect() {
+		If(!owner)
+		return;
+		super.DoEffect();
+		if (owner.isFrozen())
+			return;
+		if (owner && level.time % 24 == 0) {
+		int rad = owner.radius; //we'll use the monster's radius as a base value for horizontal offset randomization
+			
+			Owner.A_SpawnItemEx("CryoPuff", frandom(-rad,rad), frandom(-rad,rad), frandom(0,owner.height), 0,0,0, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+			owner.damagemobj(self,self,random(15,25),"Ice",DMG_THRUSTLESS);
+			
+		}
+		if (owner && level.time % 35 == 0) {
+			if (dur < duration)
+				dur++;
+			else {
+				DepleteOrDestroy();
+				return;
+			}
+		}
+		if (owner && owner.health <= 0) {	
+			DepleteOrDestroy();
+			return;
+			}
+		//We'll spawn a flame particle every 5 tics around the monster:
+		if (owner &&level.time % 1 == 0) {
+			int rad = owner.radius; //we'll use the monster's radius as a base value for horizontal offset randomization
+	
+			Owner.A_SpawnItemEx("CryoSmoke", frandom(-rad,rad), frandom(-rad,rad), frandom(0,owner.height), random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+					
+
+		}
+	
+	}
+}
