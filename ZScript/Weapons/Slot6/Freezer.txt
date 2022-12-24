@@ -36,7 +36,7 @@ Class CryoBite : Inventory {
 		if (owner && level.time % 24 == 0) {
 		int rad = owner.radius; //we'll use the monster's radius as a base value for horizontal offset randomization
 			
-			Owner.A_SpawnItemEx("CryoPuff", frandom(-rad,rad), frandom(-rad,rad), frandom(0,owner.height), 0,0,0, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+			Owner.A_SpawnItemEx("CryoPuffWithSound", frandom(-rad,rad), frandom(-rad,rad), frandom(0,owner.height), 0,0,0, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
 			owner.damagemobj(self,self,random(15,25),"Ice",DMG_THRUSTLESS);
 			
 		}
