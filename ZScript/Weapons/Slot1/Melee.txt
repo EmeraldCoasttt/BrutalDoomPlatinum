@@ -136,11 +136,12 @@ CLASS MeleeAttack : Actor
 			victim.damagemobj(self, target, damagetodeal, damagetype);
 			
 			bmissile = false;
+			/*
 			If(MeleeKnockback)
 				{
 					target.a_changevelocity(-15,0,0,CVF_RELATIVE);
 				}
-			
+			*/
 			}
 			
 			return -1;
