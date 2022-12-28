@@ -268,11 +268,10 @@
 			If(e.inflictor is "cryobite"){}
 			Else If(e.thing.bismonster)
 			{
-				If(e.inflictor is "freezethrowermissile" || e.inflictor is "freezenadeexplosion")
-				{
+				
 					e.thing.takeinventory("CryoBite",1);
 					e.thing.giveinventory("CryoBite",1);
-				}
+				
 			}
 		}
 		
