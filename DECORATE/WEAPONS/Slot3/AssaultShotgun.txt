@@ -691,7 +691,9 @@ Actor EnergyShellProjectile
     bouncesound "ricochet/hit"
     bouncecount 666
     Damage (random(12, 24))
-	
+	Species "marines"
+	+thruspecies
+	+mthruspecies
     DeathSound "ricochet/hit"
     Damagetype "plasma"
     renderstyle "add"
