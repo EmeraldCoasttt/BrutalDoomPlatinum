@@ -653,11 +653,14 @@ Class CybieRocketTimer : Inventory {
 		
 		Override void doeffect()
 			{
+			/*
 				If(owner && owner.target && owner.target.findinventory("gofatality"))
 					{
 						Owner.a_cleartarget();
 					}
+					*/
 				Super.doeffect();
+				
 			}
 	}
 
