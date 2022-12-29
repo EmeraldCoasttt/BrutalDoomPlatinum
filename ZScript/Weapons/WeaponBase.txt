@@ -2764,18 +2764,18 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		1HRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2);
 		THRG N 0;
 		"####" A 0;
-        "####" C 1 offset(-12,48);
-		"####" C 1 offset(-9,42);
-		"####" C 1 offset(-7,39);
-		"####" C 1 offset(-4,36);
-		"####" C 1 offset(-2,33);
+        "####" C 1 offset(-12,90);
+		"####" C 1 offset(-9,84);
+		"####" C 1 offset(-7,81);
+		"####" C 1 offset(-4,78);
+		"####" C 1 offset(-2,75);
 	ReadyBarrelShake:
         //"####" A 0 A_JumpIfInventory("Kicking",1,"DoKick")
 		//"####" A 0 ACS_ExecuteAlways(294, 0, 0, 0, 0)//Makes player slower.
-		"####" A 0 Offset(0, 32) A_TakeInventory("ImpactMovesSling", 1);
+		"####" A 0 Offset(0, 74) A_TakeInventory("ImpactMovesSling", 1);
         "####" DE 1 
 		{
-		 A_overlayoffset(PSP_WEAPON,0,32);
+		 A_overlayoffset(PSP_WEAPON,0,74);
 		If(invoker.owner.player.cmd.buttons & bt_attack)
 					{
 						Return resolvestate("firebarrel");
@@ -2850,15 +2850,15 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		1HRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2);
 		THRG N 0;
 		"####" A 0;
-		"####" C 1 offset(4,34);
-		"####" C 1 offset(24,41);
-		"####" C 1 offset(48,49);
-		"####" C 1 offset(56,51);
-		"####" C 1 offset(52,49);
-		"####" C 1 offset(36,41);
-		"####" C 1 offset(12,34);
-		"####" C 1 offset(-6,32);
-		"####" C 1 offset(-14,32);
+		"####" C 1 offset(4,76);
+		"####" C 1 offset(24,83);
+		"####" C 1 offset(48,91);
+		"####" C 1 offset(56,93);
+		"####" C 1 offset(52,91);
+		"####" C 1 offset(36,83);
+		"####" C 1 offset(12,76);
+		"####" C 1 offset(-6,74);
+		"####" C 1 offset(-14,74);
 		THRF A 0 
 		{
 		A_fireprojectile("ThrowedBarrel", 0, 1, 0, 0);
@@ -2882,11 +2882,11 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		1HRG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2);
 		THRG N 0;
 		"####" A 0;
-		"####" C 1 offset(-2,33);
-		"####" C 1 offset(-4,36);
-		"####" C 1 offset(-7,39);
-		"####" C 1 offset(-9,42);
-		"####" C 1 offset(-12,48);
+		"####" C 1 offset(-2,75);
+		"####" C 1 offset(-4,78);
+		"####" C 1 offset(-7,82);
+		"####" C 1 offset(-9,84);
+		"####" C 1 offset(-12,90);
 		THRF A 0 
 		{
 		
