@@ -898,7 +898,7 @@ ACTOR PipeBombThrown
 	+BOUNCEONWALLS
 	+BOUNCEONCEILINGS
    BounceFactor 0.60
-	WallBounceFactor 0.40
+	WallBounceFactor 0.10
    Mass 2
    //SeeSound "PIPBOING"
    BounceSound "PIPBOING"
