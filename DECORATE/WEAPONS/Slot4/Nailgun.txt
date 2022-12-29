@@ -338,8 +338,8 @@ ACTOR Nailgun : BrutalWeapon
 		3LGN B 1 BRIGHT A_FireCustomMissile("FlyingNail", frandom(-0.3,0.3), 0, 4, -6, 0, frandom(0,0.4))
 		NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 		3LGN A 0 A_ZoomFactor(1.0)
-		CHAG A 0 A_JumpIfInventory("IsTacticalClass", 1, 2)//Tactical mode skips a frame, fires faster
-		3LGN C 1 BRIGHT A_SetPitch(pitch - 0.6, SPF_INTERPOLATE)
+		CHAG A 0 A_JumpIfInventory("IsTacticalClass", 1, 2)//Tactical mode has recoil
+		3LGN C 0 BRIGHT A_SetPitch(pitch - 0.6, SPF_INTERPOLATE)
 		3LGN A 0 A_TakeAmmo("NailgunAmmo",1)
 		3LGN DE 1 { if(!findinventory("istacticalclass")) { A_SetPitch(pitch + 0.3, SPF_INTERPOLATE); } ELSE { A_SetPitch(pitch - 2.3, SPF_INTERPOLATE); } }
 		NULL A 0 A_WeaponOffset(0,32)
