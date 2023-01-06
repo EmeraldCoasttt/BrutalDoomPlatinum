@@ -819,8 +819,8 @@ Class NukeDamage : Actor
 				While (CheckFortracers.Next())
 					{
 						CurrentActor = CheckFortracers.Thing;
-						
-						If (CurrentActor && currentactor.bshootable && distance3d(currentactor) <= (scalevalue * 0.45))
+						bool isVoodooDoll = (currentactor && currentactor.player && currentactor.player.mo && currentactor.player.mo != currentactor);
+						If (CurrentActor && currentactor.bshootable && distance3d(currentactor) <= (scalevalue * 0.45) && !isvoodoodoll)
 							{
 							Currentactor.damagemobj(self,self,70,"desintegrate");
 							//currentactor.applykickback(self,self,200,0,"desintegrate",0);
