@@ -733,12 +733,13 @@ ACTOR Freezebot : BrutalFriend
 	+SHOOTABLE
 	+NOBLOCKMONST
 	-solid
+	+notrigger
  
 	Activation THINGSPEC_Activate
 	
-	damagefactor "ExplosiveImpact", 3.0
-	damagefactor "Shrapnel", 3.0
-	damagefactor "Explosives", 3.0
+	//damagefactor "ExplosiveImpact", 3.0
+	//damagefactor "Shrapnel", 3.0
+	//damagefactor "Explosives", 3.0
 	DeathSound "FreezeBot/die"
 	Tag "Freezebot"
     Scale 0.8
