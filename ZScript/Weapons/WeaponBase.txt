@@ -705,7 +705,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
   //No more death overlaysssss
   If(owner.health < 1)
 	{
-		owner.A_clearoverlays(-30,30);
+		owner.A_clearoverlays(-700,30,false);
 	}
 	
   
