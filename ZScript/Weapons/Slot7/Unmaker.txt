@@ -420,12 +420,12 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		invoker.owner.a_spawnitemex("teleportationfog");
 		invoker.teleportpending.destroy();
 		invoker.owner.A_startsound("Weapons/Unmaker/UseTeleporter",6);
-		If(invoker.owner.countinv("soulammo") < 30)
+		If(invoker.owner.countinv("soulammo") < 15)
 							{
 							A_damageself(10,"desintegrate");
 							
 							}
-						invoker.owner.takeinventory("soulammo",30);
+						invoker.owner.takeinventory("soulammo",15);
 		}
 		A_weaponoffset(random(-2,2),random(32,28));
 		A_zoomfactor(1);
