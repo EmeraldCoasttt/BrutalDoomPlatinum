@@ -64,10 +64,10 @@ Class BDP_MapEnhancer : LevelPostProcessor
 			LevelLocals.ReplaceTextures ("SLIME02", "BDSLIME1",0);//Doom2
 			LevelLocals.ReplaceTextures ("SLIME03", "BDSLIME1",0);//Doom2
 			LevelLocals.ReplaceTextures ("SLIME04", "BDSLIME1",0);//Doom2
-			LevelLocals.ReplaceTextures ("SLIME05", "BDSLIME2",0);//Doom2
-			LevelLocals.ReplaceTextures ("SLIME06", "BDSLIME2",0);//Doom2
-			LevelLocals.ReplaceTextures ("SLIME07", "BDSLIME2",0);//Doom2
-			LevelLocals.ReplaceTextures ("SLIME08", "BDSLIME2",0);//Doom2
+			LevelLocals.ReplaceTextures ("SLIME05", "BDSLIME1",0);//Doom2
+			LevelLocals.ReplaceTextures ("SLIME06", "BDSLIME1",0);//Doom2
+			LevelLocals.ReplaceTextures ("SLIME07", "BDSLIME1",0);//Doom2
+			LevelLocals.ReplaceTextures ("SLIME08", "BDSLIME1",0);//Doom2
 			LevelLocals.ReplaceTextures ("STEP04", "BDSTEP04",0);//Doom
 			LevelLocals.ReplaceTextures ("WFALL1", "BDWFALL1",0);//Internal Animated Wall(Plutonia)
 			LevelLocals.ReplaceTextures ("WFALL2", "BDWFALL1",0);//Internal Animated Wall(Plutonia)
