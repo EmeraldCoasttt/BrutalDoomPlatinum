@@ -719,14 +719,14 @@ ACTOR RailgunAmmo : Ammo
 }
 
 
-ACTOR NuRailgunAmmo : Ammo
+/*ACTOR NuRailgunAmmo : Ammo
 {
    Inventory.Amount 0
    Inventory.MaxAmount 5
    Ammo.BackpackAmount 0
    Inventory.Icon "SRCGA0"
    Ammo.BackpackMaxAmount 5
-}
+}*/
 
 		
 		

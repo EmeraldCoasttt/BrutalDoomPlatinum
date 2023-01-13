@@ -9,7 +9,7 @@ CLASS Railgun : Brutalweapon
 	Weapon.AmmoGive1 0;
 	Weapon.AmmoGive2 0;
 	Weapon.AmmoType1 "AmmoCell";
-	Weapon.AmmoType2 "NuRailgunAmmo";
+	Weapon.AmmoType2 "RailgunAmmo";
 	Obituary "%o was pierced by %k's Railgun.";
     Inventory.PickupSound "RAILINSR";
 	Inventory.Pickupmessage "You got the Railgun! (Slot 6)";
@@ -86,7 +86,7 @@ CLASS Railgun : Brutalweapon
 				//A_RailAttack(400, 0, 0, "Orange", "Red", RGF_FULLBRIGHT, 1, "RailgunPuff2",0,0,0,0,0.5,2,"none",0,270);
 				A_Fireprojectile ("PlasmaSmoke", 0, 0, 0, 2);
 				A_StartSound("RAILF01", 1);
-				A_takeAmmo("nurailgunammo",1);
+				A_takeAmmo("railgunammo",1);
 				A_setpitch(pitch - 6);
 	
 	}
@@ -187,7 +187,7 @@ CLASS Railgun : Brutalweapon
 
 		Fire:
 			TNT1 A 0 A_jumpifinventory("railchambered",1,"Pumping");
-			TNT1 A 0 A_CheckIfAmmo("nurailgunammo");
+			TNT1 A 0 A_CheckIfAmmo("railgunammo");
 			TNT1 AAAAAAAAAA 0 A_Fireprojectile ("BluePlasmaParticleWeapon", random(-60,60), 0, -1, -3, 0, random(-6,70));
 			RAIL A 0 
 			{
@@ -230,11 +230,11 @@ CLASS Railgun : Brutalweapon
 			TNT1 A 0 
 			{
 				takeinventory("railsteam",1);
-				If(countinv("nurailgunammo") < 1 && countinv("AmmoCell") > 9)
+				If(countinv("railgunammo") < 1 && countinv("AmmoCell") > 9)
 				{
 						Return resolvestate("ReloadFromPump");
 				}
-				Else If(countinv("nurailgunammo") < 5 && countinv("AmmoCell") > 9 && A_pressedreload())
+				Else If(countinv("railgunammo") < getCVAR("bd_RailgunMag") && countinv("AmmoCell") > 9 && A_pressedreload())
 				{
 						takeinventory("reloading",1);
 						Return resolvestate("ReloadFromPump");
@@ -267,8 +267,8 @@ CLASS Railgun : Brutalweapon
 			TNT1 A 0
 			{
 				takeinventory("ammocell",10);
-				giveinventory("nurailgunammo",1);
-				If(countinv("nurailgunammo") < 5 && Countinv("AmmoCell") > 9)
+				giveinventory("railgunammo",1);
+				If(countinv("railgunammo") < getCVAR("bd_RailgunMag") && Countinv("AmmoCell") > 9)
 					{
 						Return resolvestate("ReloadFromPumpInsertShells");
 					}
@@ -286,11 +286,11 @@ CLASS Railgun : Brutalweapon
 			TNT1 A 0
 			{
 				Takeinventory("reloading",1);
-				If(countinv("nurailgunammo") < 1 && Countinv("AmmoCell") > 9)
+				If(countinv("railgunammo") < 1 && Countinv("AmmoCell") > 9)
 					{
 						Return resolvestate("Pumping");
 					}
-				Else if (countinv("nurailgunammo") < 5 && Countinv("AmmoCell") > 9)
+				Else if (countinv("railgunammo") < getCVAR("bd_RailgunMag") && Countinv("AmmoCell") > 9)
 					{
 						Return resolvestate(null);
 					}
@@ -311,8 +311,8 @@ CLASS Railgun : Brutalweapon
 			TNT1 A 0
 			{
 				takeinventory("ammocell",10);
-				giveinventory("nurailgunammo",1);
-				If(countinv("nurailgunammo") < 5 && Countinv("AmmoCell") > 9)
+				giveinventory("railgunammo",1);
+				If(countinv("railgunammo") < getCVAR("bd_RailgunMag") && Countinv("AmmoCell") > 9)
 					{
 						Return resolvestate("ReloadInsertShells");
 					}
@@ -329,7 +329,7 @@ CLASS Railgun : Brutalweapon
 		NoAmmo:
 			TNT1 A 0
 			{
-				If(countinv("nurailgunammo") < 1 && Countinv("AmmoCell") > 9)
+				If(countinv("railgunammo") < 1 && Countinv("AmmoCell") > 9)
 					{
 						Return resolvestate("Pumping");
 					}
@@ -469,7 +469,7 @@ CLASS Railgun : Brutalweapon
 			TNT1 A 0 A_jumpifinventory("firedsecondary",1,"NoAim");
 			LOOP;
 	ZoomedFire:
-		TNT1 A 0 A_CheckIfAmmo("nurailgunammo",1,"NoAmmoZoomed");
+		TNT1 A 0 A_CheckIfAmmo("railgunammo",1,"NoAmmoZoomed");
 		TNT1 A 0 A_firenurailgun();
 		SNIP C 2 BRIGHT;
 		SNIP CCCCCC 1 BRIGHT A_setpitch(pitch + 1);
@@ -505,7 +505,7 @@ CLASS Railgun : Brutalweapon
 			SNIP CCCCCCCCCC 1 BRIGHT;
 		TNT1 A 0
 			{
-				If(countinv("nurailgunammo") < 1 && Countinv("AmmoCell") > 9)
+				If(countinv("railgunammo") < 1 && Countinv("AmmoCell") > 9)
 					{
 						Return resolvestate("NoAmmoZoomed2");
 					}
@@ -532,7 +532,7 @@ CLASS Railgun : Brutalweapon
 	NoAmmoZoomed:
 			TNT1 A 0
 			{
-				If(countinv("nurailgunammo") < 1 && Countinv("AmmoCell") > 9)
+				If(countinv("railgunammo") < 1 && Countinv("AmmoCell") > 9)
 					{
 						Return resolvestate("NoAmmoZoomed2");
 					}
@@ -690,7 +690,7 @@ CLASS Railgun : Brutalweapon
 			RAIL A 0 A_Takeinventory("Unloading",1);
 			RAIL A 0 A_Takeinventory("ADSmode",1);
 			RAIL A 0 A_Takeinventory("Zoomed",1);
-			RAIL A 0 A_JumpIfInventory("NuRailgunAmmo",1,1);
+			RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,1);
 			Goto Ready;
 		RemoveBullets:
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol");
@@ -699,12 +699,12 @@ CLASS Railgun : Brutalweapon
 			RAIL JKLMNYYOO 1;
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol2");
 			RAIL OOOO 1;
-			RAIL A 0 A_JumpIfInventory("NuRailgunAmmo",1,1);
+			RAIL A 0 A_JumpIfInventory("RailgunAmmo",1,1);
 			Goto FinishUnload;
 			TNT1 A 0 A_PlaySound("RAILMAG2", 5);
 			RAIL PR 1;
 			RAIL TWWV 1;
-			RAIL A 0 A_Takeinventory("NuRailgunAmmo",1);
+			RAIL A 0 A_Takeinventory("RailgunAmmo",1);
 			RAIL A 0 A_Giveinventory("AmmoCell",10);
 			RAIL UUUUUUUUU/*UUUUUUUUUU*/ 1;
 			TNT1 A 0 A_PlaySound("RAILINSR", 5);
