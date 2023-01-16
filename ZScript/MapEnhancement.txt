@@ -264,7 +264,8 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				}
 				
 				Break;
-			
+				
+			//e1m9
 			case '1dbf91738492fb0e29836a2d66406cf1':
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) {
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any),TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any));
@@ -273,9 +274,26 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					Levellocals.ReplaceTextures("BROWN96", "METAL24B", TexMan.NOT_MIDDLE);
 					Levellocals.ReplaceTextures("BROWN1", "METALIN4", TexMan.NOT_BOTTOM);
 					Levellocals.ReplaceTextures("BROWN1", "GREIND5",0);
-					//ChangefLOOR(4, "FLAT9");
 					Level.Sectors[4].settexture(Sector.floor,TexMan.CheckForTexture("FLAT9",TexMan.Type_Any));
 					Level.Sectors[37].settexture(Sector.floor,TexMan.CheckForTexture("LAVAFL",TexMan.Type_Any));
+					
+					SetThingEdNum(172,2004);
+					SetThingEdNum(173,17);
+					SetThingEdNum(174,17);
+					SetThingEdNum(175,17);
+					
+					SetThingEdNum(87,82);
+					SetThingEdNum(88,2008);
+					SetThingEdNum(89,2008);
+					SetThingEdNum(90,2008);
+					SetThingEdNum(91,2008);
+					
+					AddThing(2013,(-320,1088,-999),270);
+				}
+				
+				If(CVar.GetCvar("BD_PSXMonsters").getint() == 1)
+				{
+				
 				}
 			
 				Break;
