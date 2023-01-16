@@ -227,6 +227,27 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				
 				}
 				Break;
+			
+			//e1m3
+			case 'c7ff2282bc606ffb28ddcb90357094e6':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) {
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any),TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any));
+					LevelLocals.ReplaceTextures("FLOOR7_1", "FLOOR4_8",0);
+					LevelLocals.ReplaceTextures("BROWN144", "CLIFF05B",0);
+					LevelLocals.ReplaceTextures("FLOOR4_1", "METAL51",0);
+					LevelLocals.ReplaceTextures("FLOOR4_5", "METAL51",0);
+					LevelLocals.ReplaceTextures("FLOOR6_2", "MFLR8_1",0);
+					LevelLocals.ReplaceTextures("BROWN1", "METAL24",0);
+					LevelLocals.ReplaceTextures("BROWN96", "METAL22",0);
+					LevelLocals.ReplaceTextures("LITE2", "METAL24B",0);
+					LevelLocals.ReplaceTextures("STONE2", "BUNKER05",0);
+					LevelLocals.ReplaceTextures("STARG3", "BASE25",0);
+					LevelLocals.ReplaceTextures("CEIL3_1", "METAL51",0);
+					LevelLocals.ReplaceTextures("CEIL3_2", "METAL51",0);
+					LevelLocals.ReplaceTextures("STEP6", "LIT05S",0);
+					LevelLocals.ReplaceTextures("STEP5", "LIT05S",0);
+				}
+				Break;
 		}
 	}
 }
