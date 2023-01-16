@@ -933,7 +933,7 @@ CLASS HoloPlayer : BDPNotMonster
 		}
 		LOOP;
 	Spawn2:
-		TNT1 A 0 A_jump(25,"Twerk","TeaBag","Moves1","Moves2","Moves3");
+		TNT1 A 0 A_jump(30,"Twerk","TeaBag","Moves1","Moves2","Moves3","TPose");
 		TNT1 A 0 A_jump(255,"Wave1","Wave2","Observe","Medkit");
 	Wave1:
 		MWAV IJK 1;
@@ -966,6 +966,9 @@ CLASS HoloPlayer : BDPNotMonster
 		LOOP;
 	Moves3:
 		JAKE ABCDEFGHIJKLMNOP 4 A_hologramAlert();
+		LOOP;
+	TPose:
+		TWRK D 4 A_hologramAlert();
 		LOOP;
 		
 	Death:
