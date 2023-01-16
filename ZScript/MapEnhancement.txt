@@ -293,7 +293,8 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				
 				If(CVar.GetCvar("BD_PSXMonsters").getint() == 1)
 				{
-				
+					AddThing(71, (2464, 544, -999), 270);
+					SetThingEdNum(201,71);
 				}
 			
 				Break;
