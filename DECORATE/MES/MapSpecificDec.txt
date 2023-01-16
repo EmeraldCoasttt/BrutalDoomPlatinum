@@ -1881,7 +1881,7 @@ ACTOR BDECAntenna3 : BDdecorationBase2
 }
 
 
-ACTOR BDECAntenna3b : BDECAntenna3
+ACTOR BDECAntenna3b : BDECAntenna3 25870
 {
 	Height 128
 	Radius 16

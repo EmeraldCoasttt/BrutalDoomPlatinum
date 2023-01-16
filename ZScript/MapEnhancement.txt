@@ -246,6 +246,13 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					LevelLocals.ReplaceTextures("CEIL3_2", "METAL51",0);
 					LevelLocals.ReplaceTextures("STEP6", "LIT05S",0);
 					LevelLocals.ReplaceTextures("STEP5", "LIT05S",0);
+					
+					AddThing(25867, (-2192, -2456, -999), 0);
+					AddThing(15846, (-2008, -2224, -999), 270);
+					AddThing(15846, (-1944, -2224, -999), 270);
+					AddThing(15857, (-1880, -2856, 999), 270);
+					AddThing(15857, (-1112, -2856, 999), 270);
+					AddThing(25870, (-1760, -1056, -999), 80);
 				}
 				Break;
 		}
@@ -255,6 +262,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 /*
 	BDEC EdNums
 	
+	BDECcagedlight 15857
 	BDECPlantPot 25855
 	BDECAntenna1 25860
 	BDECUacShip 13845
@@ -270,5 +278,6 @@ Class BDP_MapEnhancer : LevelPostProcessor
 	BDECLightPost 11033
 	BDECWaterfallIndoor 25868
 	EnergyArmor 25869
+	BDECAntenna3b 25870
 
 */
