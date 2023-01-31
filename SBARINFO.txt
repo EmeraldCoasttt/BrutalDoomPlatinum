@@ -344,9 +344,10 @@ InInventory not sbartype3, 1
 InInventory not sbartype4, 1
 {
 
+//Inventory items
 
-
-Drawselectedinventory indexfont, 56, 158;
+	Drawselectedinventory indexfont, 56, 158;
+	
 // Keys
 	//drawimage "KEYS", 304, 0;
 	drawswitchableimage Bluecard && BlueSkull, "nullimage", "STKEYS0", "STKEYS3", "STKEYS6", 56, 188;
@@ -354,32 +355,31 @@ Drawselectedinventory indexfont, 56, 158;
 	drawswitchableimage Redcard && RedSkull, "nullimage", "STKEYS2", "STKEYS5", "STKEYS8", 76, 188;
 
 
-// Inventory Items
-	//drawselectedinventory alternateonempty, SMALLFONT, 240, 169
-	//{
-		drawmugshot "STF", 5, 1143, 1168;
-	//}
+// Mugshot
+	
+	drawmugshot "STM", 5, -25, 154;
+	
 
 
 // Armor
 	//drawimage armoricon, 78, 200; next to the mugshot
 		drawimage armoricon, 33, 186;
         drawnumber 6, SMALLFONT, green, armor, drawshadow | whennotzero, 45, 188, 0, yellow, 10, blue, 100;
-		
 		drawnumber 2, INDEXFONT, blue, SavePercent, whennotzero, 45, 182, 0, green, 46, red, 65;
+		
+		//Draw energy shield powerup indicator
+		InInventory PowerShield
+		{
+		DrawImage "HASARMR", 18, 154;
+		}
 
 // Health
 		
-		InInventory GenderMale, 1
-		{
-		drawmugshot "STM", 5, -25, 154;
-		}
 		
-		InInventory GenderFemale, 1
-		{
-		drawmugshot "GAL", 5, custom, -28, 154;
-		}
+
 		
+		//Draw berserk powerup indicator based on mode
+	
 		InInventory PowerStrength
 		{
 		DrawImage "HASBERK", -25, 154;
@@ -389,31 +389,13 @@ Drawselectedinventory indexfont, 56, 158;
 			}
 		}		
 		
-			InInventory PowerShield
-		{
-		DrawImage "HASARMR", 18, 154;
-		}
-		
         drawnumber 6, SMALLFONT, yellow, health, drawshadow, 0, 188, 0, red, 40, green, 71;
 
-
-//		drawimage translatable "STFBANY", 58, 169;
-
-	//drawimage "ARTIAMMO", 278, 159;
+// Ammo
 
 		drawimage ammoicon2, 290, 181;
 		drawnumber 4, DIGINUMBER, red, ammo2, 290, 185, 0;
-		/*
-		InInventory ShowSilencerInHud, 1
-		{
-			drawimage "SILEG0", 290, 181;
-		}
-		
-		InInventory ShowSlugShellsInHud, 1
-		{
-			drawimage "SHELZ0", 330, 181;
-		}
-		*/
+
 		drawimage ammoicon1, 330, 181;
 		drawnumber 4, DIGINUMBER, red, ammo1, 340, 185, 0;
 
@@ -422,15 +404,18 @@ Drawselectedinventory indexfont, 56, 158;
         
         
 		
-	//STAMINA	
-//	drawnumber 4, SMALLFONT, white, Ammo UsedStamina, whennotzero | interpolate(4), 166, 190, 0;
+// Stamina
 
+//When used stamina is in inventory, draw stamina bar
+//Bar fills out as more stamina is used
 InInventory UsedStamina, 1
 {
-
-DrawBar "STMNBAR2", "STMNBAR", Ammo UsedStamina, horizontal, interpolate(8), 283, 150;
-drawimage "STMNBAR3", 283, 150;
+	
+	DrawBar "STMNBAR2", "STMNBAR", Ammo UsedStamina, horizontal, interpolate(8), 283, 150;
+	drawimage "STMNBAR3", 283, 150;
 }
+
+//Powerup timers
 	
 	
 	//RADSUIT
@@ -446,8 +431,8 @@ drawimage "STMNBAR3", 283, 150;
 	drawnumber 4, SMALLFONT, Blue, PowerupTime ArtiTorch, whennotzero, 166, 168, 0;
 	
 	
-	//GRENADES
-	//drawimage "GRNDA", 255, 195;
+// GRENADES
+	//draw grenade based on nadetype
 	InInventory nadetype, 3
 		{
 			drawimage "GRNDC", 255, 195;
@@ -468,7 +453,7 @@ drawimage "STMNBAR3", 283, 150;
 		}	
 	drawnumber 4, SMALLFONT, gray, Ammo GrenadeAmmo, 260, 185, 0;
 	
-	
+// Deathmatch
 	gamemode deathmatch, teamgame
 	{
      	drawnumber 8, SMALLFONT, darkred, frags, 302, 8;
