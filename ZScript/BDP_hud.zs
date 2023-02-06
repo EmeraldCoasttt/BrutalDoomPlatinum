@@ -150,7 +150,14 @@ class BDP_HUD : DoomStatusBar
 			if (nade)
 			{
 				DrawImage(nade, pos, flags, box: box);
-				DrawString(fnt, String.Format("%d", gammo.amount), pos + (box.x / 2, -4), flags|DI_TEXT_ALIGN_RIGHT);
+				//DrawString(fnt, String.Format("%d", gammo.amount), pos + (box.x / 2, -4), flags|DI_TEXT_ALIGN_RIGHT);
+				DrawString(
+				mconfont,
+				String.Format("%d",gammo.amount),
+				pos + ((box.x / 4) + 5, -8),
+				DI_TEXT_ALIGN_RIGHT,
+				scale:(0.8, 0.8)
+				);
 				return true;
 			}
 		}
@@ -238,7 +245,14 @@ class BDP_HUD : DoomStatusBar
 			DrawInventoryIcon(invsel, pos, flags, boxsize:box);
 			if (invsel.amount > 1)
 			{
-				DrawString(mIndexfnt, String.Format("%d",invsel.amount), pos + (box.x / 2, -4), DI_TEXT_ALIGN_RIGHT|flags);
+				//DrawString(mIndexfnt, String.Format("%d",invsel.amount), pos + (box.x / 2, -4), DI_TEXT_ALIGN_RIGHT|flags);
+				DrawString(
+				mconfont,
+				String.Format("%d",invsel.amount),
+				pos + (box.x / 4, -5),
+				DI_TEXT_ALIGN_RIGHT|flags,
+				scale:(0.8, 0.8)
+				);
 			}
 		}
 	}
@@ -409,12 +423,12 @@ class BDP_HUD : DoomStatusBar
 			);
 			// armor absorption
 			DrawString(
-				mconfont, 
-				String.Format("%d%%", Clamp(armor.savepercent * 100, 0, 99)),
-				iconPos + (7, -3),
+				mconfont,
+				String.Format("%d%", Clamp(armor.savepercent * 100, 0, 99)),
+				iconPos + (7, -5),
 				numFlags,
 				translation: GetArmorAbsorbColor(armor),
-				scale:(0.4, 0.4)
+				scale:(0.8, 0.8)
 			);
 		}
 		
