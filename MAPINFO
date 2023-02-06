@@ -1,208 +1,207 @@
-
-
-
 Gameinfo
 {
-AddEventHandlers = "DoxBDHandler"
-AddEventHandlers = "WeaponSpawnHandler"
-AddEventHandlers = "RollHandler"
-AddEventHandlers = "TiltPlusPlusHandler"
+	StatusBarClass = "BDP_HUD"
+	AddEventHandlers = "DoxBDHandler"
+	AddEventHandlers = "WeaponSpawnHandler"
+	AddEventHandlers = "RollHandler"
+	AddEventHandlers = "TiltPlusPlusHandler"
 }
 
 
 DoomEdNums
 {
-7265 = BDPBike
+	7265 = BDPBike
 }
 
 
 
 episode EDAY01
 {
-optional
-name = "Extermination Day"
+	optional
+	name = "Extermination Day"
 }
+
 /*
 episode BDM01
 {
-name = "Brutal Deathmatch"
+	name = "Brutal Deathmatch"
 }
 */
+
 episode test
 {
-Name = "Testing Map"
-
+	Name = "Testing Map"
 }
 
 
 map BDM01 "Re-Entryway"
 {
-next = "BDM02"
-secretnext = "BDM02"
-sky1 = "SKYEAR1", 0.1
-music = D_RUNNIN
-cluster = 1
+	next = "BDM02"
+	secretnext = "BDM02"
+	sky1 = "SKYEAR1", 0.1
+	music = D_RUNNIN
+	cluster = 1
 }
 
 map BDM02 "Dead Simpler"
 {
-next = "BDM03"
-secretnext = "BDM03"
-sky1 = "SKYEAR1", 0.1
-music = D_SHAWN
-cluster = 1
+	next = "BDM03"
+	secretnext = "BDM03"
+	sky1 = "SKYEAR1", 0.1
+	music = D_SHAWN
+	cluster = 1
 }
 
 map BDM03 "Nuclear Ashes"
 {
-next = "BDM04"
-secretnext = "BDM04"
-sky1 = "SKYCIT1"
-music = D_ADRIAN
-cluster = 1
+	next = "BDM04"
+	secretnext = "BDM04"
+	sky1 = "SKYCIT1"
+	music = D_ADRIAN
+	cluster = 1
 }
 
 
 map BDM04 "Hangarmageddon"
 {
-next = "BDM05"
-secretnext = "BDM05"
-sky1 = "SKYPHO"
-music = D_E1M1
-cluster = 1
+	next = "BDM05"
+	secretnext = "BDM05"
+	sky1 = "SKYPHO"
+	music = D_E1M1
+	cluster = 1
 }
 
 
 map BDM05 "Sandstorm"
 {
-next = "BDM06"
-secretnext = "BDM06"
-sky1 = "SKYEAR1", 0.1
-music = D_DM05
-cluster = 1
+	next = "BDM06"
+	secretnext = "BDM06"
+	sky1 = "SKYEAR1", 0.1
+	music = D_DM05
+	cluster = 1
 }
 
 
 map BDM06 "Another One Bites De Dust"
 {
-next = "BDM07"
-secretnext = "BDM07"
-sky1 = "SKYEAR1", 0.1
-music = D_DM06
-cluster = 1
+	next = "BDM07"
+	secretnext = "BDM07"
+	sky1 = "SKYEAR1", 0.1
+	music = D_DM06
+	cluster = 1
 }
 
 map BDM07 "Pyramid"
 {
-next = "BDM09"
-secretnext = "BDM09"
-sky1 = "SKYEAR1", 0.1
-music = D_DM07
-cluster = 1
+	next = "BDM09"
+	secretnext = "BDM09"
+	sky1 = "SKYEAR1", 0.1
+	music = D_DM07
+	cluster = 1
 }
 
 
 map BDM08 "Storage Center"
 {
-next = "BDM09"
-secretnext = "BDM09"
-sky1 = "SKYEAR1"
-music = D_DM08
-cluster = 1
+	next = "BDM09"
+	secretnext = "BDM09"
+	sky1 = "SKYEAR1"
+	music = D_DM08
+	cluster = 1
 }
 
 map BDM09 "Cathedral"
 {
-next = "BDM10"
-secretnext = "BDM10"
-sky1 = "SKYDEI"
-music = D_DM09
-cluster = 1
+	next = "BDM10"
+	secretnext = "BDM10"
+	sky1 = "SKYDEI"
+	music = D_DM09
+	cluster = 1
 }
 
 map BDM10 "Tower of Babel"
 {
-next = "BDM01"
-secretnext = "BDM01"
-sky1 = "SKYDEI"
-music = D_dM10
-cluster = 1
+	next = "BDM01"
+	secretnext = "BDM01"
+	sky1 = "SKYDEI"
+	music = D_dM10
+	cluster = 1
 }
 
 map TEST "UAC Testing Center"
 {
-next = "MAP02"
-secretnext = "MAP02"
-sky1 = "SKYEAR1", 0.1
-cluster = 1
-//par = 60
-music = ORB
+	next = "MAP02"
+	secretnext = "MAP02"
+	sky1 = "SKYEAR1", 0.1
+	cluster = 1
+	//par = 60
+	music = ORB
 }
 
 map PSMAP58 "The Mansion"
 {
-next = "MAP17"
-secretnext = "PSMAP59"
-//sky1 = "SKYCIT1"
-sky1 = "SKYEAR3"
-cluster = 1
-//par = 60
-music = D_ROMERO
+	next = "MAP17"
+	secretnext = "PSMAP59"
+	//sky1 = "SKYCIT1"
+	sky1 = "SKYEAR3"
+	cluster = 1
+	//par = 60
+	music = D_ROMERO
 }
 
 map PSMAP59 "Club Doom"
 {
-next = "MAP17"
-sky1 = "SKYCITH"
-cluster = 1
-par = 60
-music = D_STALKS
+	next = "MAP17"
+	sky1 = "SKYCITH"
+	cluster = 1
+	par = 60
+	music = D_STALKS
 }
 
 map PSMAP29 "Twilight Descends"
 {
-next = "MAP15"
-secretnext = "PSMAP57"
-//sky1 = "SKYCIT1"
-sky1 = "SKYEAR3"
-cluster = 1
-//par = 60
-music = d_in_cit	
+	next = "MAP15"
+	secretnext = "PSMAP57"
+	//sky1 = "SKYCIT1"
+	sky1 = "SKYEAR3"
+	cluster = 1
+	//par = 60
+	music = d_in_cit	
 }
 
 
 map PSMAP57 "The Marshes"
 {
-next = "MAP15"
-secretnext = "MAP15"
-//sky1 = "SKYCIT1"
-sky1 = "SKYEAR3"
-cluster = 1
-//par = 60
-music = d_shawn	
+	next = "MAP15"
+	secretnext = "MAP15"
+	//sky1 = "SKYCIT1"
+	sky1 = "SKYEAR3"
+	cluster = 1
+	//par = 60
+	music = d_shawn	
 }
 
 map PSMAP16 "Hellgate"
 {
-next = "PSMAP17"
-secretnext = "PSMAP57"
-//sky1 = "SKYCIT1"
-sky1 = "SKYHELF"
-cluster = 1
-//par = 60
-music = d_dead	
+	next = "PSMAP17"
+	secretnext = "PSMAP57"
+	//sky1 = "SKYCIT1"
+	sky1 = "SKYHELF"
+	cluster = 1
+	//par = 60
+	music = d_dead	
 }
 
 
 map PSMAP17 "Blood Citadel"
 {
-next = "MAP21"
-secretnext = "MAP21"
-//sky1 = "SKYCIT1"
-sky1 = "SKYHELF"
-cluster = 1
-//par = 60
-music = d_doom	
+	next = "MAP21"
+	secretnext = "MAP21"
+	//sky1 = "SKYCIT1"
+	sky1 = "SKYHELF"
+	cluster = 1
+	//par = 60
+	music = d_doom	
 }
 
 
