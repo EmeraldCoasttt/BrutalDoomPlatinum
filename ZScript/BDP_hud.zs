@@ -66,7 +66,10 @@ class BDP_HUD : DoomStatusBar
 			DrawRightcorner();
 			DrawTopRight(mSmallFontNS, (-4, 1));
 			DrawFullscreenPowerups((0, -11), DI_SCREEN_CENTER_BOTTOM);
-			DrawInventoryBarEx(diparms, (-20, 150), 6, flags: DI_SCREEN_RIGHT_TOP, box: (20,20), vertical: true);
+			if (isInventoryBarVisible())
+			{
+				DrawInventoryBarEx(diparms, (-20, 150), 6, flags: DI_SCREEN_RIGHT_TOP, box: (20,20), vertical: true);
+			}
 		}
 	}
 	
