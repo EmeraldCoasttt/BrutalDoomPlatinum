@@ -370,7 +370,7 @@ class BDP_HUD : DoomStatusBar
 		DrawStaminaBar(iconPos + (-14, -37), iconflags);
 	
 		// Mugshot (leftmost):
-		DrawTexture(GetMugShot(5), iconPos, iconflags);
+		DrawTexture(GetMugShot(5), iconPos + (3,0), iconflags);
 		DrawString(
 			mSmallFont, 
 			String.Format("%d", CPlayer.health), 
@@ -406,9 +406,9 @@ class BDP_HUD : DoomStatusBar
 			);
 			// armor absorption
 			DrawString(
-				mConfont, 
-				String.Format("%d%% ABS.", Clamp(armor.savepercent * 100, 0, 99)),
-				iconPos + (0, -3),
+				mconfont, 
+				String.Format("%d%%", Clamp(armor.savepercent * 100, 0, 99)),
+				iconPos + (7, -3),
 				numFlags,
 				translation: GetArmorAbsorbColor(armor),
 				scale:(0.4, 0.4)
