@@ -6,7 +6,7 @@ ACTOR HandGrenades : BrutalWeapon
 	Weapon.AmmoUse1 0
 	Weapon.AmmoGive1 1
 	Weapon.SelectionOrder 5000
-	Weapon.AmmoType1 "GrenadeAmmo"
+//	Weapon.AmmoType1 "GrenadeAmmo"
 	Obituary "%o was shreded by %k's grenade."
     AttackSound "None"
     Inventory.PickupSound "AmmoAPIN"
@@ -63,21 +63,21 @@ ACTOR HandGrenades : BrutalWeapon
 	    if(CountInv("NadeType")==1)
 		  {
 		  A_PLaySound ("ICEGPRE2");
-		  ChangeAmmoIcon1("GRNDB");
+		  //ChangeAmmoIcon1("GRNDB");
 		  }
 		else
 		  {
 		  if(CountInv("NadeType")==2)
 		    {
 		    A_PLaySound ("PIPESEL");
-			ChangeAmmoIcon1("PIPBB0");
+			//ChangeAmmoIcon1("PIPBB0");
 		    }
 		  else
 		  {
 		    A_PLaySound ("GRNPIN");
 			if(CountInv("NadeType")==3)
 		    {
-			ChangeAmmoIcon1("GRNDC");
+			//ChangeAmmoIcon1("GRNDC");
 		    }
 		    }
 		  }
@@ -142,7 +142,7 @@ ACTOR HandGrenades : BrutalWeapon
 		TNT1 A 0 A_jumpif(countinv("grenadeammo") == 0, 4)
 		GNAD DCB 1
 		NULL A 0 A_giveinventory("nadetype",1)
-		TNT1 A 2 ChangeAmmoIcon1("GRNDB")
+	//	TNT1 A 2 ChangeAmmoIcon1("GRNDB")
 		TNT1 A 0 A_PLaySound ("ICEGPRE2")
 	    Goto SelectAnimation
 		
@@ -153,7 +153,7 @@ ACTOR HandGrenades : BrutalWeapon
 		TNT1 A 0 A_jumpif(countinv("grenadeammo") == 0, 4)
 		GNAD FGH 1
 		NULL A 0 A_giveinventory("nadetype",1)
-		TNT1 A 2 ChangeAmmoIcon1("PIPBB0")
+		//TNT1 A 2 ChangeAmmoIcon1("PIPBB0")
 		TNT1 A 0 A_PLaySound ("PIPESEL")
 		Goto SelectAnimation
 		
@@ -164,7 +164,7 @@ ACTOR HandGrenades : BrutalWeapon
 		TNT1 A 0 A_jumpif(countinv("grenadeammo") == 0, 5)
 		DKPB BCDE 1
 		NULL A 0 A_giveinventory("nadetype",1)
-		TNT1 A 2 ChangeAmmoIcon1("GRNDC")
+		//TNT1 A 2 ChangeAmmoIcon1("GRNDC")
 		TNT1 A 0 A_PLaySound ("GRNPIN")
 	    Goto SelectAnimation	
 		
@@ -175,7 +175,7 @@ ACTOR HandGrenades : BrutalWeapon
 		TNT1 A 0 A_jumpif(countinv("grenadeammo") == 0, 5)
 		4RTH DCBA 1
 		 NULL A 0 A_takeinventory("nadetype",3)
-		TNT1 A 2 ChangeAmmoIcon1("GRNDA")
+		//TNT1 A 2 ChangeAmmoIcon1("GRNDA")
 		TNT1 A 0 A_PLaySound ("GRNPIN")
 	    Goto SelectAnimation
 	

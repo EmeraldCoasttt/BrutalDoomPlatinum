@@ -8,6 +8,8 @@ class BDP_HUD : DoomStatusBar
 	HUDFont mSmallFontNS;
 	HUDFont mConfont;
 	HUDFont mDiginumber;
+	Int ArrowTimer;
+	int lasttickgrenade;
 
 	static clearscope double LinearMap(double val, double source_min, double source_max, double out_min, double out_max) 
 	{
@@ -34,6 +36,7 @@ class BDP_HUD : DoomStatusBar
 		// DOOM Hudfont:
 		fnt = "HUDFONT_DOOM";
 		mHUDFont = HUDFont.Create(fnt, fnt.GetCharWidth("0"), Mono_CellLeft, 1, 1);
+		Arrowtimer = 66;
 	}
 	
 	override void Draw (int state, double TicFrac)
@@ -106,7 +109,7 @@ class BDP_HUD : DoomStatusBar
 			DrawImage("HASARMR", (179, 169), DI_ITEM_LEFT_TOP);
 		}
 		
-		DrawGrenadeIndicator(mIndexfnt, (334, 194), box: (22,22));
+		DrawGrenadeIndicator(mIndexfnt, (334, 194), box: (22,22),TRUE);
 		
 		// Mag:
 		DrawImage("STARMS", (104,168), DI_ITEM_LEFT_TOP);
@@ -130,25 +133,62 @@ class BDP_HUD : DoomStatusBar
 	
 	// Draws grenade indicator. Returns false if for some reason
 	// the pointer to the grenade item wasn't obtained:
-	bool DrawGrenadeIndicator(HUDFont fnt, vector2 pos, int flags = 0, vector2 box = (-1,-1))
+	bool DrawGrenadeIndicator(HUDFont fnt, vector2 pos, int flags = 0, vector2 box = (-1,-1), bool reversed = FALSE)
 	{
+		If(ArrowTimer <= 66)
+		ArrowTimer++;
+	
 		let gammo = CPlayer.mo.FindInventory("GrenadeAmmo");
 		if (gammo)
 		{
 			string nade = "";
+			string nade2 = "";
+			string nade3 = "";
+			string nade4 = "";
+			int nade2ammo = 0;
+			int nade3ammo = 0;
+			int nade4ammo = 0;
 			// Pick the grenade icon based on the amount of
 			// NadeType in inventory:
 			int nadeAmt = (CPlayer.mo.CountInv("NadeType"));
 			switch (nadeAmt)
 			{
 			case 3:
-				nade = "GRNDC"; break;
+				nade = "GRNDC"; 
+				nade2 = "GRNDA";
+				nade3 = "GRNDB";
+				nade4 = "PIPBE";
+				nade2ammo = (CPlayer.mo.CountInv("AmmoFragGrenade"));
+				nade3ammo = (CPlayer.mo.CountInv("AmmoIceGrenade"));
+				nade4ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
+				break;
 			case 2:
-				nade = "PIPBE"; break;
+				nade = "PIPBE"; 
+				nade2 = "GRNDC";
+				nade3 = "GRNDA";
+				nade4 = "GRNDB";
+				nade2ammo = (CPlayer.mo.CountInv("AmmoVoidGrenade"));
+				nade3ammo = (CPlayer.mo.CountInv("AmmoFragGrenade"));
+				nade4ammo = (CPlayer.mo.CountInv("AmmoIceGrenade"));
+				break;
 			case 1:
-				nade = "GRNDB"; break;
+				nade = "GRNDB"; 
+				nade2 = "PIPBE";
+				nade3 = "GRNDC";
+				nade4 = "GRNDA";
+				nade2ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
+				nade3ammo = (CPlayer.mo.CountInv("AmmoVoidGrenade"));
+				nade4ammo = (CPlayer.mo.CountInv("AmmoFragGrenade"));
+				break;
 			case 0:
-				nade = "GRNDA"; break;
+				nade = "GRNDA"; 
+				nade2 = "GRNDB";
+				nade3 = "PIPBE";
+				nade4 = "GRNDC";
+				nade2ammo = (CPlayer.mo.CountInv("AmmoIceGrenade"));
+				nade3ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
+				nade4ammo = (CPlayer.mo.CountInv("AmmoVoidGrenade"));
+				break;
 			}
 			if (nade)
 			{
@@ -157,11 +197,74 @@ class BDP_HUD : DoomStatusBar
 				DrawString(
 				msmallfont,
 				String.Format("%d",gammo.amount),
-				pos + ((box.x / 4) + 5, -8),
+				pos + ((box.x / 6) + 5, -8),
 				DI_TEXT_ALIGN_RIGHT,
 				Font.CR_White
 				//scale:(0.8, 0.8)
 				);
+				If(reversed)
+				pos = (pos + (17, 0));
+				else
+				pos = (pos + (-17, 0));
+				DrawImage(nade2, pos, flags, box: (11,11), scale:(0.5,0.5));
+				DrawString(
+					msmallfont,
+					String.Format("%d",nade2ammo),
+					pos + ( 3, -4),
+					DI_TEXT_ALIGN_RIGHT,
+					Font.CR_White,
+					scale:(0.5, 0.5)
+				);
+				If(reversed)
+				pos = (pos + (10, 0));
+				Else
+				pos = (pos + (-10, 0));
+				DrawImage(nade3, pos, flags, box: (11,11), scale:(0.5,0.5));
+				DrawString(
+					msmallfont,
+					String.Format("%d",nade3ammo),
+					pos + ( 3, -4),
+					DI_TEXT_ALIGN_RIGHT,
+					Font.CR_White,
+					scale:(0.5, 0.5)
+				);
+				If(reversed)
+				pos = (pos + (10, 0));
+				Else
+				pos = (pos + (-10, 0));
+				DrawImage(nade4, pos, flags, box: (11,11), scale:(0.5,0.5));
+				DrawString(
+					msmallfont,
+					String.Format("%d",nade4ammo),
+					pos + ( 3, -4),
+					DI_TEXT_ALIGN_RIGHT,
+					Font.CR_White,
+					scale:(0.5, 0.5)
+				);
+				
+				If(lasttickgrenade != CPlayer.mo.CountInv("NadeType"))
+				{
+					ArrowTimer = 0;
+				}
+				LastTickGrenade = CPlayer.mo.CountInv("NadeType");
+				
+				
+				If(reversed && ArrowTimer < 65)
+				{
+				pos = (pos + (10, -0));
+				DrawImage("INVGEML1", pos, flags, box: box);
+				}
+				Else if(ArrowTimer < 65)
+				{
+				pos = (pos + (-10, -0));
+				DrawImage("INVGEMR1", pos, flags, box: box);
+				}
+				
+				
+				
+				
+				
+				
 				return true;
 			}
 		}
@@ -509,7 +612,7 @@ class BDP_HUD : DoomStatusBar
 			);
 		}
 		
-		iconPos += (iconSpacing * 1, 9);
+		iconPos += (iconSpacing * 1, 17);
 		DrawGrenadeIndicator(mIndexfnt, iconPos, iconFlags, (22,22));
 	}
 	
