@@ -31,6 +31,9 @@ class BDP_HUD : DoomStatusBar
 		// BD numeric font (monospaced):
 		fnt = "DIGINUMBER";
 		mDiginumber = HUDFont.Create(fnt, fnt.GetCharWidth("0"), true);
+		// DOOM Hudfont:
+		fnt = "HUDFONT_DOOM";
+		mHUDFont = HUDFont.Create(fnt, fnt.GetCharWidth("0"), Mono_CellLeft, 1, 1);
 	}
 	
 	override void Draw (int state, double TicFrac)
@@ -152,11 +155,12 @@ class BDP_HUD : DoomStatusBar
 				DrawImage(nade, pos, flags, box: box);
 				//DrawString(fnt, String.Format("%d", gammo.amount), pos + (box.x / 2, -4), flags|DI_TEXT_ALIGN_RIGHT);
 				DrawString(
-				mconfont,
+				msmallfont,
 				String.Format("%d",gammo.amount),
 				pos + ((box.x / 4) + 5, -8),
 				DI_TEXT_ALIGN_RIGHT,
-				scale:(0.8, 0.8)
+				Font.CR_White
+				//scale:(0.8, 0.8)
 				);
 				return true;
 			}
@@ -467,13 +471,13 @@ class BDP_HUD : DoomStatusBar
 		DrawString(mConfont, "Stamina", pos + (0,-5), flags|DI_TEXT_ALIGN_LEFT, alpha: LinearMap(alpha, 0, 255, 0., 1.), scale: (0.5, 0.5));
 	}
 	
-	void DrawRightcorner(vector2 basePos = (-28, -18))
+	void DrawRightcorner(vector2 basePos = (18, -19))
 	{
 		int iconflags = DI_SCREEN_RIGHT_BOTTOM|DI_ITEM_CENTER_BOTTOM;
 		int numFlags = iconflags|DI_TEXT_ALIGN_CENTER;
 		
 		vector2 iconPos = basePos;
-		int iconSpacing = -44;
+		int iconSpacing = -46;
 		vector2 numOfs = (-2, 1);
 		
 		Ammo ammo1, ammo2;
@@ -482,12 +486,14 @@ class BDP_HUD : DoomStatusBar
 		
 		if (ammo1)
 		{
+			iconPos.x += iconSpacing;
 			DrawInventoryIcon(ammo1, iconPos, iconFlags);
 			DrawString(
-				mDiginumber, 
-				String.Format("%02d", ammo1amt), 
+				mHudfont, 
+				String.Format("%d", ammo1amt), 
 				iconPos + numOfs,
-				numFlags
+				numFlags,
+				Font.CR_White
 			);
 		}
 		if (ammo2)
@@ -495,14 +501,15 @@ class BDP_HUD : DoomStatusBar
 			iconPos.x += iconSpacing;
 			DrawInventoryIcon(ammo2, iconPos, iconFlags);
 			DrawString(
-				mDiginumber, 
+				mHudfont, 
 				String.Format("%d", ammo2amt), 
 				iconPos + numOfs,
-				numFlags
+				numFlags,
+				Font.CR_White
 			);
 		}
 		
-		iconPos += (iconSpacing * 1.4, 12);
+		iconPos += (iconSpacing * 1, 9);
 		DrawGrenadeIndicator(mIndexfnt, iconPos, iconFlags, (22,22));
 	}
 	
