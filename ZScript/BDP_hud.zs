@@ -614,6 +614,18 @@ class BDP_HUD : DoomStatusBar
 		
 		iconPos += (iconSpacing * 1, 17);
 		DrawGrenadeIndicator(mIndexfnt, iconPos, iconFlags, (22,22));
+		DrawWeaponSpecificStuff(basepos);
+	}
+	
+	void DrawWeaponSpecificStuff(vector2 basepos = (18, -19))
+	{
+		Vector2 pos = basepos;
+		pos += (-92,1);
+		int flags = DI_SCREEN_RIGHT_BOTTOM|DI_ITEM_CENTER_BOTTOM;
+		if(CPlayer.mo.FindInventory("FiredMGGrenade") && CPlayer.mo.player.readyweapon && Cplayer.mo.player.readyweapon is "machinegun")
+		{
+			DrawImage("NoGren", pos, flags);
+		}
 	}
 	
 	string TicsToSeconds(int tics)

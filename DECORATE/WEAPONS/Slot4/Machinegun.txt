@@ -108,7 +108,7 @@ ACTOR Machinegun : BrutalWeapon
 			}
 			return state("");
 		}
-		  "####" "#" 0 ACS_NamedExecuteAlways("MGGrenadeCheck")
+		  "####" "#" 0 //ACS_NamedExecuteAlways("MGGrenadeCheck")
 		  "####" "#" 1 A_WeaponReadyDX(WRF_ALLOWRELOAD)
 		  goto ready3
 		  "####" "#" 0 A_JumpIfInventory("Clip2",1,"Ready")
@@ -209,7 +209,7 @@ ACTOR Machinegun : BrutalWeapon
 			MGN1 A 0 A_PlaySound("FARHMG", 6)
 			MGN1 A 0 A_PlaySound("HMGFIRE", 1)
 			MGN1 A 0 A_ZoomFactor(0.98)
-			TNT1 A 0 ACS_NamedExecuteAlways("MGGrenadeCheck")
+			TNT1 A 0// ACS_NamedExecuteAlways("MGGrenadeCheck")
 			TNT1 A 0 A_JumpIf(getCVAR("bd_AngledMachinegun")==true,"FireAngled")
 			TNT1 A 0 A_takeAmmo("clip2")
 			TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 2)// For poor PCs
@@ -323,7 +323,7 @@ ACTOR Machinegun : BrutalWeapon
 			MGN1 A 0 A_checkifammo("AmmoRocket",1,"NoAmmo2")
 			MGN1 A 0 A_JumpIfInventory("FiredMGGrenade", 1, "ReloadGrenade")
 			MGN1 A 0 A_PlaySound("weapons/firegrenade")
-			TNT1 A 0 ACS_NamedExecuteAlways("MGGrenadeCheck")
+			TNT1 A 0 //ACS_NamedExecuteAlways("MGGrenadeCheck")
 			MGN1 A 0 A_FireCustomMissile("RedFlareSpawn",-5,0,0,0)		
 			MGN1 A 0 A_takeAmmo("ammoRocket",1)
 			MGN2 A 0 BRIGHT A_FireCustomMissile("ShortGrenade", 0, 1, 0, 0)
@@ -350,7 +350,7 @@ ACTOR Machinegun : BrutalWeapon
 			MGN2 BC 1 BRIGHT A_SetPitch(1.0 + pitch, SPF_INTERPOLATE)
 			MGN2 DEF 1 A_SetPitch(1.0 + pitch, SPF_INTERPOLATE)
 			
-			TNT1 A 0 ACS_NamedExecuteAlways("MGGrenadeCheck")
+			TNT1 A 0 //ACS_NamedExecuteAlways("MGGrenadeCheck")
 			MGN1 A 10
 			MGN1 A 0 A_Refire
 			goto Ready
@@ -363,7 +363,7 @@ ACTOR Machinegun : BrutalWeapon
 			MGN3 XXY 1 A_SetPitch(1.0 + pitch, SPF_INTERPOLATE)
 			MGN1 A 0 A_jumpifinventory("powerspeed2",1,2)
 			MGN1 A 0 A_GiveInventory("FiredMGGrenade", 1)
-			TNT1 A 0 ACS_NamedExecuteAlways("MGGrenadeCheck")
+			TNT1 A 0// ACS_NamedExecuteAlways("MGGrenadeCheck")
 			MGN3 Z 1
 			MGN3 "[" 1
 			MGN3 "\" 1
