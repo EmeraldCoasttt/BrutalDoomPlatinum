@@ -620,11 +620,17 @@ class BDP_HUD : DoomStatusBar
 	void DrawWeaponSpecificStuff(vector2 basepos = (18, -19))
 	{
 		Vector2 pos = basepos;
-		pos += (-92,1);
 		int flags = DI_SCREEN_RIGHT_BOTTOM|DI_ITEM_CENTER_BOTTOM;
+		//Machine gun grenade
 		if(CPlayer.mo.FindInventory("FiredMGGrenade") && CPlayer.mo.player.readyweapon && Cplayer.mo.player.readyweapon is "machinegun")
 		{
+			pos += (-92,1);
 			DrawImage("NoGren", pos, flags);
+		}
+		if(CPlayer.mo.FindInventory("NEEDLERSELECTED") && CPlayer.mo.player.readyweapon && Cplayer.mo.player.readyweapon is "Plasma_Gun")
+		{
+			pos += (-44,-16);
+			DrawImage("Needlsel", pos, flags);
 		}
 	}
 	

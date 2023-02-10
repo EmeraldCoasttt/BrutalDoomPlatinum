@@ -186,12 +186,14 @@ ACTOR Plasma_Gun : BrutalWeapon
 			A_Print("\cyCharge altfire",2);
 			A_SetCVAR("bd_needlegun",false);
 			A_PlaySound("BEPBEP");
+			A_takeinventory("needlerselected",1);
 			}
 		else
 			{
 			A_Print("\cgNeedlegun altfire",2);
 			A_SetCVAR("bd_needleGun",true);
 			A_PlaySound("NDLRON");
+			A_giveinventory("needlerselected",1);
 			}
 	}
 	PLSI FGG 1

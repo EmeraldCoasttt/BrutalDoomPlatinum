@@ -84,6 +84,12 @@ Actor imteleporting : Inventory
 inventory.maxamount 1
 }
 
+Actor needlerselected : Inventory
+{
+inventory.maxamount 1
+}
+
+
 Actor nottitlemap : Inventory
 {
 inventory.maxamount 1
