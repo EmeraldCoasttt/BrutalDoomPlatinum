@@ -51,3 +51,28 @@ class Modifier_ShockFactor : BDPModifier
 	
 }
 
+
+class Modifier_PerfectHatred : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "FC0OUCH4";
+		BDPModifier.DisplayName "Perfect Hatred";
+		BDPModifier.Description "Demons are permanently enraged";
+	}
+	
+	Override void worldthingspawned(Worldevent e)
+	{
+		If(e.thing && e.thing.bismonster)
+		{
+			e.thing.bmissilemore = true;
+			//e.thing.bmissileevenmore = true;
+			e.thing.speed = (e.thing.speed * 1.5);
+			e.thing.bnopain = true;
+			e.thing.bnoinfighting = TRUE;
+			e.thing.giveinventory("pissedarmor",1);
+			//e.thing.A_giveinventory("thisreallypissesmeoff",(e.thing.health / 70));
+		}
+	}
+	
+}

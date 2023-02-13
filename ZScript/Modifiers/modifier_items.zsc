@@ -64,3 +64,15 @@ class ShockFactorPickup : BDPModifierpickup
 		+floatbob;
     }
 }
+
+class PerfectHatredPickup : BDPModifierpickup
+{
+ Default
+    {
+        Inventory.MaxAmount 1;
+		BDPModifierpickup.modifierclass "Modifier_PerfectHatred";
+		translation "200:207=[130,0,0]:[60,0,0]";
+		BDPModifierpickup.modifiermessage "Perfect Hatred Unlocked!";
+		+floatbob;
+    }
+}
