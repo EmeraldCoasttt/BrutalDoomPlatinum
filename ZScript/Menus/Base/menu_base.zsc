@@ -1,0 +1,111 @@
+
+class BDP_ComponentMenu : ListMenu 
+{
+	double prevMS;
+	double deltaTime;
+	Array<MenuElement> elements;
+
+	override void Init(Menu parent, ListMenuDescriptor desc)
+	{
+		Super.Init(parent, desc);
+		InitElements();
+	}
+	
+	virtual void InitElements() {}
+	
+	virtual MenuElement AddElement(class<MenuElement> type, String tag, vector2 pos, vector2 size = (1,1), double alpha = 1.0)
+	{
+		let element = MenuElement.Create(type, tag, self, pos, size, alpha);
+		elements.Push(element);
+		
+		return element;
+	}
+	
+	virtual MenuElement getElementByTag(string tag)
+	{
+		for(int i = 0; i < elements.Size(); i++)
+		{
+			if(elements[i].tag == tag)
+				return elements[i];
+		}
+		return NULL;
+	}
+	
+	virtual void getElementsOfClass(Array<MenuElement> foundElements, class<MenuElement> cls, bool child = false)
+	{
+		for(int i = 0; i < elements.Size(); i++)
+		{
+			let element = elements[i];
+			if( ((element is cls) && child) || element.getClass() == cls)
+				foundElements.Push(element);
+		}
+	}
+	
+	virtual void updateDeltaTime(double fps = 60.0)
+	{
+		double curMS = MSTimeF();
+		double diff = curMS - prevMS;
+		deltaTime = diff / (1000 / fps);
+		prevMS = curMS;
+	}
+	
+	override void Drawer()
+	{
+		updateDeltaTime();
+
+		// Draw and Update Elements
+		for(int i = 0; i < elements.Size(); i++)
+		{
+			elements[i].Draw(deltaTime);
+			elements[i].Update(deltaTime);
+		}
+		
+		// Calculate element collisions (This is REALLY slow, sadly. However the result is pretty robust and clean code-wise collision logic)
+		for(int i = 0; i < elements.Size(); i++)
+		{
+			let srcElement = elements[i];
+			if(!srcElement.canCollide(null)) continue;
+			for(int k = 0; k < elements.Size(); k++)
+			{
+				let otherElement = elements[k];
+				if(otherElement == srcElement || !otherElement.canCollide(srcElement)) continue;
+				
+				srcElement.CheckCollision(otherElement);
+			}
+		}	
+	}	
+	
+	play virtual void processNetworkEvent(ConsoleEvent e)
+	{
+		// Used as a callback from NetworkProcess, primarily to keep
+		// code functionality organized and more readable.
+	}
+	
+	virtual void OnElementEvent(MenuElement source, string eventType, int intArg, double doubleArg, string StrArg, Object objArg)
+	{
+		// MenuElements can call this function if they wish to relay behavior to their parent menu.
+	}
+	
+	virtual void OnMenuThink() {}
+	override bool OnUIEvent(UIEvent ev)
+	{	
+		OnMenuThink();
+		for(int i = 0; i < elements.Size(); i++)
+			elements[i].processUIEvent(ev, null);
+			
+		return super.OnUIEvent(ev);
+	}
+	override bool MenuEvent(int mkey, bool fromcontroller)
+	{
+		OnMenuThink();
+		return super.MenuEvent(mkey, fromcontroller);
+	}
+	
+	override bool OnInputEvent(InputEvent ev)
+	{ 	
+		for(int i = 0; i < elements.Size(); i++)
+			elements[i].processUIEvent(null, ev);
+			
+		return false;
+	}
+}

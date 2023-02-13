@@ -5,12 +5,14 @@ Gameinfo
 	AddEventHandlers = "WeaponSpawnHandler"
 	AddEventHandlers = "RollHandler"
 	AddEventHandlers = "TiltPlusPlusHandler"
+	AddEventHandlers = "BDPModifier_Events", "BDPMenuSwitcher"
 }
 
 
 DoomEdNums
 {
 	7265 = BDPBike
+	25871 = mjolnirpickup
 }
 
 

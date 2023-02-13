@@ -143,6 +143,8 @@ class Brutal_PlayerBase : PlayerPawn
 	bool notvoodoo;
 	bool previouschasecam;
 	
+	bool spawnwitharmor;
+	
 	Default
     {
 		Player.DisplayName "ZMovement Player";
@@ -194,7 +196,15 @@ class Brutal_PlayerBase : PlayerPawn
 	//{
 	
 //	}
-		
+		If(spawnwitharmor && !findinventory("powershield",TRUE))
+		{
+			GiveInventory("PowerShield2",1);
+			If(countinv("basicarmor") < 50)
+			{
+				takeinventory("basicarmor",50);
+				GiveInventory("mjolnirarmor",50);
+			}
+		}
 		
 		//giveinventory("meathook",1);
 		If (self is "tacticaldoomer")

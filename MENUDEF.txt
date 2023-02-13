@@ -32,7 +32,7 @@ IfGame(Doom, Chex)
 	
 	IfGame(Doom, Strife, Chex)
 	{
-		TextItem "New Game", "n", "PlayerclassMenu"
+		TextItem "New Game", "n", "BDPModifierMenu"
 		ifOption(SwapMenu)
 		{
 			TextItem "Load Game", "l", "LoadGameMenu"
@@ -64,6 +64,12 @@ IfGame(Doom, Chex)
 		TextItem "$MNU_INFO", "i", "ReadThisMenu"
 		TextItem "$MNU_QUITGAME", "q", "QuitMenu"
 	}
+}
+
+ListMenu "BDPModifierMenu"
+{
+	class "BDP_ModifierMenu"
+	animatedtransition
 }
 
 ListMenu "PlayerclassMenu"

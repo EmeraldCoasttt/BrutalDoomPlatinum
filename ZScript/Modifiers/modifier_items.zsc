@@ -1,0 +1,54 @@
+class BDPModifierpickup : Inventory
+{
+	string modifierclass;
+	property modifierclass : modifierclass;
+	string modifiermessage;
+	property modifiermessage : modifiermessage;
+    Default
+    {
+        Inventory.MaxAmount 1;
+		BDPModifierpickup.modifierclass "Modifier_Example2";
+		Inventory.pickupsound "null";
+		Inventory.pickupmessage "You got a Modifier!";
+		BDPModifierpickup.modifiermessage "YOU SHOULDN'T BE SEEING THIS";
+    }
+
+    static void UnlockModifier(string modifierClass)
+    {
+      // This should be a Server CVar, so we should be able to use consoleplayer.
+      let sv_unlockedmods = CVar.GetCVar("bdp_unlocked_modifiers", players[consoleplayer]);
+
+      if(bdp_unlocked_modifiers == "") 
+        sv_unlockedmods.SetString(modifierClass);
+      else
+        sv_unlockedmods.SetString(String.Format("%s, %s", bdp_unlocked_modifiers, modifierClass));
+    }
+
+    override void AttachToOwner(Actor other)
+    {
+        UnlockModifier(modifierclass);
+		other.A_startsound("MODSTING",720,0,1.0,ATTN_NONE);
+		other.A_Print(modifiermessage,5);
+        super.AttachToOwner(other);
+		
+    }
+    
+    States
+    {
+        Spawn:
+            MODD A -1;
+        stop;
+    }
+}
+
+class MjolnirPickup : BDPModifierpickup
+{
+ Default
+    {
+        Inventory.MaxAmount 1;
+		BDPModifierpickup.modifierclass "Modifier_Mjolnir";
+		translation "200:207=[0,215,215]:[0,47,47]";
+		BDPModifierpickup.modifiermessage "Mjolnir Unlocked!";
+		+floatbob;
+    }
+}

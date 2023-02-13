@@ -192,7 +192,14 @@ class PowerShield : Powerup
 }
 
 
-
+class PowerShield2 : Powershield
+{
+	Default
+	{
+		Powerup.Color "00 00 00", 0.0;
+		-INVENTORY.HUBPOWER
+	}
+}
 
 class mjolnirarmor : BasicArmorBonus
 {

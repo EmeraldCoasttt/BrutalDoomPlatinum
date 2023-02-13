@@ -1,4 +1,4 @@
-Version "3.8"
+version "4.10.0"
 
 #include "ZScript/math.zsc"
 #include "ZScript/PlayerPawn.ZMV"
@@ -63,4 +63,46 @@ Version "3.8"
 
 #include "zscript/TiltPlusPlus/TiltPlusPlus.zc"
 #include "zscript/TiltPlusPlus/TiltPlusPlusMenu.zc"
+
+#include "ZScript/Modifiers/modifier_base.zsc"
+#include "ZScript/Modifiers/modifiers.zsc"
+#include "ZScript/Modifiers/modifier_events.zsc"
+#include "ZScript/Modifiers/modifier_items.zsc"
+
+#include "ZScript/Menus/Base/sbs.zsc"
+#include "ZScript/Menus/Base/menu_elements.zsc"
+#include "ZScript/Menus/Base/menu_base.zsc"
+#include "ZScript/Menus/menuswitcher.zsc"
+
+#include "ZScript/Menus/modifiers_menu.zsc"
+
+// Any decorations should inherit from this if they've got no special behaviors.
+// This uses a custom Tick override which only goes through States and checks for 
+// alpha or if the Actor is frozen, so it's very light-weight.
+class DecoActor : Actor
+{
+	Default
+	{
+		Radius 1;
+		+NOINTERACTION;
+	}
+	
+	override void Tick()
+	{			
+		if (alpha <= 0)
+		{
+			destroy();
+			return;
+		}
+		if (isFrozen()) return;
+			
+		//animation:
+		if (tics != -1) 
+		{
+			if(tics > 0) tics--;
+			while (!tics) 
+				if(!SetState(CurState.NextState)) return;
+		}
+	}
+}
 

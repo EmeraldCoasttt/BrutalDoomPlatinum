@@ -1,0 +1,349 @@
+// HaloSkulls_Event -> skulls
+
+class ModifierButton : MenuButton
+{
+	BDPModifier btnmod; // This is the modifier assigned to this button.
+
+	void DrawIcon(vector2 iconPos, vector2 frameSize, bool keepAspect = true)
+	{
+		if(!btnmod) return;
+		string icon = btnmod.graphic;
+		
+		// Automagically scale image to size of button
+		let imgSize = BDPDrawer.GetImageSize(icon);
+		vector2 iconScale = (
+			(frameSize.x * 0.8) / imgSize.x,
+			(frameSize.y * 0.8) / imgSize.y
+		);	
+		
+		if(keepAspect) 
+		{
+			double aspectdef = imgSize.x / imgSize.y;
+			double aspectmod = (frameSize.x / frameSize.y) / aspectdef;
+			iconScale.x /= aspectmod;
+		}
+		
+		BDPDrawer.DrawImage(
+			icon, 
+			iconPos + (frameSize.x * 0.5, frameSize.y * 0.5), 
+			alpha:alpha+0.15, scale:iconScale, 
+			texoffs:(1.0,1.0)
+		); 
+	}
+	
+	override void OnPressed()
+	{
+		super.OnPressed();
+		Menu.MenuSound("menu/change");
+	}
+
+	override void Draw(double dt)
+	{
+		if(!btnmod) return;
+		string icon = btnmod.graphic;
+		
+		Color frameColor = Color(255,80,80,80);
+		if(hovered) frameColor = Color(64,255,0,0);
+		if(toggled) frameColor = Color(255,255,0,0);
+		if(disabled) frameColor = Color(255,0,0,0);
+		
+		BDPDrawer.DrawFrame(pos, size, frameColor);
+		BDPDrawer.Fill(0xFF000000, pos.x,pos.y, size.x,size.y, alpha:alpha);
+		DrawIcon(pos, size);
+	}
+}
+
+class TextButton : MenuButton
+{
+	BDP_ModifierMenu modmenu;
+	double scale;
+
+	override void Init()
+	{
+		super.Init();
+		modmenu = BDP_ModifierMenu(parentMenu);
+		scale = 1.0;
+	}
+
+	override void Draw(double dT)
+	{
+		if(!modmenu) return;
+		
+		int fontColor = Font.CR_RED;
+		if(hovered) fontColor = Font.CR_BRICK;
+		if(pressed) fontColor = Font.CR_BLACK;
+		
+		BDPDrawer.DrawString("BigFont", tag, pos, translation:fontColor, scale:(2.0,2.0) * scale);
+	}
+}
+
+class btn_AllMods : TextButton
+{
+	override void OnPressed()
+	{
+		Menu.MenuSound ("menu/choose");
+		super.OnPressed();
+		for(int i = 0; i < modmenu.buttons.Size(); i++)
+		{	
+			let btn = ModifierButton(modmenu.buttons[i]);
+			if(!btn) continue;
+			
+			btn.toggled = true;
+		}
+	}
+}
+class btn_NoMods : TextButton
+{	
+	override void OnPressed()
+	{
+		Menu.MenuSound ("menu/choose");
+		super.OnPressed();
+		for(int i = 0; i < modmenu.buttons.Size(); i++)
+		{	
+			let btn = ModifierButton(modmenu.buttons[i]);
+			if(!btn) continue;
+			
+			btn.toggled = false;
+		}
+	}
+}
+class btn_Confirm : TextButton
+{	
+	override void OnPressed()
+	{
+		Menu.MenuSound ("menu/advance");
+		super.OnPressed();
+		
+		// Go to next menu
+		Menu.SetMenu("playerclassmenu"); 
+		//modmenu.Close(); 
+	}
+}
+
+class ModifierDescriptor : MenuElement
+{
+	BDP_ModifierMenu modmenu;
+	override void Init()
+	{
+		super.Init();
+		modmenu = BDP_ModifierMenu(parentMenu);
+	}
+
+	// Attempt to automatically insert linebreaks in string.
+	clearscope static string formatLnBreaks(String str, int lineLen)
+	{
+		// Split string into words.
+		Array<string> words;
+		string newline = "\n";
+		str.Split(words, " ");
+		
+		string outStr;
+		int carriage = 0;
+		for(int i = 0; i < words.Size(); i++)
+		{
+			string word = words[i];
+			bool manualNewLine = word.IndexOf(newline, 0) != -1;
+			
+			int len = word.Length() + 1; // Add " " space at start of new word.
+			carriage += len;
+			
+			if(manualNewLine) carriage = len-1;
+			if(carriage > lineLen) 
+			{
+				outStr = outStr .. "\n";
+				carriage = len-1;
+			}
+
+			outStr = String.Format("%s %s", outStr, word);
+		}
+		
+		return outStr;
+	}
+
+	override void Draw(double dt)
+	{
+		if(!modmenu) return;
+
+		//  BDPDrawer.DrawString("NewConsoleFont", "Modifier Info", (descOffs.x + 20,descOffs.y + 10), 0, Font.CR_ORANGE, scale:txtScale*1.25);
+		
+		vector2 txtScale = (0.4,0.4);
+		txtScale *= min(size.x, size.y) / 200.;
+		
+		// Description Frame
+		vector2 descOffs = (pos.x+20, pos.y);
+		BDPDrawer.DrawFrame(pos, size);
+		BDPDrawer.Fill(0xFF000000, pos.x,pos.y, size.x,size.y, alpha:alpha);
+		
+		// Icon Frame
+		vector2 iconFrameSize = (
+			size.x * 0.3,
+			size.y * 0.3
+		);
+		vector2 iconFramePos = (
+			(pos.x + (size.x * 0.5)) - (iconFrameSize.x * 0.5),
+			pos.y + (size.y * 0.05)
+		);
+		BDPDrawer.DrawFrame(iconFramePos, iconFrameSize);
+		BDPDrawer.Fill(0xFF000000, iconFramePos.x,iconFramePos.y, iconFrameSize.x,iconFrameSize.y, alpha:alpha+0.25);
+		vector2 desc_pos = descOffs + (10,80);
+					
+		// Iterate through ModifierButtons and draw
+		// a description for the one being hovered over.
+		for(int i = 0; i < modmenu.buttons.Size(); i++)
+		{	
+			let btn = ModifierButton(modmenu.buttons[i]);
+			if( !btn || !btn.hovered || !modmenu.isValidModifierIndex(i) ) continue;
+			
+			let mod = modmenu.modifiers[i];
+			vector2 btnScale = btn.size;
+			vector2 iconPos = (btn.pos + (0,-5));
+			string icon = mod.graphic;
+			
+			string mdDesc = StringTable.Localize(mod.description);
+			mdDesc = formatLnBreaks(mdDesc, 30);
+			
+			// Draw modifier Icon
+			btn.DrawIcon(iconFramePos, iconFrameSize);
+			
+			if(btn.hovered)
+			{
+				// Draw skull name
+				BDPDrawer.DrawString(
+					"SmallFont", mod.displayName, 
+					(pos.x + (size.x*0.5), iconFramePos.y + iconFrameSize.y + 20), 
+					BDPDrawer.SS_TEXT_CENTER, Font.CR_GOLD, scale:txtScale*1.4, linespacing:20
+				);
+				
+				// Draw skull description
+				BDPDrawer.DrawString("SmallFont", mdDesc, desc_pos + (0,200), 0, Font.CR_WHITE, scale:txtScale*1.2, linespacing:10);
+			}
+			break; // Only draw one modifier in the description box.
+		}
+	}
+}
+
+class BDP_ModifierMenu : BDP_ComponentMenu
+{	
+	int mod_selected;
+	MenuCursor cursor;
+	Name prevMenu;
+	Array<MenuElement> buttons;
+	Array<BDPModifier> modifiers;
+	
+	bool isValidModifierIndex(int ind)
+	{
+		return ind >= 0 && ind < modifiers.Size();
+	}
+
+	override void Init(Menu parent, ListMenuDescriptor desc)
+	{
+		Super.Init(parent, desc);
+		
+		mod_selected = 0;
+		// DontDim = true;
+	}
+	
+	override void InitElements()
+	{
+		let modifierEvents = BDPModifier_Events(EventHandler.Find("BDPModifier_Events"));
+		if(modifierEvents) modifiers.Copy(modifierEvents.modifiers);
+	
+		cursor = MenuCursor(AddElement("MenuCursor", "cursor", (0,0), (4,4)));
+		AddElement("ModifierDescriptor", "descriptor", (1000,200), (700,500), 0.65);
+		
+		// Modifier Buttons
+		double rows = 4;
+		int curRow = 0;
+		vector2 size = (96,108);
+		vector2 btnPos = (360, 232);
+		vector2 btnOffs = (0,0);
+		for(int i = 0; i < modifiers.Size(); i++)
+		{
+			let btn = ModifierButton(AddElement(
+				"ModifierButton", 
+				String.Format("MODBTN%d", i), 
+				btnPos + btnOffs, size
+			));
+			if(btn) btn.btnmod = modifiers[i];
+			
+			if(++curRow >= rows)
+			{
+				btnOffs.y += (size.y * 1.2);
+				btnOffs.x = 0;
+				curRow = 0;
+			}
+			else
+			{
+				btnOffs.x += (size.y * 1.2);
+			}
+		}
+
+		// Text Buttons
+		AddElement("btn_AllMods", "Enable All", (1000,750), (256, 32));
+		AddElement("btn_NoMods", "Disable All", (1000,800), (256, 32));
+		AddElement("btn_Confirm", "CONFIRM", (1000,880), (256, 32));
+		
+		// Populate buttons array
+		GetElementsOfClass(buttons, "ModifierButton", true);
+	}
+	
+	override void Drawer ()
+	{
+		
+		if(modifiers.Size() <= 0)
+		{
+			// close the menu if there's nothing unlocked.
+			//Close();
+			//return;
+		}
+	
+		// Draw "container" for skull buttons
+		vector2 containerPos = (300,200);
+		vector2 containerSize = (600,800);
+		BDPDrawer.DrawFrame(containerPos, containerSize);
+		BDPDrawer.Fill(0xFF000000, containerPos.x,containerPos.y, containerSize.x,containerSize.y, alpha:0.65);
+		
+		super.Drawer();
+		uint strFlags = BDPDrawer.SS_SCREEN_TOP_CENTER | BDPDrawer.SS_TEXT_CENTER;	
+		
+		BDPDrawer.DrawString("BigFont", "MODIFIERS", (0,100), strFlags, Font.CR_RED, scale:(2.0,2.0));
+	}
+
+	override void OnMenuThink()
+	{
+		// Update Server CVar for active Modifiers
+		string modStr = "";
+		for(int i = 0; i < buttons.Size(); i++)
+		{
+			let btn = ModifierButton(buttons[i]);
+			if(i >= modifiers.Size() || !btn) continue;
+			
+			if(btn.toggled) 
+			{
+				if(modStr == "") 
+					modStr.AppendFormat("%s", modifiers[i].getClassName());
+				else
+					modStr.AppendFormat(", %s", modifiers[i].getClassName());
+			}
+		}
+		
+		// This should only be active from the title, so we don't really
+		// need to worry about player numbers.
+		let sv_activemods = CVar.GetCVar("bdp_active_modifiers", players[consoleplayer]);
+		if(sv_activemods) sv_activemods.SetString(modStr);
+	}
+	
+	override bool MenuEvent(int mkey, bool fromcontroller)
+	{
+		OnMenuThink();
+
+		switch (mkey)
+		{
+		case MKEY_Back:
+			Close();
+			//if(prevMenu) Menu.SetMenu(prevMenu);
+			return true;
+		}
+		return false;
+	}
+}

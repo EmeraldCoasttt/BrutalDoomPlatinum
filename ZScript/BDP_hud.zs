@@ -104,7 +104,7 @@ class BDP_HUD : DoomStatusBar
 			DrawImage(pwr, (143, 169), DI_ITEM_LEFT_TOP);
 		}
 		
-		if (CPlayer.mo.FindInventory("PowerShield", true))
+		if (CPlayer.mo.FindInventory("PowerShield", true) || CPlayer.mo.FindInventory("PowerShield2", true))
 		{
 			DrawImage("HASARMR", (179, 169), DI_ITEM_LEFT_TOP);
 		}
@@ -373,7 +373,7 @@ class BDP_HUD : DoomStatusBar
 		
 		// PowerShield forces 100% absorption for the current armor
 		// and gets its own color:
-		if (CPlayer.mo.CountInv("PowerShield"))
+		if (CPlayer.mo.CountInv("PowerShield") || CPlayer.mo.CountInv("PowerShield2"))
 			return Font.CR_Cyan;
 		
 		double sp = armor.savepercent;
@@ -516,7 +516,7 @@ class BDP_HUD : DoomStatusBar
 			// armor icon
 			DrawInventoryIcon(armor, iconPos, iconflags); 
 			// power shield icon
-			if (CPlayer.mo.CountInv("PowerShield"))
+			if (CPlayer.mo.CountInv("PowerShield") || CPlayer.mo.CountInv("PowerShield2"))
 			{
 				DrawImage("HASARMR", iconPos + smallIconOfs,DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
 			}

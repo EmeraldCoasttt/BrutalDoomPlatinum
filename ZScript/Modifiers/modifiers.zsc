@@ -1,0 +1,37 @@
+
+class Modifier_Mjolnir : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "HLMST00";
+		BDPModifier.DisplayName "Mjolnir";
+		BDPModifier.Description "Permanent Energy Armor powerup";
+	}
+	
+	override void WorldTick()
+	{
+		for(int i = 0; i < MAXPLAYERS; i++)
+		{
+			if(!PlayerInGame[i]) continue;
+			PlayerInfo plr = players[i];
+			if(!plr) continue;
+			
+			let dplr = Brutal_PlayerBase(plr.mo);
+			if(!dplr) continue;
+			
+			dplr.spawnwitharmor = true;
+		}
+	}
+
+}
+
+class Modifier_Example2 : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "UNKNA0";
+		BDPModifier.DisplayName "Modifier Name";
+		BDPModifier.Description "Modifier Description.";
+	}
+}
+

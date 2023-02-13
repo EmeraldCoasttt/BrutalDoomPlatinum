@@ -351,6 +351,29 @@ Actor ArmorShard : BasicArmorBonus Replaces ArmorBonus
 	}
 }
 
+Actor ArmorBonusModifier : BasicArmorBonus
+{
+	Game Doom
+	SpawnID 22
+	Radius 20
+	Height 16
+	Inventory.Pickupmessage "$GOTARMBONUS"
+	Inventory.Icon "ARM2A0"
+	Armor.Savepercent 33.1
+	Armor.Saveamount 50
+	Armor.Maxsaveamount 300
+	+COUNTITEM
+	+INVENTORY.NEVERRESPAWN
+	+INVENTORY.ALWAYSPICKUP
+	Inventory.PickupSound "items/armorbonus"
+	States
+	{
+	Spawn:
+	    TNT1 A 1
+		Loop
+	}
+}
+
 
 Actor ArmorShardNoCount: ArmorShard
 {

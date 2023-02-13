@@ -1,0 +1,261 @@
+class MenuElement : Object abstract ui
+{
+	string Tag; // Unique Element Tag
+	bool disabled;
+	BDP_ComponentMenu parentMenu;
+	vector2 pos;
+	vector2 size;
+	double alpha;
+	
+	static MenuElement Create(class<MenuElement> type, string tag, BDP_ComponentMenu parent, vector2 pos, vector2 size = (1,1), double alpha = 1.0)
+	{
+		let element = MenuElement(new(type));
+		if(element)
+		{
+			element.pos = pos;
+			element.size = size;
+			element.alpha = alpha;
+			element.parentMenu = parent;
+			element.Tag = tag;
+			element.Init();
+		}
+		return element;
+	}
+	
+	virtual void Init() {}
+	virtual void Draw(double dT) {}
+	virtual void Update(double dT) {}
+	
+	virtual bool checkDraggable()
+	{
+		return false;
+	}
+	
+	virtual void updateDragPos(MenuCursor cursor) {}
+	virtual void OnDrag(MenuCursor cursor) {}
+	virtual void OnDrop(MenuCursor cursor) {}
+	
+	static bool AABBCollision(vector2 pos1, vector2 size1, vector2 pos2, vector2 size2)
+	{
+		vector2 a0, a1, b0, b1;
+		a0 =  pos1;
+		b0 =  pos2;
+		a1 = (pos1.x+size1.x, pos1.y+size1.y);
+		b1 = (pos2.x+size2.x, pos2.y+size2.y);
+		
+		// Perform rectangular bounding box collision check
+		return (a0.x < b1.x && a1.x > b0.x && a0.y < b1.y && a1.y > b0.y);
+	}
+	
+	virtual void drawCollider()
+	{
+		BDPDrawer.DrawRect(pos, size);
+	}
+	
+	virtual bool canCollide(MenuElement other)
+	{
+		return size.x > 0 && size.y > 0;
+	}
+	virtual bool CheckCollision(MenuElement other, bool callOnCollide = true) 
+	{
+		bool collides = AABBCollision(pos, size, other.pos, other.size); 
+		if(collides && callOnCollide) OnCollision(other);
+		
+		return collides;
+	}
+	
+	virtual MenuElement getCollidingWithType(class<MenuElement> type, BDP_ComponentMenu fromMenu = NULL)
+	{
+		if(!fromMenu) fromMenu = parentMenu;
+		if(!fromMenu) return NULL;
+		
+		for(int i = 0; i < fromMenu.elements.Size(); i++)
+		{
+			let element = fromMenu.elements[i];
+			if( !(element is type) ) continue;
+			
+			if(CheckCollision(element, false))
+				return element;
+		}
+		return NULL;
+	}
+	
+	virtual void OnCollision(MenuElement other) {}
+	virtual void processUIEvent(UIEvent ev, InputEvent inputEv) {}
+}
+
+class MenuCursor : MenuElement
+{
+	MenuElement draggingElement;
+	vector2 mouseCoords;
+	bool leftDown, rightDown;
+	bool leftPressed, rightPressed;
+	int scrollDir;
+	double tmpScrollTimer;
+	double tmpBtnTimer;
+
+	override void processUIEvent(UIEvent ev, InputEvent inputEv)
+	{
+		if(ev) // Handle UIEvent events.
+		{
+			if(ev.type == UIEvent.Type_MouseMove)
+				mouseCoords = (ev.MouseX, ev.MouseY);
+				
+			// Left button
+			if(ev.type == UIEvent.Type_LButtonDown)
+			{
+				leftDown = true;
+				leftPressed = false;
+			}
+			if(ev.type == UIEvent.Type_LButtonUp) 
+			{
+				if(leftDown) leftPressed = true;
+				leftDown = false;
+			}
+
+			// Right button
+			if(ev.type == UIEvent.Type_RButtonDown)
+			{
+				rightDown = true;
+				rightPressed = false;
+			}
+			if(ev.type == UIEvent.Type_RButtonUp) 
+			{
+				if(rightDown) rightPressed = true;
+				rightDown = false;
+			}
+			
+			// Scroll
+			if(ev.type == UIEvent.Type_WheelUp  ) 
+			{
+				scrollDir = -1;
+				tmpScrollTimer = 0;
+			}
+			if(ev.type == UIEvent.Type_WheelDown) 
+			{
+				scrollDir =  1;
+				tmpScrollTimer = 0;
+			}
+		}
+	}
+	
+	override void Draw(double dT)
+	{
+		if(draggingElement) 
+		{
+			draggingElement.updateDragPos(self);
+			draggingElement.Draw(dT);
+		}
+	}
+	
+	virtual bool DragObject(MenuElement obj)
+	{
+		if( draggingElement || !obj.checkDraggable() ) 
+			return false;
+		
+		draggingElement = obj;
+		obj.OnDrag(self);
+		return true;
+	}
+	
+	virtual bool DropObject()
+	{
+		if(!draggingElement) return false;
+		draggingElement.OnDrop(self);
+		draggingElement = NULL;
+		return true;
+	}
+	
+	override void OnCollision(MenuElement other)
+	{
+		if(leftDown) 
+			DragObject(other);
+		else
+			DropObject();
+	}
+	
+	override void Update(double dT)
+	{
+		// Convert mouse coords from absolute to relative.
+		double xRel = Screen.GetWidth() / BDPDrawer.getBaseWidth();
+		double yRel = Screen.GetHeight() / BDPDrawer.getBaseHeight();
+		
+		pos = (mouseCoords.x / xRel, mouseCoords.y / yRel);
+		
+		// Update temp-state buttons
+		tmpBtnTimer    += dT;
+		tmpScrollTimer += dT;
+		if(tmpBtnTimer    >  5) leftPressed = rightPressed = false;
+		if(tmpScrollTimer > 10) scrollDir = 0;
+	}
+}
+
+class MenuButton : MenuElement
+{
+	bool btnDown;
+	bool pressed;
+	bool hovered;
+	bool toggled;
+	double heldTime;
+	
+	override void Update(double dT)
+	{
+		let cursor = MenuCursor(getCollidingWithType("MenuCursor"));
+		hovered = !!cursor;
+	
+		if(disabled)
+		{
+			pressed = false;
+			btnDown = true;
+			heldTime = 0;
+			return;
+		}
+
+		if(btnDown)
+			heldTime += dT;
+		else
+			heldTime = 0;
+			
+		if(cursor && btnDown && !cursor.leftDown && !pressed) 
+		{
+			pressed = true;
+			OnPressed();
+		}
+		btnDown = (cursor ? cursor.leftDown : false);
+	}
+	
+	virtual void OnPressed() 
+	{
+		toggled = !toggled;
+		pressed = false;
+	}
+}
+
+// Debug drawing
+extend class BDPDrawer
+{
+	static void DrawRect(vector2 pos, vector2 size, Color col = 0xFFFF00FF)
+	{
+		// Top
+		BDPDrawer.DrawThickLine(pos.x, pos.y, pos.x + size.x, pos.y, 2.0, col);
+		// Bottom
+		BDPDrawer.DrawThickLine(pos.x, pos.y + size.y, pos.x + size.x, pos.y + size.y, 2.0, col); 
+		// Left
+		BDPDrawer.DrawThickLine(pos.x, pos.y, pos.x, pos.y + size.y, 2.0, col); 
+		// Right
+		BDPDrawer.DrawThickLine(pos.x + size.x, pos.y, pos.x + size.x, pos.y + size.y, 2.0, col); 
+	}
+	
+	static void DrawFrame(vector2 pos, vector2 size, Color frameColor = Color(255, 80, 80, 80), uint flags = BDPDrawer.SS_NOASPECTCORRECTION)
+	{
+		double sc_xres = Screen.getWidth()/bdp_statscr_base_width;
+		double sc_yres = Screen.getHeight()/bdp_statscr_base_height;		
+		vector2 npos  = _ProcessCoords(pos, flags);
+		vector2 nsize = _ProcessScale(size, flags);
+		npos.x *= sc_xres;
+		npos.y *= sc_yres;
+		nsize.x *= sc_xres;
+		nsize.y *= sc_yres;
+		Screen.DrawLineFrame(frameColor, npos.x, npos.y, nsize.x, nsize.y, screen.GetHeight() / 240);
+	}
+}

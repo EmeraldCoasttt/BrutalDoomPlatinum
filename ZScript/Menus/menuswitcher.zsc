@@ -1,0 +1,65 @@
+class BDPMenuSwitcher : StaticEventHandler
+{
+	BDPModifier_Events modifierEvents;
+	ui int lastGS;
+	ui Name lastMenu;
+	
+	override void WorldTick()
+	{
+		if(!modifierEvents)
+			modifierEvents = BDPModifier_Events(EventHandler.Find("BDPModifier_Events"));
+	}
+	
+	override void UITick()
+	{
+		let curMenu = ListMenu(Menu.GetCurrentMenu());
+		
+		Name menuName = "None";
+		if(curMenu && curMenu.mDesc) menuName = curMenu.mDesc.mMenuName;
+	
+		if( (gamestate == GS_LEVEL && lastGS == GS_MENUSCREEN) || (menuName == "None" && lastMenu == "skillmenu")  )
+		{
+			EventHandler.SendNetworkEvent("flag_openmodifiermenu");
+		}
+		lastGS = gamestate;
+		lastMenu = menuName;
+	}
+}
+
+/*
+// Older code, use to have this menu "inserted" between other New Game menus.
+class BDPMenuSwitcher : StaticEventHandler
+{
+	ui Name prevMenu;
+	ui void gotoModifierMenu()
+	{
+		Menu.SetMenu("BDPModifierMenu");
+		let curMenu = BDP_ModifierMenu(Menu.GetCurrentMenu());
+		if(curMenu) curMenu.prevMenu = prevMenu;
+	}
+	
+	override void UITick()
+	{
+		let modifierEvents = BDPModifier_Events(EventHandler.Find("BDPModifier_Events"));
+		if(!modifierEvents || modifierEvents && modifierEvents.modifiers.Size() <= 0) return;
+		let curMenu = ListMenu(Menu.GetCurrentMenu());
+
+		if(!curMenu || !curMenu.mDesc) 
+		{
+			prevMenu = "";
+			return;
+		}
+		let menuName = curMenu.mDesc.mMenuName;
+		
+		bool menuBack = (menuName == "mainmenu") && (prevMenu == "episodemenu" || prevMenu == "skillmenu" || prevMenu == "playerclassmenu");
+		bool menuNext = (prevMenu == "mainmenu") && (menuName == "playerclassmenu" || menuName == "episodemenu" || menuName == "skillmenu");
+		if( (menuNext || menuBack) && prevMenu != "None" ) 
+		{
+			curMenu.Close();
+			gotoModifierMenu();	
+		}	
+		
+		prevMenu = menuName;
+	}
+}
+*/

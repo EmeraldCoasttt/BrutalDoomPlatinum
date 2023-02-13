@@ -1,0 +1,46 @@
+// Skulls are essentially mini event handlers
+class BDPModifier : Actor
+{
+	bool enabled;
+	bool unlocked; 
+	double scoreModifier; // Currently unused
+	string displayName;
+	string description;
+	string graphic;
+		
+	Property DisplayName : displayName;
+	Property Description : description;
+	Property ScoreModifier : scoreModifier; 
+	Property Icon : graphic;
+		
+	Default
+	{
+		+NOINTERACTION;
+		BDPModifier.ScoreModifier 1.0;
+	}
+	
+	override void Tick() {}
+	override void PostBeginPlay()
+	{
+		super.PostBeginPlay();
+		
+		bInvisible = true;
+		Init();
+	}
+	
+	// Overridable stuff, basically the important bit.
+	virtual void Init() {}
+	virtual void WorldTick () {}
+	virtual void WorldThingSpawned (WorldEvent e) {} 
+	virtual void WorldThingDied(WorldEvent e) {}
+	virtual void WorldThingDamaged(WorldEvent e) {}
+	virtual void WorldLinePreActivated(WorldEvent e) {}
+	virtual string FilterSpawns (class<Actor> item) { return ""; }
+	virtual void PlayerSpawned (PlayerEvent e) {}
+	virtual void PlayerRespawned (PlayerEvent e) {}
+	virtual void PlayerEntered (PlayerEvent e) {}
+	virtual void PlayerDisconnected (PlayerEvent e) {}
+	virtual void WorldLoaded (WorldEvent e) {}
+	ui virtual void RenderOverlay (RenderEvent e) {}
+}
+
