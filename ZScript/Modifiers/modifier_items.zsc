@@ -52,3 +52,15 @@ class MjolnirPickup : BDPModifierpickup
 		+floatbob;
     }
 }
+
+class ShockFactorPickup : BDPModifierpickup
+{
+ Default
+    {
+        Inventory.MaxAmount 1;
+		BDPModifierpickup.modifierclass "Modifier_ShockFactor";
+		translation "200:207=[236,0,0]:[81,0,0]";
+		BDPModifierpickup.modifiermessage "Shock Factor Unlocked!";
+		+floatbob;
+    }
+}
