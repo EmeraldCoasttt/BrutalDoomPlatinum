@@ -279,9 +279,9 @@ class BDP_ModifierMenu : BDP_ComponentMenu
 		}
 
 		// Text Buttons
-		AddElement("btn_AllMods", "Enable All", (1000,750), (256, 32));
-		AddElement("btn_NoMods", "Disable All", (1000,800), (256, 32));
-		AddElement("btn_Confirm", "CONFIRM", (1000,880), (256, 32));
+		AddElement("btn_AllMods", "Enable All", (1000,750), (556, 32));
+		AddElement("btn_NoMods", "Disable All", (1000,800), (556, 32));
+		AddElement("btn_Confirm", "CONFIRM", (1000,880), (556, 32));
 		
 		// Populate buttons array
 		GetElementsOfClass(buttons, "ModifierButton", true);
@@ -289,6 +289,8 @@ class BDP_ModifierMenu : BDP_ComponentMenu
 	
 	override void Drawer ()
 	{
+		// Populate buttons array
+		GetElementsOfClass(buttons, "ModifierButton", true);
 		
 		if(modifiers.Size() <= 0)
 		{

@@ -129,4 +129,43 @@ class BDPModifier_Events : EventHandler
 		foreach(md : modifiers)
 			if(md.enabled) md.WorldLoaded(e);
 	}
+	
+	Static void updatemodifiers()
+	{
+	
+		// Setup Modifiers
+		foreach(cls : AllActorClasses)
+		{
+			if( !(cls is "BDPModifier") || cls.getClassName() == "BDPModifier" ) continue;
+			let md = BDPModifier(Actor.Spawn(cls));
+			md.Init();
+		}
+		Array<String> activeMods;
+		Array<String> unlockedMods;
+		checkModifierUnlocked(unlockedMods);
+		getActiveModifiers(activeMods);
+		int MODNOTFOUND = activeMods.Size();
+		int MODLOCKED = unlockedMods.Size();
+		
+		//modifiers.Clear();	
+		let it = ThinkerIterator.Create("BDPModifier");
+		BDPModifier md;
+		while(md = BDPModifier(it.Next())) 
+		{
+			string clsName = md.getClassName();
+			clsName = clsName.MakeLower();
+			
+			if( (unlockedMods.Find(clsName) == MODLOCKED) && !bdp_modifiers_allunlocked )
+				continue;
+			
+			if(activeMods.Find(clsName) != MODNOTFOUND)
+				md.enabled = true;
+				
+			//modifiers.Push(md);
+		}
+		
+		//foreach(md : modifiers)
+		//	if(md.enabled) md.WorldLoaded(e);
+	
+	}
 }

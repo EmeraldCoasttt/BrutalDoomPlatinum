@@ -198,7 +198,7 @@ class Brutal_PlayerBase : PlayerPawn
 	//{
 	
 //	}
-		If(spawnwitharmor && !findinventory("powershield",TRUE))
+		If(spawnwitharmor && !findinventory("powershield",TRUE) && health > 0)
 		{
 			GiveInventory("PowerShield2",1);
 			If(countinv("basicarmor") < 50)

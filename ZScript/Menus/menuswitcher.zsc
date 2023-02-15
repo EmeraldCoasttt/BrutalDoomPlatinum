@@ -8,6 +8,7 @@ class BDPMenuSwitcher : StaticEventHandler
 	{
 		if(!modifierEvents)
 			modifierEvents = BDPModifier_Events(EventHandler.Find("BDPModifier_Events"));
+		modifierEvents.updatemodifiers();
 	}
 	
 	override void UITick()
