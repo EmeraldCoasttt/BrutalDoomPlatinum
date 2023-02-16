@@ -109,16 +109,18 @@ class btn_NoMods : TextButton
 }
 class btn_Confirm : TextButton
 {	
-	override void OnPressed()
-	{
-		Menu.MenuSound ("menu/advance");
-		super.OnPressed();
-		
-		// Go to next menu
+
+    override void OnPressed()
+    {
+        Menu.MenuSound ("menu/advance");
+        super.OnPressed();
+        
+        EventHandler.SendNetworkEvent("flag_updatemodifierstatus");
 		Menu.SetMenu("playerclassmenu"); 
-		//modmenu.Close(); 
-	}
+       // modmenu.Close(); 
+    }
 }
+
 
 class ModifierDescriptor : MenuElement
 {
@@ -245,6 +247,7 @@ class BDP_ModifierMenu : BDP_ComponentMenu
 	
 	override void InitElements()
 	{
+		EventHandler.SendNetworkEvent("flag_updatemodifierstatus");
 		let modifierEvents = BDPModifier_Events(EventHandler.Find("BDPModifier_Events"));
 		if(modifierEvents) modifiers.Copy(modifierEvents.modifiers);
 	

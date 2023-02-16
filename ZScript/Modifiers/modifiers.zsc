@@ -49,6 +49,14 @@ class Modifier_ShockFactor : BDPModifier
 		}
 	}
 	
+	Override void worldthingspawned(Worldevent e)
+	{
+		If(e.thing && e.thing.bismonster)
+		{
+			e.thing.bambush = false;
+		}
+	}
+	
 }
 
 

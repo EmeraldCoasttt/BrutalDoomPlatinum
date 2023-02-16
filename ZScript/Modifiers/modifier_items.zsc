@@ -29,6 +29,7 @@ class BDPModifierpickup : Inventory
         UnlockModifier(modifierclass);
 		other.A_startsound("MODSTING",720,0,1.0,ATTN_NONE);
 		other.A_Print(modifiermessage,5);
+		EventHandler.SendNetworkEvent("flag_updatemodifierstatus");
         super.AttachToOwner(other);
 		
     }
