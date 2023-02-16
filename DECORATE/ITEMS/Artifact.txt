@@ -208,6 +208,13 @@ ACTOR BerserkPack : CustomInventory Replaces Berserk
 	}
 }
 
+ACTOR Berserk2 : powerupgiver
+{
+	powerup.color none
+	powerup.type "powerstrength"
+	+inventory.autoactivate
+}
+
 ACTOR SuperBlurSphere : CustomInventory
 {
   +COUNTITEM

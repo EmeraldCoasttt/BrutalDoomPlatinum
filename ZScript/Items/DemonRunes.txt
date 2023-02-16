@@ -163,6 +163,7 @@ CLASS PowerTransformMeatBall : PowerMorph
 
 CLASS DemonPlayer : DoomPlayer
 {
+	int decayrate;
 	int decayticks;
 	Property decayticks : decayticks;
 	string deadgibs;
@@ -208,7 +209,7 @@ CLASS DemonPlayer : DoomPlayer
 	{
 	Health = 700;
 	}
-		if (level.time % decayticks == 0) 
+	if ( decayrate >= decayticks) 
 	{
 			If(health <= 1)
 			{
@@ -217,9 +218,12 @@ CLASS DemonPlayer : DoomPlayer
 			}
 		Else
 		{
-		Health = (health - 1);
+		A_sethealth(health - 1);
+		decayrate = 0;
 		}
 	}
+	
+	decayrate++;
 	
 	
 	If(dualtimer >= 1)

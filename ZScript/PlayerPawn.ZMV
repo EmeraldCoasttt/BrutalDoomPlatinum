@@ -145,6 +145,7 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	//Skulls
 	bool spawnwitharmor;
+	bool spawnberserked;
 	bool shockfactor;
 	
 	Default
@@ -207,6 +208,16 @@ class Brutal_PlayerBase : PlayerPawn
 				GiveInventory("mjolnirarmor",50);
 			}
 		}
+		
+		If(spawnberserked && !findinventory("powerstrength",TRUE) && health > 0)
+		{
+			GiveInventory("Berserk2",1);
+			If((health) < 50)
+			{
+				a_sethealth(100);
+			}
+		}
+		
 		
 		If(shockfactor && level.time % 5 == 0)
 		{

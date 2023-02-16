@@ -78,4 +78,16 @@ class PerfectHatredPickup : BDPModifierpickup
     }
 }
 
+class ManHalfPickup : BDPModifierpickup
+{
+ Default
+    {
+        Inventory.MaxAmount 1;
+		BDPModifierpickup.modifierclass "Modifier_ManAndAHalf";
+		translation "200:207=[117,117,117]:[0,0,0]","240:247=244:247";
+		BDPModifierpickup.modifiermessage "ManAndAHalf Unlocked!";
+		+floatbob;
+    }
+}
+
 //Man And A Half "200:207=[117,117,117]:[0,0,0]"
