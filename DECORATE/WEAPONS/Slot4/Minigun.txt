@@ -411,7 +411,7 @@ ACTOR MiniGun : BrutalWeapon
 			"####" A 0 A_ClearOverlays(-2,-2)
 			CHAG A 0 A_StopSound(5)
 			TNT1 A 0 A_JumpIfInventory("SwitchingDualModes", 1,"DeselectForNailgun")
-			TNT1 A 0 A_JumpIf(getCVAR("bd_NailgunModule")==true,"DeselectForNailgun")
+			TNT1 A 0 A_JumpIf(Countinv("NailgunModuleSelected")==1,"DeselectForNailgun")
 			CHAG A 0 A_JumpIfInventory("Clip2",1,"DecelectButHasAmmo")
 			CHGS ABCDE 1
 			TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower
@@ -439,7 +439,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_GiveInventory("RandomHeadExploder", 1)
 			CHAG A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "PuristGun")
 			TNT1 A 0 A_JumpIfInventory("SwitchingDualModes",1,"SwitchToMinigun")
-			TNT1 A 0 A_JumpIf(getCVAR("bd_NailgunModule")==true,"NailgunModeSelected")
+			TNT1 A 0 A_JumpIf(Countinv("NailgunModuleSelected")==1,"NailgunModeSelected")
 			TNT1 A 1 A_Raise
 			CHAG A 0 A_Giveinventory("GoSpecial",1)
 			CHAG A 0 A_Giveinventory("HeavyAutomaticWeapon",1)
@@ -846,8 +846,8 @@ ACTOR MiniGun : BrutalWeapon
 		NLGN T 5
 		NLGN UV 1
 		TNT1 A 0 A_GiveInventory("SwitchingDualModes", 1)
-		//TNT1 A 0 A_GiveInventory("NailgunModeSelected",1)
-		NULL A 0 A_SetCVAR("bd_NailgunModule",true)
+		TNT1 A 0 A_GiveInventory("NailgunModuleSelected",1)
+		//NULL A 0 A_SetCVAR("bd_NailgunModule",true)
 		TNT1 A 0 A_TakeInventory("StartDualWield",1)
 		TNT1 A 0 A_SelectWeapon("Nailgun")
 		TNT1 A 0 A_WeaponReady

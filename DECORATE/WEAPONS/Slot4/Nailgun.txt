@@ -692,7 +692,7 @@ ACTOR Nailgun : BrutalWeapon
 		5LGN FFG 1
 	    TNT1 A 0 A_GiveInventory("SwitchingDualModes", 1)
 	    //TNT1 A 0 A_TakeInventory("NailgunModeSelected",1)
-		NULL A 0 A_SetCVAR("bd_NailgunModule",false)
+		NULL A 0 A_TakeInventory("NailgunModuleSelected",1)
 		TNT1 A 0 A_TakeInventory("StartDualWield",1)
 		TNT1 A 0 A_SelectWeapon("Minigun")
 		TNT1 A 0 A_WeaponReady
