@@ -212,11 +212,11 @@ ACTOR BrutalSMG : BrutalWeapon
         //RIFF A 0 A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, 0)
 		SMGG A 0 A_TakeAmmo("BDSMGAmmo",1)
 		SMGG A 0 A_TakeAmmo("BDDualSMGAmmo",1)
-        SMGF B 1
+        //SMGF B 1
 		RIFG A 0 A_JumpIfInventory("NoPitch", 1, 2)
 		RIFG A 0 A_SetPitch(pitch+0.15, SPF_INTERPOLATE)
 		SMGG A 0 A_FireCustomMissile("PistolCaseSpawn",5,0,0,-9)
-		SMGG A 0 A_JumpIfInventory("IsTacticalClass", 1, 2)//Tactical mode skips a frame, fires faster
+		//SMGG A 0 A_JumpIfInventory("IsTacticalClass", 1, 2)//Tactical mode skips a frame, fires faster
 		SMGF C 1 
 		
 		RIFG A 0 A_JumpIfInventory("IsNOTTacticalClass", 1, 2)//tactical mode has muzzle climb
