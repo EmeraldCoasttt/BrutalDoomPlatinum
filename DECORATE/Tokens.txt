@@ -40,6 +40,10 @@ Actor needstoselect : Inventory
 {
 inventory.maxamount 1
 }
+Actor GlassSlugSelected : Inventory
+{
+inventory.maxamount 1
+}
 Actor killheadshottargets : Inventory
 {
 inventory.maxamount 1

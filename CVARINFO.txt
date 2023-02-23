@@ -219,21 +219,22 @@ user int bd_RailgunMag  = 50;
 server int Dox_MEStextureReplacements  = 0;
 
 //cross-save stuff
-server int bd_ShotgunAmmoType = 0;
-server int bd_ThrowableType;
+/*
+user int bd_ShotgunAmmoType = 0;
+user int bd_ThrowableType;
 
-server bool bd_UsePistolADS = false;
-server bool bd_ShotgunSlugs = false;
-server bool bd_NailgunModule = false;
-server bool bd_FrozenRailgun = false;
-server bool bd_AngledMachinegun = false;
-server bool bd_DBssg = false;
-server bool bd_EnergyASG = false;
-server bool bd_LaserRockets = false;
-server bool bd_HellishLaserRockets = false;
-server bool bd_StickyGrenades = false;
-server bool bd_needlegun = false;
-
+user bool bd_UsePistolADS = false;
+user bool bd_ShotgunSlugs = false;
+user bool bd_NailgunModule = false;
+user bool bd_FrozenRailgun = false;
+user bool bd_AngledMachinegun = false;
+user bool bd_DBssg = false;
+user bool bd_EnergyASG = false;
+user bool bd_LaserRockets = false;
+user bool bd_HellishLaserRockets = false;
+user bool bd_StickyGrenades = false;
+user bool bd_needlegun = false;
+*/
 user bool bd_AlwaysBob = false;
 
 
