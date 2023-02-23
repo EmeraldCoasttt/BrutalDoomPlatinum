@@ -44,6 +44,10 @@ Actor LaserRocketSelected : Inventory
 {
 inventory.maxamount 1
 }
+Actor StickyGrenadeSelected : Inventory
+{
+inventory.maxamount 1
+}
 Actor AngledMachineGun : Inventory
 {
 inventory.maxamount 1
