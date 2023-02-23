@@ -40,6 +40,14 @@ Actor needstoselect : Inventory
 {
 inventory.maxamount 1
 }
+Actor LaserRocketSelected : Inventory
+{
+inventory.maxamount 1
+}
+Actor AngledMachineGun : Inventory
+{
+inventory.maxamount 1
+}
 Actor NailgunModuleSelected : Inventory
 {
 inventory.maxamount 1
