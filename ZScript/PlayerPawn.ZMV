@@ -147,6 +147,7 @@ class Brutal_PlayerBase : PlayerPawn
 	bool spawnwitharmor;
 	bool spawnberserked;
 	bool shockfactor;
+	bool istactical;
 	
 	Default
     {
@@ -225,13 +226,15 @@ class Brutal_PlayerBase : PlayerPawn
 		}
 		
 		//giveinventory("meathook",1);
-		If (self is "tacticaldoomer")
+		If (istactical)
 		{
 		Giveinventory("istacticalclass",1);
+		Takeinventory("isnottacticalclass",1);
 		}
 		Else
 		{
 		Giveinventory("isnottacticalclass",1);
+		Takeinventory("istacticalclass",1);
 		}
 		If(dualtimer >= 1)
 		{

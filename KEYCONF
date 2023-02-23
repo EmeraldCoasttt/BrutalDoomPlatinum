@@ -1,8 +1,5 @@
 clearplayerclasses
 addplayerclass BDoomer
-addplayerclass Doomer2 
-addplayerclass Doomer3 
-addplayerclass TacticalDoomer 
 
 
 weaponsection "Brutal_Doom"

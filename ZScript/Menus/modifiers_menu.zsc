@@ -116,7 +116,7 @@ class btn_Confirm : TextButton
         super.OnPressed();
         
         EventHandler.SendNetworkEvent("flag_updatemodifierstatus");
-		Menu.SetMenu("playerclassmenu"); 
+		Menu.SetMenu("Episodemenu"); 
        // modmenu.Close(); 
     }
 }
