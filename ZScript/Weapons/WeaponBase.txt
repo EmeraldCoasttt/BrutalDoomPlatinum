@@ -71,6 +71,35 @@ Class Brutalweapon : DoomWeapon //Weapon
 		}
 		return victim;
 	}
+	
+	Action void A_reload(name mag, int magsize, name ammopool, bool chamberbonus = false, int conversion = 1)
+	{
+		Int MagGoal;
+		If(chamberbonus && countinv(mag) > 0)
+		{
+			MagGoal = (magsize + 1);
+		}
+		Else
+		{
+			MagGoal = magsize;
+		}
+		
+		Bool Reloaded;
+		
+		While(!reloaded)
+		{
+			If(countinv(mag) < MagGoal && countinv(ammopool) >= conversion)
+			{
+				takeinventory(ammopool,conversion);
+				giveinventory(mag,1);
+			}
+			else
+			{
+				reloaded = TRUE;
+			}
+		}
+	}
+	
 	Action void A_BDPMeleeStart(double range = 200)
 	{
 	if(A_CheckMeleeRange(skipWalls:true) < range) A_Recoil3D(-20); 
