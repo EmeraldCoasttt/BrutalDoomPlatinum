@@ -200,6 +200,7 @@ server float bd_AmmoShellBoxMultipier = 1.0;
 user int Dox_3DNail  = 0;
 user int BD_MagGoClicky  = 0;
 //MAGS
+/*
 user int bd_PistolMag  = 16;
 user int bd_SMGmag  = 41;
 user int bd_MP40mag  = 32;
@@ -214,7 +215,7 @@ user int bd_RocketMag  = 6;
 //Slot 6
 user int bd_PlasmaMag  = 50;
 user int bd_RailgunMag  = 50;
-
+*/
 //MES texturing
 server int Dox_MEStextureReplacements  = 0;
 

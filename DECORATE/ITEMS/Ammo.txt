@@ -944,9 +944,9 @@ ACTOR HelicopterMissileAmmo : Ammo
 ACTOR BDPistolAmmo : Ammo
 {
    Inventory.Amount 0
-   Inventory.MaxAmount 21
+   Inventory.MaxAmount 16
    Ammo.BackpackAmount 0
-   Ammo.BackpackMaxAmount 21
+   Ammo.BackpackMaxAmount 16
    Inventory.Icon PISTG0
 }
 

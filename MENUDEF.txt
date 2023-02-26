@@ -431,8 +431,6 @@ OptionMenu "DoxMonsterOptions"
 OptionMenu "DoxWeaponOptions"
 {
     Title "Weapon options"
-	Submenu "Customizable magazines",	"DoxAmmoOptions"
-	StaticText ""
 	Submenu "Smart crosshair",			"SmartCrosshairsMenu"
 	StaticText ""
    Option "Disable Auto Reload", "bd_NoAutoReload", "YesOrNo"
