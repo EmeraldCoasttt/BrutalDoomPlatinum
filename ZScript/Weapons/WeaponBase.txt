@@ -111,8 +111,8 @@ Class Brutalweapon : DoomWeapon //Weapon
 		If(invoker.gunslinger && invoker.gunslingereligible)
 		{
 			A_reload(mag, magsize, ammopool, 0, conversion, secondarymag);
-			invoker.gunslingereligible = false;
 		}
+		invoker.gunslingereligible = false;
 	}
 	
 	Action void A_BDPMeleeStart(double range = 200)

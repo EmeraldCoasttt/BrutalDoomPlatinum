@@ -337,6 +337,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		TNT1 A 1
 		PIST F 0 A_Giveinventory("PistolSelected",1)
 		TNT1 AAAAAAAAAAAAAAA 0 A_Raise
+		TNT1 A 0 A_GunSlingerReload("BDPistolAmmo",16,"Clip1",1,"BDDualPistolAmmo")
 		Goto SelectAnimation	
 		SwitchDual:
 		TNT1 AAAAAAAAAAAAAAA 0 A_Raise
