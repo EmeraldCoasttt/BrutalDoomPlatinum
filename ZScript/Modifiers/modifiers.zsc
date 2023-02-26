@@ -56,6 +56,12 @@ class Modifier_Mjolnir : BDPModifier
 			Actor.spawn("SkullTagArmor",e.thing.pos);
 			E.thing.destroy();
 		}
+		
+		If(e.thing && e.thing is "DemonProtectionSigil")
+		{
+			Actor.spawn("DemonStrengthRune",e.thing.pos);
+			E.thing.destroy();
+		}
 	}
 
 }
@@ -141,6 +147,21 @@ class Modifier_ManAndAHalf : BDPModifier
 			if(!dplr) continue;
 			
 			dplr.spawnberserked = true;
+		}
+	}
+	
+	Override void worldthingspawned(Worldevent e)
+	{
+		If(e.thing && e.thing is "BerserkPack")
+		{
+			Actor.spawn("DemonRuneSpawner",e.thing.pos);
+			E.thing.destroy();
+		}
+		
+		If(e.thing && e.thing is "DemonStrengthSigil")
+		{
+			Actor.spawn("DemonStrengthRune",e.thing.pos);
+			E.thing.destroy();
 		}
 	}
 	
