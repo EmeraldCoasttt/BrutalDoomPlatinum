@@ -48,6 +48,15 @@ class Modifier_Mjolnir : BDPModifier
 			dplr.spawnwitharmor = true;
 		}
 	}
+	
+	Override void worldthingspawned(Worldevent e)
+	{
+		If(e.thing && e.thing is "EnergyArmor")
+		{
+			Actor.spawn("SkullTagArmor",e.thing.pos);
+			E.thing.destroy();
+		}
+	}
 
 }
 

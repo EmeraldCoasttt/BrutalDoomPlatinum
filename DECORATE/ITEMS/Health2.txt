@@ -152,6 +152,8 @@ DropItem "EnergyArmor", 255, 4
 DropItem "SkulltagArmor", 255, 2
 }
 
+
+
 Actor EnergyArmor : CustomInventory 25869
 {
 +COUNTITEM
