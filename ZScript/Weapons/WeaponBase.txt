@@ -13,6 +13,10 @@ Class Brutalweapon : DoomWeapon //Weapon
 	Property offhandkick : offhandkick;
 	Bool clearoverlays;
 	Property clearoverlays : clearoverlays;
+	
+	//Modifiers:
+	bool gunslinger;
+	
 	Default
 	{
 	BrutalWeapon.Weight 5;

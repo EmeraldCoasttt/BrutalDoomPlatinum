@@ -78,14 +78,26 @@ class PerfectHatredPickup : BDPModifierpickup
     }
 }
 
-class ManHalfPickup : BDPModifierpickup
+class ManAndAHalfPickup : BDPModifierpickup
 {
  Default
     {
         Inventory.MaxAmount 1;
 		BDPModifierpickup.modifierclass "Modifier_ManAndAHalf";
 		translation "200:207=[117,117,117]:[0,0,0]","240:247=244:247";
-		BDPModifierpickup.modifiermessage "ManAndAHalf Unlocked!";
+		BDPModifierpickup.modifiermessage "Man And A Half Unlocked!";
+		+floatbob;
+    }
+}
+
+class GunSlingerPickup : BDPModifierpickup
+{
+ Default
+    {
+        Inventory.MaxAmount 1;
+		BDPModifierpickup.modifierclass "Modifier_Gunslinger";
+		translation "200:207=[79,149,0]:[0,77,81]","240:247=244:247";
+		BDPModifierpickup.modifiermessage "Gunslinger Unlocked!";
 		+floatbob;
     }
 }
