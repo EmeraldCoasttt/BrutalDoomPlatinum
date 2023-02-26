@@ -173,7 +173,7 @@ class Modifier_Gunslinger : BDPModifier
 	{
 		BDPModifier.Icon "CIGST10";
 		BDPModifier.DisplayName "Gunslinger";
-		BDPModifier.Description "Speed reload on weapon select";
+		BDPModifier.Description "Weapons deselected for 5 or more seconds instantly reload";
 	}
 	
 	override void WorldTick()

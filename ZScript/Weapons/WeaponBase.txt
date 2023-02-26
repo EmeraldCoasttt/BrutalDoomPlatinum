@@ -16,6 +16,8 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	//Modifiers:
 	bool gunslinger;
+	int gunslingertics;
+	bool gunslingereligible;
 	
 	Default
 	{
@@ -72,12 +74,12 @@ Class Brutalweapon : DoomWeapon //Weapon
 		return victim;
 	}
 	
-	Action void A_reload(name mag, int magsize, name ammopool, bool chamberbonus = false, int conversion = 1)
+	Action void A_reload(name mag, int magsize, name ammopool, int chamberbonus = 0, int conversion = 1, name secondarymag = "null")
 	{
 		Int MagGoal;
-		If(chamberbonus && countinv(mag) > 0)
+		If(countinv(mag) > 0)
 		{
-			MagGoal = (magsize + 1);
+			MagGoal = (magsize + chamberbonus);
 		}
 		Else
 		{
@@ -92,11 +94,24 @@ Class Brutalweapon : DoomWeapon //Weapon
 			{
 				takeinventory(ammopool,conversion);
 				giveinventory(mag,1);
+				If(secondarymag)
+				{
+					giveinventory(secondarymag,1);
+				}
 			}
 			else
 			{
 				reloaded = TRUE;
 			}
+		}
+	}
+	
+	Action void A_gunslingerreload(name mag, int magsize, name ammopool, int conversion = 1, name secondarymag = "null")
+	{
+		If(invoker.gunslinger && invoker.gunslingereligible)
+		{
+			A_reload(mag, magsize, ammopool, 0, conversion, secondarymag);
+			invoker.gunslingereligible = false;
 		}
 	}
 	
@@ -559,191 +574,214 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		}
 	}
 	
-	override void DoEffect() {
-  super.DoEffect();
+	override void DoEffect() 
+	{
+		super.DoEffect();
   
-  let player = owner.player;
+		let player = owner.player;
+		If(player.readyweapon is self.getclass())
+		{
+			If(owner.findinventory("rollingstamina"))
+			{
+				If(owner.findinventory("istacticalclass"))
+				{
+					owner.A_GiveInventory("UsedStamina", weight * 9);
+				}
+				owner.takeinventory("rollingstamina",1);
 	
-  If(owner.findinventory("rollingstamina"))
-	{
-	If(owner.findinventory("istacticalclass"))
-		{
-		owner.A_GiveInventory("UsedStamina", weight * 9);
-		}
-		owner.takeinventory("rollingstamina",1);
+			}
+			If(!owner.findinventory("grabbermodifier"))
+			{
+				owner.giveinventory("grabbermodifier",1);
+			}
+			/* If(owner.findinventory("bloodsplasherz"))
+			{
+				Owner.takeinventory("bloodsplasherz",1);
+				Int layeroffset = random(110,120);
+				player.SetPSprite(layeroffset,player.ReadyWeapon.FindState("bloodsplashred"));
+				owner.a_overlayoffset(layeroffset,random(-40,200),random(0,164));
 	
-	}
-  If(!owner.findinventory("grabbermodifier"))
-	{
-		owner.giveinventory("grabbermodifier",1);
-	}
- /* If(owner.findinventory("bloodsplasherz"))
-	{
-		Owner.takeinventory("bloodsplasherz",1);
-		Int layeroffset = random(110,120);
-		player.SetPSprite(layeroffset,player.ReadyWeapon.FindState("bloodsplashred"));
-		owner.a_overlayoffset(layeroffset,random(-40,200),random(0,164));
+			}*/
 	
-	}*/
+			Owner.takeinventory("grenadeammo",666);
+			If(owner.countinv("nadetype") == 3)
+			{
+				owner.giveinventory("grenadeammo",owner.countinv("ammovoidgrenade"));
+			}
+			Else If(owner.countinv("nadetype") == 2)
+			{
+				owner.giveinventory("grenadeammo",owner.countinv("ammopipebomb"));
+			}
+			Else If(owner.countinv("nadetype") == 1)
+			{
+				owner.giveinventory("grenadeammo",owner.countinv("ammoicegrenade"));
+			}
+			Else
+			{
+				owner.giveinventory("grenadeammo",owner.countinv("ammofraggrenade"));
+			}
+			If(owner.findinventory("hasagib") && !owner.findinventory("lostsoulfatality") || offhandkick && !owner.findinventory("lostsoulfatality"))
+			{
+				owner.giveinventory("footleft",1);
+			}
+			Else
+			{
+				owner.takeinventory("footleft",1);
+			}
 	
-	Owner.takeinventory("grenadeammo",666);
-	If(owner.countinv("nadetype") == 3)
-		{
-			owner.giveinventory("grenadeammo",owner.countinv("ammovoidgrenade"));
-		}
-	Else If(owner.countinv("nadetype") == 2)
-		{
-			owner.giveinventory("grenadeammo",owner.countinv("ammopipebomb"));
-		}
-	Else If(owner.countinv("nadetype") == 1)
-		{
-			owner.giveinventory("grenadeammo",owner.countinv("ammoicegrenade"));
-		}
-	Else
-		{
-			owner.giveinventory("grenadeammo",owner.countinv("ammofraggrenade"));
-		}
-	If(owner.findinventory("hasagib") && !owner.findinventory("lostsoulfatality") || offhandkick && !owner.findinventory("lostsoulfatality"))
-		{
-			owner.giveinventory("footleft",1);
-		}
-	Else
-		{
-			owner.takeinventory("footleft",1);
-		}
-	
-	 If(owner.findinventory("hasbarrel") && owner.findinventory("gofatality") || owner.findinventory("lostsoulfatality") && owner.findinventory("gofatality"))
-   {
-    owner.takeinventory("pseq1",1);
-   owner.takeinventory("pseq2",1);
-   player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("chooseyourgib"));
-   owner.takeinventory("gofatality",1);
-   }
+			If(owner.findinventory("hasbarrel") && owner.findinventory("gofatality") || owner.findinventory("lostsoulfatality") && owner.findinventory("gofatality"))
+			{
+				owner.takeinventory("pseq1",1);
+				owner.takeinventory("pseq2",1);
+				player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("chooseyourgib"));
+				owner.takeinventory("gofatality",1);
+			}
 
-   if(owner.GetCvar("bd_AlwaysBob") == true || owner.findinventory("sprintbob")) 
-		{
-  if (player && player.readyweapon) {
-    player.WeaponState |= WF_WEAPONBOBBING;
-		}
-  }
-   If(owner.findinventory("Gofatality"))
-   {
+			if(owner.GetCvar("bd_AlwaysBob") == true || owner.findinventory("sprintbob")) 
+			{
+				if (player && player.readyweapon) 
+				{
+					player.WeaponState |= WF_WEAPONBOBBING;
+				}
+			}
+			If(owner.findinventory("Gofatality"))
+			{
   
-   owner.takeinventory("pseq1",1);
-   owner.takeinventory("pseq2",1);
-   lasttickfatality = true;
- // owner.vel.x = 0;
- // owner.vel.y = 0;
-	owner.pitch = 0;
-   owner.ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0);//Start Camera
-   player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("Idle"));
-   player.uncrouch();
-  // setplayerproperty(0,1,4);
+				owner.takeinventory("pseq1",1);
+				owner.takeinventory("pseq2",1);
+				lasttickfatality = true;
+				// owner.vel.x = 0;
+				// owner.vel.y = 0;
+				owner.pitch = 0;
+				owner.ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0);//Start Camera
+				player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("Idle"));
+				player.uncrouch();
+				// setplayerproperty(0,1,4);
    
-   }
-   Else if (lasttickfatality)
-   {
-   lasttickfatality = false;
-    owner.ACS_NamedExecuteAlways("BDStopCamera", 0, 0, 0, 0);
-	//setplayerproperty(0,0,4);
-   }
-  //player.readyweapon.A_setcvar("throwabletype",0);
-  If(owner.findinventory("grenadeswapping"))
-	{
-	Owner.takeinventory("grenadeswapping",1);
+			}
+			Else if (lasttickfatality)
+			{
+				lasttickfatality = false;
+				owner.ACS_NamedExecuteAlways("BDStopCamera", 0, 0, 0, 0);
+				//setplayerproperty(0,0,4);
+			}
+			//player.readyweapon.A_setcvar("throwabletype",0);
+			If(owner.findinventory("grenadeswapping"))
+			{
+				Owner.takeinventory("grenadeswapping",1);
 	
-	If(owner.player.readyweapon is "handgrenades")
-		{
-		owner.giveinventory("startdualwield",1);
-		}
-		Else if(owner.CountInv("NadeType") == 0)
-		{
-		owner.giveinventory("nadetype",1);
-		owner.A_startSound ("ICEGPRE2",92);
-		owner.A_Print("\cnFreeze grenades selected.",2);
-		}
-		Else if(owner.CountInv("NadeType") == 1)
-		{
-		owner.giveinventory("nadetype",1);
-		owner.A_startSound ("PIPESEL",92);
-		owner.A_Print("\ccPipebombs selected.",2);
-		}
-		Else if(owner.CountInv("NadeType") == 2)
-		{
-		owner.giveinventory("nadetype",1);
-		owner.A_startSound ("GRNPIN",92);
-		owner.A_Print("\ctVoid grenades selected.",2);
-		}
-		Else
-		{
-		owner.takeinventory("nadetype",666);
-		owner.A_startSound ("GRNPIN",92);
-		owner.A_Print("Cluster grenades selected.",2);
-		}
-	
-		
-	
-	}
+				If(owner.player.readyweapon is "handgrenades")
+				{
+					owner.giveinventory("startdualwield",1);
+				}
+				Else if(owner.CountInv("NadeType") == 0)
+				{
+					owner.giveinventory("nadetype",1);
+					owner.A_startSound ("ICEGPRE2",92);
+					owner.A_Print("\cnFreeze grenades selected.",2);
+				}
+				Else if(owner.CountInv("NadeType") == 1)
+				{
+					owner.giveinventory("nadetype",1);
+					owner.A_startSound ("PIPESEL",92);
+					owner.A_Print("\ccPipebombs selected.",2);
+				}
+				Else if(owner.CountInv("NadeType") == 2)
+				{
+					owner.giveinventory("nadetype",1);
+					owner.A_startSound ("GRNPIN",92);
+					owner.A_Print("\ctVoid grenades selected.",2);
+				}
+				Else
+				{
+					owner.takeinventory("nadetype",666);
+					owner.A_startSound ("GRNPIN",92);
+					owner.A_Print("Cluster grenades selected.",2);
+				}
+			}
   
   
- If(sprinttimer > 0)
- {
- sprinttimer = sprinttimer - 1;
- }
-  If(owner.findinventory("sprintbob"))
-  {
-	BobRangeX = 1.0;
-	BobRangeY = 1.0;
-	BobSpeed = 3.9;
-	//owner.speed = (owner.default.speed * 2);
+			If(sprinttimer > 0)
+			{
+				sprinttimer = sprinttimer - 1;
+			}
+			If(owner.findinventory("sprintbob"))
+			{
+				BobRangeX = 1.0;
+				BobRangeY = 1.0;
+				BobSpeed = 3.9;
+				//owner.speed = (owner.default.speed * 2);
 	
-	owner.acs_namedexecute("fastplayer",0,0,0,0);
-	//owner.takeinventory("sprintbob",1);
-  }
- else
-  {
-	BobRangeX = 0.4;
-	BobRangeY = 0.4;
-	BobSpeed = 2.9;
-	//owner.takeinventory("sprintbob",1);
-	owner.acs_namedexecute("slowplayer",0,0,0,0);
-	//owner.speed = owner.default.speed;
-  }
+				owner.acs_namedexecute("fastplayer",0,0,0,0);
+				//owner.takeinventory("sprintbob",1);
+			}
+			else
+			{
+				BobRangeX = 0.4;
+				BobRangeY = 0.4;
+				BobSpeed = 2.9;
+				//owner.takeinventory("sprintbob",1);
+				owner.acs_namedexecute("slowplayer",0,0,0,0);
+				//owner.speed = owner.default.speed;
+			}
   
  
   
-  if(GetCvar("smooth_mouse") == true ) 
-		{
-  if (player && player.readyweapon) {
-    player.WeaponState |= SPF_INTERPOLATE;
-		}
-  }
+			if(GetCvar("smooth_mouse") == true ) 
+			{
+				if (player && player.readyweapon) {
+				player.WeaponState |= SPF_INTERPOLATE;
+				}
+			}
   
   //Hacky fix for weapon timers
-  If(owner.countinv("cyberdemonrockets") == 1 || owner.countinv("spiderchainguntimer") == 1)
-	{
-		guntimertics = (guntimertics + 1);
-		
-		If(guntimertics > 35)
+			If(owner.countinv("cyberdemonrockets") == 1 || owner.countinv("spiderchainguntimer") == 1)
 			{
-			owner.takeinventory("cyberdemonrockets",666);
-			owner.takeinventory("spiderchainguntimer",666);
+				guntimertics = (guntimertics + 1);
+		
+				If(guntimertics > 35)
+				{
+					owner.takeinventory("cyberdemonrockets",666);
+					owner.takeinventory("spiderchainguntimer",666);
+				}
 			}
-	}
-	Else
-	{
-		guntimertics = 0;
-	}
+			Else
+			{
+				guntimertics = 0;
+			}
 	
-  //No more death overlaysssss
-  If(owner.health < 1)
-	{
-		owner.A_clearoverlays(-700,30,false);
-	}
-	
+			//No more death overlaysssss
+			If(owner.health < 1)
+			{
+				owner.A_clearoverlays(-700,30,false);
+			}
+		
+			If(gunslingertics < 175)
+			{
+				Gunslingertics = 175;
+			}
+			//Console.printf(self.getclassname());
+		}
+		Else
+		{
+			If(gunslingertics > 0)
+			{
+				Gunslingertics--;
+			}
+			If(gunslingertics == 0 && !gunslingereligible && gunslinger)
+			{
+				Gunslingereligible = true;
+				owner.A_startsound("GUNSLNG",424,0,1);
+			}
+		}
   
 }
 	
+	Override void attachtoowner(Actor other)
+		{
+			Gunslingereligible = true;
+			Super.attachtoowner(other);
+		}
 	
 	
 	States
