@@ -3,10 +3,10 @@
 
 ACTOR DSweap : BrutalWeapon
 {
-	Obituary "%o was choped down by %k's Dragonslayer."
+	Obituary "$OB_BDP_DRAGONSLAYER"
     AttackSound "None"
     Inventory.PickupSound "AXEDRAW"
-	Inventory.Pickupmessage "You got something that looks too big to be called a sword!"
+	Inventory.Pickupmessage "$GOTBDPDRAGONSLAYER"
     +WEAPON.NOAUTOAIM
     +WEAPON.NOAUTOFIRE
     +FORCEXYBILLBOARD
@@ -17,7 +17,7 @@ ACTOR DSweap : BrutalWeapon
 	VisibleToPlayerClass BDoomer, Doomer2, TacticalDoomer, Purist
 	Weapon.SelectionOrder 20
 	Scale 0.9
-	Tag "Dragonslayer"
+	Tag "$TAG_BDP_DRAGONSLAYER"
 	BrutalWeapon.weight 10
 	brutalweapon.handedness 2
 	States

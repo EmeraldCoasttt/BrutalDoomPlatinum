@@ -17,7 +17,7 @@ ACTOR Belphegor2 : BaronofHell 2544
     Health 2000
 	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
 	damagefactor "Explosive", 1.7
-	Obituary "%o was no match for the Belphegor."
+	Obituary "$OB_BDP_NOMATCHTOBELPHEGOR"
 	BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood"
 	BloodColor "DarkGreen"
 	MaxStepHeight 24
@@ -31,7 +31,7 @@ ACTOR Belphegor2 : BaronofHell 2544
 	Species "Belphegor"
 	Height 88
 	Radius 32
-	Tag "Belphegor"
+	Tag "$FN_BDP_BELPHEGOR"
 	
 	States
 	{

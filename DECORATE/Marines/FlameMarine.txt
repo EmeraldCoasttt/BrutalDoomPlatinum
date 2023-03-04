@@ -5,6 +5,7 @@ MONSTER
 Height 56
 Radius 16
 translation "112:127=[255,168,0]:[64,12,0]"
+Tag "$FN_BDP_MARINEFLAME"
     States
 	{
 	Spawn:
@@ -1279,6 +1280,7 @@ ACTOR BlackMarine_Flame: Marine_Rifle
 	MaxTargetRange 4096
 	DropItem "FlameCannon"
 	translation "OrangeBlack"
+	"$FN_BDP_BLACKMARINEFLAME"
 	States
 	{
 	Active:

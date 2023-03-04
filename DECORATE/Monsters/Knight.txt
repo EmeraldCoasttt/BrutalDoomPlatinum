@@ -47,10 +47,10 @@ ACTOR HellKnight2 : HellKnight Replaces HellKnight
     BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood"
 	BloodColor "DarkGreen"
 	DropItem "DemonStrengthRune" 5
-	Obituary "%o was slain by a Hell Knight."
+	Obituary "$OB_BDP_SLAINBYHELLKNIGHT"
 	DamageType HKF
 	+DONTHURTSPECIES
-	Tag "Hell Knight"
+	Tag "$FN_HELL"
     MeleeDamage 5
 	States
 	{

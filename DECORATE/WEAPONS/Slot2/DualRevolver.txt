@@ -7,10 +7,10 @@ ACTOR DualRevolver : BrutalWeapon
 	Weapon.AmmoType1 "Clip1"
 	Weapon.AmmoType2 "BDDualRevolverAmmo"
 	weapon.selectionorder 500
-	Obituary "%o was shot down by %k's revolver."
+	Obituary "$OB_BDP_DUALREVOLVER"
     AttackSound "None"
     Inventory.PickupSound "REVDRY"
-	Inventory.Pickupmessage "You got the Revolver! Yee-haw! (slot 2)"
+	Inventory.Pickupmessage "$GOTBDPDUALREVOLVER"
     +WEAPON.NOAUTOAIM
 	+WEAPON.NOAUTOFIRE
 	+WEAPON.NOALERT
@@ -21,7 +21,7 @@ ACTOR DualRevolver : BrutalWeapon
 	Weapon.SisterWeapon "DoxsRevolver"
 	+POWERED_UP
 	Scale 0.9
-	Tag "Revolver"
+	Tag "$TAG_BDP_DUALREVOLVER"
 	brutalweapon.handedness 2
 	States
 	{

@@ -5,7 +5,7 @@
 
 ACTOR MiniGunCount : Ammo 
 {
-	Inventory.PickupMessage "Picked up a Minigun."
+	Inventory.PickupMessage "$GOTBDPBDPMINIGUN"
 	Inventory.Amount 1
 	Inventory.MaxAmount 5
 	Inventory.Icon "MGUNB0"
@@ -36,7 +36,7 @@ ACTOR AmmoSuply : BackpackItem Replaces Backpack
 
 ACTOR Clip2 : Ammo Replaces Clip
 {
-	Inventory.PickupMessage "Picked up a Rifle Magazine."
+	Inventory.PickupMessage "$GOTBDPRIFLEMAG"
 	Inventory.Amount 30
 	Inventory.MaxAmount 300
 	Ammo.BackpackAmount 30
@@ -88,7 +88,7 @@ ACTOR DoubleRifleAmmo : Ammo
 ACTOR Clip1 : Ammo
 {
 	Game Doom
-	Inventory.PickupMessage "Picked up a Pistol Magazine."
+	Inventory.PickupMessage "$GOTBDPPISTOLMAG"
 	Inventory.Amount 30
 	Inventory.MaxAmount 200
 	Ammo.BackpackAmount 100
@@ -129,7 +129,7 @@ ACTOR Clip1Drop: CustomInventory
  radius 24
  height 24
  +THRUACTORS +FORCEXYBILLBOARD
- Inventory.PickupMessage "Picked up a Pistol Magazine."
+ Inventory.PickupMessage "$GOTBDPPISTOLMAG"
  Inventory.PickupSound "CLIPIN"
  Mass 1
     States
@@ -167,7 +167,7 @@ ACTOR ClipBox2 : Clip2 //Replaces Clipbox
 {
 	Game Doom
 	SpawnID 139
-	Inventory.PickupMessage "Picked up a box of rifle ammunition."
+	Inventory.PickupMessage "$GOTBDPRIFLEAMMOBOX"
 	Inventory.PickupSound "CBOXPICK"
 	Inventory.Amount 75
 	Scale 0.9
@@ -201,7 +201,7 @@ ACTOR PAmmoBox: CustomInventory
  Scale 0.9
  Radius 20
  Height 16
- Inventory.PickupMessage "Picked up a box of pistol ammunition."
+ Inventory.PickupMessage "$GOTBDPPISTOLAMMOBOX"
  Inventory.PickupSound "CBOXPICK"
  States
  {
@@ -536,7 +536,7 @@ ACTOR AmmoShellSingle : AmmoShell
 +ROLLSPRITE
 +ROLLCENTER
 Inventory.Amount 1
-Inventory.PickupMessage "Picked up a shell."
+Inventory.PickupMessage "$GOTBDPSHELL"
 	States
 	{
 	Spawn:
@@ -685,7 +685,7 @@ ACTOR Gas : Ammo
    Ammo.BackpackAmount 100
    Ammo.BackpackMaxAmount 600
    Inventory.Icon "GSLNA0"
-   Inventory.PickupMessage "You got Gasoline."
+   Inventory.PickupMessage "$GOTBDPGASOLINE"
 }
 
 ACTOR MP40Ammo : Ammo
@@ -734,7 +734,7 @@ ACTOR NuRailgunAmmo : Ammo
 ACTOR GrenadeAmmo : Ammo
 {
 	Game Doom
-	Inventory.PickupMessage "Picked up a Grenade."
+	Inventory.PickupMessage "$GOTBDPGRENADE"
 	Inventory.Amount 1
 	Inventory.MaxAmount 3
 	Ammo.BackpackAmount 0
@@ -754,7 +754,7 @@ ACTOR GrenadeBox : GrenadeAmmo
 {
 	Game Doom
 	SpawnID 139
-	Inventory.PickupMessage "Picked up a box of throwables."
+	Inventory.PickupMessage "$GOTBDPGRENADEBOX"
 	Inventory.Pickupsound "RCKCLIP"
 	Inventory.Amount 4
 	Scale 0.9
@@ -793,7 +793,7 @@ ACTOR GrenadeBox : GrenadeAmmo
 
 ACTOR TankAmmo : Ammo
 {
-	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.PickupMessage "$GOTBDPMAGAZINE"
 	Inventory.Amount 10
 	Inventory.MaxAmount 100
 	Ammo.BackpackAmount 0
@@ -811,7 +811,7 @@ ACTOR TankAmmo : Ammo
 ACTOR MechAmmo : Ammo
 {
 
-	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.PickupMessage "$GOTBDPMAGAZINE"
 	Inventory.Amount 10
 	Inventory.MaxAmount 100
 	Ammo.BackpackAmount 0
@@ -831,7 +831,7 @@ ACTOR MechAmmo : Ammo
 ACTOR HeavyMachinegunAmmo : Ammo
 {
 	Game Doom
-	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.PickupMessage "$GOTBDPMAGAZINE"
 	Inventory.Amount 100
 	Inventory.MaxAmount 2000
 	Ammo.BackpackAmount 0
@@ -851,7 +851,7 @@ ACTOR HeavyMachinegunAmmo : Ammo
 ACTOR MechRocketAmmo : Ammo
 {
 	Game Doom
-	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.PickupMessage "$GOTBDPMAGAZINE"
 	Inventory.Amount 5
 	Inventory.MaxAmount 60
 	Ammo.BackpackAmount 0
@@ -869,7 +869,7 @@ ACTOR MechRocketAmmo : Ammo
 ACTOR MechLaserAmmo : Ammo
 {
 	Game Doom
-	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.PickupMessage "$GOTBDPMAGAZINE"
 	Inventory.Amount 30
 	Inventory.MaxAmount 200
 	Ammo.BackpackAmount 0
@@ -888,7 +888,7 @@ ACTOR MechLaserAmmo : Ammo
 ACTOR MechMOrtarAmmo : Ammo
 {
 	Game Doom
-	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.PickupMessage "$GOTBDPMAGAZINE"
 	Inventory.Amount 1
 	Inventory.MaxAmount 20
 	Ammo.BackpackAmount 0
@@ -907,7 +907,7 @@ ACTOR MechMOrtarAmmo : Ammo
 ACTOR HelicopterRocketAmmo : Ammo
 {
 	Game Doom
-	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.PickupMessage "$GOTBDPMAGAZINE"
 	Inventory.Amount 1
 	Inventory.MaxAmount 100
 	Ammo.BackpackAmount 0
@@ -925,7 +925,7 @@ ACTOR HelicopterRocketAmmo : Ammo
 ACTOR HelicopterMissileAmmo : Ammo
 {
 	Game Doom
-	Inventory.PickupMessage "Picked up a Magazine."
+	Inventory.PickupMessage "$GOTBDPMAGAZINE"
 	Inventory.Amount 1
 	Inventory.MaxAmount 50
 	Ammo.BackpackAmount 0
@@ -963,7 +963,7 @@ ACTOR BDDualPistolAmmo : Ammo
 
 ACTOR Nuke : Ammo
 {
-	Inventory.PickupMessage "Picked up a Nuke Cell."
+	Inventory.PickupMessage "$GOTBDPNUKECELL"
 	Inventory.Amount 1
 	Inventory.MaxAmount 1
 	Ammo.BackpackAmount 0
@@ -1012,7 +1012,7 @@ ACTOR PickyNuke : Nuke
 ACTOR Mauser9mm : Ammo
 {
 	Game Doom
-	Inventory.PickupMessage "Picked up a Pistol Magazine."
+	Inventory.PickupMessage "$GOTBDPPISTOLMAGAZINE"
 	Inventory.Amount 10
 	Inventory.MaxAmount 200
 	Ammo.BackpackAmount 150
@@ -1030,7 +1030,7 @@ ACTOR Mauser9mm : Ammo
 
 Actor AmmoFragGrenade : Ammo
 {
-	Inventory.PickupMessage "Picked up a Grenade."
+	Inventory.PickupMessage "$GOTBDPGRENADE"
 	Inventory.Amount 1
 	Inventory.MaxAmount 2
 	Ammo.BackpackAmount 1
@@ -1048,7 +1048,7 @@ Actor AmmoFragGrenade : Ammo
 
 Actor AmmoPipeBomb : Ammo
 {
-	Inventory.PickupMessage "Picked up a Pipe Bomb."
+	Inventory.PickupMessage "$GOTBDPPIPEBOMB"
 	Inventory.Amount 1
 	Inventory.MaxAmount 2
 	Ammo.BackpackAmount 1
@@ -1067,7 +1067,7 @@ Actor AmmoPipeBomb : Ammo
 
 Actor AmmoIceGrenade : Ammo
 {
-	Inventory.PickupMessage "Picked up an Freeze 'Nade."
+	Inventory.PickupMessage "$GOTBDPFREEZEGRENADE"
 	Inventory.Amount 1
 	Inventory.MaxAmount 2
 	Ammo.BackpackAmount 1
@@ -1085,7 +1085,7 @@ Actor AmmoIceGrenade : Ammo
 
 Actor AmmoVoidGrenade : Ammo
 {
-	Inventory.PickupMessage "Picked up a Void Grenade."
+	Inventory.PickupMessage "$GOTBDPVOIDGRENADE"
 	Inventory.Amount 1
 	Inventory.MaxAmount 2
 	Ammo.BackpackAmount 1

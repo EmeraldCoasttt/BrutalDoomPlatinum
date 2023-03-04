@@ -534,7 +534,7 @@ Default
 {
 translation "176:191=[153,50,204]:[0,0,0]";
 Inventory.maxamount 1;
-Inventory.pickupmessage "You got Plasma Shells for your Assault Shotgun!";
+Inventory.pickupmessage "$AMMO_BDP_ASSAULTSHOTGUNPLASMA";
 Inventory.Pickupsound "SHELPK2";
 }
 States
@@ -588,7 +588,7 @@ Default
 {
 translation "168:191=208:223";
 Inventory.maxamount 1;
-Inventory.pickupmessage "You got Dragon's Breath Shells for your SuperShotgun!";
+Inventory.pickupmessage "$AMMO_BDP_ASSAULTSHOTGUNDRAGON";
 Inventory.Pickupsound "SHELPK2";
 }
 States

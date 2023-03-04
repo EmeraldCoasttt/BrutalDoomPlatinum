@@ -5,6 +5,7 @@ ACTOR PrePlacedMarinePlasmaGun Replaces MarinePlasma
 	Height 56
 	Radius 16
 	-COUNTKILL
+	Tag "$FN_BDP_MARINEPLASMAGUN"
     States
 	{
 	Spawn:
@@ -1759,6 +1760,7 @@ ACTOR BlackPlasmaGunMarineGuarding: BlackMarine_PlasmaGun
 	+MISSILEMORE
 	+NODROPOFF
 	+MISSILEEVENMORE
+	Tag "$FN_BDP_BLACKMARINEPLASMAGUN"
 	States
 	{
 	Active:

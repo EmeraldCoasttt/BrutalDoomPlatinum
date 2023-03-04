@@ -9,8 +9,8 @@ class BDPModifierpickup : Inventory
         Inventory.MaxAmount 1;
 		BDPModifierpickup.modifierclass "Modifier_Example2";
 		Inventory.pickupsound "null";
-		Inventory.pickupmessage "You got a Modifier!";
-		BDPModifierpickup.modifiermessage "YOU SHOULDN'T BE SEEING THIS";
+		Inventory.pickupmessage "$GOTBDPMODIFIER";
+		BDPModifierpickup.modifiermessage "$BDPMODIFIERERROR";
     }
 
     static void UnlockModifier(string modifierClass)
@@ -49,7 +49,7 @@ class MjolnirPickup : BDPModifierpickup
         Inventory.MaxAmount 1;
 		BDPModifierpickup.modifierclass "Modifier_Mjolnir";
 		translation "200:207=[0,215,215]:[0,47,47]","240:247=244:247";
-		BDPModifierpickup.modifiermessage "Mjolnir Unlocked!";
+		BDPModifierpickup.modifiermessage "$UNLOCKEDBDPMJOLNIR";
 		+floatbob;
     }
 }
@@ -61,7 +61,7 @@ class ShockFactorPickup : BDPModifierpickup
         Inventory.MaxAmount 1;
 		BDPModifierpickup.modifierclass "Modifier_ShockFactor";
 		translation "200:207=[236,0,0]:[81,0,0]","240:247=244:247";
-		BDPModifierpickup.modifiermessage "Shock Factor Unlocked!";
+		BDPModifierpickup.modifiermessage "$UNLOCKEDBDPSHOCKFACTOR";
 		+floatbob;
     }
 }
@@ -73,7 +73,7 @@ class PerfectHatredPickup : BDPModifierpickup
         Inventory.MaxAmount 1;
 		BDPModifierpickup.modifierclass "Modifier_PerfectHatred";
 		translation "200:207=[130,0,0]:[60,0,0]","240:247=244:247";
-		BDPModifierpickup.modifiermessage "Perfect Hatred Unlocked!";
+		BDPModifierpickup.modifiermessage "$UNLOCKEDBDPPERFECTHATRED";
 		+floatbob;
     }
 }
@@ -85,7 +85,7 @@ class ManAndAHalfPickup : BDPModifierpickup
         Inventory.MaxAmount 1;
 		BDPModifierpickup.modifierclass "Modifier_ManAndAHalf";
 		translation "200:207=[117,117,117]:[0,0,0]","240:247=244:247";
-		BDPModifierpickup.modifiermessage "Man And A Half Unlocked!";
+		BDPModifierpickup.modifiermessage "$UNLOCKEDBDPMANANDAHALF";
 		+floatbob;
     }
 }
@@ -97,7 +97,7 @@ class GunSlingerPickup : BDPModifierpickup
         Inventory.MaxAmount 1;
 		BDPModifierpickup.modifierclass "Modifier_Gunslinger";
 		translation "200:207=[79,149,0]:[0,77,81]","240:247=244:247";
-		BDPModifierpickup.modifiermessage "Gunslinger Unlocked!";
+		BDPModifierpickup.modifiermessage "$UNLOCKEDBDPGUNSLINGER";
 		+floatbob;
     }
 }

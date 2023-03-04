@@ -40,7 +40,7 @@ ACTOR Ubersoldat
 	damagefactor "explosiveimpact", 2.0
 	Scale 1.2
 	DropItem "DropedChaingunSpawner"
-	Obituary "%o has been mowed down by an Ubersoldat."
+	Obituary "$OB_BDP_MOWEDBYUBERSOLDIER"
 	DamageFactor "CauseSplash", 0.0 DamageFactor "CauseObjectsToSplashSlime", 0.0 DamageFactor "CauseObjectsToSplashNukage", 0.0
 	DamageFactor "CauseObjectsToSplashBlood", 0.0 DamageFactor "CauseObjectsToSplashLava", 0.0
 	States

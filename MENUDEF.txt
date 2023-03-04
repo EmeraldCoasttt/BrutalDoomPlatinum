@@ -32,34 +32,34 @@ IfGame(Doom, Chex)
 	
 	IfGame(Doom, Strife, Chex)
 	{
-		TextItem "New Game", "n", "BDPModifierMenu"
+		TextItem "$MNU_NEWGAME", "n", "BDPModifierMenu"
 		ifOption(SwapMenu)
 		{
-			TextItem "Load Game", "l", "LoadGameMenu"
-			TextItem "Save Game", "s", "SaveGameMenu"
-			TextItem "Options", "o", "OptionsMenu"/////////////
-			TextItem "Brutal Doom Options", "b", "BrutalMenu"
+			TextItem "$MNU_LOADGAME", "l", "LoadGameMenu"
+			TextItem "$MNU_SAVEGAME", "s", "SaveGameMenu"
+			TextItem "$MNU_OPTIONS", "o", "OptionsMenu"/////////////
+			TextItem "$MNU_BDPOPTIONS", "b", "BrutalMenu"
 		}
 		else
 		{
-			TextItem "Options", "o", "OptionsMenu"/////////////////////
-			TextItem "Brutal Doom Options", "b", "BrutalMenu"
-			TextItem "Load Game", "l", "LoadGameMenu"
-			TextItem "Save Game", "s", "SaveGameMenu"
+			TextItem "$MNU_OPTIONS", "o", "OptionsMenu"/////////////////////
+			TextItem "$MNU_BDPOPTIONS", "b", "BrutalMenu"
+			TextItem "$MNU_LOADGAME", "l", "LoadGameMenu"
+			TextItem "$MNU_SAVEGAME", "s", "SaveGameMenu"
 		}
 		ifOption(ReadThis)
 		{
-			TextItem "Read This!","r", "ReadThisMenu"
+			TextItem "$MNU_READTHIS","r", "ReadThisMenu"
 		}
-		TextItem "Quit Game", "q", "QuitMenu"
+		TextItem "$MNU_QUITGAME", "q", "QuitMenu"
 	}
 	
 	IfGame(Heretic, Hexen)
 	{
 		TextItem "$MNU_NEWGAME", "n", "PlayerclassMenu"
 		TextItem "$MNU_OPTIONS", "o", "OptionsMenu"/////////////////////
-		TextItem "Brutal Doom Options", "b", "BrutalMenu"
-		TextItem "Credits", "c", "BrutalCreditsMenu"
+		TextItem "$MNU_BDPOPTIONS", "b", "BrutalMenu"
+		TextItem "$MNU_CREDITS", "c", "BrutalCreditsMenu"
 		TextItem "$MNU_GAMEFILES", "g", "GameFilesMenu"
 		TextItem "$MNU_INFO", "i", "ReadThisMenu"
 		TextItem "$MNU_QUITGAME", "q", "QuitMenu"

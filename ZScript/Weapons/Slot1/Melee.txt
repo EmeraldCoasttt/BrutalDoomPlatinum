@@ -28,7 +28,7 @@ CLASS MeleeAttack : Actor
 		Damagefunction (1);
 		Speed 30;
 		//HitObituary "$OB_IMPHIT"
-		Obituary "%o ate %k's boot.";
+		Obituary "$OB2_BDP_FISTS";
 		SeeSound "none";
 		DeathSound "none";
 		Decal "none";
@@ -487,7 +487,7 @@ Class CheckForGrabbable : FastProjectile
 			Alpha 0.6;
 			Damagefunction (0);
 			//HitObituary "$OB_IMPHIT"
-			Obituary "%o ate %k's boot.";
+			Obituary "$OB2_BDP_FISTS";
 			SeeSound "none";
 			DeathSound "none";
 			Decal "none";
