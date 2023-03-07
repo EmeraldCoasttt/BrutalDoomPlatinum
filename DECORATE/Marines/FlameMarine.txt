@@ -1280,7 +1280,7 @@ ACTOR BlackMarine_Flame: Marine_Rifle
 	MaxTargetRange 4096
 	DropItem "FlameCannon"
 	translation "OrangeBlack"
-	"$FN_BDP_BLACKMARINEFLAME"
+	Tag "$FN_BDP_BLACKMARINEFLAME"
 	States
 	{
 	Active:
