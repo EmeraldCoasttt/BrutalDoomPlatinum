@@ -166,7 +166,7 @@ class ModifierDescriptor : MenuElement
 	{
 		if(!modmenu) return;
 
-		//  BDPDrawer.DrawString("NewConsoleFont", "Modifier Info", (descOffs.x + 20,descOffs.y + 10), 0, Font.CR_ORANGE, scale:txtScale*1.25);
+		//  BDPDrawer.DrawString("NewConsoleFont", Stringtable.Localize("$MNU_BDP_MODIFIERINFORMATION"), (descOffs.x + 20,descOffs.y + 10), 0, Font.CR_ORANGE, scale:txtScale*1.25);
 		
 		vector2 txtScale = (0.4,0.4);
 		txtScale *= min(size.x, size.y) / 200.;
@@ -282,9 +282,9 @@ class BDP_ModifierMenu : BDP_ComponentMenu
 		}
 
 		// Text Buttons
-		AddElement("btn_AllMods", "Enable All", (1000,750), (556, 32));
-		AddElement("btn_NoMods", "Disable All", (1000,800), (556, 32));
-		AddElement("btn_Confirm", "CONFIRM", (1000,880), (556, 32));
+		AddElement("btn_AllMods", Stringtable.Localize("$MNU_BDP_MODIFIERSENABLEALL"), (1000,750), (556, 32));
+		AddElement("btn_NoMods", Stringtable.Localize("$MNU_BDP_MODIFIERSDISABLEALL"), (1000,800), (556, 32));
+		AddElement("btn_Confirm", Stringtable.Localize("$MNU_BDP_MODIFIERSCONFIRM"), (1000,880), (556, 32));
 		
 		// Populate buttons array
 		GetElementsOfClass(buttons, "ModifierButton", true);
@@ -311,7 +311,7 @@ class BDP_ModifierMenu : BDP_ComponentMenu
 		super.Drawer();
 		uint strFlags = BDPDrawer.SS_SCREEN_TOP_CENTER | BDPDrawer.SS_TEXT_CENTER;	
 		
-		BDPDrawer.DrawString("BigFont", "MODIFIERS", (0,100), strFlags, Font.CR_RED, scale:(2.0,2.0));
+		BDPDrawer.DrawString("BigFont", Stringtable.Localize("$MNU_BDP_SELECTMODIFIERS"), (0,100), strFlags, Font.CR_RED, scale:(2.0,2.0));
 	}
 
 	override void OnMenuThink()

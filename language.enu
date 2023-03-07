@@ -46,7 +46,7 @@ GOTCELLBOX = "Picked up an energy cell pack.";
 GOTSHELLS = "Picked up 4 shotgun shells.";
 GOTSHELLBOX = "Picked up a box of shotgun shells.";
 GOTBACKPACK = "Picked up a backpack full of ammo!";
-GOTBFG9000 = "You got the BFG-9K!  Oh, yes.";
+GOTBFG9000 = "You got the BFG-9000!  Oh, yes.";
 GOTCHAINGUN = "You got the minigun!";
 GOTPISTOL = "You got the pistol!";
 GOTRIFLE = "You got the assault rifle!";
@@ -94,8 +94,8 @@ GOTBDPOLDDUALPLASMARIFLE = "coding this was a pain...";
 GOTBDPPLASMARIFLE = "You got the Plasma Rifle! (Slot 6)";
 AMMO_BDP_PLASMACELLS = "Plasma Cells.";
 GOTBDPRAILGUN = "You got the Railgun! (Slot 6)";
-GOTBDPBFG9K = "You got the BFG-9K! Oh, yes. (Slot 7)";
-GOTBDPBFG10K = "You got the BFG-10K! Holy shit! (Slot 7)";
+GOTBDPBFG9K = "You got the BFG-9000! Oh, yes. (Slot 7)";
+GOTBDPBFG10K = "You got the BFG-10000! Holy shit! (Slot 7)";
 GOTBDPUNMAKER = "What the !@#%* is this!? (Slot 7)";
 GOTBDPUNMAKER2 = "You got the Unmaker, the power of hell itself! (Slot 8)";
 GOTBDPCYBERDEMONMISSILELAUNCHER = "You shouldn't be seeing this!";
@@ -165,6 +165,18 @@ UNLOCKEDBDPSHOCKFACTOR = "Shock Factor Unlocked!";
 UNLOCKEDBDPPERFECTHATRED = "Perfect Hatred Unlocked!";
 UNLOCKEDBDPMANANDAHALF = "Man And A Half Unlocked!";
 UNLOCKEDBDPGUNSLINGER = "Gunslinger Unlocked!";
+MODNAMEBDPSTAYFROSTY = "Stay Frosty";
+MODDESCBDPSTAYFROSTY = "Tactical mode! Stamina, recoil, and more!";
+MODNAMEBDPMJOLNIR = "Mjolnir";
+MODDESCBDPMJOLNIR = "Permanent Energy Armor powerup";
+MODNAMEBDPSHOCKFACTOR = "Shock Factor";
+MODDESCBDPSHOCKFACTOR = "Demons are hyper-aware of you";
+MODNAMEBDPBDPPERFECTHATRED = "Perfect Hatred";
+MODDESCBDPBDPPERFECTHATRED = "Demons are permanently enraged";
+MODNAMEBDPBDPMANANDAHALF = "Man And A Half";
+MODDESCBDPBDPMANANDAHALF = "Start every level berserked";
+MODNAMEBDPBDPGUNSLINGER = "Gunslinger";
+MODDESCBDPBDPGUNSLINGER = "Weapons deselected for 5 or more seconds instantly reload";
 
 
 
@@ -219,6 +231,7 @@ TXT_BUDDHA2OFF = "Ultimate Buddha Mode OFF";
 TXT_DEFAULTPICKUPMSG = "You got a pickup";
 
 TXT_BDP_FRIENDLY = "\n\n-Friendly-";
+TXT_BDP_STAMINAHUD = "Stamina";
 TXT_BDP_ALTERNATEEXECUTION = "Press Reload to alternate execution modes.";
 TXT_BDP_GOTDEMONSTRENGTHRUNE = "You got the Demon Strength Rune. RIP AND TEAR!";
 TXT_BDP_DEMONPROTECTIONSIGILACTIVATED = "Demon Protection Sigil Activated!";
@@ -275,6 +288,25 @@ TXT_BDP_TWOINDETICALWEAPONSNEED = "You must have two identical weapons to dual w
 TXT_BDP_LASERGUIDEDROCKETSDEACTIVATED = "Laser Guided Rockets Deactivated";
 TXT_BDP_LASERGUIDEDROCKETSACTIVATED = "Laser Guided Rockets Activated";
 TXT_BDP_NOJETPACKFUEL = "Not Enough Fuel for Jetpack";
+
+TXT_DMLVLREENTRYWAY_BDP = "Re-Entryway";
+TXT_DMLVLDEADSIMPLER_BDP = "Dead Simpler";
+TXT_DMLVLNUCLEARASHES_BDP = "Nuclear Ashes";
+TXT_DMLVLHANGARMAGEDDON_BDP = "Hangarmageddon";
+TXT_DMLVLSANDSTORM_BDP = "Sandstorm";
+TXT_DMLVLANOTHERONEBITESDEDUST_BDP = "Another One Bites De Dust";
+TXT_DMLVLPYRAMID_BDP = "Pyramid";
+TXT_DMLVLSTORAGECENTER_BDP = "Storage Center";
+TXT_DMLVLCATHEDRAL_BDP = "Cathedral";
+TXT_DMLVLTOWEROFBABEL_BDP = "Tower of Babel";
+
+TXT_TESTUACTESTINGCENTER_BDP = "UAC Testing Center";
+
+TXT_PSMAPTHEMANSION_BDP = "The Mansion";
+TXT_PSMAPCLUBDOOM_BDP = "Club Doom";
+TXT_PSMAPTWILIGHTDESCENDS_BDP = "Twilight Descends";
+TXT_PSMAPTHEMARSHES_BDP = "Hellgate";
+TXT_PSMAPBLOODCITADEL_BDP = "Blood Citadel";
 
 
 TXT_BDP_KILLENEMIES = "\n\n\n-Kill-";
@@ -347,6 +379,7 @@ OB_R_SPLASH = "%o should have stood back.";
 OB_ROCKET = "%o should have stood back.";
 OB_KILLEDSELF = "%o killed %hself.";
 
+// Brutal Doom Platinum Obituary strings
 OB_BDP_AXE = "%o was choped down by %k's axe.";
 OB2_BDP_AXE = "%o was hunted down by %k's axe.";
 OB_BDP_FISTS = "%o was Ripped and Teared by 	%k";
@@ -476,6 +509,7 @@ TAG_ROCKETLAUNCHER = "Rocket Launcher";
 TAG_PLASMARIFLE = "Plasma Rifle";
 TAG_BFG9000 = "BFG-9000";
 
+// Item tags: Brutal Doom Platinum weapons, items, and monsters
 TAG_BDP_FISTS = "Fists";
 TAG_BDP_AXE = "Axe";
 TAG_BDP_DOXSREVOLVER = "Revolver";
@@ -641,12 +675,42 @@ MNU_SORCERER        = "SORCERER";
 MNU_WARLOCK			= "WARLOCK";
 MNU_ARCHMAGE		= "ARCHMAGE";
 
+// Brutal Doom Platinum Skills
+
+SKILL_EASY_BDP		= "I Just Want To Kill";
+SKILLTIP_EASY_BDP		= "Plenty of enemies, 75% less damage. Press Enter to Confirm";
+SKILL_NORMAL_BDP		= "Hurt Me Plenty!";
+SKILL_ULTRAVIOLENCE_BDP		= "Ultra Violence";
+SKILL_WATCHMEDIE_BDP		= "Watch Me Die";
+SKILLTIP_WATCHMEDIE_BDP		= "This enables multiplayer monsters and weapons, are you sure?";
+SKILL_NIGHTMARE_BDP		= "Nightmare!";
+SKILLTIP_NIGHTMARE_BDP		= "Enemies are much more aggressive, and respawn after 20 seconds. Press Enter to Confirm";
+SKILL_REALISM_BDP		= "Realism";
+SKILLTIP_REALISM_BDP		= "Less ammo, 700% more damage, enemies have half hit points. UV enemy count. Are you tough enough?";
+SKILL_HYPERREALISM_BDP		= "Hyper-Realism";
+SKILLTIP_HYPERREALISM_BDP		= "Less ammo, 700% more damage, full enemy health, multiplayer enemy count. You're Doomed.";
+
 // Classes
 MNU_CHOOSECLASS		= "CHOOSE CLASS:";
 MNU_FIGHTER			= "FIGHTER";
 MNU_CLERIC			= "CLERIC";
 MNU_MAGE			= "MAGE";
 MNU_RANDOM			= "RANDOM";
+
+// Brutal Doom Platinum Modifiers
+
+MNU_BDP_SELECTMODIFIERS	= "MODIFIERS";
+MNU_BDP_MODIFIERINFORMATION	= "Modifier Info";
+MNU_BDP_MODIFIERSENABLEALL	= "Enable All";
+MNU_BDP_MODIFIERSDISABLEALL	= "Disable All";
+MNU_BDP_MODIFIERSCONFIRM	= "CONFIRM";
+
+MNU_BDP_SELECTGAMEMODE	= "Select Game Mode";
+MNU_BDP_GAMEMODEPISTOLSTART	= "Pistol Start";
+MNU_BDP_GAMEMODEMELEESTART	= "Melee Start";
+MNU_BDP_GAMEMODETACTICAL	= "Tactical";
+MNU_BDP_GAMEMODEDOOMMARINE	= "DOOM Marine";
+MNU_BDP_GAMEMODEPURIST	= "Purist";
 
 // Game Files
 MNU_LOADGAME		= "LOAD GAME";
@@ -664,6 +728,12 @@ MNU_DOME			= "THE DOME OF D'SPARIL";
 MNU_OSSUARY			= "THE OSSUARY";
 MNU_DEMESNE			= "THE STAGNANT DEMESNE";
 $ifgame(heretic) SWSTRING = "ONLY AVAILABLE IN THE REGISTERED VERSION";
+
+// Brutal Doom Platinum Episodes
+
+TXT_EDAYE_BDP = "Extermination Day";
+TXT_BDM_BDP = "Brutal Deathmatch";
+TXT_TESTINGMAP_BDP = "Testing Map";
 
 // Options Menu
 OPTMNU_TITLE				= "OPTIONS";
@@ -683,6 +753,28 @@ OPTMNU_VIDEO				= "Set video mode";
 OPTMNU_DEFAULTS				= "Reset to defaults";
 OPTMNU_RESETTOSAVED			= "Reset to last saved";
 OPTMNU_CONSOLE				= "Go to console";
+
+// Brutal Doom Platinum Options Menu
+
+OPTMNU_BDP_TITLE				= "BRUTAL DOOM OPTIONS";
+OPTMNU_BDP_LEVELSPAWNINGOPTIONS				= "Level/Spawning Options";
+OPTMNU_BDP_PLAYERCONTROLOPTIONS				= "Player/Control Options";
+OPTMNU_BDP_GRAPHICALOPTIONS				= "Graphical Options";
+OPTMNU_BDP_WEAPONOPTIONS				= "Weapon Options";
+OPTMNU_BDP_MONSTEROPTIONS				= "Monster Options";
+OPTMNU_BDP_CREDITSGRAPHICS				= "Credits - Graphics";
+OPTMNU_BDP_CREDITSCODING				= "Credits - Coding";
+OPTMNU_BDP_CREDITSSOUNDDESIGN				= "Credits - Sound Design";
+OPTMNU_BDP_CONTACTINFO				= "You can contact me for multiple reasons on these platforms:";
+OPTMNU_BDP_CONTACTEMAIL				= "Email - PerfectHatred2003@gmail.com";
+OPTMNU_BDP_CONTACTTWITTER				= "Twitter - @EmeraldCoasttt";
+
+OPTMNU_BDP_BDPERFORMANCEOPTIONS				= "BD Performance Options";
+OPTMNU_BDP_BDLEVELOPTIONS				= "BD Level Options";
+OPTMNU_BDP_BDDOOMGAMEPLAYOPTIONS				= "BD Doom Gameplay Options";
+OPTMNU_BDP_BDPLAYEROPTIONS				= "BD Player Options";
+OPTMNU_BDP_GOTOWEAPONSTESTINGMAP				= "Go to Weapons Testing Map";
+OPTMNU_BDP_DOXPERSONALIZEDADDONOPTIONS				= "Dox's Personalized Addon Options";
 
 // Controls Menu
 
@@ -756,6 +848,37 @@ CNTRLMNU_POPUPS					= "Strife Popup Screens";
 CNTRLMNU_MISSION				= "Mission objectives";
 CNTRLMNU_KEYS					= "Keys list";
 CNTRLMNU_STATS					= "Weapons/ammo/stats";
+
+// Brutal Doom Platinum Controls Menu
+
+CNTRLMNU_BDP_SECTIONADVANCED					= "BrutalDoom - Advanced Actions";
+CNTRLMNU_BDP_SECTIONINTERACTIONS					= "Brutal Doom - Interactions";
+CNTRLMNU_BDP_SECTIONCHEATS					= "Brutal Doom - Cheats";
+
+CNTRLMNU_BDP_KICK					= "Kick";
+CNTRLMNU_BDP_RELOAD					= "Reload";
+CNTRLMNU_BDP_DUALSPECIALWEAPONACTION					= "Dual Wield/Special Action";
+CNTRLMNU_BDP_SPECIALWEAPONACTION					= "Special Action 2";
+CNTRLMNU_BDP_FLASHLIGHT					= "Flashlight";
+CNTRLMNU_BDP_THROWGRENADE					= "Toss Grenade";
+CNTRLMNU_BDP_CHANGEGRENADES					= "Swap Grenades";
+CNTRLMNU_BDP_CHANGEBERSERK					= "Swap Berserk Modes";
+CNTRLMNU_BDP_UNRELOAD					= "Unload Gun";
+CNTRLMNU_BDP_SCANNER					= "Scan area";
+CNTRLMNU_BDP_TAUNTOFFEND					= "Offend";
+CNTRLMNU_BDP_TAUNTONELINERS					= "One-Liners";
+CNTRLMNU_BDP_SLOWMOTION					= "Slow motion toggle";
+
+CNTRLMNU_BDP_AMMODROPMENU					= "Open Ammo Drop Menu";
+CNTRLMNU_BDP_QUICKPISTOL					= "Quick Pull Pistol";
+CNTRLMNU_BDP_BOSSWEAPON					= "Use boss weapon";
+CNTRLMNU_BDP_TAUNTWAVE1					= "Wave(1)";
+CNTRLMNU_BDP_TAUNTWAVE2					= "Wave(2)";
+CNTRLMNU_BDP_TAUNTADVANCED					= "Advanced Taunt";
+CNTRLMNU_BDP_SELECTAMMODROP					= "Select Ammo Drop";
+CNTRLMNU_BDP_ROLLLEFT					= "Roll Left";
+CNTRLMNU_BDP_ROLLRIGHT					= "Roll Right";
+
 
 // Mouse Menu
 
@@ -1607,6 +1730,26 @@ MUSIC_READ_M = "read_m";
 MUSIC_DM2TTL = "dm2ttl";
 MUSIC_DM2INT = "dm2int";
 
+// Music names for Brutal Doom Platinum.
+
+MUSIC_D_RUNNIN = "D_RUNNIN";
+MUSIC_D_SHAWNCAPS = "D_SHAWN";
+MUSIC_D_ADRIAN = "D_ADRIAN";
+MUSIC_D_E1M1 = "D_E1M1";
+MUSIC_D_DM05 = "D_DM05";
+MUSIC_D_DM06 = "D_DM06";
+MUSIC_D_DM07 = "D_DM07";
+MUSIC_D_DM08 = "D_DM08";
+MUSIC_D_DM09 = "D_DM09";
+MUSIC_D_DM10 = "D_dM10";
+MUSIC_ORB = "ORB";
+MUSIC_D_ROMERO = "D_ROMERO";
+MUSIC_D_STALKS = "D_STALKS";
+MUSIC_D_IN_CIT = "d_in_cit";
+MUSIC_D_SHAWN = "d_shawn";
+MUSIC_D_DEAD = "d_dead";
+MUSIC_D_DOOM = "d_doom";
+
 // GZDoom exclusive:
 
 DSPLYMNU_GLOPT		= "OpenGL Options";
@@ -1670,6 +1813,334 @@ GLPREFMNU_LENS					= "Lens distortion effect";
 GLPREFMNU_SSAO					= "Ambient occlusion quality";
 GLPREFMNU_SSAO_PORTALS			= "Portals with AO";
 GLPREFMNU_FXAA					= "FXAA Quality";
+
+// Brutal Doom Platinum Level Spawning Options
+BDPLVLSPWNMNU_REPLACEDECORATION					= "Replace Decorations";
+BDPLVLSPWNMNU_LEVELENHANCEMENTSYSTEM					= "Level Enhancement System";
+BDPLVLSPWNMNUTIP_LEVELENHANCEMENTSYSTEM					= "Improves several maps with better textures,";
+BDPLVLSPWNMNUTIP2_LEVELENHANCEMENTSYSTEM					= "new decorations and sometimes new enemies.";
+BDPLVLSPWNMNU_PSXMONSTERS					= "PSX Monsters";
+BDPLVLSPWNMNUTIP_PSXMONSTERS					= "Adds PSX Monster placements";
+
+// Brutal Doom Platinum Player Control Options
+BDPPLRCNTRLMNU_TITLE					= "Player Settings";
+BDPPLRCNTRLMNU_CATEGORYABILITIES					= "ABILITIES";
+BDPPLRCNTRLMNU_ENABLELEDGEGRAB					= "Enable Ledge Grab";
+BDPPLRCNTRLMNUTIP_ENABLELEDGEGRAB					= "Allows you to grab onto a ledge and lift yourself up. Use with care.";
+BDPPLRCNTRLMNU_ENABLEDOUBLEJUMPING					= "Enable Double Jumping";
+BDPPLRCNTRLMNUTIP_ENABLEDOUBLEJUMPING					= "Allows you to perform a second jump in mid air. Use with care.";
+BDPPLRCNTRLMNUTIP2_ENABLEDOUBLEJUMPING					= "It might seem a little clunky, because it's only ACS and Decorate.";
+
+// Brutal Doom Platinum Graphical Options
+BDPGRAPHICMNU_TITLE					= "Visual Settings";
+BDPGRAPHICMNU_CATEGORYPERFORMANCE					= "PERFORMANCE OPTIONS";
+BDPGRAPHICMNU_MAXWALLDECALS					= "Max Wall Decals";
+BDPGRAPHICMNU_MAXGIBSBLOODPOOLS					= "Max Gibs and Blood Pools";
+BDPGRAPHICMNU_BLOODAMOUNT					= "Blood Amount";
+BDPGRAPHICMNUTIP_BLOODAMOUNT					= "How much blood you want to see?";
+BDPGRAPHICMNU_ENABLEJANITOR					= "Enable Janitor";
+BDPGRAPHICMNUTIP_ENABLEJANITOR					= "Makes gibs disappear after 30 seconds.";
+BDPGRAPHICMNU_SHELLSSTAYSONFLOOR					= "Spent Casings stays on floor forever";
+BDPGRAPHICMNU_CATEGORYDETAIL					= "DETAIL OPTIONS";
+BDPGRAPHICMNU_WATERRIPPLEEFFECT					= "Water Ripple Effects";
+BDPGRAPHICMNU_ALLMAPREVEALACTORS					= "Allmap reveals actors";
+BDPGRAPHICMNU_RANDOMPICKUPSPRITES					= "Randomized pickup sprites";
+BDPGRAPHICMNUTIP_RANDOMPICKUPSPRITES					= "Disables randomized pickup sprites.";
+BDPGRAPHICMNU_ENABLEBETADECORATIONS					= "Enable beta decorations";
+BDPGRAPHICMNUTIP_ENABLEBETADECORATIONS					= "Allows for decorations that was in the v21 Beta like breakable lights ";
+BDPGRAPHICMNUTIP2_ENABLEBETADECORATIONS					= "to appear. Can affect performance.";
+BDPGRAPHICMNU_BARRELSNUKAGEFLY					= "Barrels nukage flying";
+BDPGRAPHICMNUTIP_BARRELSNUKAGEFLY					= "It can be disabled now. Should've seen that one coming.";
+BDPGRAPHICMNU_CATEGORYPLAYERGRAPHICAL					= "PLAYER GRAPHICAL OPTIONS";
+BDPGRAPHICMNU_VIEWBOBSWHILESPRINT					= "View bobs while sprinting";
+BDPGRAPHICMNU_PLAYERGENDER					= "Player Gender";
+BDPGRAPHICMNUTIPS_PLAYERGENDER					= "Only works on Zandronum";
+BDPGRAPHICMNU_HUDTYPE					= "HUD Type";
+BDPGRAPHICMNU_HUDSIZE					= "HUD Size";
+BDPGRAPHICMNU_SHOWENEMYHTH					= "Show enemy health";
+BDPGRAPHICMNU_FORCEHUDRESTART					= "Force HUD to Restart";
+BDPGRAPHICMNU_FORCEGZDOOMUISCALE					= "Force GZDoom UI Scale";
+BDPGRAPHICMNUTIP_FORCEGZDOOMUISCALE					= "Change this if you are having trouble";
+BDPGRAPHICMNUTIP2_FORCEGZDOOMUISCALE					= "with HUD scaling on GZDoom";
+BDPGRAPHICMNUTIP3_FORCEGZDOOMUISCALE					= "(does nothing on Zandronum)";
+BDPGRAPHICMNU_WEAPONSALWAYSBOB					= "Weapons always bobbing";
+BDPGRAPHICMNUTIP_WEAPONSALWAYSBOB					= "Your weapon will sway to the sides, even when it's not in its ready state.";
+BDPGRAPHICMNU_LEGSTRAIN					= "Leg staining";
+BDPGRAPHICMNUTIP_LEGSTRAIN					= "Customize how your legs are stained.";
+BDPGRAPHICMNU_FANCYSHOOT					= "Enable fancy firing";
+BDPGRAPHICMNUTIP_FANCYSHOOT					= "You can disable tracers and firing particles. Might increase performance.";
+BDPGRAPHICMNU_SHOTGUNSTRAP					= "Enable Shotgun & GL straps";
+BDPGRAPHICMNUTIP_SHOTGUNSTRAP					= "For people who STILL dislike weapons' straps.";
+BDPGRAPHICMNU_SELFAWARENESS					= "Enable First Person Legs";
+BDPGRAPHICMNUTIP_SELFAWARENESS					= "Makes your legs visible when you look down.";
+BDPGRAPHICMNU_SCREENEFFECTS					= "Screen Effects";
+BDPGRAPHICMNUTIP_SCREENEFFECTS					= "Enables Screen Effects on HUD, such as Blood Splashing and Bullet Holes.";
+BDPGRAPHICMNU_BLOODTRAILSPLASH					= "Blood Trail Splash";
+BDPGRAPHICMNUTIP_BLOODTRAILSPLASH					= "Enables Blood Splashing when Enemies are bleeding out.";
+BDPGRAPHICMNUTIP2_BLOODTRAILSPLASH					= "If Screen Effects is disabled, this option will also be disabled.";
+BDPGRAPHICMNUTIP3_BLOODTRAILSPLASH					= "Does not work for the BDv21 Mode.";
+
+// Brutal Doom Platinum Weapon Options
+BDPWEAPONMNU_SMARTCROSSHAIR					= "Smart crosshair";
+BDPWEAPONMNU_DISABLEAUTORELOAD					= "Disable Auto Reload";
+BDPWEAPONMNU_MAGCLICKONLOW					= "Magazine clicks on low ammo";
+BDPWEAPONMNU_3DNAILSMODEL					= "3D Nail model";
+BDPWEAPONMNUTIP_3DNAILSMODEL					= "It's not perfect and there's nothing we can do to improve it.";
+BDPWEAPONMNUTIP2_3DNAILSMODEL					= "If the option will be enabled if you can't render 3D models,";
+BDPWEAPONMNUTIP3_3DNAILSMODEL					= "the nail will be invisible.";
+BDPWEAPONMNUTIP_CUSTOMWEAPONSPAWNS					= "Customizable weapon spawners (might conflict with custom weapons)";
+BDPWEAPONMNU_SPAWNSAW					= "Spawn Saw";
+BDPWEAPONMNU_SPAWNAXE					= "Spawn Axe";
+BDPWEAPONMNU_SPAWNPISTOL					= "Spawn Pistol";
+BDPWEAPONMNU_SPAWNSMG					= "Spawn Sub-Machinegun";
+BDPWEAPONMNU_SPAWNREVOLVER					= "Spawn Revolver";
+BDPWEAPONMNU_SPAWNSHOTGUN					= "Spawn Shotgun";
+BDPWEAPONMNU_SPAWNASSAULTSHOTGUN					= "Spawn Assault Shotgun";
+BDPWEAPONMNU_SPAWNSUPERSHOTGUN					= "Spawn Super Shotgun";
+BDPWEAPONMNU_SPAWNRIFLE					= "Spawn Rifle";
+BDPWEAPONMNU_SPAWNMINIGUN					= "Spawn Minigun";
+BDPWEAPONMNU_SPAWNMACHINEGUN					= "Spawn Machinegun";
+BDPWEAPONMNU_SPAWNROCKETLAUNCHER					= "Spawn Rocket Launcher";
+BDPWEAPONMNU_SPAWNGRENADELAUNCHER					= "Spawn Grenade Launcher";
+BDPWEAPONMNU_SPAWNPLASMARIFLE					= "Spawn Plasma rifle";
+BDPWEAPONMNU_SPAWNRAILGUN					= "Spawn Railgun";
+BDPWEAPONMNU_SPAWNFREEZETHROWER					= "Spawn FreezeThrower";
+BDPWEAPONMNU_SPAWNBFG9K					= "Spawn BFG-9000";
+BDPWEAPONMNU_SPAWNBFG10K					= "Spawn BFG-10000";
+BDPWEAPONMNU_SPAWNUNMAKER					= "Spawn Unmaker";
+BDPWEAPONMNUTIP_ENEMYDROPS					= "Enemy drops";
+BDPWEAPONMNU_DROPPISTOL					= "Drop Pistol";
+BDPWEAPONMNU_DROPRIFLE					= "Drop Rifle";
+BDPWEAPONMNU_DROPSMG					= "Drop SMG";
+BDPWEAPONMNU_DROPMP40					= "Drop MP40";
+BDPWEAPONMNU_DROPSHOTGUN					= "Drop Shotgun";
+BDPWEAPONMNU_DROPMINIGUN					= "Drop Minigun";
+BDPWEAPONMNUTIP_SECRETGUNS					= "Secret guns (barely supported)";
+BDPWEAPONMNU_SPAWNMG42					= "Spawn MG42 (Hitler's Buzzsaw)";
+BDPWEAPONMNU_SUPERSHOTGUNREPLACESSHOTGUN					= "Super shotgun replaces Shotgun spawn";
+BDPWEAPONMNUTIP_SUPERSHOTGUNREPLACESSHOTGUN					= "For maps that don't have the SSG, like Doom 1.";
+BDPWEAPONMNU_SUPERSHOTGUNSPAWNOVERSHOTGUN					= "SSG over Shotgun multiplier";
+BDPWEAPONMNUTIP_SUPERSHOTGUNSPAWNOVERSHOTGUN					= "Spawn rate multiplier.";
+BDPWEAPONMNU_ENABLESMARTTWOGUNS					= "Enable smart dual wielding";
+BDPWEAPONMNUTIP_ENABLESMARTTWOGUNS					= "Makes the weapons remember if they were dual wielded, so selecting them";
+BDPWEAPONMNUTIP2_ENABLESMARTTWOGUN					= "Sagain will immediately dual wield them.";
+BDPWEAPONMNU_ENABLEWEAPONPITCH					= "Enable Weapon Pitch";
+BDPWEAPONMNUTIP_ENABLEWEAPONPITCH					= "Some weapons' Pitch changes during recoil frames have been known to";
+BDPWEAPONMNUTIP2_ENABLEWEAPONPITCH					= "cause stutter on weaker devices. You can disable it as a fix.";
+BDPWEAPONMNU_AIMING					= "Aiming Options";
+BDPWEAPONMNUTIP_AIMING					= "Changes the way aiming down sights works.";
+BDPWEAPONMNU_MANUALSHOTGUNR					= "Manual shotgun pump";
+BDPWEAPONMNUTIP_MANUALSHOTGUNR					= "The shotgun won't pump until you press the fire button again after each shot.";
+BDPWEAPONMNU_OLDMINIGUN					= "Old minigun fire";
+BDPWEAPONMNUTIP_OLDMINIGUN					= "The minigun returns to vanilla BD-style firing.";
+BDPWEAPONMNU_ROCKETLAUNCHERBACKBLAST					= "Rocket Launcher has backblast";
+
+BDPSMARTCROSSHAIRMNU_TITLE					= "Smart Crosshair Options";
+BDPSMARTCROSSHAIRMNU_ENABLESMARTCROSSHAIR					= "Enable Smart Crosshairs";
+BDPSMARTCROSSHAIRMNUTIP_ENABLESMARTCROSSHAIR					= "Each weapon has a different crosshair.";
+BDPSMARTCROSSHAIRMNUTIP2_ENABLESMARTCROSSHAIR					= "Look in the HUD Options menu to see what each crosshair looks like.";
+BDPSMARTCROSSHAIRMNUTIP3_ENABLESMARTCROSSHAIR					= "Make sure you have 'Force Default Crosshair' disabled!";
+BDPSMARTCROSSHAIRMNUTIP4_ENABLESMARTCROSSHAIR					= "Crosshair 0 is the default player's crosshair.";
+BDPSMARTCROSSHAIRMNUTIP5_ENABLESMARTCROSSHAIR					= "Crosshair 41 is nothing at all.";
+BDPSMARTCROSSHAIRMNUTIP_CUSTOMIZABLECROSSHAIR					= "Customizable Crosshairs";
+BDPSMARTCROSSHAIRMNU_RESTORETODEFAULT					= "Restore to default values";
+BDPSMARTCROSSHAIRMNUTIP_RESTORETODEFAULT					= "You must go back to the game for it to take effect.";
+BDPSMARTCROSSHAIRMNU_SLOT2					= "Slot 2:";
+BDPSMARTCROSSHAIRMNU_PISTOL					= "Pistol";
+BDPSMARTCROSSHAIRMNU_SMG					= "Sub-machinegun";
+BDPSMARTCROSSHAIRMNU_REVOLVER					= "Revolver";
+BDPSMARTCROSSHAIRMNU_MP40					= "MP40";
+BDPSMARTCROSSHAIRMNU_SLOT3					= "Slot 3:";
+BDPSMARTCROSSHAIRMNU_ASSAULTSHOTGUN					= "Assault Shotgun";
+BDPSMARTCROSSHAIRMNU_SHOTGUN					= "Shotgun";
+BDPSMARTCROSSHAIRMNU_SUPERSHOTGUN					= "SSG";
+BDPSMARTCROSSHAIRMNU_SLOT4					= "Slot 4:";
+BDPSMARTCROSSHAIRMNU_MACHINEGUN					= "Machinegun";
+BDPSMARTCROSSHAIRMNU_RIFLE					= "Rifle";
+BDPSMARTCROSSHAIRMNU_MINIGUN					= "Minigun";
+BDPSMARTCROSSHAIRMNU_MG42					= "MG42";
+BDPSMARTCROSSHAIRMNU_SLOT5					= "Slot 5:";
+BDPSMARTCROSSHAIRMNU_GRENADELAUNCHER					= "Grenade Launcher";
+BDPSMARTCROSSHAIRMNU_ROCKETLAUNCHER					= "Rocket Launcher";
+BDPSMARTCROSSHAIRMNU_SLOT6					= "Slot 6:";
+BDPSMARTCROSSHAIRMNU_PLASMAGUN					= "Plasmagun";
+BDPSMARTCROSSHAIRMNU_RAILGUN					= "Railgun";
+BDPSMARTCROSSHAIRMNU_FREEZETHROWER					= "Freezethrower";
+BDPSMARTCROSSHAIRMNU_SLOT7					= "Slot 7:";
+BDPSMARTCROSSHAIRMNU_BFG9K					= "BFG9000";
+BDPSMARTCROSSHAIRMNU_BFG10K					= "BFG10K";
+BDPSMARTCROSSHAIRMNU_UNMAKER					= "Unmaker";
+BDPSMARTCROSSHAIRMNU_SLOT8					= "Slot 8:";
+BDPSMARTCROSSHAIRMNU_FLAMECANNON					= "Flamecannon";
+BDPSMARTCROSSHAIRMNU_HML					= "Hellish Missile Launcher";
+BDPSMARTCROSSHAIRMNU_DEFAULTCROSSHAIRCREDIT					= "Default crosshairs provided by Xeno1979.";
+
+// Brutal Doom Platinum Monster Options
+BDPGMONSTERMNU_SHOOTABLEPROJECTILES					= "Shootable Enemy Projectiles (EXPERIMENTAL!)";
+BDPGMONSTERMNUTIP_SHOOTABLEPROJECTILES					= "Makes you able to shoot enemy's projectiles, exploding them in the air.";
+BDPGMONSTERMNUTIP2_SHOOTABLEPROJECTILES					= "Some projectiles might be stronger and tougher to destroy.";
+BDPGMONSTERMNUTIP3_SHOOTABLEPROJECTILES					= "Keep in mind that all player's projectiles can hit enemy's projectiles, so you might";
+BDPGMONSTERMNUTIP4_SHOOTABLEPROJECTILES					= "accidentally hit one with a BFG, for instance.";
+BDPGMONSTERMNUTIP5_SHOOTABLEPROJECTILES					= "Currently supported monsters: Revenant";
+BDPGMONSTERMNU_DISABLEMEATSHIELD					= "Disable Meatshields";
+BDPGMONSTERMNUTIP_DISABLEMEATSHIELD					= "Meatshields are buggy and cause the player to continously slide on some";
+BDPGMONSTERMNUTIP2_DISABLEMEATSHIELD					= "maps. You can disable that feature as a fix (or just don't use the meat shield...)";
+BDPGMONSTERMNU_MONSTERFOOTSTEPSOUND					= "Monster footsteps";
+$BDPGMONSTERMNUTIP_MONSTERFOOTSTEPSOUND					= "Zombies and imps make footstep sounds when walking.";
+BDPGMONSTERMNU_CATEGORYBEHAVIOURTWEAKS					= "BEHAVIOUR TWEAKS";
+BDPGMONSTERMNU_NOZOMBIEINFIGHTING					= "No zombie infighting";
+BDPGMONSTERMNUTIP_NOZOMBIEINFIGHTING					= "Disables zombies' infighting.";
+BDPGMONSTERMNU_WANDERINGENEMIESSPAWN					= "Wandering enemies on spawn";
+BDPGMONSTERMNUTIP_WANDERINGENEMIESSPAWN					= "Monsters move around when they spawn, instead of standing still.";
+BDPGMONSTERMNU_ROLLINGENEMIES					= "Rolling zombies";
+BDPGMONSTERMNU_IMPGETONCEILING					= "Imp ceiling latch";
+BDPGMONSTERMNU_TAKINGFIREIMPJUMPING					= "Jumping imps when firing";
+BDPGMONSTERMNU_ARACHNOTRONGETONCEILING					= "Arachnotron ceiling latch";
+BDPGMONSTERMNU_REVENANTFLY					= "Revenant's Jetpack";
+BDPGMONSTERMNU_HELLKNIGHTDASH					= "Hell Knight's rush & slam";
+BDPGMONSTERMNU_BARONOFHELLDASH					= "Baron of Hell's rush & slam";
+BDPGMONSTERMNU_ARCHVILETELEPORT					= "Archvile teleports";
+BDPGMONSTERMNU_CYBERDEMONVERTICALATTACK					= "Cyberdemon's vertical attack";
+
+// Brutal Doom Platinum Graphics Credits
+BDPGRAPHICCREDITMNUTIP_TITLE					= "All the people or mods whose work was used in this addon.";
+BDPGRAPHICCREDITMNUTIP2_TITLE					= "If I forgot someone or something, please notify me.";
+BDPGRAPHICCREDITMNUTIP_TEXT1					= "Brutal Doom v21";
+BDPGRAPHICCREDITMNUTIP_TEXT2					= "Original Project Lead";
+BDPGRAPHICCREDITMNUTIP_TEXT3					= "Dual rifle sprites, better firing frames for multiple weapons, a lot of brightmaps,";
+BDPGRAPHICCREDITMNUTIP_TEXT4					= "new grenade launcher, new ASG";
+BDPGRAPHICCREDITMNUTIP_TEXT5					= "Better pistol zombieman";
+BDPGRAPHICCREDITMNUTIP_TEXT6					= "Dual flamecannon sprites";
+BDPGRAPHICCREDITMNUTIP_TEXT7					= "Uppercut with knuckle duster";
+BDPGRAPHICCREDITMNUTIP_TEXT8					= "Improved shotgun pump sprites";
+BDPGRAPHICCREDITMNUTIP_TEXT9					= "Improved shotgun pump sprites, improved Unmaker pickup";
+BDPGRAPHICCREDITMNUTIP_TEXT10					= "Improved shotgun pump sprites, polished SSG sprites";
+BDPGRAPHICCREDITMNUTIP_TEXT11					= "Polished SSG sprites";
+BDPGRAPHICCREDITMNUTIP_TEXT12					= "Further improved to the shotgun sprites, polished SSG sprites, knuckle crack sprites";
+BDPGRAPHICCREDITMNUTIP_TEXT13					= "Improved dual pistols and reload";
+BDPGRAPHICCREDITMNUTIP_TEXT14					= "Stained fists and boots, new shotgun, new machinegun, new flamecannon fire frames,";
+BDPGRAPHICCREDITMNUTIP_TEXT15					= "soap sprite, help with grenade box, mugshots deaths, brightmaps, Nailgun barrel and";
+BDPGRAPHICCREDITMNUTIP_TEXT16					= "magazine, bloody axe variations, angled machinegun firing frames, ASG pickup sprite";
+BDPGRAPHICCREDITMNUTIP_TEXT17					= "Better mugshots";
+BDPGRAPHICCREDITMNUTIP_TEXT18					= "for NOT SAVING STUFF THE WAY ITS SUPPOSED TO";
+BDPGRAPHICCREDITMNUTIP_TEXT19					= "Improved Frozen Railgun, new dual flamecannon, pipebomb, skull key variations";
+BDPGRAPHICCREDITMNUTIP_TEXT20					= "Base frozen railgun, switching firemodes animation, pinned imp";
+BDPGRAPHICCREDITMNUTIP_TEXT21					= "Cat's Frozen Addon (Frozen monsters, gibs, effects)";
+BDPGRAPHICCREDITMNUTIP_TEXT22					= "Project Brutality v3.0:";
+BDPGRAPHICCREDITMNUTIP_TEXT23					= "floor/ceiling ice shard";
+BDPGRAPHICCREDITMNUTIP_TEXT24					= "improved railgun and nailgun firing frames (+ brightmaps), pistol silencer";
+BDPGRAPHICCREDITMNUTIP_TEXT25					= "improved BFG10k glows, new grenade missiles and being awesome uwu";
+BDPGRAPHICCREDITMNUTIP_TEXT26					= "SgtMarkIV, typicalSF, Acclaim Entertainment and Probe Entertainment:";
+BDPGRAPHICCREDITMNUTIP_TEXT27					= "Frozen railgun muzzle flashes, new plasmagun muzzle flashes";
+BDPGRAPHICCREDITMNUTIP_TEXT28					= "Nailgun projectile, new minigun base";
+BDPGRAPHICCREDITMNUTIP_TEXT29					= "New minigun base";
+BDPGRAPHICCREDITMNUTIP_TEXT30					= "New Axe";
+BDPGRAPHICCREDITMNUTIP_TEXT31					= "Vanilla As Fuck mod (chainsaw rotations)";
+BDPGRAPHICCREDITMNUTIP_TEXT32					= "New BFG10k base";
+BDPGRAPHICCREDITMNUTIP_TEXT33					= "New BFG10k base";
+BDPGRAPHICCREDITMNUTIP_TEXT34					= "Multiple missing brightmaps (cyberdemon, mastermind, pain elemental)";
+BDPGRAPHICCREDITMNUTIP_TEXT35					= "Female marine, crouching zombies";
+BDPGRAPHICCREDITMNUTIP_TEXT36					= "New shotgun pickups and resting dropped mags";
+BDPGRAPHICCREDITMNUTIP_TEXT37					= "additional impaled marines gore";
+BDPGRAPHICCREDITMNUTIP_TEXT38					= "impaled marine helmet on a spike decoration";
+BDPGRAPHICCREDITMNUTIP_TEXT39					= "Rusty explosive barrel";
+BDPGRAPHICCREDITMNUTIP_TEXT40					= "baron and hellknight new deaths";
+BDPGRAPHICCREDITMNUTIP_TEXT41					= "ItsNatureToDie (aka David G)";
+BDPGRAPHICCREDITMNUTIP_TEXT42					= "new imp death, dead marine variations";
+BDPGRAPHICCREDITMNUTIP_TEXT43					= "Floating eye";
+BDPGRAPHICCREDITMNUTIP_TEXT44					= "Stalagtite variation";
+BDPGRAPHICCREDITMNUTIP_TEXT45					= "Nail 3D model";
+BDPGRAPHICCREDITMNUTIP_TEXT46					= "Keycard variation";
+BDPGRAPHICCREDITMNUTIP_TEXT47					= "Doom 3 keycard variations";
+BDPGRAPHICCREDITMNUTIP_TEXT48					= "Extra marine corpse";
+BDPGRAPHICCREDITMNUTIP_TEXT49					= "Extra marine corpses edits";
+BDPGRAPHICCREDITMNUTIP_TEXT50					= "Brightmap automation <3";
+BDPGRAPHICCREDITMNUTIP_TEXT51					= "Key variations";
+BDPGRAPHICCREDITMNUTIP_TEXT52					= "STARTUP Logo";
+BDPGRAPHICCREDITMNUTIP_TEXT53					= "Tpose Marine";
+
+// Brutal Doom Platinum Coding Credits
+BDPCODINGCREDITMNUTIP_TITLE					= "All the people or mods who helped me with influencing";
+BDPCODINGCREDITMNUTIP2_TITLE					= "or coding certain features in some way.";
+BDPCODINGCREDITMNUTIP3_TITLE					= "If I forgot someone or something, please notify me.";
+BDPCODINGCREDITMNUTIP_TEXT1					= "Brutal Doom v21";
+BDPCODINGCREDITMNUTIP_TEXT2					= "Original Project Lead";
+BDPCODINGCREDITMNUTIP_TEXT3					= "Cleaner variation code for weapons";
+BDPCODINGCREDITMNUTIP_TEXT4					= "Some bugfixes, friendly marine code, improved MES";
+BDPCODINGCREDITMNUTIP_TEXT5					= "Smooth dual weapon switch";
+BDPCODINGCREDITMNUTIP_TEXT6					= "Railgun ammo counter";
+BDPCODINGCREDITMNUTIP_TEXT7					= "Multiple bug fixes, first person legs, improve code, fixing janitor,";
+BDPCODINGCREDITMNUTIP_TEXT8					= "double jump, enemy roll, ACS Scripts, better ADS system, improvements";
+BDPCODINGCREDITMNUTIP_TEXT9					= "to deflectable revenant projectiles, Perfected ledge climbing code,";
+BDPCODINGCREDITMNUTIP_TEXT10					= "Additional map enhancement system content, revenant jetpack,";
+BDPCODINGCREDITMNUTIP_TEXT11					= "Laser guided missiles";
+BDPCODINGCREDITMNUTIP_TEXT12					= "Project Brutality v3.0:";
+BDPCODINGCREDITMNUTIP_TEXT13					= "Original first person legs code, laser guided missiles";
+BDPCODINGCREDITMNUTIP_TEXT14					= "Original ledge climbing code and animations";
+BDPCODINGCREDITMNUTIP_TEXT15					= "Insult mugshots ACS scripts";
+BDPCODINGCREDITMNUTIP_TEXT16					= "Listening to Dox brag about new addon's features despite not playing Doom.";
+BDPCODINGCREDITMNUTIP_TEXT17					= "Cat's Frozen Addon (Improved frozen monsters code, weakened monsters)";
+BDPCODINGCREDITMNUTIP_TEXT18					= "Zmovement (ledge climb)";
+BDPCODINGCREDITMNUTIP_TEXT19					= "Agent_Ash (aka Jekyll Grim Payne)";
+BDPCODINGCREDITMNUTIP_TEXT20					= "help with ledge grabbing, weapons always bobbing.";
+BDPCODINGCREDITMNUTIP_TEXT21					= "Ceiling climbing imps addon and code";
+BDPCODINGCREDITMNUTIP_TEXT22					= "Laser guided missiles";
+BDPCODINGCREDITMNUTIP_TEXT23					= "Six Degrees Of Freedom";
+BDPCODINGCREDITMNUTIP_TEXT24					= "Tilt++";
+BDPCODINGCREDITMNUTIP_TEXT25					= "Vehicle code";
+
+// Brutal Doom Platinum Sound Design Credits
+BDPSOUNDDESIGNCREDITMNUTIP_TITLE					= "All the people, mods or games which I used sounds from.";
+BDPSOUNDDESIGNCREDITMNUTIP2_TITLE					= "If I forgot someone or something, please notify me.";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT1					= "Original Project Lead";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT2					= "Project Brutality v2.03:";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT3					= "Revenant's missile launcher/Flamecannon pickup/select";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT4					= "Brutal Doom v19:";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT5					= "Sperglord edition - BFG firing";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT6					= "Hand grenade explosion, secret grenade throw, MP40 firing,";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT7					= "BFG10k idle";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT8					= "Contributing to the LMG firing, enemy kick variation,";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT9					= "Axe spinning in the air";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT10					= "Nailgun reload.";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT11					= "Providing multiple effects";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT12					= "Pistol inspect";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT13					= "ASG select/reload, SMG reload, Railgun reload/inspect, slug shells fire,";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT14					= "Minigun ammo belt inserting, nailgun alt fire, axe attack,";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT15					= "Silenced pistol, plasma cells pickup, machinegun belt";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT16					= "sound, new BFG10k, Spider Mastermind's firing.";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT17					= "frozen railgun primary fire, dragon breath SSG";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT18					= "Contributing to the LMG firing, grenade launcher fire, ASG inspect";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT19					= "Cat's Frozen Addon (freezing, frozen monsters struggling)";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT20					= "frozen railgun alt fire, inspect knocks, part of the exploding frozen barrel";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT21					= "Nailgun reloading smoke";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT22					= "Arachnotron's firing";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT23					= "Rocket bounce, fist wall impact, ASG fire and select,New Freeze grenade,";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT24					= "new multiple pickup, energy ball bounce, mancubus' flamecannon,";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT25					= "Weapon foley, void grenade";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT26					= "Miscillaneous voices, Energy Shield, Unmaker teleport";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT27					= "new shell insertion sounds";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT28					= "Providing HD sounds for megasphere, rifle reload, chainsaw idle.";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT29					= "Credits for other games/companies";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT30					= "Rocket bounce, fist wall impact, multiple new pickup, temporary weapon sounds";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT31					= "new freeze grenade, mancubus flamecannon, new foley sounds";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT32					= "Needler";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT33					= "Rocket bounce sound, new freeze grenade, motorcycle horn";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT34					= "new freeze grenade, void grenade, new weapon foley sounds";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT35					= "Fist wall impact sounds, plasma grenade";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT36					= "Sound Ideas - The General Series 6000";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT37					= "high quality rifle select";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT38					= "Night vision, computer map, keycard pickup, new freeze grenade";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT39					= "Void grenade sounds";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT40					= "Nailgun firing effects";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT41					= "Rifle's inspect, new foley sounds";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT42					= "Flamecannon alt fire";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT43					= "Grenade launcher reload";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT44					= "Deep Silver (from the game Painkiller Black)";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT45					= "Shotgun casings";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT46					= "Mancubus' flamecannon, new foley sounds";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT47					= "new shell insertion sounds";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT48					= "void grenade sounds";
+BDPSOUNDDESIGNCREDITMNUTIP_TEXT49					= "uwu";
 
 // Option Values
 OPTVAL_SMART 				= "Smart";
@@ -1753,6 +2224,46 @@ OPTVAL_LOW					= "Low";
 OPTVAL_MEDIUM				= "Medium";
 OPTVAL_HIGH					= "High";
 OPTVAL_EXTREME				= "Extreme";
+
+// Brutal Doom Platinum Option Values
+OPTVALBDP_BLOODLOW 				= "1) Low";
+OPTVALBDP_BLOODNORMAL 				= "2) Normal";
+OPTVALBDP_BLOODLOTS 				= "3) Lots";
+OPTVALBDP_BLOODEXTRENE 				= "4) Extreme";
+OPTVALBDP_BLOODCOMICAL 				= "5) Comical";
+OPTVALBDP_NO 				= "No";
+OPTVALBDP_YES 				= "Yes";
+OPTVALBDP_ENABLED 				= "Enabled";
+OPTVALBDP_DISABLED 				= "Disabled";
+OPTVALBDP_MULTIPLAYER 				= "Multiplayer";
+OPTVALBDP_SINGLEPLAYER 				= "Singleplayer";
+OPTVALBDP_CLASSICHUD 				= "Classic HUD";
+OPTVALBDP_CUSTOMHUDS 				= "Custom HUDs";
+OPTVALBDP_NOHUD 				= "No HUD";
+OPTVALBDP_BS169 				= "Brutal Simple 16:9";
+OPTVALBDP_BS43 				= "Brutal Simple 4:3";
+OPTVALBDP_MINIMAL 				= "Minimalist";
+OPTVALBDP_FULLHELMET 				= "Full Helmet";
+OPTVALBDP_DYNAMIC 				= "Dynamic";
+OPTVALBDP_PRESSONE 				= "Press Once";
+OPTVALBDP_HOLD 				= "Hold";
+OPTVALBDP_BDV21 				= "BDv21";
+OPTVALBDP_BURSTFIRE 				= "Burst fire";
+OPTVALBDP_AIMDOWNSIGHTS 				= "ADS";
+OPTVALBDP_PERMANENTRED 				= "Permanent red";
+OPTVALBDP_PERMANENTBLU 				= "Permanent blue";
+OPTVALBDP_PERMANENTGREEN 				= "Permanent Green";
+OPTVALBDP_PERMANENTNUKAGE 				= "Permanent nukage";
+OPTVALBDP_OFFICIALWADS 				= "Official IWADs";
+OPTVALBDP_LEGACYWADS 				= "Legacy (will most likely cause issues)";
+OPTVALBDP_GOINGDOWNWAD 				= "Going Down";
+OPTVALBDP_BTSXE1WAD 				= "Back To Saturn X Episode 1";
+OPTVALBDP_BTSXE2WAD 				= "Back To Saturn X Episode 2";
+OPTVALBDP_EPICWAD 				= "Epic";
+OPTVALBDP_EPIC2WAD 				= "Epic2";
+OPTVALBDP_SCYTHE2WAD 				= "Scythe 2";
+OPTVALBDP_SUNLUSTWAD 				= "Sunlust";
+OPTVALBDP_ALIENVENDETTAWAD 				= "Alien Vendetta";
 
 
 
