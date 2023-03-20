@@ -1,10 +1,10 @@
 // Pain effects by Sergeant_Mark_IV
 // Graphics can be found inside Bleed.wad
 
-#include "zcommon.acs"
 #library "paineffect"
+#include "zcommon.acs"
 
-script 530 (void)
+script "BrutalPain" (void)
 {
 SetHudSize(320,200,1);
 
@@ -15,7 +15,7 @@ SetHudSize(320,200,1);
 }
 
 
-script 531 (void)
+script "BrutalPainVisorBreak" (void)
 {
 
 SetHudSize(320,200,1);
@@ -54,7 +54,7 @@ SetHudSize(320,200,1);
 }
 
 
-script 611 (void)
+script "ScreenEffectsPain1" (void)
 {
 
 SetHudSize(480,300,1);
@@ -72,7 +72,7 @@ SetHudSize(480,300,1);
 }
 
 
-script 612 (void)
+script "ScreenEffectsPain2" (void)
 {
 
 SetHudSize(480,300,1);
@@ -90,7 +90,7 @@ SetHudSize(480,300,1);
 }
 
 
-script 613 (void)
+script "ScreenEffectsPain3" (void)
 {
 
 SetHudSize(480,300,1);
@@ -107,7 +107,7 @@ SetHudSize(480,300,1);
 	delay(8);
 }
 
-script 614 (void)
+script "ScreenEffectsPain4" (void)
 {
 
 SetHudSize(480,300,1);
@@ -124,7 +124,7 @@ SetHudSize(480,300,1);
 	delay(8);
 }
 
-script 615 (void)
+script "ScreenEffectsPain5" (void)
 {
 
 SetHudSize(480,300,1);
@@ -142,7 +142,7 @@ SetHudSize(480,300,1);
 }
 
 
-script 616 (void)
+script "ScreenEffectsPain6" (void)
 {
 
 SetHudSize(480,300,1);
@@ -162,7 +162,7 @@ SetHudSize(480,300,1);
 
 
 
-script 617 (void)
+script "ScreenEffectsImpScratch" (void)
 {
 SetHudSize(400,250,1);
 
