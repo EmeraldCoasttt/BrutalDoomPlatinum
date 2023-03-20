@@ -20,127 +20,127 @@ DoomEdNums
 episode EDAY01
 {
 	optional
-	name = "$TXT_EDAYE_BDP"
+	name = "Extermination Day"
 }
 
 /*
 episode BDM01
 {
-	name = "$TXT_BDM_BDP"
+	name = "Brutal Deathmatch"
 }
 */
 
 episode test
 {
-	Name = "$TXT_TESTINGMAP_BDP"
+	Name = "Testing Map"
 }
 
 
-map BDM01 lookup "TXT_DMLVLREENTRYWAY_BDP"
+map BDM01 "Re-Entryway"
 {
 	next = "BDM02"
 	secretnext = "BDM02"
 	sky1 = "SKYEAR1", 0.1
-	music = "$MUSIC_D_RUNNIN"
+	music = D_RUNNIN
 	cluster = 1
 }
 
-map BDM02 lookup "TXT_DMLVLDEADSIMPLER_BDP"
+map BDM02 "Dead Simpler"
 {
 	next = "BDM03"
 	secretnext = "BDM03"
 	sky1 = "SKYEAR1", 0.1
-	music = "$MUSIC_D_SHAWNCAPS"
+	music = D_SHAWN
 	cluster = 1
 }
 
-map BDM03 lookup "TXT_DMLVLNUCLEARASHES_BDP"
+map BDM03 "Nuclear Ashes"
 {
 	next = "BDM04"
 	secretnext = "BDM04"
 	sky1 = "SKYCIT1"
-	music = "$MUSIC_D_ADRIAN"
+	music = D_ADRIAN
 	cluster = 1
 }
 
 
-map BDM04 lookup "TXT_DMLVLHANGARMAGEDDON_BDP"
+map BDM04 "Hangarmageddon"
 {
 	next = "BDM05"
 	secretnext = "BDM05"
 	sky1 = "SKYPHO"
-	music = "$MUSIC_D_E1M1"
+	music = D_E1M1
 	cluster = 1
 }
 
 
-map BDM05 lookup "TXT_DMLVLSANDSTORM_BDP"
+map BDM05 "Sandstorm"
 {
 	next = "BDM06"
 	secretnext = "BDM06"
 	sky1 = "SKYEAR1", 0.1
-	music = "$MUSIC_D_DM05"
+	music = D_DM05
 	cluster = 1
 }
 
 
-map BDM06 lookup "TXT_DMLVLANOTHERONEBITESDEDUST_BDP"
+map BDM06 "Another One Bites De Dust"
 {
 	next = "BDM07"
 	secretnext = "BDM07"
 	sky1 = "SKYEAR1", 0.1
-	music = "$MUSIC_D_DM06"
+	music = D_DM06
 	cluster = 1
 }
 
-map BDM07 lookup "TXT_DMLVLPYRAMID_BDP"
+map BDM07 "Pyramid"
 {
 	next = "BDM09"
 	secretnext = "BDM09"
 	sky1 = "SKYEAR1", 0.1
-	music = "$MUSIC_D_DM07"
+	music = D_DM07
 	cluster = 1
 }
 
 
-map BDM08 lookup "TXT_DMLVLSTORAGECENTER_BDP"
+map BDM08 "Storage Center"
 {
 	next = "BDM09"
 	secretnext = "BDM09"
 	sky1 = "SKYEAR1"
-	music = "$MUSIC_D_DM08"
+	music = D_DM08
 	cluster = 1
 }
 
-map BDM09 lookup "TXT_DMLVLCATHEDRAL_BDP"
+map BDM09 "Cathedral"
 {
 	next = "BDM10"
 	secretnext = "BDM10"
 	sky1 = "SKYDEI"
-	music = "$MUSIC_D_DM09"
+	music = D_DM09
 	cluster = 1
 }
 
-map BDM10 lookup "TXT_DMLVLTOWEROFBABEL_BDP"
+map BDM10 "Tower of Babel"
 {
 	next = "BDM01"
 	secretnext = "BDM01"
 	sky1 = "SKYDEI"
-	music = "$MUSIC_D_DM10"
+	music = D_dM10
 	cluster = 1
 }
 
-map TEST lookup "TXT_TESTUACTESTINGCENTER_BDP"
+map TEST "UAC Testing Center"
 {
 	next = "MAP02"
 	secretnext = "MAP02"
 	sky1 = "SKYEAR1", 0.1
 	cluster = 1
 	//par = 60
-	music = "$MUSIC_ORB"
+	music = ORB
 }
 
-map PSMAP58 lookup "TXT_PSMAPTHEMANSION_BDP"
+map PSMAP58 "The Mansion"
 {
 	next = "MAP17"
 	secretnext = "PSMAP59"
@@ -148,19 +148,19 @@ map PSMAP58 lookup "TXT_PSMAPTHEMANSION_BDP"
 	sky1 = "SKYEAR3"
 	cluster = 1
 	//par = 60
-	music = "$MUSIC_D_ROMERO"
+	music = D_ROMERO
 }
 
-map PSMAP59 lookup "TXT_PSMAPCLUBDOOM_BDP"
+map PSMAP59 "Club Doom"
 {
 	next = "MAP17"
 	sky1 = "SKYCITH"
 	cluster = 1
 	par = 60
-	music = "$MUSIC_D_STALKS"
+	music = D_STALKS
 }
 
-map PSMAP29 lookup "TXT_PSMAPTWILIGHTDESCENDS_BDP"
+map PSMAP29 "Twilight Descends"
 {
 	next = "MAP15"
 	secretnext = "PSMAP57"
@@ -168,11 +168,11 @@ map PSMAP29 lookup "TXT_PSMAPTWILIGHTDESCENDS_BDP"
 	sky1 = "SKYEAR3"
 	cluster = 1
 	//par = 60
-	music = "$MUSIC_D_IN_CIT"	
+	music = d_in_cit	
 }
 
 
-map PSMAP57 lookup "TXT_PSMAPTHEMARSHES_BDP"
+map PSMAP57 "The Marshes"
 {
 	next = "MAP15"
 	secretnext = "MAP15"
@@ -180,10 +180,10 @@ map PSMAP57 lookup "TXT_PSMAPTHEMARSHES_BDP"
 	sky1 = "SKYEAR3"
 	cluster = 1
 	//par = 60
-	music = "$MUSIC_D_SHAWN"	
+	music = d_shawn	
 }
 
-map PSMAP16 lookup "TXT_PSMAPHELLGATE_BDP"
+map PSMAP16 "Hellgate"
 {
 	next = "PSMAP17"
 	secretnext = "PSMAP57"
@@ -191,11 +191,11 @@ map PSMAP16 lookup "TXT_PSMAPHELLGATE_BDP"
 	sky1 = "SKYHELF"
 	cluster = 1
 	//par = 60
-	music = "$MUSIC_D_DEAD"	
+	music = d_dead	
 }
 
 
-map PSMAP17 lookup "TXT_PSMAPBLOODCITADEL_BDP"
+map PSMAP17 "Blood Citadel"
 {
 	next = "MAP21"
 	secretnext = "MAP21"
@@ -203,7 +203,7 @@ map PSMAP17 lookup "TXT_PSMAPBLOODCITADEL_BDP"
 	sky1 = "SKYHELF"
 	cluster = 1
 	//par = 60
-	music = "$MUSIC_D_DOOM"	
+	music = d_doom	
 }
 
 
@@ -220,8 +220,8 @@ skill easyhard
    EasyBossBrain
    SpawnFilter = hard
    SpawnMulti
-   name = "$SKILL_EASY_BDP"
-   mustconfirm = "$SKILLTIP_EASY_BDP"
+   name = "I Just Want To Kill"
+   mustconfirm = "Plenty of enemies, 75% less damage. Press Enter to Confirm"
 }
 
 
@@ -231,7 +231,7 @@ skill normal
    AmmoFactor = 1
    DamageFactor = 1.0
    SpawnFilter = normal
-   name = "$SKILL_NORMAL_BDP"
+   name = "Hurt Me Plenty!"
 }
 
 
@@ -240,7 +240,7 @@ skill Hard
    AmmoFactor = 1
    DamageFactor = 1.0
    SpawnFilter = Hard
-   name = "$SKILL_ULTRAVIOLENCE_BDP"
+   name = "Ultra Violence"
    defaultskill
 }
 
@@ -250,9 +250,9 @@ skill HardPlus
    FastMonsters
    DamageFactor = 1.0
    SpawnFilter = Hard
-   name = "$SKILL_WATCHMEDIE_BDP"
+   name = "Watch Me Die"
    SpawnMulti
-	mustconfirm = "$SKILLTIP_WATCHMEDIE_BDP"
+	mustconfirm = "This enables multiplayer monsters and weapons, are you sure?"
    
 }
 
@@ -265,8 +265,8 @@ skill HyperHard
    DisableCheats
    RespawnTime = 20
    SpawnFilter = Nightmare
-   name = "$SKILL_NIGHTMARE_BDP"
-   mustconfirm = "$SKILLTIP_NIGHTMARE_BDP"
+   name = "Nightmare!"
+   mustconfirm = "Enemies are much more aggressive, and respawn after 20 seconds. Press Enter to Confirm"
 }
 
 //6
@@ -282,7 +282,7 @@ skill Realism
    //FastMonsters
    //DisableCheats
    SpawnFilter = hard
-   name = "$SKILL_REALISM_BDP"
+   name = "Realism"
    ReplaceActor = "ClipBox", "Clip"
    ReplaceActor = "RocketBox", "RocketAmmo"
    ReplaceActor = "Shellbox", "Shell"
@@ -298,7 +298,7 @@ skill Realism
    ReplaceActor = "AttackHelicopter", "AttackHelicopterRealism"
    ReplaceActor = "Mech", "MechRealism"
  //  TextColor = "Gray"
-   mustconfirm = "$SKILLTIP_REALISM_BDP"
+   mustconfirm = "Less ammo, 700% more damage, enemies have half hit points. UV enemy count. Are you tough enough?"
 }
 
 
@@ -315,7 +315,7 @@ skill HyperRealism
    SpawnFilter = hard
    SpawnMulti
    DisableCheats
-   name = "$SKILL_HYPERREALISM_BDP"
+   name = "Hyper-Realism"
    ReplaceActor = "ClipBox", "Clip"
    ReplaceActor = "RocketBox", "RocketAmmo"
    ReplaceActor = "Shellbox", "Shell"
@@ -331,7 +331,7 @@ skill HyperRealism
    ReplaceActor = "AttackHelicopter", "AttackHelicopterRealism"
    ReplaceActor = "Mech", "MechRealism"
  //  TextColor = "Gray"
-   mustconfirm = "$SKILLTIP_HYPERREALISM_BDP"
+   mustconfirm = "Less ammo, 700% more damage, full enemy health, multiplayer enemy count. You're Doomed."
 }
 
 
