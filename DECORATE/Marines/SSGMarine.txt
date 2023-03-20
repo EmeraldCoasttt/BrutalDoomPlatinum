@@ -5,6 +5,7 @@ ACTOR PrePlacedMarineSSG Replaces MarineSSG
 	Height 56
 	Radius 16
 	-COUNTKILL
+	Tag "$FN_BDP_MARINESUPERSHOTGUN"
     States
 	{
 	Spawn:
@@ -1044,6 +1045,7 @@ ACTOR BlackMarine_SSG: Marine_Rifle
 //	translation "112:127=[170,170,170]:[0,0,0]"
 translation "GRAY2black"
 	MaxTargetRange 1024
+	Tag "$FN_BDP_BLACKMARINESUPERSHOTGUN"
 	States
 	{
 	Active:

@@ -14,8 +14,8 @@ ACTOR Flamethrower2 : BrutalWeapon
 	+WEAPON.EXPLOSIVE
 	//+WEAPON.NO_AUTO_SWITCH
 	+WEAPON.CHEATNOTWEAPON
-	Inventory.PickupMessage "You got the Flamethrower! (Slot 9)"
-	Tag "Flamethrower"
+	Inventory.PickupMessage "$GOTBDPFLAMETHROWER"
+	Tag "$TAG_BDP_FLAMETHROWER"
 	Inventory.AltHUDIcon "FLMTF0"
 	States
 	{

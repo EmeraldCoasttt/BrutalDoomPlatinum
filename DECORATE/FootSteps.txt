@@ -3,7 +3,7 @@
 ACTOR Purist : Doomer
 {
 	Speed 1.0
-	Player.DisplayName "Purist"
+	Player.DisplayName "$MNU_BDP_GAMEMODEPURIST"
 	Player.StartItem "ClassicPistol"
 	Player.StartItem "ClassicFist"
 	Player.StartItem "Clip2", 50
@@ -73,7 +73,7 @@ ACTOR BDoomer : Doomer
 {
 	Speed 1.3
 	Player.RunHealth 999
-	Player.DisplayName "DOOM Marine"
+	Player.DisplayName "$MNU_BDP_GAMEMODEDOOMMARINE"
 	Player.StartItem "Rifle"
 	Player.StartItem "BrutalPistol"
 	Player.StartItem "Melee_Attacks"
@@ -120,7 +120,7 @@ ACTOR Doomer2 : Doomer
 {
 	Speed 1.3
 	Player.RunHealth 999
-	Player.DisplayName "Pistol Start"
+	Player.DisplayName "$MNU_BDP_GAMEMODEPISTOLSTART"
 	Player.StartItem "BrutalPistol"	
 	Player.StartItem "Melee_Attacks"
 	Player.startitem "AmmoFragGrenade", 2
@@ -221,7 +221,7 @@ ACTOR Doomer3 : Doomer
 	Speed 1.3
 	
 	Player.RunHealth 999
-	Player.DisplayName "Melee Start"
+	Player.DisplayName "$MNU_BDP_GAMEMODEMELEESTART"
     Player.StartItem "Melee_Attacks"
 	Player.startitem "AmmoFragGrenade", 2
 	Player.startitem "AmmoPipeBomb", 1
@@ -321,7 +321,7 @@ ACTOR TacticalDoomer : Doomer
 {
 	Speed 1.3
 	Player.RunHealth 999
-	Player.DisplayName "Tactical"
+	Player.DisplayName "$MNU_BDP_GAMEMODETACTICAL"
 	Player.StartItem "Rifle"
 	Player.StartItem "BrutalPistol"
 	
@@ -452,7 +452,7 @@ ACTOR FootStep
 	+THRUACTORS
 	gravity 1
 	mass 1000
-    Obituary "%o was stomped to death by %k."
+    Obituary "$OB_BDP_STOMPED"
 	+NOTIMEFREEZE
 	States
 		{
@@ -779,7 +779,7 @@ Actor HeavyFootSteps: FootStep
     Damage 1
     -CLIENTSIDEONLY
 	DamageType "Stomp"
-	Obituary "%o was trampled by a Mancubus."
+	Obituary "$OB_BDP_MANCUBUSSTOMP"
 	States
 		{
 		Spawn:
@@ -806,7 +806,7 @@ Actor PlayerBaronTrample: FootStep
     -CLIENTSIDEONLY
 	-DONTSPLASH
 	DamageType "Stomp"
-	Obituary "%o was trampled by a Baron."
+	Obituary "$OB_BDP_BARONSTOMP"
 	States
 		{
 		Spawn:
@@ -830,7 +830,7 @@ Actor HeavyFootSteps32: FootStep
     Damage 1
     -CLIENTSIDEONLY
 	DamageType "Stomp"
-	Obituary "%o was trampled by a Cyberdemon."
+	Obituary "$OB_BDP_CYBERDEMONSTOMP"
 	States
 		{
 		Spawn:
@@ -1036,7 +1036,7 @@ ACTOR Headkicker
 	+THRUACTORS
 	gravity 1
 	mass 1000
-    Obituary "%o was stomped to death by %k."
+    Obituary "$OB_BDP_STOMPED"
 	States
 		{
 		Spawn:
@@ -1183,7 +1183,7 @@ Radius 30
 	+NODAMAGETHRUST
 	+BLOODLESSIMPACT 
 	+ThruActors
-    Obituary "%o was stomped to death by %k."
+    Obituary "$OB_BDP_BIKESTOMP"
 
 
 

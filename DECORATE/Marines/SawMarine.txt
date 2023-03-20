@@ -5,6 +5,7 @@ MONSTER
 Translation "Dox778"
 Height 56
 Radius 16
+Tag "$FN_BDP_MARINESAW"
     States
 	{
 	Spawn:

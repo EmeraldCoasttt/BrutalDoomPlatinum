@@ -87,7 +87,7 @@ ACTOR AmmoDroper : BrutalWeapon
 	DropPistol:
 		ADRO A 1 BRIGHT
 		ADRO A 1 BRIGHT A_JumpIFInventory("Clip1", 10, 4)
-		TNT1 A 0 BRIGHT A_Print("Not enough ammo to drop", 1)
+		TNT1 A 0 BRIGHT A_Print("$TXT_BDP_NOAMMOFORDROP", 1)
 		Goto Ready
 		TNT1 AAAA 0
 		TNT1 A 0 A_TakeInventory("Clip1", 10)
@@ -98,7 +98,7 @@ ACTOR AmmoDroper : BrutalWeapon
 	DropRifle:
 		ADRO B 1 BRIGHT
 		ADRO B 1 BRIGHT A_JumpIFInventory("Clip2", 30, 4)
-		TNT1 A 0 BRIGHT A_Print("Not enough ammo to drop", 1)
+		TNT1 A 0 BRIGHT A_Print("$TXT_BDP_NOAMMOFORDROP", 1)
 		Goto Ready
 		TNT1 AAAA 0
 		TNT1 A 0 A_TakeInventory("Clip2", 30)
@@ -109,7 +109,7 @@ ACTOR AmmoDroper : BrutalWeapon
 	DropShell:
 		ADRO C 1 BRIGHT
 		ADRO C 1 BRIGHT A_JumpIFInventory("AmmoSHell", 4, 4)
-		TNT1 A 0 BRIGHT A_Print("Not enough ammo to drop", 1)
+		TNT1 A 0 BRIGHT A_Print("$TXT_BDP_NOAMMOFORDROP", 1)
 		Goto Ready
 		TNT1 AAAA 0
 		TNT1 A 0 A_TakeInventory("AmmoSHell", 4)
@@ -120,7 +120,7 @@ ACTOR AmmoDroper : BrutalWeapon
 	DropRocket:
 		ADRO D 1 BRIGHT
 		ADRO D 1 BRIGHT A_JumpIFInventory("AmmoRocket", 1, 4)
-		TNT1 A 0 BRIGHT A_Print("Not enough ammo to drop", 1)
+		TNT1 A 0 BRIGHT A_Print("$TXT_BDP_NOAMMOFORDROP", 1)
 		Goto Ready
 		TNT1 AAAA 0
 		TNT1 A 0 A_TakeInventory("AmmoRocket", 1)
@@ -131,7 +131,7 @@ ACTOR AmmoDroper : BrutalWeapon
 	DropCell:
 		ADRO E 1 BRIGHT
 		ADRO E 1 BRIGHT A_JumpIFInventory("AmmoCell", 20, 4)
-		TNT1 A 0 BRIGHT A_Print("Not enough ammo to drop", 1)
+		TNT1 A 0 BRIGHT A_Print("$TXT_BDP_NOAMMOFORDROP", 1)
 		Goto Ready
 		TNT1 AAAA 0
 		TNT1 A 0 A_TakeInventory("AmmoCell", 20)
@@ -142,7 +142,7 @@ ACTOR AmmoDroper : BrutalWeapon
 	DropFuel:
 		ADRO F 1 BRIGHT
 		ADRO F 1 BRIGHT A_JumpIFInventory("Gas", 50, 4)
-		TNT1 A 0 BRIGHT A_Print("Not enough ammo to drop", 1)
+		TNT1 A 0 BRIGHT A_Print("$TXT_BDP_NOAMMOFORDROP", 1)
 		Goto Ready
 		TNT1 AAAA 0
 		TNT1 A 0 A_TakeInventory("Gas", 50)
@@ -153,7 +153,7 @@ ACTOR AmmoDroper : BrutalWeapon
 	DropGrenade:
 		ADRO G 1 BRIGHT
 		ADRO G 1 BRIGHT A_JumpIFInventory("GrenadeAmmo", 1, 4)
-		TNT1 A 0 BRIGHT A_Print("Not enough ammo to drop", 1)
+		TNT1 A 0 BRIGHT A_Print("$TXT_BDP_NOAMMOFORDROP", 1)
 		Goto Ready
 		TNT1 AAAA 0
 		TNT1 A 0 A_TakeInventory("GrenadeAmmo", 1)
@@ -168,7 +168,7 @@ ACTOR AmmoDroper : BrutalWeapon
 		ADRO C 0 BRIGHT A_JumpIFInventory("ArmorShardDroped", 5, "DropArmor")
 		ADRO C 0 BRIGHT A_JumpIFInventory("BasicArmor", 5, "DropArmor")
 		ADRO C 0 BRIGHT A_JumpIFInventory("HeavyArmor", 5, "DropArmor")
-		TNT1 A 0 BRIGHT A_Print("Not enough armor to drop", 1)
+		TNT1 A 0 BRIGHT A_Print("$TXT_BDP_NOARMORFORDROP", 1)
 		Goto Ready
 	DropArmor:	
 		TNT1 A 0

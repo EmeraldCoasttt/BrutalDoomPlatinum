@@ -4,10 +4,10 @@ ACTOR DamageMultiplier: Inventory { Inventory.MaxAmount 30 }
 ACTOR AxeCounter: Inventory {Inventory.MaxAmount 2}
 ACTOR BrutalAxe : BrutalWeapon
 {
-	Obituary "%o was choped down by %k's axe."
+	Obituary "$OB_BDP_AXE"
     AttackSound "None"
     Inventory.PickupSound "AXEDRAW"
-	Inventory.Pickupmessage "You got your Axe back! (Slot 1)"
+	Inventory.Pickupmessage "$GOTBDPAXE"
     +WEAPON.NOAUTOAIM
     +WEAPON.NOAUTOFIRE
     +FORCEXYBILLBOARD
@@ -16,7 +16,7 @@ ACTOR BrutalAxe : BrutalWeapon
 	+WEAPON.AXEBLOOD
 	Weapon.SelectionOrder 3000
 	Scale 0.9
-	Tag "Axe"
+	Tag "$TAG_BDP_AXE"
 	brutalweapon.handedness 2
 	Inventory.AltHUDIcon "AXE9A0"
 	BrutalWeapon.weight 0
@@ -572,12 +572,12 @@ ACTOR BrutalAxe : BrutalWeapon
 	DualWield:
 //	NULL A 0 A_JumpIfInventory("AxeThrowAltFire",1,"BackToNormal")
 	//NULL A 0 A_GiveInventory("AxeThrowAltFire",1)
-  ////  NULL A 0 A_Print("Alt Fire: Throw",1)
+  ////  NULL A 0 A_Print("$TXT_BDP_AXETHROW",1)
 	//TNT1 A 0 A_TakeInventory("StartDualWield", 1)
 	//Goto Ready
 	//BackToNormal:
 	//NULL A 0 A_TakeInventory("AxeThrowAltFire",1)
-	//NULL A 0 A_Print("Alt Fire: Horizontal Swing",1)
+	//NULL A 0 A_Print("$TXT_BDP_AXEHORIZONTALSWING",1)
 	//TNT1 A 0 A_TakeInventory("StartDualWield", 1)
 	//Goto Ready
 	
@@ -964,7 +964,7 @@ ACTOR ThrowedAxe
 	Species "Marines"
 	+THRUSPECIES
 	+MTHRUSPECIES
-	Obituary "%o was hunted down by %k's axe."
+	Obituary "$OB2_BDP_AXE"
 	States
 	{
 	Spawn:

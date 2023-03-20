@@ -30,11 +30,11 @@ DropItem "Demonstrengthrune", 8
 	ActiveSound "vile/active"
 	MeleeSound "vile/stop"
 	damagefactor "TeleportRemover", 0.0
-	Obituary "%o was exploded by an Arch-Vile."
+	Obituary "$OB_BDP_EXPLODEDBYARCHVILE"
 	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
 	DeathHeight 4
 	BurnHeight 0
-	Tag "Archvile"
+	Tag "$FN_BDP_ARCHVILE"
 	Species "archviles"
 	//+thruspecies
 	States

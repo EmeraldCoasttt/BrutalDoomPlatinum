@@ -7,11 +7,11 @@ ACTOR HandGrenades : BrutalWeapon
 	Weapon.AmmoGive1 1
 	Weapon.SelectionOrder 5000
 //	Weapon.AmmoType1 "GrenadeAmmo"
-	Obituary "%o was shreded by %k's grenade."
+	Obituary "$OB_BDP_HANDGRENADE"
     AttackSound "None"
     Inventory.PickupSound "AmmoAPIN"
-	Inventory.Pickupmessage "You got a Hand Grenade! (Slot 9)"
-	Tag "Hand Grenades"
+	Inventory.Pickupmessage "$GOTBDPHANDGRENADE"
+	Tag "$TAG_BDP_HANDGRENADE"
 	BrutalWeapon.Weight 2
     +WEAPON.NOAUTOAIM
     +WEAPON.NOALERT
@@ -138,7 +138,7 @@ ACTOR HandGrenades : BrutalWeapon
 		NULL A 0 A_JumpIf(CountInv("NadeType")==1,"SwitchToPipebomb")
 		//NULL A 0 A_GiveInventory("NadeType",1)
 		
-		NULL A 0 A_Print("\cnFreeze grenades selected.",2)
+		NULL A 0 A_Print("$TXT_BDP_FREEZEGRENADESSELECTED",2)
 		TNT1 A 0 A_jumpif(countinv("grenadeammo") == 0, 4)
 		GNAD DCB 1
 		NULL A 0 A_giveinventory("nadetype",1)
@@ -149,7 +149,7 @@ ACTOR HandGrenades : BrutalWeapon
 	SwitchToPipebomb:
 	    //NULL A 0 A_GiveInventory("NadeType",1)
 		
-		NULL A 0 A_Print("\ccPipebombs selected.",2)
+		NULL A 0 A_Print("$TXT_BDP_PIPEBOMBSSELECTED",2)
 		TNT1 A 0 A_jumpif(countinv("grenadeammo") == 0, 4)
 		GNAD FGH 1
 		NULL A 0 A_giveinventory("nadetype",1)
@@ -160,7 +160,7 @@ ACTOR HandGrenades : BrutalWeapon
 	SwitchToVoid:
 	 //   NULL A 0 A_TakeInventory("NadeType",2)
 	    
-		NULL A 0 A_Print("\ctVoid grenades selected.",2)
+		NULL A 0 A_Print("$TXT_BDP_VOIDGRENADESSELECTED",2)
 		TNT1 A 0 A_jumpif(countinv("grenadeammo") == 0, 5)
 		DKPB BCDE 1
 		NULL A 0 A_giveinventory("nadetype",1)
@@ -171,7 +171,7 @@ ACTOR HandGrenades : BrutalWeapon
 	BackToCluster:
 	 //   NULL A 0 A_TakeInventory("NadeType",2)
 	   
-		NULL A 0 A_Print("Cluster grenades selected.",2)
+		NULL A 0 A_Print("$TXT_BDP_CLUSTERGRENADESSELECTED",2)
 		TNT1 A 0 A_jumpif(countinv("grenadeammo") == 0, 5)
 		4RTH DCBA 1
 		 NULL A 0 A_takeinventory("nadetype",3)
@@ -455,7 +455,7 @@ ACTOR HandGrenade
   // BounceSound "GRNBNCE"
    BounceSound "HandNadeBounce"
 	DeathSound "none"
-	Obituary "%o ate %k grenade."
+	Obituary "$OB2_BDP_HANDGRENADE"
 	+FORCEXYBILLBOARD
 	+ROLLSPRITE
 	+ROLLCENTER
@@ -531,7 +531,7 @@ Damagetype "ExplosiveImpact"
 +DONTBOUNCEONSHOOTABLES
 -BOUNCEAUTOOFF
 BounceSound "none"
-Obituary "%k was dumb enough to eat his own clusters."
+Obituary "$OB3_BDP_HANDGRENADE"
     States
 	{
 	Spawn:
@@ -803,7 +803,7 @@ ACTOR Freezenade: HandGrenade
 {
     BounceSound "IceNadeBounce"
 	DeathSound "none"
-	Obituary "%o ate %k freezenade."
+	Obituary "$OB4_BDP_HANDGRENADE"
 	+ROLLSPRITE
 	+ROLLCENTER
 	Scale 0.2
@@ -956,7 +956,7 @@ ACTOR PipeBombThrownIdle: CustomInventory
    //+THRUACTORS 
 	+FORCEXYBILLBOARD
 	-BLOODSPLATTER
-     Inventory.PickupMessage "Picked up a pipebomb."
+     Inventory.PickupMessage "$GOTBDPPIPEBOMB2"
      Inventory.PickupSound "PIPESEL"
 	 Species "ThrownPipebombs"
     //+MOVEWITHSECTOR
@@ -1000,7 +1000,7 @@ ACTOR PipeBombThrownExplodeNow: CustomInventory
    //+THRUACTORS 
 	+FORCEXYBILLBOARD
 	-BLOODSPLATTER
-     Inventory.PickupMessage "Picked up a pipebomb."
+     Inventory.PickupMessage "$GOTBDPPIPEBOMB2"
      Inventory.PickupSound "PIPESEL"
 	 Species "ThrownPipebombs"
     //+MOVEWITHSECTOR

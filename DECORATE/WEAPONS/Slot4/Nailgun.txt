@@ -25,15 +25,15 @@ ACTOR Nailgun : BrutalWeapon
 	Weapon.SelectionOrder 2500
 	Weapon.AmmoType1 "Clip2"
 	Weapon.AmmoType2 "NailgunAmmo"
-	Obituary "%o was nailed by %k's Nailgun."
+	Obituary "$OB_BDP_NAILGUN"
     AttackSound "None"
     Inventory.PickupSound "CBOXPKUP"
-	Inventory.Pickupmessage "You got the Nailgun... somehow."
+	Inventory.Pickupmessage "$GOTBDPNAILGUN"
     +WEAPON.NOAUTOAIM
     +WEAPON.NOALERT
 	+WEAPON.NOAUTOFIRE
 	+FORCEXYBILLBOARD
-	Tag "The Oscillator Nailgun"
+	Tag "$TAG_BDP_NAILGUN"
     Scale 0.8
 	+POWERED_UP
 	+INVENTORY.UNDROPPABLE

@@ -8,8 +8,8 @@ ACTOR Arachnotron2: Arachnotron1 2542
 	//$category "BD Monsters"
 	Scale 1.4
 	Health 1250
-	Obituary "%o was killed by an Ancient Arachnotron."
-	Tag "Ancient Arachnotron"
+	Obituary "$OB_BDP_KILLEDBYANCIENTARACHNOTRON"
+	Tag "$FN_BDP_ANCIENTARACHNOTRON"
 	States
 	{
 	Pain.Killme:

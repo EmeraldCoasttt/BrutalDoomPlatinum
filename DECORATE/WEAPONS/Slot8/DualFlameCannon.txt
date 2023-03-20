@@ -16,8 +16,8 @@ ACTOR DualFlameCannon : BrutalWeapon
 	BrutalWeapon.weight 15
 	+INVENTORY.UNDROPPABLE
 	+Inventory.untossable
-	Inventory.PickupMessage "hi, i'm a message you're not supposed to see!"
-	Tag "Mancubus FlameCannon"
+	Inventory.PickupMessage "$GOTBDPDUALMANCUBUSFLAMECANNON"
+	Tag "$TAG_BDP_DUALMANCUBUSFLAMECANNON"
 	Inventory.AltHUDIcon "MANAH0"
 	brutalweapon.handedness 2
 	States

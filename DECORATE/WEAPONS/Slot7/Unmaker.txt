@@ -88,7 +88,7 @@ actor UnmakerLaser : FastProjectile 9904
   Alpha 1
   SeeSound "weapons/unmaker"
   DeathSound "Null"
-  Obituary "%o was unmade by %k."
+  Obituary "$OB_BDP_UNMAKER"
   States
   {
   Spawn:

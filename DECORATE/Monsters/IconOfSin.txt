@@ -27,14 +27,14 @@ ACTOR IconOfSin 2550
 	+FLOATBOB
 	
 	DeathSound "cyber/death"
-	Obituary "%o was wiped out by the Icon of Sin"
+	Obituary "$OB_BDP_WIPEDOUTBYICONOFSIN"
 	BLoodType "DeadBlood"
 	DamageFactor "Desintegrate", 1.0
 	DamageFactor "CauseSplash", 0.0 DamageFactor "CauseObjectsToSplashSlime", 0.0 DamageFactor "CauseObjectsToSplashNukage", 0.0
 	DamageFactor "CauseObjectsToSplashBlood", 0.0 DamageFactor "CauseObjectsToSplashLava", 0.0
 	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
 	Scale 2.6
-	Tag "Gatekeeper"
+	Tag "$FN_BDP_GATEKEEPER"
 	States
 	{
 	Spawn:
@@ -393,7 +393,7 @@ ACTOR GateKeeper: IconOfSin
 	+FLOAT
 	-FLOATBOB
 	DeathSound "cyber/death"
-	Obituary "%o was wiped out by the Gate Keeper"
+	Obituary "$OB_BDP_WIPEDOUTBYGATEKEEPER"
 	BloodType "DeadBlood"
 	DamageFactor "Desintegrate", 1.0
 	States

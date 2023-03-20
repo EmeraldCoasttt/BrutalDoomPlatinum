@@ -10,10 +10,10 @@ ACTOR DualMP40 : BrutalWeapon
 	Weapon.AmmoType1 "Clip1"
 	Weapon.AmmoType2 "DualMP40Ammo"
 	Weapon.SisterWeapon "MP40"
-	Obituary "%o was shot down by %k's MP40."
+	Obituary "$OB_BDP_DUALMP40"
     AttackSound "None"
     Inventory.PickupSound "CLIPIN"
-	Inventory.Pickupmessage "aye yo... you aren't supposed to see this"
+	Inventory.Pickupmessage "$GOTBDPDUALMP40"
     +WEAPON.NOAUTOAIM
     //+WEAPON.NOAUTOFIRE
     +FORCEXYBILLBOARD

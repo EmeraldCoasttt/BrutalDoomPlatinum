@@ -12,11 +12,11 @@ ACTOR Labguy: RifleZombie
 	MaxTargetRange 100
 	+NOBLOCKMONST
 	+DROPOFF
-	Obituary "%o has been cut down by a zombie labworker."
+	Obituary "$OB_BDP_CUTDOWNBYSCIENTISTZOMBIE"
 	damagefactor "Taunt", 1.0
 	DropItem "none"
 	AttackSound "none"
-	Tag "Civilian Zombie"
+	Tag "$FN_BDP_SCIENTISTZOMBIE"
 	DamageFactor "ExtremePunches", 2.0
 	States
 	{

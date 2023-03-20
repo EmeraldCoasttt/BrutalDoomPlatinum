@@ -5,6 +5,7 @@ ACTOR PrePlacedMarineBFG10K
 	Height 56
 	Radius 16
 	-COUNTKILL
+	Tag "$FN_BDP_MARINEBFG10K"
     States
 	{
 	Spawn:

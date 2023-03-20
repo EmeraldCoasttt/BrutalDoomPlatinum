@@ -5,6 +5,7 @@ ACTOR PrePlacedMarineRailgun Replaces MarineRailgun
 	Height 56
 	Radius 16
 	-COUNTKILL
+	Tag "$FN_BDP_MARINERAILGUN"
     States
 	{
 	Spawn:
@@ -1238,7 +1239,8 @@ ACTOR BlackMarine_Railgun: Marine_Rifle
 	MaxTargetRange 4096
 	DropItem "RailgunSpawner"
 //	translation "112:127=[0,128,192]:[0,0,0]"
-translation "Blue2black"
+    translation "Blue2black"
+    Tag "$FN_BDP_BLACKMARINERAILGUN"
 	States
 	{
 	Active:

@@ -126,7 +126,7 @@ Speed 30
 		TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames4", 0, 0, angle-180, CMF_ABSOLUTEANGLE)
 		
 		TNT1 A 0 ACS_NamedExecuteAlways("rocketFollow",0,0,0,0)
-	//	TNT1 A 0 A_Print("LGR works")
+	//	TNT1 A 0 A_Print("$TXT_BDP_LASERGUIDEDROCKETENABLED")
 		FLMT A 0 A_PlaySound("RocketSwoosh", 3, 1, 1)
 		Goto Live
 		
@@ -327,7 +327,7 @@ actor RocketExplosion
 Radius 2
 Height 2
 Damagetype ExplosiveImpact
-Obituary "%o was exploded by %k rocket."
+Obituary "$OB2_BDP_MASTERMINDCHAINGUN"
 States    {
     Spawn:
 	Goto Death
@@ -344,7 +344,7 @@ States    {
 Radius 2
 Height 2
 Damagetype head
-Obituary "%o got hit in the head"
+Obituary "$OB_BDP_GOTHEADSHOTED"
 States    {
     Spawn:
 	Goto Death
@@ -362,7 +362,7 @@ States    {
 Radius 2
 Height 2
 Damagetype ExplosiveImpact
-Obituary "%o was exploded by %k rocket."
+Obituary "$OB2_BDP_MASTERMINDCHAINGUN"
 States    {
     Spawn:
 	Goto Death
@@ -822,7 +822,7 @@ ACTOR FriendlyGrenadeExplosion
 	Radius 2
 	Height 2
 	Damagetype FriendBullet
-	Obituary "%o was exploded by %k rocket."
+	Obituary "$OB2_BDP_MASTERMINDCHAINGUN"
 	Species "Marines"
 	+MTHRUSPECIES
 	States
@@ -1058,7 +1058,7 @@ ACTOR CyberBalls: Rocket2
     SeeSound "DSCANFIR"
     //SeeSound "RLANSHOT"
 	DeathSound "Explosion"
-	Obituary "%o was exploded to pieces by a Cyberdemon."
+	Obituary "$OB_BDP_EXPLODEDBYCYBERDEMON"
 	States
 	{
 	Spawn:
@@ -1245,7 +1245,7 @@ Damage (random (20000, 20000))
 Speed 30
 Scale 1.0
 Damagetype "Fire"
-Obituary "%k commited a war crime"
+Obituary "$OB_BDP_COMMITEDWARCRIME"
 
 Species "None"
 	States

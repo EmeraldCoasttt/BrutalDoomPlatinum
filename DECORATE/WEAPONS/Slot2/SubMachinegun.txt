@@ -8,18 +8,18 @@ ACTOR BrutalSMG : BrutalWeapon
 	Weapon.AmmoGive2 0
 	Weapon.AmmoType1 "Clip1"
 	Weapon.AmmoType2 "BDSMGAmmo"
-	Obituary "%o was shot down by %k's SMG."
+	Obituary "$OB_BDP_SUBMACHINEGUN"
     AttackSound "None"
 	Weapon.SelectionOrder 1800
     Inventory.PickupSound "CLIPIN"
-	Inventory.Pickupmessage "You got the Submachine Gun! (Slot 2)"
+	Inventory.Pickupmessage "$GOTBDPSUBMACHINEGUN"
     +WEAPON.NOAUTOAIM
 	+WEAPON.NOAUTOFIRE
 	//+WEAPON.NO_AUTO_SWITCH
 	+WEAPON.NOALERT
     +FORCEXYBILLBOARD
 	Scale 0.9
-	Tag "Sub-MachineGun"
+	Tag "$TAG_BDP_SUBMACHINEGUN"
 	Inventory.AltHUDIcon "SMGZA0"
 	brutalweapon.handedness 1
 	States
@@ -499,7 +499,7 @@ ACTOR BrutalSMG : BrutalWeapon
 		SMGG A 1
 		SMGG A 0 A_Takeinventory("StartDualWield",1)
 		SMGG A 0 A_JumpIfInventory("DualSMG", 1, "GetDual")
-		SMGG F 0 A_Print("You must have two SMGs to dual wield!",2)
+		SMGG F 0 A_Print("$TXT_BDP_TWOSMGSSNEED",2)
 		Goto Ready
 		
 	 GetDual:	
@@ -520,7 +520,7 @@ ACTOR BrutalSMG : BrutalWeapon
 		
 	NoDual:
 		SMGG A 1
-		TNT1 A 0 A_Print("You can't dual wield in Tactical Mode.",2)
+		TNT1 A 0 A_Print("$TXT_BDP_NOTWOWEAPONSTACTICAL",2)
 		Goto Ready		
 	}
 }

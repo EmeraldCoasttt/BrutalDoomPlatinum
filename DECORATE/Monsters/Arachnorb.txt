@@ -20,8 +20,8 @@ actor Aracnorb
   MeleeSound "demon/melee"
   MeleeDamage 6
   MissileHeight 36
-  Obituary "%o was zapped by an aracnorb."
-  HitObituary "%o had %p skull chewed by an aracnorb."
+  Obituary "$OB_BDP_ZAPPEDBYARACNORB"
+  HitObituary "$OB_BDP_SKULLCHEWEDBYARACNORB"
   damagefactor "Shrapnel", 3.0
   Scale 0.85
   States
