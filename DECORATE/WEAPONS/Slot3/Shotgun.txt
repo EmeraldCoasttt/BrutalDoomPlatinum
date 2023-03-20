@@ -152,6 +152,7 @@ ACTOR Shot_Gun : BrutalWeapon
 		//TNT1 A 0 A_jumpifinventory("GlassSlugselected",1,"ContinueSelectButShowSlugs")
 		TNT1 AAAAAAAAAAAAAA 0 A_Raise
 		TNT1 A 1 A_Raise
+		TNT1 A 0 A_GunSlingerReload("ShotgunAmmo",9,"AmmoShell",1)
 	ReturnFromNothing:
 		SHTN A 0 A_Giveinventory("ShotgunSelected",1)
 		SHTN A 0 
