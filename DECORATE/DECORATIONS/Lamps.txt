@@ -111,7 +111,7 @@ Actor Column1 : Column
     damagefactor "Avoid", 0.0    damagefactor "Kick", 0.0	damagefactor "Melee", 0.0
     damagefactor "KillMe", 0.0 damagefactor "Trample", 0.0
 	+NOTARGET
-	Tag "$TAG_BDP_LAMPPOSTSHORT"
+	Tag "Lamppost Short"
 	+LOOKALLAROUND
 	+SHOOTABLE
 	mass 999999

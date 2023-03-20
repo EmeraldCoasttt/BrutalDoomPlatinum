@@ -19,7 +19,7 @@ ACTOR Nazi: WolfensteinSS 2549
 	AttackSound "MP40"
 	PainSound "none"
 	DeathSound "nazi/death"
-	Obituary "$OB_BDP_TERMINATEDBYNAZI"
+	Obituary "%o was terminated by a Nazi."
 	DamageFactor "ExtremePunches", 2.0
 	DropItem "None"
 	DamageFactor "Melee", 2.0

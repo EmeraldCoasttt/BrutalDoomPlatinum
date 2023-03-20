@@ -48,10 +48,10 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
     BloodType "Brutal_Blood", "SawBlood", "SawBlood"
     damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
 	damagefactor "taunt", 0.0
-	Obituary "$OB_BDP_FACESPLATTEREDBYSHOTGUNNER"
+	Obituary "%o got his face splattered on the wall by a Zombie Shotgunner."
 	MaxStepHeight 24
 	MaxDropOffHeight 32
-	Tag "$FN_BDP_SHOTGUNZOMBIE"
+	Tag "Shotgun Zombie"
 	DamageFactor "CauseSplash", 0.0 DamageFactor "CauseObjectsToSplashSlime", 0.0 DamageFactor "CauseObjectsToSplashNukage", 0.0
 	DamageFactor "CauseObjectsToSplashBlood", 0.0 DamageFactor "CauseObjectsToSplashLava", 0.0
 	BrutalZombie.VoicePitch 0.9
@@ -2060,8 +2060,8 @@ Actor FatalizedSGGuy4: deadshotgunguy_nobrain
 ACTOR SMGGuy: ShotgunGuy1
 {
 DropItem "SMGDrop"
-Tag "$FN_BDP_SMGZOMBIE"
-Obituary "$OB_BDP_PUNCTUREDBYSMGZOMBIE"
+Tag "SMG Zombie"
+Obituary "%o got punctured by a SMG Zombie."
 	States
 	{
 	Pain.Avoid:

@@ -175,8 +175,7 @@ ACTOR Marine_Rifle: AlliedMarineBase
 	Scale 1.0
 	Translation  "RED"
 	BloodType "Player_Blood", "Player_BloodSaw", "Player_Blood"
-	Obituary "$OB_BDP_SHOTDOWNBYMARINE"
-	Tag "$FN_BDP_MARINERIFLE"
+	Obituary "%o has been gunned down by a Marine."
 	DropItem "RifleDrop"
 	+FLOORCLIP
 	+QUICKTORETALIATE
@@ -1285,8 +1284,7 @@ ACTOR BlackMarine_Rifle: AlliedMarineBase
 	Scale 1.0
 	Translation  "REDblack"
 	BloodType "Player_Blood", "Player_BloodSaw", "Player_Blood"
-	Obituary "$OB_BDP_SHOTDOWNBYMARINE"
-	Tag "$FN_BDP_BLACKMARINERIFLE"
+	Obituary "%o has been gunned down by a Marine."
 	DropItem "RifleDrop"
 	+FLOORCLIP
 	+QUICKTORETALIATE

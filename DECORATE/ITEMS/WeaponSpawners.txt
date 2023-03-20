@@ -8,7 +8,7 @@ ACTOR RifleSpawner: CustomInventory Replaces Pistol
  radius 24
  height 24
  +THRUACTORS +FORCEXYBILLBOARD
- Inventory.PickupMessage "$GOTBDPASSAULTRIFLE"
+ Inventory.PickupMessage "You got the Assault Rifle! (Slot 4)"
  Inventory.PickupSound "CLIPIN"
  Mass 1
     States
@@ -89,7 +89,7 @@ ACTOR PistolSpawner: CustomInventory
  radius 24
  height 24
  +THRUACTORS +FORCEXYBILLBOARD
- Inventory.PickupMessage "$GOTBDPPISTOL"
+ Inventory.PickupMessage "You got the Pistol! (Slot 2)"
  Inventory.PickupSound "PSRLIN"
  Mass 1
     States
@@ -132,7 +132,7 @@ ACTOR MP40Spawner: CustomInventory
  radius 24
  height 24
  +THRUACTORS +FORCEXYBILLBOARD
- Inventory.PickupMessage "$GOTBDPMP40"
+ Inventory.PickupMessage "You got the MP40! (Slot 2)"
  Inventory.PickupSound "CLIPIN"
  Mass 1
     States
@@ -174,7 +174,7 @@ ACTOR RevolverSpawner: CustomInventory 5874
  height 15
  +THRUACTORS +FORCEXYBILLBOARD
 
- Inventory.PickupMessage "$GOTBDPDOXSREVOLVER"
+ Inventory.PickupMessage "You got the Revolver! Yee-haw! (Slot 2)"
  Inventory.PickupSound "REVDRY"
  Mass 1
     States
@@ -232,7 +232,7 @@ ACTOR ShotgunSpawner: CustomInventory
  height 24
  +THRUACTORS +FORCEXYBILLBOARD
 
- Inventory.PickupMessage "$GOTBDPSHOTGUN"
+ Inventory.PickupMessage "You got the Shotgun! (Slot 3)"
  Inventory.PickupSound "weapons/sgpump"
  Mass 1
     States
@@ -394,7 +394,7 @@ ACTOR SSGSpawner: CustomInventory
  height 24
  +THRUACTORS +FORCEXYBILLBOARD
 
- Inventory.PickupMessage "$GOTBDPSUPERSHOTGUN"
+ Inventory.PickupMessage "You got the Super Shotgun! (Slot 3)"
  Inventory.PickupSound "CLIPINSS"
  Mass 1
     States
@@ -432,7 +432,7 @@ ACTOR AssaultShotgunSpawner: CustomInventory
  +THRUACTORS +FORCEXYBILLBOARD
 
 Inventory.PickupSound "ASGSEL"
-	Inventory.Pickupmessage "$GOTBDPASSAULTSHOTGUN"
+	Inventory.Pickupmessage "You got the Assault Shotgun! (Slot 3)"
  Mass 1
     States
     {
@@ -466,7 +466,7 @@ ACTOR ChaingunSpawner: CustomInventory
  +THRUACTORS +FORCEXYBILLBOARD
 
  Inventory.PickupSound "CBOXPKUP"
-	Inventory.PickupMessage "$GOTBDPMINIGUNWITHNAILGUN"
+	Inventory.PickupMessage "You got the Minigun with the Nailgun module! (Slot 4)"
  Mass 1
     States
     {
@@ -503,7 +503,7 @@ ACTOR MinigunNoAmmo: CustomInventory
  +THRUACTORS +FORCEXYBILLBOARD
 
  Inventory.PickupSound "CBOXPKUP"
-	Inventory.PickupMessage "$GOTBDPMINIGUNWITHNAILGUN"
+	Inventory.PickupMessage "You got the Minigun with the Nailgun module! (Slot 4)"
  Mass 1
     States
     {
@@ -537,7 +537,7 @@ ACTOR SMGSpawner: CustomInventory
  +THRUACTORS +FORCEXYBILLBOARD
 
  Inventory.PickupSound "CBOXPKUP"
-	Inventory.PickupMessage "$GOTBDPSUBMACHINEGUN2"
+	Inventory.PickupMessage "You got the Sub-machinegun! (Slot 2)"
  Mass 1
     States
     {
@@ -584,7 +584,7 @@ ACTOR MachinegunSpawner: CustomInventory
  +THRUACTORS +FORCEXYBILLBOARD
 
  Inventory.PickupSound "LMGUP"
-	Inventory.PickupMessage "$GOTBDPMACHINEGUN"
+	Inventory.PickupMessage "You got the Machine Gun! (Slot 4)"
  Mass 1
     States
     {
@@ -738,7 +738,7 @@ ACTOR RocketLauncherSpawner : CustomInventory
  height 24
  +THRUACTORS +FORCEXYBILLBOARD
  Inventory.PickupSound "RLANDRAW"
- Inventory.PickupMessage "$GOTBDPROCKETLAUNCHER" 
+ Inventory.PickupMessage "You got the Rocket Launcher! (Slot 5)" 
  Mass 1
     States
     {
@@ -780,7 +780,7 @@ ACTOR GrenadeLauncherSpawner: CustomInventory 2551
  +THRUACTORS +FORCEXYBILLBOARD
  //$category Weapons
  Inventory.PickupSound "ROCKPKUP"
- Inventory.PickupMessage "$GOTBDPGRENADELAUNCHER"
+ Inventory.PickupMessage "You got the Grenade Launcher! (Slot 5)"
  Mass 1
     States
     {
@@ -936,7 +936,7 @@ ACTOR PLasmagunSpawner: CustomInventory
  +THRUACTORS +FORCEXYBILLBOARD
 
  Inventory.PickupSound "PLSDRAW"
- Inventory.PickupMessage "$GOTBDPPLASMARIFLE"
+ Inventory.PickupMessage "You got the Plasma Rifle! (Slot 6)"
  Mass 1
     States
     {
@@ -1018,7 +1018,7 @@ ACTOR RailgunSpawner: CustomInventory  2552
  //$category "Weapons"
  +THRUACTORS +FORCEXYBILLBOARD
  Inventory.PickupSound "RAILINSR"
- Inventory.PickupMessage "$GOTBDPRAILGUN"
+ Inventory.PickupMessage "You got the Railgun! (Slot 6)"
  Mass 1
     States
     {
@@ -1160,7 +1160,7 @@ ACTOR BFG9000Spawner: CustomInventory
  height 24
  +THRUACTORS +FORCEXYBILLBOARD
  Inventory.PickupSound "BFGREADY"
- Inventory.PickupMessage "$GOTBDPBFG9K"
+ Inventory.PickupMessage "You got the BFG9000! Oh, yes. (Slot 7)"
  Mass 1
     States
     {
@@ -1194,7 +1194,7 @@ ACTOR BFG10KSpawner: CustomInventory 2553
  //$category "Weapons"
  +THRUACTORS +FORCEXYBILLBOARD
  Inventory.PickupSound "10kSELEC"
- Inventory.PickupMessage "$GOTBDPBFG10K"
+ Inventory.PickupMessage "You got the BFG 10K! Holy Shit! (Slot 7)"
  Mass 1
     States
     {
@@ -1228,7 +1228,7 @@ ACTOR UnmakerSpawner: CustomInventory 8845
  height 24
  +THRUACTORS +FORCEXYBILLBOARD
  Inventory.PickupSound "UNMAKSEL"
- Inventory.PickupMessage "$GOTBDPUNMAKER"
+ Inventory.PickupMessage "What the !@#%* is this!? (Slot 7)"
  Mass 1
 
     States
@@ -1333,7 +1333,7 @@ ACTOR ChainsawSpawned: CustomInventory //Replaces Chainsaw
  height 24
  +THRUACTORS +FORCEXYBILLBOARD
  inventory.pickupsound "weapons/chainsaw/draw"
- Inventory.PickupMessage "$GOTBDPCHAINSAW2"
+ Inventory.PickupMessage "You got the Chainsaw! Find some meat! (Slot 1)"
  Mass 1
     States
     {
@@ -1365,7 +1365,7 @@ ACTOR AxeSpawner: CustomInventory
  height 24
  +THRUACTORS +FORCEXYBILLBOARD
  Inventory.PickupSound "AXEDRAW"
- Inventory.PickupMessage "$GOTBDPAXE"
+ Inventory.PickupMessage "You got the Axe! (Slot 1)"
  Mass 1
     States
     {
@@ -1428,7 +1428,7 @@ ACTOR ChainsawStuckInWall: CustomInventory
  +NOBLOOD
  Health 10
  inventory.pickupsound "weapons/chainsaw/draw"
- Inventory.PickupMessage "$GOTBDPCHAINSAW"
+ Inventory.PickupMessage "You got your Chainsaw back! (Slot 1)"
  Mass 1
     States
     {

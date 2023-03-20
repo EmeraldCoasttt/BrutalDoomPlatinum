@@ -9,7 +9,7 @@ DamageFactor "Head", 1
 DropItem "PistolDrop"
 DropItem "PistolDrop"
 DropItem "DroppedHelmetSpawner"
-Tag "$FN_BDP_HELMETDUALPISTOLZOMBIE"
+Tag "Pistol Zombie"
 Damagefactor "Head", 0.1
 painchance "Head", 255
 	States

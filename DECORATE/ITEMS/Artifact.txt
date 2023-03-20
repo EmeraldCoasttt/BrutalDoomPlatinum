@@ -16,7 +16,7 @@ ACTOR InvulnerabilitySphere_  : PowerupGiver Replaces InvulnerabilitySphere
 	Powerup.Type Invulnerable
 	Powerup.Colormap 0.0, 0.0, 0.0, 1.0,1.0,1.0
 	Inventory.PickupMessage "$GOTINVUL"
-	Tag "$TAG_BDP_INVULNERABILITY"
+	Tag "Invulnerability"
 	States
 	{
 	Spawn:
@@ -38,9 +38,9 @@ ACTOR LifeSphere : CustomInventory Replaces SoulSphere
 	+FLOATBOB
 	FloatSpeed 1
 	+INVENTORY.ALWAYSPICKUP
-	Inventory.PickupMessage "$GOTBDPSOULSPHERE"
+	Inventory.PickupMessage "Soulsphere"
 	Inventory.PickupSound "items/soulsphere"
-	Tag "$TAG_BDP_SOULSPHERE"
+	Tag "Soulsphere"
 	States
 	{
 	Spawn:
@@ -72,9 +72,9 @@ ACTOR EnergySphere : CustomInventory Replaces Megasphere
 	+FLOATBOB
 	FloatSpeed 1
 	+INVENTORY.ALWAYSPICKUP
-	Inventory.PickupMessage "$GOTBDPMEGASPHERE"
+	Inventory.PickupMessage "Megasphere"
 	Inventory.PickupSound "items/soulsphere"
-	Tag "$TAG_BDP_MEGASPHERE"
+	Tag "Megasphere"
 	States
 	{
 	Spawn:
@@ -102,7 +102,7 @@ ACTOR NightVision : CustomInventory
 	SpawnID 138
 	+COUNTITEM
 	+INVENTORY.ALWAYSPICKUP
-	Inventory.PickupMessage "$GOTBDPINFRAREDVISOR"
+	Inventory.PickupMessage "You got the Infrared Vision Googles."
 	Inventory.PickupSound "items/nightvision"
 	States
 	{
@@ -173,7 +173,7 @@ ACTOR BerserkPack : CustomInventory Replaces Berserk
 	Inventory.PickupSound "misc/p_pkup"
     Inventory.PickupSound "BERSPKUP"
 	+Inventory.NEVERRESPAWN
-	Tag "$TAG_BDP_BERSERKPACK"
+	Tag "Berserk Pack"
 	States
 	{
 	Spawn:
@@ -203,7 +203,7 @@ ACTOR BerserkPack : CustomInventory Replaces Berserk
 		TNT1 A 0 HealThing(100, 0)
 		//TNT1 A 20 ACS_NamedExecuteAlways("BerserkMessage")
 		
-		TNT1 A 0 A_Print ("$TXT_BDP_ALTERNATEEXECUTION")
+		TNT1 A 0 A_Print ("Press Reload to alternate execution modes.")
 		Stop
 	}
 }
@@ -249,7 +249,7 @@ ACTOR UnmakerUpgradeSpawner : CustomInventory
 	Game Doom
     Scale 1.0
 	+INVENTORY.ALWAYSPICKUP
-	Inventory.PickupMessage "$GOTBDPUNMAKERPOINT"
+	Inventory.PickupMessage "You got an unmaker upgrade point!"
 	Inventory.PickupSound "misc/p_pkup"
 	States
 	{
@@ -261,7 +261,7 @@ ACTOR UnmakerUpgradeSpawner : CustomInventory
 	    TNT1 A 0 A_StopSound
 		TNT1 A 0 A_GiveInventory("UnmakerUpgrade",1)
 		//TNT1 A 20
-		//TNT1 A 0 A_Print ("$TXT_BDP_GOTDEMONSTRENGTHRUNE")
+		//TNT1 A 0 A_Print ("You got the Demon Strength Rune. RIP AND TEAR!")
 		Stop
 }}
 	
@@ -291,8 +291,8 @@ ACTOR DemonQuakeSigil : powerupgiver
 Inventory.InterHubAmount 3
 Inventory.icon "SIG2A0"
 	Inventory.maxamount 3
-	Inventory.PickupMessage "$GOTBDPDEMONQUAKESIGIL"
-	Tag "$TAG_BDP_DEMONQUAKESIGIL"
+	Inventory.PickupMessage "You got the Demon Quake Sigil!"
+	Tag "Demon Quake Sigil"
 	Inventory.PickupSound "sigil/pickup"
 	Inventory.usesound "sigil/quake"
 	+inventory.invbar
@@ -318,8 +318,8 @@ ACTOR DemonProtectionSigil : custominventory
 Inventory.InterHubAmount 3
 Inventory.icon "SIG5A0"
 	Inventory.maxamount 3
-	Inventory.PickupMessage "$GOTBDPDEMONPROTECTIONSIGIL"
-	Tag "$TAG_BDP_DEMONPROTECTIONSIGIL"
+	Inventory.PickupMessage "You got the Demon Protection Sigil!"
+	Tag "Demon Protection Sigil"
 	Inventory.PickupSound "sigil/pickup"
 	Inventory.usesound "sigil/protection"
 	+inventory.invbar
@@ -333,7 +333,7 @@ Inventory.icon "SIG5A0"
 		Use:
 		TNT1 A 0 A_GiveInventory("PowerShield", 1)
 		TNT1 A 20
-		//TNT1 A 0 A_Print ("$TXT_BDP_DEMONPROTECTIONSIGILACTIVATED")
+		//TNT1 A 0 A_Print ("Demon Strength Sigil Activated!")
 		Stop
 		
 	}
@@ -352,8 +352,8 @@ ACTOR DemonBioSigil : custominventory
 Inventory.InterHubAmount 3
 Inventory.icon "SIG3A0"
 	Inventory.maxamount 3
-	Inventory.PickupMessage "$GOTBDPDEMONBIOSIGIL"
-	Tag "$TAG_BDP_DEMONBIOSIGIL"
+	Inventory.PickupMessage "You got the Demon Bio Sigil!"
+	Tag "Demon Bio Sigil"
 	Inventory.PickupSound "sigil/pickup"
 	Inventory.usesound "sigil/bio"
 	+inventory.invbar
@@ -402,8 +402,8 @@ ACTOR DemonHasteSigil : powerupgiver
 Inventory.InterHubAmount 3
 Inventory.icon "SIG4A0"
 	Inventory.maxamount 3
-	Inventory.PickupMessage "$GOTBDPDEMONHASTESIGIL"
-	Tag "$TAG_BDP_DEMONHASTESIGIL"
+	Inventory.PickupMessage "You got the Demon Haste Sigil!"
+	Tag "Demon Haste Sigil"
 	Inventory.PickupSound "sigil/pickup"
 	Inventory.usesound "sigil/haste"
 	+inventory.invbar
@@ -425,8 +425,8 @@ Inventory.icon "SIG4A0"
 Actor DemonChronoSigil : PowerupGiver
 {
 	
-		Inventory.PickupMessage "$GOTBDPDEMONCHRONOSIGIL"
-		Tag "$TAG_BDP_DEMONCHRONOSIGIL"
+		Inventory.PickupMessage "You got the Demon Chrono Sigil!"
+		Tag "Demon Chrono Sigil"
 		Inventory.Icon "SIG6A0"
 		Inventory.MaxAmount 3
 		Powerup.Type "PowerTimeFreezerNu"
@@ -465,8 +465,8 @@ ACTOR DemonStrengthSigil : custominventory
 	//+INVENTORY.ALWAYSPICKUP
 	Inventory.icon "SIG1A0"
 	Inventory.maxamount 3
-	Inventory.PickupMessage "$GOTBDPDEMONSTRENGTHSIGIL"
-	Tag "$TAG_BDP_DEMONSTRENGTHSIGIL"
+	Inventory.PickupMessage "You got the Demon Strength Sigil!"
+	Tag "Demon Strength Sigil"
 	Inventory.PickupSound "sigil/pickup"
 	Inventory.usesound "misc/p_pkup"
 	+inventory.invbar
@@ -482,7 +482,7 @@ ACTOR DemonStrengthSigil : custominventory
 		TNT1 A 0 A_GiveInventory("PowerStrength", 1)
 		TNT1 A 0 HealThing(100, 0)
 		TNT1 A 20
-		//TNT1 A 0 A_Print ("$TXT_BDP_DEMONSTRENGTHSIGILACTIVATED")
+		//TNT1 A 0 A_Print ("Demon Strength Sigil Activated!")
 		Stop
 	}
 }
@@ -501,8 +501,8 @@ Inventory.useSound "BFGREADY"
 
  +inventory.invbar
  inventory.icon "SIG1C0"
- Inventory.PickupMessage "$GOTBDPCYBERDEMONMISSILELAUNCHER"
- Tag "$TAG_BDP_CYBERDEMONMISSILELAUNCHER"
+ Inventory.PickupMessage "You got the Cyberdemon's missile launcher!"
+ Tag "Cyberdemon's Missile Launcher"
  Mass 1
     States
     {
@@ -517,7 +517,7 @@ Inventory.useSound "BFGREADY"
 		TNT1 A 0 
 		TNT1 A 0 
 		TNT1 A 20
-		//TNT1 A 0 A_Print ("$TXT_BDP_DEMONSTRENGTHSIGILACTIVATED")
+		//TNT1 A 0 A_Print ("Demon Strength Sigil Activated!")
 		Stop
 		
 		Youstupid:
@@ -542,8 +542,8 @@ Game Doom
  +THRUACTORS +FORCEXYBILLBOARD
  Inventory.PickupSound "ROCKPKUP"
   Inventory.useSound "ROCKPKUP"
- Inventory.PickupMessage "$GOTBDPSPIDERMASTERMINDCHAINGUN" 
- Tag "$TAG_BDP_MASTERMINDCHAINGUN"
+ Inventory.PickupMessage "You got the Spider Mastermind's Chaingun!" 
+ Tag "Mastermind's Chaingun"
  Mass 1
  +inventory.invbar
  inventory.icon "SIG1B0"
@@ -565,7 +565,7 @@ Game Doom
 		TNT1 A 0 
 		TNT1 A 0 
 		TNT1 A 20
-		//TNT1 A 0 A_Print ("$TXT_BDP_DEMONSTRENGTHSIGILACTIVATED")
+		//TNT1 A 0 A_Print ("Demon Strength Sigil Activated!")
 		Stop
 		
 		Youstupid:
@@ -652,7 +652,7 @@ ACTOR DemonRuneMix: CustomInventory
  +THRUGHOST
  damage 0
    Mass 1
-   Inventory.PickupMessage "$GOTBDPDEMONSPHERE"
+   Inventory.PickupMessage "You got the Demon Sphere!"
     States
     {
 
@@ -685,7 +685,7 @@ actor NightVisionSpawner : RandomSpawner  Replaces InfraRed
     //DropItem "DemonRuneMix"
     DropItem "NIghtvision"
 	//DropItem "Flamethrower2"
-	Tag "$TAG_BDP_NIGHTVISIONDEMONRUNE"
+	Tag "Nightvision/Demon Rune"
 }
 
 actor DeadMarineArtifact

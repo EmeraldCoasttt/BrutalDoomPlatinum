@@ -14,11 +14,11 @@ ACTOR MastermindChaingun : BrutalWeapon
 	+WEAPON.NO_AUTO_SWITCH
 	+FORCEXYBILLBOARD
 	Inventory.PickupSound "CBOXPKUP"
-	Inventory.PickupMessage "$GOTBDPMASTERMINDCHAINGUN"
-	Obituary "$OB_BDP_MASTERMINDCHAINGUN"
+	Inventory.PickupMessage "how did you see this???"
+	Obituary "%o was mowed down by %k's Mastermind's Chaingun."
 	AttackSound "none"
 	Scale 1.1
-	Tag "$TAG_BDP_MASTERMINDCHAINGUN"
+	Tag "Mastermind's Chaingun"
 	inventory.althudicon "RMNGT0"
 	BrutalWeapon.weight 15
 	States
@@ -257,7 +257,7 @@ actor MinigunExplosion
 Radius 2
 Height 2
 Damagetype ExplosiveImpact
-Obituary "$OB2_BDP_MASTERMINDCHAINGUN"
+Obituary "%o was exploded by %k rocket."
 Species "Marines"
 +THRUSPECIES
 +MTHRUSPECIES

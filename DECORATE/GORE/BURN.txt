@@ -549,7 +549,7 @@ ACTOR BurningZombie
 	+NOTARGET
 	Gravity 0.7
 	bloodtype "DeadBlood"
-    Obituary "$OB_BDP_BURNEDFROMMONSTER"
+    Obituary "%o was near someone in flames."
 	MaxDropOffHeight 6000
    
 	Mass 999999
@@ -687,7 +687,7 @@ ACTOR BurningCacodemon
 	+DONTSPLASH
 	Gravity 1.0
 	bloodtype "DeadBlood"
-    Obituary "$OB_BDP_BURNEDFROMMONSTER"
+    Obituary "%o was near someone in flames."
 	Mass 100
     States
     {
@@ -789,7 +789,7 @@ ACTOR BurningZombieMan
 	+NOTARGET
 	Gravity 0.7
 	bloodtype "DeadBlood"
-    Obituary "$OB_BDP_BURNEDFROMMONSTER"
+    Obituary "%o was near someone in flames."
 	MaxDropOffHeight 6000
    
 	Mass 999999

@@ -21,7 +21,7 @@ CLASS StickyGrenade : actor
 	//+bloodlessimpact;
 	//+BLOODSPLATTER;
 	//+ripper;
-	Obituary "$OB5_BDP_HANDGRENADE";
+	Obituary "%o was stuck by a grenade";
 	//SeeSound "weapons/chainsaw/loop"
 	//+ripper
 	+hittracer;

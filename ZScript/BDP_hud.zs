@@ -571,7 +571,7 @@ class BDP_HUD : DoomStatusBar
 		int green = Linearmap(realAmt, maxAmt / 2, maxAmt, 100, 255);
 		
 		Fill(Color(alpha, red, green, 0), pos.x, pos.y, realAmt, 2, flags);
-		DrawString(mConfont, Stringtable.Localize("$TXT_BDP_STAMINAHUD"), pos + (0,-5), flags|DI_TEXT_ALIGN_LEFT, alpha: LinearMap(alpha, 0, 255, 0., 1.), scale: (0.5, 0.5));
+		DrawString(mConfont, "Stamina", pos + (0,-5), flags|DI_TEXT_ALIGN_LEFT, alpha: LinearMap(alpha, 0, 255, 0., 1.), scale: (0.5, 0.5));
 	}
 	
 	void DrawRightcorner(vector2 basePos = (18, -19))
@@ -742,7 +742,7 @@ class BDP_HUD : DoomStatusBar
 		{
 			DrawString(
 				fnt, 
-				String.Format(Stringtable.Localize("$SCORE_FRAGS") .. ": %d", CPlayer.fragcount), 
+				String.Format("Frags: %d", CPlayer.fragcount), 
 				pos,
 				flags,
 				Font.CR_DarkRed
@@ -752,7 +752,7 @@ class BDP_HUD : DoomStatusBar
 		
 		DrawString(
 			fnt, 
-			String.Format(Stringtable.Localize("$SCORE_KILLS") .. ": %d/%d", Level.killed_monsters, Level.total_monsters), 
+			String.Format("Kills: %d/%d", Level.killed_monsters, Level.total_monsters), 
 			pos,
 			flags,
 			Font.CR_White
@@ -761,7 +761,7 @@ class BDP_HUD : DoomStatusBar
 		
 		DrawString(
 			fnt, 
-			String.Format(Stringtable.Localize("$TXT_IMSECRETS") .. ": %d/%d", Level.found_secrets, Level.total_secrets), 
+			String.Format("Secrets: %d/%d", Level.found_secrets, Level.total_secrets), 
 			pos,
 			flags,
 			Font.CR_White

@@ -123,13 +123,13 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
     damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
 	DropItem "RifleDrop"
 	//DropItem "GrenadeAmmo" 15
-	Obituary "$OB_BDP_SHOOTEDBYZOMBIEMEN"
+	Obituary "%o has been gunned down by a Zombie Soldier."
 	damagefactor "Taunt", 1.0
 	damagefactor "LowKick", 1.0
 	damagefactor "Melee", 1.35
 	damagefactor "Shotgun", 2.0
 	+RANDOMIZE
-	Tag "$FN_BDP_RIFLEZOMBIE"
+	Tag "Rifle Zombie"
 	DamageFactor "CauseSplash", 0.0 DamageFactor "CauseObjectsToSplashSlime", 0.0 DamageFactor "CauseObjectsToSplashNukage", 0.0
 	DamageFactor "CauseObjectsToSplashBlood", 0.0 DamageFactor "CauseObjectsToSplashLava", 0.0
 	States

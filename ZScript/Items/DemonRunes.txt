@@ -9,7 +9,7 @@ CLASS RevGas : Ammo
    Ammo.BackpackAmount 10;
    Ammo.BackpackMaxAmount 10;
    Inventory.Icon "GSLNA0";
-   Inventory.PickupMessage "$GOTBDPGASOLINE";
+   Inventory.PickupMessage "You got Gasoline.";
    }
 }
 
@@ -51,7 +51,7 @@ CLASS DemonRuneRevenant : PowerupGiver
 	{
 	+FLOATBOB;
 	FloatSpeed 1;
-	Inventory.PickupMessage "$GOTBDPREVENANTRUNE";
+	Inventory.PickupMessage "Revenant Rune!";
 	Inventory.PickupSound "misc/p_pkup";
 	Inventory.MaxAmount 0;
 	+COUNTITEM;
@@ -86,7 +86,7 @@ CLASS DemonRuneMancubus : DemonRuneRevenant
 {
 	Default
 	{
-	Inventory.PickupMessage "$GOTBDPMANCUBUSRUNE";
+	Inventory.PickupMessage "Mancubus Rune!";
 	Powerup.Type "PowerTransformMancubus";
 	
 	}
@@ -114,7 +114,7 @@ CLASS DemonRuneBaron : DemonRuneRevenant
 {
 	Default
 	{
-	Inventory.PickupMessage "$GOTBDPBARONOFHELLRUNE";
+	Inventory.PickupMessage "Baron Of Hell Rune!";
 	Powerup.Type "PowerTransformBaron";
 	
 	}
@@ -879,7 +879,7 @@ CLASS RevenantWeapon : DemonWeapon
 	Weapon.AmmoGive2 0;
 	//Weapon.ammotype1 "revgas";
 	+WEAPON.CHEATNOTWEAPON;
-	Tag "$TAG_BDP_REVENANTLAUNCHERS";
+	Tag "Rev Launchers";
 	}
 	
 	action void MoveSpeed(float pspeed, float psidemove)
@@ -1387,7 +1387,7 @@ Default
 	Weapon.AmmoUse2 0;
 	Weapon.AmmoGive2 0;
 	
-	Tag "$TAG_BDP_FLAMETHROWERS";
+	Tag "FlameThrowers";
 	}
 	
 	
@@ -1564,7 +1564,7 @@ CLASS BaronWeapon : DemonWeapon
 	{
 	+FORCERADIUSDMG;
 	
-	Tag "$TAG_BDP_BARON";
+	Tag "Baron";
 	}
 	States
 	{

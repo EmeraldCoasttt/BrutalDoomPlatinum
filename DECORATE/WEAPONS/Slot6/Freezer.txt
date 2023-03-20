@@ -13,9 +13,9 @@ ACTOR Freezer : BrutalWeapon
 	Weapon.AmmoGive2 50
 	Weapon.AmmoType1 "AmmoCell"
 	Weapon.AmmoType2 "FreezerAmmo"
-	Obituary "$OB_BDP_FREEZETHROWER"
+	Obituary "%o was put on ice by %k's FreezeThrower."
     Inventory.PickupSound "PLSDRAW"
-	Inventory.Pickupmessage "$GOTBDPFREEZETHROWER"
+	Inventory.Pickupmessage "You got the FreezeThrower! (Slot 6)"
 	+WEAPON.NOAUTOAIM
 	+WEAPON.NOALERT
 	+WEAPON.NOAUTOFIRE
@@ -24,7 +24,7 @@ ACTOR Freezer : BrutalWeapon
 	Weapon.SelectionOrder 1550
 	Inventory.AltHUDIcon "FRZRA0"
 	BrutalWeapon.weight 7
-	Tag "$TAG_BDP_FREEZETHROWER"
+	Tag "Freeze Thrower"
 	States
 	{
 	
@@ -741,7 +741,7 @@ ACTOR Freezebot : BrutalFriend
 	//damagefactor "Shrapnel", 3.0
 	//damagefactor "Explosives", 3.0
 	DeathSound "FreezeBot/die"
-	Tag "$TAG_BDP_FREEZEBOT"
+	Tag "Freezebot"
     Scale 0.8
 	AttackSound "none"
 	//MaxStepHeight 52
@@ -759,7 +759,7 @@ ACTOR Freezebot : BrutalFriend
 	//DropItem "AmmoCell"
 	//damagefactor "HelperMarineFatallity", 0.0
 	SeeSound "None"
-	Obituary "$OB_BDP_FREEZEBOT"
+	Obituary "%o has been frozen down by a FreezeBot."
 	Mass 50
 	+friendly
 	States

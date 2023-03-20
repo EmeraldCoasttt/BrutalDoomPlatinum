@@ -44,7 +44,7 @@ script "EnemyScouterThing" ENTER
 				//ACTOR FRIENDLY INDICATOR	
 				if (GetActorProperty(new_tid, APROP_Friendly) == TRUE)
 				{
-					HudMessage(	l:"TXT_BDP_FRIENDLY";
+					HudMessage(	s:"\n\n-Friendly-";
 								HUDMSG_FADEOUT, 112225, CR_GREEN, 0.5, 0.02, 0.6, 0.2);
 				}
 				
@@ -59,11 +59,11 @@ script "EnemyScouterThing" ENTER
 		if(monstercount != GetLevelInfo (LEVELINFO_KILLED_MONSTERS))
 		{
 			monstercount = GetLevelInfo (LEVELINFO_KILLED_MONSTERS);
-			HudMessage(	l:"TXT_BDP_KILLENEMIES";
+			HudMessage(	s:"\n\n\n-Kill-";
 						HUDMSG_FADEINOUT, 0, CR_OLIVE, 0.5, 0.02, 0.5, 0.1, 0.5);
 			
 			//for lulz
-			//HudMessage(	l:"TXT_BDP_OSCARNAME";
+			//HudMessage(	s:"\n\n\nOscar Mike Tango Down";
 			//			HUDMSG_FADEINOUT, 0, CR_OLIVE, 0.5, 0.02, 0.5, 0.1, 0.5);
 		}	
 		*/

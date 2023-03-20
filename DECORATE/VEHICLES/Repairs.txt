@@ -3,7 +3,7 @@ ACTOR RepairTool : Weapon 6544
 {
 	Weapon.Kickback 0
 	Weapon.SelectionOrder 2200
-	Inventory.PickupMessage "$GOTBDPREPAIRTOOL"
+	Inventory.PickupMessage "You got the Repair Tool (Slot 0)"
 	Obituary "$OB_MPCHAINSAW"
 	Tag "$TAG_CHAINSAW"
 	+WEAPON.MELEEWEAPON		
@@ -77,7 +77,7 @@ ACTOR RepairToolRicochet: BulletPuff
   +FORCEXYBILLBOARD
   +NOBLOOD
   
-	Obituary "$OB_BDP_SHRAPNELRICOCHET"
+	Obituary "%o ate bullet shrapnel."
   damagetype "Shrapnel"
   Scale 0.6
   Speed 0

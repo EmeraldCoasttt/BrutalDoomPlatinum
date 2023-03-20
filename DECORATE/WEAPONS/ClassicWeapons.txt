@@ -223,7 +223,7 @@ ACTOR ClassicWeapon : Weapon
 		TNT1 A 0 A_TakeInventory("TossGrenade", 1)
 		TNT1 A 0 A_JumpIfInventory("GrenadeAmmo", 1, 4)
 		TNT1 A 0
-		TNT1 A 0 A_Print("$TXT_BDP_NOGRENADESTOUSE")
+		TNT1 A 0 A_Print("No Grenades Left.")
 		TNT1 A 0 A_Jump(256, "Ready3")
 		TNT1 AAAAA 0
 		PRTH ABCD 1
@@ -443,7 +443,7 @@ ACTOR ClassicFist : ClassicWeapon
 	+WEAPON.MELEEWEAPON
 	
 	+WEAPON.NOALERT
-	Tag "$TAG_BDP_FISTS"
+	Tag "Fists"
 	States
 	{
 	
@@ -501,7 +501,7 @@ ACTOR ClassicSaw : ClassicWeapon
 	Obituary "$OB_MPCHAINSAW"
 	Tag "$TAG_CHAINSAW"
 	+WEAPON.MELEEWEAPON
-	Tag "$TAG_CHAINSAW"
+	Tag "Chainsaw"
 	+WEAPON.AXEBLOOD
 	
 	States
@@ -602,7 +602,7 @@ ACTOR ClassicPistol : ClassicWeapon
 	Obituary "$OB_MPPISTOL"
 	
 	+WEAPON.NOAUTOFIRE
-	Tag "$TAG_PISTOL"
+	Tag "Pistol"
 	Inventory.Pickupmessage "$PICKUP_PISTOL_DROPPED"
 	Tag "$TAG_PISTOL"
 	States
@@ -667,8 +667,8 @@ ACTOR ClassicSMG : ClassicWeapon
 	Obituary "$OB_MPPISTOL"
 	
 	+WEAPON.NOAUTOFIRE
-	Tag "$TAG_BDP_CLASSICSUBMACHINEGUN"
-	Inventory.Pickupmessage "$GOTBDPCLASSICSUBMACHINEGUN"
+	Tag "Sub-Machinegun"
+	Inventory.Pickupmessage "You got the Sub-Machinegun!"
 	Tag "$TAG_PISTOL"
 	States
 	{
@@ -743,7 +743,7 @@ ACTOR ClassicShotgun : ClassicWeapon
 	Weapon.AmmoGive 8
 	Weapon.AmmoType "AmmoShell"
 	
-	Tag "$TAG_SHOTGUN"
+	Tag "Shotgun"
 	Inventory.PickupMessage "$GOTSHOTGUN"
 	Obituary "$OB_MPSHOTGUN"
 	Tag "$TAG_SHOTGUN"
@@ -814,7 +814,7 @@ ACTOR ClassicSSG : ClassicWeapon
 	Obituary "$OB_MPSSHOTGUN"
 	Tag "$TAG_SUPERSHOTGUN"
 	+WEAPON.NOAUTOFIRE
-	Tag "$TAG_SUPERSHOTGUN"
+	Tag "Super Shotgun"
 	States
 	{
 	
@@ -889,7 +889,7 @@ ACTOR ClassicChaingun : ClassicWeapon
 	Weapon.AmmoType "clip2"
 	Inventory.PickupMessage "$GOTCHAINGUN"
 	Obituary "$OB_MPCHAINGUN"
-	Tag "$TAG_BDP_MINIGUN"
+	Tag "Minigun"
 	Tag "$TAG_CHAINGUN"
 	States
 	{
@@ -956,7 +956,7 @@ ACTOR ClassicRocketLauncher : ClassicWeapon
 	Weapon.AmmoGive 2
 	Weapon.AmmoType "AmmoRocket"
 	
-	Tag "$TAG_ROCKETLAUNCHER"
+	Tag "Rocket Launcher"
 	Inventory.PickupMessage "$GOTLAUNCHER"
 	Tag "$TAG_ROCKETLAUNCHER"
 	States
@@ -1014,7 +1014,7 @@ ACTOR ClassicPlasmaRifle : ClassicWeapon
 	Weapon.AmmoGive 40
 	Weapon.AmmoType "AmmoCell"
 	
-	Tag "$TAG_PLASMARIFLE"
+	Tag "Plasma Rifle"
 	Inventory.PickupMessage "$GOTPLASMA"
 	Tag "$TAG_PLASMARIFLE"
 	States
@@ -1115,7 +1115,7 @@ ACTOR VanillaBFG9000 : ClassicWeapon
 	Weapon.AmmoGive 0
 	Weapon.AmmoType "AmmoCell"
 	+WEAPON.NOAUTOFIRE
-	Tag "$TAG_BFG9000"
+	Tag "BFG 9000"
 	Inventory.PickupMessage "$GOTBFG9000"
 	States
 	{

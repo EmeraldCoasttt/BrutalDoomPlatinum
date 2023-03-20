@@ -25,7 +25,7 @@ CLASS ThrowedChainsaw : actor
 	//+ripper;
 	+skyexplode;
 	Gravity 0.9;
-	Obituary "$OB_BDP_CHAINSAW";
+	Obituary "%o was cut up by a Chainsaw";
 	//SeeSound "weapons/chainsaw/loop"
 	Decal "SawVerticalThrown";
 	//+ripper

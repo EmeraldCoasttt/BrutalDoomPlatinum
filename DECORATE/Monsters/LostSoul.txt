@@ -67,7 +67,7 @@ ACTOR TehLostSoul: LostSoulBase Replaces LostSoul
 	DamageFactor "Ice",3.0
 	DamageFactor "Frost",3.0
 	DamageFactor "Extremepunches",2.0
-	Tag "$FN_LOST"
+	Tag "Lost Soul"
     Alpha 1
 	-countkill
 	States

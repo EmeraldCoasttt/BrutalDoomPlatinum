@@ -26,7 +26,7 @@ ACTOR Juggernaut : Fatso 2545
     BloodType "Brutal_Blood"
     damagefactor "Shrapnel", 0.4
 	damagefactor "Explosive", 1.3
-	Obituary "$OB_BDP_DESTROYEDBYJUGG"
+	Obituary "%o was destroyed by the Juggernaut"
 	MaxStepHeight 24
 	MaxDropOffHeight 32
 	Speed 1

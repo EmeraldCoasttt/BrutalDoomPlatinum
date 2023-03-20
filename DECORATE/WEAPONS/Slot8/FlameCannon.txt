@@ -12,8 +12,8 @@ ACTOR FlameCannon : BrutalWeapon
 	+WEAPON.EXPLOSIVE
 	BrutalWeapon.weight 10
 	//+WEAPON.NO_AUTO_SWITCH
-	Inventory.PickupMessage "$GOTBDPMANCUBUSFLAMECANNON"
-	Tag "$TAG_BDP_MANCUBUSFLAMECANNON"
+	Inventory.PickupMessage "You got the Mancubus' FlameCannon! (Slot 8)"
+	Tag "Mancubus FlameCannon"
 	Inventory.AltHUDIcon "MANAH0"
 	States
 	{
@@ -182,7 +182,7 @@ ACTOR FlameCannon : BrutalWeapon
 		//TNT1 A 0 A_GiveInventory("FlameCannonCounter", 1)
 		//TNT1 A 0 A_JumpIfInventory("FlameCannonCounter", 2, "GetDual")
 		PIST F 0 A_JumpIfInventory("DualFlameCannon", 1, "GetDual")
-		PIST F 0 A_Print("$TXT_BDP_TWOINDETICALWEAPONSNEED")
+		PIST F 0 A_Print("You must have two identical weapons to dual wield.")
 		Goto Ready
 		
 	GetDual:	
