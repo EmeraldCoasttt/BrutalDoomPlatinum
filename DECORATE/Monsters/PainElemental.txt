@@ -30,7 +30,7 @@ ACTOR PainElemental1 Replaces PainElemental
 	damagefactor "Shrapnel", 3.0
 	damagefactor "ExplosiveImpact", 3.0
 	BurnHeight 0
-	Tag "$FN_PAIN"
+	Tag "Pain Elemental"
 	States
 	{
 	Spawn:

@@ -11,7 +11,7 @@ MONSTER
 +LOOKALLAROUND
 -COUNTKILL
 -FRIENDLY
-Tag "$FN_BDP_LASTSTANDZOMBIE"
+Tag "Zombie"
 BloodType "Brutal_Blood", "BloodSPlatterReplacer", "SawBlood"
 States
 	{

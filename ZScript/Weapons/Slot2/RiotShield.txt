@@ -8,10 +8,10 @@ CLASS RiotShield : BrutalWeapon
 			Weapon.AmmoUse2 0;
 			Weapon.AmmoGive2 0;
 			Weapon.AmmoType1 "Clip1";
-			Obituary "$OB_BDP_MP40";
+			Obituary "%o was shot down by %k's MP40.";
 			AttackSound "None";
 			Inventory.PickupSound "CLIPIN";
-			Inventory.Pickupmessage "$GOTBDPRIOTSHIELD";
+			Inventory.Pickupmessage "I am a monument to all your sins";
 			+WEAPON.NOALERT;
 			//+WEAPON.CHEATNOTWEAPON
 			Weapon.SelectionOrder 1500;
@@ -431,7 +431,7 @@ CLASS RiotShieldSpawner : CustomInventory
 		Radius 8;
 		Height 8;
 		+inventory.autoactivate;
-		Inventory.Pickupmessage "$GOTBDPRIOTSHIELD2";
+		Inventory.Pickupmessage "You got a Riot Shield! Use it with an MP40!";
 		}
 		
 	States

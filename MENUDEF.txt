@@ -32,34 +32,34 @@ IfGame(Doom, Chex)
 	
 	IfGame(Doom, Strife, Chex)
 	{
-		TextItem "$MNU_NEWGAME", "n", "BDPModifierMenu"
+		TextItem "New Game", "n", "BDPModifierMenu"
 		ifOption(SwapMenu)
 		{
-			TextItem "$MNU_LOADGAME", "l", "LoadGameMenu"
-			TextItem "$MNU_SAVEGAME", "s", "SaveGameMenu"
-			TextItem "$MNU_OPTIONS", "o", "OptionsMenu"/////////////
-			TextItem "$MNU_BDPOPTIONS", "b", "BrutalMenu"
+			TextItem "Load Game", "l", "LoadGameMenu"
+			TextItem "Save Game", "s", "SaveGameMenu"
+			TextItem "Options", "o", "OptionsMenu"/////////////
+			TextItem "Brutal Doom Options", "b", "BrutalMenu"
 		}
 		else
 		{
-			TextItem "$MNU_OPTIONS", "o", "OptionsMenu"/////////////////////
-			TextItem "$MNU_BDPOPTIONS", "b", "BrutalMenu"
-			TextItem "$MNU_LOADGAME", "l", "LoadGameMenu"
-			TextItem "$MNU_SAVEGAME", "s", "SaveGameMenu"
+			TextItem "Options", "o", "OptionsMenu"/////////////////////
+			TextItem "Brutal Doom Options", "b", "BrutalMenu"
+			TextItem "Load Game", "l", "LoadGameMenu"
+			TextItem "Save Game", "s", "SaveGameMenu"
 		}
 		ifOption(ReadThis)
 		{
-			TextItem "$MNU_READTHIS","r", "ReadThisMenu"
+			TextItem "Read This!","r", "ReadThisMenu"
 		}
-		TextItem "$MNU_QUITGAME", "q", "QuitMenu"
+		TextItem "Quit Game", "q", "QuitMenu"
 	}
 	
 	IfGame(Heretic, Hexen)
 	{
 		TextItem "$MNU_NEWGAME", "n", "PlayerclassMenu"
 		TextItem "$MNU_OPTIONS", "o", "OptionsMenu"/////////////////////
-		TextItem "$MNU_BDPOPTIONS", "b", "BrutalMenu"
-		TextItem "$MNU_CREDITS", "c", "BrutalCreditsMenu"
+		TextItem "Brutal Doom Options", "b", "BrutalMenu"
+		TextItem "Credits", "c", "BrutalCreditsMenu"
 		TextItem "$MNU_GAMEFILES", "g", "GameFilesMenu"
 		TextItem "$MNU_INFO", "i", "ReadThisMenu"
 		TextItem "$MNU_QUITGAME", "q", "QuitMenu"
@@ -74,7 +74,7 @@ ListMenu "BDPModifierMenu"
 
 ListMenu "PlayerclassMenu"
 {
-	StaticTextCentered 160, 15, "$MNU_BDP_SELECTGAMEMODE"
+	StaticTextCentered 160, 15, "Select Game Mode"
 	Position 30, 50
 	PlayerDisplay 220, 50, "64 224 208", "0 0 0"
 	// The rest of this menu will be set up based on the actual player definitions.
@@ -82,32 +82,32 @@ ListMenu "PlayerclassMenu"
 
 OptionMenu "BrutalMenu"
 {
-	Title "$OPTMNU_BDP_TITLE"
-	//Submenu "$OPTMNU_BDP_BDPERFORMANCEOPTIONS",		"BrutalDoomOptionsPerformance"
-	//Submenu "$OPTMNU_BDP_BDLEVELOPTIONS",			"BrutalDoomOptionsLevel"
-	//Submenu "$OPTMNU_BDP_BDDOOMGAMEPLAYOPTIONS",			"BrutalDoomOptionsGame"
-	//Submenu "$OPTMNU_BDP_BDPLAYEROPTIONS",			"BrutalDoomOptionsPlayer"
+	Title "BRUTAL DOOM OPTIONS"
+	//Submenu "BD Performance Options",		"BrutalDoomOptionsPerformance"
+	//Submenu "BD Level Options",			"BrutalDoomOptionsLevel"
+	//Submenu "BD Doom Gameplay Options",			"BrutalDoomOptionsGame"
+	//Submenu "BD Player Options",			"BrutalDoomOptionsPlayer"
 	//StaticText " "
 	//StaticText " "
-	//Command "$OPTMNU_BDP_GOTOWEAPONSTESTINGMAP",			"map test"
+	//Command "Go to Weapons Testing Map",			"map test"
 	//StaticText "------------------------------------------------------------------------------", "Black"
-	//StaticText "$OPTMNU_BDP_DOXPERSONALIZEDADDONOPTIONS"
-	Submenu "$OPTMNU_BDP_LEVELSPAWNINGOPTIONS",			"DoxMESSettings"
-	Submenu "$OPTMNU_BDP_PLAYERCONTROLOPTIONS",			"DoxPlayerSettings"
-	Submenu "$OPTMNU_BDP_GRAPHICALOPTIONS",			"DoxVisualSettings"
-	Submenu "$OPTMNU_BDP_WEAPONOPTIONS",		"DoxWeaponOptions"
-	Submenu "$OPTMNU_BDP_MONSTEROPTIONS",		"DoxMonsterOptions"
+	//StaticText "Dox's Personalized Addon Options"
+	Submenu "Level/Spawning Options",			"DoxMESSettings"
+	Submenu "Player/Control Options",			"DoxPlayerSettings"
+	Submenu "Graphical Options",			"DoxVisualSettings"
+	Submenu "Weapon options",		"DoxWeaponOptions"
+	Submenu "Monster options",		"DoxMonsterOptions"
 	
 	StaticText "-------------------------", "white"
-	Submenu "$OPTMNU_BDP_CREDITSGRAPHICS",			"DoxCreditsGraphics"
-	Submenu "$OPTMNU_BDP_CREDITSCODING",			"DoxCreditsCode"
-	Submenu "$OPTMNU_BDP_CREDITSSOUNDDESIGN",			"DoxCreditsSound"
+	Submenu "Credits - Graphics",			"DoxCreditsGraphics"
+	Submenu "Credits - Coding",			"DoxCreditsCode"
+	Submenu "Credits - Sound Design",			"DoxCreditsSound"
 	StaticText "------------------------------------------------------------------------------", "Black"
 	StaticText " "
-	StaticText "$OPTMNU_BDP_CONTACTINFO"
-	StaticText "$OPTMNU_BDP_CONTACTEMAIL"
+	StaticText "You can contact me for multiple reasons on these platforms:"
+	StaticText "Email - PerfectHatred2003@gmail.com"
 	StaticText "Discord - Emerald#7486"
-	StaticText "$OPTMNU_BDP_CONTACTTWITTER"
+	StaticText "Twitter - @EmeraldCoasttt"
 	StaticText " "
 	StaticText " "
 }
@@ -195,18 +195,18 @@ OptionMenu "BrutalDoomOptionsPlayer"
 
 OptionMenu "DoxMESSettings"
 {
-   Title "$OPTMNU_BDP_LEVELSPAWNINGOPTIONS"
+   Title "Level/Spawning Options"
    
    
-  Option "$BDPLVLSPWNMNU_REPLACEDECORATION", "bd_disabledecorations", "DisabledOption"
+  Option "Replace Decorations", "bd_disabledecorations", "DisabledOption"
    
   StaticText " " 
-  Option "$BDPLVLSPWNMNU_LEVELENHANCEMENTSYSTEM", "bd_disablemapenhancements", "DisabledOption"
-  StaticText "$BDPLVLSPWNMNUTIP_LEVELENHANCEMENTSYSTEM"
-  StaticText  "$BDPLVLSPWNMNUTIP2_LEVELENHANCEMENTSYSTEM"
+  Option "Level Enhancement System", "bd_disablemapenhancements", "DisabledOption"
+  StaticText "Improves several maps with better textures,"
+  StaticText  "new decorations and sometimes new enemies."
   StaticText " "
-   Option "$BDPLVLSPWNMNU_PSXMONSTERS", "bd_PSXMonsters", "Enable/Disable"
-  StaticText "$BDPLVLSPWNMNUTIP_PSXMONSTERS"
+   Option "PSX Monsters", "bd_PSXMonsters", "Enable/Disable"
+  StaticText "Adds PSX Monster placements"
   StaticText " "
   
   
@@ -216,290 +216,290 @@ OptionMenu "DoxMESSettings"
 
 OptionMenu "SmartCrosshairsMenu"
 {
-Title "$BDPSMARTCROSSHAIRMNU_TITLE"
-Option "$BDPSMARTCROSSHAIRMNU_ENABLESMARTCROSSHAIR", "bd_SmartCrosshairs", "YesOrNo"
-	StaticText "$BDPSMARTCROSSHAIRMNUTIP_ENABLESMARTCROSSHAIR", "red"//comment for mass deleting
-    StaticText "$BDPSMARTCROSSHAIRMNUTIP2_ENABLESMARTCROSSHAIR", "red"//comment for mass deleting
-	StaticText "$BDPSMARTCROSSHAIRMNUTIP3_ENABLESMARTCROSSHAIR", "red"//comment for mass deleting
-	StaticText "$BDPSMARTCROSSHAIRMNUTIP4_ENABLESMARTCROSSHAIR", "red"//comment for mass deleting
-	StaticText "$BDPSMARTCROSSHAIRMNUTIP5_ENABLESMARTCROSSHAIR", "red"//comment for mass deleting
+Title "Smart Crosshair Options"
+Option "Enable Smart Crosshairs", "bd_SmartCrosshairs", "YesOrNo"
+	StaticText "Each weapon has a different crosshair.", "red"//comment for mass deleting
+    StaticText "Look in the HUD Options menu to see what each crosshair looks like.", "red"//comment for mass deleting
+	StaticText "Make sure you have 'Force Default Crosshair' disabled!", "red"//comment for mass deleting
+	StaticText "Crosshair 0 is the default player's crosshair.", "red"//comment for mass deleting
+	StaticText "Crosshair 41 is nothing at all.", "red"//comment for mass deleting
 	StaticText " "
-	StaticText "$BDPSMARTCROSSHAIRMNUTIP_CUSTOMIZABLECROSSHAIR"
-	Command "$BDPSMARTCROSSHAIRMNU_RESTORETODEFAULT",	"pukename SmartCrosshairsDefault"
-	StaticText "$BDPSMARTCROSSHAIRMNUTIP_RESTORETODEFAULT", "red"
-	StaticText "$BDPSMARTCROSSHAIRMNU_SLOT2"
-	Slider "$BDPSMARTCROSSHAIRMNU_PISTOL", "PistolCrosshair", 0, 99, 1
-	Slider "$BDPSMARTCROSSHAIRMNU_SMG", "SMGCrosshair", 0, 99, 1
-	Slider "$BDPSMARTCROSSHAIRMNU_REVOLVER", "RevolverCrosshair", 0, 99, 1
-	Slider "$BDPSMARTCROSSHAIRMNU_MP40", "MP40Crosshair", 0, 99, 1
-	StaticText "$BDPSMARTCROSSHAIRMNU_SLOT3"
-	Slider "$BDPSMARTCROSSHAIRMNU_ASSAULTSHOTGUN", "ASGCrosshair", 0, 99, 1
-	Slider "$BDPSMARTCROSSHAIRMNU_SHOTGUN", "ShotgunCrosshair", 0, 99, 1
-	Slider "$BDPSMARTCROSSHAIRMNU_SUPERSHOTGUN", "SSGCrosshair", 0, 99, 1
-	StaticText "$BDPSMARTCROSSHAIRMNU_SLOT4"
-	Slider "$BDPSMARTCROSSHAIRMNU_MACHINEGUN", "LMGCrosshair", 0, 99, 1
-	Slider "$BDPSMARTCROSSHAIRMNU_RIFLE", "RifleCrosshair", 0, 99, 1
-	Slider "$BDPSMARTCROSSHAIRMNU_MINIGUN", "MinigunCrosshair", 0, 99, 1
-	Slider "$BDPSMARTCROSSHAIRMNU_MG42", "MG42Crosshair", 0, 99, 1
-	StaticText "$BDPSMARTCROSSHAIRMNU_SLOT5"
-	Slider "$BDPSMARTCROSSHAIRMNU_GRENADELAUNCHER", "GLCrosshair", 0, 99, 1
-	Slider "$BDPSMARTCROSSHAIRMNU_ROCKETLAUNCHER", "RLCrosshair", 0, 99, 1
-	StaticText "$BDPSMARTCROSSHAIRMNU_SLOT6"
-	Slider "$BDPSMARTCROSSHAIRMNU_PLASMAGUN", "PlasmaCrosshair", 0, 99, 1
-	Slider "$BDPSMARTCROSSHAIRMNU_RAILGUN", "RailgunCrosshair", 0, 99, 1
-	Slider "$BDPSMARTCROSSHAIRMNU_FREEZETHROWER", "FreezethrowerCrosshair", 0, 99, 1
-	StaticText "$BDPSMARTCROSSHAIRMNU_SLOT7"
-	Slider "$BDPSMARTCROSSHAIRMNU_BFG9K", "BFGCrosshair", 0, 99, 1
-	Slider "$BDPSMARTCROSSHAIRMNU_BFG10K", "BFG10kCrosshair", 0, 99, 1
-	Slider "$BDPSMARTCROSSHAIRMNU_UNMAKER", "UnmakerCrosshair", 0, 99, 1
-	StaticText "$BDPSMARTCROSSHAIRMNU_SLOT8"
-	Slider "$BDPSMARTCROSSHAIRMNU_FLAMECANNON", "FlamecannonCrosshair", 0, 99, 1
-	Slider "$BDPSMARTCROSSHAIRMNU_HML", "HMLCrosshair", 0, 99, 1
+	StaticText "Customizable Crosshairs"
+	Command "Restore to default values",	"pukename SmartCrosshairsDefault"
+	StaticText "You must go back to the game for it to take effect.", "red"
+	StaticText "Slot 2:"
+	Slider "Pistol", "PistolCrosshair", 0, 99, 1
+	Slider "Sub-machinegun", "SMGCrosshair", 0, 99, 1
+	Slider "Revolver", "RevolverCrosshair", 0, 99, 1
+	Slider "MP40", "MP40Crosshair", 0, 99, 1
+	StaticText "Slot 3:"
+	Slider "Assault Shotgun", "ASGCrosshair", 0, 99, 1
+	Slider "Shotgun", "ShotgunCrosshair", 0, 99, 1
+	Slider "SSG", "SSGCrosshair", 0, 99, 1
+	StaticText "Slot 4:"
+	Slider "Machinegun", "LMGCrosshair", 0, 99, 1
+	Slider "Rifle", "RifleCrosshair", 0, 99, 1
+	Slider "Minigun", "MinigunCrosshair", 0, 99, 1
+	Slider "MG42", "MG42Crosshair", 0, 99, 1
+	StaticText "Slot 5:"
+	Slider "Grenade Launcher", "GLCrosshair", 0, 99, 1
+	Slider "Rocket Launcher", "RLCrosshair", 0, 99, 1
+	StaticText "Slot 6:"
+	Slider "Plasmagun", "PlasmaCrosshair", 0, 99, 1
+	Slider "Railgun", "RailgunCrosshair", 0, 99, 1
+	Slider "Freezethrower", "FreezethrowerCrosshair", 0, 99, 1
+	StaticText "Slot 7:"
+	Slider "BFG9000", "BFGCrosshair", 0, 99, 1
+	Slider "BFG10K", "BFG10kCrosshair", 0, 99, 1
+	Slider "Unmaker", "UnmakerCrosshair", 0, 99, 1
+	StaticText "Slot 8:"
+	Slider "Flamecannon", "FlamecannonCrosshair", 0, 99, 1
+	Slider "Hellish Missile Launcher", "HMLCrosshair", 0, 99, 1
 	StaticText "=====================================", "black"
-	StaticText "$BDPSMARTCROSSHAIRMNU_DEFAULTCROSSHAIRCREDIT"
+	StaticText "Default crosshairs provided by Xeno1979."
 	
 }
 
 OptionMenu "DoxVisualSettings"
 {
-	 Title "$BDPGRAPHICMNU_TITLE"
+	 Title "Visual Settings"
 	   StaticText "-------------------------------------------------------", "black"
-	StaticText "$BDPGRAPHICMNU_CATEGORYPERFORMANCE"
+	StaticText "PERFORMANCE OPTIONS"
 	StaticText "-------------------------------------------------------", "black"
    StaticText " "
   
-  Option "$BDPGRAPHICMNU_MAXWALLDECALS", "cl_maxdecals", "maxdecals"
-  Option "$BDPGRAPHICMNU_MAXGIBSBLOODPOOLS", "sv_corpsequeuesize", "maxgibs"
+  Option "Max Wall Decals", "cl_maxdecals", "maxdecals"
+  Option "Max Gibs and Blood Pools", "sv_corpsequeuesize", "maxgibs"
   StaticText " "
   
 
-  Option "$BDPGRAPHICMNU_BLOODAMOUNT", "bd_bloodamount", "BrutalBlood"
-  StaticText "$BDPGRAPHICMNUTIP_BLOODAMOUNT"
+  Option "Blood Amount", "bd_bloodamount", "BrutalBlood"
+  StaticText "How much blood you want to see?"
   StaticText " "
-  Option "$BDPGRAPHICMNU_ENABLEJANITOR", "bd_lowgraphicsmode", "YesOrNo"
-  StaticText "$BDPGRAPHICMNUTIP_ENABLEJANITOR"
+  Option "Enable Janitor", "bd_lowgraphicsmode", "YesOrNo"
+  StaticText "Makes gibs disappear after 30 seconds."
   StaticText " "
   
   
 
   
-  Option "$BDPGRAPHICMNU_SHELLSSTAYSONFLOOR", "bd_infinitecasings", "YesOrNo"
+  Option "Spent Casings stays on floor forever", "bd_infinitecasings", "YesOrNo"
    StaticText " "
   
      StaticText "-------------------------------------------------------", "black"
-	StaticText "$BDPGRAPHICMNU_CATEGORYDETAIL"
+	StaticText "DETAIL OPTIONS"
 	StaticText "-------------------------------------------------------", "black"
 	StaticText " "
-  Option "$BDPGRAPHICMNU_WATERRIPPLEEFFECT", "bd_disablewaterripples2", "YesOrNoFalse"
+  Option "Water Ripple Effects", "bd_disablewaterripples2", "YesOrNoFalse"
   StaticText " "
   
-   Option "$BDPGRAPHICMNU_ALLMAPREVEALACTORS", "bd_allmapdx", "YesOrNoFalse"
+   Option "Allmap reveals actors", "bd_allmapdx", "YesOrNoFalse"
   StaticText " "
   
-  Option "$BDPGRAPHICMNU_RANDOMPICKUPSPRITES", "Dox_SimplePickups", "YesOrNoFalse"
-	StaticText "$BDPGRAPHICMNUTIP_RANDOMPICKUPSPRITES", "red"//comment for mass deleting
+  Option "Randomized pickup sprites", "Dox_SimplePickups", "YesOrNoFalse"
+	StaticText "Disables randomized pickup sprites..", "red"//comment for mass deleting
 	StaticText " "	
 	
-    Option "$BDPGRAPHICMNU_ENABLEBETADECORATIONS", "bd_beta_decorations", "YesOrNoFalse"
-	StaticText "$BDPGRAPHICMNUTIP_ENABLEBETADECORATIONS"
-	StaticText "$BDPGRAPHICMNUTIP2_ENABLEBETADECORATIONS" 
+    Option "Enable beta decorations", "bd_beta_decorations", "YesOrNoFalse"
+	StaticText "Allows for decorations that was in the v21 Beta like breakable lights "
+	StaticText "to appear. Can affect performance." 
 	StaticText " "
-	Option "$BDPGRAPHICMNU_BARRELSNUKAGEFLY", "bd_ToxicWasteOnExplosion", "YesOrNo"
-	StaticText "$BDPGRAPHICMNUTIP_BARRELSNUKAGEFLY", "red"//comment for mass deleting
+	Option "Barrels nukage flying", "bd_ToxicWasteOnExplosion", "YesOrNo"
+	StaticText "It can be disabled now. Should've seen that one coming.", "red"//comment for mass deleting
 	StaticText ""
 	StaticText "-------------------------------------------------------", "black"
-	StaticText "$BDPGRAPHICMNU_CATEGORYPLAYERGRAPHICAL"
+	StaticText "PLAYER GRAPHICAL OPTIONS"
 	StaticText "-------------------------------------------------------", "black"
 	StaticText " "
-	 Option "$BDPGRAPHICMNU_VIEWBOBSWHILESPRINT", "bd_sprintbob", "YesOrNoFalse"
+	 Option "View bobs while sprinting", "bd_sprintbob", "YesOrNoFalse"
 	statictext ""
 	
-	   Option "$BDPGRAPHICMNU_PLAYERGENDER", "bd_GenderFemale", "GenderOption"
-   //StaticText "$BDPGRAPHICMNUTIPS_PLAYERGENDER"
+	   Option "Player Gender", "bd_GenderFemale", "GenderOption"
+   //StaticText "Only works on Zandronum"
    StaticText " "
    
-   Option "$BDPGRAPHICMNU_HUDTYPE", "bd_sbartype", "HUDType"
+   Option "HUD Type", "bd_sbartype", "HUDType"
    StaticText " "
    
-   Option "$BDPGRAPHICMNU_HUDSIZE", "screenblocks", "screenblocksize"
+   Option "HUD Size", "screenblocks", "screenblocksize"
    StaticText " "
    
-   Option "$BDPGRAPHICMNU_SHOWENEMYHTH", "bd_disablescanner", "YesorNoFalse"
+   Option "Show enemy health", "bd_disablescanner", "YesorNoFalse"
    StaticText " "
    
-   Command "$BDPGRAPHICMNU_FORCEHUDRESTART",			"pukename BDRespawn"
+   Command "Force HUD to Restart",			"pukename BDRespawn"
    StaticText " "
-   Option "$BDPGRAPHICMNU_FORCEGZDOOMUISCALE", "uiscale", "uiscalesize"
-   StaticText "$BDPGRAPHICMNUTIP_FORCEGZDOOMUISCALE"
-   StaticText "$BDPGRAPHICMNUTIP2_FORCEGZDOOMUISCALE"
-   StaticText "$BDPGRAPHICMNUTIP3_FORCEGZDOOMUISCALE"
-	Option "$BDPGRAPHICMNU_WEAPONSALWAYSBOB", "bd_AlwaysBob", "YesOrNo"
-	StaticText "$BDPGRAPHICMNUTIP_WEAPONSALWAYSBOB"
+   Option "Force GZDoom UI Scale", "uiscale", "uiscalesize"
+   StaticText "Change this if you are having trouble"
+   StaticText "with HUD scaling on GZDoom"
+   StaticText "(does nothing on Zandronum)"
+	Option "Weapons always bobbing", "bd_AlwaysBob", "YesOrNo"
+	StaticText "Your weapon will sway to the sides, even when it's not in its ready state."
 	StaticText " "
 	
-	Option "$BDPGRAPHICMNU_LEGSTRAIN", "bd_LegStainingOptions", "LegStainingOption"
-	StaticText "$BDPGRAPHICMNUTIP_LEGSTRAIN", "red"//comment for mass deleting
+	Option "Leg staining", "bd_LegStainingOptions", "LegStainingOption"
+	StaticText "Customize how your legs are stained.", "red"//comment for mass deleting
 	StaticText " "
-    Option "$BDPGRAPHICMNU_FANCYSHOOT", "bd_FancyShooting", "YesOrNoFalse"
-	StaticText "$BDPGRAPHICMNUTIP_FANCYSHOOT", "red"//comment for mass deleting
+    Option "Enable fancy firing", "bd_FancyShooting", "YesOrNoFalse"
+	StaticText "You can disable tracers and firing particles. Might increase performance.", "red"//comment for mass deleting
 	StaticText " "
-	Option "$BDPGRAPHICMNU_SHOTGUNSTRAP", "bd_ShotgunStrap", "YesOrNoFalse"
-	StaticText "$BDPGRAPHICMNUTIP_SHOTGUNSTRAP", "red"//comment for mass deleting
+	Option "Enable Shotgun & GL straps", "bd_ShotgunStrap", "YesOrNoFalse"
+	StaticText "For people who STILL dislike weapons' straps.", "red"//comment for mass deleting
 	StaticText " "
-    Option "$BDPGRAPHICMNU_SELFAWARENESS", "bd_Legs", "YesOrNoFalse"
-	StaticText "$BDPGRAPHICMNUTIP_SELFAWARENESS", "red"//comment for mass deleting
+    Option "Enable First Person Legs", "bd_Legs", "YesOrNoFalse"
+	StaticText "Makes your legs visible when you look down.", "red"//comment for mass deleting
 	StaticText " "
-	Option "$BDPGRAPHICMNU_SCREENEFFECTS", "bd_ScreenFX", "ScreenTypes"
-    StaticText "$BDPGRAPHICMNUTIP_SCREENEFFECTS", "red"//comment for mass deleting
+	Option "Screen Effects", "bd_ScreenFX", "ScreenTypes"
+    StaticText "Enables Screen Effects on HUD, such as Blood Splashing and Bullet Holes.", "red"//comment for mass deleting
 	StaticText " "
-    Option "$BDPGRAPHICMNU_BLOODTRAILSPLASH", "bd_BloodTrail", "YesOrNoFalse"
-    StaticText "$BDPGRAPHICMNUTIP_BLOODTRAILSPLASH", "red"//comment for mass deleting
-	StaticText "$BDPGRAPHICMNUTIP2_BLOODTRAILSPLASH", "red"//comment for mass deleting
-	StaticText "$BDPGRAPHICMNUTIP3_BLOODTRAILSPLASH", "red"//comment for mass deleting
+    Option "Blood Trail Splash", "bd_BloodTrail", "YesOrNoFalse"
+    StaticText "Enables Blood Splashing when Enemies are bleeding out.", "red"//comment for mass deleting
+	StaticText "If Screen Effects is disabled, this option will also be disabled.", "red"//comment for mass deleting
+	StaticText "Does not work for the BDv21 Mode.", "red"//comment for mass deleting
 	StaticText " "
 	StaticText "-------------------------------------------------------", "black"
 }
 	OptionMenu "DoxPlayerSettings"
 {
-	 Title "$BDPPLRCNTRLMNU_TITLE"
+	 Title "Player Settings"
     StaticText "-------------------------------------------------------", "black"
-	StaticText "$BDPPLRCNTRLMNU_CATEGORYABILITIES"
+	StaticText "ABILITIES"
 	StaticText "-------------------------------------------------------", "black"
 	
 	
 
-	Option "$BDPPLRCNTRLMNU_ENABLELEDGEGRAB", "donotclimb", "YesOrNoFalse"
-	StaticText "$BDPPLRCNTRLMNUTIP_ENABLELEDGEGRAB", "red"//comment for mass deleting
+	Option "Enable Ledge Grab", "donotclimb", "YesOrNoFalse"
+	StaticText "Allows you to grab onto a ledge and lift yourself up. Use with care.", "red"//comment for mass deleting
 	StaticText " "
-	Option "$BDPPLRCNTRLMNU_ENABLEDOUBLEJUMPING", "donotdoublejump", "YesOrNoFalse"
-	StaticText "$BDPPLRCNTRLMNUTIP_ENABLEDOUBLEJUMPING", "red"//comment for mass deleting
-	StaticText "$BDPPLRCNTRLMNUTIP2_ENABLEDOUBLEJUMPING", "red"//comment for mass deleting
+	Option "Enable Double Jumping", "donotdoublejump", "YesOrNoFalse"
+	StaticText "Allows you to perform a second jump in mid air. Use with care.", "red"//comment for mass deleting
+	StaticText "It might seem a little clunky, because it's only ACS and Decorate.", "red"//comment for mass deleting
 	StaticText " "
 	StaticText "-------------------------------------------------------", "black"
 }
 
 OptionMenu "DoxMonsterOptions"
 {
-    Title "$OPTMNU_BDP_MONSTEROPTIONS"
-	Option "$BDPGMONSTERMNU_SHOOTABLEPROJECTILES", "BD_ShootableEnemyProjectiles", "YesOrNo"
-	StaticText "$BDPGMONSTERMNUTIP_SHOOTABLEPROJECTILES", "red"//comment for mass deleting
-	StaticText "$BDPGMONSTERMNUTIP2_SHOOTABLEPROJECTILES", "red"//comment for mass deleting
-	StaticText "$BDPGMONSTERMNUTIP3_SHOOTABLEPROJECTILES", "red"//comment for mass deleting
-	StaticText "$BDPGMONSTERMNUTIP4_SHOOTABLEPROJECTILES", "red"//comment for mass deleting
-	StaticText "$BDPGMONSTERMNUTIP5_SHOOTABLEPROJECTILES", "red"//comment for mass deleting
+    Title "Monster options"
+	Option "Shootable Enemy Projectiles (EXPERIMENTAL!)", "BD_ShootableEnemyProjectiles", "YesOrNo"
+	StaticText "Makes you able to shoot enemy's projectiles, exploding them in the air.", "red"//comment for mass deleting
+	StaticText "Some projectiles might be stronger and tougher to destroy.", "red"//comment for mass deleting
+	StaticText "Keep in mind that all player's projectiles can hit enemy's projectiles, so you might", "red"//comment for mass deleting
+	StaticText "accidentally hit one with a BFG, for instance.", "red"//comment for mass deleting
+	StaticText "Currently supported monsters: Revenant", "red"//comment for mass deleting
 	StaticText " "
 	
-	Option "$BDPGMONSTERMNU_DISABLEMEATSHIELD", "BD_DontUseMeatshield", "YesOrNo"
-	StaticText "$BDPGMONSTERMNUTIP_DISABLEMEATSHIELD", "red"//comment for mass deleting
-	StaticText "$BDPGMONSTERMNUTIP2_DISABLEMEATSHIELD", "red"//comment for mass deleting
+	Option "Disable Meatshields", "BD_DontUseMeatshield", "YesOrNo"
+	StaticText "Meatshields are buggy and cause the player to continously slide on some", "red"//comment for mass deleting
+	StaticText "maps. You can disable that feature as a fix (or just don't use the meat shield...)", "red"//comment for mass deleting
 	StaticText " "
 	
-	Option "$BDPGMONSTERMNU_MONSTERFOOTSTEPSOUND", "bd_MonsterFootsteps", "YesOrNo"
-	StaticText "$BDPGMONSTERMNUTIP_MONSTERFOOTSTEPSOUND", "red"//comment for mass deleting
+	Option "Monster footsteps", "bd_MonsterFootsteps", "YesOrNo"
+	StaticText "Zombies and imps make footstep sounds when walking.", "red"//comment for mass deleting
 	StaticText " "
 	StaticText "-------------------------------------------------------", "black"
-	StaticText "$BDPGMONSTERMNU_CATEGORYBEHAVIOURTWEAKS"
+	StaticText "BEHAVIOUR TWEAKS"
 	StaticText "-------------------------------------------------------", "black"
 	StaticText " "
-	Option "$BDPGMONSTERMNU_NOZOMBIEINFIGHTING", "bd_NoZombieInfight", "YesOrNo"
-	StaticText "$BDPGMONSTERMNUTIP_NOZOMBIEINFIGHTING", "red"//comment for mass deleting
+	Option "No zombie infighting", "bd_NoZombieInfight", "YesOrNo"
+	StaticText "Disables zombies' infighting.", "red"//comment for mass deleting
 	StaticText " "
-	Option "$BDPGMONSTERMNU_WANDERINGENEMIESSPAWN", "bd_WanderingOnSpawn", "YesOrNo"
-	StaticText "$BDPGMONSTERMNUTIP_WANDERINGENEMIESSPAWN", "red"//comment for mass deleting
+	Option "Wandering enemies on spawn", "bd_WanderingOnSpawn", "YesOrNo"
+	StaticText "Monsters move around when they spawn, instead of standing still.", "red"//comment for mass deleting
 	StaticText " "	
-	Option "$BDPGMONSTERMNU_ROLLINGENEMIES", "bd_RollingZombies", "YesOrNoFalse"
+	Option "Rolling zombies", "bd_RollingZombies", "YesOrNoFalse"
 	StaticText " "	
-	Option "$BDPGMONSTERMNU_IMPGETONCEILING", "bd_CeilingImps", "YesOrNoFalse"
+	Option "Imp ceiling latch", "bd_CeilingImps", "YesOrNoFalse"
 	StaticText " "	
-	Option "$BDPGMONSTERMNU_TAKINGFIREIMPJUMPING", "bd_JumpingImps", "YesOrNoFalse"
+	Option "Jumping imps when firing", "bd_JumpingImps", "YesOrNoFalse"
 	StaticText " "	
-	Option "$BDPGMONSTERMNU_ARACHNOTRONGETONCEILING", "bd_CeilingSpiders", "YesOrNoFalse"
+	Option "Arachnotron ceiling latch", "bd_CeilingSpiders", "YesOrNoFalse"
 	StaticText " "	
-	Option "$BDPGMONSTERMNU_REVENANTFLY", "bd_JetpackRevenant", "YesOrNoFalse"
+	Option "Revenant's Jetpack", "bd_JetpackRevenant", "YesOrNoFalse"
 	StaticText " "	
-	Option "$BDPGMONSTERMNU_HELLKNIGHTDASH", "bd_HKslam", "YesOrNoFalse"
+	Option "Hell Knight's rush & slam", "bd_HKslam", "YesOrNoFalse"
 	StaticText " "	
-	Option "$BDPGMONSTERMNU_BARONOFHELLDASH", "bd_Baronslam", "YesOrNo"
+	Option "Baron of Hell's rush & slam", "bd_Baronslam", "YesOrNo"
 	StaticText ""
-	Option "$BDPGMONSTERMNU_ARCHVILETELEPORT", "bd_archvileteleport", "YesOrNoFalse"
+	Option "Archvile teleports", "bd_archvileteleport", "YesOrNoFalse"
 	StaticText " "	
-	Option "$BDPGMONSTERMNU_CYBERDEMONVERTICALATTACK", "bd_CYBERFIREUP", "YesOrNo"
+	Option "Cyberdemon's vertical attack", "bd_CYBERFIREUP", "YesOrNo"
 	
 }
 	
 	
 OptionMenu "DoxWeaponOptions"
 {
-    Title "$OPTMNU_BDP_WEAPONOPTIONS"
-	Submenu "$BDPWEAPONMNU_SMARTCROSSHAIR",			"SmartCrosshairsMenu"
+    Title "Weapon options"
+	Submenu "Smart crosshair",			"SmartCrosshairsMenu"
 	StaticText ""
-   Option "$BDPWEAPONMNU_DISABLEAUTORELOAD", "bd_NoAutoReload", "YesOrNo"
+   Option "Disable Auto Reload", "bd_NoAutoReload", "YesOrNo"
    StaticText " "
-	Option "$BDPWEAPONMNU_MAGCLICKONLOW", "BD_MagGoClicky", "YesOrNo" 
-	Option "$BDPWEAPONMNU_3DNAILSMODEL", "Dox_3DNail", "YesOrNo"
-	StaticText "$BDPWEAPONMNUTIP_3DNAILSMODEL"
-	StaticText "$BDPWEAPONMNUTIP2_3DNAILSMODEL"
-	StaticText "$BDPWEAPONMNUTIP3_3DNAILSMODEL"
+	Option "Magazine clicks on low ammo", "BD_MagGoClicky", "YesOrNo" 
+	Option "3D Nail model", "Dox_3DNail", "YesOrNo"
+	StaticText "It's not perfect and there's nothing we can do to improve it."
+	StaticText "If the option will be enabled if you can't render 3D models,"
+	StaticText "the nail will be invisible."
 	StaticText ""
-	StaticText "$BDPWEAPONMNUTIP_CUSTOMWEAPONSPAWNS"
+	StaticText "Customizable weapon spawners (might conflict with custom weapons)"
 	StaticText ""
-	Option "$BDPWEAPONMNU_SPAWNSAW", "bd_SpawnSaw", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNAXE", "bd_SpawnAxe", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNPISTOL", "bd_SpawnPistol", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNSMG", "bd_SpawnSMG", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNREVOLVER", "bd_SpawnRevolver", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNSHOTGUN", "bd_SpawnShotgun", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNASSAULTSHOTGUN", "bd_SpawnASG", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNSUPERSHOTGUN", "bd_SpawnSSG", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNRIFLE", "bd_SpawnRifle", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNMINIGUN", "bd_SpawnMinigun", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNMACHINEGUN", "bd_SpawnMachinegun", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNROCKETLAUNCHER", "bd_SpawnRL", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNGRENADELAUNCHER", "bd_SpawnGL", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNPLASMARIFLE", "bd_SpawnPlasmagun", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNRAILGUN", "bd_SpawnRailgun", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNFREEZETHROWER", "bd_SpawnFreezer", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNBFG9K", "bd_SpawnBFG", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNBFG10K", "bd_SpawnBFG10K", "Enable/Disable"
-	Option "$BDPWEAPONMNU_SPAWNUNMAKER", "bd_SpawnUnmaker", "Enable/Disable"
+	Option "Spawn Saw", "bd_SpawnSaw", "Enable/Disable"
+	Option "Spawn Axe", "bd_SpawnAxe", "Enable/Disable"
+	Option "Spawn Pistol", "bd_SpawnPistol", "Enable/Disable"
+	Option "Spawn Sub-Machinegun", "bd_SpawnSMG", "Enable/Disable"
+	Option "Spawn Revolver", "bd_SpawnRevolver", "Enable/Disable"
+	Option "Spawn Shotgun", "bd_SpawnShotgun", "Enable/Disable"
+	Option "Spawn Assault Shotgun", "bd_SpawnASG", "Enable/Disable"
+	Option "Spawn Super Shotgun", "bd_SpawnSSG", "Enable/Disable"
+	Option "Spawn Rifle", "bd_SpawnRifle", "Enable/Disable"
+	Option "Spawn Minigun", "bd_SpawnMinigun", "Enable/Disable"
+	Option "Spawn Machinegun", "bd_SpawnMachinegun", "Enable/Disable"
+	Option "Spawn Rocket Launcher", "bd_SpawnRL", "Enable/Disable"
+	Option "Spawn Grenade Launcher", "bd_SpawnGL", "Enable/Disable"
+	Option "Spawn Plasma rifle", "bd_SpawnPlasmagun", "Enable/Disable"
+	Option "Spawn Railgun", "bd_SpawnRailgun", "Enable/Disable"
+	Option "Spawn FreezeThrower", "bd_SpawnFreezer", "Enable/Disable"
+	Option "Spawn BFG9000", "bd_SpawnBFG", "Enable/Disable"
+	Option "Spawn BFG10K", "bd_SpawnBFG10K", "Enable/Disable"
+	Option "Spawn Unmaker", "bd_SpawnUnmaker", "Enable/Disable"
 	StaticText ""
-	StaticText "$BDPWEAPONMNUTIP_ENEMYDROPS"
+	StaticText "Enemy drops"
 	Statictext ""
-	Option "$BDPWEAPONMNU_DROPPISTOL", "bd_Spawnpistoldrop", "Enable/Disable"
-	Option "$BDPWEAPONMNU_DROPRIFLE", "bd_SpawnRifleDrop", "Enable/Disable"
-	Option "$BDPWEAPONMNU_DROPSMG", "bd_SpawnSMGDrop", "Enable/Disable"
-	Option "$BDPWEAPONMNU_DROPMP40", "bd_SpawnMP40Drop", "Enable/Disable"
-	Option "$BDPWEAPONMNU_DROPSHOTGUN", "bd_SpawnshotgunDrop", "Enable/Disable"
-	Option "$BDPWEAPONMNU_DROPMINIGUN", "bd_SpawnMiniGunDrop", "Enable/Disable"
+	Option "Drop Pistol", "bd_Spawnpistoldrop", "Enable/Disable"
+	Option "Drop Rifle", "bd_SpawnRifleDrop", "Enable/Disable"
+	Option "Drop SMG", "bd_SpawnSMGDrop", "Enable/Disable"
+	Option "Drop MP40", "bd_SpawnMP40Drop", "Enable/Disable"
+	Option "Drop Shotgun", "bd_SpawnshotgunDrop", "Enable/Disable"
+	Option "Drop MiniGun", "bd_SpawnMiniGunDrop", "Enable/Disable"
 	StaticText ""
-	StaticText "$BDPWEAPONMNUTIP_SECRETGUNS"
+	StaticText "Secret guns (barely supported)"
 	StaticText ""
-	Option "$BDPWEAPONMNU_SPAWNMG42", "bd_SpawnMG42", "Enable/Disable"
+	Option "Spawn MG42 (Hitler's Buzzsaw)", "bd_SpawnMG42", "Enable/Disable"
 	StaticText " "
-	Option "$BDPWEAPONMNU_SUPERSHOTGUNREPLACESSHOTGUN", "bd_SSGreplacesShotgun", "YesOrNo"
-	StaticText "$BDPWEAPONMNUTIP_SUPERSHOTGUNREPLACESSHOTGUN", "red"//comment for mass deleting
+	Option "Super shotgun replaces Shotgun spawn", "bd_SSGreplacesShotgun", "YesOrNo"
+	StaticText "For maps that don't have the SSG, like Doom 1.", "red"//comment for mass deleting
 	StaticText " "
-	Slider "$BDPWEAPONMNU_SUPERSHOTGUNSPAWNOVERSHOTGUN", "bd_SSGreplacementMultiplier", 1, 8, 1
-	StaticText "$BDPWEAPONMNUTIP_SUPERSHOTGUNSPAWNOVERSHOTGUN", "red"//comment for mass deleting
+	Slider "SSG over Shotgun multiplier", "bd_SSGreplacementMultiplier", 1, 8, 1
+	StaticText "Spawn rate multiplier.", "red"//comment for mass deleting
 	StaticText " "
-	Option "$BDPWEAPONMNU_ENABLESMARTTWOGUNS", "bd_SmartDualWield", "YesOrNoFalse"
-	StaticText "$BDPWEAPONMNUTIP_ENABLESMARTTWOGUNS", "red"//comment for mass deleting
-	StaticText "$BDPWEAPONMNUTIP2_ENABLESMARTTWOGUN", "red"//comment for mass deleting
+	Option "Enable smart dual wielding", "bd_SmartDualWield", "YesOrNoFalse"
+	StaticText "Makes the weapons remember if they were dual wielded, so selecting them", "red"//comment for mass deleting
+	StaticText "again will immediately dual wield them.", "red"//comment for mass deleting
 	StaticText " "
-	Option "$BDPWEAPONMNU_ENABLEWEAPONPITCH", "bd_Pitch", "YesOrNoFalse"
-	StaticText "$BDPWEAPONMNUTIP_ENABLEWEAPONPITCH", "red"//comment for mass deleting
-	StaticText "$BDPWEAPONMNUTIP2_ENABLEWEAPONPITCH", "red"//comment for mass deleting
+	Option "Enable Weapon Pitch", "bd_Pitch", "YesOrNoFalse"
+	StaticText "Some weapons' Pitch changes during recoil frames have been known to", "red"//comment for mass deleting
+	StaticText "cause stutter on weaker devices. You can disable it as a fix.", "red"//comment for mass deleting
 	StaticText " "
-	Option "$BDPWEAPONMNU_AIMING", "bd_Aim", "AimOption"
-	StaticText "$BDPWEAPONMNUTIP_AIMING", "red"//comment for mass deleting
+	Option "Aiming Options", "bd_Aim", "AimOption"
+	StaticText "Changes the way aiming down sights works.", "red"//comment for mass deleting
 	StaticText " "
-	Option "$BDPWEAPONMNU_MANUALSHOTGUNR", "ManualShotgunPump", "YesOrNo"
-	StaticText "$BDPWEAPONMNUTIP_MANUALSHOTGUNR", "red"//comment for mass deleting
+	Option "Manual shotgun pump", "ManualShotgunPump", "YesOrNo"
+	StaticText "The shotgun won't pump until you press the fire button again after each shot.", "red"//comment for mass deleting
 	StaticText " "
-	Option "$BDPWEAPONMNU_OLDMINIGUN", "bd_LegacyMinigunFire", "YesOrNo"
-	StaticText "$BDPWEAPONMNUTIP_OLDMINIGUN", "red"//comment for mass deleting
+	Option "Old minigun fire", "bd_LegacyMinigunFire", "YesOrNo"
+	StaticText "The minigun returns to vanilla BD-style firing.", "red"//comment for mass deleting
 	StaticText " "
-		Option "$BDPWEAPONMNU_ROCKETLAUNCHERBACKBLAST", "bd_rocketbackblast", "YesOrNo"
+		Option "Rocket Launcher has backblast", "bd_rocketbackblast", "YesOrNo"
   StaticText " "
    
 
@@ -560,108 +560,108 @@ Slider "Railgun", "bd_RailgunMag", 20, 500, 1
 
 OptionMenu "DoxCreditsGraphics"
 {
-   Title "$OPTMNU_BDP_CREDITSGRAPHICS"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TITLE"
-   StaticText "$BDPGRAPHICCREDITMNUTIP2_TITLE"
+   Title "Credits - Graphics"
+   StaticText "All the people or mods whose work was used in this addon."
+   StaticText "If I forgot someone or something, please notify me."
    StaticText "-------------------------------------------------------------------------", "Black"
   StaticText "Sergeant_Mark_IV", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT1"
+   StaticText "Brutal Doom v21"
      StaticText "Dox778", "LightBlue"
-	    StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT2"
+	    StaticText "Original Project Lead"
    StaticText "TypicalSF:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT3"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT4"
+   StaticText "Dual rifle sprites, better firing frames for multiple weapons, a lot of brightmaps,"
+   StaticText "new grenade launcher, new ASG"
    StaticText "Theundeadsoldier:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT5"
+   StaticText "Better pistol zombieman"
    StaticText "Ƅarge™:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT6"
+   StaticText "Dual flamecannon sprites"
    StaticText "Mryayayify:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT7"
+   StaticText "Uppercut with knuckle duster"
    StaticText "goldenmob72:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT8"
+   StaticText "Improved shotgun pump sprites"
    StaticText "JMartinez2098:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT9"
+   StaticText "Improved shotgun pump sprites, improved Unmaker pickup"
    StaticText "Tomtefar1988:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT10"
+   StaticText "Improved shotgun pump sprites, polished SSG sprites"
    StaticText "AzoNa:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT11"
+   StaticText "Polished SSG sprites"
    StaticText "IDDQD_1337:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT12"
+   StaticText "Further improved to the shotgun sprites, polished SSG sprites, knuckle crack sprites"
    StaticText "Farhan:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT13"
+   StaticText "Improved dual pistols and reload"
    StaticText "Squig", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT14"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT15"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT16"
+   StaticText "Stained fists and boots, new shotgun, new machinegun, new flamecannon fire frames,"
+   StaticText "soap sprite, help with grenade box, mugshots deaths, brightmaps, Nailgun barrel and"
+   StaticText "magazine, bloody axe variations, angled machinegun firing frames, ASG pickup sprite"
    StaticText "StalkerZHS:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT17"
+   StaticText "Better mugshots"
    StaticText "Paint.NET:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT18"
+   StaticText "for NOT SAVING STUFF THE WAY ITS SUPPOSED TO"
    StaticText "Craneo:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT19"
+   StaticText "Improved Frozen Railgun, new dual flamecannon, pipebomb, skull key variations"
    StaticText "Iknowhowtomap(Gorman Freebmane):", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT20"
+   StaticText "Base frozen railgun, switching firemodes animation, pinned imp"
    StaticText "SchrodingCat:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT21"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT22", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT23"
+   StaticText "Cat's Frozen Addon (Frozen monsters, gibs, effects)"
+   StaticText "Project Brutality 3.0:", "LightBlue"
+   StaticText "floor/ceiling ice shard"
    StaticText "Sechtera:", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT24"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT25"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT26", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT27"
+   StaticText "improved railgun and nailgun firing frames (+ brightmaps), pistol silencer"
+   StaticText "improved BFG10k glows, new grenade missiles and being awesome uwu"
+   StaticText "SgtMarkIV, typicalSF, Acclaim Entertainment and Probe Entertainment:", "LightBlue"
+   StaticText "Frozen railgun muzzle flashes, new plasmagun muzzle flashes"
    StaticText "Xaser ", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT28"
+   StaticText "Nailgun projectile, new minigun base"
    StaticText "DoomNukem", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT29"
+   StaticText "New minigun base"
    StaticText "NeoWorm", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT30"
+   StaticText "New Axe"
    StaticText "JoeyTD", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT31"
+   StaticText "Vanilla As Fuck mod (chainsaw rotations)"
    StaticText "Iamcarrotmaster", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT32"
+   StaticText "New BFG10k base"
    StaticText "Ultra-Violence", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT33"
+   StaticText "New BFG10k base"
    StaticText "Z86 ", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT34"
+   StaticText "Multiple missing brightmaps (cyberdemon, mastermind, pain elemental)"
    StaticText "Kinsie", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT35"
+   StaticText "Female marine, crouching zombies"
    StaticText "Xamp", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT36"
+   StaticText "New shotgun pickups and resting dropped mags"
    StaticText "Skulltag ", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT37"
+   StaticText "additional impaled marines gore"
     StaticText "Clonehunter ", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT38"
+   StaticText "impaled marine helmet on a spike decoration"
    StaticText "Vostyok  ", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT39"
+   StaticText "Rusty explosive barrel"
     StaticText "Vader", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT40"
-    StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT41", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT42"
+   StaticText "baron and hellknight new deaths"
+    StaticText "ItsNatureToDie (aka David G)", "LightBlue"
+   StaticText "new imp death, dead marine variations"
     StaticText "TheDoomedArchvile", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT43"
+   StaticText "Floating eye"
     StaticText "Bravo", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT44"
+   StaticText "Stalagtite variation"
    StaticText "Popguy12", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT45"
+   StaticText "Nail 3D model"
     StaticText "Freedoom team", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT46"
+   StaticText "Keycard variation"
     StaticText "Blue Shadow", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT47"
+   StaticText "Doom 3 keycard variations"
     StaticText "The Innocent Crew (OBTIC.WAD)", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT48"
+   StaticText "Extra marine corpse"
    StaticText "Captain Toenail", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT48"
+   StaticText "Extra marine corpse"
    StaticText "DarthSeeth", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT49"
+   StaticText "Extra marine corpses edits"
     StaticText "Wafer", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT50"
+   StaticText "Brightmap automation <3"
      StaticText "OSJCLATCHFORD", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT51"
+   StaticText "Key variations"
    StaticText "Frosted_Moontips", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT52"
+   StaticText "STARTUP Logo"
    StaticText "Bjecinst", "LightBlue"
-   StaticText "$BDPGRAPHICCREDITMNUTIP_TEXT53"
+   StaticText "Tpose Marine"
    StaticText "", "LightBlue"
    StaticText ""
 
@@ -669,55 +669,55 @@ OptionMenu "DoxCreditsGraphics"
 
 OptionMenu "DoxCreditsCode"
 {
-   Title "$OPTMNU_BDP_CREDITSCODING"
-   StaticText "$BDPCODINGCREDITMNUTIP_TITLE"
-   StaticText "$BDPCODINGCREDITMNUTIP2_TITLE"
-   StaticText "$BDPCODINGCREDITMNUTIP3_TITLE"
+   Title "Credits - Coding"
+   StaticText "All the people or mods who helped me with influencing"
+   StaticText "or coding certain features in some way."
+   StaticText "If I forgot someone or something, please notify me."
    StaticText "-------------------------------------------------------------------------", "Black"
   StaticText "Sergeant_Mark_IV", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT1"
+   StaticText "Brutal Doom v21"
    StaticText "Dox778", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT2"
+   StaticText "Original Project Lead"
    StaticText "Brutal Doom: Schism:", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT3"
+   StaticText "Cleaner variation code for weapons"
    StaticText "McKase", "LightBlue"
    StaticText "BLOODWOLF333:", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT4"
+   StaticText "Some bugfixes, friendly marine code, improved MES"
    StaticText "ikdfa:", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT5"
+   StaticText "Smooth dual weapon switch"
    StaticText "IDDQD_1337:", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT6"
+   StaticText "Railgun ammo counter"
    StaticText "Mechanical Sanity:", "LightBlue"
    StaticText "Oh, boy..."
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT7"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT8"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT9"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT10"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT11"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT12", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT13"
+   StaticText "Multiple bug fixes, first person legs, improve code, fixing janitor,"
+   StaticText "double jump, enemy roll, ACS Scripts, better ADS system, improvements"
+   StaticText "to deflectable revenant projectiles, Perfected ledge climbing code,"
+   StaticText "Additional map enhancement system content, revenant jetpack,"
+   StaticText "Laser guided missiles"
+   StaticText "Project Brutality 3.0:", "LightBlue"
+   StaticText "Original first person legs code, laser guided missiles"
    StaticText "XV117:", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT14"
+   StaticText "Original ledge climbing code and animations"
    StaticText "Grey_Wolf:", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT15"
+   StaticText "Insult mugshots ACS scripts"
    StaticText "Sechtera:", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT16"
+   StaticText "Listening to Dox brag about new addon's features despite not playing Doom."
    StaticText "SchrodingCat: ", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT17"
+   StaticText "Cat's Frozen Addon (Improved frozen monsters code, weakened monsters)"
    StaticText "Ivory Duke", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT18"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT19", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT20"
+   StaticText "Zmovement (ledge climb)"
+   StaticText "Agent_Ash (aka Jekyll Grim Payne)", "LightBlue"
+   StaticText "help with ledge grabbing, weapons always bobbing."
    StaticText "gordo.n", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT21"
+   StaticText "Ceiling climbing imps addon and code"
    StaticText "Scotty", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT22"
+   StaticText "Laser guided missiles"
    StaticText "Dodopod", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT23"
+   StaticText "Six Degrees Of Freedom"
    StaticText "Nash Muhandes", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT24"
+   StaticText "Tilt++"
    StaticText "Lewisk3", "LightBlue"
-   StaticText "$BDPCODINGCREDITMNUTIP_TEXT25"
+   StaticText "Vehicle code"
    StaticText ""
    
    
@@ -725,90 +725,90 @@ OptionMenu "DoxCreditsCode"
 
 OptionMenu "DoxCreditsSound"
 {
-   Title "$OPTMNU_BDP_CREDITSSOUNDDESIGN"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TITLE"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP2_TITLE"
+   Title "Credits - Sound Design"
+   StaticText "All the people, mods or games which I used sounds from."
+   StaticText "If I forgot someone or something, please notify me."
    StaticText "-------------------------------------------------------------------------", "Black"
    
    StaticText "Dox778", "LightBlue"
-      StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT1"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT2", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT3"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT4", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT5"
+      StaticText "Original Project Lead"
+   StaticText "Project Brutality v2.03:", "LightBlue"
+   StaticText "Revenant's missile launcher/Flamecannon pickup/select"
+   StaticText "Brutal Doom v19:", "LightBlue"
+   StaticText "Sperglord edition - BFG firing"
    StaticText "Bermanator", "LightBlue"
    StaticText "WolVexus:", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT6"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT7"
+   StaticText "Hand grenade explosion, secret grenade throw, MP40 firing,"
+   StaticText "BFG10k idle"
    StaticText "Dogelord:", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT8"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT9"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT10"
+   StaticText "Contributing to the LMG firing, enemy kick variation,"
+   StaticText "Axe spinning in the air"
+   StaticText "Nailgun reload."
    StaticText "goldenmob72:", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT11"
+   StaticText "Providing multiple effects"
    StaticText "ikdfa", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT12"
+   StaticText "Pistol inspect"
    StaticText "sulflix:", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT13"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT14"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT15"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT16"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT17"
+   StaticText "ASG select/reload, SMG reload, Railgun reload/inspect, slug shells fire,"
+   StaticText "Minigun ammo belt inserting, nailgun alt fire, axe attack,"
+   StaticText "Silenced pistol, plasma cells pickup, machinegun belt"
+   StaticText "sound, new BFG10k, Spider Mastermind's firing."
+   StaticText "frozen railgun primary fire, dragon breath SSG"
    StaticText "Squig:", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT18"
+   StaticText "Contributing to the LMG firing, grenade launcher fire, ASG inspect"
    StaticText "SchrodingCat:", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT19"
+   StaticText "Cat's Frozen Addon (freezing, frozen monsters struggling)"
    StaticText "Iknowhowtomap(Gorman Freebmane):", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT20"
+   StaticText "frozen railgun alt fire, inspect knocks, part of the exploding frozen barrel"
    StaticText "A bunch of trash:", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT21"
+   StaticText "Nailgun reloading smoke"
    StaticText "perkristian", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT22"
+   StaticText "Arachnotron's firing"
    StaticText "Dissy EX", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT23"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT24"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT25"
+   StaticText "Rocket bounce, fist wall impact, ASG fire and select,New Freeze grenade,"
+   StaticText "new multiple pickup, energy ball bounce, mancubus' flamecannon,"
+   StaticText "Weapon foley, void grenade"
    StaticText "LandyRS", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT26"
+   StaticText "Miscillaneous voices, Energy Shield, Unmaker teleport"
    StaticText ""
    StaticText "Warry#6969", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT27"
+   StaticText "new shell insertion sounds"
    StaticText "The Almighty Egg", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT28"
+   StaticText "Providing HD sounds for megasphere, rifle reload, chainsaw idle."
    StaticText "-------------------------------------------------------------------------", "Black"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT29"
+   StaticText "Credits for other games/companies"
    StaticText "Doom Eternal", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT30"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT31"
+   StaticText "Rocket bounce, fist wall impact, multiple new pickup, temporary weapon sounds"
+   StaticText "new freeze grenade, mancubus flamecannon, new foley sounds"
    StaticText "Halo: Combat Evolved", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT32"
+   StaticText "Needler"
    StaticText "Halo: Reach", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT33"
+   StaticText "Rocket bounce sound, new freeze grenade, motorcycle horn"
    StaticText "Halo 4", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT34"
+   StaticText "new freeze grenade, void grenade, new weapon foley sounds"
    StaticText "Doom 3", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT35"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT36", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT37"
+   StaticText "Fist wall impact sounds, plasma grenade"
+   StaticText "Sound Ideas - The General Series 6000", "LightBlue"
+   StaticText "high quality rifle select"
    StaticText "Metroid Prime 2: Echoes", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT38"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT39"
+   StaticText "Night vision, computer map, keycard pickup, new freeze grenade"
+   StaticText "Void grenade sounds"
    StaticText "Quake 4 (Raven Software, ID Software):", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT40"
+   StaticText "Nailgun firing effects"
    StaticText "Valve (CS:GO):", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT41"
+   StaticText "Rifle's inspect, new foley sounds"
    StaticText "Valve (Team Fortress 2):", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT42"
+   StaticText "Flamecannon alt fire"
    StaticText "Running with Scissors (Postal 2):", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT43"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT44", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT45"
+   StaticText "Grenade launcher reload"
+   StaticText "Deep Silver (from the game Painkiller Black)", "LightBlue"
+   StaticText "Shotgun casings"
    StaticText "Call of Duty: Black Ops II", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT46"
+   StaticText "Mancubus' flamecannon, new foley sounds"
    StaticText "Activision", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT47"
+   StaticText "new shell insertion sounds"
    StaticText "Rock Raiders", "LightBlue"
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT48"
+   StaticText "void grenade sounds"
    StaticText "", "LightBlue"
    StaticText ""
    StaticText "", "LightBlue"
@@ -823,7 +823,7 @@ OptionMenu "DoxCreditsSound"
    StaticText ""
    StaticText "", "LightBlue"
    StaticText ""
-   StaticText "$BDPSOUNDDESIGNCREDITMNUTIP_TEXT49"
+   StaticText "uwu"
 
 }
 
@@ -947,23 +947,31 @@ OptionMenu "TiltPlusPlusMenu"
 
 OptionValue "BrutalBlood"
 {
+<<<<<<< HEAD
 	1, "$OPTVALBDP_BLOODLOW"
 	2, "$OPTVALBDP_BLOODNORMAL"
 	3, "$OPTVALBDP_BLOODLOTS"
 	4, "$OPTVALBDP_BLOODEXTRENE"
 	666, "$OPTVALBDP_BLOODCOMICAL"
+=======
+	1, "1) Low"
+	2, "2) Normal"
+	3, "3) Lots"
+	4, "4) Extreme"
+	666, "5) Comical"
+>>>>>>> parent of 692328a7 (Merge pull request #28 from Blueberryy/main)
 }
 
 OptionValue "YesOrNo"
 {
-	0, "$OPTVALBDP_NO"
-	1, "$OPTVALBDP_YES"
+	0, "No"
+	1, "Yes"
 }
 
 OptionValue "DisabledOption"
 {
-	0, "$OPTVALBDP_ENABLED"
-	1, "$OPTVALBDP_DISABLED"
+	0, "Enabled"
+	1, "Disabled"
 }
 
 
@@ -972,38 +980,38 @@ OptionValue "DisabledOption"
 
 OptionValue "YesOrNoFalse"
 {
-	1, "$OPTVALBDP_NO"
-	0, "$OPTVALBDP_YES"
+	1, "No"
+	0, "Yes"
 }
 
 
 
 OptionValue "SelectEngineType"
 {
-	1, "$OPTVALBDP_MULTIPLAYER"
-	0, "$OPTVALBDP_SINGLEPLAYER"
+	1, "Multiplayer"
+	0, "Singleplayer"
 }
 
 OptionValue "genderoption"
 {
-	1, "$OPTVAL_FEMALE"
-	0, "$OPTVAL_MALE"
+	1, "Female"
+	0, "Male"
 }
 
 OptionValue "screenblocksize"
 {
-	10, "$OPTVALBDP_CLASSICHUD"
-	11, "$OPTVALBDP_CUSTOMHUDS"
-	12, "$OPTVALBDP_NOHUD"
+	10, "Classic HUD"
+	11, "Custom HUDs"
+	12, "No HUD"
 }
 
 
 OptionValue "HUDType"
 {
-	1, "$OPTVALBDP_BS169"
-	2, "$OPTVALBDP_BS43"
-	3, "$OPTVALBDP_MINIMAL"
-	4, "$OPTVALBDP_FULLHELMET"
+	1, "Brutal Simple 16:9"
+	2, "Brutal Simple 4:3"
+	3, "Minimalist"
+	4, "Full Helmet"
 }
 
 OptionValue "UIScaleSize"
@@ -1046,59 +1054,59 @@ OptionValue "maxgibs"
 
 OptionValue "GenderOption"
 {
-	0, "$OPTVAL_MALE"
-	1, "$OPTVAL_FEMALE"
+	0, "Male"
+	1, "Female"
 }
 
 
 OptionValue "AimOption"
 {
-	0, "$OPTVALBDP_DYNAMIC"
-	1, "$OPTVALBDP_PRESSONE"
-	2, "$OPTVALBDP_HOLD"
+	0, "Dynamic"
+	1, "Press Once"
+	2, "Hold"
 }
 
 OptionValue "ScreenTypes"
 {
-	0, "$OPTVALBDP_YES"
-	1, "$OPTVALBDP_BDV21"
-	2, "$OPTVALBDP_NO"
+	0, "Yes"
+	1, "BDv21"
+	2, "No"
 }
 
 OptionValue "PistolADS"
 {
-    0, "$OPTVALBDP_BURSTFIRE"
- 	1, "$OPTVALBDP_AIMDOWNSIGHTS"
+    0, "Burst fire"
+ 	1, "ADS"
 }
 
 OptionValue "Enable/Disable"
 {
-    0, "$OPTVALBDP_DISABLED"
- 	1, "$OPTVALBDP_ENABLED"
+    0, "Disabled"
+ 	1, "Enabled"
 }
 
 OptionValue LegStainingOption
 {
-0, "$OPTVALBDP_ENABLED"
-1, "$OPTVALBDP_DISABLED"
-2, "$OPTVALBDP_PERMANENTRED"
-3, "$OPTVALBDP_PERMANENTBLU"
-4, "$OPTVALBDP_PERMANENTGREEN"
-//5, "$OPTVALBDP_PERMANENTNUKAGE"
+0, "Enabled"
+1, "Disabled"
+2, "Permanent red"
+3, "Permanent blue"
+4, "Permanent Green"
+//5, "Permanent nukage"
 }
 
 //Dox_MEStextureReplacements
 OptionValue MEStextureReplacements
 {
-0, "$OPTVALBDP_OFFICIALWADS"
-1, "$OPTVALBDP_LEGACYWADS"
-2, "$OPTVALBDP_GOINGDOWNWAD"
-3, "$OPTVALBDP_BTSXE1WAD"
-4, "$OPTVALBDP_BTSXE2WAD"
-5, "$OPTVALBDP_EPICWAD"
-6, "$OPTVALBDP_EPIC2WAD"
-7, "$OPTVALBDP_SCYTHE2WAD"
-8, "$OPTVALBDP_SUNLUSTWAD"
-9, "$OPTVALBDP_ALIENVENDETTAWAD"
+0, "Official IWADs"
+1, "Legacy (will most likely cause issues)"
+2, "Going Down"
+3, "Back To Saturn X Episode 1"
+4, "Back To Saturn X Episode 2"
+5, "Epic"
+6, "Epic2"
+7, "Scythe 2"
+8, "Sunlust"
+9, "Alien Vendetta"
 }
 

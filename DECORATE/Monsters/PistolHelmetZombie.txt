@@ -8,7 +8,7 @@ FastSpeed 18
 DamageFactor "Head", 1
 DropItem "PistolDrop"
 DropItem "DroppedHelmetSpawner"
-Tag "$FN_BDP_HELMETPISTOLZOMBIE"
+Tag "Pistol Zombie"
 Damagefactor "Head", 0.1
 painchance "Head", 255
 	States

@@ -3547,7 +3547,7 @@ Actor BDECWIndowGlass1: BDdestroyabledecorative
 	Radius 4
 	Height 128
 	Renderstyle Translucent
-	Obituary "$OB_BDP_CUTBYGLASS"
+	Obituary "%o was cut by falling glass."
 	Alpha 0.65
 	states
 	{

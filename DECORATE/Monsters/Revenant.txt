@@ -41,7 +41,7 @@ DropItem "Demonstrengthrune", 5
 	Radius 12
 	Height 60
 	Scale 0.9
-	Tag "$FN_REVEN"
+	Tag "Revenant"
 	MeleeRange 100
 	States
 	{
@@ -1374,7 +1374,6 @@ ACTOR RevenantU
 	MeleeSound "skeleton/melee"
 	HitObituary "$OB_UNDEADHIT"
 	Obituary "$OB_UNDEAD"
-	Tag "$FN_BDP_REVENANTNOLEGS"
 damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
 	MaxStepHeight 24
 	+DONTHURTSPECIES

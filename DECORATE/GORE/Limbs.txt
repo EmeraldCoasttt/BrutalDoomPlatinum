@@ -2513,7 +2513,7 @@ ACTOR XDeathMancubusArm: XDeathArm1
 
 Actor FlameCannonPickup : CustomInventory
 {
-Inventory.PickupMessage "$GOTBDPMANCUBUSFLAMECANNON2"
+Inventory.PickupMessage "You got the Mancubus' FlameCannon! (Slot 9)"
 Inventory.PickupSound "BFGREADY"
 States
 {

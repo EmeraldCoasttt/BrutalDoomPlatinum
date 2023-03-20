@@ -2,7 +2,7 @@ ACTOR RiotShieldGuy : ShotgunGuy1
 {
   //$Title "Riot Shield Sergeant"
   //$Category XV117Monsters
-	Obituary "$OB_BDP_ASSASSINATEDBYRIOTSERGEANT"
+	Obituary "%o was assassinated by a Riot Shield Sergeant."
 	Health 70
 	Radius 20//50SpriteW(96%=48)
 	Height 44//56SpriteH(96%=54)
@@ -12,7 +12,7 @@ ACTOR RiotShieldGuy : ShotgunGuy1
 	//DropItem "GrenadeAmmo" 4
 	damagefactor "Avoid", 0.0
 	DropItem "none"
-	Tag "$FN_BDP_RIOTSHIELDSHOTGUNZOMBIE"
+	Tag "Riot Shield Sergeant"
 	+FLOORCLIP
 	+AVOIDMELEE
 	-DOHARMSPECIES

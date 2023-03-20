@@ -8,8 +8,8 @@ ACTOR Spectro: BullDemon Replaces Spectre
     Alpha 0.45
 	speed 8
 	fastspeed 6
-	Obituary "$OB_BDP_SODOMIZEDBYSPECTRE"
-	Tag "$FN_SPECTRE"
+	Obituary "%o has been sodomized by a Spectre."
+	Tag "Spectre"
 	States
 	{
 	ReplaceVanilla:

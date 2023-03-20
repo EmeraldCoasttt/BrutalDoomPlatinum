@@ -172,8 +172,7 @@ ACTOR EvilMarineRifle
 	DeathSound "zombiemarine/death"
 	ActiveSound "zombiemarine/active"
 	DamageFactor "ExtremePunches", 2.0
-	Obituary "$OB_BDP_ELIMINATEDBYEVILMARINE"
-	Tag "$FN_BDP_EVILMARINERIFLE"
+	Obituary "%o was eliminated by an evil marine."
 	DropItem "RifleDrop"
 	Translation "48:79=[255,203,155]:[75,58,24]", "112:123=152:159", "124:127=9:12"
 	States
@@ -738,7 +737,6 @@ ACTOR EvilMarineRifle
 Actor EvilMarinePlasma: EvilMarineRifle
 {
 DropItem "PLasmaRifle"
-Tag "$FN_BDP_EVILMARINEPLASMA"
 States
 {
 
@@ -1003,7 +1001,7 @@ ACTOR EasyMarineRifleAlive : EvilMarineRifle
 	PainSound "EvilmarinePain"
 	DeathSound "EvilmarineDeath"
 	ActiveSound "EvilmarineActive"
-	Obituary "$OB_BDP_STONEINSHOESOFUAC"
+	Obituary "%o is no longer a stone in the shoes of the UAC."
 	DropItem "RifleDrop"
 	Translation "112:127=99:111"
 	MaxStepHeight 16
@@ -1221,7 +1219,7 @@ ACTOR EasyMarineRifleAlive : EvilMarineRifle
 ACTOR MrX : EvilMarinePlasma
 {
 	Health 400
-	Obituary "$OB_BDP_HEATEDENCOUNTERMRX"
+	Obituary "%o had a heated encounter with Mr. X."
 	Translation "112:127=32:47", "128:143=107:111", "144:151=109:111", "152:159=104:108"
 	Speed 6
 	MaxStepHeight 16

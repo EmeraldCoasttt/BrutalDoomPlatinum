@@ -24,7 +24,7 @@ ACTOR ZombieMainBattleTank 9951
     
     damagefactor "Shrapnel", 0.4
 	damagefactor "Explosive", 1.5
-	Obituary "$OB_BDP_DESTROYEDBYZOMBIETANK"
+	Obituary "%o was destroyed by a zombie-seized tank."
 	MaxStepHeight 24
 	MaxDropOffHeight 32
 	Speed 1
@@ -41,7 +41,6 @@ ACTOR ZombieMainBattleTank 9951
 	+NORADIUSDMG
 	+DONTRIP
 	Species "EnemyTank"
-	Tag "$FN_BDP_ZOMBIEMAINBATTLETANK"
 	States
 	{
 	/////////////////////
@@ -569,7 +568,6 @@ Stop
 ACTOR ZombieArtilleryTank : ZombieMainBattleTank 9950
 {
     Health 4000
-	Tag "$FN_BDP_ZOMBIEARTILLERYTANK"
 	States
 	{
 	Spawn:
@@ -1006,8 +1004,7 @@ ACTOR ZombieHelicopter 9953
 	Species "AttackHelicopterZombie"
 	damagefactor "Railgun", 2.0
 	DamageFactor "TankShell", 2.0
-	Obituary "$OB_BDP_DESTROYEDBYZOMBIEHELICOPTER"
-	Tag "$FN_BDP_ZOMBIEHELICOPTER"
+	Obituary "%o was destroyed by a zombie-seized helicopter."
 	States
 	{
 	Spawn:
@@ -1156,8 +1153,7 @@ ACTOR ZombieMech 9954
 	PainSound "none"
 	DeathSound "none"
 	ActiveSound "none"
-	Obituary "$OB_BDP_DESTROYEDBYZOMBIEMECH"
-	Tag "$FN_BDP_ZOMBIEMECH"
+	Obituary "%o was destroyed by a zombie-seized Mech."
 	States
 	{
 	Spawn:

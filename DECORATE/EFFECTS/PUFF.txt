@@ -199,7 +199,7 @@ ACTOR RicoChet
   +FORCEXYBILLBOARD
   +THRUACTORS
   +NOGRAVITY
-	Obituary "$OB_BDP_SHRAPNELRICOCHET"
+	Obituary "%o ate bullet shrapnel."
   //damagetype "Shrapnel"
   Scale 0.6
   Speed 0

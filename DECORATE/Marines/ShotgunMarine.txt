@@ -5,7 +5,6 @@ MONSTER
 Height 56
 Radius 16
 translation "112:127=[170,170,170]:[0,0,0]"
-Tag "$FN_BDP_MARINESHOTGUN"
     States
 	{
 	Spawn:
@@ -1009,7 +1008,6 @@ ACTOR BlackMarine_Shotgun: Marine_Rifle
 	DropItem "ShotgunSpawnerDroped"
 	//translation "112:127=[170,170,170]:[0,0,0]"
 	translation "GrayBlack"
-	Tag "$FN_BDP_BLACKMARINESHOTGUN"
 	States
 	{
 	Active:

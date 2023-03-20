@@ -2,7 +2,7 @@
 /////////////////////////
 Actor BDBlueCard : BDBaseKey Replaces BlueCard
 {
-	Tag "$TAG_BDP_BLUECARD"
+	Tag "Blue Keycard"
 	SpawnID 85
 	Inventory.Pickupmessage "$GOTBLUECARD"
 	Inventory.Icon "STKEYS0"
@@ -45,7 +45,7 @@ Actor BDBlueCard : BDBaseKey Replaces BlueCard
 
 Actor BDBlueSkull : BDBaseSkull Replaces BlueSkull
 {
-	Tag "$TAG_BDP_BLUESKULL"
+	Tag "Blue Skullkey"
 	SpawnID 90
 	Inventory.Pickupmessage "$GOTBLUESKUL"
 	Inventory.Icon "STKEYS3"
@@ -93,7 +93,7 @@ Actor BDBlueSkull : BDBaseSkull Replaces BlueSkull
 
 Actor BDRedCard : BDBaseKey Replaces RedCard
 {
-	Tag "$TAG_BDP_REDCARD"
+	Tag "Red Keycard"
 	SpawnID 86
 	Inventory.Pickupmessage "$GOTREDCARD"
 	Inventory.Icon "STKEYS2"
@@ -135,7 +135,7 @@ Actor BDRedCard : BDBaseKey Replaces RedCard
 
 Actor BDRedSkull : BDBaseSkull Replaces RedSkull
 {
-	Tag "$TAG_BDP_REDSKULL"
+	Tag "Red Skullkey"
 	SpawnID 89
 	Inventory.Pickupmessage "$GOTREDSKUL"
 	Inventory.Icon "STKEYS5"
@@ -181,7 +181,7 @@ Actor BDRedSkull : BDBaseSkull Replaces RedSkull
 
 Actor BDYellowCard : BDBaseKey Replaces YellowCard
 {
-	Tag "$TAG_BDP_YELWCARD"
+	Tag "Yellow Keycard"
 	SpawnID 87
 	Inventory.Pickupmessage "$GOTYELWCARD"
 	Inventory.Icon "STKEYS1"
@@ -222,7 +222,7 @@ Actor BDYellowCard : BDBaseKey Replaces YellowCard
 
 Actor BDYellowSkull : BDBaseSkull Replaces YellowSkull
 {
-	Tag "$TAG_BDP_YELWSKULL"
+	Tag "Yellow Skullkey"
 	SpawnID 88
 	Inventory.Pickupmessage "$GOTYELWSKUL"
 	Inventory.Icon "STKEYS4"

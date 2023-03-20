@@ -34,7 +34,7 @@ ACTOR Cacodemon_ : Cacodemon Replaces Cacodemon
 	DeathHeight 4
 	BurnHeight 0
 	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
-	Tag "$FN_CACO"
+	Tag "Cacodemon"
 	States
 	{
 	

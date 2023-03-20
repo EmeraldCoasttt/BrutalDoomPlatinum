@@ -13,11 +13,11 @@ CLASS SSG : BrutalWeapon
 		+WEAPON.NOAUTOAIM;
 		+WEAPON.NOAUTOFIRE;
 		+FORCEXYBILLBOARD;
-		Inventory.PickupMessage "$GOTBDPSUPERSHOTGUN";
+		Inventory.PickupMessage "You got the Super Shotgun! (Slot 3)";
 		Obituary "$OB_MPSSHOTGUN";
 		Inventory.PickupSound "CLIPINSS";
 		Scale 0.9;
-		Tag "$TAG_SUPERSHOTGUN";
+		Tag "Super Shotgun";
 		Inventory.AltHUDIcon "SGN2A0";
 		BrutalWeapon.weight 6;
 	}

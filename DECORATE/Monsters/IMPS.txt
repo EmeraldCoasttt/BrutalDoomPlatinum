@@ -130,8 +130,8 @@ ACTOR Imp Replaces DoomImp
 	PainChance "Trample", 255
     Speed 7
 	FastSpeed 12
-	Tag "$FN_IMP"
-	Obituary "$OB_BDP_SUFFERED4THDEGREEIMP"
+	Tag "Imp"
+	Obituary "%o suffered a 4th degree burn by an imp."
 	States
 	{
 	

@@ -39,10 +39,10 @@ ACTOR ChaingunGuy1: BrutalZombie Replaces ChaingunGuy
 	AttackSound "weapons/minigunfire"
 	damagefactor "explosiveimpact", 2.0
 	DropItem "MinigunDrop"
-	Obituary "$OB_BDP_MOWEDBYZOMBIECOMMANDO"
+	Obituary "%o has been mowed down by a Zombie Commando."
 	DamageFactor "CauseSplash", 0.0 DamageFactor "CauseObjectsToSplashSlime", 0.0 DamageFactor "CauseObjectsToSplashNukage", 0.0
 	DamageFactor "CauseObjectsToSplashBlood", 0.0 DamageFactor "CauseObjectsToSplashLava", 0.0
-	Tag "$FN_BDP_MINIGUNZOMBIE"
+	Tag "Minigun Zombie"
 	DamageFactor "Head", 1.8
 	BrutalZombie.VoicePitch 0.80
 	States

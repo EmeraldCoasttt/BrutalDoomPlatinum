@@ -19,8 +19,8 @@ ACTOR DualPlasmaRifles : BrutalWeapon
 	+WEAPON.NO_AUTO_SWITCH
 	+FORCEXYBILLBOARD
 	+POWERED_UP
-	Tag "$TAG_BDP_DUALPLASMARIFLES"
-	Inventory.PickupMessage "$GOTBDPDUALPLASMARIFLES"
+	Tag "Dual Plasma Rifles"
+	Inventory.PickupMessage "wow... somehow you're seeing this message"
 	Inventory.AltHUDIcon "PLASB0"
 	BrutalWeapon.weight 10
 	+INVENTORY.UNDROPPABLE

@@ -12,7 +12,7 @@ ACTOR NukeLauncher : BrutalWeapon 7452
 	 +WEAPON.CHEATNOTWEAPON
 	 -WEAPON.NO_AUTO_SWITCH
 	 +WEAPON.BFG
-	Inventory.PickupMessage "$GOTBDPNUKEROCKETLAUNCHER"
+	Inventory.PickupMessage "You got the Nuclear Rocket Launcher (Slot 5)"
 	VisibleToPlayerClass BDoomer, Doomer2, TacticalDoomer, Purist
 	Inventory.ForbiddenTo ""
 	States

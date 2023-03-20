@@ -15,10 +15,10 @@ Actor Chain_saw : BrutalWeapon
 	//+WEAPON.NO_AUTO_SWITCH
 	+WEAPON.MELEEWEAPON
 	+FORCEXYBILLBOARD
-	Inventory.PickupMessage "$GOTBDPCHAINSAW"
+	Inventory.PickupMessage "You got your Chainsaw back! (Slot 1)"
 	Weapon.KickBack 0
 	BrutalWeapon.weight 7
-	Tag "$TAG_CHAINSAW"
+	Tag "Chainsaw"
 	Inventory.PickupSound "weapons/chainsaw/draw"
 	Inventory.AltHUDIcon "CSAWA0"
 	scale 0.8

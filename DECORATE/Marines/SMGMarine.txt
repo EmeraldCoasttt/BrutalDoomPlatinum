@@ -5,7 +5,6 @@ ACTOR PrePlacedMarineSMG Replaces MarinePistol
 	Height 56
 	Radius 16
 	-COUNTKILL
-	Tag "$FN_BDP_MARINESMG"
     States
 	{
 	Spawn:
@@ -1026,7 +1025,6 @@ ACTOR BlackMarine_SMG: Marine_Rifle
 	DropItem "SMGSpawner"
 	translation "YellowBlack"
 	MaxTargetRange 2048
-	Tag "$FN_BDP_BLACKMARINESMG"
 	States
 	{
 	Active:

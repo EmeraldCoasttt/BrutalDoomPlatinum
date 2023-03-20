@@ -28,7 +28,7 @@ ACTOR Mancubus : Fatso Replaces Fatso
     BloodType "Brutal_Blood", "SawBlood", "SawBlood"
 	DropItem "DemonRunespawner", 3
 DropItem "Demonstrengthrune", 5
-	Obituary "$OB_BDP_INCINERATEDBYMANCUBUS"
+	Obituary "%o was incinerated by a Mancubus."
 	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
     +DONTHURTSPECIES
 	+THRUGHOST

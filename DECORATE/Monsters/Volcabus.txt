@@ -9,8 +9,7 @@ Actor Volcabus : Mancubus 2543
 	DeathSound "Volcabus/death"
 	ActiveSound "fatso/active"
 	Height 62
-	Obituary "$OB_BDP_SQUASHEDBYVOLCABUS"
-	Tag "$FN_BDP_VOLCABUS"
+	Obituary "%o squashed by a Volcabus."
    States
    {
 

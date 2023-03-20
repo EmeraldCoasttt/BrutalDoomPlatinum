@@ -5,7 +5,6 @@ MONSTER
 Height 56
 Radius 16
 -COUNTKILL
-Tag "$FN_BDP_MARINEMINIGUN"
     States
 	{
 	Spawn:
@@ -994,7 +993,6 @@ ACTOR BlackMarine_Minigun: Marine_Rifle
 	//translation "112:127=[220,0,0]:[0,0,0]"
 	translation "RED2black"
 	MaxTargetRange 3072
-	Tag "$FN_BDP_BLACKMARINEMINIGUN"
 	States
 	{
 	Active:

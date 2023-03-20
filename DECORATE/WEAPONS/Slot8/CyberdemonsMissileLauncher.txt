@@ -6,10 +6,10 @@ ACTOR CyberdemonsMissileLauncher : BrutalWeapon
 	Weapon.AmmoGive2 0
 	Weapon.AmmoType1 "CyberdemonRockets"
 	weapon.selectionorder 3800
-	Obituary "$OB_BDP_CYBERDEMONMISSILELAUNCHER"
+	Obituary "%o was blown up by %k's Cyberdemon missile launcher. Ouch!"
     AttackSound "None"
     Inventory.PickupSound "BFGREADY"
-	Inventory.Pickupmessage "$GOTBDPCYBERDEMONMISSILELAUNCHER"
+	Inventory.Pickupmessage "You shouldn't be seeing this!"
     +WEAPON.NOAUTOAIM
 	+WEAPON.NOAUTOFIRE
 	+WEAPON.NOALERT
@@ -19,7 +19,7 @@ ACTOR CyberdemonsMissileLauncher : BrutalWeapon
 	+INVENTORY.UNDROPPABLE
     +FORCEXYBILLBOARD
 	Scale 0.9
-	Tag "$TAG_BDP_CYBERDEMONMISSILELAUNCHER"
+	Tag "Cyberdemon's Missile Launcher"
 	inventory.althudicon "CYGGE0"
 	BrutalWeapon.weight 15
 	States
@@ -154,7 +154,7 @@ ACTOR CyberdemonsMissileLauncher : BrutalWeapon
 		Goto CyberRecoil
 	
 	CantAltFire:
-		TNT1 A 0 A_Print("$TXT_BDP_AIMHIGH",1)
+		TNT1 A 0 A_Print("Aim higher!",1)
 		Goto Ready
 	/*
 	AltFire:
@@ -250,7 +250,7 @@ ACTOR CyberBallsPlayer: FastProjectile
     SeeSound "none"
     //SeeSound "RLANSHOT"
 	DeathSound "Explosion"
-	Obituary "$OB_BDP_MPCYBERDEMONMISSILELAUNCHER"
+	Obituary "%o was blown up by %k's Cyberdemon missile launcher. Ouch!"
 	Species "Marines"
 	+THRUSPECIES
 	+MTHRUSPECIES

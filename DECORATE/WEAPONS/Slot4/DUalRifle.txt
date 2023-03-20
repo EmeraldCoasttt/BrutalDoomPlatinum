@@ -12,17 +12,17 @@ ACTOR DualRifles : BrutalWeapon
 	Weapon.AmmoType1 "Clip2"
 	Weapon.AmmoType2 "dOUBLERifleAmmo"
 	Weapon.SisterWeapon "Rifle"
-	Obituary "$OB_BDP_DUALRIFLES"
+	Obituary "%o was shot down by %k's assault rifle."
     AttackSound "None"
     Inventory.PickupSound "CLIPIN"
-	Inventory.Pickupmessage "$GOTBDPDUALRIFLES"
+	Inventory.Pickupmessage "how did you manage to see that message?"
     +WEAPON.NOAUTOAIM
     +WEAPON.NOALERT
     //+WEAPON.NOAUTOFIRE
 	+WEAPON.NO_AUTO_SWITCH
 	+FORCEXYBILLBOARD
 	+POWERED_UP
-	Tag "$TAG_BDP_DUALRIFLES"
+	Tag "Dual Rifles"
 	+INVENTORY.UNDROPPABLE
 	+Inventory.untossable
     Scale 0.8

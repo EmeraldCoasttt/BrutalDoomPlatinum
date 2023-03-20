@@ -5,7 +5,6 @@ MONSTER
 translation "112:127=[128,255,0]:[30,80,0]"
 Height 56
 Radius 16
-Tag "$FN_BDP_MARINEFIST"
     States
 	{
 	Spawn:

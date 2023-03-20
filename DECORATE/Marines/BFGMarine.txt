@@ -5,7 +5,6 @@ ACTOR PrePlacedMarineBFG Replaces MarineBFG
 	Height 56
 	Radius 16
 	-COUNTKILL
-	Tag "$FN_BDP_MARINEBFG"
     States
 	{
 	Spawn:

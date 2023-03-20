@@ -45,7 +45,7 @@ Class Needle : actor
 			//bouncecount 2;
 			//Translation "PLASMAPINK";
 			+rollsprite;
-			Obituary "$OB_BDP_NEEDLER";
+			Obituary "%o was needled by %k's Gauss Cannon.";
 		}
 		Override void postbeginplay()
 		{

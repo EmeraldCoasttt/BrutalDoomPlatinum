@@ -506,7 +506,7 @@ Height 4
 +CLIENTSIDEONLY
 Damage (random (80, 80))
 Damagetype "Shrapnel"
-Obituary "$OB_BDP_SHRAPNELPIERCE"
+Obituary "%o ate a handful of shrapnel."
 states
 	{
 	Spawn:

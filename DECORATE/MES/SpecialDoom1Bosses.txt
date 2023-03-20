@@ -1,7 +1,7 @@
 
 ACTOR CyberdemonBoss: TheCyberdemon 2546
 {
-    Obituary "$OB_BDP_DESTROYEDBYCYBERDEMON"
+    Obituary "%o was destroyed by the Cyberdemon."
 	Health 20000
     damagefactor "Crush", 20.0
 	MaxStepHeight 64
@@ -14,7 +14,7 @@ ACTOR CyberdemonBoss: TheCyberdemon 2546
 	//$category "BD Bosses"
 	painchance "kick", 0
 	mass 5000
-	Tag "$FN_BDP_CYBERDEMONDEIMOS"
+	Tag "Cyberdemon Lord of Deimos"
 	States
 	{
 	
@@ -212,7 +212,7 @@ Actor GreatCyberdemon: CyberdemonBoss 15858
 
 ACTOR SuperMastermind: TheSpiderMastermind 2547
 {
-    Obituary "$OB_BDP_DESTROYEDBYMASTERMIND"
+    Obituary "%o was destroyed by a Mastermind."
 	Health 10000
 	Radius 130
     Scale 2.5
@@ -224,7 +224,7 @@ ACTOR SuperMastermind: TheSpiderMastermind 2547
 	MaxStepHeight 64
 	MaxDropOffHeight 64
 	//$category "BD Bosses"
-	Tag "$FN_BDP_GREATMASTERMIND"
+	Tag "Great Mastermind Invasion Leader"
 	States
 	{
 	Death.KillMe:

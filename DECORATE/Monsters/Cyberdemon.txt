@@ -40,7 +40,7 @@ DropItem "Demonstrengthrune", 25
 	Painchance "Fatality", 90
     BloodType "CyberDemon_Blood", "CyberDemon_SawBlood", "CyberDemon_Blood"
 	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
-	Tag "$FN_CYBER"
+	Tag "Cyberdemon"
 	painchance "fire", 1
   damagefactor "fire", 0.3
 	States
@@ -729,7 +729,7 @@ ACTOR CyberdemonLegsFatality 17003
   +THRUACTORS
    DeathSound "world/barrelx"
   Obituary "$OB_CYBORG"
-  Tag "$FN_BDP_CYBERDEMONROAMINGLEGS"
+  Tag "Cyberdemon's roaming legs"
   States
   {
   Spawn:
@@ -772,8 +772,8 @@ ACTOR CyberStomp
     +EXTREMEDEATH
 	+NOTELEPORT
 	+THRUACTORS
-	Obituary "$OB_BDP_STEPPEDBYCYBERDEMON"
-	HitObituary "$OB_BDP_STEPPEDBYCYBERDEMON"
+	Obituary "%o was stepped by a Cyberdemon."
+	HitObituary "%o was stepped by a Cyberdemon."
 	States
 	{
 	Spawn:

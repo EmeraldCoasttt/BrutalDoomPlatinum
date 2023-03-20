@@ -25,7 +25,7 @@ ACTOR BaronofHell2 : BaronofHell Replaces BaronofHell
 	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
     BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood"
 	BloodColor "DarkGreen"
-	Obituary "$OB_BDP_BRUTALIZEDBYBARONOFHELL"
+	Obituary "%o was brutalized by a Baron of Hell."
 	MaxStepHeight 24
 	MaxDropOffHeight 32
 	+DONTHURTSPECIES
@@ -35,7 +35,7 @@ ACTOR BaronofHell2 : BaronofHell Replaces BaronofHell
 	Speed 10
 	PainChance "Head", 120
 	PainChance 25
-	Tag "$FN_BARON"
+	Tag "Baron of Hell"
 DropItem "DemonRunespawner", 5
 DropItem "Demonstrengthrune", 10
 	States
@@ -1527,7 +1527,7 @@ MaxStepHeight 48
 MaxDropOffHeight 48
 +LOOKALLAROUND
 Translation "16:47=22:47", "48:79=62:79"
-Obituary "$OB_BDP_BRUTALIZEDBYBRUISERBROTHERS"
+Obituary "%o was brutalized by the Bruiser Brothers."
 States
 {
 Spawn:

@@ -5,7 +5,6 @@ MONSTER
 Height 56
 Radius 16
 translation "112:127=[205,133,63]:[0,0,0]"
-Tag "$FN_BDP_MARINEROCKET"
     States
 	{
 	Spawn:

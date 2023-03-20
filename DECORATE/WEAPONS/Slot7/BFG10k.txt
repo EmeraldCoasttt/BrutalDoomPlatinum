@@ -11,8 +11,8 @@ Actor BFG10k : BrutalWeapon
   weapon.ammotype2 "Nuke"
   Weapon.Kickback 100
   Weapon.SelectionOrder 3000
-  Inventory.Pickupmessage "$GOTBDPBFG10K"
-  Obituary "$OB_BDP_BFG10K"
+  Inventory.Pickupmessage "You got the BFG10000! Holy shit! (Slot 7)"
+  Obituary "%o was blasted by %k's BFG10K"
   Decal BFGLightning
 	+WEAPON.BFG
 	+WEAPON.NOAUTOAIM
@@ -239,7 +239,7 @@ Actor BFG10k : BrutalWeapon
 	DualWield:
 		TNT1 A 0 A_takeinventory("startdualwield",1)
 		TNT1 A 0 A_jumpifinventory("nuke",1,"firenuke")
-		TNT1 A 0 A_print("$TXT_BDP_NONUKECELL")
+		TNT1 A 0 A_print("You don't have a nuke cell!")
 		Goto ready
 	Firenuke:
 		TNT1 A 0 A_PlaySound("BFGCHAR2", 1)
@@ -340,7 +340,7 @@ Actor BFG10k : BrutalWeapon
 	{
 	A_PlaySound("10KSTOP", 12);
 	A_takeinventory("startdualwield",1);
-	A_print("$TXT_BDP_NUKELAUNCHCANCEL");
+	A_print("Nuke firing sequence cancelled.");
 	
 	}
 	Goto ready

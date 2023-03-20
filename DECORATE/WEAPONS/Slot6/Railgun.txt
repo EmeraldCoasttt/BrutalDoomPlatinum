@@ -9,9 +9,9 @@ ACTOR RailGun : BrutalWeapon
 	Weapon.AmmoGive2 0
 	Weapon.AmmoType1 "AmmoCell"
 	Weapon.AmmoType2 "RailgunAmmo"
-	Obituary "$OB_BDP_RAILGUN"
+	Obituary "%o was pierced by %k's Railgun."
     Inventory.PickupSound "PLSDRAW"
-	Inventory.Pickupmessage "$GOTBDPRAILGUN"
+	Inventory.Pickupmessage "You got the Railgun! (Slot 6)"
 	+WEAPON.NOAUTOAIM
 	+WEAPON.NOALERT
 	+WEAPON.NOAUTOFIRE
