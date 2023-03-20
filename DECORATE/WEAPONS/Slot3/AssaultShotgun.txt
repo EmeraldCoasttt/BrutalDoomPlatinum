@@ -172,6 +172,7 @@ ACTOR AssaultShotgun : BrutalWeapon
 	//	A12G A 0 A_JumpIfInventory("AutoShotUnloaded", 1, "SelectsNoAmmo")
 		TNT1 AAAAAAAAAAAAAA 0 A_Raise
 	//	A12G A 0 A_JumpIfInventory("AutoShotUnloaded", 1, "SelectsNoAmmo")
+		TNT1 A 0 A_GunSlingerReload("AssaultShotgunAmmo",16,"AmmoShell",1)
 		Goto SelectAnimation
 	
 	
