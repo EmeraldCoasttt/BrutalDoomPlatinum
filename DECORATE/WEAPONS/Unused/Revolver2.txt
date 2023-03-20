@@ -9,7 +9,7 @@ ACTOR Revolver2 : BrutalWeapon
 	Weapon.AmmoGive2 0
 	Weapon.AmmoType1 "Clip2"
 	Weapon.AmmoType2 "RevolverAmmo"
-	Inventory.PickupMessage "You got the Shotvolver! Say farewell to your wrists. (Slot 2)"
+	Inventory.PickupMessage "$GOTBDPSHOTVOLVER"
     Inventory.PickupSound "REVOFIRpump"
 	Obituary "$OB_MPSHOTGUN"
     AttackSound "None"
@@ -18,7 +18,7 @@ ACTOR Revolver2 : BrutalWeapon
 	+WEAPON.NOAUTOFIRE
 	+WEAPON.CHEATNOTWEAPON
 	Scale 0.9
-	Tag "Revolver"
+	Tag "$TAG_BDP_SHOTVOLVER"
 	States
 	{
 		

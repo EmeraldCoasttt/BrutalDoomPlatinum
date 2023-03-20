@@ -5,7 +5,7 @@ ACTOR DualPistolZombie: RifleZombie
 {
 DropItem "PistolDrop"
 DropItem "PistolDrop"
-Tag "Pistol Zombie"
+Tag "$FN_BDP_DUALPISTOLZOMBIE"
 	States
 	{
 	Pain.Avoid:

@@ -18,7 +18,7 @@ ACTOR BDMummy
 	DeathSound "MUMYDIE"
 	ActiveSound "MUMYACT"
 	MeleeSound "skeleton/melee"
-	Tag "Mummy"
+	Tag "$FN_BDP_MUMMY"
 	HitObituary "$OB_UNDEADHIT"
 	Obituary "$OB_UNDEAD"
 	States
@@ -105,7 +105,7 @@ ACTOR Experiment: BDMummy
 	DeathSound "MUMYDIE"
 	ActiveSound "MUMYACT"
 	MeleeSound "skeleton/melee"
-	Tag "Experiment"
+	Tag "$FN_BDP_EXPERIMENT"
 	HitObituary "$OB_UNDEADHIT"
 	Obituary "$OB_UNDEAD"
 	States

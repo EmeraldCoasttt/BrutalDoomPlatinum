@@ -19,17 +19,17 @@ ACTOR AssaultShotgun : BrutalWeapon
 	Weapon.SelectionOrder 1200
 	Weapon.AmmoType1 "AmmoShell"
 	Weapon.AmmoType2 "AssaultShotgunAmmo"
-	Obituary "%o was shot down by %k's Assault Shotgun."
+	Obituary "$OB_BDP_ASSAULTSHOTGUN"
     AttackSound "None"
     Inventory.PickupSound "ASGSEL"
-	Inventory.Pickupmessage "You got the Assault Shotgun! (Slot 3)"
+	Inventory.Pickupmessage "$GOTBDPASSAULTSHOTGUN"
     +WEAPON.NOAUTOAIM
     +WEAPON.NOAUTOFIRE
 	+WEAPON.NOALERT
 	+FORCEXYBILLBOARD
     Scale 0.8
 	BrutalWeapon.weight 8
-	Tag "Assault Shotgun"
+	Tag "$TAG_BDP_ASSAULTSHOTGUN"
 	Inventory.AltHUDIcon "A12PA0"
 	States
 	{
@@ -598,12 +598,12 @@ DualWield:
 		A_TakeInventory("StartDualWield",1);
 		if(Countinv("PlasmaShellSelected")==1)
 			{
-			A_Print("\cgSwitching to buckshot.",2);
+			A_Print("$TXT_BDP_AMMOTYPESWITCHBUCKSHOT",2);
 			A_takeinventory("PlasmaShellSelected",1);
 			}
 		else
 			{
-			A_Print("\ctSwitching to plasma shells.",2);
+			A_Print("$TXT_BDP_AMMOTYPESWITCHPLASMA",2);
 			A_giveinventory("PlasmaShellSelected",1);
 			}
 		}

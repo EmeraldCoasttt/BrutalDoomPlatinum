@@ -4,8 +4,8 @@ class Modifier_StayFrosty : BDPModifier
 	Default
 	{
 		BDPModifier.Icon "STMST01";
-		BDPModifier.DisplayName "Stay Frosty";
-		BDPModifier.Description "Tactical mode! Stamina, recoil, and more!";
+		BDPModifier.DisplayName "$MODNAMEBDPSTAYFROSTY";
+		BDPModifier.Description "$MODDESCBDPSTAYFROSTY";
 	}
 	
 	override void WorldTick()
@@ -30,8 +30,8 @@ class Modifier_Mjolnir : BDPModifier
 	Default
 	{
 		BDPModifier.Icon "HLMST00";
-		BDPModifier.DisplayName "Mjolnir";
-		BDPModifier.Description "Permanent Energy Armor powerup";
+		BDPModifier.DisplayName "$MODNAMEBDPMJOLNIR";
+		BDPModifier.Description "$MODDESCBDPMJOLNIR";
 	}
 	
 	override void WorldTick()
@@ -71,8 +71,8 @@ class Modifier_ShockFactor : BDPModifier
 	Default
 	{
 		BDPModifier.Icon "STMST12";
-		BDPModifier.DisplayName "Shock Factor";
-		BDPModifier.Description "Demons are hyper-aware of you";
+		BDPModifier.DisplayName "$MODNAMEBDPSHOCKFACTOR";
+		BDPModifier.Description "$MODDESCBDPSHOCKFACTOR";
 	}
 	
 	override void WorldTick()
@@ -106,8 +106,8 @@ class Modifier_PerfectHatred : BDPModifier
 	Default
 	{
 		BDPModifier.Icon "FC0OUCH4";
-		BDPModifier.DisplayName "Perfect Hatred";
-		BDPModifier.Description "Demons are permanently enraged";
+		BDPModifier.DisplayName "$MODNAMEBDPBDPPERFECTHATRED";
+		BDPModifier.Description "$MODDESCBDPBDPPERFECTHATRED";
 	}
 	
 	Override void worldthingspawned(Worldevent e)
@@ -131,8 +131,8 @@ class Modifier_ManAndAHalf : BDPModifier
 	Default
 	{
 		BDPModifier.Icon "FC0EVL1";
-		BDPModifier.DisplayName "Man And A Half";
-		BDPModifier.Description "Start every level berserked";
+		BDPModifier.DisplayName "$MODNAMEBDPBDPMANANDAHALF";
+		BDPModifier.Description "$MODDESCBDPBDPMANANDAHALF";
 	}
 	
 	override void WorldTick()
@@ -172,8 +172,8 @@ class Modifier_Gunslinger : BDPModifier
 	Default
 	{
 		BDPModifier.Icon "CIGST10";
-		BDPModifier.DisplayName "Gunslinger";
-		BDPModifier.Description "Weapons deselected for 5 or more seconds instantly reload";
+		BDPModifier.DisplayName "$MODNAMEBDPBDPGUNSLINGER";
+		BDPModifier.Description "$MODDESCBDPBDPGUNSLINGER";
 	}
 	
 	override void WorldTick()

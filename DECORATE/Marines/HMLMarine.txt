@@ -5,6 +5,7 @@ MONSTER
 Height 56
 Radius 16
 translation "112:127=[80,80,80]:[0,0,0]"
+Tag "$FN_BDP_MARINEHELLISHMISSILELAUNCHER"
     States
 	{
 	Spawn:
@@ -1357,6 +1358,7 @@ ACTOR BlackMarine_HML: Marine_Rifle
 	MaxTargetRange 4096
 	DropItem "HellishMissileLauncher"
 	translation "BlackBlack"
+	Tag "$FN_BDP_BLACKMARINEHELLISHMISSILELAUNCHER"
 	States
 	{
 	Active:

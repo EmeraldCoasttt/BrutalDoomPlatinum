@@ -11,15 +11,15 @@ ACTOR Rifle : BrutalWeapon
 	Weapon.AmmoType1 "Clip2"
 	Weapon.AmmoType2 "RifleAmmo"
 	BrutalWeapon.Weight 5
-	Obituary "%o was shot down by %k's assault rifle."
+	Obituary "$OB_BDP_ASSAULTRIFLE"
     AttackSound "None"
     Inventory.PickupSound "CLIPIN"
-	Inventory.Pickupmessage "You got the Assault Rifle! (Slot 4)"
+	Inventory.Pickupmessage "$GOTBDPASSAULTRIFLE"
     +WEAPON.NOAUTOAIM
     +WEAPON.NOALERT
 	+WEAPON.NOAUTOFIRE
 	+FORCEXYBILLBOARD
-	Tag "Assault Rifle"
+	Tag "$TAG_BDP_ASSAULTRIFLE"
     Scale 0.8
 	Inventory.AltHUDIcon "RIFLA0"
 	States
@@ -566,12 +566,12 @@ ACTOR Rifle : BrutalWeapon
 		//TNT1 A 0 A_JumpIfInventory("UseBashInstead",1,"Bash")
 		//RIFL C 0 A_JumpIfInventory("IsTacticalClass", 1, "NoDual")//Tactical mode cant dual
 		RIFL C 0 A_JumpIfInventory("DualRifles", 1, "GetDual")
-		RIFL C 0 A_Print("You must have two rifles to dual wield!",2)
+		RIFL C 0 A_Print("$TXT_BDP_TWORIFLESSNEED",2)
 		Goto Ready
 	
 	NoDual:
 		RIFL C 1
-		TNT1 A 0 A_Print("You can't dual wield in Tactical Mode.",2)
+		TNT1 A 0 A_Print("$TXT_BDP_NOTWOWEAPONSTACTICAL",2)
 		Goto Ready
 		
 	 GetDual:	
@@ -751,7 +751,7 @@ ACTOR Rifle : BrutalWeapon
 	ReturnToDualWield:
 	"####" A 0 A_TakeInventory("UseBashInstead",1)
 	"####" A 0 A_TakeInventory("swapRifleSpecial",1)
-	"####" A 0 A_Print("Dual wielding selected",1)
+	"####" A 0 A_Print("$TXT_BDP_TWOWEAPONSMODESELECTED",1)
 	Goto Ready
 	
 	}

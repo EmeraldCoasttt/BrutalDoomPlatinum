@@ -138,7 +138,7 @@ InInventory sbartype2, 1
 	gamemode deathmatch, teamgame
 		{
      	drawnumber 8, SMALLFONT, darkred, frags, 302, 8;
-       DrawString SMALLFONT, darkred, "Frags", 302, 0;
+       DrawString SMALLFONT, darkred, Stringtable.Localize("$SCORE_FRAGS"), 302, 0;
   
         }
 		*/
@@ -224,11 +224,7 @@ InInventory sbartype3, 1
 	gamemode deathmatch, teamgame
 		{
      	drawnumber 8, SMALLFONT, darkred, frags, 302, 8;
-<<<<<<< HEAD
     //   DrawString SMALLFONT, darkred, Stringtable.Localize("$SCORE_FRAGS"), 302, 0;
-=======
-       DrawString SMALLFONT, darkred, "Frags", 302, 0;
->>>>>>> parent of 692328a7 (Merge pull request #28 from Blueberryy/main)
    
         }
 }
@@ -462,11 +458,7 @@ InInventory UsedStamina, 1
 	gamemode deathmatch, teamgame
 	{
      	drawnumber 8, SMALLFONT, darkred, frags, 302, 8;
-<<<<<<< HEAD
       // DrawString SMALLFONT, darkred, Stringtable.Localize("$SCORE_FRAGS"), 302, 0;
-=======
-       DrawString SMALLFONT, darkred, "Frags", 302, 0;
->>>>>>> parent of 692328a7 (Merge pull request #28 from Blueberryy/main)
    
     }
 }}}	

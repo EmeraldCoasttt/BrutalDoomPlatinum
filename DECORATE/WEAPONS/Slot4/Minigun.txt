@@ -19,8 +19,8 @@ ACTOR MiniGun : BrutalWeapon
 	+WEAPON.ALT_AMMO_OPTIONAL
 	+FORCEXYBILLBOARD
 	Inventory.PickupSound "CBOXPKUP"
-	Inventory.PickupMessage "You got the Minigun! (Slot 4)"
-	Obituary "%o was mowed down by %k's Minigun."
+	Inventory.PickupMessage "$GOTBDPMINIGUN"
+	Obituary "$OB_BDP_MINIGUN"
 	AttackSound "none"
 	Scale 0.9
 	Inventory.AltHUDIcon "MGUNA0"

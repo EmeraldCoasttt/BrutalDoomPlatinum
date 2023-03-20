@@ -399,7 +399,7 @@ ACTOR Soap: CustomInventory
 Inventory.Amount 1
 Inventory.MaxAmount 1
  -THRUACTORS 
- Inventory.PickupMessage "You got some UAC soap for your boots!"
+ Inventory.PickupMessage "$GOTBDPUACSOAP"
  Mass 1
     States
     {
