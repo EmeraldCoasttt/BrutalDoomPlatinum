@@ -134,13 +134,14 @@ InInventory sbartype2, 1
 		}
 	drawnumber 4, SMALLFONT, gray, Ammo GrenadeAmmo, 300, 150, 0;
 
-
+/*
 	gamemode deathmatch, teamgame
 		{
      	drawnumber 8, SMALLFONT, darkred, frags, 302, 8;
        DrawString SMALLFONT, darkred, Stringtable.Localize("$SCORE_FRAGS"), 302, 0;
   
         }
+		*/
 }
 
 
@@ -223,7 +224,7 @@ InInventory sbartype3, 1
 	gamemode deathmatch, teamgame
 		{
      	drawnumber 8, SMALLFONT, darkred, frags, 302, 8;
-       DrawString SMALLFONT, darkred, Stringtable.Localize("$SCORE_FRAGS"), 302, 0;
+    //   DrawString SMALLFONT, darkred, Stringtable.Localize("$SCORE_FRAGS"), 302, 0;
    
         }
 }
@@ -457,7 +458,7 @@ InInventory UsedStamina, 1
 	gamemode deathmatch, teamgame
 	{
      	drawnumber 8, SMALLFONT, darkred, frags, 302, 8;
-       DrawString SMALLFONT, darkred, Stringtable.Localize("$SCORE_FRAGS"), 302, 0;
+      // DrawString SMALLFONT, darkred, Stringtable.Localize("$SCORE_FRAGS"), 302, 0;
    
     }
 }}}	
