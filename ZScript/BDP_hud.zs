@@ -622,7 +622,7 @@ class BDP_HUD : DoomStatusBar
 		Vector2 pos = basepos;
 		int flags = DI_SCREEN_RIGHT_BOTTOM|DI_ITEM_CENTER_BOTTOM;
 		//Machine gun grenade
-		if(CPlayer.mo.FindInventory("FiredMGGrenade") && CPlayer.mo.player.readyweapon && Cplayer.mo.player.readyweapon is "machinegun")
+		if(CPlayer.mo.countinv("MachineGunAmmo") < 1 && CPlayer.mo.player.readyweapon && Cplayer.mo.player.readyweapon is "machinegun")
 		{
 			pos += (-92,1);
 			DrawImage("NoGren", pos, flags);

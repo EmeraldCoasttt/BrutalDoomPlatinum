@@ -96,6 +96,7 @@ ACTOR BDoomer : Doomer
 	Player.StartItem "DoubleRifleAmmo", 62
 	Player.StartItem "Clip2", 60
 	Player.StartItem "NailgunAmmo", 75
+	Player.StartItem "MachineGunAmmo", 1
 	//slot 5
 	Player.StartItem "GLAmmo", 1
 	Player.StartItem "RocketRounds", 6

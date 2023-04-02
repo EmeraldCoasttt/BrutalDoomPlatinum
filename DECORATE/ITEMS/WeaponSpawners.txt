@@ -606,6 +606,7 @@ ACTOR MachinegunSpawner: CustomInventory
 		TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "Purist")
 		TNT1 A 0 A_GiveInventory("Machinegun", 1)
 		TNT1 A 0 A_GiveInventory("Clip2", 50)
+		TNT1 A 0 A_GiveInventory("AmmoRocket", 3)
 		Stop
 
 	Purist:

@@ -1,5 +1,11 @@
-//Changes made:
-//select,deselect
+
+ACTOR MachinegunAmmo: Ammo 
+{
+Inventory.MaxAmount 1
+//Inventory.Icon "3LNGZ0"
+Inventory.Icon "MGUNC0"
+}
+
 ACTOR Machinegun : BrutalWeapon 
 {
 	Weapon.SelectionOrder 600
@@ -12,6 +18,7 @@ ACTOR Machinegun : BrutalWeapon
 	+WEAPON.NOAUTOAIM
 	//+WEAPON.NOAUTOFIRE
 	+FORCEXYBILLBOARD
+	+WEAPON.AMMO_OPTIONAL
 	+WEAPON.ALT_AMMO_OPTIONAL
 	Inventory.PickupSound "LMGUP"
 	Inventory.PickupMessage "You got the Machine Gun! (Slot 4)"
@@ -169,10 +176,12 @@ ACTOR Machinegun : BrutalWeapon
 				
 			
 			TNT1 A 1
+			TNT1 A 0 A_GunSlingerReload("MachineGunAmmo",1,"AmmoRocket")
 			MGN1 A 0 A_Giveinventory("HeavyAutomaticWeapon",1)
 			MGN1 A 0 A_Giveinventory("MinigunSelected",1)
 			MGN1 A 0 A_GiveInventory("RandomHeadExploder", 1)
 			TNT1 AAAAAAAAAAAAAAA 0 A_Raise
+		
 		
 		SelectAnimation:
 		ReturnFromNothing:
@@ -316,16 +325,16 @@ ACTOR Machinegun : BrutalWeapon
 			goto Ready
 			
 		AltFireNoReload:
-		TNT1 A 0 A_TakeInventory("FiredMGGrenade", 1)
+		//TNT1 A 0 A_TakeInventory("FiredMGGrenade", 1)
 			GOto ready
 		AltFire:
 			MGN1 A 0
-			MGN1 A 0 A_checkifammo("AmmoRocket",1,"NoAmmo2")
-			MGN1 A 0 A_JumpIfInventory("FiredMGGrenade", 1, "ReloadGrenade")
+			MGN1 A 0 A_checkifammo("MachineGunAmmo",1,"Reload2")
+			//MGN1 A 0 A_JumpIfInventory("FiredMGGrenade", 1, "ReloadGrenade")
 			MGN1 A 0 A_PlaySound("weapons/firegrenade")
 			TNT1 A 0 //ACS_NamedExecuteAlways("MGGrenadeCheck")
 			MGN1 A 0 A_FireCustomMissile("RedFlareSpawn",-5,0,0,0)		
-			MGN1 A 0 A_takeAmmo("ammoRocket",1)
+			MGN1 A 0 A_takeAmmo("MachineGunAmmo",1)
 			MGN2 A 0 BRIGHT A_FireCustomMissile("ShortGrenade", 0, 1, 0, 0)
 			MGN1 A 0 A_SetPitch(-5.0 + pitch, SPF_INTERPOLATE)
 			//MGN1 A 0 A_Recoil(3*cos(pitch))
@@ -341,8 +350,8 @@ ACTOR Machinegun : BrutalWeapon
 		  ThrustThingZ(0,pitch/4,0,1);
 		  }
 		}
-			MGN1 A 0 A_jumpifinventory("powerspeed2",1,2)
-			MGN1 A 0 A_GiveInventory("FiredMGGrenade", 1)
+			//MGN1 A 0 A_jumpifinventory("powerspeed2",1,2)
+			//MGN1 A 0 A_GiveInventory("FiredMGGrenade", 1)
 			TNT1 A 0 A_JumpIf(Countinv("AngledMachineGun")==1,"AltFireAngled")
 		TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 8)// For poor PCs
 			TNT1 AAAAA 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, -1, 0, 0, random(-9,9))
@@ -361,8 +370,8 @@ ACTOR Machinegun : BrutalWeapon
 		    TNT1 AA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, -9, 0, 0, random(-9,9))
 		    MGN3 VW 1 BRIGHT A_SetPitch(1.0 + pitch, SPF_INTERPOLATE)
 			MGN3 XXY 1 A_SetPitch(1.0 + pitch, SPF_INTERPOLATE)
-			MGN1 A 0 A_jumpifinventory("powerspeed2",1,2)
-			MGN1 A 0 A_GiveInventory("FiredMGGrenade", 1)
+			//MGN1 A 0 A_jumpifinventory("powerspeed2",1,2)
+			//MGN1 A 0 A_GiveInventory("FiredMGGrenade", 1)
 			TNT1 A 0// ACS_NamedExecuteAlways("MGGrenadeCheck")
 			MGN3 Z 1
 			MGN3 "[" 1
@@ -370,12 +379,14 @@ ACTOR Machinegun : BrutalWeapon
 			MGN3 Q 8
 			MGN1 A 0 A_Refire
 			Goto Ready
+		Reload2:
+			TNT1 A 0 A_checkifammo("AmmoRocket",1,"NoAmmo2")
 		Reload:
 			//MGN1 A 1
 			MGN1 A 0 A_TakeInventory("Reloading", 1)
-			MGN1 A 0 A_JumpIfInventory("FiredMGGrenade", 1, "ReloadGrenade")
-			Goto Fidget
+			MGN1 A 0 A_JumpIfInventory("MachineGunAmmo", 1, "Fidget")
 		ReloadGrenade:
+			TNT1 A 0 A_checkifammo("AmmoRocket",1,"Fidget")
 		    TNT1 A 0 A_JumpIf(Countinv("AngledMachineGun")==1,"ReloadAngled")
 			MGN1 A 0
 			XXXX X 0 A_PlaySound("foley/MGMoveBeforeGrenadeReload",10) 
@@ -393,7 +404,8 @@ ACTOR Machinegun : BrutalWeapon
 			//MGN1 A 0 A_PlaySound("insertshell")
 			MGN1 A 0 A_PlaySound("LMGREL")
 			
-			MGN1 A 0 A_TakeInventory("FiredMGGrenade", 1)
+			MGN1 A 0 A_TakeInventory("AmmoRocket", 1)
+			MGN1 A 0 A_GiveInventory("MachineGunAmmo", 1)
 			MGN2 VWW 1
 			MGN2 X 2
 			MGN2 X 2
@@ -420,7 +432,8 @@ ACTOR Machinegun : BrutalWeapon
 			//MGN1 A 0 A_PlaySound("insertshell")
 			MGN1 A 0 A_PlaySound("LMGREL")
 			
-			MGN1 A 0 A_TakeInventory("FiredMGGrenade", 1)
+			MGN1 A 0 A_TakeInventory("AmmoRocket", 1)
+			MGN1 A 0 A_GiveInventory("MachineGunAmmo", 1)
 			MGN2 VWW 1
 			MGN2 X 2
 			MGN2 X 1

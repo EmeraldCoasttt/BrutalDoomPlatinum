@@ -18,6 +18,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 	bool gunslinger;
 	int gunslingertics;
 	bool gunslingereligible;
+	bool gunslinger2;
 	
 	//name gunslingerammoname;
 	name gunslingermagname;
@@ -121,6 +122,8 @@ Class Brutalweapon : DoomWeapon //Weapon
 		Invoker.gunslingermagname = mag;
 		Invoker.gunslingermagsize = magsize;
 	}
+	
+	
 	
 	Action void A_BDPMeleeStart(double range = 200)
 	{
@@ -776,6 +779,11 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 				Gunslingertics--;
 			}
 			If(gunslingertics == 0 && !gunslingereligible && gunslinger && countinv(gunslingermagname) < gunslingermagsize)
+			{
+				Gunslingereligible = true;
+				owner.A_startsound("GUNSLNG",424,0,1);
+			}
+			If(gunslingertics == 0 && !gunslingereligible && gunslinger && gunslinger2)
 			{
 				Gunslingereligible = true;
 				owner.A_startsound("GUNSLNG",424,0,1);
