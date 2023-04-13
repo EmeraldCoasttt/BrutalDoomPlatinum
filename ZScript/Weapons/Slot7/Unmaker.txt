@@ -149,6 +149,7 @@ CLASS Unmaker : BrutalWeapon
 		UNHF ABCD 1;
 		UNHG A 0 A_PlaySOund("UNMSTA", 1);
 		UNHG A 0 A_ZoomFactor(0.90);
+		/*
 	    UNHF EFGHEFGHEFGHEFGHEFGHEFGHEFGHEFGHEFGHEFGH 1 BRIGHT
 		{
 		//invoker.A_unmakelevel(6);
@@ -164,21 +165,27 @@ CLASS Unmaker : BrutalWeapon
 		 A_SetAngle(random(1, -1) + angle, SPF_INTERPOLATE);
 		A_SetPitch(-1 + pitch, SPF_INTERPOLATE);
 		}
+		*/
 		Fire2:
 		 UNHF EFGH 1 BRIGHT
 		{
 		//invoker.A_unmakelevel(6);
 		A_startSOund("UNMLOP", 6,CHANF_LOOPING);
 			If(countinv("soulammo") < 1)
-		{
-		A_damageself(1,"desintegrate");
-		}
+			{
+				A_damageself(1,"desintegrate");
+			}
+			A_TakeInventory("SoulAmmo",1);
 		A_fireprojectile("ShotgunParticles", random(-12,12), 0, -1, 0, 0, random(-9,9));
 		A_fireprojectile("ShotgunParticles2", random(-12,12), 0, -1, 0, 0, random(-9,9));
-		A_RailAttack((random(50,80)), 0, 1, 0, "red", RGF_SILENT | RGF_CENTERZ | RGF_FULLBRIGHT, 0, "UnmakerLaserPuff", 0, 0, 8192, 1, 32.0, 0, "UnmakerLaserTrail2");
+		A_RailAttack((random(150,300)), 0, 0, 0, "red", RGF_SILENT | RGF_CENTERZ | RGF_FULLBRIGHT, 0, "UnmakerLaserPuff", 0, 0, 8192, 1, 32.0, 0, "UnmakerLaserTrail2");
 		 A_SetAngle(random(1, -1) + angle, SPF_INTERPOLATE);
-		A_SetPitch(-1 + pitch, SPF_INTERPOLATE);
+		A_SetPitch(random(1, -1) + pitch, SPF_INTERPOLATE);
+	
+		A_Recoil3d(0.2);
+		
 		}
+		
 		
 		UNHG A 0 A_Refire("fire2");
 	
