@@ -310,8 +310,10 @@ ACTOR Plasma_Gun : BrutalWeapon
 		TNT1 A 0
 		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("PlasmaCrosshair"));}else{A_SetCrosshair(0);}}
 		Goto SelectFirstPersonLegs
-		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1) "####" A 0 
-			
+		SelectContinue: 
+		RIFL C 0 A_GunSlingerReload("PlasmaAmmo",50,"AmmoCell",1,"DoublePlasmaAmmo")
+		"####" A 0 A_GiveInventory("IsPlayingDoxMod",1) "####" A 0 
+		
 	    PLSN A 0 A_Giveinventory("HasPlasmaWeapon",1)
 		TNT1 A 0 A_JumpIfInventory("NoSmartDualWield",1,2)//Checks if the Smart Dual Wielding option is disabled.
 		TNT1 A 0 A_JumpIfInventory("RememberDualPlasma",1,"HasRememberedDual")
