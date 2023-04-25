@@ -28,6 +28,10 @@ Actor UnmakerUnmorph : Inventory
 {
 inventory.maxamount 1
 }
+Actor ExtraLife : Inventory
+{
+inventory.maxamount 99
+}
 Actor KillHologram : Inventory
 {
 inventory.maxamount 1

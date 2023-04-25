@@ -58,6 +58,17 @@ ACTOR LifeSphere : CustomInventory Replaces SoulSphere
 	}
 }
 
+ACTOR LifeSphereOneUp : LifeSphere
+{
+	States
+	{
+	Pickup:
+        TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 0 A_GiveInventory("ExtraLife", 1)
+		Stop
+	}
+}
+
 ACTOR SoulSphereHealth : Health	
 {
 	Inventory.Amount 100
@@ -89,6 +100,19 @@ ACTOR EnergySphere : CustomInventory Replaces Megasphere
         TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360))
 		TNT1 A 0 A_GiveInventory("HeavyArmor", 1)
 		TNT1 AA 0 A_GiveInventory("SoulsphereHealth", 1)
+		Stop
+	}
+}	
+
+ACTOR EnergySphereOneUp : EnergySphere
+{
+	States
+	{
+	
+	Pickup:
+        TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360))
+		//TNT1 A 0 A_GiveInventory("HeavyArmor", 1)
+		TNT1 A 0 A_GiveInventory("ExtraLife", 3)
 		Stop
 	}
 }	
