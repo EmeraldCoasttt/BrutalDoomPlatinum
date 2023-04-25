@@ -627,6 +627,11 @@ object LifeSphere
     frame SOUL { light SOULSPHERE }
 }
 
+object LifeSphereOneUp
+{
+    frame SOUL { light SOULSPHERE }
+}
+
 // Invulnerability Sphere
 pulselight INVULN
 {

@@ -209,13 +209,13 @@ class Modifier_OneUpmanship : BDPModifier
 	}
 	Override void worldthingspawned(Worldevent e)
 	{
-	If(e.thing.getclassname() == "LifeSphere")
+	If(e.thing && e.thing.getclassname() == "LifeSphere")
 		{
 			Actor.spawn("LifeSphereOneUp",e.thing.pos);
 			E.thing.destroy();
 		}
 		
-	Else If(e.thing.getclassname() == "EnergySphere")
+	If(e.thing  && e.thing.getclassname() == "EnergySphere")
 		{
 			Actor.spawn("EnergySphereOneUp",e.thing.pos);
 			E.thing.destroy();

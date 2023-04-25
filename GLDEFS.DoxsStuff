@@ -9,6 +9,11 @@ object EnergySphere
     frame MEGA { light MegaSphereLight }
 }
 
+object EnergySphereOneUp
+{
+    frame MEGA { light MegaSphereLight }
+}
+
 pulselight MegaSphereLight
 {
     color 1.0 1.0 1.0
