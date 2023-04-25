@@ -197,3 +197,17 @@ class Modifier_Gunslinger : BDPModifier
 	}
 
 }
+
+
+class Modifier_OneUpmanship : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "BJBST00";
+		BDPModifier.DisplayName "One-Upmanship";
+		BDPModifier.Description "Soul Spheres grant extra lives";
+	}
+	
+	
+
+}
