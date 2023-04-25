@@ -108,7 +108,7 @@ class OneUpmanshipPickup : BDPModifierpickup
     {
         Inventory.MaxAmount 1;
 		BDPModifierpickup.modifierclass "Modifier_OneUpmanship";
-		translation "200:207=[128,255,255]:[0,138,138]","240:247=244:247";
+		translation "200:207=[19,210,149]:[0,51,51]","240:247=244:247";
 		BDPModifierpickup.modifiermessage "One-Upmanship Unlocked!";
 		+floatbob;
     }
