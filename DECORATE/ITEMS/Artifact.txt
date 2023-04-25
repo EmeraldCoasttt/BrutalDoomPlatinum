@@ -118,6 +118,14 @@ ACTOR EnergySphereOneUp : EnergySphere
 }	
 
 
+ACTOR MiniInvul : InvulnerabilitySphere
+{
+Tag "Invulnerability"
+Powerup.Type Invulnerable
+Powerup.Duration -5
+Powerup.Colormap 0.0, 0.0, 0.0, 1.0,1.0,1.0
+}
+
 // infrared -----------------------------------------------------------------
 
 ACTOR NightVision : CustomInventory

@@ -220,9 +220,27 @@ class Brutal_PlayerBase : PlayerPawn
 		}
 		
 		
+		
+		
 		If(shockfactor && level.time % 5 == 0)
 		{
 			A_alertmonsters(0,AMF_TARGETEMITTER);
+		}
+		
+		If(countinv("extralife") > 0)
+		{
+			bbuddha = true;
+			If((health) <= 1)
+			{
+				a_sethealth(100);
+				A_takeinventory("extralife",1);
+				A_giveinventory("miniinvul",1);
+				A_startsound("items/soulsphere",212);
+			}
+		}
+		Else
+		{
+			bbuddha = false;
 		}
 		
 		//giveinventory("meathook",1);
