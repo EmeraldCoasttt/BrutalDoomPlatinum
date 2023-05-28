@@ -55,13 +55,13 @@ Actor Revolvertracer
 	renderstyle ADD
 	alpha 0.9
 	scale .15
-	radius 6
-	height 2
+	radius 3
+	height 1
 	-DONTSPLASH
 	// +BLOODSPLATTER 
 	-NOEXTREMEDEATH
 	-Nogravity
-	Gravity 0.75
+	Gravity 0.45
 	damage (random(35,39))
 	DamageType "Revolver"
 	Decal "BulletDecalNew1"
