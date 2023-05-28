@@ -114,4 +114,16 @@ class OneUpmanshipPickup : BDPModifierpickup
     }
 }
 
+class UltranightmarePickup : BDPModifierpickup
+{
+ Default
+    {
+        Inventory.MaxAmount 1;
+		BDPModifierpickup.modifierclass "Modifier_Ultranightmare";
+		translation "200:207=[19,210,149]:[0,51,51]","240:247=244:247";
+		BDPModifierpickup.modifiermessage "Ultra Nightmare Unlocked!";
+		+floatbob;
+    }
+}
+
 //Man And A Half "200:207=[117,117,117]:[0,0,0]"

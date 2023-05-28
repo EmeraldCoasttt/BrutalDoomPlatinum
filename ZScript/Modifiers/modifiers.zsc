@@ -224,3 +224,28 @@ class Modifier_OneUpmanship : BDPModifier
 	}
 
 }
+
+class Modifier_UltraNightmare : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "STFXDTH4";
+		BDPModifier.DisplayName "Ultra Nightmare";
+		BDPModifier.Description "Death is permanent. Good luck!";
+	}
+	override void WorldTick()
+	{
+		for(int i = 0; i < MAXPLAYERS; i++)
+		{
+			if(!PlayerInGame[i]) continue;
+			PlayerInfo plr = players[i];
+			if(!plr) continue;
+			
+			let dplr = Brutal_PlayerBase(plr.mo);
+			if(!dplr) continue;
+			
+			dplr.ultranightmare = true;
+		}
+	}
+
+}
