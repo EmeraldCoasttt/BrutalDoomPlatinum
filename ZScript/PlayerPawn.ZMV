@@ -148,9 +148,11 @@ class Brutal_PlayerBase : PlayerPawn
 	bool spawnberserked;
 	bool shockfactor;
 	bool istactical;
+	bool oneupmanship;
 	bool ultranightmare;
 	int ultraseed;
 	bool alreadyblacklisted;
+	bool extralifegranted;
 	
 	Default
     {
@@ -274,6 +276,13 @@ class Brutal_PlayerBase : PlayerPawn
 			}
 			
 		}	
+		
+		if(ultranightmare && oneupmanship && !extralifegranted)
+		{
+			A_giveinventory("extralife",3);
+			Extralifegranted = true;
+		}
+		
 		If(spawnwitharmor && !findinventory("powershield",TRUE) && health > 0)
 		{
 			GiveInventory("PowerShield2",1);
