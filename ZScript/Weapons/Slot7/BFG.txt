@@ -603,12 +603,12 @@ CLASS SuperBFGBall : BFGBall replaces BFGBall
 				}
 			}
 			
-			Console.printf("%i", foundtracers.size());
+			//Console.printf("%i", foundtracers.size());
 			If(foundtracers.size() > 0)
 			{
 				Int bfgdivide = foundtracers.size();
 				int outputdamage = (basedamage / bfgdivide);
-				Console.printf("%i", outputdamage);
+				//Console.printf("%i", outputdamage);
 				for(int i=0; i<foundtracers.Size(); i++)
 				{
 					tracer = foundtracers[i];
