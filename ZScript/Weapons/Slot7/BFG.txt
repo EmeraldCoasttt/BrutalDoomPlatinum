@@ -572,7 +572,7 @@ CLASS SuperBFGBall : BFGBall replaces BFGBall
 	{
 		If(target)
 		{
-			
+			Array<actor> FoundTracers;
 			
 			BlockThingsIterator CheckFortracers = BlockThingsIterator.create(target,6000); //256 can be whatever range around the actor.
 			Actor CurrentActor;
@@ -586,7 +586,7 @@ CLASS SuperBFGBall : BFGBall replaces BFGBall
 				{
 					Tracer = currentactor;
 							
-						
+						Foundtracers.push(Tracer);
 						actor beam; 
 						Beam = Spawn("BFGTendril2", (target.pos.x,target.pos.y,target.pos.z + 35));
 						Vector3 BFGCoords = LevelLocals.SphericalCoords(target.pos,tracer.pos);
@@ -599,6 +599,16 @@ CLASS SuperBFGBall : BFGBall replaces BFGBall
 						}
 				}
 			}
+			
+			Console.printf("%i", foundtracers.size());
+			If(foundtracers.size() > 0)
+			{
+				Int bfgdivide = foundtracers.size();
+				int outputdamage = (basedamage / bfgdivide);
+				Console.printf("%i", outputdamage);
+			
+			}
+			
 		}
 	}
 }
