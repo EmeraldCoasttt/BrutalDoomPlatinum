@@ -585,7 +585,9 @@ CLASS SuperBFGBall : BFGBall replaces BFGBall
 				If (CurrentActor && CurrentActor.bismonster && currentactor.health > 0 && !currentactor.bfriendly && currentactor != target && target.CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY))
 				{
 					Tracer = currentactor;
-							
+					vector3 tracerpos = LevelLocals.SphericalCoords((target.pos.x,target.pos.y,target.player.viewz),tracer.pos+(0,0,tracer.default.height*0.5),(target.angle,target.pitch));    
+					if (abs(tracerpos.x) <= 60)
+					{		
 						Foundtracers.push(Tracer);
 						actor beam; 
 						Beam = Spawn("BFGTendril2", (target.pos.x,target.pos.y,target.pos.z + 35));
@@ -597,6 +599,7 @@ CLASS SuperBFGBall : BFGBall replaces BFGBall
 							beam.pitch = (-BFGCOORDS.Y -90);
 							beam.scale.y = target.distance3d(tracer);
 						}
+					}
 				}
 			}
 			
