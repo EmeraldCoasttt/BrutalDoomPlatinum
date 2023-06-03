@@ -272,6 +272,16 @@ Actor SuperBFGExtraGiant : SuperBFGExtra
 	Stop
 }}
 
+Actor SuperBFGExtraScalable : SuperBFGExtra
+{
+  Scale 3.3
+ }
+ 
+ Actor SuperBFGExtraScalable2 : SuperBFGExtra
+{
+  Scale 1.5
+ }
+
 Actor SuperBFGExtraSmall : SuperBFGExtra
 {
   Scale 0.4

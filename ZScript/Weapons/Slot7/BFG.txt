@@ -571,46 +571,110 @@ CLASS SuperBFGBall : BFGBall replaces BFGBall
 }
 
 
+CLASS BFG10K_Ball: FastProjectile
+{
+	Default
+	{
+		Radius 10;
+		Height 2;
+		Speed 200;
+		Damagefunction (random(50, 300));
+		DamageType "desintegrate";
+		Decal "SmallerScorch";
+		Projectile;
+		+RANDOMIZE;
+		+SPECTRAL;
+		//+SHOOTABLE;
+		-NOBLOCKMAP;
+		+NOBLOOD;
+		+NORADIUSDMG;
+		+THRUSPECIES;
+		+MTHRUSPECIES;
+		+FORCEXYBILLBOARD;
+		Species "Marines";
+		Scale 1.0;
+		renderstyle "ADD";
+		alpha 0.99;
+		Scale 0.4;
+		DeathSound "None";
+		SeeSound "None";
+		Obituary "$OB_MPPLASMARIFLE";
+	}
+	States
+	{
 
+		Spawn:
+			BFS1 AB 1 BRIGHT A_CustomMissile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360));
+			Loop;
+
+		Death:
+			BFE1 A 0 Bright A_BFGSpray("SuperBFGExtrasmall", 10);
+			BFE1 A 3 Bright;
+			//BG2G A 0 A_SpawnItem("RocketExplosion")
+			BG2G A 0 Radius_Quake(3, 2, 0, 12, 0);
+			BG2G A 0 Bright A_SpawnItem("GreenShockWave",0,0,0);
+			EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleSuperFast", 0, 0, random (0, 360), 2, random (0, 360));
+			EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360));
+			EXPL AAAA 0 A_CustomMissile ("BFGBIGFOG", 0, 0, random (0, 360), 2, random (0, 360));
+			TNT1 AAAAAAA 0 A_CustomMissile ("GreenExplosionFire", 2, 0, random (0, 360), 2, random (0, 360));
+			EXPL AA 0 A_CustomMissile ("BigNeoSmoke", 0, 0, random (0, 360), 2, random (0, 360));
+			BFE1 BCDEF 2 Bright;
+			BG2G A 0 A_PlaySound("FAREXPL");
+			TNT1 AAAA 2 A_CustomMissile ("BigNeoSmoke", 2, 0, random (0, 360), 2, random (0, 360));
+			Stop;
+	}
+}
 
 
 CLASS BFGTendril : tripmineparticle {
-
+	int fadeoutpercent;
+	property fadeoutpercent : fadeoutpercent;
+	Default
+	{
+		BFGTendril.fadeoutpercent 0.4;
+	}
 	States
-		{
+	{
 		Spawn:
-TNT1 A 0;
-TNT1 A 0 A_jump(256,"spawn1","spawn2","spawn3","spawn4");
-Spawn1:
-L2NR A 1 BRIGHT 
-{
-A_fadeout(0.4);
-}
-Stop;
-Spawn2:
-L2NR B 1 BRIGHT 
-{
-//A_fadeout(0.4);
-}
-Stop;
-Spawn3:
-L2NR C 1 BRIGHT 
-{
-//A_fadeout(0.4);
-}
-Stop;
-Spawn4:
-L2NR D 1 BRIGHT 
-{
-A_fadeout(0.4);
-}
-Stop;
+			TNT1 A 0;
+			TNT1 A 0 A_jump(256,"spawn1","spawn2","spawn3","spawn4");
+		Spawn1:
+			L2NR A 1 BRIGHT 
+			{
+				A_fadeout(fadeoutpercent);
+			}
+			LOOP;
+		Spawn2:
+			L2NR B 1 BRIGHT 
+			{
+				A_fadeout(fadeoutpercent);
+			}
+			LOOP;
+		Spawn3:
+			L2NR C 1 BRIGHT 
+			{
+				A_fadeout(fadeoutpercent);
+			}
+			LOOP;
+		Spawn4:
+			L2NR D 1 BRIGHT 
+			{
+				A_fadeout(fadeoutpercent);
+			}
+			LOOP;
 		
 		}
 
 
 }
 
+CLASS BFGTendril2 : BFGTendril
+{
+	Default
+	{
+		BFGTendril.fadeoutpercent 0.1;
+	}
+}
 
 CLASS BFGBallWithTracers : SuperBFGBall
 {
