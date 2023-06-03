@@ -570,7 +570,36 @@ CLASS SuperBFGBall : BFGBall replaces BFGBall
 	}
 	Action void A_BFGSprayNEO(Name SpraySpawn = "SuperBFGExtraScalable", int basedamage = 2500, int quakestrength = 7)
 	{
-		
+		If(target)
+		{
+			
+			
+			BlockThingsIterator CheckFortracers = BlockThingsIterator.create(target,6000); //256 can be whatever range around the actor.
+			Actor CurrentActor;
+			While (CheckFortracers.Next())
+			{
+				CurrentActor = CheckFortracers.Thing;
+						
+				//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
+				//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
+				If (CurrentActor && CurrentActor.bismonster && currentactor.health > 0 && !currentactor.bfriendly && currentactor != target && target.CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY))
+				{
+					Tracer = currentactor;
+							
+						
+						actor beam; 
+						Beam = Spawn("BFGTendril2", (target.pos.x,target.pos.y,target.pos.z + 35));
+						Vector3 BFGCoords = LevelLocals.SphericalCoords(target.pos,tracer.pos);
+						if (beam && tracer)
+						{
+							//tracer.giveinventory("bfgdamage",1);
+							beam.angle = target.angleto(tracer);
+							beam.pitch = (-BFGCOORDS.Y -90);
+							beam.scale.y = target.distance3d(tracer);
+						}
+				}
+			}
+		}
 	}
 }
 
