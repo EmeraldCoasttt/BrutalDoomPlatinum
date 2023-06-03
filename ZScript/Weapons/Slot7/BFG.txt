@@ -589,7 +589,7 @@ CLASS SuperBFGBall : BFGBall replaces BFGBall
 						Foundtracers.push(Tracer);
 						actor beam; 
 						Beam = Spawn("BFGTendril2", (target.pos.x,target.pos.y,target.pos.z + 35));
-						Vector3 BFGCoords = LevelLocals.SphericalCoords(target.pos,tracer.pos);
+						Vector3 BFGCoords = LevelLocals.SphericalCoords(target.pos,(tracer.pos.x,tracer.pos.y,(tracer.pos.z + (tracer.height * 0.5))));
 						if (beam && tracer)
 						{
 							//tracer.giveinventory("bfgdamage",1);
@@ -606,6 +606,13 @@ CLASS SuperBFGBall : BFGBall replaces BFGBall
 				Int bfgdivide = foundtracers.size();
 				int outputdamage = (basedamage / bfgdivide);
 				Console.printf("%i", outputdamage);
+				for(int i=0; i<foundtracers.Size(); i++)
+				{
+					tracer = foundtracers[i];
+					actor bfgextra; 
+					bfgextra = Spawn(sprayspawn, (tracer.pos.x,tracer.pos.y,tracer.pos.z + (tracer.height * 0.5)));
+					bfgextra.scale = (bfgextra.scale / bfgdivide);
+				}
 			
 			}
 			
