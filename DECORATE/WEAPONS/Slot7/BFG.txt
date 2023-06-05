@@ -20,7 +20,7 @@ Actor AlphaBFGBAll : SuperBFGBall
 	+THRUSPECIES
 	+MTHRUSPECIES
 	Decal BFGAlphaScorch
-	DeathSound "Explosion"
+	DeathSound "BFGAltImpact"
 	Damage (random(50, 70))
   States
   {
@@ -52,7 +52,7 @@ Actor AlphaBFGBAll : SuperBFGBall
 	EXPL AAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleSuperFast", 0, 0, random (0, 360), 2, random (0, 360))
 	TNT1 AAAAAAAAA 0 A_CustomMissile ("GreenExplosionFire", 2, 0, random (0, 360), 2, random (0, 360))
     
-	TNT1 A 0 A_PlaySound("FAREXPL", 3)
+	//TNT1 A 0 A_PlaySound("FAREXPL", 3)
 	BFGB ABCDE 1 Bright A_SpawnItem("GreenFlare",0,0)
     BFGB GHIJK 1 Bright A_SpawnItem("GreenFlare",0,0)
     Stop
@@ -67,7 +67,7 @@ Actor AlphaBFGBAll_RED : SuperBFGBall
 	+THRUSPECIES
 	+MTHRUSPECIES
 	Decal BFGAlphaScorch
-	DeathSound "Explosion"
+	DeathSound "BFGAltImpact"
 	Damage (random(50, 50))
   States
   {
@@ -99,7 +99,7 @@ Actor AlphaBFGBAll_RED : SuperBFGBall
 	EXPL AAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleSuperFastRed", 0, 0, random (0, 360), 2, random (0, 360))
 	TNT1 AAAAAAAAA 0 A_CustomMissile ("RedExplosionFire", 2, 0, random (0, 360), 2, random (0, 360))
     
-	TNT1 A 0 A_PlaySound("FAREXPL", 3)
+	//TNT1 A 0 A_PlaySound("FAREXPL", 3)
 	BFGB ABCDE 1 Bright A_SpawnItem("RedFlare",0,0)
     BFGB GHIJK 1 Bright A_SpawnItem("RedFlare",0,0)
     Stop
