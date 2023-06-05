@@ -686,7 +686,7 @@ CLASS BFGTendril : tripmineparticle {
 	property fadeoutpercent : fadeoutpercent;
 	Default
 	{
-		BFGTendril.fadeoutpercent 0.4;
+		BFGTendril.fadeoutpercent 0.9;
 	}
 	States
 	{
@@ -694,25 +694,29 @@ CLASS BFGTendril : tripmineparticle {
 			TNT1 A 0;
 			TNT1 A 0 A_jump(256,"spawn1","spawn2","spawn3","spawn4");
 		Spawn1:
-			L2NR A 1 BRIGHT 
+			L2NR A 1 BRIGHT;
+			TNT1 A 0
 			{
 				A_fadeout(fadeoutpercent);
 			}
 			LOOP;
 		Spawn2:
-			L2NR B 1 BRIGHT 
+			L2NR B 1 BRIGHT;
+			TNT1 A 0 
 			{
 				A_fadeout(fadeoutpercent);
 			}
 			LOOP;
 		Spawn3:
-			L2NR C 1 BRIGHT 
+			L2NR C 1 BRIGHT;
+			TNT1 A 0 
 			{
 				A_fadeout(fadeoutpercent);
 			}
 			LOOP;
 		Spawn4:
-			L2NR D 1 BRIGHT 
+			L2NR D 1 BRIGHT;
+			TNT1 A 0 
 			{
 				A_fadeout(fadeoutpercent);
 			}
