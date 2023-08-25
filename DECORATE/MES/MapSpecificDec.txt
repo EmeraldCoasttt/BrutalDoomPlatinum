@@ -2229,7 +2229,7 @@ states
 	}
 }
 
-Actor BDECDestroyedGasPipe: BDECPipe1B
+Actor BDECDestroyedGasPipe: BDECPipe1B 
 {
 YScale 0.9
 states
@@ -2378,7 +2378,7 @@ States
 
 
 
-ACTOR BDECcables1: BDdecorationBase
+ACTOR BDECcables1: BDdecorationBase 25911
 {
 Height 90
 Scale 0.8
@@ -2401,7 +2401,7 @@ States
 
 
 
-ACTOR BDECRedLightWall: BDdecorationBase
+ACTOR BDECRedLightWall: BDdecorationBase 25912
 {
 +THRUACTORS
 +NOBLOCKMAP
@@ -2440,7 +2440,7 @@ States
 
 
 
-ACTOR BDECBlueLightWall: BDECRedLightWall
+ACTOR BDECBlueLightWall: BDECRedLightWall 25913
 {
 States
 {
@@ -2471,7 +2471,7 @@ States
 
 
 
-ACTOR BDECyellowLightWall: BDECRedLightWall
+ACTOR BDECyellowLightWall: BDECRedLightWall 25914
 {
 States
 {
@@ -2500,7 +2500,7 @@ States
 
 
 
-ACTOR BDECwhiteLightWall: BDECRedLightWall
+ACTOR BDECwhiteLightWall: BDECRedLightWall 25915
 {
 States
 {
@@ -3363,7 +3363,7 @@ States
 }}
 
 
-ACTOR BDecMap16SecretExit: BDdecorationBase
+ACTOR BDecMap16SecretExit: BDdecorationBase 25916
 {
  XScale 1.0
  YScale 0.2
@@ -3395,7 +3395,7 @@ ACTOR BDecMap16SecretExit: BDdecorationBase
 
 
 
-ACTOR BDecMap20SecretExit: BDdecorationBase
+ACTOR BDecMap20SecretExit: BDdecorationBase 25917
 {
  XScale 1.0
  YScale 0.2
@@ -3420,7 +3420,7 @@ ACTOR BDecMap20SecretExit: BDdecorationBase
 		Stop
 }}
 
-Actor BDECExitHoleMap13: BDdestroyabledecorative
+Actor BDECExitHoleMap13: BDdestroyabledecorative 25918
 {
 Health 200
 XScale 0.9
@@ -3447,7 +3447,7 @@ states
 }
 
 
-ACTOR D2MAP13SecretExit: BDdecorationBase
+ACTOR D2MAP13SecretExit: BDdecorationBase 25919
 {
  XScale 1.0
  YScale 0.2
@@ -3809,7 +3809,7 @@ states
 
 
 
-Actor BDECBarrelSpawn3
+Actor BDECBarrelSpawn3 25920
 {
 states
 	{
@@ -3881,7 +3881,7 @@ ACTOR BDECchainHook: BDECcagedlight 15856
 }
 
 
-Actor BDECHookSpawn4
+Actor BDECHookSpawn4 25921
 {
 states
 	{
@@ -3897,7 +3897,7 @@ states
 
 
 
-Actor BDECHookSpawn9
+Actor BDECHookSpawn9 25922
 {
 states
 	{
@@ -4051,7 +4051,7 @@ states
 
 
 
-Actor PlutoniaBottomlessPit
+Actor PlutoniaBottomlessPit 25923
 {
 states
 	{
@@ -4066,7 +4066,7 @@ states
 
 
 
-Actor PlutoniaBridge
+Actor PlutoniaBridge 25924
 {
 +SOLID
 +SHOOTABLE
@@ -4088,7 +4088,7 @@ states
 }
 
 
-Actor PlutoniaBridgeShort
+Actor PlutoniaBridgeShort 25925
 {
 
 	States
@@ -4106,7 +4106,7 @@ Actor PlutoniaBridgeShort
 
 
 
-Actor PlutoniaBridgeLong
+Actor PlutoniaBridgeLong 25926
 {
 
 	States
@@ -4126,7 +4126,7 @@ Actor PlutoniaBridgeLong
 
 
 
-Actor BDECCandleCorridor
+Actor BDECCandleCorridor 25927
 {
 
 	States
@@ -4146,7 +4146,7 @@ Actor BDECCandleCorridor
 
 
 
-Actor BDECJungleLine1
+Actor BDECJungleLine1 25928
 {
 
 	States
@@ -4166,7 +4166,7 @@ Actor BDECJungleLine1
 }
 
 
-Actor BDECGrassLine1
+Actor BDECGrassLine1 25929
 {
 
 	States
@@ -4206,7 +4206,7 @@ Stop
 
 
 
-Actor BDECFountain// 15858
+Actor BDECFountain 25930// 15858
 {
 +THRUACTORS
 Renderstyle Translucent
@@ -4227,7 +4227,7 @@ States
 }
 
 
-Actor BDECSpecimenTanks1
+Actor BDECSpecimenTanks1 25931
 {
 +SOLID
 +SHOOTABLE
@@ -4243,7 +4243,7 @@ States
 	}
 }
 
-Actor BDECSpecimenTanks2: BDECSpecimenTanks1
+Actor BDECSpecimenTanks2: BDECSpecimenTanks1 25932
 {
 States
 {
@@ -4255,7 +4255,7 @@ States
 }
 
 
-Actor BDECSpecimenTanks3: BDECSpecimenTanks1
+Actor BDECSpecimenTanks3: BDECSpecimenTanks1 25933
 {
 States
 {
@@ -4267,7 +4267,7 @@ States
 }
 
 
-Actor BDECSpecimenTank: BDECSpecimenTanks1
+Actor BDECSpecimenTank: BDECSpecimenTanks1 25934
 {
 MONSTER
 -COUNTKILL
@@ -4320,7 +4320,7 @@ States
 }
 
 
-Actor BDECSpecimenTankHasSpecimen: BDECSpecimenTank
+Actor BDECSpecimenTankHasSpecimen: BDECSpecimenTank 25935
 {
 -FRIENDLY
 +LOOKALLAROUND
@@ -4345,7 +4345,7 @@ States
 
 
 
-Actor BDECSpecimenTankDestroyed: BDECSpecimenTanks1
+Actor BDECSpecimenTankDestroyed: BDECSpecimenTanks1 25936
 {
 -SHOOTABLE
 States
@@ -4397,7 +4397,7 @@ states
 
 
 
-ACTOR BDECHellFire
+ACTOR BDECHellFire 25937
 {
     Radius 12
     Height 12
@@ -4510,7 +4510,7 @@ ACTOR BDSpawnImps
 }
 
 
-ACTOR BDECHellGrowth : BDdecorationBase2
+ACTOR BDECHellGrowth : BDdecorationBase2 25938
 {
 	Height 96
 	Radius 32
@@ -4529,7 +4529,7 @@ ACTOR BDECHellGrowth : BDdecorationBase2
 }
 
 
-ACTOR BDECHellGrowthSmall : BDdecorationBase2
+ACTOR BDECHellGrowthSmall : BDdecorationBase2 25939
 {
 	Height 56
 	Radius 16
@@ -4549,7 +4549,7 @@ ACTOR BDECHellGrowthSmall : BDdecorationBase2
 
 
 
-ACTOR BDECHellKeep
+ACTOR BDECHellKeep 25940
 {
 	sCALE 2.0
 	+THRUACTORS
@@ -4566,7 +4566,7 @@ ACTOR BDECHellKeep
 
 
 
-ACTOR BDECHellKeepColision
+ACTOR BDECHellKeepColision 25941
 {
  +SOLID
   +NOGRAVITY
