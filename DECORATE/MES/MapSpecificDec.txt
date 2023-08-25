@@ -844,7 +844,7 @@ ACTOR BDECOldTree2: BDECOldTree1 25880
 }}
 
 
-Actor BDECbigfire
+Actor BDECbigfire 25881
 {
 height 32
 radius 32
@@ -1005,7 +1005,7 @@ States
 }
 }
 
-Actor SmallRedLightBtmm
+Actor SmallRedLightBtmm 25882
 {
 +THRUACTORS
 +SHOOTABLE
@@ -1342,7 +1342,7 @@ XScale 0.6
 YScale 0.6
 }
 
-ACTOR BigShaftOrange1: BDECSmallShaft1Orange
+ACTOR BigShaftOrange1: BDECSmallShaft1Orange 25883
 {
 XScale 0.6
 YScale 0.6
@@ -1440,7 +1440,7 @@ ACTOR BDECvolumetricLightOrange : BDECvolumetricLight 11030
 	}
 }
 
-ACTOR BDECvolumetricLightRed : BDECvolumetricLight
+ACTOR BDECvolumetricLightRed : BDECvolumetricLight 25884
 {
 	XScale 2.9
 	YScale 2.2
@@ -1454,7 +1454,7 @@ ACTOR BDECvolumetricLightRed : BDECvolumetricLight
 }
 
 
-ACTOR BDECvolumetricLightRedCeiling : BDECvolumetricLightRed
+ACTOR BDECvolumetricLightRedCeiling : BDECvolumetricLightRed 25885
 {
 	+NOGRAVITY
 	+FLOAT
@@ -1498,7 +1498,7 @@ ACTOR BDECLightPost: BDdecorationBase 11033
 
 }}
 
-ACTOR BDecLightPostLit: BDdecorationBase
+ACTOR BDecLightPostLit: BDdecorationBase 25886
 {
  States
 	{
@@ -1527,7 +1527,7 @@ Scale 1.0
 }}
 
 
-ACTOR BDecRiverPlantSpawner: BDdecorationBase
+ACTOR BDecRiverPlantSpawner: BDdecorationBase 25887
 {
  States
 	{
@@ -1543,7 +1543,7 @@ ACTOR BDecRiverPlantSpawner: BDdecorationBase
 
 
 
-Actor BDECChairSimple: BDdestroyabledecorative
+Actor BDECChairSimple: BDdestroyabledecorative 25888
 {
 Health 50
 Scale 1.0
@@ -1568,7 +1568,7 @@ states
 
 
 
-Actor BDECTable: BDECChairSimple
+Actor BDECTable: BDECChairSimple 25889
 {
 Health 50
 Scale 1.0
@@ -1672,7 +1672,7 @@ ACTOR BDECIndustrialLamp2 : BDECIndustrialLamp
 	Health 5
 }
 
-ACTOR BDecWhiteFlareCagedLamp
+ACTOR BDecWhiteFlareCagedLamp 25890
 {
 XScale 0.7
 YScale 0.17
@@ -1728,7 +1728,7 @@ States
 
 
 
-ACTOR BDECCeilLamp: BDECcagedlight
+ACTOR BDECCeilLamp: BDECcagedlight 25891
 {
 	Height 40
 	Radius 12
@@ -1779,7 +1779,7 @@ ACTOR BDECCeilLampLong: BDECCeilLamp 25863
 }
 
 
-ACTOR BDECCeilLampLong2: BDECCeilLamp
+ACTOR BDECCeilLampLong2: BDECCeilLamp 25892
 {
 	Height 80
 	Radius 12
@@ -1853,13 +1853,13 @@ ACTOR BDECAntenna1 : BDdecorationBase2 25860
 }
 
 
-ACTOR BDECAntenna2 : BDECAntenna1
+ACTOR BDECAntenna2 : BDECAntenna1 25893
 {
 	Radius 32
 	sCALE 1.5
 }
 
-ACTOR BDECAntenna3 : BDdecorationBase2
+ACTOR BDECAntenna3 : BDdecorationBase2 25894
 {
 	Height 256
 	Radius 32
@@ -1871,7 +1871,7 @@ ACTOR BDECAntenna3 : BDdecorationBase2
 	{
 	Spawn:
 		BPEC W 1
-		TNT1 A 0 A_RadiusGive("MarkForDeletion", 64, RGF_OBJECTS, 1)
+		//TNT1 A 0 A_RadiusGive("MarkForDeletion", 64, RGF_OBJECTS, 1)
 	Spawn2:
 	    BPEC W 35
 		BPEC X 2
@@ -1890,7 +1890,7 @@ ACTOR BDECAntenna3b : BDECAntenna3 25870
 
 
 
-ACTOR BDECGrateBar : BDdecorationBase2
+ACTOR BDECGrateBar : BDdecorationBase2 
 {
 	Height 98
 	Radius 2
@@ -1918,7 +1918,7 @@ ACTOR BDECGrateBar : BDdecorationBase2
 
 
 
-ACTOR BDECGrateFence1 : BDdecorationBase
+ACTOR BDECGrateFence1 : BDdecorationBase 25895
 {
 	Height 98
 	Radius 1
@@ -1974,7 +1974,7 @@ ACTOR BDECGrateBarDS : BDdecorationBase2
 
 
 
-ACTOR BDECGrateFenceDS : BDdecorationBase
+ACTOR BDECGrateFenceDS : BDdecorationBase 25896
 {
 	Height 64
 	Radius 1
@@ -2063,7 +2063,7 @@ states
 
 
 
-Actor BDECLocker1: BDECChairSimple
+Actor BDECLocker1: BDECChairSimple 25897
 {
 -PUSHABLE
 Mass 99999
@@ -2090,7 +2090,7 @@ states
 
 
 
-Actor BDECPipe1A: BDdecorationBase2
+Actor BDECPipe1A: BDdecorationBase2 25898
 {
 +SOLID
 Radius 6
@@ -2106,13 +2106,13 @@ states
 }
 
 
-Actor BDECPipe1B: BDECPipe1A
+Actor BDECPipe1B: BDECPipe1A 25899
 {
 Height 100
 YScale 1.2
 }
 
-Actor BDECPipe1C: BDECPipe1A
+Actor BDECPipe1C: BDECPipe1A 25900
 {
 Height 192
 YScale 1.8
@@ -2121,7 +2121,7 @@ YScale 1.8
 
 
 
-Actor BDECPipe2A: BDECPipe1A
+Actor BDECPipe2A: BDECPipe1A 25901
 {
 states
 	{
@@ -2132,13 +2132,13 @@ states
 }
 
 
-Actor BDECPipe2B: BDECPipe2A
+Actor BDECPipe2B: BDECPipe2A 25902
 {
 Height 100
 YScale 1.2
 }
 
-Actor BDECPipe2C: BDECPipe2A
+Actor BDECPipe2C: BDECPipe2A 25903
 {
 Height 192
 YScale 1.8
@@ -2148,7 +2148,7 @@ YScale 1.8
 
 
 
-Actor BDECPipe3A: BDECPipe1A
+Actor BDECPipe3A: BDECPipe1A 25904
 {
 states
 	{
@@ -2159,7 +2159,7 @@ states
 }
 
 
-Actor BDECPipe3F: BDECPipe1A
+Actor BDECPipe3F: BDECPipe1A 25905
 {
 states
 	{
@@ -2170,20 +2170,20 @@ states
 }
 
 
-Actor BDECPipe3G: BDECPipe3A
+Actor BDECPipe3G: BDECPipe3A 25906
 {
 Height 100
 YScale 1.2
 }
 
-Actor BDECPipe3C: BDECPipe3A
+Actor BDECPipe3C: BDECPipe3A 25907
 {
 Height 192
 YScale 1.8
 }
 
 
-Actor BDECPipe3D: BDECPipe3A
+Actor BDECPipe3D: BDECPipe3A 25908
 {
 Height 220
 YScale 2.8
@@ -2191,7 +2191,7 @@ YScale 2.8
 
 
 
-Actor BDECPipe3B: BDECPipe3A
+Actor BDECPipe3B: BDECPipe3A 25909
 {
 Height 100
 YScale 1.2
@@ -2199,7 +2199,7 @@ YScale 1.2
 
 
 
-Actor BDECGasPipe: BDECPipe1A
+Actor BDECGasPipe: BDECPipe1A 25910
 {
 -INVULNERABLE
 Health 50
