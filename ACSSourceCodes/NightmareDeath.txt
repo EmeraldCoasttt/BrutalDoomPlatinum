@@ -1,0 +1,18 @@
+#library "NightmareDeath"
+#include "zcommon.acs"
+
+script "BDNightmareDeath" (VOID)
+{
+SetMusic("D_NMLOS", 0);
+FadeTo (0, 0, 0, 1.0, 10.0);
+terminate;
+
+}
+
+script "BDNightmareLoad" (VOID)
+{
+SetMusic("D_NMLOS", 0);
+FadeTo (0, 0, 0, 1.0, 0.0);
+terminate;
+
+}
