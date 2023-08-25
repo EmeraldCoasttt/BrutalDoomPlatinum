@@ -784,7 +784,7 @@ ACTOR BurningBarrelVanilla
 
 
 
-actor HumanBBQ
+actor HumanBBQ 25872
 {
 	+NOTARGET
 Radius 10
@@ -815,7 +815,7 @@ Stop
 
 
 
-Actor BDECBurningPillar
+Actor BDECBurningPillar 25873
 {
 +SHOOTABLE
 +NOBLOOD
@@ -841,7 +841,7 @@ states
 
 
 
-ACTOR BDECTorch
+ACTOR BDECTorch 25874
 {
 	Radius 0
 	Height 0
