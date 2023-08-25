@@ -323,6 +323,22 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					Levellocals.ReplaceTextures("STEP6", "LIT05S",0);
 					Levellocals.ReplaceTextures("STEP5", "LIT05S",0);
 					
+					AddThing(25920,(672, -320, -999),45);
+					AddThing(25920,(416, -96, -999),45);
+					AddThing(25920,(-544, 160, -999),45);
+					AddThing(25920,(-576, 1248, -999),45);
+					
+					AddThing(15855,(-736, 64, -999),45);
+					
+					AddThing(25870,(1600, 608, -999),80);
+					AddThing(25870,(1600, 992, -999),80);
+					
+					AddThing(25868,(-1144, 1248, 999),0);
+					AddThing(25868,(-992, 1400, 999),180);
+					
+					AddThing(25895,(-1188, 1280, 999),0);
+					//AddThing(25895,(-1008, 1888, 0),0);
+					
 					}
 				Break;
 		}
