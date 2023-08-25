@@ -302,7 +302,8 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				Break;
 			//e1m4
 			case '5b26545ff21b051ca06d389ce535684c':
-				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) {
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
+				{
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any),TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any));
 					
 					Levellocals.ReplaceTextures("FLAT5_5", "METAL54",0);
@@ -339,7 +340,12 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(25895,(-1188, 1280, 999),0);
 					//AddThing(25895,(-1008, 1888, 0),0);
 					
-					}
+				}
+				If(CVar.GetCvar("BD_PSXMonsters").getint() == 1)
+				{
+					AddThing(71, (-672, 672, -999), 0);
+					AddThing(71, (-928, 800, -999), 270);
+				}
 				Break;
 		}
 	}
