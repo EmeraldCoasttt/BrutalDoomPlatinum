@@ -137,6 +137,26 @@ ACTOR NightmarePinky : BullDemon
 		TNT1 A 0 A_FaceTarget
 		TNT1 A 0 A_JumpIfInTargetInventory("IsInvisible", 1, "Idle")
 		Loop
+		
+	TeleportTime:
+		TNT1 A 0 A_spawnitemex("Nightmareteleportationfog")
+		TNT1 A 0 A_changeflag("thruactors",true)
+		TNT1 A 0 A_changeflag("nopain",true)
+		TNT1 A 0 A_changeflag("floorhugger",true)
+		TNT1 AAAAAAAAAAAAAAAAAAAA 1 A_chase("","")
+		Stayteleported:
+		TNT1 A 1 A_chase("","")
+		//TNT1 A 0 A_spawnitemex("randomTinyBurningPiece")
+		TNT1 A 0 A_jump(25, "teleportback")
+		Loop
+		Teleportback:
+		TNT1 A 0 A_stop
+		TNT1 A 0 A_spawnitemex("NightmareTeleportationFog")
+		TNT1 A 0 A_changeflag("nopain",false)
+		TNT1 A 0 A_changeflag("thruactors",false)
+		TNT1 A 0 A_changeflag("floorhugger",false)
+		Goto See
+		
 	
 	Melee:
 		TNT1 A 0
@@ -200,6 +220,7 @@ ACTOR NightmarePinky : BullDemon
 		TNT1 A 0 A_JumpIfInventory("ImpFatality", 1, "EndFatalityImp")
 		TNT1 A 0 A_JumpIfInventory("ComandoFatality", 1, "EndFatalityComando")	
 		SARG H 4
+		TNT1 A 0 A_jump(150,"TeleportTime")
 		Goto SeeContinue
 	
 	Pain.Melee:
@@ -224,6 +245,7 @@ ACTOR NightmarePinky : BullDemon
 		TNT1 A 0 A_JumpIfInventory("ImpFatality", 1, "EndFatalityImp")
 		TNT1 A 0 A_JumpIfInventory("ComandoFatality", 1, "EndFatalityComando")	
 		SARG H 4
+		TNT1 A 0 A_jump(150,"TeleportTime")
         Goto SeeContinue	
 
     Pain.Kick:
