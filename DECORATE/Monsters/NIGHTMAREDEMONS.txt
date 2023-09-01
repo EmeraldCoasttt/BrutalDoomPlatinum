@@ -1,4 +1,4 @@
-ACTOR NightmarePinky : BullDemon 25901
+ACTOR NightmarePinky : BullDemon 25942
 {
 	Health 400
 	Renderstyle "Subtract"

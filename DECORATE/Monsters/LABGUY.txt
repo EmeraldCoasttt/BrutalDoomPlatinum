@@ -1,6 +1,6 @@
 //Changes made:
 //added dropped axe
-ACTOR Labguy: RifleZombie
+ACTOR Labguy: RifleZombie 25943
 {
 	Game Doom
 	Health 50
