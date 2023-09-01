@@ -1455,6 +1455,19 @@ ACTOR PentagramSpawner
 	}
 }
 
+ACTOR NIGHTMAREPENTAGRAMSPAWNER : Pentagramspawner
+{
+	States
+	{
+    Spawn:
+        TNT1 A 1
+		TNT1 AAAAA 2 A_SpawnItem("NightmareBurningPentagram")
+		TNT1 A 20
+		TNT1 A 1 A_SpawnItem("NightmarePentagramOff")
+		TNT1 A 1
+        Stop
+	}
+}
 
 
 ACTOR BurningPentagram: PentagramSpawner
@@ -1470,6 +1483,18 @@ ACTOR BurningPentagram: PentagramSpawner
 	}
 }
 
+ACTOR NightmareBurningPentagram : BurningPentagram
+{
+	translation "0:255=[128,255,255]:[0,0,0]"
+	States
+	{
+    Spawn:
+        TNT1 A 0
+		PNTG AAAAAAAAAAAAAAAAAAAAAAA 1 A_FadeIn(0.02)
+		PNTG AAAAAAAAAAAAAAAAAAAAAAA 1 A_FadeOut(0.02)
+        Stop
+	}
+}
 
 ACTOR PentagramOff: PentagramSpawner
 {
@@ -1481,6 +1506,11 @@ ACTOR PentagramOff: PentagramSpawner
 		PNTG BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB 1 A_FadeOut(0.02)
         Stop
 	}
+}
+
+ACTOR NightmarePentagramOff : PentagramOff
+{
+	translation "0:255=[128,255,255]:[0,0,0]"
 }
 
 
