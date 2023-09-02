@@ -16,12 +16,12 @@ ACTOR NightmarePinky : Demon 25942
 	PainChance "Taunt", 255
 	PainChance "ExtremePunches", 255 PainChance "SuperPunch", 255
 	PainChance "Kick", 255 PainChance "HangingHook", 0
-    damagefactor "Crush", 10.0    damagefactor "SSG", 5.0
+    damagefactor "Crush", 10.0    //damagefactor "SSG", 5.0
 	damagefactor "Avoid", 0.0	damagefactor "GibRemoving", 0.0	damagefactor "SSG", 50.0	damagefactor "TeleportRemover", 0.0
 	DamageFactor "CauseSplash", 0.0 DamageFactor "CauseObjectsToSplashSlime", 0.0 DamageFactor "CauseObjectsToSplashNukage", 0.0
 	DamageFactor "CauseObjectsToSplashBlood", 0.0 DamageFactor "CauseObjectsToSplashLava", 0.0
 	Monster
-	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
+	damagefactor "Blood", 0.0 damagefactor "blue_blood", 0.0 damagefactor "GreenBlood", 0.0
 	+FLOORCLIP 
 	-FASTER
 	+SLIDESONWALLS
@@ -540,10 +540,10 @@ Goto Spawn
 		 TNT1 AA 0 A_CustomMissile ("XDeath3blue", random (45, 55), random (5, -5), random (160, 200), 2, random (-10, 10))
 		 TNT1 AA 0 A_CustomMissile ("XDeath2blue", random (45, 55), random (5, -5), random (160, 200), 2, random (-10, 10))
 		TNT1 AAAAAA 0 A_CustomMissile ("BlueBloodMistBig", 40, 0, random (0, 360), 2, random (40, 90))
-		TNT1 A 0 A_CustomMissile ("BloodMistExtraBig", 40, 0, random (0, 360), 2, random (40, 90))
+		TNT1 A 0 A_CustomMissile ("BlueBloodMistExtraBig", 40, 0, random (0, 360), 2, random (40, 90))
 		TNT1 A 0 A_CustomMissile ("PinkyHeadPieceBlue", 52, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_CustomMissile ("PinkyJawBlue", 52, 0, random (0, 360), 2, random (0, 160))
-		TNT1 AAAAA 0 A_CustomMissile ("SmallBlueBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
+		TNT1 AAAAA 0 A_CustomMissile ("SmallBlueBrainPiece", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
 		SARH EEEEEE 2 A_CustomMissile ("Blue_LiquidBlood", 40, 0, random (0, 360), 2, random (30, 110))
 		SARH FFFFFF 2 A_CustomMissile ("Blue_LiquidBlood", 40, 0, random (0, 360), 2, random (30, 110))
 		TNT1 A 0 A_NoBlocking
@@ -565,10 +565,10 @@ Goto Spawn
 		 TNT1 AA 0 A_CustomMissile ("XDeath3blue", random (45, 55), random (5, -5), random (160, 200), 2, random (-10, 10))
 		 TNT1 AA 0 A_CustomMissile ("XDeath2blue", random (45, 55), random (5, -5), random (160, 200), 2, random (-10, 10))
 		TNT1 AAAAAA 0 A_CustomMissile ("BlueBloodMistBig", 40, 0, random (0, 360), 2, random (40, 90))
-		TNT1 A 0 A_CustomMissile ("BloodMistExtraBig", 40, 0, random (0, 360), 2, random (40, 90))
+		TNT1 A 0 A_CustomMissile ("BlueBloodMistExtraBig", 40, 0, random (0, 360), 2, random (40, 90))
 		TNT1 A 0 A_CustomMissile ("PinkyHeadPieceBlue", 52, 0, random (0, 360), 2, random (0, 160))
 		//TNT1 A 0 A_CustomMissile ("PinkyJawBlue", 52, 0, random (0, 360), 2, random (0, 160))
-		TNT1 AAAAA 0 A_CustomMissile ("SmallBlueBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
+		TNT1 AAAAA 0 A_CustomMissile ("SmallBlueBrainPiece", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
 		SARH AAAAAAA 2 A_CustomMissile ("Blue_LiquidBlood", 40, 0, random (0, 360), 2, random (30, 110))
 		SARH BBBBBB 2 A_CustomMissile ("Blue_LiquidBlood", 40, 0, random (0, 360), 2, random (30, 110))
 		TNT1 A 0 A_NoBlocking
@@ -622,7 +622,7 @@ Goto Spawn
 			TNT1 AA 0 A_CustomMissile ("XDeath2blue", random (45, 55), random (5, -5), random (160, 200), 2, random (-10, 10))
 			TNT1 A 0 A_CustomMissile ("muchbloodblue", 60, 0, random (0, 360), 2, random (0, 160))
 			TNT1 AAAA 0 A_CustomMissile ("BlueBloodMistBig", 50, 0, random (0, 360), 2, random (30, 90))
-			TNT1 AAAAA 0 A_CustomMissile ("SmallBlueBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
+			TNT1 AAAAA 0 A_CustomMissile ("SmallBlueBrainPiece", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
 			SARH AAAAAAA 2 A_CustomMissile ("Blue_LiquidBlood", 40, 0, random (0, 360), 2, random (30, 110))
 			SARH BBBBBB 2 A_CustomMissile ("Blue_LiquidBlood", 40, 0, random (0, 360), 2, random (30, 110))
 			TNT1 A 0 A_NoBlocking
@@ -643,12 +643,12 @@ Goto Spawn
 	    SARC A 1 A_Pain
 	    SARC A 1 A_FaceTarget
 		
-	    TNT1 AAA 0 bright A_CustomMissile ("SuperGoreSpawner", 35, 0, random (170, 190), 2, random (0, 40))
+	    TNT1 AAA 0 bright A_CustomMissile ("BlueSuperGoreSpawner", 35, 0, random (170, 190), 2, random (0, 40))
         //TNT1 A 0 A_CustomMissile ("BlueMeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AAAA 0 A_CustomMissile ("XDeath2blue", 32, 0, random (170, 190), 2, random (0, 40))
 		TNT1 AAAA 0 A_CustomMissile ("XDeath3blue", 32, 0, random (170, 190), 2, random (0, 40))
 		TNT1 AAAAAA 0 A_CustomMissile ("BlueBloodMistBig", 40, 0, random (0, 360), 2, random (40, 90))
-		TNT1 AA 0 A_CustomMissile ("BloodMistExtraBig", 40, 0, random (0, 360), 2, random (40, 90))
+		TNT1 AA 0 A_CustomMissile ("BlueBloodMistExtraBig", 40, 0, random (0, 360), 2, random (40, 90))
 		TNT1 AA 0 A_CustomMissile ("PinkyHeadPieceBlue", 42, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_CustomMissile ("PinkyJawBlue", 42, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AA 0 A_CustomMissile ("XDeathDemonArmBlue", 32, 0, random (170, 190), 2, random (0, 40))
@@ -710,12 +710,12 @@ Goto Spawn
 		TNT1 A 0 A_NoBlocking
 		SARG IJKL 2
 	    TNT1 AA 0 A_SpawnItem("BlueMeatDeathSmall")
-		TNT1 AAA 0 bright A_CustomMissile ("SuperGoreSpawner", 5, 0, random (0, 360), 2, random (30, 180))
+		TNT1 AAA 0 bright A_CustomMissile ("BlueSuperGoreSpawner", 5, 0, random (0, 360), 2, random (30, 180))
 		TNT1 AAAA 0 bright A_CustomMissile ("XDeath1blue", 5, 0, random (0, 360), 2, random (30, 180))
 		TNT1 AA 0 bright A_CustomMissile ("XDeath2blue", 55, 0, random (0, 360), 2, random (30, 180))
 		TNT1 AA 0 bright A_CustomMissile ("XDeath3blue", 55, 0, random (0, 360), 2, random (30, 180))
 		TNT1 AAAAAA 0 A_CustomMissile ("BlueBloodMistBig", 40, 0, random (0, 360), 2, random (40, 90))
-		TNT1 AA 0 A_CustomMissile ("BloodMistExtraBig", 40, 0, random (0, 360), 2, random (40, 90))
+		TNT1 AA 0 A_CustomMissile ("BlueBloodMistExtraBig", 40, 0, random (0, 360), 2, random (40, 90))
 		TNT1 A 0 A_SpawnItem ("BlueGrowingBloodPool")
 		//TNT1 A 0 A_SpawnItem ("CrushedRemains")
 		TNT1 A 1
@@ -761,7 +761,7 @@ Goto Spawn
 	    TNT1 A 0 A_CustomMissile ("XDeathBurnedDemonArm", 32, 0, random (0, 360), 2, random (0, 160))
 	    TNT1 A 0 A_CustomMissile ("XDeathBurnedDemonLeg", 32, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AAAA 0 A_CustomMissile ("BluePlasmaFireNonStatic", 42, 0, random (0, 360), 2, random (0, 180))
-		TNT1 AAA 0 A_CustomMissile ("blueBlood", 32, 0, random (0, 360), 2, random (0, 180))
+		TNT1 AAA 0 A_CustomMissile ("blue_blood", 32, 0, random (0, 360), 2, random (0, 180))
 		TNT1 AAA 0 A_CustomMissile ("blueBloodMistSmall", 32, 0, random (0, 360), 2, random (0, 180))
 		TNT1 AAA 0 A_CustomMissile ("Blue_FlyingBlood", 32, 0, random (0, 360), 2, random (0, 180))
 		TNT1 A 0 A_SpawnItemEx ("DetectFloorCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
@@ -1061,7 +1061,7 @@ Actor BlueDeadDemonNoHead2: BlueDeadDemon1
 		
 		Death:
 		TNT1 A 0 A_NoBlocking
-		TNT1 A 0 A_CustomMissile ("XDeathStomach", 50, 0, random (0, 360), 2, random (0, 160))
+	//	TNT1 A 0 A_CustomMissile ("XDeathStomach", 50, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AA 0 A_CustomMissile ("XDeathDemonArmBlue", 35, 0, random (0, 360), 2, random (10, 40))
 //		TNT1 A 0 A_CustomMissile ("PinkyJawBlue", 22, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AA 0 A_SpawnItem("BlueMeatDeathSmall", 0, 20)
@@ -1101,7 +1101,7 @@ Stop
 
 Death:
 		TNT1 A 0 A_NoBlocking
-		TNT1 A 0 A_CustomMissile ("XDeathStomach", 60, 0, random (0, 360), 2, random (0, 160))
+		//TNT1 A 0 A_CustomMissile ("XDeathStomach", 60, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_CustomMissile ("XDeathDemonArmBlue", 35, 0, random (0, 360), 2, random (10, 40))
 		TNT1 A 0 A_CustomMissile ("XDeathBullLeg12Blue", 35, 0, random (0, 360), 2, random (10, 40))
 		TNT1 AA 0 A_SpawnItem("BlueMeatDeathSmall", 0, 20)
@@ -1192,7 +1192,7 @@ ACTOR PoorBluePinkyLostHisArm: Demon
         TNT1 A 0 A_CustomMissile ("MuchBloodblue", 60, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_CustomMissile ("PinkyHeadPieceBlue", 52, 0, random (0, 360), 2, random (0, 160))
 		//TNT1 A 0 A_CustomMissile ("PinkyJawBlue", 52, 0, random (0, 360), 2, random (0, 160))
-		TNT1 AAAAA 0 A_CustomMissile ("SmallBlueBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
+		TNT1 AAAAA 0 A_CustomMissile ("SmallBlueBrainPiece", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
 		TNT1 AAAA 0 A_CustomMissile ("blueBloodMistBig", 50, 0, random (0, 360), 2, random (30, 90))
 		SAAR GGGGGGG 2 A_CustomMissile ("Blue_LiquidBlood", 40, 0, random (0, 360), 2, random (30, 110))
 		TNT1 A 0 A_NoBlocking
@@ -1283,7 +1283,7 @@ States
 		TNT1 A 0
 		TNT1 A 0 A_FaceTarget
 		
-		TNT1 A 0 A_CustomMissile ("PinkyHeadExplode", 50, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("PinkyHeadExplodeBlue", 50, 0, random (0, 360), 2, random (0, 160))
 		SAAR GGGGGGG 2 A_CustomMissile ("Blue_LiquidBlood", 40, 0, random (0, 360), 2, random (30, 110))
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_Scream 
@@ -1347,7 +1347,7 @@ ACTOR XDeathBullArm1Blue: XDeathArm1
     Spawn:
         TNT1 A 0
 	    TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
-		HND8 ABCDEFGH 3 A_CustomMissile ("Brutal_FlyingBloodTrail5", 0, 0, random (0, 360), 2, random (0, 360))
+		HND8 ABCDEFGH 3 A_CustomMissile ("Blue_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
 		Loop
 	
     Death.plasma: Death.Burn: Death.Flames:		   
@@ -1356,7 +1356,7 @@ ACTOR XDeathBullArm1Blue: XDeathArm1
 		TNT1 A 0 A_CustomMissile ("XDeathBurnedDemonArm", 2, 0, random (0, 360), 2, 270)        Stop
 	Death:
         HND8 I 1
-        HND8 A 0 A_SpawnItem("Gib_DemonArm",0,0,0,1)
+        HND8 A 0 A_SpawnItem("Gib_DemonArmBlue",0,0,0,1)
         Stop	
     }
 }
@@ -1387,15 +1387,15 @@ actor Gib_DemonArmBlue: LimbBase
 		Loop
 		
     Death:    
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
-		TNT1 A 0 A_CustomMissile ("GibDemonHand", 0, 0, random (0, 180), 2, random (0, 180))
-		TNT1 A 0 A_CustomMissile ("GibDemonArmPart", 0, 0, random (0, 180), 2, random (0, 180))
+		TNT1 AAAA 0 A_CustomMissile ("Blue_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 0 A_CustomMissile ("GibDemonHandBlue", 0, 0, random (0, 180), 2, random (0, 180))
+		TNT1 A 0 A_CustomMissile ("GibDemonArmPartBlue", 0, 0, random (0, 180), 2, random (0, 180))
 		Stop
 	Death.Kick:
 	Death.Melee:
 	Death.SuperPunch:
 	    HND8 AA 1 A_FaceTarget
-		TNT1 A 0 A_CustomMissile ("XDeathBullArm1Kicked", 5, 0, random (170, 190), 2, random (20, 40))
+		TNT1 A 0 A_CustomMissile ("XDeathBullArm1KickedBlue", 5, 0, random (170, 190), 2, random (20, 40))
 		Stop
 		
 	Pain:
@@ -1413,7 +1413,7 @@ actor Gib_DemonArmBlue: LimbBase
 		Goto Landz
 		Landz:
 	
-		XDT5 I 0 A_SpawnItem("Gib_DemonArm")
+		XDT5 I 0 A_SpawnItem("Gib_DemonArmBlue")
 		Stop
 }}
 
@@ -1484,12 +1484,12 @@ ACTOR XDeathBullLeg12Blue: XDeathArm1
     {
     Spawn:
 	    TNT1 A 0 A_JumpIf(waterlevel > 1, "Death")
-        TNT1 A 0 A_SpawnItem ("Brutal_BloodSpot", 0, 1)
-		LEG8 ABCDEFGH 4 A_CustomMissile ("Brutal_FlyingBloodTrail5", 0, 0, random (0, 360), 2, random (0, 360))
+        TNT1 A 0 A_SpawnItem ("Blue_BloodSpot", 0, 1)
+		LEG8 ABCDEFGH 4 A_CustomMissile ("Blue_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
 		Loop
 	Death:
 	    LEG8 I 1
-	    LEG8 I 0 A_SpawnItem("Gib_DemonLeg")
+	    LEG8 I 0 A_SpawnItem("Gib_DemonLegBlue")
         Stop
     }
 }
@@ -1508,7 +1508,7 @@ actor Gib_DemonLegBlue: LimbBase
 		TNT1 A 0 A_QueueCorpse
 		Goto Spawn1
 	  Spawn1:
-		LEG8 I 1 A_SpawnItem ("Brutal_BloodSpot", 0, 1)
+		LEG8 I 1 A_SpawnItem ("Blue_BloodSpot", 0, 1)
 		LEG8 I -1
         Stop
 	   
@@ -1520,9 +1520,9 @@ actor Gib_DemonLegBlue: LimbBase
 		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-15, 15), random (-15, 15))
 		TNT1 A 0 A_CustomMissile ("XDeathBurnedDemonLeg", 2, 0, random (0, 360), 2, 270)        Stop
     Death:    
-    TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
-    TNT1 A 0 A_CustomMissile ("GibDemonLegPart", 0, 0, random (0, 180), 2, random (0, 180))
-    TNT1 A 0 A_CustomMissile ("GibDemonPaw", 0, 0, random (0, 180), 2, random (0, 180))
+    TNT1 AAAA 0 A_CustomMissile ("Blue_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
+    TNT1 A 0 A_CustomMissile ("GibDemonLegPartBlue", 0, 0, random (0, 180), 2, random (0, 180))
+    TNT1 A 0 A_CustomMissile ("GibDemonPawBlue", 0, 0, random (0, 180), 2, random (0, 180))
 Stop
 	Death.Kick:
 	Death.Melee:
@@ -1543,7 +1543,7 @@ Stop
 	TNT1 A 0 ThrustThingZ(0,30,0,1)
 	LEG8 A 5
 	LEG8 ABCDEFGH 5
-	XDT5 I 0 A_SpawnItem("Gib_DemonLeg")
+	XDT5 I 0 A_SpawnItem("Gib_DemonLegBlue")
 	Stop}}
 
 actor GibDemonLegPartBlue: TinyGib
@@ -1607,11 +1607,11 @@ ACTOR DyingDemonBlue
     States
     {
     Spawn:
-		SARH AAA 4 A_SpawnItem ("MuchBlood", 0, 50)
-		SARH BBB 4 A_SpawnItem ("MuchBlood", 0, 40)
+		SARH AAA 4 A_SpawnItem ("MuchBloodBlue", 0, 50)
+		SARH BBB 4 A_SpawnItem ("MuchBloodBlue", 0, 40)
 		SARH CCC 4 A_SpawnItem ("MuchBlood", 0, 30)
-		SARH DDDDDDDDDDDDDDD 4 A_SpawnItem ("MuchBlood", 0, 20)
-        TNT1 A 0 A_SpawnItem ("DeadDemonNoHead", 1)
+		SARH DDDDDDDDDDDDDDD 4 A_SpawnItem ("MuchBloodBlue", 0, 20)
+        TNT1 A 0 A_SpawnItem ("BlueDeadDemonNoHead", 1)
         Stop
     }
 }
@@ -1636,7 +1636,7 @@ Speed 10
 		Loop
    	Death:
 	    DEMH I 1
-        DEMH I 1 A_SpawnItem("PinkyDemonHead",0,0,0,1)
+        DEMH I 1 A_SpawnItem("PinkyDemonHeadBlue",0,0,0,1)
         Stop
 }
 }
@@ -1665,13 +1665,13 @@ damagefactor "SuperPunch", 9.0
     Spawn:
 		TNT1 A 0
 		TNT1 A 0 A_QueueCorpse
-		DEMH I 1 A_SpawnItem ("Brutal_BloodSpot", 0, 1)
+		DEMH I 1 A_SpawnItem ("Blue_BloodSpot", 0, 1)
 		DEMH I -1
 		Loop
 	Death.Trample:
 	Crush:
     Death:
-        TNT1 A 0 A_CustomMissile ("PinkyHeadExplode", 5, 0, random (0, 360), 2, random (60, 140))
+        TNT1 A 0 A_CustomMissile ("PinkyHeadExplodeBlue", 5, 0, random (0, 360), 2, random (60, 140))
         TNT1 A 0 A_PlaySound("misc/xdeath5")
         Stop
     Death.plasma:
@@ -1686,7 +1686,7 @@ damagefactor "SuperPunch", 9.0
 	   DEMH A 1 A_Pain
 	    DEMH A 1 A_FaceTarget
 		TNT1 A 0 A_NoBlocking
-		TNT1 A 0 A_CustomMissile ("XDeathPinkyDemonHeadKicked", 5, 0, random (170, 190), 2, random (20, 40))
+		TNT1 A 0 A_CustomMissile ("XDeathPinkyDemonHeadKickedBlue", 5, 0, random (170, 190), 2, random (20, 40))
 		TNT1 A 0 A_PlaySound("misc/xdeath5", 1)
 		TNT1 A 0 A_PlaySound("FOOTWALL", 3)
 		TNT1 A 20
@@ -1697,7 +1697,7 @@ Death.Headkick:
 		TNT1 A 0
 		TNT1 A 0 A_NoBlocking
 	   	XHE2 EE 0 A_FaceTarget
-		TNT1 A 0 A_CustomMissile ("XDeathPinkyDemonHeadKicked2", 5, 0, random (170, 190), 2, random (20, 30))
+		TNT1 A 0 A_CustomMissile ("XDeathPinkyDemonHeadKicked2Blue", 5, 0, random (170, 190), 2, random (20, 30))
 		TNT1 A 0 A_PlaySound("misc/xdeath5", 1)
 		TNT1 A 0 A_PlaySound("FOOTWALL", 3)
 		TNT1 A 20
@@ -1714,7 +1714,7 @@ Death.Headkick:
 	TNT1 A 0 A_NoBlocking
 	TNT1 A 0 ThrustThingZ(0,30,0,1)
 	DEMH ABCDEFGH 3
-	DEMH I 0 A_SpawnItem("PinkyDemonHead")
+	DEMH I 0 A_SpawnItem("PinkyDemonHeadBlue")
 	Stop
 
 }}
@@ -1759,12 +1759,12 @@ ACTOR XDeathHalfDemonBlue
     States
     {
     Spawn:
-        TNT1 A 0 A_SpawnItem ("Brutal_BloodSpot", 0, 1)
+        TNT1 A 0 A_SpawnItem ("Blue_BloodSpot", 0, 1)
 		SARC E 12
 		Loop
     Death:
-        TNT1 A 0 A_SpawnItem ("Brutal_BloodSpot", 0, 1)
-        SARC F 1 A_SpawnItem("Gib_HalfDemon",0,0,0,1)
+        TNT1 A 0 A_SpawnItem ("Blue_BloodSpot", 0, 1)
+        SARC F 1 A_SpawnItem("Gib_HalfDemonBlue",0,0,0,1)
         TNT1 A 0
         Stop
     }
@@ -1781,19 +1781,19 @@ Renderstyle "Subtract"
     Spawn:
 	TNT1 A 0
 	TNT1 A 0 A_QueueCorpse
-		SARC F 1 A_SpawnItem ("Brutal_BloodSpot", 0, 1)
+		SARC F 1 A_SpawnItem ("Blue_BloodSpot", 0, 1)
 		SARC F -1
        Stop   
 	   
 	   
 	   Death: Death.Trample:
-  	     TNT1 AAA 0 A_CustomMissile ("XDeath1", 5, 0, random (0, 360), 2, random (0, 160))
-		 TNT1 AAA 0 A_CustomMissile ("XDeathSkinPiece2", 5, 0, random (0, 360), 2, random (0, 160))
-		 TNT1 AA 0 A_CustomMissile ("XDeathSkinPiece1", 5, 0, random (0, 360), 2, random (0, 160))
-		 TNT1 AaaA 0 A_CustomMissile ("BloodMistBig", 10, 0, random (0, 360), 2, random (30, 90))
-		TNT1 AA 0 A_CustomMissile ("XDeath1", 0, 0, random (0, 360), 2, random (0, 160))
-		TNT1 AAA 0 A_CustomMissile ("XDeath3b", 10, 0, random (0, 360), 2, random (50, 90))
-		TNT1 AAA 0 A_CustomMissile ("XDeath2b", 10, 0, random (0, 360), 2, random (50, 90))
+  	     TNT1 AAA 0 A_CustomMissile ("XDeath1Blue", 5, 0, random (0, 360), 2, random (0, 160))
+		 //TNT1 AAA 0 A_CustomMissile ("XDeathSkinPiece2", 5, 0, random (0, 360), 2, random (0, 160))
+		 //TNT1 AA 0 A_CustomMissile ("XDeathSkinPiece1", 5, 0, random (0, 360), 2, random (0, 160))
+		 TNT1 AaaA 0 A_CustomMissile ("blueBloodMistBig", 10, 0, random (0, 360), 2, random (30, 90))
+		TNT1 AA 0 A_CustomMissile ("XDeath1blue", 0, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AAA 0 A_CustomMissile ("XDeath3blue", 10, 0, random (0, 360), 2, random (50, 90))
+		TNT1 AAA 0 A_CustomMissile ("XDeath2blue", 10, 0, random (0, 360), 2, random (50, 90))
 		TNT1 AA 0 A_CustomMissile ("XDeathDemonArmBlue", 2, 0, random (0, 360), 2, random (0, 160))
 		 TNT1 A 0 A_CustomMissile ("XDeathPinkyDemonHeadBlue", 2, 0, random (0, 360), 2, random (0, 160))
 		Stop
@@ -1838,4 +1838,28 @@ ACTOR PinkyHeadPieceBlue: BaronHeadPiece
 		XHE5 IJKL 4 //A_CustomMissile ("Brutal_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 360))
 		Loop
 		}
+}
+
+ACTOR PinkyHeadExplodeBlue: ZombieXDeath
+{
+    States
+    {
+    Spawn:
+	    TNT1 A 0
+		
+		TNT1 A 0 A_PlaySound("misc/xdeath4")
+		TNT1 AA 0 A_CustomMissile ("pinkyheadPieceBlue", 52, 0, random (0, 360), 2, random (0, 160))
+	    TNT1 AAA 0 A_CustomMissile ("blueBloodMist", 0, 0, random (0, 360), 2, random (60, 90))
+		TNT1 AAAAA 0 A_CustomMissile ("blueBloodmistSpray", 0, 0, random (0, 360), 2, random (30, 90))
+		TNT1 AA 0 A_CustomMissile ("Blue_FlyingBlood", 0, 0, random (0, 360), 2, random (30, 90))
+		TNT1 AAA 0 A_CustomMissile ("blueSuperGore", 0, 0, random (0, 360), 2, random (30, 90))
+		TNT1 AAA 0 A_CustomMissile ("SmallBlueBrainPiece", 0, 0, random (0, 360), 2, random (10, 20))
+		TNT1 AAAAA 0 A_CustomMissile ("SmallBlueBrainPiece", 0, 0, random (0, 360), 2, random (10, 90))
+		//TNT1 AAA 0 A_CustomMissile ("Teeth", 0, 0, random (0, 360), 2, random (10, 90))
+		TNT1 AA 0 A_CustomMissile ("XDeath1blue", 0, 0, random (0, 360), 2, random (10, 90))
+		TNT1 AA 0 A_CustomMissile ("XDeath3blue", 10, 0, random (0, 360), 2, random (50, 90))
+		TNT1 AA 0 A_CustomMissile ("XDeath2blue", 10, 0, random (0, 360), 2, random (50, 90))
+		TNT1 A 10
+	     Stop
+	}
 }
