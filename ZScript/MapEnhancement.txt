@@ -432,6 +432,22 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					levellocals.ReplaceTextures("FLOOR7_1", "MFLR8_2",0);
 					
 				}
+				If(CVar.GetCvar("BD_PSXMonsters").getint() == 1)
+				{
+					SetThingEdNum(40,25942);
+					SetThingEdNum(41,25942);
+					SetThingEdNum(42,25942);
+					SetThingEdNum(43,25942);
+					SetThingEdNum(185,25942);
+					SetThingEdNum(243,25942);
+					AddThing(25942, (2496, -960, 999), 180);
+					
+					AddThing(65, (-272, -768, 999), 0);
+					AddThing(65, (512, 1424, 999), 270);
+					AddThing(65, (648, 1392, 999), 270);
+					AddThing(65, (3200, -1664, 999), 45);
+					SetThingEdNum(47,65);
+				}
 				Break;
 		}
 	}
