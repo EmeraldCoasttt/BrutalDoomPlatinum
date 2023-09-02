@@ -271,7 +271,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 			case '1dbf91738492fb0e29836a2d66406cf1':
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) {
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any),TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any));
-					Levellocals.ReplaceTextures("CEIL3_5", "LITGEN8",0);
+					//Levellocals.ReplaceTextures("CEIL3_5", "LITGEN8",0);
 					Levellocals.ReplaceTextures("BROWN96", "METAL24", TexMan.NOT_BOTTOM);
 					Levellocals.ReplaceTextures("BROWN96", "METAL24B", TexMan.NOT_MIDDLE);
 					Levellocals.ReplaceTextures("BROWN1", "METALIN4", TexMan.NOT_BOTTOM);
@@ -310,10 +310,10 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					Levellocals.ReplaceTextures("FLOOR4_1", "METAL51",0);
 					Levellocals.ReplaceTextures("FLOOR4_5", "METAL51",0);
 					Levellocals.ReplaceTextures("CEIL3_5", "LITGEN6",0);
-					Levellocals.ReplaceTextures("MFLR8_1", "LITGEN8",0);
+					//Levellocals.ReplaceTextures("MFLR8_1", "LITGEN8",0);
 					Levellocals.ReplaceTextures("CEIL5_2", "METAL51",0);
-					Levellocals.ReplaceTextures("FLOOR6_2", "LITGEN8", TexMan.not_floor);
-					Levellocals.ReplaceTextures("FLOOR7_2", "LITGEN8", TexMan.not_floor);
+				//	Levellocals.ReplaceTextures("FLOOR6_2", "LITGEN8", TexMan.not_floor);
+				//	Levellocals.ReplaceTextures("FLOOR7_2", "LITGEN8", TexMan.not_floor);
 					Levellocals.ReplaceTextures("BROWN1", "METAL24",0);
 					Levellocals.ReplaceTextures("BROWN96", "METAL22",0);
 					Levellocals.ReplaceTextures("LITE2", "METAL24B",0);
@@ -408,6 +408,29 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					SetThingEdNum(30,65);
 					SetThingEdNum(31,65);
 					SetThingEdNum(78,65);
+				}
+				Break;
+			
+			//e1m6
+			case '5faa25f5a6aab3409cae0af87f910341':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
+				{
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any),TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any));
+					levellocals.ReplaceTextures("FLAT5_5", "METAL54",0);
+					levellocals.ReplaceTextures("FLOOR4_1", "METAL51",0);
+					levellocals.ReplaceTextures("FLOOR4_5", "METAL51",0);
+				//	levellocals.ReplaceTextures("MFLR8_1", "LITGEN8",0);
+					levellocals.ReplaceTextures("CEIL5_2", "METAL51",0);
+				//	levellocals.ReplaceTextures("FLOOR6_2", "LITGEN8", TexMan.not_floor);
+				//	levellocals.ReplaceTextures("FLOOR7_2", "LITGEN8", TexMan.not_floor);
+					levellocals.ReplaceTextures("BROWN1", "METAL24",0);
+					levellocals.ReplaceTextures("BROWN96", "METAL22",0);
+					levellocals.ReplaceTextures("LITE2", "METAL24B",0);
+					levellocals.ReplaceTextures("STARTAN3", "STARGR1",0);
+					levellocals.ReplaceTextures("STONE2", "BUNKER05",0);
+					levellocals.ReplaceTextures("BROWNHUG", "CLIFF05B",0);
+					levellocals.ReplaceTextures("FLOOR7_1", "MFLR8_2",0);
+					
 				}
 				Break;
 		}
