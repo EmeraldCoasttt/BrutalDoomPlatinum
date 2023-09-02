@@ -390,6 +390,67 @@ ACTOR BullXDeath
     }
 }
 
+ACTOR BullXDeathBlue
+{
+    Radius 1
+    Height 1
+    Scale 0.8
+	Speed 0
+	Mass 1
+	Decal BlueBloodSuper
+	BounceFactor 0.5
+	+DOOMBOUNCE
+	+MISSILE
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +MOVEWITHSECTOR
+    +NOGRAVITY
+    +NOCLIP
+    +DONTSPLASH
+    States
+    {
+    Spawn:
+	     
+	     TNT1 AAAA 0 A_CustomMissile ("BlueBloodMistExtraBig", 30, 0, random (0, 360), 2, random (40, 90))
+         TNT1 AAAAAAAAA 0 A_CustomMissile ("BlueCeilBloodLauncher", 0, 0, random (0, 360), 2, random (50, 130))
+		 TNT1 AA 0 A_CustomMissile ("XDeath1Blue", 32, 0, random (0, 360), 2, random (10, 90))
+		 //TNT1 A 0 A_CustomMissile ("XDeath2", 32, 0, random (0, 360), 2, random (10, 90))
+		 //TNT1 A 0 A_CustomMissile ("XDeath3", 32, 0, random (0, 360), 2, random (10, 90))
+		 //TNT1 A 0 A_CustomMissile ("XDeath4", 32, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 A 0 A_SpawnItem ("BlueBigBloodSpot")
+		 TNT1 AAA 0 A_CustomMissile ("BlueSuperGoreSpawner", 30, 0, random (0, 360), 2, random (30, 60))
+		 TNT1 AAAA 0 A_CustomMissile ("XDeath2blue", 15, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 AAAA 0 A_CustomMissile ("XDeath3blue", 15, 0, random (0, 360), 2, random (10, 90))
+		// TNT1 AA 0 A_CustomMissile ("XDeathSkinPiece2", 15, 0, random (0, 360), 2, random (10, 90))
+	//	 TNT1 AA 0 A_CustomMissile ("XDeathSkinPiece1", 15, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 A 0 A_CustomMissile ("BlueGuts", 32, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 AA 0 A_CustomMissile ("XDeathBullLeg12Blue", 32, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 AA 0 A_CustomMissile ("XDeathDemonArmBlue", 32, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 AA 0 A_CustomMissile ("XDeath2blue", 32, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 AA 0 A_CustomMissile ("XDeath3blue", 32, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 A 0 A_CustomMissile ("XDeathPinkyDemonHeadblue", 42, 0, random (0, 360), 2, random (10, 90))
+		 
+		 TNT1 A 1
+		 TNT1 A 0 ACS_NamedExecuteAlways("BD_CheckBloodIntensity", 0, 0, 0, 0)//Check Blood density
+		 TNT1 AAAAAAAAAaaAA 0 A_CustomMissile ("blueBloodMistExtraBig", 30, 0, random (0, 360), 2, random (40, 90))
+		 TNT1 A 2
+		 Stop
+		 
+	LowBlood:
+	    TNT1 A 2
+		Stop
+	LotsOfBlood:
+		TNT1 AAAAAAAAAAAAAA 0 A_CustomMissile ("blueBloodMistExtraBig", 30, 0, random (0, 360), 2, random (40, 90))
+		TNT1 AAAAAA 0 A_CustomMissile ("blueSuperGoreSpawner", 64, 0, random (0, 360), 2, random (20, 40))
+		Stop
+	AbsurdBlood:
+		TNT1 AAAAAAAAAAAAAA 0 A_CustomMissile ("blueBloodMistExtraBig", 30, 0, random (0, 360), 2, random (40, 90))
+		TNT1 AAAAAAAAAAAA 0 A_CustomMissile ("blueSuperGoreMist", 24, 0, random (0, 360), 2, random (30, 90))
+		TNT1 AAAAAAAA 0 A_CustomMissile ("blueSuperGoreSpawner", 64, 0, random (0, 360), 2, random (20, 40))
+		Stop
+    }
+}
+
 ACTOR ChainXDeath
 {
     Radius 1
