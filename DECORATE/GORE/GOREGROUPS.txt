@@ -700,6 +700,7 @@ ACTOR MeatDeath
 }
 
 
+
 ACTOR SmalllMeatDeath: MeatDeath
 {
     States
@@ -719,6 +720,25 @@ ACTOR SmalllMeatDeath: MeatDeath
     }
 }
 
+
+ACTOR BlueMeatDeathSmall: MeatDeath
+{
+    States
+    {
+    Spawn:
+         TNT1 AAA 0 A_CustomMissile ("BlueCeilBloodLauncher", 0, 0, random (0, 360), 2, random (50, 130))
+         TNT1 AAAAAA 0 A_CustomMissile ("Blue_FlyingBlood", 15, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 AA 0 A_CustomMissile ("XDeath1blue", 32, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 A 0 A_CustomMissile ("XDeath2blue", 32, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 A 0 A_CustomMissile ("XDeath3blue", 32, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 A 0 A_CustomMissile ("XDeath4blue", 32, 0, random (0, 360), 2, random (10, 90))
+		 TNT1 AAA 0 A_CustomMissile ("BlueBloodMistSpray", 30, 0, random (0, 360), 2, random (40, 90))
+		 TNT1 AAA 0 A_CustomMissile ("Blue_FlyingBlood", 15, 0, random (0, 360), 2, random (10, 90))
+	Death:
+	    TNT1 A 0
+        Stop
+    }
+}
 
 ACTOR GibsZ: MeatDeath
 {
