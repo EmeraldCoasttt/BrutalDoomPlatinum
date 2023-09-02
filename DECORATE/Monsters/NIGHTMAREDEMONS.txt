@@ -35,7 +35,7 @@ ACTOR NightmarePinky : Demon 25942
 	MaxStepHeight 32
 	MaxDropOffHeight 32
 	MeleeRange 100
-	Tag "Pinky Demon"
+	Tag "Nightmare"
 	DropItem "DemonStrengthRune" 2
 	Health 400
 	Renderstyle "Subtract"
@@ -44,6 +44,7 @@ ACTOR NightmarePinky : Demon 25942
 	stealthalpha  0.3
 	bloodtype "Blue_Blood", "BlueSawBlood", "BlueSawBlood"
 	bloodcolor "Blue"
+	Obituary "%o couldn't escape a Nightmare"
 	States
 	{
 	
@@ -1159,6 +1160,8 @@ ACTOR PoorBluePinkyLostHisArm: Demon
 	Alpha 0.9
 	bloodtype "Blue_Blood", "BlueSawBlood", "BlueSawBlood"
 	bloodcolor "Blue"
+	Tag "Nightmare"
+	Obituary "%o couldn't escape a Nightmare"
 	States
 	{
 	PutAFight:
