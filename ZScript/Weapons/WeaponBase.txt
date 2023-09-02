@@ -64,7 +64,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 			double inertia = BDPMath.GetInertia(victim.mass);
 			self.A_Quake(2,3,0,20,"");
 			
-			if(doHitThrust)
+			if(doHitThrust && victim.bsolid)
 			{
 				self.vel *= 0;
 				self.vel += BDPMath.VecFromAngles(self.angle, self.pitch, -12);	
@@ -127,7 +127,13 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	Action void A_BDPMeleeStart(double range = 200)
 	{
-	if(A_CheckMeleeRange(skipWalls:true) < range) A_Recoil3D(-20); 
+	//if(A_CheckMeleeRange(skipWalls:true) < range) A_Recoil3D(-20); 
+		FLineTraceData lt;
+		LineTrace(angle, range, pitch, 0, player.viewheight, data:lt);
+		If(lt.hitactor && lt.hitactor.bsolid)
+		{
+			A_Recoil3D(-20);
+		}
 	}
 	
 	action double A_CheckMeleeRange(double maxrange = 512, bool skipWalls = false)
