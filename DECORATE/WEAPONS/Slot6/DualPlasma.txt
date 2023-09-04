@@ -454,6 +454,7 @@ ACTOR DualPlasmaRifles : BrutalWeapon
 	FireLoop:
 	 DUPL A 0 A_CheckIfAmmo("DoublePlasmaAmmo")
 		DUPL A 0 A_PlaySound("PLSM9", CHAN_WEAPON)	
+		TNT1 A 0 a_alertmonstersDX
 		DUPL A 0 A_ZoomFactor(0.98)
 		DUPL A 0 A_SetPitch(Pitch-0.7, SPF_INTERPOLATE)
 		DUPL A 0 A_SetAngle(angle+random(-1,1), SPF_INTERPOLATE)

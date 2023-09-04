@@ -116,6 +116,7 @@ ACTOR FlameCannon : BrutalWeapon
 		
 	Fireball:	
 	    NULL A 0 A_playSound("MANCFIRE")
+		TNT1 A 0 a_alertmonstersDX
         FLMF A 1 BRIGHT A_FireCustomMissile("BigFireBallWithGravity", 0, 0, 0, -6)
 		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 		FLMG A 0 A_SetPitch(-4.0 + pitch, SPF_INTERPOLATE)
@@ -141,6 +142,7 @@ ACTOR FlameCannon : BrutalWeapon
 		
 	Flamethrower:
         FLMT A 0 BRIGHT A_FireCustomMissile("FlamethrowerMissile", 0, 1, 0, -12, 0, 8)
+		TNT1 A 0 a_alertmonstersDX
 		TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 4)// For poor PCs
 		TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, -1, 0, 0, random(-9,9))
 		TNT1 AA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, -1, 0, 0, random(-9,9))

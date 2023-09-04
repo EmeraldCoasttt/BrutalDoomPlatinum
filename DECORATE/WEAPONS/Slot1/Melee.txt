@@ -1071,7 +1071,7 @@ ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 		"####" A 0 ACS_NamedExecute("InsultGetOffScum",0,0)
         "####" B 1 A_PlaySound("FUCK2", 2)
 	FinishTaunt:
-        "####" CDE 1 A_AlertMonsters
+        "####" CDE 1 A_AlertMonstersDX
 		"####" F 12 A_Takeinventory("Taunting",1)
         "####" EDCBA 1
 		Goto Ready	 
@@ -1079,7 +1079,7 @@ ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 		
 	TauntFemale:
 		"####" B 1 A_PlaySound("FTAUNT", 2)
-        "####" CDE 1 A_AlertMonsters
+        "####" CDE 1 A_AlertMonstersDX
 		"####" F 12 A_Takeinventory("Taunting",1)
         "####" EDCBA 1
 		Goto Ready		

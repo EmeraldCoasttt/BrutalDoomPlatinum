@@ -136,6 +136,7 @@ ACTOR GrenadeLauncher : BrutalWeapon
 		TNT1 A 0
 		TNT1 A 0 A_CheckIfAmmo("GLAmmo")
 		TNT1 A 0 
+		TNT1 A 0 a_alertmonstersDX
 		TNT1 A 0 A_jumpif(Countinv("StickyGrenadeSelected")==1, "firesticky")
 		TNT1 A 0 A_TakeAmmo("GLAmmo", 1)
 		GLAN A 0 A_FireCustomMissile("RedFlareSpawn",-5,0,0,0)

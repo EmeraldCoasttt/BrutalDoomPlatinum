@@ -218,7 +218,7 @@ ACTOR MP40 : BrutalWeapon
 		MP40 A 0 A_PlaySound("FARSHT", 6)
 		MP40 A 0 A_Takeinventory("MP40Ammo",1)
 		MP40 A 0 A_Takeinventory("DualMP40Ammo",1)
-		MP40 B 1 BRIGHT A_AlertMonsters
+		MP40 B 1 BRIGHT A_AlertMonstersDX
 		NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 		MP40 C 1 A_FireBullets (3, 3, -1, 15, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-14)
 		MP40 A 0 A_ZoomFactor(0.99)
@@ -243,7 +243,7 @@ ACTOR MP40 : BrutalWeapon
 		MP40 A 0 A_PlaySound("FARSHT", 6)
 		MP40 A 0 A_Takeinventory("MP40Ammo",1)
 		MP40 A 0 A_Takeinventory("DualMP40Ammo",1)
-		MP41 F 1 BRIGHT A_AlertMonsters
+		MP41 F 1 BRIGHT A_AlertMonstersDX
 		MP40 A 0 A_FireBullets (1.5, 1.5, -1, 15, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-4)
 		MP41 C 1 A_ZoomFactor(1.28)
         MP41 G 1 A_FireCustomMissile("MP40CaseSpawn",-5,0,-4,-3)

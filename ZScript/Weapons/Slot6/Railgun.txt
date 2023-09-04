@@ -81,7 +81,7 @@ CLASS Railgun : Brutalweapon
 				A_giveinventory("railchambered",1);
 				}
 				A_Fireprojectile("RailgunProjectile", 0, 0, 0, 0);
-				A_alertmonsters(500);
+				A_alertmonstersDX(500);
 				A_RailAttack(300, 0, 0, "Blue", "Blue", RGF_FULLBRIGHT, 1, "RailgunPuff2",0,0,0,0,1.2,2,"BluePlasmaParticleWeaponRailgun",0,360);
 				//A_RailAttack(400, 0, 0, "Orange", "Red", RGF_FULLBRIGHT, 1, "RailgunPuff2",0,0,0,0,0.5,2,"none",0,270);
 				A_Fireprojectile ("PlasmaSmoke", 0, 0, 0, 2);

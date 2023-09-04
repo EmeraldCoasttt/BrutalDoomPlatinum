@@ -323,7 +323,7 @@ class SalInvisibleActor : Actor
 	States
 	{
 		Spawn:
-			HEAD A -1;
+			TNT1 A -1;
 			WAIT;
 	}
 }

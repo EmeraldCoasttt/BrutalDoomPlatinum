@@ -209,7 +209,7 @@ ACTOR DualRevolver : BrutalWeapon
         TNT1 AAAA 0
 	    REDF A 0 A_PlaySound("REVFIRE1")
 	    RE3F ABB 1
-		REDF A 0 A_AlertMonsters
+		REDF A 0 A_AlertMonstersDX
 		
 		//RIFF A 0 A_FireCustomMissile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1))
 		TNT1 A 0 A_GiveInventory("NowFireSecondRevolverUWU",1)
@@ -244,7 +244,7 @@ ACTOR DualRevolver : BrutalWeapon
         TNT1 AAAA 0
 	    REDF A 0 A_PlaySound("REVFIRE1")
 	    RE3F CDD 1
-		REDF A 0 A_AlertMonsters
+		REDF A 0 A_AlertMonstersDX
 		
 		//RIFF A 0 A_FireCustomMissile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1))
 		TNT1 A 0 A_TakeInventory("NowFireSecondRevolverUWU",1)

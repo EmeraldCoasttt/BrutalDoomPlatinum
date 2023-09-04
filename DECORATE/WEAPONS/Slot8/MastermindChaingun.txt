@@ -130,6 +130,7 @@ ACTOR MastermindChaingun : BrutalWeapon
 			RMNG A 0 A_PlaySound("CHGNSHOT", 1)
  			RMNG A 0 A_PlaySound("FARMGN", 5)
 			RMNG A 0 A_ZoomFactor(0.98)
+			TNT1 A 0 a_alertmonstersDX
 			RMNG A 1 A_Firecustommissile("MastermindTracerDoomguy",random(-2,2),0,0,-12,random(3,-3))
 			TNT1 A 0 A_SetPitch(Pitch-2)
 			RMNG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
@@ -145,6 +146,7 @@ ACTOR MastermindChaingun : BrutalWeapon
 			RMNG A 0 A_PlaySound("CHGNSHOT", 1)
  			RMNG A 0 A_PlaySound("FARMGN", 5)
 			RMNG A 0 A_ZoomFactor(0.98)
+			TNT1 A 0 a_alertmonstersDX
 			RMNG B 1 A_Firecustommissile("MastermindTracerDoomguy",random(-2,2),0,0,-12,random(3,-3))
 			TNT1 A 0 A_SetPitch(Pitch-2)
 			RMNG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
@@ -166,6 +168,7 @@ ACTOR MastermindChaingun : BrutalWeapon
 			RMNG A 0 A_PlaySound("DSRFIRE", 1)
  			RMNG A 0 A_PlaySound("FARMGN", 5)
 			RMNG A 0 A_ZoomFactor(0.98)
+			TNT1 A 0 a_alertmonstersDX
 			RMNG A 1 A_Firecustommissile("MasterMindGrenadePlayer",random(-2,2),0,0,-12,0,random(-10,-30))
 			TNT1 A 0 A_SetPitch(Pitch-2)
 			RMNG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
