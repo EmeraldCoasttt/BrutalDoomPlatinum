@@ -49,6 +49,10 @@ Class Brutalweapon : DoomWeapon //Weapon
 		self.LineTrace(self.angle, range, self.pitch, 0, aimz, data:lt);
 		Actor victim = lt.HitActor;
 		int aimCheck = -6;
+		int meleecounter = 1;
+		
+		
+		
 		while (aimCheck++ < 6 && !victim)
 		{
 			self.LineTrace(self.angle + (aimCheck * 8), range, self.pitch, 0, aimz, data:lt);
@@ -60,6 +64,17 @@ Class Brutalweapon : DoomWeapon //Weapon
 			
 			vector3 victimAngles = level.sphericalCoords(victim.pos, self.pos, (victim.angle, victim.pitch));
 			
+			if(abs(victimAngles.x) >= 120)
+			{
+				If(findinventory("powerstrength"))
+				{
+					Meleecounter = 2;
+				}
+				else
+				{
+					Meleecounter = 3;
+				}
+			}
 		
 			double inertia = BDPMath.GetInertia(victim.mass);
 			self.A_Quake(2,3,0,20,"");
@@ -71,10 +86,14 @@ Class Brutalweapon : DoomWeapon //Weapon
 			}
 					
 		}
-		actor proj = A_FireProjectile(projectile, 0, 0, 0, spawnheight);
-		If(proj && victim && victim.bSHOOTABLE)
+		for (int i = meleecounter; i > 0; i--)
 		{
-			proj.setorigin(victim.pos,false);
+			actor proj = A_FireProjectile(projectile, 0, 0, 0, spawnheight);
+			If(proj && victim && victim.bSHOOTABLE)
+			{
+				proj.setorigin(victim.pos,false);
+			}
+			console.printf("SEX");
 		}
 		return victim;
 	}
