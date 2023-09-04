@@ -526,6 +526,27 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					Level.Sectors[31].settexture(Sector.ceiling,TexMan.CheckForTexture("BDBLOOD1",TexMan.Type_Any));
 					levellocals.ReplaceTextures("BROWNHUG", "CLIFF05B",0);
 					//levellocals.ReplaceTextures("BROWN1", "CLIFF05B",0);
+					
+					AddThing(25856, (416, 864, 999), 180);
+					
+					AddThing(25860, (-512, 4608, 999), 180);
+					AddThing(25860, (1536, 4608, 999), 180);
+					AddThing(25860, (-1024, 2560, 999), 180);
+					AddThing(25860, (2048, 2560, 999), 180);
+					
+					AddThing(2035, (256, 3584, 999), 180);
+					AddThing(2035, (768, 3328, 999), 180);
+					AddThing(2035, (256, 3200, 999), 180);
+					AddThing(2035, (512, 3712, 999), 180);
+					AddThing(2035, (640, 2432, 999), 180);
+					AddThing(2035, (-128, 2304, 999), 180);
+					AddThing(2035, (0, 2688, 999), 180);
+					
+					SetThingEdNum(94,2046);
+					SetThingEdNum(70,2003);
+					
+					SetThingEdNum(58,25947);
+					SetThingEdNum(59,25948);
 				}
 				Break;
 		}

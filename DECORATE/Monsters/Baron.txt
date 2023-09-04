@@ -1516,7 +1516,7 @@ ACTOR CallingTheBaronAFaggot: BaronBall
 
 
 
-Actor BaronBoss1: BaronofHell2
+Actor BaronBoss1: BaronofHell2 25947
 {
 Scale 1.3
 Health 4000
@@ -1528,6 +1528,7 @@ MaxDropOffHeight 48
 +LOOKALLAROUND
 Translation "16:47=22:47", "48:79=62:79"
 Obituary "%o was brutalized by the Bruiser Brothers."
++BOSS
 States
 {
 Spawn:
@@ -1553,7 +1554,7 @@ Spawn:
 }
 
 
-Actor BaronBoss2: BaronBoss1
+Actor BaronBoss2: BaronBoss1 25948
 {
 States
 {
