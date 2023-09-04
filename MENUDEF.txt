@@ -718,6 +718,8 @@ OptionMenu "DoxCreditsCode"
    StaticText "Tilt++"
    StaticText "Lewisk3", "LightBlue"
    StaticText "Vehicle code"
+   StaticText "TehRealSalt", "LightBlue"
+   StaticText "New blursphere code"
    StaticText ""
    
    

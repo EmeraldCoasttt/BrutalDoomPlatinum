@@ -590,6 +590,16 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		}
 	}
 	
+	Action void A_AlertMonstersDX(double maxdist = 0, int flags = 0)
+	{
+		A_alertmonsters(maxdist,flags);
+		
+		if(invoker.owner.findinventory("powerinvisibility"))
+		{
+			invoker.owner.giveinventory("moveblurspheretarget",1);
+		}
+	}
+	
 	override void DoEffect() 
 	{
 		super.DoEffect();

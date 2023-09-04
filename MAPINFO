@@ -2,6 +2,7 @@ Gameinfo
 {
 	StatusBarClass = "BDP_HUD"
 	AddEventHandlers = "DoxBDHandler"
+	AddEventHandlers = "SalInvisHandler"
 	AddEventHandlers = "WeaponSpawnHandler"
 	AddEventHandlers = "RollHandler"
 	AddEventHandlers = "TiltPlusPlusHandler"

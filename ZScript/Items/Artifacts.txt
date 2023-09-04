@@ -306,10 +306,161 @@ Default
 		Powerup.Color "FF 6C 00";
 		+INVENTORY.HUBPOWER
 	}
-	
+}
 
-	
-	
-	
+class SalInvisibleActor : Actor
+{
+	Default
+	{
+		+NONSHOOTABLE
+		+NODAMAGE
+		+THRUACTORS
+		+NOTELEPORT
+		+DROPOFF
+		+isMonster;
+		//RenderStyle "None";
+	}
+	States
+	{
+		Spawn:
+			HEAD A -1;
+			WAIT;
+	}
+}
 
+class SalInvisHandler : EventHandler
+{
+	Array <Actor> monsterList;
+	SalInvisibleActor playerInvisTarget[MAXPLAYERS];
+
+	void SalInvisTargetStatus(int i)
+	{
+		let mo = players[i].mo;
+
+		if (mo)
+		{
+			let targ = playerInvisTarget[i];
+
+			if (targ && mo.bShadow == false)
+			{
+				// Destroy it if it exists
+				targ.Destroy();
+			}
+		}
+	}
+
+	void SalMoveInvisTarget(int i)
+	{
+		let mo = players[i].mo;
+
+		if (mo)
+		{
+			let targ = playerInvisTarget[i];
+
+			if (mo.bShadow == true)
+			{
+				if (targ)
+				{
+					// Move the existing one directly to your current position
+					targ.SetOrigin(mo.pos, false);
+				}
+				else
+				{
+					// Create a new invisible target spot at your location
+					playerInvisTarget[i] = SalInvisibleActor(mo.Spawn("SalInvisibleActor", mo.pos, NO_REPLACE));
+				}
+			}
+		}
+	}
+
+	override void WorldThingSpawned(WorldEvent e)
+    {
+		if (e.Thing.bIsMonster)
+		{
+			// Store in a list for later.
+			monsterList.push(e.Thing);
+		}
+	}
+
+	override void WorldTick()
+	{
+		Array <Actor> removalList;
+
+		for (int i = 0; i < MAXPLAYERS; i++)
+		{
+			let target = playerInvisTarget[i];
+
+			if (!playeringame[i])
+			{
+				if (target)
+				{
+					target.Destroy();
+				}
+				continue;
+			}
+			else
+			{
+				let mo = players[i].mo;
+
+				if (!target)
+				{
+					SalMoveInvisTarget(i);
+				}
+				else
+				{
+					SalInvisTargetStatus(i);
+
+					if (mo.CurState == mo.ResolveState("Missile")
+						|| mo.CurState == mo.ResolveState("Melee")
+						|| mo.CurState == mo.ResolveState("Pain")
+						|| mo.findinventory("moveblurspheretarget"))
+					{
+						SalMoveInvisTarget(i);
+						mo.takeinventory("moveblurspheretarget",1);
+					}
+				}
+			}
+		}
+
+		for (int i = 0; i < monsterList.Size(); i++)
+        {
+            Actor mo = monsterList[i];
+
+			if (!mo || mo.health <= 0)
+			{
+				// Must be removed later, because we can't change iteration length.
+				removalList.push(mo);
+				continue;
+            }
+
+			if (mo.bSeeInvisible)
+			{
+				// Don't remove, but don't do the target setting either
+				continue;
+			}
+			else
+			{
+				let target = PlayerPawn(mo.target);
+
+				if (target)
+				{
+					let n = target.PlayerNumber();
+					let invisTarget = playerInvisTarget[n];
+
+					if (invisTarget)
+					{
+						// Your target has a SalInvisTarget,
+						// so you need to change your target to it immediately.
+						mo.target = invisTarget;
+					}
+				}
+			}
+        }
+
+		for (int i = 0; i < removalList.Size(); i++)
+        {
+            int j = monsterList.Find(removalList[i]);
+            monsterList.Delete(j);
+        }
+	}
 }

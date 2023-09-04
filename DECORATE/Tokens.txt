@@ -36,6 +36,10 @@ Actor KillHologram : Inventory
 {
 inventory.maxamount 1
 }
+Actor moveblurspheretarget : Inventory
+{
+inventory.maxamount 1
+}
 Actor ReturnUnmorphStuffPlease : Inventory
 {
 inventory.maxamount 1
