@@ -548,6 +548,28 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					SetThingEdNum(58,25947);
 					SetThingEdNum(59,25948);
 				}
+				
+				If(CVar.GetCvar("BD_PSXMonsters").getint() == 1)
+				{
+					
+					
+					AddThing(25942, (48, 688, 999), 45);
+					AddThing(25942, (784, 688, 999), 135);
+					
+					SetThingEdNum(77,25942);
+					SetThingEdNum(86,25942);
+					SetThingEdNum(80,25942);
+					SetThingEdNum(83,25942);
+					SetThingEdNum(82,25942);
+					SetThingEdNum(81,25942);
+					SetThingEdNum(78,25942);
+					SetThingEdNum(84,25942);
+					SetThingEdNum(79,25942);
+					SetThingEdNum(85,25942);
+					
+				}
+				Break;
+				
 				Break;
 		}
 	}
