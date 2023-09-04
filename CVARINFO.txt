@@ -100,6 +100,8 @@ server int bd_SSGreplacementMultiplier = 1;
 
 user int bd_SilencerWeaponSpecial = 0;
 
+user int bd_LegacyMinigunFire = 0;
+
 server int bd_LegStainingOptions = 0;
 //Very customizable weapon spawns.
 server int bd_SpawnAxe = 1;

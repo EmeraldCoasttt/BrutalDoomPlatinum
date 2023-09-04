@@ -963,7 +963,7 @@ ACTOR MiniGun : BrutalWeapon
      LegacyFire:
 			CHAG A 0
 			CHAG A 0 A_JumpIfInventory("Spin",1,"LegacyHold")
-		NULL A 0 A_JumpIf(CountInv("Clip2")==0,"LegacyFireNoAmmo")
+			NULL A 0 A_CheckIfAmmo("CLip2",1,"LegacyFireNoAmmo")
 			CHAG A 0 A_PlaySound("CHAINSTA", 5)
 			CHAG A 0 BRIGHT A_FireCustomMissile("Alerter", 0, 0, 0, 0)
 			CHAG BC 1
@@ -975,11 +975,12 @@ ACTOR MiniGun : BrutalWeapon
 		LegacyHold:
 			CHAG A 0 A_JumpIfInventory("Salute1", 1, "Salute")
 			CHAG A 0 A_JumpIfInventory("Salute2", 1, "Salute")
-		NULL A 0 A_JumpIf(CountInv("Clip2")==0,"LegacyHoldNoAmmo")
+			NULL A 0 A_CheckIfAmmo("CLip2",1,"LegacyHoldNoAmmo")			
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			CHAG A 0 A_PlaySound("FARMGN", 5)
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
+			TNT1 A 0 A_TakeAmmo("CLip2",1)
 			CHAF A 1 BRIGHT A_FireBullets(5, 5, -1, 16, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
 			TNT1 A 0 A_SetPitch(Pitch-0.2, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
@@ -996,13 +997,12 @@ ACTOR MiniGun : BrutalWeapon
 			RIFG A 0 A_JumpIfInventory("IsNOTTacticalClass", 1, 2)//tactical mode has muzzle climb
 			RIFG A 0 A_SetPitch(pitch-1.0, SPF_INTERPOLATE)
 			RIFG A 0
-		NULL A 0 A_JumpIf(CountInv("Clip2")==0,"LegacyHoldNoAmmo2")	
+			NULL A 0 A_CheckIfAmmo("CLip2",1,"LegacyHoldNoAmmo2")
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			CHAG A 0 A_PlaySound("FARMGN", 5)
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
-			//TNT1 AA 0 A_FireCustomMissile("YellowFlareSpawn",0,0,0,0)
-			//RIFF A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, 0, -5, 0, 0)
+			TNT1 A 0 A_TakeAmmo("CLip2",1)
 			CHAF C 1 BRIGHT A_FireBullets(5, 5, -1, 16, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
 			TNT1 A 0 A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE)
 			TNT1 A 0 A_SetPitch(Pitch-0.2, SPF_INTERPOLATE)
