@@ -41,6 +41,10 @@ CLASS SSG : BrutalWeapon
 		{
 			A_overlayAlpha(9,0.0);
 			invoker.theoverlayalpha = 0;
+			if(invoker.owner.findinventory("powerinvisibility"))
+			{
+				A_overlay(9,"donothing");
+			}
 		}
 	//If meathook is available, fade them in
 	Else if(hookfadein)
