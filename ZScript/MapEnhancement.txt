@@ -139,8 +139,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				AddThing(25866,(2744, -3236, 999),180);
 				AddThing(25867,(-224, -3128, 999),270);
 				AddThing(25867,(-224, -3336, 999),90);
-				AddThing(15846,(-328, -3264, 999),180);
-				AddThing(15846,(-328, -3200, 999),180);
+				AddThing(25867,(-328, -3232, 999),180);
 				}
 				
 				If(CVar.GetCvar("BD_PSXMonsters").getint() == 1)
