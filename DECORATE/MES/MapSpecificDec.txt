@@ -3472,6 +3472,18 @@ ACTOR D2MAP13SecretExit: BDdecorationBase 25919
 }}
 
 
+ACTOR BDECDestroyableWindowAdd2: BDdecorationBase 25945
+{
+ +THRUACTORS
+ States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx("BDECDestroyableWindow1", 0, 32, 0, 0, 0, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("BDECDestroyableWindow1", 0, -32, 0, 0, 0, 0, 0)
+		Stop
+}}
+
 
 ACTOR BDECDestroyableWindowAdd3: BDdecorationBase 25867
 {
@@ -3483,6 +3495,23 @@ ACTOR BDECDestroyableWindowAdd3: BDdecorationBase 25867
 		TNT1 A 0 A_SpawnItemEx("BDECDestroyableWindow1")
 		TNT1 A 0 A_SpawnItemEx("BDECDestroyableWindow1", 0, 64, 0, 0, 0, 0, 0)
 		TNT1 A 0 A_SpawnItemEx("BDECDestroyableWindow1", 0, -64, 0, 0, 0, 0, 0)
+		Stop
+}}
+
+ACTOR BDECDestroyableWindowAdd7: BDdecorationBase 25944
+{
+ +THRUACTORS
+ States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx("BDECDestroyableWindow1")
+		TNT1 A 0 A_SpawnItemEx("BDECDestroyableWindow1", 0, 64, 0, 0, 0, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("BDECDestroyableWindow1", 0, 128, 0, 0, 0, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("BDECDestroyableWindow1", 0, 192, 0, 0, 0, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("BDECDestroyableWindow1", 0, -64, 0, 0, 0, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("BDECDestroyableWindow1", 0, -128, 0, 0, 0, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("BDECDestroyableWindow1", 0, -192, 0, 0, 0, 0, 0)
 		Stop
 }}
 
@@ -3718,6 +3747,19 @@ Actor BDECWIndowGlass2: BDECWIndowGlass1
 		Stop
 	}
 }
+
+
+ACTOR BDECDestroyableWindow2Add2: BDdecorationBase 25946
+{
+ +THRUACTORS
+ States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_SpawnItemEx("BDECDestroyableWindow2", 0, 48, 0, 0, 0, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("BDECDestroyableWindow2", 0, -48, 0, 0, 0, 0, 0)
+		Stop
+}}
 
 
 ACTOR BDECDestroyableWindow2Add3: BDdecorationBase 25866//Add 3 windows of size 96

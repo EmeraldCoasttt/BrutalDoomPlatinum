@@ -473,6 +473,39 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					setwalltexture(921,line.front,side.mid,"CEMENT1");
 					//setwalltexture(916,line.front,side.top,"BROWN96");
 					
+					AddThing(25855, (96, -352, 999), 0);
+					AddThing(25855, (288, -352, 999), 0);
+					AddThing(25855, (496, -352, 999), 0);
+					AddThing(25855, (-496, -880, 999), 0);
+					
+					SetThingEdNum(151,25855);
+					SetThingEdNum(150,25855);
+					
+					AddThing(25866, (1028, -792, 999), 90);
+					AddThing(25866, (1168, -1784, 999), 90);
+					AddThing(25866, (1312, -2000, 999), 0);
+					AddThing(25866, (1504, -2232, 999), 90);
+					AddThing(25866, (1504, -2376, 999), 90);
+					AddThing(25866, (1824, -2232, 999), 90);
+					AddThing(25866, (1824, -2376, 999), 90);
+					AddThing(25866, (-352, -904, 999), 90);
+					AddThing(25866, (-932, -8, 999), 90);
+					
+					
+					
+					AddThing(25867, (904, -914, 999), 0);
+					AddThing(25867, (904, -1098, 999), 0);
+					AddThing(25867, (-704, -236, 999), 0);
+					AddThing(25867, (-704, -428, 999), 0);
+					AddThing(25867, (-1384, 384, 999), 0);
+					
+					AddThing(25944, (-520, -384, 999), 0);
+					
+					AddThing(25946, (-8, -1208, 999), 0);
+					AddThing(25946, (-888, -2516, 999), 0);
+					
+					AddThing(25946, (-124, -2476, 999), -45);
+					
 					
 				}
 				Break;
