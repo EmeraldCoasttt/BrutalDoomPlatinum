@@ -120,7 +120,7 @@ ACTOR VanillaZombieMan: RifleZombie
 
  Pain.Melee:
 		TNT1 A 0
-		TNT1 A 0 A_JumpIfInventory ("SKZombieman", 1, "GotoStealthKill")
+		//TNT1 A 0 A_JumpIfInventory ("SKZombieman", 1, "GotoStealthKill")
         TNT1 A 0 A_JumpIfInventory ("IsDown", 1, 8)
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 0, 44,0)
 	    POSS G 3

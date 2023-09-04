@@ -84,7 +84,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	PainChance "Head", 256
 	PainChance "Kick", 256
 	Painchance "Slide", 256
-	PainChance "Melee", 256 PainChance "Stealth", 256
+	PainChance "Melee", 256 PainChance "Stealth", 0
 	PainChance "Fatality", 256
 	PainChance "Taunt", 256
 	PainChance "LowKick", 256
@@ -695,7 +695,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	Pain.Stealth:
 		TNT1 A 0
 		TNT1 A 0 A_ZPain
-		TNT1 A 0 A_JumpIfInventory ("SKZombieman", 1, "GotoStealthKill")
+		//TNT1 A 0 A_JumpIfInventory ("SKZombieman", 1, "GotoStealthKill")
         //TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "GroundExecution")
 		Goto See
 		
@@ -714,7 +714,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	Pain.Fatality:
 		TNT1 A 0
 		TNT1 A 0 A_SetSize(-1,40)
-		TNT1 A 0 A_JumpIfInventory ("SKZombieman", 1, "GotoStealthKill")
+		//TNT1 A 0 A_JumpIfInventory ("SKZombieman", 1, "GotoStealthKill")
         TNT1 A 0 A_JumpIfInventory ("IsDown", 1, 8)
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 0, 40,0)
 	    POSR G 4
@@ -871,7 +871,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	 Death.Melee:
 	    TNT1 A 0
         TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Death.Down")
-		TNT1 A 0 A_JumpIfInventory ("SKZombieMan", 1, "StealthKill")
+		//TNT1 A 0 A_JumpIfInventory ("SKZombieMan", 1, "StealthKill")
 		Goto Death.Kick
 		
         Death.Kick:

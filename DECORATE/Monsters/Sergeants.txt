@@ -18,7 +18,7 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 	PainChance "Avoid", 150
 	PainChance "Head", 255
 	PainChance "Kick", 256 PainChance "Slide", 256
-	PainChance "Melee", 255 PainChance "HangingHook", 0 PainChance "Stealth", 255
+	PainChance "Melee", 255 PainChance "HangingHook", 0 PainChance "Stealth", 0
 	PainChance "HelperMarineFatality", 255
 	PainChance "MonsterKnocked", 255
 	PainChance "ExplosiveImpact", 255
@@ -545,7 +545,7 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 	Pain.Melee:
 	    TNT1 A 0
 		TNT1 A 0 A_SetSize(-1,40)
-		TNT1 A 0 A_JumpIfInventory ("SKShotgunGuy", 1, "GotoStealthKill")
+		//TNT1 A 0 A_JumpIfInventory ("SKShotgunGuy", 1, "GotoStealthKill")
         TNT1 A 0 A_JumpIfInventory ("IsDown", 1, 6)
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0)
 		SPOS G 4
@@ -563,7 +563,7 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 	Pain.Stealth:
 		TNT1 A 0
 		TNT1 A 0 A_ZPain
-		TNT1 A 0 A_JumpIfInventory ("SKShotgunguy", 1, "GotoStealthKill")
+		//TNT1 A 0 A_JumpIfInventory ("SKShotgunguy", 1, "GotoStealthKill")
        // TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "GroundExecution")
 		Goto See
 		
@@ -857,7 +857,7 @@ Death.Revolver:
     Death.Melee:
 	
        TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Death.Down")
-	   		TNT1 A 0 A_JumpIfInventory ("SKShotgunGuy", 1, "StealthKill")
+	   		//TNT1 A 0 A_JumpIfInventory ("SKShotgunGuy", 1, "StealthKill")
          Death.Kick:
 		 TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
 		 TNT1 A 0 A_ZScream
@@ -2539,7 +2539,7 @@ Obituary "%o got punctured by a SMG Zombie."
 	Pain.Melee:
 	    TNT1 A 0
 		TNT1 A 0 A_SetSize(-1,40)
-		TNT1 A 0 A_JumpIfInventory ("SKShotgunGuy", 1, "GotoStealthKill")
+		//TNT1 A 0 A_JumpIfInventory ("SKShotgunGuy", 1, "GotoStealthKill")
         TNT1 A 0 A_JumpIfInventory ("IsDown", 1, 6)
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0)
 		PSS3 G 4

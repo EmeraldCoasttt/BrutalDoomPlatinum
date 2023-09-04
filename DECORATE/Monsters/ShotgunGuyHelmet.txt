@@ -469,7 +469,7 @@ painchance "Head", 255
 		
 	Pain.Melee:
 	    TNT1 A 0 A_SetSize(-1,40)
-		TNT1 A 0 A_JumpIfInventory ("SKShotgunGuy", 1, "GotoStealthKill")
+		//TNT1 A 0 A_JumpIfInventory ("SKShotgunGuy", 1, "GotoStealthKill")
         TNT1 A 0 A_JumpIfInventory ("IsDown", 1, 6)
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0)
 		SP1S G 4
