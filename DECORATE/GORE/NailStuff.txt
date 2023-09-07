@@ -274,7 +274,7 @@ Actor DeadZombieman_Pinned: ZombiemanTorso
 Health 100
 DamageFactor "Head", 15.0
 radius 10
-Height 44
+Height 40
 +NOBLOCKMONST
 +NOGRAVITY
 -FORCEXYBILLBOARD
@@ -283,6 +283,7 @@ Height 44
 States
 {
 Spawn:
+TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
 		TNT1 A 0
 		NAIL E 1 ThrustThingZ (0,random(-3,3),random(0,1),0)
 		TNT1 A 0 A_Stop
@@ -480,7 +481,7 @@ ACTOR AgonizingZombieman_NoTorso: ZombiemanTorso
 Health 80
 DamageFactor "Head", 15.0
 Radius 10
-Height 44
+Height 40
 PainSound "imp/pain"
 PainChance 255
 +NOBLOCKMONST
@@ -490,6 +491,7 @@ PainChance 255
 States
 {
 Spawn:
+TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
 		TNT1 A 0
 		TNT1 A 0 A_PlaySound ("BURNZOM")
 		TNT1 A 0 A_Stop
@@ -555,7 +557,7 @@ Actor DeadZombieman_PinnedOnlyTorso: ZombiemanTorso
 Health 100
 DamageFactor "Head", 15.0
 radius 10
-Height 44
+Height 40
 +NOBLOCKMONST
 +NOGRAVITY
 -FORCEXYBILLBOARD
@@ -564,6 +566,7 @@ Height 44
 States
 {
 Spawn:
+TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
 		TNT1 A 0
 		NAIL O 1 ThrustThingZ (0,random(-3,3),random(0,1),0)
 		TNT1 A 0 A_Stop
@@ -732,7 +735,7 @@ Actor DeadShotgunguy_Pinned: ZombiemanTorso
 Health 100
 DamageFactor "Head", 15.0
 Radius 10
-Height 44
+Height 40
 +NOBLOCKMONST
 +NOGRAVITY
 -FORCEXYBILLBOARD
@@ -740,6 +743,7 @@ Height 44
 States
 {
 Spawn:
+TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
 		TNT1 A 0
 		NAIL H 1 ThrustThingZ (0,random(-3,3),random(0,1),0)
 		TNT1 A 0 A_Stop
@@ -938,7 +942,7 @@ ACTOR AgonizingShotgunguy_NoTorso: ZombiemanTorso
 Health 80
 DamageFactor "Head", 15.0
 Radius 10
-Height 44
+Height 40
 PainSound "imp/pain"
 PainChance 255
 +NOBLOCKMONST
@@ -948,6 +952,7 @@ PainChance 255
 States
 {
 Spawn:
+TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
 		TNT1 A 0
 		TNT1 A 0 A_PlaySound ("BURNZOM")
 		TNT1 A 0 A_Stop
@@ -1013,7 +1018,7 @@ Actor DeadShotgunguy_PinnedOnlyTorso: ZombiemanTorso
 Health 100
 DamageFactor "Head", 15.0
 radius 10
-Height 44
+Height 40
 +NOBLOCKMONST
 +NOGRAVITY
 -FORCEXYBILLBOARD
@@ -1022,6 +1027,7 @@ Height 44
 States
 {
 Spawn:
+TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
 		TNT1 A 0
 		NAIL U 1 ThrustThingZ (0,random(-3,3),random(0,1),0)
 		TNT1 A 0 A_Stop
@@ -1207,7 +1213,7 @@ Actor DeadImp_Pinned: ZombiemanTorso
 Health 100
 DamageFactor "Head", 15.0
 Radius 10
-Height 44
+Height 40
 +NOBLOCKMONST
 +NOGRAVITY
 -FORCEXYBILLBOARD
@@ -1215,6 +1221,7 @@ Height 44
 States
 {
 Spawn:
+TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
 		TNT1 A 0
 		NAIL L 1 ThrustThingZ (0,random(-3,3),random(0,1),0)
 		TNT1 A 0 A_Stop
@@ -1274,7 +1281,7 @@ Actor AgonizingImp_Pinned: ZombiemanTorso
 Health 80
 DamageFactor "Head", 15.0
 Radius 10
-Height 44
+Height 40
 PainSound "imp/pain"
 PainChance 255
 +NOBLOCKMONST
@@ -1284,6 +1291,7 @@ PainChance 255
 States
 {
 Spawn:
+TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
         TNT1 A 0
 		TNT1 A 0 A_Stop
 		TNT1 A 0 A_PlaySound ("imp/pain")
