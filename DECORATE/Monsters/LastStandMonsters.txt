@@ -16,6 +16,7 @@ BloodType "Brutal_Blood", "BloodSPlatterReplacer", "SawBlood"
 States
 	{
 	Spawn:
+	TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
 	ZBLS A 1 A_Look
 	Goto See
 	
@@ -154,6 +155,7 @@ MONSTER
 States
 	{
 	Spawn:
+	TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
 	ZBLS C 1 A_Look
 	Goto See
 	
@@ -318,6 +320,7 @@ MONSTER
 States
 	{
 	Spawn:
+	TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
 	ZSLS A 1 A_Look
 	Goto See
 	
@@ -478,6 +481,7 @@ MONSTER
 States
 	{
 	Spawn:
+	TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
 	ZSLS C 1 A_Look
 	Goto See
 	
