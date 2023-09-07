@@ -304,7 +304,7 @@ States
 
 
 
-ACTOR SergeantLastStand1: DyingSergeantNoLeg
+ACTOR SergeantLastStand1: sergeantgothislegblowed
 {
 Speed 0
 MONSTER
