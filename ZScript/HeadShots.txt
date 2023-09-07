@@ -74,7 +74,7 @@ CLASS BASEHEADSHOT : ACTOR
 	
 	Override int takespecialdamage(actor inflictor, actor source, int damage, name damagetype)
 	{
-	IF(damagetype == "plasma" || damagetype == "ice" || damagetype == "frost" || damagetype == "freeze" || damagetype == "desintegrate" || damagetype == "explosiveimpact" || damagetype == "fire" || damagetype == "fatality" || damagetype == "extremepunches" || damagetype == "kick" || damagetype == "melee")
+	IF(damagetype == "plasma" || damagetype == "ice" || damagetype == "frost" || damagetype == "freeze" || damagetype == "desintegrate" || damagetype == "explosiveimpact" || damagetype == "fire" || damagetype == "fatality")
 	{
 	
 	damagetoactor = damage;
