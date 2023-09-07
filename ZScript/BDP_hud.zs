@@ -719,7 +719,7 @@ class BDP_HUD : DoomStatusBar
 				
 				// Continue drawing only if we have the icon
 				// (don't draw times for dummy powerups):
-				if (iconName)
+				if (iconName && !(item is "PowerBloodOnVisor"))
 				{
 					double alph = item.IsBlinking() ? 0.3 : 1.0;
 					DrawImage(
@@ -737,8 +737,23 @@ class BDP_HUD : DoomStatusBar
 						translation: col,
 						scale: (0.8, 0.8)
 					);
+					//DEBUG
+					/*
+					numpos.x = (numpos.x + 25);
+					DrawString(
+						mConfont, 
+						item.getclassname(), 
+						numpos, 
+						flags|DI_TEXT_ALIGN_LEFT,
+						translation: col,
+						scale: (0.8, 0.8)
+					);
+					numpos.x = (numpos.x - 25);
+					*/
+					
 					iconPos.y += ySpacing;
 					numpos.y += ySpacing;
+					
 				}
 			}
 		}
