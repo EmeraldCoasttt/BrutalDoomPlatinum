@@ -719,7 +719,7 @@ class BDP_HUD : DoomStatusBar
 				
 				// Continue drawing only if we have the icon
 				// (don't draw times for dummy powerups):
-				if (iconName && !(item is "PowerBloodOnVisor"))
+				if (iconName && !(item is "PowerBloodOnVisor") && !(item is "PowerBlueBloodOnVisor") && !(item is "PowerGreenBloodOnVisor"))
 				{
 					double alph = item.IsBlinking() ? 0.3 : 1.0;
 					DrawImage(
