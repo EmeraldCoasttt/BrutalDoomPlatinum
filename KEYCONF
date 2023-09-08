@@ -43,9 +43,9 @@ setslot 9 Flamethrower2 HandGrenades
    defaultbind I swapgrenade
    alias swapgrenade "pukename swapgrenades"
    
-   addmenukey "Swap Berserk Modes" swapberserk
-   defaultbind B swapberserk
-   alias swapberserk "pukename swapberserkmode"
+  // addmenukey "Swap Berserk Modes" swapberserk
+  // defaultbind B swapberserk
+  // alias swapberserk "pukename swapberserkmode"
    
    addmenukey "Unload Gun" unreloader
    alias unreloader "pukename PressUnload"

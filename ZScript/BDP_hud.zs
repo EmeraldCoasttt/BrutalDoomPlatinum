@@ -504,8 +504,8 @@ class BDP_HUD : DoomStatusBar
 		);
 		if (CPlayer.mo.FindInventory("PowerStrength", true))
 		{
-			name pwr = CPlayer.mo.FindInventory("NoFatality") ? 'HASBERK2' : 'HASBERK';
-			DrawImage(pwr, iconPos + smallIconOfs, DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
+			//name pwr = CPlayer.mo.FindInventory("NoFatality") ? 'HASBERK2' : 'HASBERK';
+			DrawImage('HASBERK', iconPos + smallIconOfs, DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
 		}
 		If (CPlayer.mo.countinv("extralife") > 0)
 		{
