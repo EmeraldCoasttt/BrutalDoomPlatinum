@@ -139,7 +139,7 @@ CLASS MeleeAttack : Actor
 			{
 				//Console.printf("Backsmack!");
 				Damagetodeal = (damagetodeal*4);
-				A_startsound("bonecrack",27);
+				A_startsound("melee/backsmack",28);
 				Radius_Quake (6, 12, 0, 60, 0);
 			}
 			victim.damagemobj(self, target, damagetodeal, damagetype);
