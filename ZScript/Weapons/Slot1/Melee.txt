@@ -6,8 +6,8 @@ CLASS MeleeAttack : Actor
 	Property Berserkdamage : Berserkdamage;
 	Bool pickbarrel;
 	Property pickbarrel : pickbarrel;
-	Bool dofatality;
-	Property dofatality : dofatality;
+	//Bool dofatality;
+	//Property dofatality : dofatality;
 	Bool splatterblood;
 	Property splatterblood : splatterblood;
 	Bool uppercut;
@@ -38,7 +38,7 @@ CLASS MeleeAttack : Actor
 		MeleeAttack.basedamage 17;
 		MeleeAttack.berserkdamage 55;
 		MeleeAttack.pickbarrel TRUE;
-		MeleeAttack.dofatality TRUE;
+		//MeleeAttack.dofatality TRUE;
 		MeleeAttack.MeleeKnockback TRUE;
 	}
 	Int DamageToDeal;
@@ -47,7 +47,7 @@ CLASS MeleeAttack : Actor
 	
 	Override int specialmissilehit(Actor victim)
 		{
-			If(target && victim && victim is "ExplosiveBarrel1" && pickbarrel && target.findinventory("powerstrength") && !target.findinventory("hasagib") && !target.findinventory("nofatality"))
+			If(target && victim && victim is "ExplosiveBarrel1" && pickbarrel && target.findinventory("powerstrength") && !target.findinventory("hasagib"))
 				{
 					A_startsound("footmeat",3);
 					victim.destroy();
@@ -55,7 +55,7 @@ CLASS MeleeAttack : Actor
 					target.giveinventory("gofatality",1);
 					target.giveinventory("hasagib",1);
 				}
-				If(target && victim && victim is "TehLostSoul" && pickbarrel && target.findinventory("powerstrength") && !target.findinventory("hasagib") && !target.findinventory("nofatality"))
+				If(target && victim && victim is "TehLostSoul" && pickbarrel && target.findinventory("powerstrength") && !target.findinventory("hasagib"))
 				{
 					A_startsound("footmeat",3);
 					victim.a_noblocking();
@@ -84,9 +84,10 @@ CLASS MeleeAttack : Actor
 						}
 					}
 					}
-					//A_startsound("footmeat",3);
-					Damagetype = "Fatality";
-					If(target && target.findinventory("nofatality") || target && target.findinventory("hasagib") || !dofatality) {Damagetype = "ExtremePunches";}
+					A_startsound("footmeat",3);
+					//Damagetype = "Fatality";
+					//If(target && target.findinventory("nofatality") || target && target.findinventory("hasagib") || !dofatality) {Damagetype = "ExtremePunches";}
+					Damagetype = "ExtremePunches";
 					Damagetodeal = berserkdamage;
 					If(victim && uppercut && !victim.bspawnceiling && victim.bismonster)
 						{
@@ -340,7 +341,7 @@ CLASS MeleeAttackAir : MeleeAttackSlide
 				MeleeAttack.basedamage 27;
 		MeleeAttack.berserkdamage 95;
 		MeleeAttack.pickbarrel TRUE;
-		MeleeAttack.dofatality TRUE;
+		//MeleeAttack.dofatality TRUE;
 		Speed 40;
 			}
 	
