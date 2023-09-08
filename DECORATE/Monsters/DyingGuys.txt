@@ -98,6 +98,9 @@ ACTOR DyingZombieman
 	TNT1 A 0 A_SpawnItem ("DyingZombiemanInFlames")
 	Stop
 	Death.Trample:	
+	Death.Kick:
+		Death.KickDowned:
+		Death.Extremepunches:
 	            TNT1 A 0 A_CustomMissile ("MuchBlood2", 10, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AAAA 0 A_CustomMissile ("Brains1", 10, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_CustomMissile ("Brains2", 10, 0, random (0, 360), 2, random (0, 160))
@@ -1202,6 +1205,9 @@ ACTOR DyingSergeantNoLeg
 	Stop
 	
 	Death.Trample:	
+	Death.Kick:
+		Death.KickDowned:
+		Death.Extremepunches:
 	    TNT1 A 0 A_CustomMissile ("MuchBlood2", 10, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AAAA 0 A_CustomMissile ("Brains1", 10, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_CustomMissile ("Brains2", 10, 0, random (0, 360), 2, random (0, 160))

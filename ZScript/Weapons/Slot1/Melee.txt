@@ -134,6 +134,14 @@ CLASS MeleeAttack : Actor
 				{
 					Setstatelabel("death");
 				}
+				
+			If(victim && absangle(angle,victim.angle) < 90)
+			{
+				//Console.printf("Backsmack!");
+				Damagetodeal = (damagetodeal*4);
+				A_startsound("bonecrack",27);
+				Radius_Quake (6, 12, 0, 60, 0);
+			}
 			victim.damagemobj(self, target, damagetodeal, damagetype);
 			
 			bmissile = false;
