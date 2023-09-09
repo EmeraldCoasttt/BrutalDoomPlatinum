@@ -329,6 +329,7 @@ ACTOR GreenShockWave
    +NOBLOCKMAP 
    +NOGRAVITY 
    +CLIENTSIDEONLY
+   +forcexybillboard
    States 
    { 
    Spawn: 
