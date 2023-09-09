@@ -1483,6 +1483,20 @@ ACTOR BurningPentagram: PentagramSpawner
 	}
 }
 
+ACTOR BurningPentagramHammer: PentagramSpawner
+{
+    //Alpha 0
+	+floorhugger
+	States
+	{
+    Spawn:
+        TNT1 A 0
+		//PNTG AAAAAAAAAAAAAAAAAAAAAAA 1 A_FadeIn(0.02)
+		PNTG A 16
+		PNTG AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 A_FadeOut(0.03)
+        Stop
+	}
+}
 ACTOR NightmareBurningPentagram : BurningPentagram
 {
 	translation "0:255=[128,255,255]:[0,0,0]"
