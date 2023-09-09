@@ -54,6 +54,18 @@ ACTOR ExplosionParticleHeavy: ExplosionParticle2
        Stop
     }
 }
+ACTOR ExplosionParticleHeavyRed : ExplosionParticleHeavy
+{
+    States
+    {
+     Spawn:
+       SPRR SSSSS 1 BRIGHT
+	   SPRR SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 1 Bright A_FadeOut(0.02)
+        stop
+     Death:
+       Stop
+    }
+}
 
 ACTOR ExplosionParticleHeavyBlue : ExplosionParticleHeavy
 {
@@ -66,7 +78,11 @@ ACTOR ExplosionParticleVeryFast: ExplosionParticleHeavy
  Gravity 0.9
 }
 
-
+ACTOR ExplosionParticleREDVeryFast: ExplosionParticleHeavyRed
+{
+ speed 18
+ Gravity 0.9
+}
 ACTOR ExplosionParticleVerySlow: ExplosionParticleHeavy
 {
  Scale 0.05
@@ -1207,6 +1223,34 @@ ACTOR BDExplosionparticles: ExplosionParticle2
     }
 }
 
+
+ACTOR BDExplosionparticlesRED : BDExplosionparticles
+{
+States
+    {
+        Spawn: 
+			TNT1 A 0
+			TNT1 A 0 A_Jump(255, "Spawn1", "Spawn2", "Spawn3", "Live")
+	Spawn1:
+			TNT1 A 0
+			TNT1 A 0 A_SetScale(-0.7, -0.7)
+			Goto live
+	
+	Spawn2:
+			TNT1 A 0
+			TNT1 A 0 A_SetScale(0.5, -0.5)
+			Goto live
+			
+	Spawn3:
+			TNT1 A 0
+			TNT1 A 0 A_SetScale(-0.8, 0.8)
+			Goto live
+			
+	Live:	
+			SPRS ABCDEFGHI 1 BRIGHT
+			Stop
+    }
+}
 
 ACTOR BDExplosionparticles2: BDExplosionparticles
 {
