@@ -371,7 +371,7 @@
 			{
 				If(!passive && inflictor && inflictor.findinventory("grabberdamage"))
 					{
-						Newdamage = (damage * 8.0);
+						Newdamage = (damage * 4.0);
 					}
 			}
 	}
