@@ -630,7 +630,10 @@ class BDP_HUD : DoomStatusBar
 		int iconSpacing = -46;
 		vector2 numOfs = (-2, 1);
 		
-		DrawTeleBar(iconPos + (-32, -29), iconflags);
+		if(CPlayer.mo.player.readyweapon && Cplayer.mo.player.readyweapon is "Tenderizer")
+		{
+			DrawTeleBar(iconPos + (-32, -29), iconflags);
+		}
 		
 		Ammo ammo1, ammo2;
 		int ammo1amt, ammo2amt;

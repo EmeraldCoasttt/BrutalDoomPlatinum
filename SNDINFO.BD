@@ -1264,3 +1264,17 @@ BCRACK4 BCRACK4
 BCRACK5 BCRACK5
 BCRACK6 BCRACK6
 
+BDP/Weapon/Hammer/Swing1 "SOUNDS/COMBAT/WEAPONS/Slot 8/Hammer/Hammer_Swing_1.ogg"
+BDP/Weapon/Hammer/Swing2 "SOUNDS/COMBAT/WEAPONS/Slot 8/Hammer/Hammer_Swing_2.ogg"
+BDP/Weapon/Hammer/Swing3 "SOUNDS/COMBAT/WEAPONS/Slot 8/Hammer/Hammer_Swing_3.ogg"
+
+$random BDP/Weapon/Hammer/Swing { BDP/Weapon/Hammer/Swing1 BDP/Weapon/Hammer/Swing2 BDP/Weapon/Hammer/Swing3 }
+
+BDP/Weapon/Hammer/Impact1 "SOUNDS/COMBAT/WEAPONS/Slot 8/Hammer/Hammer_Impact_1.ogg"
+BDP/Weapon/Hammer/Impact2 "SOUNDS/COMBAT/WEAPONS/Slot 8/Hammer/Hammer_Impact_2.ogg"
+BDP/Weapon/Hammer/Impact3 "SOUNDS/COMBAT/WEAPONS/Slot 8/Hammer/Hammer_Impact_3.ogg"
+
+$random BDP/Weapon/Hammer/Impact { BDP/Weapon/Hammer/Impact1 BDP/Weapon/Hammer/Impact2 BDP/Weapon/Hammer/Impact3 }
+
+BDP/Weapon/Hammer/Select "SOUNDS/COMBAT/WEAPONS/Slot 8/Hammer/Hammer_Select.ogg"
+

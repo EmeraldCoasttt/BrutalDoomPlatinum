@@ -11,7 +11,7 @@ setslot 4 Rifle MiniGun Machinegun ClassicChaingun
 setslot 5 Rocket_Launcher GrenadeLauncher ClassicRocketLauncher NukeLauncher
 setslot 6 Plasma_Gun RailGun Freezer ClassicPlasmaRifle
 setslot 7 BIG_FUCKING_GUN BFG10k Unmaker  VanillaBFG9000
-setslot 8 HellishMissileLauncher FlameCannon
+setslot 8 HellishMissileLauncher FlameCannon Tenderizer
 setslot 9 Flamethrower2 HandGrenades
 //setslot 0 AmmoDroper
 
