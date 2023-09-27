@@ -576,3 +576,84 @@ CLASS Tenderizer : Brutalweapon
 	}
 	
 }
+
+Class HammerPortal : Actor
+{
+	Default
+	{
+	+NOBLOCKMAP;
+	+NOGRAVITY;
+	+NOTELEPORT;
+	RenderStyle "Add";
+	Alpha 0.0;
+	Scale 0.0;
+	+bright;
+	+forcexybillboard;
+	}
+	States
+	{
+		Spawn:
+	
+		TNT1 A 0 NODELAY;
+		HAMT ABCDCBABCDCB 1
+		{
+			A_fadein(0.10);
+			scale.x = (scale.x + 0.02);
+			scale.y = (scale.y + 0.02);
+			spawn("HammerLightning",pos);
+		}
+		StaySpawned:
+		HAMT ABCDCB 1
+		{
+			spawn("HammerLightning",pos);
+			//spawn("HammerLightning",pos);
+		}
+		LOOP;
+	}
+}
+
+Class HammerLightning : Actor
+{
+	Default
+	{
+	+NOBLOCKMAP;
+	+NOGRAVITY;
+	+NOTELEPORT;
+	+forcexybillboard;
+	RenderStyle "Add";
+	Alpha 1.0;
+	//Scale 0.0;
+	+bright;
+	+rollsprite;
+	}
+	States
+	{
+		Spawn:
+			TNT1 A 0 NODELAY
+			{
+				If(random(1,2) == 2)
+				{
+					bxflip = true;
+				}
+				roll = frandom(0,256);
+				float scaletobe = frandom(0.10,0.5);
+				scale = (scaletobe,scaletobe);
+			}
+			TNT1 A 0 a_jump(256,"Spawn1","spawn2","Spawn3");
+		Spawn1:
+			HAMT E 1;
+			Goto StaySpawned;
+		Spawn2:
+			HAMT F 1;
+			Goto StaySpawned;
+		Spawn3:
+			HAMT G 1;
+			Goto StaySpawned;
+		StaySpawned:
+			HAMT "#" 1 A_fadeout(0.2);
+			LOOP;
+	}
+	
+}
+	
+	
