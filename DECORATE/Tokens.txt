@@ -40,6 +40,10 @@ Actor moveblurspheretarget : Inventory
 {
 inventory.maxamount 1
 }
+Actor TeleporterTimer : Inventory
+{
+inventory.maxamount 100
+}
 Actor ReturnUnmorphStuffPlease : Inventory
 {
 inventory.maxamount 1
