@@ -622,7 +622,7 @@ Class HammerLightning : Actor
 	+forcexybillboard;
 	RenderStyle "Add";
 	Alpha 1.0;
-	//Scale 0.0;
+	//Scale 0.30;
 	+bright;
 	+rollsprite;
 	}
@@ -635,8 +635,8 @@ Class HammerLightning : Actor
 				{
 					bxflip = true;
 				}
-				roll = frandom(0,256);
-				float scaletobe = frandom(0.10,0.5);
+				roll = frandom(0,360);
+				float scaletobe = frandom(0.30,0.50);
 				scale = (scaletobe,scaletobe);
 			}
 			TNT1 A 0 a_jump(256,"Spawn1","spawn2","Spawn3");
