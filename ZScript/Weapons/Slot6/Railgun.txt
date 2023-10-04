@@ -6,7 +6,7 @@ CLASS Railgun : Brutalweapon
 	{
 	Weapon.AmmoUse1 0;
 	Weapon.AmmoUse2 0;
-	Weapon.AmmoGive1 0;
+	Weapon.AmmoGive1 50;
 	Weapon.AmmoGive2 0;
 	Weapon.AmmoType1 "AmmoCell";
 	Weapon.AmmoType2 "NuRailgunAmmo";
@@ -16,6 +16,10 @@ CLASS Railgun : Brutalweapon
 	+WEAPON.NOAUTOAIM;
 	+WEAPON.NOALERT;
 	+WEAPON.EXPLOSIVE;
+	+FORCEXYBILLBOARD;
+	scale 0.8;
+	radius 24;
+	height 24;
 	damagetype "Railgun";
 	Weapon.SelectionOrder 1550;
 	Inventory.AltHUDIcon "SRCGA0";

@@ -44,7 +44,7 @@ ACTOR Marine_Railgun: Marine_Rifle
 {
 	Health 135
 	MaxTargetRange 4096
-	DropItem "RailgunSpawner"
+	DropItem "Railgun"
 //	translation "112:127=[0,128,192]:[0,0,0]"
 translation "Blue2"
 	States
@@ -1236,7 +1236,7 @@ ACTOR BlackMarine_Railgun: Marine_Rifle
 {
 	Health 135
 	MaxTargetRange 4096
-	DropItem "RailgunSpawner"
+	DropItem "Railgun"
 //	translation "112:127=[0,128,192]:[0,0,0]"
 translation "Blue2black"
 	States

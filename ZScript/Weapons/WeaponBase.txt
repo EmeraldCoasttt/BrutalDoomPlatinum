@@ -32,8 +32,6 @@ Class Brutalweapon : DoomWeapon //Weapon
 	Weapon.BobRangeY 0.4;
 	Weapon.BobSpeed 2.9;
 	Weapon.BobStyle "InverseAlpha";
-	VisibleToPlayerClass "BDoomer", "Doomer2", "Doomer3", "TacticalDoomer";
-	Inventory.ForbiddenTo "Purist";
 	brutalweapon.clearoverlays TRUE;
 	
 	}

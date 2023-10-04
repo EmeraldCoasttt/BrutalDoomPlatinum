@@ -3,15 +3,18 @@
 
 Actor BFG10k : BrutalWeapon
 {
-  Radius 20
-  Height 20
+  Scale 0.8
+  Radius 24
+  Height 24
   Weapon.AmmoUse 5
-  Weapon.AmmoGive 0
+  Weapon.AmmoGive1 100
+  Weapon.AmmoGive2 0
   Weapon.AmmoType "AmmoCell"
   weapon.ammotype2 "Nuke"
   Weapon.Kickback 100
   Weapon.SelectionOrder 3000
-  Inventory.Pickupmessage "You got the BFG10000! Holy shit! (Slot 7)"
+  Inventory.PickupSound "10kSELEC"
+  Inventory.PickupMessage "You got the BFG 10K! Holy Shit! (Slot 7)"
   Obituary "%o was blasted by %k's BFG10K"
   Decal BFGLightning
 	+WEAPON.BFG
@@ -19,6 +22,7 @@ Actor BFG10k : BrutalWeapon
 	+WEAPON.NOAUTOFIRE
 	+WEAPON.EXPLOSIVE
 	//+WEAPON.NO_AUTO_SWITCH
+	+FORCEXYBILLBOARD
 	Inventory.AltHUDIcon "BFG2A0"
 	BrutalWeapon.weight 13
   States

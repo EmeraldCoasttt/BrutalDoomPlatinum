@@ -14,8 +14,6 @@ ACTOR AssaultShotgun : BrutalWeapon
 	Weapon.AmmoGive1 8
 	Weapon.AmmoUse2 0
 	Weapon.AmmoGive2 0
-	YScale 0.6
-	XScale 0.8
 	Weapon.SelectionOrder 1200
 	Weapon.AmmoType1 "AmmoShell"
 	Weapon.AmmoType2 "AssaultShotgunAmmo"
@@ -28,6 +26,8 @@ ACTOR AssaultShotgun : BrutalWeapon
 	+WEAPON.NOALERT
 	+FORCEXYBILLBOARD
     Scale 0.8
+	Radius 24
+	Height 24
 	BrutalWeapon.weight 8
 	Tag "Assault Shotgun"
 	Inventory.AltHUDIcon "A12PA0"
@@ -659,8 +659,12 @@ DualWield:
 		
 		
 	
- 	Spawn:
+	 Spawn:
+		TNT1 A 0 NoDelay A_Jump(80,"Spawn2")
 		A12P A -1
+		Stop
+	Spawn2:
+		A12P B -1
 		Stop
 	}
 }

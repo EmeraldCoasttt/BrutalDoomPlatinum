@@ -46,7 +46,7 @@ ACTOR Marine_Grenade: Marine_Rifle
 {
 	Health 175
 	MaxTargetRange 1024
-	DropItem "GrenadeLauncherSpawner"
+	DropItem "GrenadeLauncher"
 	//translation "112:127=[205,133,63]:[0,0,0]"
 	translation "BROWN"
 	States

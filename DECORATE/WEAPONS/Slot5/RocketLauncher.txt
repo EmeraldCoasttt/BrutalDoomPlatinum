@@ -15,7 +15,7 @@ ACTOR Rocket_Launcher : BrutalWeapon Replaces RocketLauncher
 	Weapon.AmmoUse1 0
 	Weapon.AmmoUse2 0
 	Weapon.AmmoGive2 0
-	Weapon.AmmoGive1 0
+	Weapon.AmmoGive1 2
 	Weapon.AmmoType1 "AmmoRocket"
 	Weapon.AmmoType2 "RocketRounds"
     Inventory.PickupSound "RLANDRAW"
@@ -27,6 +27,9 @@ ACTOR Rocket_Launcher : BrutalWeapon Replaces RocketLauncher
 	//+WEAPON.NO_AUTO_SWITCH
 	Inventory.PickupMessage "You got the Rocket Launcher! (Slot 5)"
 	Tag "Rocket Launcher"
+	scale 0.8
+	radius 24
+	height 24
 	Inventory.AltHUDIcon "LAUNA0"
 	BrutalWeapon.weight 8
 	States

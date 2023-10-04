@@ -43,7 +43,7 @@ ACTOR Marine_BFGSpawn: RedTorch
 ACTOR Marine_BFG: Marine_Rifle
 {
 	Health 125
-	DropItem "BFG9000Spawner"
+	DropItem "BIG_FUCKING_GUN"
 	translation "112:127=[0,140,0]:[0,0,0]"
 	MaxTargetRange 4096
 	States

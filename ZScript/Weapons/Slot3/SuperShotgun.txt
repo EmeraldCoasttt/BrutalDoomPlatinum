@@ -4,7 +4,7 @@ CLASS SSG : BrutalWeapon
 	{
 		Weapon.Kickback 50;
 		Weapon.SelectionOrder 400;
-		Weapon.AmmoGive1 0;
+		Weapon.AmmoGive1 8;
 		Weapon.AmmoGive2 0;
 		Weapon.AmmoType1 "AmmoShell";
 		Weapon.AmmoType2 "SSGAmmo";
@@ -16,7 +16,9 @@ CLASS SSG : BrutalWeapon
 		Inventory.PickupMessage "You got the Super Shotgun! (Slot 3)";
 		Obituary "$OB_MPSSHOTGUN";
 		Inventory.PickupSound "CLIPINSS";
-		Scale 0.9;
+		Scale 0.8;
+		Radius 24;
+		Height 24;
 		Tag "Super Shotgun";
 		Inventory.AltHUDIcon "SGN2A0";
 		BrutalWeapon.weight 6;
@@ -733,9 +735,13 @@ CLASS SSG : BrutalWeapon
 		
 		
 		
-	Spawn:
+	 Spawn:
+		TNT1 A 0 NoDelay A_jump(80,"Spawn2");
 		SGN2 A -1;
-		stop;
+		Stop;
+	Spawn2:
+		MGN2 A -1;
+		Stop;
 	
 	Unload:
 		SHTZ A 1 A_WeaponReady();
