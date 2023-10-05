@@ -41,7 +41,7 @@ CLASS Tenderizer : Brutalweapon
 		
 		TakeTeleportTimer++;
 		
-		If(taketeleporttimer >= 15)
+		If(taketeleporttimer >= 7)
 		{
 			owner.TakeInventory("TeleporterTimer",1);
 			TakeTeleportTimer = 0;
@@ -617,7 +617,11 @@ CLASS Tenderizer : Brutalweapon
 				
 					let Destination = spawn("HammerPortal",targetpos);
 					invoker.destination = destination;
+				A_startsound("Weapons/Unmaker/PlaceTeleporter",6);
 			}
+			HAMG LMNLMNLMN 1;
+			TNT1 A 0 A_startSound("BDP/Weapon/Hammer/Select",1);
+			HAMG KJIHGFE 1;
 			Goto Ready;
 
 		Spawn:
