@@ -212,11 +212,14 @@ CLASS Tenderizer : Brutalweapon
 			
 			invoker.owner.A_startsound("Weapons/Unmaker/UseTeleporter",6);
 			vector3 SavedPos = invoker.owner.pos;
+			float savedAngle = invoker.owner.angle;
 			//invoker.owner.setorigin((invoker.Destination.pos - (0,0,64)),false);
 			invoker.owner.teleportmove((invoker.Destination.pos - (0,0,64)),TRUE);
+			invoker.owner.angle = invoker.destination.angle;
 			Invoker.Destination.destroy();
 			let destination = spawn("HammerPortal",(savedpos + (0,0,64)));
 			invoker.destination = destination;
+			destination.angle = savedAngle;
 			invoker.owner.a_spawnitemex("teleportationfog");
 			Return resolvestate("Ready");
 		}
@@ -618,6 +621,7 @@ CLASS Tenderizer : Brutalweapon
 				
 					let Destination = spawn("HammerPortal",targetpos);
 					invoker.destination = destination;
+					destination.angle = angle;
 				A_startsound("Weapons/Unmaker/PlaceTeleporter",6);
 				If(countinv("soulammo") < 30)
 				{
