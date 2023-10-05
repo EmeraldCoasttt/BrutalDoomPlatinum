@@ -45,7 +45,19 @@ CLASS Tenderizer : Brutalweapon
 		{
 			owner.TakeInventory("TeleporterTimer",1);
 			TakeTeleportTimer = 0;
+			
 		}
+		If(owner.findinventory("TeleporterTimer") && owner.findinventory("Swapriflespecial"))
+		{
+			Owner.takeinventory("swapriflespecial",1);
+			A_tryHammerTeleport();
+		}
+		
+		If(!owner.findinventory("teleportertimer") && destination)
+		{
+			destination.destroy();
+		}
+		
 	}
 	
 		action void A_CheckGrab(double range, double ang)
@@ -197,11 +209,14 @@ CLASS Tenderizer : Brutalweapon
 	{
 		If(Invoker.Destination)
 		{
+			
+			invoker.owner.A_startsound("Weapons/Unmaker/UseTeleporter",6);
 			vector3 SavedPos = invoker.owner.pos;
 			invoker.owner.setorigin(invoker.Destination.pos,true);
 			Invoker.Destination.destroy();
 			let destination = spawn("HammerPortal",SavedPos);
 			invoker.destination = destination;
+			invoker.owner.a_spawnitemex("teleportationfog");
 			Return resolvestate("Ready");
 		}
 		Else
@@ -313,7 +328,7 @@ CLASS Tenderizer : Brutalweapon
 				A_startsound("BDP/Weapon/Hammer/Impact",1);
 				Radius_Quake(4,14,0,12,0);
 				A_DoHammer(300,90,true,random(200,500));
-				A_giveinventory("teleportertimer",100);
+				
 				A_recoil3d(10);
 				If(countinv("soulammo") < 30)
 				{
@@ -595,6 +610,7 @@ CLASS Tenderizer : Brutalweapon
 			HAMG EFGHIJK 1;
 			TNT1 A 0
 			{
+				A_giveinventory("teleportertimer",100);
 				FLineTraceData Portaldestination;
 				LineTrace(angle, 64, pitch, TRF_SOLIDACTORS|TRF_THRUHITSCAN, offsetz: player.viewz - pos.z, data: portaldestination);
 				vector3 targetpos = Portaldestination.HitLocation;
