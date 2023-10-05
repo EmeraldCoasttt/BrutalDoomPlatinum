@@ -4,10 +4,12 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 {
 	Default
 	{
-		Height 20;
+		Scale 0.8;
+		Height 24;
+		Radius 24;
 		Weapon.SelectionOrder 2900;
 		Weapon.AmmoUse 0;
-		Weapon.AmmoGive 0;
+		Weapon.AmmoGive 100;
 		Weapon.AmmoType "AmmoCell";
 		Inventory.PickupSound "BFGREADY";
 		+FORCEXYBILLBOARD;

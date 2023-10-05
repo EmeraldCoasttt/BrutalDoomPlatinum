@@ -10,12 +10,12 @@ ACTOR Shot_Gun : BrutalWeapon
 	Weapon.SelectionOrder 1300
 	Weapon.AmmoUse1 0
 	Weapon.AmmoUse2 0
-	Weapon.AmmoGive1 0
+	Weapon.AmmoGive1 8
 	Weapon.AmmoGive2 0
 	Weapon.AmmoType1 "AmmoShell"
 	Weapon.AmmoType2 "ShotgunAmmo"
-	Inventory.PickupMessage "$GOTSHOTGUN"
-    Inventory.PickupSound "weapons/sgpump"
+	Inventory.PickupMessage "You got the Shotgun! (Slot 3)"
+	Inventory.PickupSound "weapons/sgpump"
 	Obituary "$OB_MPSHOTGUN"
     AttackSound "None"
     +WEAPON.NOALERT
@@ -23,6 +23,8 @@ ACTOR Shot_Gun : BrutalWeapon
 	+WEAPON.NOAUTOFIRE
 	+FORCEXYBILLBOARD
 	scale 0.8
+	radius 24
+	height 24
 	Tag "Shotgun"
 	Inventory.AltHUDIcon "SHTCD0"
 	States
@@ -65,7 +67,7 @@ ACTOR Shot_Gun : BrutalWeapon
 	stop	
 		
     Spawn:
-		SHTC D -1
+		SHTC A -1
 		Stop
 
 	Fidget:

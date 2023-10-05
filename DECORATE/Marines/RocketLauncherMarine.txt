@@ -46,7 +46,7 @@ ACTOR Marine_Rocket: Marine_Rifle
 {
 	Health 175
 	MaxTargetRange 4096
-	DropItem "RocketLauncherSpawner"
+	DropItem "Rocket_Launcher"
 	//translation "112:127=[205,133,63]:[0,0,0]"
 	translation "Brown2"
 	States

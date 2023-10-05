@@ -43,7 +43,7 @@ ACTOR Marine_SSGSpawn: RedTorch
 ACTOR Marine_SSG: Marine_Rifle
 {
 	Health 175
-	DropItem "SSGSpawner"
+	DropItem "SSG"
 //	translation "112:127=[170,170,170]:[0,0,0]"
 translation "GRAY2"
 	MaxTargetRange 1024
@@ -1040,7 +1040,7 @@ ACTOR Marine_SSGPathfinder
 ACTOR BlackMarine_SSG: Marine_Rifle
 {
 	Health 175
-	DropItem "SSGSpawner"
+	DropItem "SSG"
 //	translation "112:127=[170,170,170]:[0,0,0]"
 translation "GRAY2black"
 	MaxTargetRange 1024
