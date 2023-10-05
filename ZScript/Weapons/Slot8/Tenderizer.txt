@@ -317,6 +317,7 @@ CLASS Tenderizer : Brutalweapon
 			{
 				A_SetPitch(pitch-2.333, SPF_INTERPOLATE);
 				invoker.owner.A_setangle(invoker.owner.angle-0.83333,SPF_INTERPOLATE);
+				invoker.owner.vel.z = (invoker.owner.vel.z - 40);
 			}
 		FireHold:
 		//	HAMR G 1;
@@ -431,6 +432,7 @@ CLASS Tenderizer : Brutalweapon
 		tnt1 A 0
 		{
 			A_startsound("GRBRFIRE",12);
+			A_startsound("GRBRFAIL",13);
 			If(invoker.grabbedactor)
 			{
 			invoker.grabbedactor.bmissile = invoker.previousmissile;
