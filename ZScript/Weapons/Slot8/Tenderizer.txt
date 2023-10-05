@@ -619,6 +619,11 @@ CLASS Tenderizer : Brutalweapon
 					let Destination = spawn("HammerPortal",targetpos);
 					invoker.destination = destination;
 				A_startsound("Weapons/Unmaker/PlaceTeleporter",6);
+				If(countinv("soulammo") < 30)
+				{
+					A_damageself(20,"desintegrate");
+				}
+				takeinventory("soulammo",30);
 			}
 			HAMG LMNLMNLMN 1;
 			TNT1 A 0 A_startSound("BDP/Weapon/Hammer/Select",1);
