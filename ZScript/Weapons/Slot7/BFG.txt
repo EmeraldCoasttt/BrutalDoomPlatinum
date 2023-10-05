@@ -318,6 +318,7 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		  TNT1 A 0 A_takeinventory("Big_Fucking_Gun",1)
 		  Goto ready
 		*/
+		/*
    DualWield:
 		TNT1 A 0 A_takeinventory("startdualwield",1);
 		//TNT1 A 0 A_jumpifinventory("ammocell",1,1);
@@ -500,7 +501,7 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		}
 		//TNT1 A 0 A_takeinventory("ammocell",1);
 		LOOP;
-	
+	*/
 	Spawn:
 		BFUG A -1;
 		Stop;
