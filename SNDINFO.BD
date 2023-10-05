@@ -1278,3 +1278,6 @@ $random BDP/Weapon/Hammer/Impact { BDP/Weapon/Hammer/Impact1 BDP/Weapon/Hammer/I
 
 BDP/Weapon/Hammer/Select "SOUNDS/COMBAT/WEAPONS/Slot 8/Hammer/Hammer_Select.ogg"
 
+BDP/Weapon/Hammer/Portal evilbas1
+BDP/Weapon/Hammer/Portal/Die evilbas2
+

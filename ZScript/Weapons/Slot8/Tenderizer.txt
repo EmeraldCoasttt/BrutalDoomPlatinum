@@ -55,7 +55,7 @@ CLASS Tenderizer : Brutalweapon
 		
 		If(!owner.findinventory("teleportertimer") && destination)
 		{
-			destination.destroy();
+			destination.setstatelabel("die");
 		}
 		
 	}
@@ -216,7 +216,7 @@ CLASS Tenderizer : Brutalweapon
 			//invoker.owner.setorigin((invoker.Destination.pos - (0,0,64)),false);
 			invoker.owner.teleportmove((invoker.Destination.pos - (0,0,64)),TRUE);
 			invoker.owner.angle = invoker.destination.angle;
-			Invoker.Destination.destroy();
+			Invoker.Destination.setstatelabel("die");
 			let destination = spawn("HammerPortal",(savedpos + (0,0,64)));
 			invoker.destination = destination;
 			destination.angle = savedAngle;
@@ -659,7 +659,7 @@ Class HammerPortal : Actor
 	{
 		Spawn:
 	
-		TNT1 A 0 NODELAY;
+		TNT1 A 0 NODELAY A_startsound("BDP/Weapon/Hammer/Portal",1,CHANF_LOOP,1.0,ATTN_NORM,0.0,frandom(0,1));
 		HAMT ABCDCBABCDCB 1
 		{
 			A_fadein(0.10);
@@ -674,6 +674,9 @@ Class HammerPortal : Actor
 			//spawn("HammerLightning",pos);
 		}
 		LOOP;
+		Die:
+		TNT1 A 0 A_startsound("BDP/Weapon/Hammer/Portal/Die",1);
+		STOP;
 	}
 }
 
