@@ -220,6 +220,7 @@ CLASS Tenderizer : Brutalweapon
 			let destination = spawn("HammerPortal",(savedpos + (0,0,64)));
 			invoker.destination = destination;
 			destination.angle = savedAngle;
+			invoker.owner.A_giveinventory("teleportertimer",5);
 			//invoker.owner.a_spawnitemex("teleportationfog");
 			Return resolvestate("Ready");
 		}
