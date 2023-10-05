@@ -212,9 +212,10 @@ CLASS Tenderizer : Brutalweapon
 			
 			invoker.owner.A_startsound("Weapons/Unmaker/UseTeleporter",6);
 			vector3 SavedPos = invoker.owner.pos;
-			invoker.owner.setorigin(invoker.Destination.pos,true);
+			//invoker.owner.setorigin((invoker.Destination.pos - (0,0,64)),false);
+			invoker.owner.teleportmove((invoker.Destination.pos - (0,0,64)),TRUE);
 			Invoker.Destination.destroy();
-			let destination = spawn("HammerPortal",SavedPos);
+			let destination = spawn("HammerPortal",(savedpos + (0,0,64)));
 			invoker.destination = destination;
 			invoker.owner.a_spawnitemex("teleportationfog");
 			Return resolvestate("Ready");
