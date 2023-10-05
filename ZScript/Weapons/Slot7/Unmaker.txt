@@ -325,7 +325,7 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		Goto Ready;
 		*/
 
-		
+		/*
 	DualWield:
 		TNT1 A 0 A_takeinventory("startdualwield",1);
 		UNHG A 0 A_startSOund("UNMCRAK2");
@@ -382,7 +382,7 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		Goto Ready;
 		*/
 		
-		
+		/*
 	AimTeleport:
 		TNT1 A 0
 			{
@@ -409,6 +409,7 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 					targetpos.z = (targetpos.z + 16);
 				}
 				*/
+				/*
 				If(invoker.teleportpending)
 					{
 					invoker.Teleportpending.setorigin(targetpos,TRUE);
@@ -442,7 +443,7 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		}
 		UNHF DCBA 1 A_takeinventory("startdualwield",1);
 		Goto Ready;
-		
+		*/
 		
 		
 	Reload: //that's actually inspect
