@@ -137,7 +137,7 @@ actor VeryVeryDeadMarine2 : VeryVeryDeadMarine
 
 
 
-actor CurbstompedMarine
+actor CurbstompedMarine : BDPCorpse
 {  
     Radius 10
     Height 30

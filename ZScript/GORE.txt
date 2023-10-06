@@ -450,3 +450,19 @@ class GreenSquishyGibs : NAshgoresquishygibs
 				
 		}
 	}
+	
+	Class BDPCorpse : Actor
+	{
+	
+	
+		Override void tick()
+		{
+			
+			If(health >= 1 && !findinventory("BDPCorpseInventory") && bshootable)
+			{
+				Giveinventory("bdpcorpseinventory",1);
+			}
+			Super.tick();
+			
+		}
+	}
