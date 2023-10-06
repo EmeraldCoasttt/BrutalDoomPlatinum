@@ -5,7 +5,7 @@ CLASS Tenderizer : Brutalweapon
 	{
 	Weapon.AmmoUse1 0;
 	Weapon.AmmoUse2 0;
-	Weapon.AmmoGive1 0;
+	Weapon.AmmoGive1 100;
 	Weapon.AmmoGive2 0;
 	Weapon.AmmoType1 "SoulAmmo";
 	Obituary "%o was tenderized by %k's Hammer.";

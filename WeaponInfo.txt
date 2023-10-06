@@ -9,7 +9,7 @@ shotgunspawner,shotgun,1
 ssgspawnerreplacer,supershotgun,1
 chaingunspawnerreplacer,chaingun,1
 RLSPAWNERREPLACER,rocketlauncher,1
-Tenderizer,rocketlauncher,2
+Tenderizer,rocketlauncher,3
 chainsawspawner,chainsaw,1
 plasmagunreplacer,plasmarifle,1
 bfgreplacer,bfg,1
