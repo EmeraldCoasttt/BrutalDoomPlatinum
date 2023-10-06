@@ -243,7 +243,7 @@ class SquishMeRed : Actor
 	Default
 	{
 		Height 10;
-		Radius 30;
+		Radius 1;
 		SquishMeRed.spawnguts "NashGoreSquishyGibs";
 		
 	}
