@@ -740,6 +740,7 @@ Actor NoGutsFatso: CurbstompedMarine
 States
     {
     Spawn:
+		TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 		FAT2 P -1
         Stop
     Death:

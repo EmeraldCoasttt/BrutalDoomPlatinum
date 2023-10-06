@@ -1104,6 +1104,7 @@ Actor DeadBaron: CurbstompedMarine
 States
     {
     Spawn:
+		TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 		BADD F -1
         Stop
 		

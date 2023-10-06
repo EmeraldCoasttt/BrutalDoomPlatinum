@@ -323,6 +323,7 @@ Actor DeadBelphegor: CurbstompedMarine
 	States
     {
     Spawn:
+		TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 		BOS3 l 1
 		BOS3 l -1
         Stop

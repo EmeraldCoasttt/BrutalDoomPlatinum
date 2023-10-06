@@ -157,7 +157,7 @@ actor CurbstompedMarine
 	damagefactor "CrushedBodies", 9999.00
 	damagefactor "Headkick", 0.0
 	+forcexybillboard
-   
+	+dontthrust
     States    {
     Spawn:
 	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
@@ -280,6 +280,7 @@ actor DukeNukem1Marine: CurbstompedMarine
     States
     {
        Spawn:
+	   TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -294,6 +295,7 @@ actor SlightlyBurned1Marine: CurbstompedMarine
     States
     {
 	 Spawn:
+	 TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -319,6 +321,7 @@ DropItem "Helmet1Armor"
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -343,6 +346,7 @@ actor OnlyTorso1Marine: CurbstompedMarine
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -356,6 +360,7 @@ actor NoArmMarine: CurbstompedMarine
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -369,6 +374,7 @@ actor VanillaDeadMarine: CurbstompedMarine
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -393,6 +399,7 @@ DropItem "Helmet1Armor"
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -446,6 +453,7 @@ DropItem "Helmet1Armor"
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -460,6 +468,7 @@ DropItem "Helmet1Armor"
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -473,6 +482,7 @@ actor RappedMarine: CurbstompedMarine
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -505,6 +515,7 @@ actor AteMarine: CurbstompedMarine
 	
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -529,6 +540,7 @@ actor FuckedMarine: CurbstompedMarine
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -564,6 +576,7 @@ actor DeadRippedOffMarine: CurbstompedMarine
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -609,6 +622,7 @@ actor VeryDeadCivilian: CurbstompedMarine
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 		TNT1 A 0 A_SpawnItem("GoreFliesWsound", 0, random(0, 15))
 		TNT1 AAA 0 A_SpawnItem("GoreFlies", 0, random(0, 15))
 	Idle:
@@ -623,6 +637,7 @@ actor MarineGotOwnedByImp: CurbstompedMarine
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 60
 	IPFP P 1
@@ -647,6 +662,7 @@ DropItem "Helmet1Armor"
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -678,7 +694,8 @@ DropItem "Helmet1Armor"
     States
     {
     Spawn:
-PLAY N 1900 
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
+PLAY N -1 
        Loop    
 	   
 	  	Death:
@@ -698,7 +715,8 @@ DropItem "Helmet1Armor"
     States
     {
     Spawn:
-PLA9 N 1900 
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
+PLA9 N -1 
        Loop 
 	 
 	
@@ -720,6 +738,7 @@ actor DeadHalfMarine: CurbstompedMarine
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -732,6 +751,7 @@ actor VanillaDeadMarineFaceOnFloor: CurbstompedMarine
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -755,6 +775,7 @@ actor VanillaDeadMarineArmsForward: CurbstompedMarine
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 	TNT1 A 0
 	TNT1 A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFLIP",1)
@@ -3426,7 +3447,8 @@ actor VeryFuckedUpRevenant: CurbstompedMarine
     States
     {
     Spawn:
-REVH L 1900 
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
+REVH L -1 
        Loop    }}
 	   
 actor MarineFatalizedByRevenant: CurbstompedMarine
@@ -3434,7 +3456,8 @@ actor MarineFatalizedByRevenant: CurbstompedMarine
     States
     {
     Spawn:
-REFP K 1900 
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
+REFP K -1 
        Loop    }}
 	   
 	   
@@ -3456,6 +3479,7 @@ actor PlayerJustGotCutInHalf: CurbstompedMarine
     States
     {
     Spawn:
+	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 XPL2 GHIJKL 5
 XPL2 L -1 A_SpawnItem("MediumBloodSpot")
        Stop    }}
@@ -3466,6 +3490,7 @@ actor DeadNazi: CurbstompedMarine
 States
 {
 Spawn:
+TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 NAZI L -1
 Stop
 }

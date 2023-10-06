@@ -1660,6 +1660,7 @@ Actor DeadShotgunGuy1: CurbstompedMarine //Replaces DeadShotgunguy
 States
     {
     Spawn:
+		TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
         SPOS L -1
         Stop
     Death:

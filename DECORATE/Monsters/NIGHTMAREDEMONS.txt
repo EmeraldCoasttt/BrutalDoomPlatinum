@@ -955,6 +955,7 @@ Actor BlueDeadDemon1: CurbstompedMarine //Replaces BlueDeadDemon
 States
     {
     Spawn:
+		TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 		SARG N -1
         Stop
     Death:
@@ -977,7 +978,26 @@ States
 		EXPL AAA 0 A_CustomMissile ("ExplosionSmoke", 32, 0, random (0, 360), 2, random (0, 360))
         CARB JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ 10 A_CustomMissile ("SmallSmoke", 1, 0, random (0, 360), 2, random (0, 160))
         CARB J -1
-        Stop}}
+        Stop
+		Death.CrushedBodies:
+	Crush:
+		//TNT1 A 0 A_spawnitemex("bluesquishygibs")
+		//TNT1 A 0 A_spawnitemex("SquishMeBlue",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_SetAngle(0)
+		TNT1 A 0 A_CustomMissile ("XDeath1Blue", 5, random (-30, 30), random (0, 360), 2, random (0, 160))
+		 TNT1 A 0 A_CustomMissile ("XDeath2bBlue", 5, random (-30, 30), random (0, 360), 2, random (0, 160))
+		 TNT1 A 0 A_CustomMissile ("XDeath3bBlue", 5, random (-30, 30), random (0, 360), 2, random (0, 160))
+		 TNT1 AAAAA 0 A_CustomMissile ("BlueBloodMistBig", 5, random (-40, 40), random (0, 360), 2, random (30, 90))
+		 TNT1 A 0 A_SetAngle(90)
+		TNT1 A 0 A_CustomMissile ("XDeath1Blue", 5, random (-30, 30), random (0, 360), 2, random (0, 160))
+		 TNT1 A 0 A_CustomMissile ("XDeath2bBlue", 5, random (-30, 30), random (0, 360), 2, random (0, 160))
+		 TNT1 A 0 A_CustomMissile ("XDeath3bBlue", 5, random (-30, 30), random (0, 360), 2, random (0, 160))
+		 TNT1 AAAAAA 0 A_CustomMissile ("BlueBloodMistBig", 5, random (-40, 40), random (0, 360), 2, random (30, 90))
+		TNT1 A 1 A_XScream
+		CRS2 B -1
+		Stop 
+		}}
 
 
 Actor BlueDeadDemonHalf: BlueDeadDemon1

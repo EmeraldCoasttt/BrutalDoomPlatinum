@@ -955,6 +955,7 @@ Actor DeadKnight: CurbstompedMarine
 States
     {
     Spawn:
+		TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1)
 		HKDD D -1
         Stop
 	
