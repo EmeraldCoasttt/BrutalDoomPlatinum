@@ -1177,7 +1177,7 @@ Decal BlueBloodSuper
 			Crash:
 			TNT1 A 0
 
-			  XMT2 JJJJJJJJJJJJJJJJJ 4 ThrustThingZ(0, 20, 0, 1)
+			  XMT2 JJJJJJJJJJJJJJJJJ 1 ThrustThingZ(0, 20, 0, 1)
 			  TNT1 A 0 A_jump(30,"fall")
 			 LOOP
 		  
