@@ -584,13 +584,14 @@ States
 		TNT1 A 0 A_Stop
         XFBT CDEF 4 
         XFBT F 1 A_BossDeath
-		
+		TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 	    TNT1 A 0 A_SpawnItem ("XDeadFat", 1)
 		TNT1 A -1
         Stop
 
     Crush:
 		TNT1 A 0
+		TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 AAAAAA 0 A_SpawnItemEx ("BodyRemovalThing",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 1 A_XScream
 		Stop

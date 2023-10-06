@@ -542,7 +542,9 @@ ReplaceVanilla:
 	XDeath:
 	    TNT1 A 0 A_XScream
 		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_spawnitemex("SquishMegreen",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 	    TNT1 A 0 A_CustomMissile ("KnightXDeath", 0, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A -1
 	    Stop
 
 	
@@ -776,7 +778,8 @@ Death.ExplosiveImpact:
 		
 	Crush:
 		TNT1 A 0
-		TNT1 A 0 A_spawnitemex("greensquishygibs")
+		//TNT1 A 0 A_spawnitemex("greensquishygibs")
+		TNT1 A 0 A_spawnitemex("SquishMeGreen",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 AAAAAA 0 A_SpawnItemEx ("BodyRemovalThing",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 1 A_XScream
 		Stop
@@ -1003,7 +1006,7 @@ States
 		
 		Death.crush:
 		 TNT1 A 0 A_SetAngle(0)
-		 TNT1 A 0 A_spawnitemex("greensquishygibs")
+		// TNT1 A 0 A_spawnitemex("greensquishygibs")
 		 TNT1 A 0 bright A_CustomMissile ("GreenSuperGoreSpawner", 1, -40, random (0, 360), 2, random (25, 45))
 		 TNT1 A 0 bright A_CustomMissile ("GreenSuperGoreSpawner", 1, 40, random (0, 360), 2, random (25, 45))
 		 TNT1 A 0 A_CustomMissile ("XDeath1Green", 1, random (-30, 30), random (0, 360), 2, random (0, 160))

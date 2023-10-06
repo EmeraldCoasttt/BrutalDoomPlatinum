@@ -715,6 +715,7 @@ FatalityImp:
 		TNT1 A 0 A_Scream
 		REDX ABCDEFGHIJK 3
 		TNT1 A 0 A_SpawnItem("GrowingBloodPool")
+		TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		REDX K -1
         Stop
 		
@@ -812,6 +813,7 @@ ACTOR RoamingLegs
 		Stop
    Crush:
 		TNT1 A 0
+		TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 AAAA 0 A_SpawnItemEx ("BodyRemovalThing",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 1 A_XScream
 		Stop

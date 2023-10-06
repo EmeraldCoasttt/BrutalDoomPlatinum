@@ -1324,6 +1324,7 @@ Death.Revolver:
 		TNT1 A 0 A_CustomMissile ("XDeath2", 42, 0, random (0, 190), 2, random (10, 60))
 		TNT1 A 0 A_CustomMissile ("XDeath4", 42, 0, random (0, 190), 2, random (10, 60))
         TNT1 A 0 A_CustomMissile ("SargeXDeath", 0, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
         Stop
 		
 	Death.Desintegrate:
@@ -1354,7 +1355,8 @@ Death.Revolver:
 	Crush:
 		TNT1 A 0
 		TNT1 A 0
-		TNT1 A 0 A_spawnitemex("NashGoreRealGibs")
+		TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		//TNT1 A 0 A_spawnitemex("NashGoreRealGibs")
 		TNT1 AAAA 0 A_SpawnItemEx ("BodyRemovalThing",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 AAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail8", 0, 0, random (0, 360), 2, random (0, 360))
 		TNT1 A 1 A_XScream

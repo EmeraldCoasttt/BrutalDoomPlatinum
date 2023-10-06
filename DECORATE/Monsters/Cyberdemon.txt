@@ -275,6 +275,7 @@ DropItem "Demonstrengthrune", 25
 		CYBR M 5 A_NoBlocking
 		CYBR NOP 5
 		CYBR P 120
+		TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 0 A_BossDeath
 		CYBR P -1 A_BossDeath
 		Stop
@@ -325,6 +326,7 @@ DropItem "Demonstrengthrune", 25
 	
     Crush:
 		TNT1 A 0
+		TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 AAAA 0 A_SpawnItemEx ("BodyRemovalThing",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 1 A_XScream
 		Stop

@@ -3396,7 +3396,7 @@ ACTOR BrainStem2
 }
 
 
-ACTOR RealGibs2
+ACTOR RealGibs2 REPLACES Realgibs
 {
   +DROPOFF
   +CORPSE

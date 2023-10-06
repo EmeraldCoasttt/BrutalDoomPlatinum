@@ -65,6 +65,11 @@ class NashGoreStatics play
 	{
 		self.bSpriteFlip = RandomPick(false, true);
 	}
+	
+	static void RandomYFlip(Actor self)
+	{
+		self.bYFlip = RandomPick(false, true);
+	}
 
 	//===========================================================================
 	//
@@ -230,6 +235,59 @@ class NashGoreRealGibs : RealGibs
     Stop;
 	}
 }
+
+class SquishMeRed : Actor
+{
+	Name SpawnGuts;
+	Property spawnGuts : SpawnGuts;
+	Default
+	{
+		Height 10;
+		Radius 30;
+		SquishMeRed.spawnguts "NashGoreSquishyGibs";
+		
+	}
+	Bool bsquished;
+	Override void tick()
+	{
+		int spawnFlags = SXF_TRANSFERTRANSLATION | SXF_NOCHECKPOSITION;
+
+		double crushHeight = (Pos.Z + Height);
+
+		if (CeilingZ <= crushHeight && Pos.Z <= FloorZ && !bSquished)
+		{
+			
+			A_SpawnItemEx(SpawnGuts, flags: spawnFlags);
+			A_StartSound("misc/gibbed");
+			bSquished = true;
+		}
+		Super.tick();
+	}
+	States
+	{
+		Spawn:
+		TNT1 A 1;
+		LOOP;
+	
+	}
+}
+
+class SquishMeBlue : SquishMeRed
+{
+	Default
+	{
+		SquishMeRed.spawnguts "BlueSquishyGibs";
+	}
+}
+
+class SquishMeGreen : SquishMeRed
+{
+	Default
+	{
+		SquishMeRed.spawnguts "GreenSquishyGibs";
+	}
+}
+
 class NashGoreSquishyGibs : RealGibs
 {
 	Name Spawnblood;
@@ -239,8 +297,8 @@ class NashGoreSquishyGibs : RealGibs
 		+FORCEYBILLBOARD
 		NashGoreSquishyGibs.spawnblood "blood"; 
 	}
-
-	const SPRITE_HEIGHT = 49;
+	Float MaxSquishY;
+	int SPRITE_HEIGHT;
 
 	//===========================================================================
 	//
@@ -251,8 +309,11 @@ class NashGoreSquishyGibs : RealGibs
 	override void BeginPlay(void)
 	{
 		NashGoreStatics.RandomXFlip(self);
+		NashGoreStatics.RandomYFlip(self);
 		Super.BeginPlay();
+		MaxSquishY = frandom(1.5,3.0);
 	}
+	
 
 	override void Tick(void)
 	{
@@ -264,9 +325,9 @@ class NashGoreSquishyGibs : RealGibs
 		Scale.Y = 1.0 * squishY;
 
 		// split if stretched too far
-		if (squishY > 3.0)
+		if (squishY > MaxSquishY)
 		{
-			A_Playsound("misc/gibbed");
+			//A_Playsound("misc/gibbed");
 			for (int i = 0; i < h; i++)
 			{
 				A_SpawnItemEx(spawnblood,
@@ -288,7 +349,20 @@ class NashGoreSquishyGibs : RealGibs
 	States
 	{
 	Spawn:
+		TNT1 A 0 NODELAY A_jump(256,"spawn1","spawn2");
+	Spawn1:
+		TNT1 A 0 
+		{
+			SPRITE_HEIGHT = 41;
+		}
 		SQSH A -1;
+		Stop;
+	Spawn2:
+		TNT1 A 0 
+		{
+			SPRITE_HEIGHT = 41;
+		}
+		SQSH B -1;
 		Stop;
 	}
 }
@@ -298,19 +372,53 @@ class BlueSquishyGibs : NAshgoresquishygibs
 		Default
 		{
 			NashGoreSquishyGibs.spawnblood "blue_blood"; 
-			translation "168:191=192:207","16:47=240:247";
 		}
 	
-	
+		States
+	{
+	Spawn:
+		TNT1 A 0 NODELAY A_jump(256,"spawn1","spawn2");
+	Spawn1:
+		TNT1 A 0 
+		{
+			SPRITE_HEIGHT = 41;
+		}
+		SQSB A -1;
+		Stop;
+	Spawn2:
+		TNT1 A 0 
+		{
+			SPRITE_HEIGHT = 41;
+		}
+		SQSB B -1;
+		Stop;
+	}
 	}
 	
 class GreenSquishyGibs : NAshgoresquishygibs
 	{
 		Default
 		{
-			NashGoreSquishyGibs.spawnblood "green_blood"; 
-			translation "168:191=112:127", "16:47=123:127";
+			NashGoreSquishyGibs.spawnblood "green_blood";
 		}
 	
-	
+		States
+	{
+	Spawn:
+		TNT1 A 0 NODELAY A_jump(256,"spawn1","spawn2");
+	Spawn1:
+		TNT1 A 0 
+		{
+			SPRITE_HEIGHT = 41;
+		}
+		SQSG A -1;
+		Stop;
+	Spawn2:
+		TNT1 A 0 
+		{
+			SPRITE_HEIGHT = 41;
+		}
+		SQSG B -1;
+		Stop;
+	}
 	}

@@ -16,11 +16,6 @@
 	
 	override void CheckReplacement(ReplaceEvent e)
 	{
-	if (e.Replacee == "RealGibs") 
-		{
-		E.replacement = "nashgorerealgibs";
-		
-		}
 	If(bd_disabledecorations == FALSE)
 		{
 		
