@@ -422,3 +422,31 @@ class GreenSquishyGibs : NAshgoresquishygibs
 		Stop;
 	}
 	}
+	
+	Class BDPCorpseInventory : inventory
+	{
+
+		Default
+		{
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		inventory.maxamount 1;
+		}
+		bool bsquished;
+		
+		Override void doeffect()
+		{
+			int spawnFlags = SXF_USEBLOODCOLOR | SXF_NOCHECKPOSITION;
+
+			double crushHeight = (Owner.Pos.Z + Owner.Height) + Owner.GetDeathHeight();
+
+			if (Owner.CeilingZ <= crushHeight && Owner.Pos.Z <= Owner.FloorZ && !bSquished)
+			{
+				owner.setstatelabel("Death.CrushedBodies");
+
+				bSquished = true;
+			}
+			Super.doeffect();
+				
+		}
+	}
