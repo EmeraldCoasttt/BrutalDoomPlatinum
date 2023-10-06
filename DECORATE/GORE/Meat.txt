@@ -180,20 +180,13 @@ actor CeilXDeath2: Brutal_BloodSpot
 	{
 	Spawn:
 		TNT1 A 0
-		TNT1 A 0 A_JUmp (255, "Live1", "Live2", "Live3")
+		//TNT1 A 0 A_JUmp (255, "Live1", "Live2", "Live3")
 		Goto Live1
 
 	  Live1:
-		  XMT1 IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII 5 ThrustThingZ(0, 20, 0, 1)
-		  Goto Fall
-	  
-	  Live2:
-		  XMT1 IIIIIIIIIIIIIIIIIIIIIIIII 5 ThrustThingZ(0, 20, 0, 1)
-		  Goto Fall
-	  
-	  Live3:
-		  XMT1 IIIIIIIIIIIIIIIII 5 ThrustThingZ(0, 20, 0, 1)
-		  Goto Fall
+		  XMT1 IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII 1 ThrustThingZ(0, 20, 0, 1)
+		  TNT1 A 0 A_jump(30,"fall")
+		 LOOP
 	  
 	 Fall:
 		  XMT1 F 0
@@ -343,18 +336,11 @@ actor CeilXDeath3: CeilXDeath2
 		 Death:
 		 Crash:
 			TNT1 A 0
-			TNT1 A 0 A_JUmp (255, "Live1", "Live2", "Live3")
-			Goto Live1
 
 		  Live1:
-			  XMT2 JJJJJJJJJJJJJJJJJ 4 ThrustThingZ(0, 20, 0, 1)
-			  Goto Fall
-		  Live2:
-			  XMT2 JJJJJJJJJJJJJJJJJJJJJJJJJJJ 4 ThrustThingZ(0, 20, 0, 1)
-			  Goto Fall
-		  Live3:
-			  XMT2 JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ 4 ThrustThingZ(0, 20, 0, 1)
-			  Goto Fall
+			  XMT2 JJJJJJJJJJJJJJJJJ 1 ThrustThingZ(0, 20, 0, 1)
+		  TNT1 A 0 A_jump(30,"Fall")
+		  LOOP
 		  
 		 Fall:
 			  XMT2 JJJJKKKLLM 2
@@ -723,20 +709,13 @@ Scale 0.4
 	{
 		Spawn:
 			TNT1 A 0
-			TNT1 A 0 A_JUmp (255, "Live1", "Live2", "Live3")
-			Goto Live1
 
-		  Live1:
-			  XDB5 JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ 4 ThrustThingZ(0, 20, 0, 1)
-			  Goto Fall
 		  
 		  Live2:
-			  XDB5 JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ 4 ThrustThingZ(0, 20, 0, 1)
-			  Goto Fall
-		  
-		  Live3:
-			  XDB5 JJJJJJJJJJJJJJJ 4 ThrustThingZ(0, 20, 0, 1)
-			  Goto Fall
+			  XDB5 JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ 1 ThrustThingZ(0, 20, 0, 1)
+			  TNT1 A 0 A_jump(30,"fall")
+			LOOP
+
 		  
 		 Fall:
 			  TNT1 A 0 A_SpawnItemEx("SmallBrainPieceFalling", 0, 0, 0, 0, 0, -2, SXF_TRANSFERSCALE)
