@@ -1048,7 +1048,7 @@ actor CeilBloodSpotnukage
 		  TNT1 A 0 A_SpawnItem ("DripingBloodLeavesSmallPoolnukage")
 		  TNT1 A 0 A_SpawnItem ("CeilBloodTinyBloodSpawnernukage")
 		Live:	
-		  BPDL A 5 ThrustThingZ(0, 20, 0, 1)
+		  BPDL A 1 ThrustThingZ(0, 20, 0, 1)
 		  Loop
 			}
 }
@@ -1064,7 +1064,7 @@ actor CeilBloodSpotLargenukage: CeilBloodSpotnukage
 			TNT1 A 0 A_SpawnItem ("DripingBloodLeavesSmallPoolnukage")
 			TNT1 A 0 A_SpawnItem ("CeilBloodLargeBloodSpawnernukage")
 		Live:	
-			BPDL A 5 ThrustThingZ(0, 20, 0, 1)
+			BPDL A 1 ThrustThingZ(0, 20, 0, 1)
 			Loop
 		Splash:
 			BLOD A 0
