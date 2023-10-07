@@ -319,7 +319,7 @@
 		if (e.thing.bismonster && e.damagetype != "desintegrate" && e.thing.health < 1 && e.thing.target && !e.thing.findinventory("extractedsoul"))
 			{
 			e.thing.a_giveinventory("extractedsoul",1);
-			e.thing.a_giveinventory("soulammo",1,AAPTR_TARGET);
+			//e.thing.a_giveinventory("soulammo",1,AAPTR_TARGET);
 			
 				
 			If(e.thing.target is "demonplayer")

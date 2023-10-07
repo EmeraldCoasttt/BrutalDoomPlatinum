@@ -143,6 +143,11 @@ class Brutal_PlayerBase : PlayerPawn
 	bool notvoodoo;
 	bool previouschasecam;
 	
+	//Soul granting
+	
+	int previouskills;
+	int currentkills;
+	
 	//Skulls
 	bool spawnwitharmor;
 	bool spawnberserked;
@@ -201,10 +206,15 @@ class Brutal_PlayerBase : PlayerPawn
 		Super.playerthink();
 		
 		
-	//	If(player.morphtics == 0)
-	//{
-	
-//	}
+		currentkills = Level.Killed_monsters;
+		If(currentkills > previouskills)
+		{
+			giveinventory("soulammo",(currentkills - previouskills));
+			//console.printf("Soul Extracted");
+		}
+		previouskills = Level.Killed_monsters;
+		
+		
 		If(ultranightmare && !ultraseed)
 		{
 		

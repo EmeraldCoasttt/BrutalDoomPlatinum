@@ -408,7 +408,7 @@ TNT1 A 0 A_SetRoll(0)
 	Death.Fatality:
 	TNT1 A 0 A_SetRoll(0)
 	    TNT1 A 0
-		TNT1 A 0 A_GiveToTarget("SoulAmmo", 10)
+	//	TNT1 A 0 A_GiveToTarget("SoulAmmo", 10)
 		TNT1 A 0 A_FaceTarget
 		TNT1 AAAAA 0 A_SpawnItemEx("HealthPlusFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8)
 		TNT1 AAAAA 0 A_SpawnItemEx("ArmorShardFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8)
