@@ -445,15 +445,15 @@ ACTOR DemonCoreSpawner : RandomSpawner
 	Dropitem "Fatso", 255, 60
 	DropItem "Arachnotron", 255, 60
 	DropItem "ArchVile", 255, 40
-	DropItem "ZombieHelicopter", 255, 30
+//	DropItem "ZombieHelicopter", 255, 30
 	DropItem "BaronofHell", 255, 30
 	DropItem "Arachnotron2", 255, 20
 	DropItem "Belphegor2", 255, 20
 	DropItem "Volcabus", 255, 10
-	DropItem "ZombieMech", 255, 4
+//	DropItem "ZombieMech", 255, 4
 	DropItem "SpiderMastermind", 255, 3
-	DropItem "ZombieArtilleryTank", 255, 3
+//	DropItem "ZombieArtilleryTank", 255, 3
 	DropItem "Cyberdemon", 255, 2
 	DropItem "ZombieTank", 255, 2
-	DropItem "Juggernaut", 255, 1
+//	DropItem "Juggernaut", 255, 1
 }
