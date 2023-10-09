@@ -76,6 +76,8 @@ server int bd_beta_decorations = 1;
 
 server bool Dox_SimplePickups = false;
 
+server int bd_testmapsky = 0;
+
 //WEAPONS
 user int bd_Aim = 0;
 
