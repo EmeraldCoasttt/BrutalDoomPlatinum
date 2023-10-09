@@ -427,3 +427,33 @@ DamageType Shotgun
 Scale 0.8
 Decal "ShotgunSlugDecal"
 }
+
+// Testmap - Demon Core
+ACTOR DemonCoreSpawner : RandomSpawner
+{
+	DropItem "Zombieman", 255, 500
+	DropItem "ShotgunGuy", 255, 500
+	DropItem "ChaingunGuy", 255, 350
+	DropItem "DoomImp", 255, 350
+	DropItem "LostSoul", 255, 300
+	DropItem "Demon", 255, 120
+	DropItem "Spectre", 255, 120
+	DropItem "NightmarePinky", 255, 80
+	DropItem "Cacodemon", 255, 80
+	DropItem "PainElemental", 255, 80
+	DropItem "HellKnight", 255, 70
+	Dropitem "Fatso", 255, 60
+	DropItem "Arachnotron", 255, 60
+	DropItem "ArchVile", 255, 40
+	DropItem "ZombieHelicopter", 255, 30
+	DropItem "BaronofHell", 255, 30
+	DropItem "Arachnotron2", 255, 20
+	DropItem "Belphegor2", 255, 20
+	DropItem "Volcabus", 255, 10
+	DropItem "ZombieMech", 255, 4
+	DropItem "SpiderMastermind", 255, 3
+	DropItem "ZombieArtilleryTank", 255, 3
+	DropItem "Cyberdemon", 255, 2
+	DropItem "ZombieTank", 255, 2
+	DropItem "Juggernaut", 255, 1
+}

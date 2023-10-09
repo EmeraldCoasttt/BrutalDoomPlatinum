@@ -143,7 +143,7 @@ map TEST "UAC Testing Center"
 {
 	next = "MAP02"
 	secretnext = "MAP02"
-	sky1 = "SKYEAR1", 0.1
+	sky1 = "SKYEAR6", 0.1
 	cluster = 1
 	//par = 60
 	music = ORB
