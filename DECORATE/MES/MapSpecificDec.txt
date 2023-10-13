@@ -83,7 +83,7 @@ ACTOR BDECRubble1: BDdecorationBase
 		Stop
 }}
 
-ACTOR BDECRubble2: BDdecorationBase
+ACTOR BDECRubble2: BDdecorationBase 26006
 {
  -ACTLIKEBRIDGE
  States
@@ -94,7 +94,7 @@ ACTOR BDECRubble2: BDdecorationBase
 		Stop
 }}
 
-ACTOR BDECRubble3: BDdecorationBase
+ACTOR BDECRubble3: BDdecorationBase 26007
 {
  -ACTLIKEBRIDGE
  States
@@ -281,7 +281,7 @@ Scale 0.8
 		Stop
 }}
 
-ACTOR BDECGrass: BDdecorationBase
+ACTOR BDECGrass: BDdecorationBase 26003
 {
 Scale 0.35
 -CLIENTSIDEONLY
@@ -1946,7 +1946,7 @@ Mass 99999999
 
 ACTOR BDECGrateBarDS : BDdecorationBase2
 {
-	Height 64
+	Height 96
 	Radius 2
 	Health 999
 	+INVULNERABLE
@@ -3993,7 +3993,7 @@ ACTOR HookColision
 
 
 // Actors that spawns dynamic lights made by computers
-Actor BDECComputerLight1: BDdecorationBase2
+Actor BDECComputerLight1: BDdecorationBase2 26002
 {
 +THRUACTORS
 states
@@ -4005,7 +4005,7 @@ states
 	}
 }
 
-Actor BDECComputerLight2: BDECComputerLight1
+Actor BDECComputerLight2: BDECComputerLight1 26001
 {
 states
 	{
@@ -4016,19 +4016,7 @@ states
 	}
 }
 
-Actor BDECComputerLight3: BDECComputerLight1
-{
-states
-	{
-	Spawn:
-		TNT1 O 1
-	    TNT1 O -1
-		Stop
-	}
-}
-
-
-Actor BDECBlueLight: BDECComputerLight1
+Actor BDECComputerLight3: BDECComputerLight1 26000
 {
 states
 	{
@@ -4040,7 +4028,19 @@ states
 }
 
 
-Actor BDECYellowLight: BDECComputerLight1
+Actor BDECBlueLight: BDECComputerLight1 26004
+{
+states
+	{
+	Spawn:
+		TNT1 O 1
+	    TNT1 O -1
+		Stop
+	}
+}
+
+
+Actor BDECYellowLight: BDECComputerLight1 26005
 {
 states
 	{

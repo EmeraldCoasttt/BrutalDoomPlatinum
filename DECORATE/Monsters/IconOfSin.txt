@@ -312,7 +312,7 @@ ACTOR GatekeeperFireBall
 
 
 
-ACTOR GateKeeperMeatBase
+ACTOR GateKeeperMeatBase 26008
 {
 	+NOGRAVITY
 	+FLOAT
@@ -345,17 +345,17 @@ ACTOR GateKeeperMeatBase
 }
 
 
-Actor GateKeeperMeat1: GateKeeperMeatBase
+Actor GateKeeperMeat1: GateKeeperMeatBase 26009
 {
 Scale 1.0
 }
 
-Actor GateKeeperMeat2: GateKeeperMeat1
+Actor GateKeeperMeat2: GateKeeperMeat1 26010
 {
 Scale 0.8
 }
 
-Actor GateKeeperMeat3: GateKeeperMeat1
+Actor GateKeeperMeat3: GateKeeperMeat1 26011
 {
 XScale -1.2
 YScale 1.2
