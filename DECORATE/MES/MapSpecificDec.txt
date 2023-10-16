@@ -4497,7 +4497,7 @@ ACTOR BDECPentagram 25856
 
 
 
-ACTOR BDSpawnBaron
+ACTOR BDSpawnBaron 25949
 {
 	States
 	{
@@ -4512,7 +4512,7 @@ ACTOR BDSpawnBaron
 }
 
 
-ACTOR BDSpawnCacodemon
+ACTOR BDSpawnCacodemon 25950
 {
 +NOGRAVITY +FLOAT +THRUACTORS
 Height 60
@@ -4531,7 +4531,7 @@ Radius 2
 
 
 
-ACTOR BDSpawnImps
+ACTOR BDSpawnImps 25951
 {
 	States
 	{
@@ -4600,8 +4600,8 @@ ACTOR BDECHellKeep 25940
 	States
 	{
 	Spawn:
-		NULL A 1
-		NULL A -1
+		XXXX H 1
+		XXXX H -1
 		Loop
 	}
 }
@@ -4619,8 +4619,8 @@ ACTOR BDECHellKeepColision 25941
   +NOTARGET
   +INVULNERABLE
  Mass 999999
- Radius 128
- Height 72
+ Radius 96
+ Height 128
  States
  {
  Spawn:
