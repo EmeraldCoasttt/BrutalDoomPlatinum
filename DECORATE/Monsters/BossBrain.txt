@@ -39,21 +39,10 @@ ACTOR BossBrainReplacer Replaces BossBrain
 
   Spawn2:	
     BBRN A 3
-	TNT1 A 0 A_JumpIfInventory("AltEasyMarineVerification", 1, "IsPlayingAlt")
+	//TNT1 A 0 A_JumpIfInventory("AltEasyMarineVerification", 1, "IsPlayingAlt")
 	BBRN A 100
     Loop
-	
-	EvidenceTNTMap30:
-			TNT1 A 1
-			TNT1 A 0 A_JumpIf(y == -1472, "ConfirmTNTMAP30")
-			Stop		
-			
-	ConfirmTNTMAP30:
-			TNT1 A 1
-			TNT1 A 0 A_JumpIf(z == 224, "IsTNTMap30")
-			Stop	
 
-			
 		IsTNTMAP30:
 			TNT1 A 0
 			TNT1 A 0 A_SetAngle(90)
@@ -62,160 +51,52 @@ ACTOR BossBrainReplacer Replaces BossBrain
 			TNT1 A 0 A_ChangeFlag("THRUACTORS", 1)
 			TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
 			GOTO sPAWN2
-			
-			
-		EvidencePlutoniaMap30:
-			TNT1 A 1
-			TNT1 A 0 A_JumpIf(y == 6080, "ConfirmPlutoniaMAP30")
-			Stop		
-			
-	    ConfirmPlutoniaMAP30:
-			TNT1 A 1
-			TNT1 A 0 A_JumpIf(z == 14, "IsPlutoniaMap30")
-			Stop	
 
-			
 		IsPlutoniaMap30:
 			TNT1 A 0
 			TNT1 A 0 A_SpawnItemEx ("GateKeeper",320,0,-9999,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
 			TNT1 A 0 A_ChangeFlag("THRUACTORS", 1)
 			TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
 			GOTO sPAWN2	
-			
-			
-		EvidenceAVMap30:
-			TNT1 A 1
-			TNT1 A 0 A_JumpIf(y == 6026, "ConfirmAVMAP30")
-			TNT1 A 0 A_JumpIf(y == 6048, "ConfirmAVMAP30")
-			Stop		
-			
-	    ConfirmAVMAP30:
-			TNT1 A 1
-			TNT1 A 0 A_JumpIf(z == 14, "IsAVMap30")
-			Stop	
 
-			
 		IsAVMap30:
 			TNT1 A 0
 			TNT1 A 0 A_SetANgle(0)
 			Goto ReplaceDoom2
-			
-			
-			
-		EvidenceEPICMap30:
-			TNT1 A 1
-			TNT1 A 0 A_JumpIf(y == -1224, "ConfirmEPICMAP30")
-			Stop		
-			
-	    ConfirmEPICMAP30:
-			TNT1 A 1
-			TNT1 A 0 A_JumpIf(z == 208, "IsEPICMap30")
-			Stop	
 
-			
 		IsEPICMap30:
 			TNT1 A 0
 			TNT1 A 0 A_SpawnItemEx ("GateKeeper",224,64,-9999,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
 			TNT1 A 0 A_ChangeFlag("THRUACTORS", 1)
 			TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
 			GOTO sPAWN2	
-			
-			
-		//////////////
-		
-		
-		EvidencePL2Map30:
-			TNT1 A 1
-			TNT1 A 0 A_JumpIf(y == 280, "ConfirmPL2MAP30")
-			Stop		
-			
-	    ConfirmPL2MAP30:
-			TNT1 A 1
-			TNT1 A 0 A_JumpIf(z == 128, "IsPL2Map30")
-			Stop	
 
-			
 		IsPL2Map30:
 			TNT1 A 0
 			TNT1 A 0 A_SpawnItemEx ("GateKeeper",328,0,-9999,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
 			TNT1 A 0 A_ChangeFlag("THRUACTORS", 1)
 			TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
 			GOTO sPAWN2	
-			
-			
-		EvidencePLCRMap30:
-			TNT1 A 1
-			TNT1 A 0 A_JumpIf(y == 416, "ConfirmPLCRMAP30")
-			Stop		
-			
-	    ConfirmPLCRMAP30:
-			TNT1 A 1
-			TNT1 A 0 A_JumpIf(z == 64, "IsPLCRMap30")
-			Stop	
 
-			
 		IsPLCRMap30:
 			TNT1 A 0
 			TNT1 A 0 A_SpawnItemEx ("DeletusVeryLarge",304,0,100,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
 			TNT1 A 0 A_NoBlocking
 			TNT1 A 0
 			Stop
-			
-   ReplaceDoom2:
-		TNT1 A 0
-		TNT1 A 0 A_NoBlocking
-		TNT1 A 0 A_ChangeFlag("THRUACTORS", 1)
-		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
-		TNT1 A 0 ACs_ExecuteALways(230)
-		TNT1 A 0 A_SpawnItemEx ("GateKeeperMeatBase",0,600,-50,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
-		TNT1 A 0 A_SpawnItemEx ("GateKeeperMeat1",0,580,-70,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
-		TNT1 A 0 A_SpawnItemEx ("GateKeeperMeat2",15,540,-100,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
-		TNT1 A 0 A_SpawnItemEx ("GateKeeperMeat3",-15,500,-120,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
-		TNT1 A 0 A_SpawnItemEx ("GateKeeperMeat1",-25,460,-100,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
-		TNT1 A 0 A_SpawnItemEx ("GateKeeperMeat2",-15,420,-80,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
-		TNT1 A 0 A_SpawnItemEx ("GateKeeperMeat3",0,400,-60,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
-		TNT1 A 0 A_SpawnItemEx ("GateKeeperMeat2",20,360,-20,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
-		TNT1 A 0 A_SpawnItemEx ("GateKeeperMeat1",5,320,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
-		TNT1 A 0 A_SpawnItemEx ("GateKeeperMeat3",0,280,10,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
-		TNT1 A 0 A_SpawnItemEx ("IconOfSin",0,600,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
-		BBRN A 1
-		BBRN A -1
-		Loop
-		
-  		
-  
+
   ReplaceDoom2Reloaded:
 		TNT1 A 0
 		TNT1 A 0 A_SetAngle(0)
 		Goto ReplaceDoom2
-		
-		
-  ReplaceDoom2Check:
-		TNT1 A 0
-		TNT1 A 0 A_JumpIf(y == 1648, "ReplaceDoom2")
-		BBRN A 1
-		BBRN A -1
-		Loop
-		
-		
-	EvidenceWOSMap30:
-			TNT1 A 1
-			TNT1 A 0 A_JumpIf(y == 2536, "ConfirmWOSMAP30")
-			Stop		
-			
-	    ConfirmWOSMAP30:
-			TNT1 A 1
-			TNT1 A 0 A_JumpIf(z == -128, "IsWOSMap30")
-			Stop	
 
-			
 		IsWOSMap30:
 			TNT1 A 0
 			TNT1 A 0 ThrustThingZ(0, 99999, 0, 1)
 			TNT1 A 5
 			TNT1 A 0 A_SetANgle(0)
 			Goto ReplaceDoom2	
-		
+
   BrainExplode:
     MISL BBBBBBBC 1 Bright
     MISL D 1 A_BrainExplode
@@ -260,10 +141,6 @@ ACTOR BossBrainReplacer Replaces BossBrain
   }
 }
 
-
-
-
-
 ACTOR AltMap01Airplane
 {
   Health 250
@@ -299,14 +176,5 @@ ACTOR AltMap01Airplane
     BBRN AA 10
     BBRN A -1 A_BrainDie
     Stop
-	
-	IsPlayingAlt:
-		TNT1 A 0
-		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
-		TNT1 A 0 A_ChangeFlag("THRUACTORS", 1)
-		TNT1 A 0 A_ChangeFlag("NOTARGET", 1)
-		TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", 1)
-		TNT1 A 0 A_SpawnItemEx("AltMap01Airplane", 0, 0, 28, 0, 0, 0, 0, SXF_TRANSFERPOINTERS | SXF_TRANSFERAMBUSHFLAG)
-		Stop
   }
 }
