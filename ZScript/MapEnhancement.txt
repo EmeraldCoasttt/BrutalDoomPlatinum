@@ -940,7 +940,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(25856, (-800, 1440, 0), 180);
 					AddThing(25951, (-376, -856, 0), 270);
 					AddThing(25951, (792, -1064, 0), 270);
-					AddThing(25949, (-800, 2208, 0), 270);
+					//AddThing(25949, (-800, 2208, 0), 270);
 					AddThing(25950, (232, 616, 0), 270);
 					AddThing(3002, (-512, -752, 0), 270);
 					AddThing(3002, (1064, -792, 0), 270);
