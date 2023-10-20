@@ -47,7 +47,7 @@ CLASS Tenderizer : Brutalweapon
 			TakeTeleportTimer = 0;
 			
 		}
-		If(owner.findinventory("TeleporterTimer") && owner.findinventory("Swapriflespecial"))
+		If(owner.findinventory("TeleporterTimer") && owner.findinventory("Swapriflespecial") && owner.player.readyweapon is "tenderizer")
 		{
 			Owner.takeinventory("swapriflespecial",1);
 			A_tryHammerTeleport();
