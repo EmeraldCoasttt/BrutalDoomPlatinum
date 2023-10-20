@@ -77,6 +77,11 @@ version "4.10.0"
 
 #include "ZScript/Menus/modifiers_menu.zsc"
 
+#include "ZScript/weather/weatherhandler.zs"
+#include "ZScript/weather/weather.zs"
+#include "ZScript/weather/precipitation.zs"
+#include "ZScript/weather/weatherparticles.txt"
+
 // Any decorations should inherit from this if they've got no special behaviors.
 // This uses a custom Tick override which only goes through States and checks for 
 // alpha or if the Actor is frozen, so it's very light-weight.

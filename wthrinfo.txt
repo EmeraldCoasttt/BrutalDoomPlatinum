@@ -1,0 +1,156 @@
+// Rain
+precipitation "MinRain"
+{
+	PrecipitationType = "Rain"
+	PrecipitationTag = "$WTHR_LIGHTRAIN"
+	PrecipitationAmount = 1
+	PrecipitationRateTime = 0.02
+}
+
+precipitation "MedRain"
+{
+	PrecipitationType = "Rain"
+	PrecipitationTag = "$WTHR_RAIN"
+	PrecipitationAmount = 7
+	PrecipitationRateTime = 0.02
+	PrecipitationSound = "weather/rain"
+	MinPrecipitationVolume = 0.2
+	MaxPrecipitationVolume = 0.75
+}
+
+precipitation "MaxRain"
+{
+	PrecipitationType = "Rain"
+	PrecipitationTag = "$WTHR_HEAVYRAIN"
+	PrecipitationAmount = 13
+	PrecipitationRateTime = 0.02
+	PrecipitationSound = "weather/rain"
+	
+	Foggy
+	FogAlpha = 0.05
+	
+	Stormy
+	LightningAlpha = 0.1
+	ThunderSound = "weather/thunder"
+}
+
+// Snow
+precipitation "MinSnow"
+{
+	PrecipitationType = "LightSnow"
+	PrecipitationTag = "$WTHR_LIGHTSNOW"
+	PrecipitationAmount = 1
+	PrecipitationRateTime = 0.08
+}
+
+precipitation "MedSnow"
+{
+	PrecipitationType = "MediumSnow"
+	PrecipitationTag = "$WTHR_SNOW"
+	PrecipitationAmount = 2
+	PrecipitationRateTime = 0.02
+}
+
+precipitation "MaxSnow"
+{
+	PrecipitationType = "HeavySnow"
+	PrecipitationTag = "$WTHR_HEAVYSNOW"
+	PrecipitationAmount = 10
+	PrecipitationRateTime = 0.02
+	
+	WindSound = "weather/wind"
+	
+	Foggy
+	FogAlpha = 0.075
+	FogColor = 0xFFD3D3D3
+}
+
+// Bonus
+precipitation "MinBloodRain"
+{
+	PrecipitationTag = "$WTHR_LIGHTBLOOD"
+	
+	WindSound = "weather/wind"
+	MinWindVolume = 0.05
+	MaxWindVolume = 0.1
+	
+	Stormy
+	ThunderSound = "weather/thunder"
+	
+	FogIndoors
+	Foggy
+	FogAlpha = 0.05
+	FogColor = 0xFF8B0000;
+}
+
+precipitation "MedBloodRain"
+{
+	PrecipitationType = "BloodRain"
+	PrecipitationTag = "$WTHR_BLOOD"
+	PrecipitationAmount = 8
+	PrecipitationRateTime = 0.02
+	PrecipitationSound = "weather/rain"
+	MinPrecipitationVolume = 0.2
+	MaxPrecipitationVolume = 0.75
+	
+	FogIndoors
+	Foggy
+	FogAlpha = 0.075
+	FogColor = 0xFF8B0000;
+}
+
+precipitation "MaxBloodRain"
+{
+	PrecipitationType = "BloodRain"
+	PrecipitationTag = "$WTHR_HEAVYBLOOD"
+	PrecipitationAmount = 16
+	PrecipitationRateTime = 0.02
+	PrecipitationSound = "weather/rain"
+	
+	WindSound = "weather/wind"
+	
+	FogIndoors
+	Foggy
+	FogAlpha = 0.075
+	FogColor = 0xFF8B0000;
+	
+	Stormy
+	LightningAlpha = 0.1
+	LightningColor = 0xFFFF0000
+	ThunderSound = "weather/thunder"
+}
+
+precipitation "MinAsh"
+{
+	PrecipitationOnlyIndoors
+	PrecipitationType = "LightAsh"
+	PrecipitationTag = "$WTHR_LIGHTASH"
+	PrecipitationAmount = 1
+	PrecipitationRateTime = 0.1
+}
+
+precipitation "MedAsh"
+{
+	PrecipitationIndoors
+	PrecipitationType = "LightAsh"
+	PrecipitationTag = "$WTHR_ASH"
+	PrecipitationAmount = 1
+	PrecipitationRateTime = 0.05
+}
+
+precipitation "MaxAsh"
+{
+	PrecipitationType = "HeavyAsh"
+	PrecipitationTag = "$WTHR_HEAVYASH"
+	PrecipitationAmount = 5
+	PrecipitationRateTime = 0.02
+	
+	WindSound = "weather/wind"
+	MinWindVolume = 0.1
+	MaxWindVolume = 0.2
+	
+	FogIndoors
+	Foggy
+	FogAlpha = 0.1
+	FogColor = 0xFF000000
+}
