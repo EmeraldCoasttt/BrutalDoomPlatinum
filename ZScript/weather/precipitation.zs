@@ -8,7 +8,8 @@ class MoveTracer : LineTracer
 		bHitPortal = bHitWater = false;
 		results.hitType = TRACE_HitNone;
 		results.ffloor = null;
-		results.crossedWater = results.crossed3DWater = null;
+		results.crossedWater = null;
+		results.crossed3DWater = null;
 	}
 	
 	override ETraceStatus TraceCallback()

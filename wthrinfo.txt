@@ -111,7 +111,7 @@ precipitation "MaxBloodRain"
 	
 	FogIndoors
 	Foggy
-	FogAlpha = 0.075
+	FogAlpha = 0.175
 	FogColor = 0xFF8B0000;
 	
 	Stormy
