@@ -2014,6 +2014,8 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					levellocals.ReplaceTextures("PANCASE2", "BRICK7",0);
 					levellocals.ReplaceTextures("PANEL2", "BRICK6",0);
 					levellocals.ReplaceTextures("PANEL1", "BRICKLIT",0);
+					
+					AddThing(26012, (0,0,0),0);
 				}
 				Break;
 

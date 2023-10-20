@@ -86,7 +86,7 @@ class Weather : Actor
 		weather.weather_precip_vol 1;
 		weather.weather_wind_vol 1;
 		weather.weather_thunder_vol 1;
-		weather.weather_precipitationtype "MaxRain";
+		weather.weather_precipitationtype "MaxRain"; 
 	}
 	
 	override void beginplay()

@@ -81,6 +81,7 @@ version "4.10.0"
 #include "ZScript/weather/weather.zs"
 #include "ZScript/weather/precipitation.zs"
 #include "ZScript/weather/weatherparticles.txt"
+#include "ZScript/weather/weathertypes.txt"
 
 // Any decorations should inherit from this if they've got no special behaviors.
 // This uses a custom Tick override which only goes through States and checks for 

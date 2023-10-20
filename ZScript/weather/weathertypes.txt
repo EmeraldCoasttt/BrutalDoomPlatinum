@@ -1,0 +1,7 @@
+CLASS BleedingSky : Weather
+{
+	Default
+	{
+		weather.weather_precipitationtype "MaxBloodRain";
+	}
+}
