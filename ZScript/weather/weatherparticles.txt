@@ -33,7 +33,8 @@ class BloodRain : Rain
 {
 	Default
 	{
-		Translation "0:255=176:191";
+		Alpha 1.0;
+		Translation "0:255=189:191";
 	}
 }
 

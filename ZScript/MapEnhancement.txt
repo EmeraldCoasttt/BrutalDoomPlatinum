@@ -765,7 +765,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 			case '99c580ad8fabe923cab485cb7f3c5e5d':
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
 				{
-					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYDEI",TexMan.Type_Any),TexMan.CheckForTexture("SKYDEI",TexMan.Type_Any));
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYDE2",TexMan.Type_Any),TexMan.CheckForTexture("SKYDE2",TexMan.Type_Any));
 					//levellocals.ReplaceTextures("STARTAN3", "W_LAB3", 0);
 					//levellocals.ReplaceTextures("STARG1", "W_LAB4", 0);
 					//levellocals.ReplaceTextures("STONE", "W_LAB4", 0);
@@ -820,7 +820,9 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					//levellocals.ReplaceTextures("CEIL3_5", "CEMENTW9", 0);
 					levellocals.ReplaceTextures("STEP6", "LIT05S", 0);
 					levellocals.ReplaceTextures("STEP5", "LIT05S", 0);
-
+					
+					LevelLocals.ReplaceTextures ("BDNUKE1", "BDBLOOD1",0);
+					
 					AddThing(25855, (-3184, -112, -999), 80);
 					AddThing(25855, (-2960, -112, -999), 80);
 					AddThing(25855, (-3216, 16, -999), 80);
@@ -840,6 +842,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(25888, (-2640, 160, -999), 315);
 					AddThing(25888, (-2640, 0, -999), 45);
 					AddThing(25937, (-2624, -288, -999), 45);
+					AddThing(26012, (0,0,0),0);
 				}
 				Break;
 
