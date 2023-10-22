@@ -2615,7 +2615,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
 				{
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYEAR4",TexMan.Type_Any),TexMan.CheckForTexture("SKYEAR4",TexMan.Type_Any));
-					levellocals.ReplaceTextures("SLIME05", "FWATER1",0);
+					levellocals.ReplaceTextures("BDSLIME1", "BDFWATER",0);
 					levellocals.ReplaceTextures("A-BROWN4", "NEWDOR1",0);
 
 
