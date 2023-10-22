@@ -43,22 +43,6 @@ ACTOR BossBrainReplacer Replaces BossBrain
 	BBRN A 100
     Loop
 
-		IsTNTMAP30:
-			TNT1 A 0
-			TNT1 A 0 A_SetAngle(90)
-			TNT1 A 0 ACS_ExecuteALways(290)
-			TNT1 A 0 A_SpawnItemEx ("GateKeeper",608,0,-9999,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
-			TNT1 A 0 A_ChangeFlag("THRUACTORS", 1)
-			TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
-			GOTO sPAWN2
-
-		IsPlutoniaMap30:
-			TNT1 A 0
-			TNT1 A 0 A_SpawnItemEx ("GateKeeper",320,0,-9999,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0)
-			TNT1 A 0 A_ChangeFlag("THRUACTORS", 1)
-			TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
-			GOTO sPAWN2	
-
 		IsAVMap30:
 			TNT1 A 0
 			TNT1 A 0 A_SetANgle(0)

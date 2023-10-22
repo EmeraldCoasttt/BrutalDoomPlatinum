@@ -1514,7 +1514,7 @@ ACTOR BDecLightPostLit: BDdecorationBase 25886
 
 
 
-ACTOR BDecRiverPlant: BDECGrass
+ACTOR BDecRiverPlant: BDECGrass 26016
 {
 Scale 1.0
  States
@@ -1667,7 +1667,7 @@ ACTOR BDECIndustrialLamp : BDdecorationBase2 15878
 
 
 
-ACTOR BDECIndustrialLamp2 : BDECIndustrialLamp
+ACTOR BDECIndustrialLamp2 : BDECIndustrialLamp 26013
 {
 	Health 5
 }
@@ -2002,7 +2002,7 @@ ACTOR BDECGrateFenceDS : BDdecorationBase 25896
 
 
 
-Actor BDECDestroyFenceSwitch: BDdestroyabledecorative
+Actor BDECDestroyFenceSwitch: BDdestroyabledecorative 26017
 {
 Health 1
 Radius 12
