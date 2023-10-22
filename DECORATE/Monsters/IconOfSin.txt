@@ -371,7 +371,7 @@ YScale 1.2
 
 
 
-ACTOR GateKeeper: IconOfSin
+ACTOR GateKeeper: IconOfSin 26014
 {
 	Health 20000
 	Radius 120

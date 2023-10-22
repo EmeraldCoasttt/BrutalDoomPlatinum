@@ -5,3 +5,11 @@ CLASS BleedingSky : Weather
 		weather.weather_precipitationtype "MaxBloodRain";
 	}
 }
+
+CLASS JungleRain : Weather
+{
+	Default
+	{
+		weather.weather_precipitationtype "MedRain";
+	}
+}
