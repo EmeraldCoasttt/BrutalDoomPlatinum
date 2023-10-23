@@ -438,6 +438,11 @@ class SalInvisHandler : EventHandler
 				// Don't remove, but don't do the target setting either
 				continue;
 			}
+			else if (mo.bmissile)
+			{
+				// Don't remove, but don't do the target setting either
+				continue;
+			}
 			else
 			{
 				let target = PlayerPawn(mo.target);
