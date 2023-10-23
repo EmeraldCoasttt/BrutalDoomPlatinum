@@ -35,6 +35,8 @@ CLASS Tenderizer : Brutalweapon
 	
 	Actor Destination;
 	
+	Actor Beam;
+	
 	override void DoEffect() 
 	{
 		super.DoEffect();
@@ -432,8 +434,13 @@ CLASS Tenderizer : Brutalweapon
 		GrabShoot:
 		tnt1 A 0
 		{
+		
 			A_startsound("GRBRFIRE",12);
 			A_startsound("GRBRFAIL",13);
+			If(invoker.beam)
+			{
+				invoker.beam.destroy();
+			}
 			If(invoker.grabbedactor)
 			{
 			invoker.grabbedactor.bmissile = invoker.previousmissile;
@@ -490,6 +497,10 @@ CLASS Tenderizer : Brutalweapon
 		GrabDie:
 		tnt1 A 0
 		{
+			If(invoker.beam)
+			{
+				invoker.beam.destroy();
+			}
 			invoker.grabbedtimer = 0;
 			A_startsound("GRBRFAIL",12);
 			If(invoker.grabbedactor)
@@ -560,18 +571,40 @@ CLASS Tenderizer : Brutalweapon
 			If(invoker.grabbedactor && invoker.grabbedactor.health > 0)
 				{
 				
-			//	console.printf(invoker.grabbedactor.getclassname());
-				invoker.grabbedactor.reactiontime = 0;
-					//Vector3 grabdir = (AngleToVector(angle, cos(pitch)), -sin(pitch));
-					// FLineTraceData grabwarp;
-				//	LineTrace(angle, ((invoker.grabbedactor.radius * 0.5) + (invoker.owner.radius * 0.5)), pitch,TRF_THRUHITSCAN | TRF_THRUACTORS, offsetz: player.viewz - pos.z, data: grabwarp);
-					//If (invoker.grabbedactor.checkmove(grabwarp.hitlocation.xy))
-					//	{	
-							If(invoker.grabbedactor.target && invoker.grabbedactor.target == invoker.owner)
-								{
-									Invoker.grabbedactor.target = null;
-								}
-							//Invoker.grabbedactor.reactiontime = 2;
+			
+					invoker.grabbedactor.reactiontime = 0;
+					
+					If(invoker.grabbedactor.target && invoker.grabbedactor.target == invoker.owner)
+					{
+						Invoker.grabbedactor.target = null;
+					}
+					
+					FLineTraceData grabberlength;
+					LineTrace(angle, (78 + (invoker.grabbedactor.radius * 0.7)), pitch, TRF_THRUACTORS, offsetz: player.viewz - pos.z, data: grabberlength);
+					vector3 targetpos = grabberlength.HitLocation;
+					
+					invoker.grabbedactor.SetOrigin(targetpos,true);
+					//invoker.grabbedactor.angle = angle;
+					/*
+					if (!invoker.beam)
+					{
+						//tracer.giveinventory("bfgdamage",1);
+						invoker.Beam = Spawn("TenderizerTendril", (targetpos));
+						
+					}
+					Else
+					{
+						Vector3 ofs = invoker.owner.pos+(0,0,invoker.owner.player.viewz - invoker.owner.pos.z);
+						Vector3 x, y, z;
+						[x, y, z] = BDP_CoordUtil.getaxes(invoker.owner.pitch,invoker.owner.angle,invoker.owner.roll);
+						vector3 newpos = (ofs+x*(3)-z*(0.7));
+						invoker.beam.angle = (angle);
+						invoker.beam.pitch = (pitch - 95);
+						invoker.beam.scale.y = grabberlength.distance;
+						invoker.beam.setorigin(newpos,true);
+					}
+					*/
+							/*
 							int warpoffset = ((invoker.grabbedactor.radius * 0.5) + (invoker.owner.radius * 0.5));
 							//Vector3 warpdir = (AngleToVector(invoker.angle, cos(invoker.pitch)), -sin(invoker.pitch));
 							//warpdir.x = (warpdir.x * warpoffset);
@@ -584,15 +617,16 @@ CLASS Tenderizer : Brutalweapon
 							Vector3 x, y, z;
 							[x, y, z] = BDP_CoordUtil.getaxes(invoker.owner.pitch,invoker.owner.angle,invoker.owner.roll);
 							vector3 newpos = (ofs+x*(32 + (invoker.grabbedactor.radius * 0.7))-z*(invoker.grabbedactor.height * 0.6));
-							If(level.IsPointInLevel(newpos))
-							{
+							//If(level.IsPointInLevel(newpos))
+							//{
 								//invoker.grabbedactor.angle = (invoker.owner.angle - 180);
 								invoker.grabbedactor.SetOrigin(newpos,true);
-							}
-							If(invoker.grabbedactor.distance3d(invoker.owner) > 300)
-								{
-									Return resolvestate("grabdie");
-								}
+							//}
+							*/
+					If(invoker.grabbedactor.distance3d(invoker.owner) > 300)
+					{
+						Return resolvestate("grabdie");
+					}
 				}
 			Else
 				{
@@ -732,6 +766,20 @@ Class HammerLightning : Actor
 			LOOP;
 	}
 	
+}
+
+
+Class TenderizerTendril : Tripmineparticle
+{
+	States
+	{
+		Spawn:
+			TNT1 A 0;
+
+			L2NR A -1 BRIGHT ;
+
+			Stop;
+	}
 }
 	
 	

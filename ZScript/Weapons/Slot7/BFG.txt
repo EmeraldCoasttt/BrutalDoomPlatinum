@@ -737,6 +737,8 @@ CLASS BFGTendril : tripmineparticle {
 
 }
 
+
+
 CLASS BFGTendril2 : BFGTendril
 {
 	Default
@@ -744,6 +746,7 @@ CLASS BFGTendril2 : BFGTendril
 		BFGTendril.fadeoutpercent 0.1;
 	}
 }
+
 
 CLASS BFGBallWithTracers : SuperBFGBall
 {

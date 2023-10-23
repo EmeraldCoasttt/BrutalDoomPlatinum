@@ -81,6 +81,23 @@ Model tripmineparticle // Name of actor in DECORATE
    FrameIndex L2NR A 0 0 // The sprite lump, sprite frame, model index, frame number
 }
 
+Model tenderizertendril // Name of actor in DECORATE
+{ 
+   Path "Models/Projectiles" // Path to model in PK3
+   SKIN 0 "tracer4.tga" // Model index, model file
+   MODEL 0 "Tracer2.md3" // Model index, texture (can be in any format supported by GZDoom)
+   Scale 0.3 0.3 1.0 // Scale values
+  // offset 0 0 3
+   useactorpitch
+   //ROTATING
+  // rotation-speed 5.0
+  // PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+   //rolloffset 90
+   pitchoffset 90
+   FrameIndex L2NR A 0 0 // The sprite lump, sprite frame, model index, frame number
+}
+
+
 
 Model bfgtendril // Name of actor in DECORATE
 { 
