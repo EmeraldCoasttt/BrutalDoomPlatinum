@@ -1217,6 +1217,65 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(2048, (344, -1672, 0), 270);
 				}
 				Break;
+				
+			//SIGIL
+			
+			//e5m3
+			case '3417a4859c8fece797c9daa715d14d63':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) {
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SIGCAV",TexMan.Type_Any),TexMan.CheckForTexture("SIGCAV",TexMan.Type_Any));
+					
+				}
+				
+				Break;
+			//e5m4
+			case 'aebf219bf02aaec549ba3ef8cb3f715b':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) {
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SIGCAV",TexMan.Type_Any),TexMan.CheckForTexture("SIGCAV",TexMan.Type_Any));
+					
+				}
+				
+				Break;
+			//e5m5
+			case '4e5d482364f6f787cb8efc17bde5d64d':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) {
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SIGCAV",TexMan.Type_Any),TexMan.CheckForTexture("SIGCAV",TexMan.Type_Any));
+					
+				}
+				
+				Break;
+			//e5m6
+			case 'eb984250d4935e93c265ae8c8455560f':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) {
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SIGCAV",TexMan.Type_Any),TexMan.CheckForTexture("SIGCAV",TexMan.Type_Any));
+					
+				}
+				
+				Break;
+			//e5m7
+			case '8c35efba700537035c84f5e1ad35c064':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) {
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SIGCAV",TexMan.Type_Any),TexMan.CheckForTexture("SIGCAV",TexMan.Type_Any));
+					
+				}
+				
+				Break;
+			//e5m8
+			case '6ead80da1f30b4b3546fa294eef9f87c':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) {
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SIGCAV",TexMan.Type_Any),TexMan.CheckForTexture("SIGCAV",TexMan.Type_Any));
+					
+				}
+				
+				Break;
+			//e5m9
+			case '2a6b4d277f526bfb3adb122609feead7':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) {
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SIGCAV",TexMan.Type_Any),TexMan.CheckForTexture("SIGCAV",TexMan.Type_Any));
+					
+				}
+				
+				Break;
 
 			//DOOM II
 			//map01
