@@ -35,7 +35,7 @@ CLASS Tenderizer : Brutalweapon
 	
 	Actor Destination;
 	
-	Actor Beam;
+	BEAMZ_LaserBeam beam;
 	
 	override void DoEffect() 
 	{
@@ -583,7 +583,30 @@ CLASS Tenderizer : Brutalweapon
 					LineTrace(angle, (78 + (invoker.grabbedactor.radius * 0.7)), pitch, TRF_THRUACTORS, offsetz: player.viewz - pos.z, data: grabberlength);
 					vector3 targetpos = grabberlength.HitLocation;
 					
-					invoker.grabbedactor.SetOrigin(targetpos,true);
+					//If(level.IsPointInLevel(targetpos))
+					//{
+						
+						invoker.grabbedactor.SetOrigin(targetpos,true);
+					//}
+					
+					
+					if(!invoker.beam) 
+					{
+						invoker.beam = invoker.beam.Create(invoker.Owner, 5, 0, -2, 0, 2, type:"TenderizerLaser");
+						invoker.beam.SetEnabled(true);
+						invoker.beam.starttracking(invoker.grabbedactor.pos);
+					}
+		
+					// Toggle laser
+					//if( btns & BT_RELOAD && !(obtns & BT_RELOAD) ) 
+					//	beam.SetEnabled(!beam.enabled);
+		
+					// Update laser if tracking target 
+					if(invoker.beam.isTracking())
+					{
+						Actor aim = invoker.grabbedactor;
+						if(aim) invoker.beam.targetPos = (aim.pos.xy, aim.pos.z + aim.height * 0.5);
+					}
 					//invoker.grabbedactor.angle = angle;
 					/*
 					if (!invoker.beam)

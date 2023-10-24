@@ -227,7 +227,26 @@ Model bfgtendril2 // Name of actor in DECORATE
    FrameIndex L2NR D 0 0 // The sprite lump, sprite frame, model index, frame number
 }
 
-
+Model "BEAMZ_LaserBeam"
+{
+	Path "models/"
+	Model 0 "beam.md3"
+	Skin 0 "beam.png"
+	USEACTORPITCH
+	DONTCULLBACKFACES
+	
+	FrameIndex MODL A 0 0
+}
+Model "TenderizerLaser"
+{
+	Path "Models/Projectiles"
+	Model 0 "beam.md3"
+	Skin 0 "tracer4.tga"
+	USEACTORPITCH
+	DONTCULLBACKFACES
+	
+	FrameIndex MODL A 0 0
+}
 
 //Model Rocket2 // Name of actor in DECORATE
 //{ 
