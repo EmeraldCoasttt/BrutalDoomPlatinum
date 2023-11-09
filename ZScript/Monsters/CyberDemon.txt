@@ -1,3 +1,17 @@
+
+CLASS BDPCyberdemon : Cyberdemon
+{
+	Action void a_cyberwarn()
+	{
+		
+		If(target)
+		{
+			
+		}
+		
+	}
+	
+}
 CLASS CyberFireUp2 : Actor
 	{
 	Default
@@ -8,7 +22,14 @@ CLASS CyberFireUp2 : Actor
 	States
 		{
 		Spawn:
-			TNT1 A 15 NODELAY;
+			TNT1 A 0 NODELAY
+			{
+				If(master && master.target)
+				{
+					master.target.A_startsound("CYBWARN",669);
+				}
+			}
+			TNT1 A 15;
 			TNT1 A 0
 				{
 				If(master && master.target)
