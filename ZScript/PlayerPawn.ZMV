@@ -503,19 +503,19 @@ class Brutal_PlayerBase : PlayerPawn
 		//}
 		If(CountInv("RollingRight") == 1)
 		{
-		player.cheats |= CF_CHASECAM;
+		//player.cheats |= CF_CHASECAM;
 		SetStateLabel("rollingright");
 		bforcexybillboard = TRUE;
 		}
 		If(CountInv("RollingLeft") == 1)
 		{
-		player.cheats |= CF_CHASECAM;
+		//player.cheats |= CF_CHASECAM;
 		SetStateLabel("rollingLeft");
 		bforcexybillboard = TRUE;
 		}
 		If(CountInv("RollFinished") == 1)
 		{
-		player.cheats &= ~CF_CHASECAM;
+		//player.cheats &= ~CF_CHASECAM;
 		takeinventory("rollfinished",1);
 		bforcexybillboard = FALSE;
 		}

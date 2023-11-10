@@ -210,8 +210,8 @@ script "pressroll" (VOID) NET
 						y = -GetPlayerInput(-1, INPUT_SIDEMOVE);
 						ang = getactorangle(0)+vectorangle(x, y);
 						//print(i:y);
-						if(x || y) ThrustThing (ang>>8, 64, 1, 0);
-						else ThrustThing (getactorangle(0)>>8, 64, 1, 0);
+						if(x || y) ThrustThing (ang>>8, 32, 1, 0);
+						else ThrustThing (getactorangle(0)>>8, 32, 1, 0);
 						If(y == 0)
 						{
 							If(x > 1)
