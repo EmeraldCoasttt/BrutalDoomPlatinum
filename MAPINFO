@@ -27,6 +27,7 @@ DoomEdNums
 	26015 = JungleRain
 	26018 = TitlePhobos
 	26019 = TitleMars
+	26020 = TNTShipSpawner
 }
 
 
@@ -47,6 +48,12 @@ episode BDM01
 episode test
 {
 	Name = "Testing Map"
+}
+
+
+map TITLEMAP "Title"
+{
+	music = D_DM2TTL	
 }
 
 
