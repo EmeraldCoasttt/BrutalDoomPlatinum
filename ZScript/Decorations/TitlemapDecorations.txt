@@ -1,0 +1,35 @@
+CLASS TitlePhobos : actor
+{
+	Default
+	{
+		+forcexybillboard;
+		+bright;
+		Scale 0.14;
+		+rollsprite;
+		+nogravity;
+	}
+	States
+	{
+		Spawn:
+			PHBS A -1 NODELAY A_setroll(10);
+			WAIT;
+	
+	}
+
+}
+
+CLASS TitleMars : TitlePhobos
+{
+	Default
+	{
+		Scale 1.0;
+	}
+	States
+	{
+		Spawn:
+			PHBS B -1;
+			WAIT;
+	
+	}
+
+}
