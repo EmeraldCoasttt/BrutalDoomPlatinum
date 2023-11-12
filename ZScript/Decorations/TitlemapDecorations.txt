@@ -47,7 +47,7 @@ CLASS TNTSHIPSPAWNER : actor
 		Spawn:
 			TNT1 A 300
 			{
-				If(random(0,4) == 1)
+				If(random(0,12) == 1)
 				{
 					let ship = spawn("TNTSHIP",(pos.x, pos.y, frandom(200,320)));
 					If(ship)
