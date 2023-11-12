@@ -238,7 +238,6 @@ user bool bd_HellishLaserRockets = false;
 user bool bd_StickyGrenades = false;
 user bool bd_needlegun = false;
 */
-user bool bd_AlwaysBob = false;
 
 
 server bool G_Trichording = false;
