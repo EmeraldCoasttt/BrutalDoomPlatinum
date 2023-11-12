@@ -68,8 +68,6 @@ user int bd_BloodTrail = 0;
 
 server int bd_RandomizedMedkits = 1;
 
-user int bd_GenderFemale = 0;
-
 server int bd_ToxicWasteOnExplosion= 1;
 
 server int bd_beta_decorations = 1;
