@@ -857,6 +857,9 @@ ACTOR FlyingLava: FlyingBurningFuel
 	Radius 14
 	Height 14
 	+NODAMAGETHRUST
+	+thruspecies
+	+mthruspecies
+	Species "marines"
     States
     {
     Spawn:
@@ -876,7 +879,7 @@ ACTOR FlyingLava: FlyingBurningFuel
         Loop
 	Death:
 		TNT1 A 0
-		TNT1 A 0 A_Explode(32, 120, 1, 120)
+		//TNT1 A 0 A_Explode(32, 120, 1, 120)
 		EXPL AAAA 0 A_CustomMissile ("FireBallExplosionFlames", 1, 0, random (0, 360), 2, random (0, 360))
 		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-5, 5), random (-5, 5))
 		Stop	
@@ -952,7 +955,7 @@ ACTOR FlyingLava1c: FlyingLava1b
         Loop
 	Death:
 		TNT1 A 0
-		TNT1 A 0 A_Explode(4, 32, 1)
+		//TNT1 A 0 A_Explode(4, 32, 1)
 		EXPL AA 0 A_CustomMissile ("FireBallExplosionFlames", 1, 0, random (0, 360), 2, random (0, 360))
 		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-5, 5), random (-5, 5))
 		Stop	
