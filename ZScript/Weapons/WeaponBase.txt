@@ -671,7 +671,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 				owner.takeinventory("gofatality",1);
 			}
 
-			if(owner.GetCvar("bd_AlwaysBob") == true || owner.findinventory("sprintbob")) 
+			if(owner.findinventory("sprintbob")) 
 			{
 				if (player && player.readyweapon) 
 				{

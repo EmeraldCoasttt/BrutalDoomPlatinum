@@ -50,10 +50,10 @@ class OptionMenuItemTiltPlusPlusSlider : OptionMenuItemSlider
 {
 	String mTooltip;
 
-	OptionMenuItemTiltPlusPlusSlider Init(String label, String tooltip, Name command, double min, double max, double step, int showval = 1)
+	OptionMenuItemTiltPlusPlusSlider Init(String label, String tooltip, Name command, double min, double max, double step, int showval = 1, CVar graycheck = null)
 	{
 		mTooltip = tooltip;
-		Super.Init(label, command, min, max, step, showval);
+		Super.Init(label, command, min, max, step, showval, graycheck);
 		return self;
 	}
 }

@@ -38,12 +38,12 @@ IfGame(Doom, Chex)
 			TextItem "Load Game", "l", "LoadGameMenu"
 			TextItem "Save Game", "s", "SaveGameMenu"
 			TextItem "Options", "o", "OptionsMenu"/////////////
-			TextItem "Brutal Doom Options", "b", "BrutalMenu"
+			TextItem "Brutal Doom", "b", "BrutalMenu"
 		}
 		else
 		{
 			TextItem "Options", "o", "OptionsMenu"/////////////////////
-			TextItem "Brutal Doom Options", "b", "BrutalMenu"
+			TextItem "Brutal Doom", "b", "BrutalMenu"
 			TextItem "Load Game", "l", "LoadGameMenu"
 			TextItem "Save Game", "s", "SaveGameMenu"
 		}
@@ -58,7 +58,7 @@ IfGame(Doom, Chex)
 	{
 		TextItem "$MNU_NEWGAME", "n", "PlayerclassMenu"
 		TextItem "$MNU_OPTIONS", "o", "OptionsMenu"/////////////////////
-		TextItem "Brutal Doom Options", "b", "BrutalMenu"
+		TextItem "Brutal Doom", "b", "BrutalMenu"
 		TextItem "Credits", "c", "BrutalCreditsMenu"
 		TextItem "$MNU_GAMEFILES", "g", "GameFilesMenu"
 		TextItem "$MNU_INFO", "i", "ReadThisMenu"
@@ -82,869 +82,609 @@ ListMenu "PlayerclassMenu"
 
 OptionMenu "BrutalMenu"
 {
-	Title "BRUTAL DOOM OPTIONS"
-	//Submenu "BD Performance Options",		"BrutalDoomOptionsPerformance"
-	//Submenu "BD Level Options",			"BrutalDoomOptionsLevel"
-	//Submenu "BD Doom Gameplay Options",			"BrutalDoomOptionsGame"
-	//Submenu "BD Player Options",			"BrutalDoomOptionsPlayer"
-	//StaticText " "
-	//StaticText " "
-	//Command "Go to Weapons Testing Map",			"map test"
-	//StaticText "------------------------------------------------------------------------------", "Black"
-	//StaticText "Dox's Personalized Addon Options"
-	Submenu "Level/Spawning Options",			"DoxMESSettings"
-	Submenu "Player/Control Options",			"DoxPlayerSettings"
-	Submenu "Graphical Options",			"DoxVisualSettings"
-	Submenu "Weapon options",		"DoxWeaponOptions"
-	Submenu "Monster options",		"DoxMonsterOptions"
-	
-	StaticText "-------------------------", "white"
-	Submenu "Credits - Graphics",			"DoxCreditsGraphics"
-	Submenu "Credits - Coding",			"DoxCreditsCode"
-	Submenu "Credits - Sound Design",			"DoxCreditsSound"
-	StaticText "------------------------------------------------------------------------------", "Black"
-	StaticText " "
-	StaticText "You can contact me for multiple reasons on these platforms:"
-	StaticText "Email - PerfectHatred2003@gmail.com"
-	StaticText "Discord - Emerald#7486"
-	StaticText "Twitter - @EmeraldCoasttt"
-	StaticText " "
-	StaticText " "
+	Title "Brutal Doom"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "OPTIONS", "fire"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText ""
+	Submenu "Gameplay Options", "DoxGameplayOptions", 0, 1
+	Submenu "Visual Options", "DoxVisualOptions", 0, 1
+	Submenu "Weapon Spawns", "DoxWeaponSpawns", 0, 1
+	StaticText ""
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "CREDITS", "fire"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText ""
+	Submenu "Graphics", "DoxCreditsGraphics", 0, 1
+	Submenu "Coding", "DoxCreditsCode", 0, 1
+	Submenu "Sound Design", "DoxCreditsSound", 0, 1
+	StaticText ""
+	StaticText "-------------------------------------------------------------------------", "Black"
+	StaticText "You can contact me for multiple reasons on these platforms:", "fire"
+	StaticText "Email - PerfectHatred2003@gmail.com", "fire"
+	StaticText "Discord - emeraldcoasttt", "fire"
+	StaticText "Twitter - @EmeraldCoasttt", "fire"
 }
 
-OptionMenu "BrutalDoomOptionsPerformance"
+OptionMenu "DoxGameplayOptions"
 {
-
-  
-  
-
-  
-
+	Title "Gameplay Options"
+	Class "TiltPlusPlusMenu"
+	Position -32
+	StaticText ""
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "LEVEL CHANGES", "fire"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText ""
+	TiltPlusPlusOption "Level Enhancement System", "Adds new textures, decorations and enemies to vanilla maps.", "bd_disablemapenhancements", "DisabledEnabled"
+	TiltPlusPlusOption "PSX Monsters", "Adds PSX Monster placements to The Ultimate Doom.", "bd_PSXMonsters", "EnabledDisabled"
+	StaticText ""
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "PLAYER/WEAPON OPTIONS", "fire"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText ""
+	TiltPlusPlusOption "Ledge Grab", "Allows you to grab onto a ledge and lift yourself up. Use with care.", "donotclimb", "NoYes"
+	TiltPlusPlusOption "Double Jump", "Allows you to perform a second jump in mid air. Use with care.", "donotdoublejump", "NoYes"
+	TiltPlusPlusOption "Enable Auto Reload", "Automatically reload your gun when it runs out of ammo.", "bd_NoAutoReload", "NoYes"
+	TiltPlusPlusOption "Enable smart dual wielding", "Weapons remember if they were dual wielded when selecting them again.", "bd_SmartDualWield", "NoYes"
+	TiltPlusPlusOption "Enable Weapon Pitch Changes", "Makes weapons change the screen pitch while recoiling.", "bd_Pitch", "NoYes"
+	TiltPlusPlusOption "ADS mode", "Change how aiming down sights is controlled.", "bd_Aim", "AimOption"
+	TiltPlusPlusOption "Manual shotgun pump", "The shotgun must be pumped by pressing fire.", "ManualShotgunPump", "YesNo"
+	TiltPlusPlusOption "BDv21 Minigun firing", "The minigun spins up faster, but cannot fire while spinning up.", "bd_LegacyMinigunFire", "YesNo"
+	TiltPlusPlusOption "Rocket Launcher backblast", "Deals damage to enemies behind players using Rocket Launchers.", "bd_rocketbackblast", "YesNo"
+	StaticText ""
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "MONSTER ABILITIES", "fire"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText ""
+	TiltPlusPlusOption "Monster footsteps", "Zombies and Imps make footstep sounds while walking.", "bd_MonsterFootsteps", "EnabledDisabled"
+	TiltPlusPlusOption "Monsters wander", "Monsters move around after spawning, instead of standing still.", "bd_WanderingOnSpawn", "YesNo"
+	TiltPlusPlusOption "Zombies infight", "Zombies will not attack ohter zombies if provoked. They can still damage each other.", "bd_NoZombieInfight", "NoYes"
+	TiltPlusPlusOption "Zombies roll", "Zombies dodge-roll in combat.", "bd_RollingZombies", "NoYes"
+	TiltPlusPlusOption "Imps crawl on ceiling", "Imps can jump to the ceiling and crawl on it.", "bd_CeilingImps", "NoYes"
+	TiltPlusPlusOption "Imps jump attack", "Imps will jump while throwing fireballs.", "bd_JumpingImps", "NoYes"
+	TiltPlusPlusOption "Arachnotrons walk on ceiling", "Arachnotrons can jump to the ceiling and walk on it.", "bd_CeilingSpiders", "NoYes"
+	TiltPlusPlusOption "Revenants use jetpack", "Revenants can activate their jetpacks to fly.", "bd_JetpackRevenant", "NoYes"
+	TiltPlusPlusOption "Hell Knights rush & slam", "Hell Knights can rush the player and slam the ground.", "bd_HKslam", "NoYes"
+	TiltPlusPlusOption "Barons of Hell rush & slam", "Barons of Hell can rush the player and slam the ground.", "bd_Baronslam", "YesNo"
+	TiltPlusPlusOption "Archviles teleport", "Archviles have a chance to teleport if hit.", "bd_archvileteleport", "NoYes"
+	TiltPlusPlusOption "Cyberdemons airstrike", "Cyberdemons fire rockets into the air and airstrike the player.", "bd_CYBERFIREUP", "YesNo"
 }
 
-OptionMenu "BrutalDoomOptionsLevel"
+OptionMenu "DoxVisualOptions"
 {
-
-  
-  
-   Title "Level Options"
-   StaticText "All changes made here will take effect on next level"
-   StaticText "or when you start a new game."
-   StaticText " "
-   
-  Option "Vanilla Monsters", "bd_classicmonsters", "YesOrNo"
-  StaticText "Disables new enemy AI and new attacks."
-  StaticText " "
-  
-  Option "Advanced Decorative Objects", "bd_disabledecorations", "DisabledOption"
-  StaticText "Fancy particle effects for torches and lamps."
-  StaticText " "
-  
-  Option "Level Enhancement System", "bd_disablemapenhancements", "DisabledOption"
-  StaticText "Improves several maps with better textures,"
-  StaticText  "new decorations and sometimes new enemies."
-  StaticText " "
-  
-  
-   Option "Level Enhancement System - Disable Voxels", "bd_voxeldec", "YesorNoFalse"
-  StaticText "Disable voxel decorations to prevent crashes on Android."
-  StaticText " "
-  
-  Option "New Weapons", "bd_disablenewguns", "DisabledOption"
-  StaticText "Selects if the new weapons should be spawned or not."
-  StaticText "(Submachinegun, Assault Shotgun, Railgun, etc.)"
-  StaticText " "
-  
-  Option "New Enemies", "bd_disablenewenemies", "DisabledOption"
-  Option "Footstep Sounds", "bd_footstepsounds", "YesOrNo"
-  Option "Spawn Demon Spheres", "bd_disabledemonspheres", "YesOrNoFalse"
- // StaticText "Following CVARs still doesn't works:"
-  //Option "Cruelty Bonuses", "bd_disablecrueltybonus", "DisabledOption"
- // Option "Bloody Screen Effects", "bd_disablebloodyscreen", "DisabledOption"
-  Option "Rescuable Marines", "bd_disablefriendlymarines", "YesOrNoFalse"
-  Option "Rocket Ammo is shootable", "bd_shootablerocketammo", "YesOrNo"
+	Title "Visual Options"
+	Class "TiltPlusPlusMenu"
+	Position -32
+	StaticText ""
+	TiltPlusPlusOption "Replace Decorations", "Enable fancier decorations.", "bd_disabledecorations", "DisabledEnabled"
+	StaticText ""
+	Title "Visual Options"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "PERFORMANCE OPTIONS", "fire"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText ""
+	Slider "Max Decals", "cl_maxdecals", 0, 10000, 100, 0
+	Slider "Max Gibs and Blood Pools", "sv_corpsequeuesize", 0, 50000, 100, 0
+	TiltPlusPlusOption "Blood Amount", "Amount of blood from hitting enemies.", "bd_bloodamount", "BrutalBlood"
+	TiltPlusPlusOption "Gibs Janitor", "Makes gibs disappear after 30 seconds.", "bd_lowgraphicsmode", "EnabledDisabled"
+	TiltPlusPlusOption "Casings janitor", "Makes casings disappear after 10 seconds.", "bd_infinitecasings", "DisabledEnabled"
+	StaticText ""
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "DETAIL OPTIONS", "fire"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText ""
+	Option "Water Ripple Effects", "bd_disablewaterripples2", "DisabledEnabled"
+	Option "Computer Area Map reveals actors", "bd_allmapdx", "NoYes"
+	TiltPlusPlusOption "Randomized pickup sprites", "Enables visual variants of ammo and weapon pickups.", "Dox_SimplePickups", "DisabledEnabled"
+	TiltPlusPlusOption "Barrels bleed nukage", "Barrels explode into pools of toxic waste. Purely visual.", "bd_ToxicWasteOnExplosion", "DisabledEnabled"
+	StaticText ""
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "PLAYER/WEAPON GRAPHICAL OPTIONS", "fire"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText ""
+	Submenu "Smart crosshair", "SmartCrosshairsMenu"
+	Slider "$DSPLYMNU_SCREENSIZE", "screenblocks", 3.0, 12.0, 1.0, 0
+	ScaleSlider "User interface scale", "uiscale", 0.0, 8.0, 1.0, "Adapt to screen size"
+	TiltPlusPlusOption "Enable Scanner", "Shows enemy names and health.", "bd_disablescanner", "NoYes"
+	TiltPlusPlusOption "Leg staining", "Configure blood-stains on first person legs.", "bd_LegStainingOptions", "LegStainingOption"
+	Option "Enable fancy firing [!!! DEPRECATED !!!]", "bd_FancyShooting", "NoYes"
+	TiltPlusPlusOption "Swaying Shotgun & GL straps", "Makes straps on weapons sway back and forth.", "bd_ShotgunStrap", "NoYes"
+	TiltPlusPlusOption "Enable First Person Legs", "Show the player's legs in first person.", "bd_Legs", "NoYes"
+	TiltPlusPlusOption "Screen Effects", "Enable blood splatters and bullet holes on the screen.", "bd_ScreenFX", "ScreenTypes"
+	TiltPlusPlusOption "Blood Trail Splash", "Enables blood splashing when enemies are bleeding out. If screen effects are disabled, this will also be disabled.", "bd_BloodTrail", "NoYes"
+	TiltPlusPlusOption "3D Nails", "Enables 3D models for nailgun and glass slug projectiles.", "Dox_3DNail", "YesNo"
+	TiltPlusPlusOption "Magazine clicks on low ammo", "Adds an audio indicator when your mag's ammo is low.", "BD_MagGoClicky", "YesNo" 
+	StaticText ""
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "VIEW TILTING", "fire"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText ""
+	StaticText "$TILTPLUSPLUSMNU_STRAFETILT_TITLE", 1
+	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED", "$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT", "sv_strafetilt", "YesNo"
+	TiltPlusPlusOption "$TILTPLUSPLUSMNU_INVERT", "$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_INVERT", "sv_strafetiltinvert", "YesNo"
+	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SPEED", "$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_SPEED", "sv_strafetiltspeed", 0.1, 2.0, 0.01, 2
+	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_ANGLE", "$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_ANGLE", "sv_strafetiltangle", 0.1, 1.0, 0.01, 2
+	StaticText ""
+	StaticText "$TILTPLUSPLUSMNU_MOVETILT_TITLE", 1
+	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED", "$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT", "sv_movetilt", "YesNo"
+	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SPEED", "$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_SPEED", "sv_movetiltspeed", 0.1, 20.0, 0.1, 2
+	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_ANGLE", "$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_ANGLE", "sv_movetiltangle", 0.01, 0.10, 0.01, 2
+	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SCALAR", "$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_SCALAR", "sv_movetiltscalar", 0.0, 1.0, 0.1
+	StaticText ""
+	StaticText "$TILTPLUSPLUSMNU_TURNTILT_TITLE", 1
+	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED", "$TILTPLUSPLUSMNU_HELPTEXT_TURNTILT", "sv_turntilt", "YesNo"
+	TiltPlusPlusOption "$TILTPLUSPLUSMNU_INVERT", "$TILTPLUSPLUSMNU_HELPTEXT_TURNTILT_INVERT", "sv_turntiltinvert", "YesNo"
+	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SCALAR", "$TILTPLUSPLUSMNU_HELPTEXT_TURNTILT_SCALAR", "sv_turntiltscalar", 0.0, 20.0, 0.1
+	StaticText ""
+	StaticText "$TILTPLUSPLUSMNU_UNDERWATERTILT_TITLE", 1
+	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED", "$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT", "sv_underwatertilt", "YesNo"
+	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SPEED", "$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_SPEED", "sv_underwatertiltspeed", 0.1, 20.0, 0.1, 2
+	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_ANGLE", "$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_ANGLE", "sv_underwatertiltangle", 0.01, 0.5, 0.01, 2
+	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SCALAR", "$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_SCALAR", "sv_underwatertiltscalar", 0.0, 1.0, 0.1
+	StaticText ""
+	StaticText "$TILTPLUSPLUSMNU_DEATHTILT_TITLE", 1
+	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED", "$TILTPLUSPLUSMNU_HELPTEXT_DEATHTILT", "sv_deathtilt", "YesNo"
 }
 
-OptionMenu "BrutalDoomOptionsGame"
+OptionMenu "DoxWeaponSpawns"
 {
-   Title "Gameplay Options"
-   StaticText "All changes made here have imediate effect."
-   StaticText " "
-   
-   
-   
-
+	Title "Weapon Spawns"
+	Class "TiltPlusPlusMenu"
+	Position -32
+	StaticText ""
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "WEAPON SPAWNS", "fire"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText ""
+	Option "Axe", "bd_SpawnAxe", "EnabledDisabled"
+	Option "Chainsaw", "bd_SpawnSaw", "EnabledDisabled"
+	StaticText ""
+	Option "Pistol", "bd_SpawnPistol", "EnabledDisabled"
+	Option "Sub-Machinegun", "bd_SpawnSMG", "EnabledDisabled"
+	Option "Revolver", "bd_SpawnRevolver", "EnabledDisabled"
+	StaticText ""
+	Option "Shotgun", "bd_SpawnShotgun", "EnabledDisabled"
+	Option "Super Shotgun", "bd_SpawnSSG", "EnabledDisabled"
+	Option "Assault Shotgun", "bd_SpawnASG", "EnabledDisabled"
+	TiltPlusPlusOption "SSG spawns on Shotgun", "Allows the SSG to spawn instead of a Shotgun.", "bd_SSGreplacesShotgun", "YesNo"
+	TiltPlusPlusSlider "SSG spawn multiplier", "Chance for the SSG to spawn.", "bd_SSGreplacementMultiplier", 1, 8, 1, 1, "bd_SSGreplacesShotgun"
+	StaticText ""
+	Option "Rifle", "bd_SpawnRifle", "EnabledDisabled"
+	Option "Minigun", "bd_SpawnMinigun", "EnabledDisabled"
+	Option "Machinegun", "bd_SpawnMachinegun", "EnabledDisabled"
+	StaticText ""
+	Option "Rocket Launcher", "bd_SpawnRL", "EnabledDisabled"
+	Option "Grenade Launcher", "bd_SpawnGL", "EnabledDisabled"
+	StaticText ""
+	Option "Plasma rifle", "bd_SpawnPlasmagun", "EnabledDisabled"
+	Option "Railgun", "bd_SpawnRailgun", "EnabledDisabled"
+	Option "FreezeThrower", "bd_SpawnFreezer", "EnabledDisabled"
+	StaticText ""
+	Option "BFG9000", "bd_SpawnBFG", "EnabledDisabled"
+	Option "BFG10K", "bd_SpawnBFG10K", "EnabledDisabled"
+	Option "Unmaker", "bd_SpawnUnmaker", "EnabledDisabled"
+	StaticText ""
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "ENEMY WEAPON DROPS", "fire"
+	StaticText "-------------------------------------------------------", "black"
+	Statictext ""
+	Option "Pistol", "bd_Spawnpistoldrop", "EnabledDisabled"
+	Option "SMG", "bd_SpawnSMGDrop", "EnabledDisabled"
+	Option "Shotgun", "bd_SpawnshotgunDrop", "EnabledDisabled"
+	Option "Rifle", "bd_SpawnRifleDrop", "EnabledDisabled"
+	Option "Minigun", "bd_SpawnMiniGunDrop", "EnabledDisabled"
 }
-
-OptionMenu "BrutalDoomOptionsPlayer"
-{
-
-  
-  
-   Title "Player Options"
-   StaticText "All changes made here requires the level to"
-   StaticText "be restarted or take effect on next level."
-   StaticText " "
-   
-   
-
-}
-
-
-
-
-OptionMenu "DoxMESSettings"
-{
-   Title "Level/Spawning Options"
-   
-   
-  Option "Replace Decorations", "bd_disabledecorations", "DisabledOption"
-   
-  StaticText " " 
-  Option "Level Enhancement System", "bd_disablemapenhancements", "DisabledOption"
-  StaticText "Improves several maps with better textures,"
-  StaticText  "new decorations and sometimes new enemies."
-  StaticText " "
-   Option "PSX Monsters", "bd_PSXMonsters", "Enable/Disable"
-  StaticText "Adds PSX Monster placements"
-  StaticText " "
-  
-  
-}
-
-
 
 OptionMenu "SmartCrosshairsMenu"
 {
-Title "Smart Crosshair Options"
-Option "Enable Smart Crosshairs", "bd_SmartCrosshairs", "YesOrNo"
-	StaticText "Each weapon has a different crosshair.", "red"//comment for mass deleting
-    StaticText "Look in the HUD Options menu to see what each crosshair looks like.", "red"//comment for mass deleting
-	StaticText "Make sure you have 'Force Default Crosshair' disabled!", "red"//comment for mass deleting
-	StaticText "Crosshair 0 is the default player's crosshair.", "red"//comment for mass deleting
-	StaticText "Crosshair 41 is nothing at all.", "red"//comment for mass deleting
-	StaticText " "
-	StaticText "Customizable Crosshairs"
-	Command "Restore to default values",	"pukename SmartCrosshairsDefault"
-	StaticText "You must go back to the game for it to take effect.", "red"
-	StaticText "Slot 2:"
+	Title "Smart Crosshair Options"
+	Class "TiltPlusPlusMenu"
+	Position -32
+	StaticText ""
+	TiltPlusPlusOption "$HUDMNU_FORCECROSSHAIR", "Disable this option to use Smart Crosshairs.", "crosshairforce", "OnOff"
+	TiltPlusPlusOption "Enable Smart Crosshairs", "Gives each weapon a different crosshair. 0 is the default crosshair. 41 is nothing at all.", "bd_SmartCrosshairs", "YesNo"
+	StaticText "Crosshair Settings", "fire"
+	StaticText ""
+	StaticText "Slot 2:", "fire"
 	Slider "Pistol", "PistolCrosshair", 0, 99, 1
 	Slider "Sub-machinegun", "SMGCrosshair", 0, 99, 1
 	Slider "Revolver", "RevolverCrosshair", 0, 99, 1
 	Slider "MP40", "MP40Crosshair", 0, 99, 1
-	StaticText "Slot 3:"
+	StaticText ""
+	StaticText "Slot 3:", "fire"
 	Slider "Assault Shotgun", "ASGCrosshair", 0, 99, 1
 	Slider "Shotgun", "ShotgunCrosshair", 0, 99, 1
 	Slider "SSG", "SSGCrosshair", 0, 99, 1
-	StaticText "Slot 4:"
+	StaticText ""
+	StaticText "Slot 4:", "fire"
 	Slider "Machinegun", "LMGCrosshair", 0, 99, 1
 	Slider "Rifle", "RifleCrosshair", 0, 99, 1
 	Slider "Minigun", "MinigunCrosshair", 0, 99, 1
-	Slider "MG42", "MG42Crosshair", 0, 99, 1
-	StaticText "Slot 5:"
+	StaticText ""
+	StaticText "Slot 5:", "fire"
 	Slider "Grenade Launcher", "GLCrosshair", 0, 99, 1
 	Slider "Rocket Launcher", "RLCrosshair", 0, 99, 1
-	StaticText "Slot 6:"
+	StaticText ""
+	StaticText "Slot 6:", "fire"
 	Slider "Plasmagun", "PlasmaCrosshair", 0, 99, 1
 	Slider "Railgun", "RailgunCrosshair", 0, 99, 1
 	Slider "Freezethrower", "FreezethrowerCrosshair", 0, 99, 1
-	StaticText "Slot 7:"
+	StaticText ""
+	StaticText "Slot 7:", "fire"
 	Slider "BFG9000", "BFGCrosshair", 0, 99, 1
 	Slider "BFG10K", "BFG10kCrosshair", 0, 99, 1
 	Slider "Unmaker", "UnmakerCrosshair", 0, 99, 1
-	StaticText "Slot 8:"
+	StaticText ""
+	StaticText "Slot 8:", "fire"
 	Slider "Flamecannon", "FlamecannonCrosshair", 0, 99, 1
 	Slider "Hellish Missile Launcher", "HMLCrosshair", 0, 99, 1
-	StaticText "=====================================", "black"
-	StaticText "Default crosshairs provided by Xeno1979."
-	
+	StaticText ""
+	Command "Restore to default values", "pukename SmartCrosshairsDefault"
+	StaticText ""
+	StaticText "Default crosshairs provided by Xeno1979.", "fire"
 }
-
-OptionMenu "DoxVisualSettings"
-{
-	 Title "Visual Settings"
-	   StaticText "-------------------------------------------------------", "black"
-	StaticText "PERFORMANCE OPTIONS"
-	StaticText "-------------------------------------------------------", "black"
-   StaticText " "
-  
-  Option "Max Wall Decals", "cl_maxdecals", "maxdecals"
-  Option "Max Gibs and Blood Pools", "sv_corpsequeuesize", "maxgibs"
-  StaticText " "
-  
-
-  Option "Blood Amount", "bd_bloodamount", "BrutalBlood"
-  StaticText "How much blood you want to see?"
-  StaticText " "
-  Option "Enable Janitor", "bd_lowgraphicsmode", "YesOrNo"
-  StaticText "Makes gibs disappear after 30 seconds."
-  StaticText " "
-  
-  
-
-  
-  Option "Spent Casings stays on floor forever", "bd_infinitecasings", "YesOrNo"
-   StaticText " "
-  
-     StaticText "-------------------------------------------------------", "black"
-	StaticText "DETAIL OPTIONS"
-	StaticText "-------------------------------------------------------", "black"
-	StaticText " "
-  Option "Water Ripple Effects", "bd_disablewaterripples2", "YesOrNoFalse"
-  StaticText " "
-  
-   Option "Allmap reveals actors", "bd_allmapdx", "YesOrNoFalse"
-  StaticText " "
-  
-  Option "Randomized pickup sprites", "Dox_SimplePickups", "YesOrNoFalse"
-	StaticText "Disables randomized pickup sprites..", "red"//comment for mass deleting
-	StaticText " "	
-	
-    Option "Enable beta decorations", "bd_beta_decorations", "YesOrNoFalse"
-	StaticText "Allows for decorations that was in the v21 Beta like breakable lights "
-	StaticText "to appear. Can affect performance." 
-	StaticText " "
-	Option "Barrels nukage flying", "bd_ToxicWasteOnExplosion", "YesOrNo"
-	StaticText "It can be disabled now. Should've seen that one coming.", "red"//comment for mass deleting
-	StaticText ""
-	StaticText "-------------------------------------------------------", "black"
-	StaticText "PLAYER GRAPHICAL OPTIONS"
-	StaticText "-------------------------------------------------------", "black"
-	StaticText " "
-	 Option "View bobs while sprinting", "bd_sprintbob", "YesOrNoFalse"
-	statictext ""
-	
-	   Option "Player Gender", "bd_GenderFemale", "GenderOption"
-   //StaticText "Only works on Zandronum"
-   StaticText " "
-   
-   Option "HUD Type", "bd_sbartype", "HUDType"
-   StaticText " "
-   
-   Option "HUD Size", "screenblocks", "screenblocksize"
-   StaticText " "
-   
-   Option "Show enemy health", "bd_disablescanner", "YesorNoFalse"
-   StaticText " "
-   
-   Command "Force HUD to Restart",			"pukename BDRespawn"
-   StaticText " "
-   Option "Force GZDoom UI Scale", "uiscale", "uiscalesize"
-   StaticText "Change this if you are having trouble"
-   StaticText "with HUD scaling on GZDoom"
-   StaticText "(does nothing on Zandronum)"
-	Option "Weapons always bobbing", "bd_AlwaysBob", "YesOrNo"
-	StaticText "Your weapon will sway to the sides, even when it's not in its ready state."
-	StaticText " "
-	
-	Option "Leg staining", "bd_LegStainingOptions", "LegStainingOption"
-	StaticText "Customize how your legs are stained.", "red"//comment for mass deleting
-	StaticText " "
-    Option "Enable fancy firing", "bd_FancyShooting", "YesOrNoFalse"
-	StaticText "You can disable tracers and firing particles. Might increase performance.", "red"//comment for mass deleting
-	StaticText " "
-	Option "Enable Shotgun & GL straps", "bd_ShotgunStrap", "YesOrNoFalse"
-	StaticText "For people who STILL dislike weapons' straps.", "red"//comment for mass deleting
-	StaticText " "
-    Option "Enable First Person Legs", "bd_Legs", "YesOrNoFalse"
-	StaticText "Makes your legs visible when you look down.", "red"//comment for mass deleting
-	StaticText " "
-	Option "Screen Effects", "bd_ScreenFX", "ScreenTypes"
-    StaticText "Enables Screen Effects on HUD, such as Blood Splashing and Bullet Holes.", "red"//comment for mass deleting
-	StaticText " "
-    Option "Blood Trail Splash", "bd_BloodTrail", "YesOrNoFalse"
-    StaticText "Enables Blood Splashing when Enemies are bleeding out.", "red"//comment for mass deleting
-	StaticText "If Screen Effects is disabled, this option will also be disabled.", "red"//comment for mass deleting
-	StaticText "Does not work for the BDv21 Mode.", "red"//comment for mass deleting
-	StaticText " "
-	StaticText "-------------------------------------------------------", "black"
-}
-	OptionMenu "DoxPlayerSettings"
-{
-	 Title "Player Settings"
-    StaticText "-------------------------------------------------------", "black"
-	StaticText "ABILITIES"
-	StaticText "-------------------------------------------------------", "black"
-	
-	
-
-	Option "Enable Ledge Grab", "donotclimb", "YesOrNoFalse"
-	StaticText "Allows you to grab onto a ledge and lift yourself up. Use with care.", "red"//comment for mass deleting
-	StaticText " "
-	Option "Enable Double Jumping", "donotdoublejump", "YesOrNoFalse"
-	StaticText "Allows you to perform a second jump in mid air. Use with care.", "red"//comment for mass deleting
-	StaticText "It might seem a little clunky, because it's only ACS and Decorate.", "red"//comment for mass deleting
-	StaticText " "
-	StaticText "-------------------------------------------------------", "black"
-}
-
-OptionMenu "DoxMonsterOptions"
-{
-    Title "Monster options"
-	Option "Shootable Enemy Projectiles (EXPERIMENTAL!)", "BD_ShootableEnemyProjectiles", "YesOrNo"
-	StaticText "Makes you able to shoot enemy's projectiles, exploding them in the air.", "red"//comment for mass deleting
-	StaticText "Some projectiles might be stronger and tougher to destroy.", "red"//comment for mass deleting
-	StaticText "Keep in mind that all player's projectiles can hit enemy's projectiles, so you might", "red"//comment for mass deleting
-	StaticText "accidentally hit one with a BFG, for instance.", "red"//comment for mass deleting
-	StaticText "Currently supported monsters: Revenant", "red"//comment for mass deleting
-	StaticText " "
-	
-	Option "Disable Meatshields", "BD_DontUseMeatshield", "YesOrNo"
-	StaticText "Meatshields are buggy and cause the player to continously slide on some", "red"//comment for mass deleting
-	StaticText "maps. You can disable that feature as a fix (or just don't use the meat shield...)", "red"//comment for mass deleting
-	StaticText " "
-	
-	Option "Monster footsteps", "bd_MonsterFootsteps", "YesOrNo"
-	StaticText "Zombies and imps make footstep sounds when walking.", "red"//comment for mass deleting
-	StaticText " "
-	StaticText "-------------------------------------------------------", "black"
-	StaticText "BEHAVIOUR TWEAKS"
-	StaticText "-------------------------------------------------------", "black"
-	StaticText " "
-	Option "No zombie infighting", "bd_NoZombieInfight", "YesOrNo"
-	StaticText "Disables zombies' infighting.", "red"//comment for mass deleting
-	StaticText " "
-	Option "Wandering enemies on spawn", "bd_WanderingOnSpawn", "YesOrNo"
-	StaticText "Monsters move around when they spawn, instead of standing still.", "red"//comment for mass deleting
-	StaticText " "	
-	Option "Rolling zombies", "bd_RollingZombies", "YesOrNoFalse"
-	StaticText " "	
-	Option "Imp ceiling latch", "bd_CeilingImps", "YesOrNoFalse"
-	StaticText " "	
-	Option "Jumping imps when firing", "bd_JumpingImps", "YesOrNoFalse"
-	StaticText " "	
-	Option "Arachnotron ceiling latch", "bd_CeilingSpiders", "YesOrNoFalse"
-	StaticText " "	
-	Option "Revenant's Jetpack", "bd_JetpackRevenant", "YesOrNoFalse"
-	StaticText " "	
-	Option "Hell Knight's rush & slam", "bd_HKslam", "YesOrNoFalse"
-	StaticText " "	
-	Option "Baron of Hell's rush & slam", "bd_Baronslam", "YesOrNo"
-	StaticText ""
-	Option "Archvile teleports", "bd_archvileteleport", "YesOrNoFalse"
-	StaticText " "	
-	Option "Cyberdemon's vertical attack", "bd_CYBERFIREUP", "YesOrNo"
-	
-}
-	
-	
-OptionMenu "DoxWeaponOptions"
-{
-    Title "Weapon options"
-	Submenu "Smart crosshair",			"SmartCrosshairsMenu"
-	StaticText ""
-   Option "Disable Auto Reload", "bd_NoAutoReload", "YesOrNo"
-   StaticText " "
-	Option "Magazine clicks on low ammo", "BD_MagGoClicky", "YesOrNo" 
-	Option "3D Nail model", "Dox_3DNail", "YesOrNo"
-	StaticText "It's not perfect and there's nothing we can do to improve it."
-	StaticText "If the option will be enabled if you can't render 3D models,"
-	StaticText "the nail will be invisible."
-	StaticText ""
-	StaticText "Customizable weapon spawners (might conflict with custom weapons)"
-	StaticText ""
-	Option "Spawn Saw", "bd_SpawnSaw", "Enable/Disable"
-	Option "Spawn Axe", "bd_SpawnAxe", "Enable/Disable"
-	Option "Spawn Pistol", "bd_SpawnPistol", "Enable/Disable"
-	Option "Spawn Sub-Machinegun", "bd_SpawnSMG", "Enable/Disable"
-	Option "Spawn Revolver", "bd_SpawnRevolver", "Enable/Disable"
-	Option "Spawn Shotgun", "bd_SpawnShotgun", "Enable/Disable"
-	Option "Spawn Assault Shotgun", "bd_SpawnASG", "Enable/Disable"
-	Option "Spawn Super Shotgun", "bd_SpawnSSG", "Enable/Disable"
-	Option "Spawn Rifle", "bd_SpawnRifle", "Enable/Disable"
-	Option "Spawn Minigun", "bd_SpawnMinigun", "Enable/Disable"
-	Option "Spawn Machinegun", "bd_SpawnMachinegun", "Enable/Disable"
-	Option "Spawn Rocket Launcher", "bd_SpawnRL", "Enable/Disable"
-	Option "Spawn Grenade Launcher", "bd_SpawnGL", "Enable/Disable"
-	Option "Spawn Plasma rifle", "bd_SpawnPlasmagun", "Enable/Disable"
-	Option "Spawn Railgun", "bd_SpawnRailgun", "Enable/Disable"
-	Option "Spawn FreezeThrower", "bd_SpawnFreezer", "Enable/Disable"
-	Option "Spawn BFG9000", "bd_SpawnBFG", "Enable/Disable"
-	Option "Spawn BFG10K", "bd_SpawnBFG10K", "Enable/Disable"
-	Option "Spawn Unmaker", "bd_SpawnUnmaker", "Enable/Disable"
-	StaticText ""
-	StaticText "Enemy drops"
-	Statictext ""
-	Option "Drop Pistol", "bd_Spawnpistoldrop", "Enable/Disable"
-	Option "Drop Rifle", "bd_SpawnRifleDrop", "Enable/Disable"
-	Option "Drop SMG", "bd_SpawnSMGDrop", "Enable/Disable"
-	Option "Drop MP40", "bd_SpawnMP40Drop", "Enable/Disable"
-	Option "Drop Shotgun", "bd_SpawnshotgunDrop", "Enable/Disable"
-	Option "Drop MiniGun", "bd_SpawnMiniGunDrop", "Enable/Disable"
-	StaticText ""
-	StaticText "Secret guns (barely supported)"
-	StaticText ""
-	Option "Spawn MG42 (Hitler's Buzzsaw)", "bd_SpawnMG42", "Enable/Disable"
-	StaticText " "
-	Option "Super shotgun replaces Shotgun spawn", "bd_SSGreplacesShotgun", "YesOrNo"
-	StaticText "For maps that don't have the SSG, like Doom 1.", "red"//comment for mass deleting
-	StaticText " "
-	Slider "SSG over Shotgun multiplier", "bd_SSGreplacementMultiplier", 1, 8, 1
-	StaticText "Spawn rate multiplier.", "red"//comment for mass deleting
-	StaticText " "
-	Option "Enable smart dual wielding", "bd_SmartDualWield", "YesOrNoFalse"
-	StaticText "Makes the weapons remember if they were dual wielded, so selecting them", "red"//comment for mass deleting
-	StaticText "again will immediately dual wield them.", "red"//comment for mass deleting
-	StaticText " "
-	Option "Enable Weapon Pitch", "bd_Pitch", "YesOrNoFalse"
-	StaticText "Some weapons' Pitch changes during recoil frames have been known to", "red"//comment for mass deleting
-	StaticText "cause stutter on weaker devices. You can disable it as a fix.", "red"//comment for mass deleting
-	StaticText " "
-	Option "Aiming Options", "bd_Aim", "AimOption"
-	StaticText "Changes the way aiming down sights works.", "red"//comment for mass deleting
-	StaticText " "
-	Option "Manual shotgun pump", "ManualShotgunPump", "YesOrNo"
-	StaticText "The shotgun won't pump until you press the fire button again after each shot.", "red"//comment for mass deleting
-	StaticText " "
-	Option "Old minigun fire", "bd_LegacyMinigunFire", "YesOrNo"
-	StaticText "The minigun returns to vanilla BD-style firing.", "red"//comment for mass deleting
-	StaticText " "
-		Option "Rocket Launcher has backblast", "bd_rocketbackblast", "YesOrNo"
-  StaticText " "
-   
-
-}
-
-
-
-OptionMenu "DoxAmmoOptions"
-{
-Title "Customizable weapon mags"
-//StaticText "Here you can customize how much ammo you get from ammo pickups on the floor."
-//StaticText "Does not affect dropped/spawned weapons, non-standard ammo drops and backpacks."
-StaticText ""
-//Not really possible to do that as of right now...
-/*                              
-Slider "Pistol mag", "bd_Clip1Multipier", 0.25, 3.0, 0.25, 2
-Slider "Pistol mag box", "bd_PAmmoBoxMultipier", 0.25, 3.0, 0.25, 2
-StaticText ""
-Slider "Shells", "bd_AmmoShellMultipier", 0.25, 3.0, 0.25, 2
-Slider "Shell box", "bd_AmmoShellBoxMultipier", 0.25, 3.0, 0.25, 2
-StaticText ""
-Slider "Rifle mag", "bd_Clip2Multipier", 0.25, 3.0, 0.25, 2
-Slider "Rifle ammo box", "bd_Clipbox2Multipier", 0.25, 3.0, 0.25, 2
-StaticText ""
-Slider "Rocket", "bd_AmmoRocketMultipier", 0.25, 3.0, 0.25, 2
-Slider "Rocket box", "bd_AmmoRocketBoxMultipier", 0.25, 3.0, 0.25, 2
-Slider "Grenade box", "bd_GrenadeBoxMultipier", 0.25, 3.0, 0.25, 2
-StaticText ""
-Slider "Cell", "bd_AmmoCellMultipier", 0.25, 3.0, 0.25, 2
-Slider "Cellpack", "bd_AmmoCellPackMultipier", 0.25, 3.0, 0.25, 2
-StaticText ""
-*/
-StaticText "Here you can customize the size of your magazines for each weapon."
-StaticText "IT MIGHT BREAK BALANCE, USED ONLY FOR FUN!"
-
-Command "Restore to default values",	"pukename RestoreDefaultMagValues"
-Command "Apply new values",	"pukename SetNewMagValues"
-StaticText "(automatically applies when switching maps)"
-StaticText ""
-Slider "Pistol", "bd_PistolMag", 4, 160, 1
-Slider "Sub-Machinegun", "bd_SMGMag", 11, 410, 1
-Slider "MP40", "bd_MP40Mag", 8, 320, 1
-
-Slider "Shotgun", "bd_ShotgunMag", 3, 90, 1
-Slider "Assault Shotgun", "bd_ASGMag", 4, 160, 1
-
-Slider "Rifle", "bd_RifleMag", 8, 310, 1
-Slider "Nailgun", "bd_NewNailgunMag", 12, 500, 1
-
-Slider "Rocket Launcher", "bd_RocketMag", 2, 60, 1
-
-Slider "Plasmagun", "bd_PlasmaMag", 12, 500, 1
-Slider "Railgun", "bd_RailgunMag", 20, 500, 1
-}
-
-
-
 
 OptionMenu "DoxCreditsGraphics"
 {
-   Title "Credits - Graphics"
-   StaticText "All the people or mods whose work was used in this addon."
-   StaticText "If I forgot someone or something, please notify me."
-   StaticText "-------------------------------------------------------------------------", "Black"
-  StaticText "Sergeant_Mark_IV", "LightBlue"
-   StaticText "Brutal Doom v21"
-     StaticText "Dox778", "LightBlue"
-	    StaticText "Original Project Lead"
-   StaticText "TypicalSF:", "LightBlue"
-   StaticText "Dual rifle sprites, better firing frames for multiple weapons, a lot of brightmaps,"
-   StaticText "new grenade launcher, new ASG"
-   StaticText "Theundeadsoldier:", "LightBlue"
-   StaticText "Better pistol zombieman"
-   StaticText "Ƅarge™:", "LightBlue"
-   StaticText "Dual flamecannon sprites"
-   StaticText "Mryayayify:", "LightBlue"
-   StaticText "Uppercut with knuckle duster"
-   StaticText "goldenmob72:", "LightBlue"
-   StaticText "Improved shotgun pump sprites"
-   StaticText "JMartinez2098:", "LightBlue"
-   StaticText "Improved shotgun pump sprites, improved Unmaker pickup"
-   StaticText "Tomtefar1988:", "LightBlue"
-   StaticText "Improved shotgun pump sprites, polished SSG sprites"
-   StaticText "AzoNa:", "LightBlue"
-   StaticText "Polished SSG sprites"
-   StaticText "IDDQD_1337:", "LightBlue"
-   StaticText "Further improved to the shotgun sprites, polished SSG sprites, knuckle crack sprites"
-   StaticText "Farhan:", "LightBlue"
-   StaticText "Improved dual pistols and reload"
-   StaticText "Squig", "LightBlue"
-   StaticText "Stained fists and boots, new shotgun, new machinegun, new flamecannon fire frames,"
-   StaticText "soap sprite, help with grenade box, mugshots deaths, brightmaps, Nailgun barrel and"
-   StaticText "magazine, bloody axe variations, angled machinegun firing frames, ASG pickup sprite"
-   StaticText "StalkerZHS:", "LightBlue"
-   StaticText "Better mugshots"
-   StaticText "Paint.NET:", "LightBlue"
-   StaticText "for NOT SAVING STUFF THE WAY ITS SUPPOSED TO"
-   StaticText "Craneo:", "LightBlue"
-   StaticText "Improved Frozen Railgun, new dual flamecannon, pipebomb, skull key variations"
-   StaticText "Iknowhowtomap(Gorman Freebmane):", "LightBlue"
-   StaticText "Base frozen railgun, switching firemodes animation, pinned imp"
-   StaticText "SchrodingCat:", "LightBlue"
-   StaticText "Cat's Frozen Addon (Frozen monsters, gibs, effects)"
-   StaticText "Project Brutality 3.0:", "LightBlue"
-   StaticText "floor/ceiling ice shard"
-   StaticText "Sechtera:", "LightBlue"
-   StaticText "improved railgun and nailgun firing frames (+ brightmaps), pistol silencer"
-   StaticText "improved BFG10k glows, new grenade missiles and being awesome uwu"
-   StaticText "SgtMarkIV, typicalSF, Acclaim Entertainment and Probe Entertainment:", "LightBlue"
-   StaticText "Frozen railgun muzzle flashes, new plasmagun muzzle flashes"
-   StaticText "Xaser ", "LightBlue"
-   StaticText "Nailgun projectile, new minigun base"
-   StaticText "DoomNukem", "LightBlue"
-   StaticText "New minigun base"
-   StaticText "NeoWorm", "LightBlue"
-   StaticText "New Axe"
-   StaticText "JoeyTD", "LightBlue"
-   StaticText "Vanilla As Fuck mod (chainsaw rotations)"
-   StaticText "Iamcarrotmaster", "LightBlue"
-   StaticText "New BFG10k base"
-   StaticText "Ultra-Violence", "LightBlue"
-   StaticText "New BFG10k base"
-   StaticText "Z86 ", "LightBlue"
-   StaticText "Multiple missing brightmaps (cyberdemon, mastermind, pain elemental)"
-   StaticText "Kinsie", "LightBlue"
-   StaticText "Female marine, crouching zombies"
-   StaticText "Xamp", "LightBlue"
-   StaticText "New shotgun pickups and resting dropped mags"
-   StaticText "Skulltag ", "LightBlue"
-   StaticText "additional impaled marines gore"
-    StaticText "Clonehunter ", "LightBlue"
-   StaticText "impaled marine helmet on a spike decoration"
-   StaticText "Vostyok  ", "LightBlue"
-   StaticText "Rusty explosive barrel"
-    StaticText "Vader", "LightBlue"
-   StaticText "baron and hellknight new deaths"
-    StaticText "ItsNatureToDie (aka David G)", "LightBlue"
-   StaticText "new imp death, dead marine variations"
-    StaticText "TheDoomedArchvile", "LightBlue"
-   StaticText "Floating eye"
-    StaticText "Bravo", "LightBlue"
-   StaticText "Stalagtite variation"
-   StaticText "Popguy12", "LightBlue"
-   StaticText "Nail 3D model"
-    StaticText "Freedoom team", "LightBlue"
-   StaticText "Keycard variation"
-    StaticText "Blue Shadow", "LightBlue"
-   StaticText "Doom 3 keycard variations"
-    StaticText "The Innocent Crew (OBTIC.WAD)", "LightBlue"
-   StaticText "Extra marine corpse"
-   StaticText "Captain Toenail", "LightBlue"
-   StaticText "Extra marine corpse"
-   StaticText "DarthSeeth", "LightBlue"
-   StaticText "Extra marine corpses edits"
-    StaticText "Wafer", "LightBlue"
-   StaticText "Brightmap automation <3"
-     StaticText "OSJCLATCHFORD", "LightBlue"
-   StaticText "Key variations"
-   StaticText "Frosted_Moontips", "LightBlue"
-   StaticText "STARTUP Logo"
-   StaticText "Bjecinst", "LightBlue"
-   StaticText "Tpose Marine"
-   StaticText "", "LightBlue"
-   StaticText ""
-
+	Title "Credits - Graphics"
+	StaticText "All the people or mods whose work was used in this addon."
+	StaticText "If I forgot someone or something, please notify me."
+	StaticText "-------------------------------------------------------------------------", "Black"
+	StaticText "Sergeant_Mark_IV", "LightBlue"
+	StaticText "Brutal Doom v21"
+	StaticText ""
+	StaticText "Dox778", "LightBlue"
+	StaticText "Original Project Lead"
+	StaticText ""
+	StaticText "TypicalSF:", "LightBlue"
+	StaticText "Dual rifle sprites, better firing frames for multiple weapons, a lot of brightmaps,"
+	StaticText "new grenade launcher, new ASG"
+	StaticText ""
+	StaticText "Theundeadsoldier:", "LightBlue"
+	StaticText "Better pistol zombieman"
+	StaticText ""
+	StaticText "Ƅarge™:", "LightBlue"
+	StaticText "Dual flamecannon sprites"
+	StaticText ""
+	StaticText "Mryayayify:", "LightBlue"
+	StaticText "Uppercut with knuckle duster"
+	StaticText ""
+	StaticText "fireenmob72:", "LightBlue"
+	StaticText "Improved shotgun pump sprites"
+	StaticText ""
+	StaticText "JMartinez2098:", "LightBlue"
+	StaticText "Improved shotgun pump sprites, improved Unmaker pickup"
+	StaticText ""
+	StaticText "Tomtefar1988:", "LightBlue"
+	StaticText "Improved shotgun pump sprites, polished SSG sprites"
+	StaticText ""
+	StaticText "AzoNa:", "LightBlue"
+	StaticText "Polished SSG sprites"
+	StaticText ""
+	StaticText "IDDQD_1337:", "LightBlue"
+	StaticText "Further improved to the shotgun sprites, polished SSG sprites, knuckle crack sprites"
+	StaticText ""
+	StaticText "Farhan:", "LightBlue"
+	StaticText "Improved dual pistols and reload"
+	StaticText ""
+	StaticText "Squig", "LightBlue"
+	StaticText "Stained fists and boots, new shotgun, new machinegun, new flamecannon fire frames,"
+	StaticText "soap sprite, help with grenade box, mugshots deaths, brightmaps, Nailgun barrel and"
+	StaticText "magazine, bloody axe variations, angled machinegun firing frames, ASG pickup sprite"
+	StaticText ""
+	StaticText "StalkerZHS:", "LightBlue"
+	StaticText "Better mugshots"
+	StaticText ""
+	StaticText "Paint.NET:", "LightBlue"
+	StaticText "for NOT SAVING STUFF THE WAY ITS SUPPOSED TO"
+	StaticText ""
+	StaticText "Craneo:", "LightBlue"
+	StaticText "Improved Frozen Railgun, new dual flamecannon, pipebomb, skull key variations"
+	StaticText "Iknowhowtomap(Gorman Freebmane):", "LightBlue"
+	StaticText "Base frozen railgun, switching firemodes animation, pinned imp"
+	StaticText ""
+	StaticText "SchrodingCat:", "LightBlue"
+	StaticText "Cat's Frozen Addon (Frozen monsters, gibs, effects)"
+	StaticText ""
+	StaticText "Project Brutality 3.0:", "LightBlue"
+	StaticText "floor/ceiling ice shard"
+	StaticText ""
+	StaticText "Sechtera:", "LightBlue"
+	StaticText "improved railgun and nailgun firing frames (+ brightmaps), pistol silencer"
+	StaticText "improved BFG10k glows, new grenade missiles and being awesome uwu"
+	StaticText ""
+	StaticText "SgtMarkIV, typicalSF, Acclaim Entertainment and Probe Entertainment:", "LightBlue"
+	StaticText "Frozen railgun muzzle flashes, new plasmagun muzzle flashes"
+	StaticText ""
+	StaticText "Xaser ", "LightBlue"
+	StaticText "Nailgun projectile, new minigun base"
+	StaticText ""
+	StaticText "DoomNukem", "LightBlue"
+	StaticText "New minigun base"
+	StaticText ""
+	StaticText "NeoWorm", "LightBlue"
+	StaticText "New Axe"
+	StaticText ""
+	StaticText "JoeyTD", "LightBlue"
+	StaticText "Vanilla As Fuck mod (chainsaw rotations)"
+	StaticText ""
+	StaticText "Iamcarrotmaster", "LightBlue"
+	StaticText "New BFG10k base"
+	StaticText ""
+	StaticText "Ultra-Violence", "LightBlue"
+	StaticText "New BFG10k base"
+	StaticText ""
+	StaticText "Z86 ", "LightBlue"
+	StaticText "Multiple missing brightmaps (cyberdemon, mastermind, pain elemental)"
+	StaticText ""
+	StaticText "Kinsie", "LightBlue"
+	StaticText "Female marine, crouching zombies"
+	StaticText ""
+	StaticText "Xamp", "LightBlue"
+	StaticText "New shotgun pickups and resting dropped mags"
+	StaticText ""
+	StaticText "Skulltag ", "LightBlue"
+	StaticText "Additional impaled marines gore"
+	StaticText ""
+	StaticText "Clonehunter ", "LightBlue"
+	StaticText "Impaled marine helmet on a spike decoration"
+	StaticText ""
+	StaticText "Vostyok ", "LightBlue"
+	StaticText "Rusty explosive barrel"
+	StaticText ""
+	StaticText "Vader", "LightBlue"
+	StaticText "Baron and hellknight new deaths"
+	StaticText ""
+	StaticText "ItsNatureToDie (aka David G)", "LightBlue"
+	StaticText "New imp death, dead marine variations"
+	StaticText ""
+	StaticText "TheDoomedArchvile", "LightBlue"
+	StaticText "Floating eye"
+	StaticText ""
+	StaticText "Bravo", "LightBlue"
+	StaticText "Stalagtite variation"
+	StaticText ""
+	StaticText "Popguy12", "LightBlue"
+	StaticText "Nail 3D model"
+	StaticText ""
+	StaticText "Freedoom team", "LightBlue"
+	StaticText "Keycard variation"
+	StaticText ""
+	StaticText "Blue Shadow", "LightBlue"
+	StaticText "Doom 3 keycard variations"
+	StaticText ""
+	StaticText "The Innocent Crew (OBTIC.WAD)", "LightBlue"
+	StaticText "Extra marine corpse"
+	StaticText ""
+	StaticText "Captain Toenail", "LightBlue"
+	StaticText "Extra marine corpse"
+	StaticText ""
+	StaticText "DarthSeeth", "LightBlue"
+	StaticText "Extra marine corpses edits"
+	StaticText ""
+	StaticText "Wafer", "LightBlue"
+	StaticText "Brightmap automation <3"
+	StaticText ""
+	StaticText "OSJCLATCHFORD", "LightBlue"
+	StaticText "Key variations"
+	StaticText ""
+	StaticText "Frosted_Moontips", "LightBlue"
+	StaticText "STARTUP Logo"
+	StaticText ""
+	StaticText "Bjecinst", "LightBlue"
+	StaticText "Tpose Marine"
 }
 
 OptionMenu "DoxCreditsCode"
 {
-   Title "Credits - Coding"
-   StaticText "All the people or mods who helped me with influencing"
-   StaticText "or coding certain features in some way."
-   StaticText "If I forgot someone or something, please notify me."
-   StaticText "-------------------------------------------------------------------------", "Black"
-  StaticText "Sergeant_Mark_IV", "LightBlue"
-   StaticText "Brutal Doom v21"
-   StaticText "Dox778", "LightBlue"
-   StaticText "Original Project Lead"
-   StaticText "Brutal Doom: Schism:", "LightBlue"
-   StaticText "Cleaner variation code for weapons"
-   StaticText "McKase", "LightBlue"
-   StaticText "BLOODWOLF333:", "LightBlue"
-   StaticText "Some bugfixes, friendly marine code, improved MES"
-   StaticText "ikdfa:", "LightBlue"
-   StaticText "Smooth dual weapon switch"
-   StaticText "IDDQD_1337:", "LightBlue"
-   StaticText "Railgun ammo counter"
-   StaticText "Mechanical Sanity:", "LightBlue"
-   StaticText "Oh, boy..."
-   StaticText "Multiple bug fixes, first person legs, improve code, fixing janitor,"
-   StaticText "double jump, enemy roll, ACS Scripts, better ADS system, improvements"
-   StaticText "to deflectable revenant projectiles, Perfected ledge climbing code,"
-   StaticText "Additional map enhancement system content, revenant jetpack,"
-   StaticText "Laser guided missiles"
-   StaticText "Project Brutality 3.0:", "LightBlue"
-   StaticText "Original first person legs code, laser guided missiles"
-   StaticText "XV117:", "LightBlue"
-   StaticText "Original ledge climbing code and animations"
-   StaticText "Grey_Wolf:", "LightBlue"
-   StaticText "Insult mugshots ACS scripts"
-   StaticText "Sechtera:", "LightBlue"
-   StaticText "Listening to Dox brag about new addon's features despite not playing Doom."
-   StaticText "SchrodingCat: ", "LightBlue"
-   StaticText "Cat's Frozen Addon (Improved frozen monsters code, weakened monsters)"
-   StaticText "Ivory Duke", "LightBlue"
-   StaticText "Zmovement (ledge climb)"
-   StaticText "Agent_Ash (aka Jekyll Grim Payne)", "LightBlue"
-   StaticText "help with ledge grabbing, weapons always bobbing."
-   StaticText "gordo.n", "LightBlue"
-   StaticText "Ceiling climbing imps addon and code"
-   StaticText "Scotty", "LightBlue"
-   StaticText "Laser guided missiles"
-   StaticText "Dodopod", "LightBlue"
-   StaticText "Six Degrees Of Freedom"
-   StaticText "Nash Muhandes", "LightBlue"
-   StaticText "Tilt++"
-   StaticText "Lewisk3", "LightBlue"
-   StaticText "Vehicle code"
-   StaticText "TehRealSalt", "LightBlue"
-   StaticText "New blursphere code"
-   StaticText ""
-   
-   
+	Title "Credits - Coding"
+	StaticText "All the people or mods who helped me with influencing"
+	StaticText "or coding certain features in some way."
+	StaticText "If I forgot someone or something, please notify me."
+	StaticText "-------------------------------------------------------------------------", "Black"
+	StaticText "Sergeant_Mark_IV", "LightBlue"
+	StaticText "Brutal Doom v21"
+	StaticText ""
+	StaticText "Dox778", "LightBlue"
+	StaticText "Original Project Lead"
+	StaticText ""
+	StaticText "Brutal Doom: Schism:", "LightBlue"
+	StaticText "Cleaner variation code for weapons"
+	StaticText ""
+	StaticText "McKase", "LightBlue"
+	StaticText "BLOODWOLF333:", "LightBlue"
+	StaticText "Some bugfixes, friendly marine code, improved MES"
+	StaticText ""
+	StaticText "ikdfa:", "LightBlue"
+	StaticText "Smooth dual weapon switch"
+	StaticText ""
+	StaticText "IDDQD_1337:", "LightBlue"
+	StaticText "Railgun ammo counter"
+	StaticText ""
+	StaticText "Mechanical Sanity:", "LightBlue"
+	StaticText "Oh, boy..."
+	StaticText "Multiple bug fixes, first person legs, improve code, fixing janitor,"
+	StaticText "double jump, enemy roll, ACS Scripts, better ADS system, improvements"
+	StaticText "to deflectable revenant projectiles, Perfected ledge climbing code,"
+	StaticText "Additional map enhancement system content, revenant jetpack,"
+	StaticText "Laser guided missiles"
+	StaticText ""
+	StaticText "Project Brutality 3.0:", "LightBlue"
+	StaticText "Original first person legs code, laser guided missiles"
+	StaticText ""
+	StaticText "XV117:", "LightBlue"
+	StaticText "Original ledge climbing code and animations"
+	StaticText ""
+	StaticText "Grey_Wolf:", "LightBlue"
+	StaticText "Insult mugshots ACS scripts"
+	StaticText ""
+	StaticText "Sechtera:", "LightBlue"
+	StaticText "Listening to Dox brag about new addon's features despite not playing Doom."
+	StaticText ""
+	StaticText "SchrodingCat: ", "LightBlue"
+	StaticText "Cat's Frozen Addon (Improved frozen monsters code, weakened monsters)"
+	StaticText ""
+	StaticText "Ivory Duke", "LightBlue"
+	StaticText "Zmovement (ledge climb)"
+	StaticText ""
+	StaticText "Agent_Ash (aka Jekyll Grim Payne)", "LightBlue"
+	StaticText "help with ledge grabbing, weapons always bobbing."
+	StaticText ""
+	StaticText "gordo.n", "LightBlue"
+	StaticText "Ceiling climbing imps addon and code"
+	StaticText ""
+	StaticText "Scotty", "LightBlue"
+	StaticText "Laser guided missiles"
+	StaticText ""
+	StaticText "Dodopod", "LightBlue"
+	StaticText "Six Degrees Of Freedom"
+	StaticText ""
+	StaticText "Nash Muhandes", "LightBlue"
+	StaticText "Tilt++"
+	StaticText ""
+	StaticText "Lewisk3", "LightBlue"
+	StaticText "Vehicle code"
+	StaticText ""
+	StaticText "TehRealSalt", "LightBlue"
+	StaticText "New blursphere code"
+	StaticText ""
+	StaticText "nemesisVampy", "LightBlue"
+	StaticText "MES overhauls, improved testmap, menus, and weapon pickup system."
 }
 
 OptionMenu "DoxCreditsSound"
 {
-   Title "Credits - Sound Design"
-   StaticText "All the people, mods or games which I used sounds from."
-   StaticText "If I forgot someone or something, please notify me."
-   StaticText "-------------------------------------------------------------------------", "Black"
-   
-   StaticText "Dox778", "LightBlue"
-      StaticText "Original Project Lead"
-   StaticText "Project Brutality v2.03:", "LightBlue"
-   StaticText "Revenant's missile launcher/Flamecannon pickup/select"
-   StaticText "Brutal Doom v19:", "LightBlue"
-   StaticText "Sperglord edition - BFG firing"
-   StaticText "Bermanator", "LightBlue"
-   StaticText "WolVexus:", "LightBlue"
-   StaticText "Hand grenade explosion, secret grenade throw, MP40 firing,"
-   StaticText "BFG10k idle"
-   StaticText "Dogelord:", "LightBlue"
-   StaticText "Contributing to the LMG firing, enemy kick variation,"
-   StaticText "Axe spinning in the air"
-   StaticText "Nailgun reload."
-   StaticText "goldenmob72:", "LightBlue"
-   StaticText "Providing multiple effects"
-   StaticText "ikdfa", "LightBlue"
-   StaticText "Pistol inspect"
-   StaticText "sulflix:", "LightBlue"
-   StaticText "ASG select/reload, SMG reload, Railgun reload/inspect, slug shells fire,"
-   StaticText "Minigun ammo belt inserting, nailgun alt fire, axe attack,"
-   StaticText "Silenced pistol, plasma cells pickup, machinegun belt"
-   StaticText "sound, new BFG10k, Spider Mastermind's firing."
-   StaticText "frozen railgun primary fire, dragon breath SSG"
-   StaticText "Squig:", "LightBlue"
-   StaticText "Contributing to the LMG firing, grenade launcher fire, ASG inspect"
-   StaticText "SchrodingCat:", "LightBlue"
-   StaticText "Cat's Frozen Addon (freezing, frozen monsters struggling)"
-   StaticText "Iknowhowtomap(Gorman Freebmane):", "LightBlue"
-   StaticText "frozen railgun alt fire, inspect knocks, part of the exploding frozen barrel"
-   StaticText "TrashMarine:", "LightBlue"
-   StaticText "Nailgun reloading smoke"
-   StaticText "perkristian", "LightBlue"
-   StaticText "Arachnotron's firing"
-   StaticText "Dissy EX", "LightBlue"
-   StaticText "Rocket bounce, fist wall impact, ASG fire and select,New Freeze grenade,"
-   StaticText "new multiple pickup, energy ball bounce, mancubus' flamecannon,"
-   StaticText "Weapon foley, void grenade"
-   StaticText "LandyRS", "LightBlue"
-   StaticText "Miscillaneous voices, Energy Shield, Unmaker teleport"
-   StaticText ""
-   StaticText "Warry#6969", "LightBlue"
-   StaticText "new shell insertion sounds"
-   StaticText "The Almighty Egg", "LightBlue"
-   StaticText "Providing HD sounds for megasphere, rifle reload, chainsaw idle."
-   StaticText "-------------------------------------------------------------------------", "Black"
-   StaticText "Credits for other games/companies"
-   StaticText "Doom Eternal", "LightBlue"
-   StaticText "Rocket bounce, fist wall impact, multiple new pickup, temporary weapon sounds"
-   StaticText "new freeze grenade, mancubus flamecannon, new foley sounds"
-   StaticText "Halo: Combat Evolved", "LightBlue"
-   StaticText "Needler"
-   StaticText "Halo: Reach", "LightBlue"
-   StaticText "Rocket bounce sound, new freeze grenade, motorcycle horn"
-   StaticText "Halo 4", "LightBlue"
-   StaticText "new freeze grenade, void grenade, new weapon foley sounds"
-   StaticText "Doom 3", "LightBlue"
-   StaticText "Fist wall impact sounds, plasma grenade"
-   StaticText "Sound Ideas - The General Series 6000", "LightBlue"
-   StaticText "high quality rifle select"
-   StaticText "Metroid Prime 2: Echoes", "LightBlue"
-   StaticText "Night vision, computer map, keycard pickup, new freeze grenade"
-   StaticText "Void grenade sounds"
-   StaticText "Quake 4 (Raven Software, ID Software):", "LightBlue"
-   StaticText "Nailgun firing effects"
-   StaticText "Valve (CS:GO):", "LightBlue"
-   StaticText "Rifle's inspect, new foley sounds"
-   StaticText "Valve (Team Fortress 2):", "LightBlue"
-   StaticText "Flamecannon alt fire"
-   StaticText "Running with Scissors (Postal 2):", "LightBlue"
-   StaticText "Grenade launcher reload"
-   StaticText "Deep Silver (from the game Painkiller Black)", "LightBlue"
-   StaticText "Shotgun casings"
-   StaticText "Call of Duty: Black Ops II", "LightBlue"
-   StaticText "Mancubus' flamecannon, new foley sounds"
-   StaticText "Activision", "LightBlue"
-   StaticText "new shell insertion sounds"
-   StaticText "Rock Raiders", "LightBlue"
-   StaticText "void grenade sounds"
-   StaticText "", "LightBlue"
-   StaticText ""
-   StaticText "", "LightBlue"
-   StaticText ""
-   StaticText "", "LightBlue"
-   StaticText ""
-   StaticText "", "LightBlue"
-   StaticText ""
-   StaticText "", "LightBlue"
-   StaticText ""
-   StaticText "", "LightBlue"
-   StaticText ""
-   StaticText "", "LightBlue"
-   StaticText ""
-   StaticText "uwu"
-
-}
-
-OptionMenu "BDCredits1"
-{
-
-   Title "BDv21 by SGT_Mark_IV"
-   StaticText "==== Graphics ===="
-   StaticText "Mike12, Captain Toenail, David G, Revilution,"
-   StaticText "Eriance, Perkristian, Dr. Doctor, DoomNukem,"
-   StaticText "Joey_TD, Samuel 'Mryayayify' Shank, Brandon (Keeper)"
-   StaticText "Pa1nki113r, CrucuxDuo, Minigunner, Jekyll Grim Payne,"
-   StaticText "Scuba Steeve, Ghastly, Vader, Lynn Forest,"
-   StaticText "EletricPulse, Mr. Enchanter, Doom_Jedi, Kamijou"
-   StaticText "Kars van Kouwen, scalliano, Tomtefars, Das_M,"
-   StaticText "Azona, Bret Arts, 3D Realms, Raven Software."
-   StaticText ""
-   
-   
-   StaticText "==== Code Contributions ===="
-   StaticText "TerminusEst13, Solarsnowfall, Nash, Jekyll Grim Payne" 
-   StaticText " "
-   
-   StaticText "==== Voice Acting ===="
-   StaticText "Zero X. Diamond (Doomguy), Tiberium Soul (Marines)"
-    StaticText " "
-   
-   StaticText "==== PSX Doom Maps ===="
-   StaticText "fenderc01, Dragonsbretheren"
-   
-   StaticText " "
-   StaticText " "
-   StaticText " "
-   StaticText "In case of missing names, please PM them to me either"
-   StaticText "in Twitter, Discord, Moddb, Doomworld, or Zandronum forums"
-}
-
-
-
-
-OptionMenu "BDCredits2"
-{
-
-   Title "Special Thanks"
-   
-   StaticText "==== Special Sponsors ===="
-   StaticText "Rowan Waltho, Tainted Reality, Josef S. E. Trendevski,"
-   StaticText "Lasse Skov, Matthew J. Meade, Jian Feng"
-   StaticText "Suleyman Kutlu, Khayman, SenorFussion"
-   StaticText "Aaron Stockman, Kyle Quintanilla"
-   StaticText " "
-   
-   StaticText "= V21 Testing Team (list still incomplete) ="
-   StaticText "Cairn (El_Jefe) Moczygemba, Bog, TheZombie, LadySlash"
-   StaticText "FusedQYou, BXN, Erebus, Miles, Jaylen (Pyrolex) Leu"	
-   StaticText "Jess-James (scaryred24) Medeiros, Spart_N"
-   StaticText "ManofDom, Brandon (Keeper), Deathlock176,"
-   StaticText "Sir Fagtrixxx, Iddqd, Supra107, JeffSturm4nn,"
-   StaticText "Jose (TootsyBowl) Lee, Joji (Battore) Iriefu,"
-   StaticText "Marcin (Martinoz) Oprzadek,"   
-   StaticText "Dantos, Enrico Alessandro (ZioMcCall) Marino,"  
-   StaticText "blackmore103, SoulCircle, NexGuy"  
-   StaticText " "
-   StaticText "In case of missing names, please PM them to me either"
-   StaticText "in Twitter, Discord, Moddb, Doomworld, or Zandronum forums"
-   
-   
-   StaticText " "
-   StaticText "Special Thanks To Andrew Hulshult, Finfr0sk"
-   StaticText "John Romero, Bethesda's Doom Community Managers"
-   
-}
-
-AddOptionMenu "OptionsMenu"
-{
+	Title "Credits - Sound Design"
+	StaticText "All the people, mods or games which I used sounds from."
+	StaticText "If I forgot someone or something, please notify me."
+	StaticText "-------------------------------------------------------------------------", "Black"
+	
+	StaticText "Dox778", "LightBlue"
+	StaticText "Original Project Lead"
 	StaticText ""
-	StaticText "Tilt++ v1.65"
-	Submenu "$OPTMNU_TILTPLUSPLUS", "TiltPlusPlusMenu"
-}
-
-OptionMenu "TiltPlusPlusMenu"
-{
-	Class "TiltPlusPlusMenu"
-	Title "$TILTPLUSPLUSMNU_TITLE"
-	Position -32
-
+	StaticText "Project Brutality v2.03:", "LightBlue"
+	StaticText "Revenant's missile launcher/Flamecannon pickup/select"
 	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_STRAFETILT_TITLE", 1
-
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED",					"$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT",				"sv_strafetilt", "YesNo"
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_INVERT",					"$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_INVERT",		"sv_strafetiltinvert", "YesNo"
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SPEED",					"$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_SPEED",		"sv_strafetiltspeed", 0.1, 2.0, 0.01, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_ANGLE",					"$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_ANGLE",		"sv_strafetiltangle", 0.1, 1.0, 0.01, 2
-
+	StaticText "Brutal Doom v19:", "LightBlue"
+	StaticText "Sperglord edition - BFG firing"
 	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_MOVETILT_TITLE", 1
-
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED",					"$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT",				"sv_movetilt", "YesNo"
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SPEED",					"$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_SPEED",			"sv_movetiltspeed", 0.1, 20.0, 0.1, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_ANGLE",					"$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_ANGLE",			"sv_movetiltangle", 0.01, 0.10, 0.01, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SCALAR",					"$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_SCALAR",		"sv_movetiltscalar", 0.0, 1.0, 0.1
-
+	StaticText "Bermanator", "LightBlue"
+	StaticText "WolVexus:", "LightBlue"
+	StaticText "Hand grenade explosion, secret grenade throw, MP40 firing,"
+	StaticText "BFG10k idle"
 	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_TURNTILT_TITLE", 1
-
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED",					"$TILTPLUSPLUSMNU_HELPTEXT_TURNTILT",				"sv_turntilt", "YesNo"
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_INVERT",					"$TILTPLUSPLUSMNU_HELPTEXT_TURNTILT_INVERT",		"sv_turntiltinvert", "YesNo"
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SCALAR",					"$TILTPLUSPLUSMNU_HELPTEXT_TURNTILT_SCALAR",		"sv_turntiltscalar", 0.0, 20.0, 0.1
-
+	StaticText "Dogelord:", "LightBlue"
+	StaticText "Contributing to the LMG firing, enemy kick variation,"
+	StaticText "Axe spinning in the air"
+	StaticText "Nailgun reload."
 	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_UNDERWATERTILT_TITLE", 1
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED",					"$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT",			"sv_underwatertilt", "YesNo"
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SPEED",					"$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_SPEED",	"sv_underwatertiltspeed", 0.1, 20.0, 0.1, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_ANGLE",					"$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_ANGLE",	"sv_underwatertiltangle", 0.01, 0.5, 0.01, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SCALAR",					"$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_SCALAR",	"sv_underwatertiltscalar", 0.0, 1.0, 0.1
-
+	StaticText "fireenmob72:", "LightBlue"
+	StaticText "Providing multiple effects"
 	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_DEATHTILT_TITLE", 1
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED",					"$TILTPLUSPLUSMNU_HELPTEXT_DEATHTILT",				"sv_deathtilt", "YesNo"
+	StaticText "ikdfa", "LightBlue"
+	StaticText "Pistol inspect"
+	StaticText ""
+	StaticText "sulflix:", "LightBlue"
+	StaticText "ASG select/reload, SMG reload, Railgun reload/inspect, slug shells fire,"
+	StaticText "Minigun ammo belt inserting, nailgun alt fire, axe attack,"
+	StaticText "Silenced pistol, plasma cells pickup, machinegun belt"
+	StaticText "sound, new BFG10k, Spider Mastermind's firing."
+	StaticText "frozen railgun primary fire, dragon breath SSG"
+	StaticText ""
+	StaticText "Squig:", "LightBlue"
+	StaticText "Contributing to the LMG firing, grenade launcher fire, ASG inspect"
+	StaticText ""
+	StaticText "SchrodingCat:", "LightBlue"
+	StaticText "Cat's Frozen Addon (freezing, frozen monsters struggling)"
+	StaticText ""
+	StaticText "Iknowhowtomap(Gorman Freebmane):", "LightBlue"
+	StaticText "frozen railgun alt fire, inspect knocks, part of the exploding frozen barrel"
+	StaticText ""
+	StaticText "TrashMarine:", "LightBlue"
+	StaticText "Nailgun reloading smoke"
+	StaticText ""
+	StaticText "perkristian", "LightBlue"
+	StaticText "Arachnotron's firing"
+	StaticText ""
+	StaticText "Dissy EX", "LightBlue"
+	StaticText "Rocket bounce, fist wall impact, ASG fire and select,New Freeze grenade,"
+	StaticText "new multiple pickup, energy ball bounce, mancubus' flamecannon,"
+	StaticText "Weapon foley, void grenade"
+	StaticText ""
+	StaticText "LandyRS", "LightBlue"
+	StaticText "Miscillaneous voices, Energy Shield, Unmaker teleport"
+	StaticText ""
+	StaticText "Warry#6969", "LightBlue"
+	StaticText "new shell insertion sounds"
+	StaticText ""
+	StaticText "The Almighty Egg", "LightBlue"
+	StaticText "Providing HD sounds for megasphere, rifle reload, chainsaw idle."
+	StaticText "-------------------------------------------------------------------------", "Black"
+	StaticText "Credits for other games/companies"
+	StaticText ""
+	StaticText "Doom Eternal", "LightBlue"
+	StaticText "Rocket bounce, fist wall impact, multiple new pickup, temporary weapon sounds"
+	StaticText "new freeze grenade, mancubus flamecannon, new foley sounds"
+	StaticText ""
+	StaticText "Halo: Combat Evolved", "LightBlue"
+	StaticText "Needler"
+	StaticText ""
+	StaticText "Halo: Reach", "LightBlue"
+	StaticText "Rocket bounce sound, new freeze grenade, motorcycle horn"
+	StaticText ""
+	StaticText "Halo 4", "LightBlue"
+	StaticText "new freeze grenade, void grenade, new weapon foley sounds"
+	StaticText ""
+	StaticText "Doom 3", "LightBlue"
+	StaticText "Fist wall impact sounds, plasma grenade"
+	StaticText ""
+	StaticText "Sound Ideas - The General Series 6000", "LightBlue"
+	StaticText "high quality rifle select"
+	StaticText ""
+	StaticText "Metroid Prime 2: Echoes", "LightBlue"
+	StaticText "Night vision, computer map, keycard pickup, new freeze grenade"
+	StaticText "Void grenade sounds"
+	StaticText ""
+	StaticText "Quake 4 (Raven Software, ID Software):", "LightBlue"
+	StaticText "Nailgun firing effects"
+	StaticText ""
+	StaticText "Valve (CS:GO):", "LightBlue"
+	StaticText "Rifle's inspect, new foley sounds"
+	StaticText ""
+	StaticText "Valve (Team Fortress 2):", "LightBlue"
+	StaticText "Flamecannon alt fire"
+	StaticText ""
+	StaticText "Running with Scissors (Postal 2):", "LightBlue"
+	StaticText "Grenade launcher reload"
+	StaticText ""
+	StaticText "Deep Silver (from the game Painkiller Black)", "LightBlue"
+	StaticText "Shotgun casings"
+	StaticText ""
+	StaticText "Call of Duty: Black Ops II", "LightBlue"
+	StaticText "Mancubus' flamecannon, new foley sounds"
+	StaticText ""
+	StaticText "Activision", "LightBlue"
+	StaticText "new shell insertion sounds"
+	StaticText ""
+	StaticText "Rock Raiders", "LightBlue"
+	StaticText "void grenade sounds"
+	StaticText "", "LightBlue"
+	StaticText ""
+	StaticText "", "LightBlue"
+	StaticText ""
+	StaticText "", "LightBlue"
+	StaticText ""
+	StaticText "", "LightBlue"
+	StaticText ""
+	StaticText "", "LightBlue"
+	StaticText ""
+	StaticText "", "LightBlue"
+	StaticText ""
+	StaticText "", "LightBlue"
+	StaticText ""
+	StaticText "uwu"
+
 }
 
 OptionValue "BrutalBlood"
@@ -956,40 +696,16 @@ OptionValue "BrutalBlood"
 	666, "5) Comical"
 }
 
-OptionValue "YesOrNo"
+OptionValue "EnabledDisabled"
 {
-	0, "No"
-	1, "Yes"
+	0, "Disabled"
+ 	1, "Enabled"
 }
 
-OptionValue "DisabledOption"
+OptionValue "DisabledEnabled"
 {
 	0, "Enabled"
 	1, "Disabled"
-}
-
-
-
-
-
-OptionValue "YesOrNoFalse"
-{
-	1, "No"
-	0, "Yes"
-}
-
-
-
-OptionValue "SelectEngineType"
-{
-	1, "Multiplayer"
-	0, "Singleplayer"
-}
-
-OptionValue "genderoption"
-{
-	1, "Female"
-	0, "Male"
 }
 
 OptionValue "screenblocksize"
@@ -998,60 +714,6 @@ OptionValue "screenblocksize"
 	11, "Custom HUDs"
 	12, "No HUD"
 }
-
-
-OptionValue "HUDType"
-{
-	1, "Brutal Simple 16:9"
-	2, "Brutal Simple 4:3"
-	3, "Minimalist"
-	4, "Full Helmet"
-}
-
-OptionValue "UIScaleSize"
-{
-	1, "1"
-	2, "2"
-	3, "3"
-	4, "4"
-	5, "5"
-	6, "6"
-	7, "7"
-	8, "8"
-}
-
-OptionValue "maxdecals"
-{
-	1, "0"
-	128, "128"
-	512, "512"
-	1024, "1024"
-	2056, "2056"
-	5102, "5102"
-	9999, "9999"
-}
-
-
-OptionValue "maxgibs"
-{
-	1, "0"
-	64, "64"
-	100, "100"
-	500, "500"
-	1000, "1000"
-	2000, "2000"
-	5000, "5000"
-	10000, "10000"
-	25000, "25000"
-	50000, "50000"
-}
-
-OptionValue "GenderOption"
-{
-	0, "Male"
-	1, "Female"
-}
-
 
 OptionValue "AimOption"
 {
@@ -1067,18 +729,6 @@ OptionValue "ScreenTypes"
 	2, "No"
 }
 
-OptionValue "PistolADS"
-{
-    0, "Burst fire"
- 	1, "ADS"
-}
-
-OptionValue "Enable/Disable"
-{
-    0, "Disabled"
- 	1, "Enabled"
-}
-
 OptionValue LegStainingOption
 {
 0, "Enabled"
@@ -1088,19 +738,3 @@ OptionValue LegStainingOption
 4, "Permanent Green"
 //5, "Permanent nukage"
 }
-
-//Dox_MEStextureReplacements
-OptionValue MEStextureReplacements
-{
-0, "Official IWADs"
-1, "Legacy (will most likely cause issues)"
-2, "Going Down"
-3, "Back To Saturn X Episode 1"
-4, "Back To Saturn X Episode 2"
-5, "Epic"
-6, "Epic2"
-7, "Scythe 2"
-8, "Sunlust"
-9, "Alien Vendetta"
-}
-

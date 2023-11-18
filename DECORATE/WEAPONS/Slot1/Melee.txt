@@ -1052,7 +1052,6 @@ ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 		"####" A 0 BRIGHT A_FireCustomMissile("Taunter", 0, 0, -1, 0)
 		"####" A 0 BRIGHT A_FireCustomMissile("Taunter", -9, 0, -1, 0)
 		"####" A 0 BRIGHT A_FireCustomMissile("Taunter", 9, 0, -1, 0)
-		"####" A 0 A_JumpIfInventory("GenderFemale", 1, "TauntFemale")
 		"####" A 0 A_Jump(256, "FuckYourself", "FhaccYoself", "GoFuckYourself", "GetOffScum")
 		
 	FuckYourself:
@@ -1075,14 +1074,7 @@ ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 		"####" F 12 A_Takeinventory("Taunting",1)
         "####" EDCBA 1
 		Goto Ready	 
-		
-		
-	TauntFemale:
-		"####" B 1 A_PlaySound("FTAUNT", 2)
-        "####" CDE 1 A_AlertMonstersDX
-		"####" F 12 A_Takeinventory("Taunting",1)
-        "####" EDCBA 1
-		Goto Ready		
+	
 		
 	
 	
