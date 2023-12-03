@@ -28,10 +28,14 @@ DoomEdNums
 	26018 = TitlePhobos
 	26019 = TitleMars
 	26020 = TNTShipSpawner
+	26022 = ShockFactorPickup
+	26023 = PerfectHatredPickup
+	26024 = ManAndAHalfPickup
+	26025 = GunSlingerPickup
+	26026 = OneUpmanshipPickup
+	26027 = UltranightmarePickup
 }
-
-
-
+	
 episode EDAY01
 {
 	optional

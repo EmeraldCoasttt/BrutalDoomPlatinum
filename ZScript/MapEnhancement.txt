@@ -758,6 +758,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(25943, (448, -640, 0), 180);
 					AddThing(25943, (288, -192, 0), 180);
 					AddThing(25943, (832, 64, 0), 180);
+					AddThing(26022, (2560, -16, 0), 180);
 				}
 				Break;
 
@@ -1106,6 +1107,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(25949, (2016, 864, 0), 270);
 					AddThing(25949, (2016, 672, 0), 270);
 					AddThing(25949, (960, 320, 0), 270);
+					AddThing(26023, (-1248, -672, 0), 270);
 				}
 				Break;
 
@@ -1171,6 +1173,14 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(2046, (1664, -832, 0), 270);
 					AddThing(2046, (1536, -704, 0), 270);
 					AddThing(2046, (1536, -832, 0), 270);
+				}
+				Break;
+
+			//e4m1
+			case 'da0c8281ac70eec31127c228bcd7fe2c':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
+				{
+					AddThing(26024, (808, -156, 0), 270);
 				}
 				Break;
 
@@ -1451,6 +1461,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(15857, (-672, 1152, -999), 90);
 					AddThing(26000, (-1008, 608, -999), 90);
 					AddThing(26000, (-1008, 480, -999), 90);
+					AddThing(26025, (-136, 1568, -999), 90);
 				}
 				Break;
 
@@ -2140,6 +2151,14 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(26009, (2885,1328,160),0); //
 					AddThing(26011, (2880,1368,170),0); //
 					AddThing(2550, (2880,1048,416),0);
+				}
+				Break;
+
+			//map32
+			case 'aa4ca3fc891d13821accabd836e29eb5':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
+				{
+					AddThing(26026, (448,8168,0),0);
 				}
 				Break;
 
@@ -3019,6 +3038,14 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				{
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any),TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any));
 					AddThing(26014,(-3648,5760,-999),0);
+				}
+				Break;
+
+			//Plutonia map32
+			case 'd5f64e02679a81b82006af34a6a8eac3':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
+				{
+					AddThing(26027,(-2736,672,-999),0);
 				}
 				Break;
 
