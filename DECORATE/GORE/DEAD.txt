@@ -1098,6 +1098,7 @@ DropItem "ImpaledMarineAlive1", 255, 6
 DropItem "ImpaledMarineAlive2", 255, 6
 DropItem "FloorNailedMarine", 255, 4
 DropItem "DeadLiveStick", 255, 2
+DropItem "capturedmarine", 255, 1
 }
 
 
