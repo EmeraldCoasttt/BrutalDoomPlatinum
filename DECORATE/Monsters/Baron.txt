@@ -42,7 +42,7 @@ DropItem "Demonstrengthrune", 10
 	{
 	BeginCharge:
 	
-		TNT1 A 0 A_PlaySound("knight/sight",1)
+		TNT1 A 0 A_PlaySound("baron/sight",1)
 		BTS3 ABC 1
 		BTS3 DEDF 2
 		BTS3 DEDF 2
