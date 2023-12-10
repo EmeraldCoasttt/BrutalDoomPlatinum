@@ -141,56 +141,79 @@ ACTOR HandGrenades : BrutalWeapon
 		//NULL A 0 A_GiveInventory("NadeType",1)
 		
 		NULL A 0 A_Print("\cnFreeze grenades selected.",2)
-		TNT1 A 0 A_jumpif(countinv("grenadeammo") == 0, 4)
+		TNT1 A 0 A_jumpif(countinv("AmmoFragGrenade") == 0, "ContinueIceSelect")
 		GNAD DCB 1
+	ContinueIceSelect:
 		NULL A 0 A_giveinventory("nadetype",1)
+		TNT1 A 0 A_jumpif(countinv("AmmoIceGrenade") == 0, "ready")
 	//	TNT1 A 2 ChangeAmmoIcon1("GRNDB")
 		TNT1 A 0 A_PLaySound ("ICEGPRE2")
-	    Goto SelectAnimation
+	   GNAD HGF 1
+	   Goto Ready
 		
 	SwitchToPipebomb:
 	    //NULL A 0 A_GiveInventory("NadeType",1)
 		
 		NULL A 0 A_Print("\ccPipebombs selected.",2)
-		TNT1 A 0 A_jumpif(countinv("grenadeammo") == 0, 4)
+		TNT1 A 0 A_jumpif(countinv("AmmoIceGrenade") == 0, "ContinuePipeSelect")
 		GNAD FGH 1
+	ContinuePipeSelect:
 		NULL A 0 A_giveinventory("nadetype",1)
 		//TNT1 A 2 ChangeAmmoIcon1("PIPBB0")
+		TNT1 A 0 A_jumpif(countinv("AmmoPipeBomb") == 0, "ready")
 		TNT1 A 0 A_PLaySound ("PIPESEL")
-		Goto SelectAnimation
+		DKPB EDCB 1
+		Goto Ready
 		
 	SwitchToVoid:
 	 //   NULL A 0 A_TakeInventory("NadeType",2)
 	    
 		NULL A 0 A_Print("\ctVoid grenades selected.",2)
-		TNT1 A 0 A_jumpif(countinv("grenadeammo") == 0, 5)
+		TNT1 A 0 A_jumpif(countinv("AmmoPipeBomb") == 0, "ContinueVoidSelect")
 		DKPB BCDE 1
+	ContinueVoidSelect:
 		NULL A 0 A_giveinventory("nadetype",1)
 		//TNT1 A 2 ChangeAmmoIcon1("GRNDC")
+		TNT1 A 0 A_jumpif(countinv("AmmoVoidGrenade") == 0, "ready")
 		TNT1 A 0 A_PLaySound ("GRNPIN")
-	    Goto SelectAnimation	
+	   4RTH ABCD 1
+	   Goto Ready
 		
 	BackToCluster:
 	 //   NULL A 0 A_TakeInventory("NadeType",2)
 	   
 		NULL A 0 A_Print("Cluster grenades selected.",2)
-		TNT1 A 0 A_jumpif(countinv("grenadeammo") == 0, 5)
+		TNT1 A 0 A_jumpif(countinv("AmmoVOidGrenade") == 0, "ContinueFragSelect")
 		4RTH DCBA 1
+	ContinueFragSelect:
 		 NULL A 0 A_takeinventory("nadetype",3)
+		 TNT1 A 0 A_jumpif(countinv("AmmoFragGrenade") == 0, "ready")
 		//TNT1 A 2 ChangeAmmoIcon1("GRNDA")
 		TNT1 A 0 A_PLaySound ("GRNPIN")
-	    Goto SelectAnimation
+		GNAD BCD 1
+	    Goto Ready
 	
 	Ready3:
 	Ready:
 	    GNAD A 0 A_CheckIfAmmo("GrenadeAmmo",1,"NoGrenades")
-		4RTH D 0 A_JumpIf(CountInv("NadeType")==3,4)
-		DKPB A 0 A_JumpIf(CountInv("NadeType")==2,3)
-		GNAD E 0 A_JumpIf(CountInv("NadeType")==1,2)
-		GNAD A 0
-		"####" "#" 0
-		"####" "#" 1 A_WeaponReadyDX(0,FALSE)
+		4RTH D 0 A_JumpIf(CountInv("NadeType")==3,"ReadyVOid")
+		DKPB A 0 A_JumpIf(CountInv("NadeType")==2,"ReadyPipe")
+		GNAD E 0 A_JumpIf(CountInv("NadeType")==1,"ReadyIce")
+		TNT1 A 0 A_jumpif(countinv("AmmoFragGrenade") == 0, "NoGrenades")
+		GNAD A 1 A_WeaponReadyDX(0,FALSE)
 		Loop
+	ReadyVoid:
+		TNT1 A 0 A_jumpif(countinv("AmmoVoidGrenade") == 0, "NoGrenades")
+		4RTH D 1 A_WeaponReadyDX(0,FALSE)
+		Goto Ready
+	ReadyPipe:
+		TNT1 A 0 A_jumpif(countinv("AmmoPipeBomb") == 0, "NoGrenades")
+		DKPB A 1 A_WeaponReadyDX(0,FALSE)
+		Goto Ready
+	ReadyIce:
+		TNT1 A 0 A_jumpif(countinv("AmmoIceGrenade") == 0, "NoGrenades")
+		GNAD E 1 A_WeaponReadyDX(0,FALSE)
+		Goto Ready
 	
 	NoGrenades:
 		TNT1 A 1 A_WeaponReadyDX(0,FALSE)
