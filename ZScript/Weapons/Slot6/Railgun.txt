@@ -179,10 +179,10 @@ CLASS Railgun : Brutalweapon
 			RAIL JKLMNYYOO 1 A_WeaponReadyDX();
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol2");
 			RAIL OOOO 1 A_WeaponReadyDX();
-			TNT1 A 0 A_PlaySound("RAILMAG2", 5);
+			TNT1 A 0 A_StartSound("RAILMAG2", 5);
 			RAIL PR 1 A_WeaponReadyDX();
 			RAIL TWWVUUUUUUUUU/*UUUUUUUUUU*/ 1 A_WeaponReadyDX();
-			TNT1 A 0 A_PlaySound("RAILINSR", 5);
+			TNT1 A 0 A_StartSound("RAILINSR", 5);
 			RAIL UUUUUTTSRQP 1 A_WeaponReadyDX();
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol2reverse");
 			RAIL OOOOONMLKJ 1 A_WeaponReadyDX();
@@ -213,7 +213,7 @@ CLASS Railgun : Brutalweapon
 			RAIL JKLMNYYOO 1;
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol2");
 			RAIL OOOO 1;
-			TNT1 A 0 A_PlaySound("RAILMAG2", 5);
+			TNT1 A 0 A_StartSound("RAILMAG2", 5);
 			RAIL PR 1;
 			TNT1 A 0 
 			{
@@ -249,7 +249,7 @@ CLASS Railgun : Brutalweapon
 		FinishPump:
 			RAIL WWVV 1;
 		FinishPump2:
-		TNT1 A 0 A_PlaySound("RAILINSR", 5);
+		TNT1 A 0 A_StartSound("RAILINSR", 5);
 			RAIL UUUUUTTSRQP 1;
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol2reverse");
 			RAIL OOOOONMLKJ 1;
@@ -362,7 +362,7 @@ CLASS Railgun : Brutalweapon
 		}
 		RAIZ ABCD 1;
 		RLNG A 0 A_SetCrosshair(41);
-		SMGG A 0 A_PlaySound("ADSIN");
+		SMGG A 0 A_StartSound("ADSIN");
 		RAIZ EF 1;
 	AltFireContinue:
 		
@@ -482,7 +482,7 @@ CLASS Railgun : Brutalweapon
 		TNT1 A 0 A_jumpifinventory("PowerSPeed2",1,"StillAiming");
 			SNIP CCCC 1 BRIGHT A_weaponZoom3();
 			
-			TNT1 A 0 A_PlaySound("RAILMAG2", 5);
+			TNT1 A 0 A_StartSound("RAILMAG2", 5);
 			SNIP CC 1 BRIGHT;
 			TNT1 A 0 
 			{
@@ -506,7 +506,7 @@ CLASS Railgun : Brutalweapon
 			//TNT1 A 0 A_WeaponZoom2();
 			SNIP CCCC 1 BRIGHT A_WeaponZoom3();
 
-		TNT1 A 0 A_PlaySound("RAILINSR", 5);
+		TNT1 A 0 A_StartSound("RAILINSR", 5);
 			SNIP CCCCCCCCCC 1 BRIGHT;
 		TNT1 A 0
 			{
@@ -528,7 +528,7 @@ CLASS Railgun : Brutalweapon
 		RLNG A 0 A_Takeinventory("PowerLightAmpc", 1);
         RLNG A 0 A_ZoomFactor(1.0);
 	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
-		SMGG A 0 A_PlaySound("ADSOUT");
+		SMGG A 0 A_StartSound("ADSOUT");
         RAIZ FE 1;
 		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
 		RAIZ DCBA 1;
@@ -560,7 +560,7 @@ CLASS Railgun : Brutalweapon
 		RLNG A 0 A_Takeinventory("PowerLightAmpc", 1);
         RLNG A 0 A_ZoomFactor(1.0);
 	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
-		SMGG A 0 A_PlaySound("ADSOUT");
+		SMGG A 0 A_StartSound("ADSOUT");
         RAIZ FE 1;
 		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
 		RAIZ DCBA 1;	
@@ -572,7 +572,7 @@ CLASS Railgun : Brutalweapon
 		RLNG A 0 A_Takeinventory("PowerLightAmpc", 1);
         RLNG A 0 A_ZoomFactor(1.0);
 	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
-		SMGG A 0 A_PlaySound("ADSOUT");
+		SMGG A 0 A_StartSound("ADSOUT");
         RAIZ FE 1;
 		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
 		RAIZ DCBA 1;	
@@ -584,7 +584,7 @@ CLASS Railgun : Brutalweapon
 		RLNG A 0 A_Takeinventory("PowerLightAmpc", 1);
         RLNG A 0 A_ZoomFactor(1.0);
 	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
-		SMGG A 0 A_PlaySound("ADSOUT");
+		SMGG A 0 A_StartSound("ADSOUT");
         RAIZ FE 1;
 		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
 		RAIZ DCBA 1;	
@@ -592,14 +592,14 @@ CLASS Railgun : Brutalweapon
 		
 		
 		Pumpinghandlol:
-		TNT1 A 0 A_PlaySound("foley/ShotgunReloadRaise", 6);
+		TNT1 A 0 A_StartSound("foley/ShotgunReloadRaise", 6);
 			RAIH ABCD 1;
 			STOP;
 		Pumpinghandlol2:
 			RAIH IHFE 1;
 			STOP;
 		Pumpinghandlolreverse:
-		TNT1 A 0 A_PlaySound("foley/ShotgunReloadLower", 6);
+		TNT1 A 0 A_StartSound("foley/ShotgunReloadLower", 6);
 			RAIH DCBA 1;
 			STOP;
 		Pumpinghandlol2reverse:
@@ -706,13 +706,13 @@ CLASS Railgun : Brutalweapon
 			RAIL OOOO 1;
 			RAIL A 0 A_JumpIfInventory("NuRailgunAmmo",1,1);
 			Goto FinishUnload;
-			TNT1 A 0 A_PlaySound("RAILMAG2", 5);
+			TNT1 A 0 A_StartSound("RAILMAG2", 5);
 			RAIL PR 1;
 			RAIL TWWV 1;
 			RAIL A 0 A_Takeinventory("NuRailgunAmmo",1);
 			RAIL A 0 A_Giveinventory("AmmoCell",10);
 			RAIL UUUUUUUUU/*UUUUUUUUUU*/ 1;
-			TNT1 A 0 A_PlaySound("RAILINSR", 5);
+			TNT1 A 0 A_StartSound("RAILINSR", 5);
 			RAIL UUUUUTTSRQP 1;
 			Goto RemoveBullets+19;
 		FinishUnload:

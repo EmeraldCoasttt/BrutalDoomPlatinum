@@ -692,7 +692,7 @@ CLASS BFG10K_Ball: SuperBFGBall
 
 
 CLASS BFGTendril : tripmineparticle {
-	int fadeoutpercent;
+	double fadeoutpercent;
 	property fadeoutpercent : fadeoutpercent;
 	Default
 	{

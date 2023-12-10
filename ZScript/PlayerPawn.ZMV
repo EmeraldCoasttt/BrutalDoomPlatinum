@@ -673,7 +673,7 @@ class Brutal_PlayerBase : PlayerPawn
 			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("FinishClimb"));
 			
 			A_StopSound(CHAN_WEAPON);
-			A_Playsound("ledgeclimb");
+			A_StartSound("ledgeclimb");
 			LedgeAngle = Angle;
 			LedgeCheck = False;
 			LedgeGrabbed = True;
@@ -711,7 +711,7 @@ class Brutal_PlayerBase : PlayerPawn
 			if(LedgeTime >= 35) { return; }
 			LedgeGrabbed = LedgeTime = LedgeHeight = LedgeHeightMin = LedgeHeightMax = FrameTime = 0;
 			Vel = Vel.Length() ? (5.f * AngleToVector(LedgeAngle), -3) : (0, 0, 0); //push player forward and downward
-			A_PlaySound("*land", CHAN_BODY);
+			A_StartSound("*land", CHAN_BODY);
 		}
 		else
 		{
@@ -856,11 +856,11 @@ Class Hook : Actor
 			monster.a_pain();
 			brutal_playerbase(Target).GrappledMonster = Monster;
 			SetMonsterSpeed(False);
-			A_PlaySound("HookMeat", 7);
+			A_StartSound("HookMeat", 7);
 		}
 		else
 		{
-			A_PlaySound("HookWall", 7);
+			A_StartSound("HookWall", 7);
 		}
 	}
 	

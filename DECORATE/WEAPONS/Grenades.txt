@@ -75,10 +75,12 @@ ACTOR HandGrenades : BrutalWeapon
 		  else
 		  {
 		    A_PLaySound ("GRNPIN");
-			if(CountInv("NadeType")==3)
+//If this statement is needed for later uncomment this out - JM
+/*			if(CountInv("NadeType")==3)
 		    {
+				A_PLaySound ("GRNPIN");
 			//ChangeAmmoIcon1("GRNDC");
-		    }
+		    }*/
 		    }
 		  }
 		}
