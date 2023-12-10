@@ -224,7 +224,7 @@ class NashGoreRealGibs : RealGibs
 			
 			
 				A_SpawnItemEx("NashGoreSquishyGibs", flags: SXF_TRANSFERTRANSLATION);
-				A_PlaySound("misc/gibbed");
+				A_StartSound("misc/gibbed");
 			
 
 			//Destroy();
