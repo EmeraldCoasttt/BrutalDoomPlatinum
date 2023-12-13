@@ -100,10 +100,8 @@ OptionMenu "BrutalMenu"
 	Submenu "Sound Design", "DoxCreditsSound", 0, 1
 	StaticText ""
 	StaticText "-------------------------------------------------------------------------", "Black"
-	StaticText "You can contact me for multiple reasons on these platforms:", "fire"
-	StaticText "Email - PerfectHatred2003@gmail.com", "fire"
-	StaticText "Discord - emeraldcoasttt", "fire"
-	StaticText "Twitter - @EmeraldCoasttt", "fire"
+	StaticText "For more information on this mod, addons, and the developers:", "fire"
+	Statictext "perfect-hatred.github.io", "fire"
 }
 
 OptionMenu "DoxGameplayOptions"
