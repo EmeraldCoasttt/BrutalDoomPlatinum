@@ -536,6 +536,7 @@ CLASS SuperBFGBall : BFGBall replaces BFGBall
 		Height 1;
 		+THRUSPECIES;
 		+MTHRUSPECIES;
+		+skyexplode;
 	}
 	States
 	{
