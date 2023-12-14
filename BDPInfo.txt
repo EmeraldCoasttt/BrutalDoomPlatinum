@@ -1,4 +1,4 @@
-//WeaponInfo lump
+//BDPInfo lump
 //All letters need to be lowercase without spaces
 //value 1 is what actor you want to spawn
 //value 2 is what actor you want to replace

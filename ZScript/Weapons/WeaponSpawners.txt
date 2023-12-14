@@ -65,11 +65,11 @@
 			*/
 			
 		//Thanks for the help 3saster!
-		int currLump = Wads.FindLump("WeaponInfo",0,1);
+		int currLump = Wads.FindLump("BDPInfo",0,1);
 		while( currLump != -1 )
 		{
 			addguns(currLump);
-			currLump = Wads.FindLump("WeaponInfo",currLump+1,1);
+			currLump = Wads.FindLump("BDPInfo",currLump+1,1);
 		}
 	}
 		
