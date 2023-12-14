@@ -47,10 +47,6 @@ IfGame(Doom, Chex)
 			TextItem "Load Game", "l", "LoadGameMenu"
 			TextItem "Save Game", "s", "SaveGameMenu"
 		}
-		ifOption(ReadThis)
-		{
-			TextItem "Read This!","r", "ReadThisMenu"
-		}
 		TextItem "Quit Game", "q", "QuitMenu"
 	}
 	
@@ -175,7 +171,7 @@ OptionMenu "DoxVisualOptions"
 	Option "Water Ripple Effects", "bd_disablewaterripples2", "DisabledEnabled"
 	Option "Computer Area Map reveals actors", "bd_allmapdx", "NoYes"
 	TiltPlusPlusOption "Randomized pickup sprites", "Enables visual variants of ammo and weapon pickups.", "Dox_SimplePickups", "DisabledEnabled"
-	TiltPlusPlusOption "Barrels bleed nukage", "Barrels explode into pools of toxic waste. Purely visual.", "bd_ToxicWasteOnExplosion", "DisabledEnabled"
+	TiltPlusPlusOption "Barrels bleed nukage", "Barrels explode into pools of toxic waste. Purely visual.", "bd_ToxicWasteOnExplosion", "EnabledDisabled"
 	StaticText ""
 	StaticText "-------------------------------------------------------", "black"
 	StaticText "PLAYER/WEAPON GRAPHICAL OPTIONS", "fire"
