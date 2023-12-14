@@ -148,6 +148,10 @@ class Brutal_PlayerBase : PlayerPawn
 	int previouskills;
 	int currentkills;
 	
+	//Merciless Extermination
+	
+	bool mercilessgranted;
+	
 	//Skulls
 	bool spawnwitharmor;
 	bool spawnberserked;
@@ -214,6 +218,25 @@ class Brutal_PlayerBase : PlayerPawn
 		}
 		previouskills = Level.Killed_monsters;
 		
+		If(currentkills == 0)
+		{
+			mercilessgranted = false;
+		}
+		If(!mercilessgranted && currentkills > 5 && currentkills >= Level.Total_Monsters)
+		{
+			mercilessgranted = true;
+			A_Print("MERCILESS EXTERMINATION!",5);
+			If(health < 100)
+			{
+				A_sethealth(100);
+			}
+			A_startsound("ALLKILL",227,CHANF_LOCAL,1.0,ATTN_NONE);
+			If(random(0,50) == 5)
+			{
+				A_startsound("YIPPEE",228,CHANF_LOCAL,1.0,ATTN_NONE);
+			}
+			
+		}
 		
 		If(ultranightmare && !ultraseed)
 		{
