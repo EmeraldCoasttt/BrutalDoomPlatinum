@@ -433,15 +433,15 @@ ACTOR Plasma_Gun : BrutalWeapon
 	NULL A 0 A_OverlayFlags(6, PSPF_ADDWEAPON|PSPF_ADDBOB, true)
 	PLSN A 0 A_PlaySound("PLSCHARG",1)
 //	NULL A 0 A_TakeAmmo("PlasmaAmmo",1)
-	TNT1 A 0 A_GiveInventory("PlasmaCooldowncounter",1)
+	//TNT1 A 0 A_GiveInventory("PlasmaCooldowncounter",1)
 	AltFireLoop:
 		PLSF IJKL 1 BRIGHT 
-		TNT1 A 0 A_JumpIfInventory("PlasmaCooldownCounter",6,"AltFire2")
+		TNT1 A 0 A_JumpIfInventory("PlasmaCooldownCounter",10,"ContinueAlt")
 		TNT1 A 0 A_TakeAmmo("PlasmaAmmo",1)
 		TNT1 A 0 A_GiveInventory("PlasmaCooldowncounter",1)	
 		NULL A 0 A_ReFire("AltFireLoop")
 		TNT1 A 0 A_PLaySound("PLSCOOL", 1)
-		TNT1 A 0 A_takeAmmo("PlasmaAmmo",1)
+		//TNT1 A 0 A_takeAmmo("PlasmaAmmo",1)
 	AltFireUnloadLoop:
 		TNT1 A 0 A_WeaponOffset(0,32)	
 		TNT1 A 0 A_JumpIf(CountInv("PlasmaCooldowncounter")==0,"Ready")
@@ -450,14 +450,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 		TNT1 A 0 A_takeInventory("PlasmaCooldowncounter",1)
 		loop
 	
-	AltFire2:
-		TNT1 A 0 A_TakeAmmo("PlasmaAmmo",1)
-		PLSF MNOP 1 BRIGHT A_WeaponOffset( random(-1,1),32+random(-1,1) )
-		TNT1 A 0 A_JumpIf(CountInv("PlasmaCooldownCounter")==8,"ContinueAlt")
-		TNT1 A 0 A_GiveInventory("PlasmaCooldowncounter",1)	
-		NULL A 0 A_ReFire("AltFire2")
-		TNT1 A 0 A_PLaySound("PLSCOOL", 1)
-		TNT1 A 0 A_takeAmmo("PlasmaAmmo",1)
+
 	AltFireUnloadLoop2:
 		TNT1 A 0 A_JumpIf(CountInv("PlasmaCooldowncounter")==6,"AltFireUnloadLoop")
 		PLSF MNOP 1 BRIGHT A_WeaponOffset( random(-1,1),32+random(-1,1) )
@@ -512,7 +505,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 // Holding Charge ------------------------------------------------------------
 
 	ContinueAlt:
-		TNT1 A 0 A_TakeInventory("PlasmaCooldowncounter",15)
+		TNT1 A 0 A_TakeInventory("PlasmaCooldowncounter",666)
 		NULL A 0 A_Overlay(6,"AltReadyOverlay")
 		PLSF MNOP 1
 		{
