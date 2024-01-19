@@ -34,10 +34,11 @@ ACTOR DualRevolver : BrutalWeapon
 	
 	SprintOverlay:
 		RE3F EFGH 1
-		RE3F I 1 
-		WAIT
+	KeepSprinting:
+		RE3F I 1 A_WeaponReadyDX(0,FAlSE,FALSE)
+		TNT1 A 0 A_KeepSprinting
 	ReturnFromSprint:
-		RE3F HGFE 1
+		RE3F HGFE 1 A_WeaponReadyDX
 		Goto ready
 
 	KickingFlash:

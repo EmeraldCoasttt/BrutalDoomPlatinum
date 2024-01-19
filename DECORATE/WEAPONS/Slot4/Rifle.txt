@@ -27,11 +27,11 @@ ACTOR Rifle : BrutalWeapon
 	
 	SprintOverlay:
 	RIFL RSTU 1
-	RIFL V 1
-	Wait
-	
+	KeepSprinting:
+	RIFL V 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
+	TNT1 A 0 A_keepsprinting
 	Returnfromsprint:
-	RIFL UTSR 1
+	RIFL UTSR 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
 	Goto ready
 	
 	GrenadeThrowFlash:

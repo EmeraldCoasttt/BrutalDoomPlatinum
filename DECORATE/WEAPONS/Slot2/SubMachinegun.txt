@@ -68,8 +68,9 @@ ACTOR BrutalSMG : BrutalWeapon
 		
 		SprintOverlay:
 		SMGG BCD 1
-		SMGG E 1
-		Wait
+		KeepSprinting:
+		SMGG E 1 A_WeaponReadyDX(0,FALSE,FALSE)
+		TNT1 A 0 A_KeepSprinting
 		ReturnFromSprint:
 		SMGG DCB 1
 		Goto ready

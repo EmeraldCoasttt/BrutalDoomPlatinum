@@ -213,14 +213,16 @@ ACTOR DualPistols : BrutalWeapon
 	SprintOverlay:
 		SI2F Q 0 A_JumpIFInventory("IsSilenced",1,2)
 		PI2F Q 0
+	
 		"####" QRST 1
-		"####" U 1
-		Wait
+		KeepSprinting:
+		"####" U 1 A_WeaponReadyDX(0,FALSE,FALSE)
+		"####" A 0 A_KeepSprinting
 	
 	ReturnFromSprint:
 		SI2F T 0 A_JumpIFInventory("IsSilenced",1,2)
 		PI2F T 0
-		"####" TSRQ 1
+		"####" TSRQ 1 A_WeaponReadyDX
 		Goto ready
 	
 	Grenadethrowflash:

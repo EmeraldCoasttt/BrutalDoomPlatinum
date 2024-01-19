@@ -435,7 +435,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	A_takeinventory("hasimpfatality",666);
 	}
 	
-	Action void A_WeaponReadyDX(int dxflags = 0, bool kickflashes = true)
+	Action void A_WeaponReadyDX(int dxflags = 0, bool kickflashes = true, bool cansprint = true)
 		{
 			takeinventory("Zoomies",1);
 			A_weaponready(dxflags);
@@ -445,7 +445,10 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			}
 			
 			//A_checksprint();
-			
+			If(invoker.a_checksprint() && cansprint)
+			{
+				player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('SprintOverlay'));
+			}
 			State DualWield = player.ReadyWeapon.FindState('DualWield');
 			if (DualWield != NULL && (CountInv("StartDualWield") == 1))
 			{
@@ -583,20 +586,31 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
     {
         CVar.GetCVar(cvartoset, Player).SetInt(valuetoset);
     }
-	/*
-	action void A_checksprint(statelabel sprintstate = "sprintoverlay")
+	
+	Bool A_checksprint()
 	{
-		If(player.cmd.buttons & BT_SPEED && invoker.sprinttimer < 1 && ( vel.x != 0 || vel.y != 0))
+		let player = owner.player;
+		If(player.cmd.buttons & BT_SPEED && !(player.cmd.buttons & BT_ATTACK || player.cmd.buttons & BT_ALTATTACK))
 		{
-			IF(GetPlayerInput(MODINPUT_FORWARDMOVE,-1)!=0 || GetPlayerInput(MODINPUT_SIDEMOVE,-1)!=0)
-				{
-				player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("startsprint"));
-					
-							
-						
-				}
+			Return True;
 		}
-	}*/
+		Else
+		{
+			Return False;
+		}
+	}
+	
+	action state A_KeepSprinting()
+	{
+		If(invoker.A_checksprint())
+		{
+		Return ResolveState('keepsprinting');
+		}
+		Else
+		{
+		Return resolvestate(null);
+		}
+	}
 	
 	Action void A_AlertMonstersDX(double maxdist = 0, int flags = 0)
 	{
@@ -739,7 +753,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			{
 				sprinttimer = sprinttimer - 1;
 			}
-			If(player.cmd.buttons & BT_SPEED && !(player.cmd.buttons & BT_ATTACK || player.cmd.buttons & BT_ALTATTACK))
+			If(A_checksprint())
 			{
 				BobRangeX = 1.0;
 				BobRangeY = 1.0;
