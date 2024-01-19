@@ -488,8 +488,10 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 
 	SprintOverlay:
 		
-		GLAN BCDEF 1
-		Wait
+		GLAN BCDE 1
+		KeepSprinting:
+		GLAN F 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
+	TNT1 A 0 A_keepsprinting
 	ReturnFromSprint:
 		GLAN EDCB 1
 		Goto ready

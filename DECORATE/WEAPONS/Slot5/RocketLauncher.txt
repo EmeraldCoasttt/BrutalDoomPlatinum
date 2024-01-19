@@ -223,11 +223,18 @@ ACTOR Rocket_Launcher : BrutalWeapon Replaces RocketLauncher
 	
 	SprintOverlay:
 	RLNG A 0 A_JumpIfInventory("HasUnloadedRL", 1, "SprintUnloaded")
-	RLNG EFGHI 1
-	Wait
+	RLNG EFGH 1
+	KeepSprinting:
+	RLNG A 0 A_JumpIfInventory("HasUnloadedRL", 1, "KeepSprintingUnloaded")
+	RLNG I 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
+	TNT1 A 0 A_keepsprinting
+	Goto ReturnFromSprint
 	SprintUnloaded:
-	RLNG JKLMN 1
-	Wait
+	RLNG JKLM 1
+	KeepSprintingUnloaded:
+	RLNG N 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
+	TNT1 A 0 A_keepsprinting
+	Goto ReturnFromSprint
 	
 	ReturnfromSprint:
 	RLNG A 0 A_JumpIfInventory("HasUnloadedRL", 1, "ReturnFromSprintUnloaded")
