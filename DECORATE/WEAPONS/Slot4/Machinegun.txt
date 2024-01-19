@@ -133,12 +133,17 @@ ACTOR Machinegun : BrutalWeapon
 
 	Sprint1:
 	MGN1 GHIJL 1
-	MGN1 M 1
-	Wait
+	KeepSprinting:
+	MGN1 Q 0 A_JumpIf(Countinv("AngledMachineGun")==1,"KeepSprinting2")
+	MGN1 M 1 A_WeaponreadyDX(0,FALSE,FALSE)
+	TNT1 A 0 A_KeepSprinting
+	Goto ReturnFromSprint
 	Sprint2:
 	MGN4 OPQR 1
-	MGN4 S 1
-	Wait
+	KeepSprinting2:
+	MGN4 S 1 A_WeaponreadyDX(0,FALSE,FALSE)
+	TNT1 A 0 A_KeepSprinting
+	Goto ReturnFromSprint2
 	
 	returnfromsprint:
 	MGN1 Q 0 A_JumpIf(Countinv("AngledMachineGun")==1,"ReturnFromSprint2")

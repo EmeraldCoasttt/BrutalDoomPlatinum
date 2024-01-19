@@ -325,19 +325,27 @@ ACTOR MiniGun : BrutalWeapon
 		Goto Sprintnoammo
 		CHAG A 0 A_JumpIfInventory("Spin",1,"SprintSpin")
 	    CHAG EFGH 1 //16
-		CHAG I 1
-	    wait
+		KeepSprinting:
+		 CHAG A 0 A_JumpIfInventory("Clip2",1,1)
+		Goto KeepSprintingNoAmmo
+		CHAG A 0 A_JumpIfInventory("Spin",1,"SprintSpin2")
+		CHAG I 1 A_WeaponreadyDX(0,FALSE,FALSE)
+		TNT1 A 0 A_KeepSprinting
+	   Goto ReturnFromSprint
 	SprintNoAmmo:
 	    CHAG JKLM 1 //16
-		CHAG N 1
-	    Wait
+		KeepSprintingNoAmmo:
+		CHAG N 1 A_WeaponreadyDX(0,FALSE,FALSE)
+		TNT1 A 0 A_KeepSprinting
+	   Goto ReturnFromSprintNoAmmo
 	SprintSpin:
 		CHAG OPQR 1
 		SprintSpin2:
 		CHAG A 0 A_AlertMonstersDX(400)
 		CHAG A 0 A_PlaySound("CHAINSPI", 5)
-		CHAG STUV 1
-		LOOP
+		CHAG STUV 1 A_WeaponreadyDX(0,FALSE,FALSE)
+	TNT1 A 0 A_KeepSprinting
+		Goto ReturnFromSprint
 		
 		ReturnFromSprint:
 		CHAG A 0 A_JumpIfInventory("Clip2",1,1)

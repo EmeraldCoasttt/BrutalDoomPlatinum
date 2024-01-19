@@ -32,8 +32,10 @@ ACTOR DualRifles : BrutalWeapon
 	{
 	SprintOverlay:
 	DURI GHIJ 1 
-	DURI K 1
-	Wait
+	KeepSprinting:
+	DURI K 1 A_WeaponReadyDX(0,FALSE,FALSE)
+	TNT1 A 0 A_KeepSprinting
+
 	
 	ReturnFromSprint:
 	DURI JIHG 1
