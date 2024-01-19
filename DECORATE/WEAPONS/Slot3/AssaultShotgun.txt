@@ -37,8 +37,9 @@ ACTOR AssaultShotgun : BrutalWeapon
 	
 	SprintOverlay:
 	A12G BCDE 1
-	A12G F 1
-	Wait
+	KeepSprinting:
+	A12G F 1 A_WeaponReadyDX(0,FALSE,FALSE)
+	TNT1 A 0 A_KeepSprinting
 	
 	ReturnFromSprint:
 	A12G EDCB 1

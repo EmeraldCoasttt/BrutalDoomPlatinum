@@ -178,15 +178,17 @@ CLASS SSG : BrutalWeapon
 	SprintOverlay:
 		TNT1 A 0 A_HookOverlay("SprintHook");
 		 SH69 PQRS 1;
-		SH69 T 1;
-		Wait;
+		KeepSprinting:
+		SH69 T 1 A_WeaponReadyDX(0,FALSE,FALSE);
+		TNT1 A 0 A_KeepSprinting();
+		Goto ReturnFromSprint;
 	SprintHook:
 		MH69 PQRS 1;
 		MH69 T 1;
 		Wait;
 	ReturnFromSprint:
 	TNT1 A 0 A_HookOverlay("SprintHook2");
-		SH69 SRQP 1;
+		SH69 SRQP 1 A_WeaponReadyDX();
 		Goto ready;
 		
 	SprintHook2:
