@@ -319,15 +319,19 @@ ACTOR Freezer : BrutalWeapon
 		SprintOverlay:
 	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"sprintNoAmmo")
 	FR1K ABCD 1
-	SprintOverlay2:
+	KeepSprinting:
+	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"KeepSprintingNoAmmo")
 	RAIL A 0 A_PlaySound("PLSIDLE")
-	FR1K EFG 2
-	
-	LOOP
+	FR1K EFG 2 A_weaponreadyDX(0,FALSE,FALSE)
+	TNT1 A 0 A_KeepSprinting
+	Goto ReturnFromSprint
 	SprintNoAmmo:
 	TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"SprintUnloaded")
-	FR1K MNOPQ 1
-	WAIT
+	FR1K MNOP 1
+	KeepSprintingNoAmmo:
+	FR1K Q 1 A_weaponreadyDX(0,FALSE,FALSE)
+	TNT1 A 0 A_KeepSprinting
+	Goto ReturnFromSprint
 	
 	SprintUnloaded:
 	FR1K HIJKL 1
@@ -335,7 +339,7 @@ ACTOR Freezer : BrutalWeapon
 	
 	ReturnFromSprint:
 	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"ReturnFromsprintNoAmmo")
-	FR1K DCBA 1 //16
+	FR1K DCBA 1 A_WeaponReadyDX//16
 	Goto Ready
 	
 	ReturnFromSprintNoAmmo:

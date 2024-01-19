@@ -29,6 +29,8 @@ ACTOR DualPlasmaRifles : BrutalWeapon
 	States
 	{
 	
+	
+	
 	SprintOverlay:
 	TNT1 A 0 { A_Overlay(6,"SprintOverlay2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
 		3UPL C 0 A_JumpIf(countInv("DoublePlasmaAmmo")==0,4)
@@ -36,24 +38,54 @@ ACTOR DualPlasmaRifles : BrutalWeapon
 	2UPL B 0 A_JumpIf(countInv("DoublePlasmaAmmo")<=60,2)
 	DUPL A 0
 	"####" A 0
-	    "####" KLMNO 1
-		WAIT
-		
-	SprintOverlay2:
+	"####" KLMN 1
+	KeepSprinting:
+	TNT1 A 0 { A_Overlay(6,"SprintOverlay2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
 		3UPL C 0 A_JumpIf(countInv("DoublePlasmaAmmo")==0,4)
-	3UPL C 0 A_JumpIf(countInv("DoublePlasmaAmmo")<=20,"SprintOverlayLowAmmo")
+	3UPL C 0 A_JumpIf(countInv("DoublePlasmaAmmo")<=20,"KeepSprintinglowAmmo")
 	2UPL B 0 A_JumpIf(countInv("DoublePlasmaAmmo")<=60,2)
 	DUPL A 0
 	"####" A 0
-	    "####" KLMNO 1
-		WAIT
+	"####" A 0  { A_Overlay(6,"KeepSprinting2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+	    
+		"####" O 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
+	"####" A 0 A_keepsprinting
+	Goto ReturnFromSprint
+		
+	SprintOverlay2:
+		3UPL C 0 A_JumpIf(countInv("DoublePlasmaAmmo")==0,4)
+	3UPL C 0 A_JumpIf(countInv("DoublePlasmaAmmo")<=20,"SprintOverlayLowAmmo2")
+	2UPL B 0 A_JumpIf(countInv("DoublePlasmaAmmo")<=60,2)
+	DUPL A 0
+	"####" A 0
+	    "####" KLMN 1
+		STOP
+	KeepSprinting2:
+			3UPL C 0 A_JumpIf(countInv("DoublePlasmaAmmo")==0,4)
+	3UPL C 0 A_JumpIf(countInv("DoublePlasmaAmmo")<=20,"KeepSprintingOverlayLowAmmo2")
+	2UPL B 0 A_JumpIf(countInv("DoublePlasmaAmmo")<=60,2)
+	DUPL A 0
+	"####" A 0
+	    "####" O 1
+		STOP
 	SprintOverlayLowAmmo:
+	TNT1 A 0 { A_Overlay(6,"SprintOverlayLowAmmo2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
 		3UPL KLMNOO 1
-		LowAmmoSprint2:
+		KeepSprintingLowAmmo:
+		TNT1 A 0 { A_Overlay(6,"KeepSprinting2LowAmmo"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		PLSN A 0 A_PlaySound("BEP",4,0.3)
+		4UPL OOOOOO 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
+		3UPL OOOOOO 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
+		TNT1 A 0 A_KeepSprinting
+		Goto ReturnFromSprint
+		
+		SprintOverlayLowAmmo2:
+		3UPL KLMNOO 1
+		KeepSprinting2LowAmmo:
 		PLSN A 0 A_PlaySound("BEP",4,0.3)
 		4UPL OOOOOO 1
 		3UPL OOOOOO 1
-		LOOP
+		STOP
 		
 	ReturnFromSprint:
 		TNT1 A 0 { A_Overlay(6,"ReturnFromSprint2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
