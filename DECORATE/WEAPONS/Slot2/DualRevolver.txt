@@ -102,7 +102,7 @@ ACTOR DualRevolver : BrutalWeapon
 	ReadyNoAmmo:
 	    REDF A 0 A_JumpIfInventory("BDRevolverAmmo",1,4)
 		REDF V 1 A_WeaponReadyDX(WRF_ALLOWRELOAD)
-		REDF A 0 A_checksprint
+		//REDF A 0 A_checksprint
 		Loop	
 		TNT1 A 0 A_takeinventory("RevolverIsUnloaded",1)
 		Goto Ready

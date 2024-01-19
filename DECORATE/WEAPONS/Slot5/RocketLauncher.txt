@@ -177,7 +177,7 @@ ACTOR Rocket_Launcher : BrutalWeapon Replaces RocketLauncher
 		RLNG A 0 A_JumpIfInventory("Salute1", 1, "Salute")
 		RLNG A 0 A_JumpIfInventory("Salute2", 1, "Salute")
 		RLNG A 0 A_JumpIfInventory("Reloading",1,"Reload")
-		RLNG A 0 A_checksprint
+	//	RLNG A 0 A_checksprint
 		RLNG A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
 		TNT1 A 0 A_SetCrosshair(41)
 		Loop
@@ -191,7 +191,7 @@ ACTOR Rocket_Launcher : BrutalWeapon Replaces RocketLauncher
 		RLNG A 0 A_JumpIfInventory("Salute2", 1, "Salute")
         RLNG A 0 A_JumpIfInventory("Taunting",1,"Taunt")
 		RLNG A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		RLNG A 0 A_checksprint
+	//	RLNG A 0 A_checksprint
 		Loop	
 	
 	NoAmmo:

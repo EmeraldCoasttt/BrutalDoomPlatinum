@@ -36,7 +36,7 @@ ACTOR DSweap : BrutalWeapon
 		TNT1 A 0 A_JumpIfInventory("Salute1", 1, "Salute")
 		TNT1 A 0 A_JumpIfInventory("Salute2", 1, "Salute")
 		TNT1 A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		TNT1 A 0 A_checksprint
+		//TNT1 A 0 A_checksprint
 		DSLA A 1 A_WeaponReady
 		Loop
 		

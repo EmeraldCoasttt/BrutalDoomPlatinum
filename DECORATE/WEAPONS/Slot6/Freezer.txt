@@ -222,7 +222,7 @@ ACTOR Freezer : BrutalWeapon
 			if (CountInv("Salute1")==1 || CountInv("Salute2")==1) { return state("Salute"); }
 			if (CountInv("Reloading") == 1) { return state("Reload"); }
 			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
-			A_checksprint;
+			//A_checksprint;
 			if (CountInv("Unloading") == 1) { return state("Unload"); }
 			if (CountInv("FreezerAmmo") == 0) { return state("ReadyNoAmmo"); }
 			return state("");
@@ -280,7 +280,7 @@ ACTOR Freezer : BrutalWeapon
 			if (CountInv("Salute1")==1 || CountInv("Salute2")==1) { return state("Salute"); }
 			if (CountInv("Reloading") == 1) { return state("Reload"); }
 			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
-			A_checksprint;
+			//A_checksprint;
 			if (CountInv("Unloading") == 1) { return state("Unload"); }
 			if (CountInv("swapriflespecial") == 1) { return state("PlaceFreezeBot"); }
 			return state("");
@@ -309,7 +309,7 @@ ACTOR Freezer : BrutalWeapon
 			if (CountInv("Salute1")==1 || CountInv("Salute2")==1) { return state("Salute"); }
 			if (CountInv("Reloading") == 1) { return state("Reload"); }
 			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
-			A_checksprint;
+			//A_checksprint;
 			if (CountInv("Unloading") == 1) { return state("Unload"); }
 			if (CountInv("swapriflespecial") == 1) { return state("PlaceFreezeBot"); }
 			return state("");

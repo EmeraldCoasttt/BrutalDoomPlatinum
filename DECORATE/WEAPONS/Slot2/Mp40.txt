@@ -163,7 +163,7 @@ ACTOR MP40 : BrutalWeapon
 		MP40 A 0 A_JumpIfInventory("Salute2", 1, "Salute")
 		MP40 A 0 A_JumpIfInventory("Unloading",1,"Unload")
 		MP40 A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		MP40 A 0 A_checksprint
+		//MP40 A 0 A_checksprint
 		MP40 A 0 A_JumpIfInventory("StartDualWield",1,"DualWield")
 		//MP40 A 0 A_JumpIfInventory("SwapRifleSpecial",1,"SpecialAction")
 		MP40 A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
@@ -178,7 +178,7 @@ ACTOR MP40 : BrutalWeapon
 		MP40 A 0 A_JumpIfInventory("Salute2", 1, "Salute")
 		MP40 A 0 A_JumpIfInventory("Unloading",1,"Unload")
 		MP40 A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		MP40 A 0 A_checksprint
+		//MP40 A 0 A_checksprint
 		MP40 A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
 		TNT1 A 0 A_SetCrosshair(41)
 		MP41 A 1 A_WeaponReady(WRF_ALLOWRELOAD)
@@ -548,7 +548,7 @@ ACTOR MG42 : BrutalWeapon
 		MP40 A 0 A_JumpIfInventory("Salute1", 1, "Salute")
 		MP40 A 0 A_JumpIfInventory("Salute2", 1, "Salute")
 		MP40 A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		TNT1 A 0 A_checksprint
+		//TNT1 A 0 A_checksprint
 		Loop
 		
 	Deselect: "####" A 0 A_TakeInventory("IsPlayingDoxMod",1)

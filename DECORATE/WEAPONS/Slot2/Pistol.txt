@@ -195,7 +195,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 	    PIST F 0
 		"####" F 1 A_WeaponReadyDX(WRF_ALLOWRELOAD)
 		PIST F 0 A_Takeinventory("PistolFireAnimation1",1)
-		PIST F 0 A_checksprint
+		//PIST F 0 A_checksprint
 		PIST F 0 A_JumpIfInventory("StartDualWield",1,"DualWield")
 		TNT1 A 0 A_JumpIfInventory("swapRifleSpecial",1,"Switchsilencer")
 		RIFG A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
@@ -212,7 +212,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		RIFG A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
 		PISZ A 1 A_WeaponReady(WRF_ALLOWRELOAD)
 		PIST F 0 A_Takeinventory("PistolFireAnimation1",1)
-		PIST F 0 A_checksprint
+		//PIST F 0 A_checksprint
 		PIST F 0 A_JumpIfInventory("StartDualWield",1,"DualWield")
 		Loop
 		
@@ -667,7 +667,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 	    PISZ A 0 A_JumpIfInventory("Taunting",1,"Taunt")
 		PISZ A 0 A_JumpIfInventory("Salute1", 1, "Salute")
 		PISZ A 0 A_JumpIfInventory("Salute2", 1, "Salute")
-		PISZ A 0 A_checksprint
+		//PISZ A 0 A_checksprint
 		PISZ A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
 		PISZ A 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
 		2ILE A 0 A_JumpIFInventory("BurstANDsilencer", 1, 4)	

@@ -89,7 +89,7 @@ ACTOR MastermindChaingun : BrutalWeapon
 	    RIFG A 0 A_JumpIfInventory("Taunting",1,"Taunt")
 		RIFG A 0 A_JumpIfInventory("Salute1", 1, "Salute")
 		RIFG A 0 A_JumpIfInventory("Salute2", 1, "Salute")
-		RIFG A 0 A_checksprint
+		//RIFG A 0 A_checksprint
 		RIFG A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
 		Loop
 		  

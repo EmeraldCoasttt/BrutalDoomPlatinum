@@ -444,7 +444,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('Chooseyourgib'));
 			}
 			
-			A_checksprint();
+			//A_checksprint();
 			
 			State DualWield = player.ReadyWeapon.FindState('DualWield');
 			if (DualWield != NULL && (CountInv("StartDualWield") == 1))
@@ -583,7 +583,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
     {
         CVar.GetCVar(cvartoset, Player).SetInt(valuetoset);
     }
-	
+	/*
 	action void A_checksprint(statelabel sprintstate = "sprintoverlay")
 	{
 		If(player.cmd.buttons & BT_SPEED && invoker.sprinttimer < 1 && ( vel.x != 0 || vel.y != 0))
@@ -596,7 +596,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 						
 				}
 		}
-	}
+	}*/
 	
 	Action void A_AlertMonstersDX(double maxdist = 0, int flags = 0)
 	{

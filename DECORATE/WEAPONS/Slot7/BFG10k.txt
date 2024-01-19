@@ -104,7 +104,7 @@ Actor BFG10k : BrutalWeapon
 		if (CountInv("Taunting") == 1) { return state("Taunt"); }
 		if (CountInv("Salute1")==1 || CountInv("Salute2")==1) { return state("Salute"); }
 		if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
-		a_checksprint;
+		//a_checksprint;
 		return state("");
  	}
 	Goto Ready3
@@ -115,7 +115,7 @@ Actor BFG10k : BrutalWeapon
         if (CountInv("Taunting") == 1) { return state("Taunt"); }
 		if (CountInv("Salute1")==1 || CountInv("Salute2")==1) { return state("Salute"); }
 		if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
-		A_checksprint;
+		//A_checksprint;
 		return state("");
  	}
 	loop
