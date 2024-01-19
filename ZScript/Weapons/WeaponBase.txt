@@ -739,7 +739,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			{
 				sprinttimer = sprinttimer - 1;
 			}
-			If(owner.findinventory("sprintbob"))
+			If(player.cmd.buttons & BT_SPEED && !(player.cmd.buttons & BT_ATTACK || player.cmd.buttons & BT_ALTATTACK))
 			{
 				BobRangeX = 1.0;
 				BobRangeY = 1.0;
