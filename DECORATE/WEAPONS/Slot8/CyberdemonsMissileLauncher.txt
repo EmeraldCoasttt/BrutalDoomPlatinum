@@ -86,7 +86,7 @@ ACTOR CyberdemonsMissileLauncher : BrutalWeapon
 		CYBF I 0 A_JumpIfInventory("Salute1", 1, "Salute")
 		CYBF I 0 A_JumpIfInventory("Salute2", 1, "Salute")
 		CYBF I 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		CYBF IJ 1 BRIGHT A_WeaponReadyDX(WRF_NOSWITCH)
+		CYBF IJ 1 BRIGHT A_WeaponReadyDX(WRF_NOSWITCH,TRUE,FALSE)
 		//CYBF I 0 A_checksprint
 		Loop
 		

@@ -18,9 +18,10 @@ ACTOR FlameCannon : BrutalWeapon
 	States
 	{
 	SprintOverlay:
-	FLMG BCDEF 1
-	WAIT
-	
+	FLMG BCDE 1
+	KeepSprinting:
+	FLMG F 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
+	TNT1 A 0 A_keepsprinting	
 	ReturnFromSprint:
 	FLMG EDCB 1
 	Goto ready

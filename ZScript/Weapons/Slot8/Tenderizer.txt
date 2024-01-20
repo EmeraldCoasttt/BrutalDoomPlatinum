@@ -269,7 +269,9 @@ CLASS Tenderizer : Brutalweapon
 
 		SprintOverlay:
 			HAMG ABCD 1;
-			Wait;
+			KeepSprinting:
+			HAMG D 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+			TNT1 A 0 A_keepsprinting();
 
 		ReturnfromSprint:
 			HAMG DCBA 1;
