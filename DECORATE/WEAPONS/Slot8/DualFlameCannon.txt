@@ -13,7 +13,7 @@ ACTOR DualFlameCannon : BrutalWeapon
 	+WEAPON.EXPLOSIVE
 	+WEAPON.NO_AUTO_SWITCH
 	+POWERED_UP
-	BrutalWeapon.weight 15
+	BrutalWeapon.weight 3
 	+INVENTORY.UNDROPPABLE
 	+Inventory.untossable
 	Inventory.PickupMessage "hi, i'm a message you're not supposed to see!"

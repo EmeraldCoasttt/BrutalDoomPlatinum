@@ -17,7 +17,7 @@ CLASS Tenderizer : Brutalweapon
 	brutalweapon.handedness 1;
 	Weapon.SelectionOrder 1550;
 	Inventory.AltHUDIcon "HAMPA0";
-	BrutalWeapon.weight 7;
+	BrutalWeapon.weight 1;
 	}
 	Bool previousgravity;
 	Bool previousmissile;

@@ -26,7 +26,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	Default
 	{
-	BrutalWeapon.Weight 5;
+	BrutalWeapon.Weight 1;
 	BrutalWeapon.Handedness 0;
 	Weapon.BobRangeX 0.4;
 	Weapon.BobRangeY 0.4;
@@ -587,10 +587,23 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
         CVar.GetCVar(cvartoset, Player).SetInt(valuetoset);
     }
 	
+	Bool A_CheckExhaustion()
+	{
+		If(owner.findinventory("StaminaExhaustion"))
+		{
+			owner.A_startSound("Tired", 21,CHANF_NOSTOP);
+			Return True;
+		}
+		Else
+		{
+			Return False;
+		}
+	}
+	
 	Bool A_checksprint()
 	{
 		let player = owner.player;
-		If(player.cmd.buttons & BT_SPEED && !(player.cmd.buttons & BT_ATTACK || player.cmd.buttons & BT_ALTATTACK))
+		If(player.cmd.buttons & BT_SPEED && !(player.cmd.buttons & BT_ATTACK || player.cmd.buttons & BT_ALTATTACK) && !A_CheckExhaustion())
 		{
 			Return True;
 		}
@@ -748,13 +761,27 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 				}
 			}
   
-  
-			If(sprinttimer > 0)
-			{
-				sprinttimer = sprinttimer - 1;
-			}
+			If(owner.countinv("usedstamina") >= 99)
+				{
+					owner.giveinventory("StaminaExhaustion",1);
+				}
+			
 			If(A_checksprint())
 			{
+				
+				If(owner.findinventory("istacticalclass"))
+				{
+					If(owner.findinventory("powerstrength"))
+					{
+						owner.A_GiveInventory("UsedStamina", weight * 0.3);
+					}
+					Else
+					{
+						owner.A_GiveInventory("UsedStamina", weight);
+					}
+					
+				}
+				
 				BobRangeX = 1.0;
 				BobRangeY = 1.0;
 				BobSpeed = 3.9;
@@ -770,6 +797,19 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 				BobSpeed = 2.9;
 				//owner.takeinventory("sprintbob",1);
 				owner.acs_namedexecute("slowplayer",0,0,0,0);
+				if (level.time % 2 == 0)
+				{
+					owner.takeinventory("usedstamina",1);
+	
+				}
+				If(owner.countinv("usedstamina") >= 60)
+				{
+					owner.giveinventory("StaminaExhaustion",1);
+				}
+				Else
+				{
+					Owner.takeinventory("staminaExhaustion",1);
+				}
 				//owner.speed = owner.default.speed;
 			}
   
@@ -910,7 +950,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			{
 			If(invoker.owner.findinventory("istacticalclass"))
 			{
-			invoker.owner.giveinventory("usedstamina",invoker.weight * 6);
+			invoker.owner.giveinventory("usedstamina",invoker.weight * 30);
 			}
 			A_StartSound("ledgeclimb",5);
 			}

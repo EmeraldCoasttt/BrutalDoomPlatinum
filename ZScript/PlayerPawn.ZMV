@@ -413,13 +413,17 @@ class Brutal_PlayerBase : PlayerPawn
 		
 		if(GetCvar("donotclimb") == 0) 
 		{
-			If(countinv("usedstamina") < 50)
+			If(LedgeCheck)
 			{
-				if(LedgeCheck)
+				if(countinv("usedstamina") < 60)
 				{	
 					LedgeReach();
 				
 				
+				}
+				Else
+				{
+					A_startSound("Tired", 21,CHANF_NOSTOP);
 				}
 			}
 			if(LedgeGrabbed)
@@ -516,10 +520,6 @@ class Brutal_PlayerBase : PlayerPawn
 		Else
 		{
 		bpickup = true;
-	if (level.time % 2 == 0)
-	{
-	takeinventory("usedstamina",1);
-	}
 		//if (GetCvar("bd_GenderFemale") == 1) {
 		//if (CountInv("GenderFemale") == 1) {
 		//	SoundClass = "fplayer";

@@ -21,7 +21,7 @@ CLASS SSG : BrutalWeapon
 		Height 24;
 		Tag "Super Shotgun";
 		Inventory.AltHUDIcon "SGN2A0";
-		BrutalWeapon.weight 6;
+		BrutalWeapon.weight 1;
 	}
 	Float theoverlayalpha; //Keeping track of fade-in
 	

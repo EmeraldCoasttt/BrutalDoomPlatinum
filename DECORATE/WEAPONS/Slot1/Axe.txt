@@ -18,8 +18,9 @@ ACTOR BrutalAxe : BrutalWeapon
 	Scale 0.9
 	Tag "Axe"
 	brutalweapon.handedness 2
+	BrutalWeapon.weight 1
 	Inventory.AltHUDIcon "AXE9A0"
-	BrutalWeapon.weight 0
+	
 	States
 	{
 	

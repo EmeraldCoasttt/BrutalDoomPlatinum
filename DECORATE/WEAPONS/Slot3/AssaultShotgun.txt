@@ -28,7 +28,7 @@ ACTOR AssaultShotgun : BrutalWeapon
     Scale 0.8
 	Radius 24
 	Height 24
-	BrutalWeapon.weight 8
+	BrutalWeapon.weight 2
 	Tag "Assault Shotgun"
 	Inventory.AltHUDIcon "A12PA0"
 	States

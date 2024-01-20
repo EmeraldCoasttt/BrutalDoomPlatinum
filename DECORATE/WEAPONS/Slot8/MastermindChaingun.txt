@@ -20,7 +20,7 @@ ACTOR MastermindChaingun : BrutalWeapon
 	Scale 1.1
 	Tag "Mastermind's Chaingun"
 	inventory.althudicon "RMNGT0"
-	BrutalWeapon.weight 15
+	BrutalWeapon.weight 3
 	States
 	{
 	

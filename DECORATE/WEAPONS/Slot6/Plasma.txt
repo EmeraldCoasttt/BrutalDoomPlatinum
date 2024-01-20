@@ -13,7 +13,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 	Tag "Plasma Rifle"
 	Inventory.PickupMessage "You got the Plasma Rifle! (Slot 6)"
 	inventory.althudicon "PLASA0"
-	BrutalWeapon.weight 7
+	BrutalWeapon.weight 1
 	States
 	{
 	

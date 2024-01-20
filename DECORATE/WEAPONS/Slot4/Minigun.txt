@@ -24,7 +24,7 @@ ACTOR MiniGun : BrutalWeapon
 	AttackSound "none"
 	Scale 0.9
 	Inventory.AltHUDIcon "MGUNA0"
-	BrutalWeapon.weight 9
+	BrutalWeapon.weight 2
 	States
 	{
 	

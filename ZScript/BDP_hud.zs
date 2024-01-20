@@ -568,7 +568,7 @@ class BDP_HUD : DoomStatusBar
 	}
 	
 	int stambarFadeTime; //modified in Tick()
-	const STAMFADEWAIT = 60;
+	const STAMFADEWAIT = 10;
 	const STAMFADEHALF = STAMFADEWAIT / 2;
 	
 	void DrawStaminaBar(vector2 pos, int flags = 0)

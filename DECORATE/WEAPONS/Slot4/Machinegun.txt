@@ -29,7 +29,7 @@ ACTOR Machinegun : BrutalWeapon
 	Height 24
 	Tag "MachineGun"
 	Inventory.AltHUDIcon "MGN1Z0"
-	BrutalWeapon.weight 7
+	BrutalWeapon.weight 2
 	States
 	{
 	

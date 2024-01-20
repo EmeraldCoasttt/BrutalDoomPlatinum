@@ -24,7 +24,7 @@ Actor BFG10k : BrutalWeapon
 	//+WEAPON.NO_AUTO_SWITCH
 	+FORCEXYBILLBOARD
 	Inventory.AltHUDIcon "BFG2A0"
-	BrutalWeapon.weight 13
+	BrutalWeapon.weight 3
   States
   {
   

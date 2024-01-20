@@ -23,7 +23,7 @@ CLASS Railgun : Brutalweapon
 	damagetype "Railgun";
 	Weapon.SelectionOrder 1550;
 	Inventory.AltHUDIcon "SRCGA0";
-	BrutalWeapon.weight 7;
+	BrutalWeapon.weight 2;
 
 
 	}

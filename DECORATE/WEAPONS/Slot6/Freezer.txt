@@ -23,7 +23,7 @@ ACTOR Freezer : BrutalWeapon
 	damagetype "Ice"
 	Weapon.SelectionOrder 1550
 	Inventory.AltHUDIcon "FRZRA0"
-	BrutalWeapon.weight 7
+	BrutalWeapon.weight 2
 	Tag "Freeze Thrower"
 	States
 	{

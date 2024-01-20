@@ -21,7 +21,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 	radius 24
 	height 24
 	Inventory.AltHUDIcon "GLAPA0"
-	BrutalWeapon.weight 8
+	BrutalWeapon.weight 2
 	States
 	{
 	

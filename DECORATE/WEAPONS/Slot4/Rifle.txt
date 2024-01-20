@@ -10,7 +10,7 @@ ACTOR Rifle : BrutalWeapon
 	//Weapon.SelectionOrder 2500
 	Weapon.AmmoType1 "Clip2"
 	Weapon.AmmoType2 "RifleAmmo"
-	BrutalWeapon.Weight 5
+	//BrutalWeapon.Weight 6
 	Obituary "%o was shot down by %k's assault rifle."
     AttackSound "None"
     Inventory.PickupSound "CLIPIN"

@@ -10,7 +10,7 @@ ACTOR FlameCannon : BrutalWeapon
     Inventory.PickupSound "FLMDRAW"
 	+WEAPON.NOAUTOAIM
 	+WEAPON.EXPLOSIVE
-	BrutalWeapon.weight 10
+	BrutalWeapon.weight 2
 	//+WEAPON.NO_AUTO_SWITCH
 	Inventory.PickupMessage "You got the Mancubus' FlameCannon! (Slot 8)"
 	Tag "Mancubus FlameCannon"

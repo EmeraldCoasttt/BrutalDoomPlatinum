@@ -21,7 +21,7 @@ ACTOR CyberdemonsMissileLauncher : BrutalWeapon
 	Scale 0.9
 	Tag "Cyberdemon's Missile Launcher"
 	inventory.althudicon "CYGGE0"
-	BrutalWeapon.weight 15
+	BrutalWeapon.weight 3
 	States
 	{
 	GrenadeThrowFlash:

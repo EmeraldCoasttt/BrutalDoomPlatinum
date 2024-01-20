@@ -28,6 +28,10 @@ Actor UnmakerUnmorph : Inventory
 {
 inventory.maxamount 1
 }
+Actor StaminaExhaustion : Inventory
+{
+inventory.maxamount 1
+}
 Actor ExtraLife : Inventory
 {
 inventory.maxamount 99
@@ -1696,7 +1700,7 @@ inventory.maxamount 1
 ACTOR USedStamina : ammo
 {
    Inventory.Amount 0
-   Inventory.MaxAmount 110
+   Inventory.MaxAmount 100
 }
 
 Actor dummystamina : Inventory

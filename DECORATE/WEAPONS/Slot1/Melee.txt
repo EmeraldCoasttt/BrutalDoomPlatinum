@@ -10,6 +10,7 @@ ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 	Game Doom
 	Weapon.SelectionOrder 4000
 	Weapon.Kickback 100
+	
 	Obituary "%o was Ripped and Teared by 	%k"
 	+WEAPON.MELEEWEAPON
     +WEAPON.NOALERT
@@ -18,8 +19,9 @@ ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 	+INVENTORY.UNDROPPABLE
 	+WEAPON.NOAUTOFIRE
 	Tag "Fists"
+	
 	Inventory.AltHUDIcon "PRNSF0"
-	BrutalWeapon.weight 0
+	
 	States
 	{
 	

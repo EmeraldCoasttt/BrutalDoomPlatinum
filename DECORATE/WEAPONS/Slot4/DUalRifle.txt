@@ -28,6 +28,7 @@ ACTOR DualRifles : BrutalWeapon
     Scale 0.8
 	Inventory.AltHUDIcon "RIFLB0"
 	brutalweapon.handedness 2
+	brutalweapon.weight 2
 	States
 	{
 	SprintOverlay:
