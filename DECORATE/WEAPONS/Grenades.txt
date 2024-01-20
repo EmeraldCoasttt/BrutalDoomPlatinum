@@ -200,23 +200,23 @@ ACTOR HandGrenades : BrutalWeapon
 		DKPB A 0 A_JumpIf(CountInv("NadeType")==2,"ReadyPipe")
 		GNAD E 0 A_JumpIf(CountInv("NadeType")==1,"ReadyIce")
 		TNT1 A 0 A_jumpif(countinv("AmmoFragGrenade") == 0, "NoGrenades")
-		GNAD A 1 A_WeaponReadyDX(0,FALSE)
+		GNAD A 1 A_WeaponReadyDX(0,FALSE,FALSE)
 		Loop
 	ReadyVoid:
 		TNT1 A 0 A_jumpif(countinv("AmmoVoidGrenade") == 0, "NoGrenades")
-		4RTH D 1 A_WeaponReadyDX(0,FALSE)
+		4RTH D 1 A_WeaponReadyDX(0,FALSE,FALSE)
 		Goto Ready
 	ReadyPipe:
 		TNT1 A 0 A_jumpif(countinv("AmmoPipeBomb") == 0, "NoGrenades")
-		DKPB A 1 A_WeaponReadyDX(0,FALSE)
+		DKPB A 1 A_WeaponReadyDX(0,FALSE,FALSE)
 		Goto Ready
 	ReadyIce:
 		TNT1 A 0 A_jumpif(countinv("AmmoIceGrenade") == 0, "NoGrenades")
-		GNAD E 1 A_WeaponReadyDX(0,FALSE)
+		GNAD E 1 A_WeaponReadyDX(0,FALSE,FALSE)
 		Goto Ready
 	
 	NoGrenades:
-		TNT1 A 1 A_WeaponReadyDX(0,FALSE)
+		TNT1 A 1 A_WeaponReadyDX(0,FALSE,FALSE)
 		Goto Ready
 	
 	DropGrenade:
