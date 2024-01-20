@@ -87,7 +87,7 @@ Actor BFG10k : BrutalWeapon
 	BG2G A 0 A_JumpIf( (CountInv("AmmoCell")==0), "ReadyNoAmmo")
 	BG2G A 0 A_startSound ("10KIDLE",12)
     BG2G ABCD 3 BRIGHT {
-		A_WeaponReadyDX;
+		A_WeaponReadyDX(0,TRUE,FALSE);
 								
 			if (CountInv("Kicking") == 1) {
 				if (CountInv("IsCrouching") == 1) {
@@ -111,7 +111,7 @@ Actor BFG10k : BrutalWeapon
 	
 	ReadyNoAmmo:
 	bg2g S 1 {
-		A_WeaponReadyDX;
+		A_WeaponReadyDX(0,TRUE,FALSE);
         if (CountInv("Taunting") == 1) { return state("Taunt"); }
 		if (CountInv("Salute1")==1 || CountInv("Salute2")==1) { return state("Salute"); }
 		if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }

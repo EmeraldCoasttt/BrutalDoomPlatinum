@@ -74,12 +74,12 @@ CLASS Unmaker : BrutalWeapon
 	Ready3:
 		UNHG AABBCCDDDD 1 {
 			return a_jumpifinventory("unmakerunmorph",1,"unmakerunmorph");
-			A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			A_WeaponReadyDX(0,TRUE,FALSE);
 			return resolvestate(null);
 		}
 		UNHG A 0 A_startSound("UNMIDLE", 2);
 		UNHG DDCCBBAAAAAAAAAA 1 {	//DDCB AAAAA
-			A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			A_WeaponReadyDX(0,TRUE,FALSE);
 			if (CountInv("GoFatality") == 1) { return resolvestate("Steady"); }
 									
 			if (CountInv("Kicking") == 1) {
