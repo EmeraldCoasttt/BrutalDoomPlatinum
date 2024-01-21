@@ -194,7 +194,7 @@ ACTOR CryoTracer : FastProjectile
 	DeathSound "weapons/cryobowhit"
 	MissileType "CryoTrail"
 	MissileHeight 8
-	Decal "IceScorch"
+	//Decal "IceScorch"
 	+FORCEXYBILLBOARD
 	Species "Marines"
 	+THRUSPECIES
@@ -229,7 +229,7 @@ ACTOR CryoShot : FastProjectile
 	DeathSound "weapons/cryobowhit"
 	MissileType "CryoTrail"
 	MissileHeight 8
-	Decal "IceScorch"
+	Decal "IceScorchSmall"
 	+FORCEXYBILLBOARD
 	Species "Marines"
 	+THRUSPECIES
@@ -263,7 +263,7 @@ Actor CryoPuff : HitPuff
 	Damagetype "Ice"
 	RenderStyle Add
 	Alpha 0.9
-	Decal "IceScorch"
+	Decal "IceScorchSmall"
 	+PUFFONACTORS
 	States
 	{

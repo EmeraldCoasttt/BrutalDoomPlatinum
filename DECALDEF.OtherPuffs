@@ -31,6 +31,17 @@ decal IceScorchSmaller
 	fullbright
 }
 
+decal IceScorchSmall
+{
+	pic SCORCH1
+	shade "white"
+	x-scale 0.6
+	y-scale 0.6
+	randomflipx
+	randomflipy
+	fullbright
+}
+
 decal BFGAlphaScorch
 {
 	pic SCORCH1
