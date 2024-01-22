@@ -92,15 +92,9 @@ CLASS MeleeAttack : Actor
 					If(victim && uppercut && !victim.bspawnceiling && victim.bismonster)
 						{
 							A_startsound("bonecrack",27);
-							//A_startsound("uppercut",28);
-							Radius_Quake (12, 24, 0, 60, 0);//(intensity, duration, damrad, tremrad, tid)
-							int savedangle = victim.angle;
-							victim.angle = angle;
-							//victim.applykickback(self,target,200,0,"melee",0);
-							//victim.A_recoil(20);
-							//victim.vel.z = 20;
-							victim.a_changevelocity(20,0,20,CVF_RELATIVE);
-							victim.angle = savedangle;
+							Radius_Quake (10, 16, 0, 60, 0);//(intensity, duration, damrad, tremrad, tid)
+							victim.vel3dfromangle(20,target.angle,target.pitch - 25);
+
 						}
 				}
 				Else{
@@ -110,13 +104,7 @@ CLASS MeleeAttack : Actor
 							A_startsound("bonecrack",27);
 							//A_startsound("uppercut",28);
 							Radius_Quake (6, 12, 0, 60, 0);//(intensity, duration, damrad, tremrad, tid)
-							int savedangle = victim.angle;
-							victim.angle = angle;
-							//victim.applykickback(self,target,200,0,"melee",0);
-							//victim.A_recoil(10);
-							//victim.vel.z = 10;
-							victim.a_changevelocity(10,0,10,CVF_RELATIVE);
-							victim.angle = savedangle;
+							victim.vel3dfromangle(10,target.angle,target.pitch - 25);
 						}
 				}
 			If(target && victim)
