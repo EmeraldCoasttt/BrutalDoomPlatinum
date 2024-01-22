@@ -646,7 +646,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			{
 				If(owner.findinventory("istacticalclass"))
 				{
-					owner.A_GiveInventory("UsedStamina", weight * 9);
+					owner.A_GiveInventory("UsedStamina", weight * 30);
 				}
 				owner.takeinventory("rollingstamina",1);
 	
@@ -773,7 +773,10 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 				{
 					If(owner.findinventory("powerstrength"))
 					{
-						owner.A_GiveInventory("UsedStamina", weight * 0.3);
+						if (level.time % 3 == 0)
+						{
+							owner.A_GiveInventory("UsedStamina", weight);
+						}
 					}
 					Else
 					{
