@@ -227,7 +227,8 @@ ACTOR DoxsRevolver : BrutalWeapon
 		REVO A 0 A_CHeckIfAmmo("BDRevolverAmmo",1)
         TNT1 AAAA 0
 	    REVO A 0 A_PlaySound("REVFIRE1")
-	    REVO KLL 1
+		
+	    //REVO KLL 1
 		REVO A 0 A_AlertMonstersDX
 		
 		//RIFF A 0 A_FireCustomMissile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1))
@@ -248,7 +249,7 @@ ACTOR DoxsRevolver : BrutalWeapon
 		REVO DC 1 A_SetPitch(Pitch+0.5, SPF_INTERPOLATE)
 		REVO FGHIJ 1 A_SetPitch(Pitch+0.6, SPF_INTERPOLATE)
 		REVO A 0 A_JumpIfInventory("Reloading",1,"Reload")
-		REVO A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+		REVO A 3
 		//REVO A 1 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
 		Goto Ready
 		
