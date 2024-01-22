@@ -198,6 +198,10 @@ class Brutal_PlayerBase : PlayerPawn
 					SetStateLabel("pain.bikelaunch");
 					
 				}
+			If(grappled)
+				{
+					Damage = (damage * 0.25);
+				}
 				
 			return super.TakeSpecialDamage(inflictor, source, damage, damagetype);
 				
@@ -444,6 +448,7 @@ class Brutal_PlayerBase : PlayerPawn
 		Else
 			{
 				giveinventory("meathook",1);
+				Grappled = False; 
 			}
 			
 		super.HandleMovement();
@@ -500,6 +505,7 @@ class Brutal_PlayerBase : PlayerPawn
 		Rope = GrappleVel = (0, 0, 0);
 		PendulumLength = 0;
 		GrappledMonster = Null;
+		
 	}
 		
 		//QuakeHandleMove();
