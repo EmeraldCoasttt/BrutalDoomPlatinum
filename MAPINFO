@@ -357,7 +357,7 @@ skill HyperRealism
    ReplaceActor = "AttackHelicopter", "AttackHelicopterRealism"
    ReplaceActor = "Mech", "MechRealism"
  //  TextColor = "Gray"
-   mustconfirm = "Less ammo, 700% more damage, full enemy health, multiplayer enemy count. You're Doomed."
+   mustconfirm = "Less ammo, 700% more damage, full enemy health, multiplayer enemy count. It's like playing Mighty Doom without paying any money. You're Doomed."
 }
 
 
