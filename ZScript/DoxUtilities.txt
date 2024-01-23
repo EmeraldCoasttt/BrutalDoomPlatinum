@@ -1,17 +1,210 @@
 	
-	
-	
-	
 	class BDPNotMonster : Actor
 	{
 	
 	}
 	
+	Class BDPSecret : Actor
+	{
+		States
+		{
+			Spawn:
+			CACO A -1;
+			Wait;
+		}
+	}
 	
+	class BDPSecretSpawner : Actor
+	{
+		bool dud;
+		bool chanceinit;
+		
+
+
+		static void SpawnSecrets()
+		{
+			// find all secret sectors, find potential spawn spots within them
+		// after that, spawn up to 3 boxes total within them
+		int tboxes = 0;
+		for ( int i=0; i<level.Sectors.Size(); i++ )
+		{
+			if ( !(level.Sectors[i].flags&Sector.SECF_SECRET) ) continue;
+			Sector s = level.Sectors[i];
+			// find any spots in the sector that are within it and have no linedefs or blocking actors within a 32 unit box
+			// start from the center, expand in rings
+			Vector2 origin = s.centerspot;
+			double maxradius = 0;
+			for ( int j=0; j<s.lines.Size(); j++ )
+			{
+				Line l = s.lines[j];
+				double v1len = (l.v1.p-origin).length(),
+					v2len = (l.v2.p-origin).length();
+				if ( v1len > maxradius ) maxradius = v1len;
+				if ( v2len > maxradius ) maxradius = v2len;
+			}
+			int rings = 1;
+			bool spawned = false;
+			Array<bdpspawnspot> spots;
+			spots.Clear();
+			for ( double j=0.; j<maxradius; j+=16. )
+			{
+				for ( double k=0.; k<360.; k+=(360./rings) )
+				{
+					// check spot
+					Vector3 testpos = (origin.x+j*cos(k),origin.y+j*sin(k),0);
+					testpos.z = s.floorplane.ZAtPoint(testpos.xy);
+					if ( (level.PointInSector(testpos.xy) != s) || !level.IsPointInLevel(testpos) ) continue;
+					double ceil = s.ceilingplane.ZAtPoint(testpos.xy);
+					bool blocked = false;
+					BlockLinesIterator bl = BlockLinesIterator.CreateFromPos(testpos,15,15,s);
+					double tbox[4];
+					// top, bottom, left, right
+					tbox[0] = testpos.y+15;
+					tbox[1] = testpos.y-15;
+					tbox[2] = testpos.x-15;
+					tbox[3] = testpos.x+15;
+					while ( bl.Next() )
+					{
+						Line l = bl.CurLine;
+						if ( !l ) continue;
+						if ( tbox[2] > l.bbox[3] ) continue;
+						if ( tbox[3] < l.bbox[2] ) continue;
+						if ( tbox[0] < l.bbox[1] ) continue;
+						if ( tbox[1] > l.bbox[0] ) continue;
+						if ( DoxBDHandler.BoxOnLineSide(tbox[0],tbox[1],tbox[2],tbox[3],l) != -1 ) continue;
+						blocked = true;
+						break;
+					}
+					if ( blocked ) continue;
+					// check for 3D floors first
+					int nffloor = s.Get3DFloorCount();
+					double bceil = ceil;
+					for ( int l=0; l<nffloor; l++ )
+					{
+						if ( !(s.Get3DFloor(l).flags&F3DFloor.FF_SOLID) ) continue;
+						double fz = s.Get3DFloor(l).top.ZAtPoint(testpos.xy);
+						if ( fz < testpos.z ) continue;
+						double cz = ceil;
+						for ( int l2=0; l2<nffloor; l2++ )
+						{
+							if ( !(s.Get3DFloor(l2).flags&F3DFloor.FF_SOLID) ) continue;
+							if ( (s.Get3DFloor(l2).top.ZAtPoint(testpos.xy) < fz) ) continue;
+							cz = s.Get3DFloor(l2).bottom.ZAtPoint(testpos.xy);
+							break;
+						}
+						if ( cz < bceil ) bceil = cz;
+						if ( cz-fz < 60 ) continue;	// too short
+						bool blockedff = false;
+						BlockThingsIterator bt = BlockThingsIterator.CreateFromPos(testpos.x,testpos.y,fz,60,256,false);
+						while ( bt.Next() )
+						{
+							if ( !bt.Thing ) continue;
+							if ( abs(bt.Thing.pos.x-testpos.x) > 15+bt.Thing.Radius ) continue;
+							if ( abs(bt.Thing.pos.y-testpos.y) > 15+bt.Thing.Radius ) continue;
+							blockedff = true;
+							break;
+						}
+						if ( blockedff ) continue;
+						let sp = new("bdpspawnspot");
+						sp.pos = (testpos.x,testpos.y,fz);
+						sp.angle = k+180;
+						spots.Push(sp);
+					}
+					// spawn at the real floor
+					if ( bceil-testpos.z < 60 ) continue;	// too short
+					// don't spawn on sky or hurtfloors if there are 3D floors
+					if ( (nffloor > 0) && ((s.GetTexture(0) == skyflatnum) || (s.damageamount > 0)) ) continue;
+					BlockThingsIterator bt = BlockThingsIterator.CreateFromPos(testpos.x,testpos.y,testpos.z,60,256,false);
+					while ( bt.Next() )
+					{
+						if ( !bt.Thing ) continue;
+						if ( abs(bt.Thing.pos.x-testpos.x) > 32+bt.Thing.Radius ) continue;
+						if ( abs(bt.Thing.pos.y-testpos.y) > 32+bt.Thing.Radius ) continue;
+						blocked = true;
+						break;
+					}
+					if ( blocked ) continue;
+					let sp = new("bdpspawnspot");
+					sp.pos = testpos;
+					sp.angle = k+180;
+					spots.Push(sp);
+				}
+				rings += 3;
+			}
+			if ( spots.Size() < 10 ) continue;
+			int ws = Random[bdpspawnspot](0,spots.Size()-1);
+			let handler = WeaponSpawnHandler(StaticEventHandler.Find('WeaponSpawnHandler'));
+
+			Handler.SpawnSecret(spots[ws].pos);
+			console.printf("buttsex");
+			//c.angle = spots[ws].angle;
+			tboxes++;
+			if ( tboxes >= 3 ) break;	// already spawned 3 boxes in one map (which is a lot)
+		}
+		}
+	}
+	
+	Class bdpspawnspot
+	{
+		Vector3 pos;
+		double angle;
+	}
 	
 	class DoxBDHandler : EventHandler
 	{
 	
+	static clearscope int PointOnLineSide( Vector2 p, Line l )
+	{
+		if ( !l ) return 0;
+		return (((p.y-l.v1.p.y)*l.delta.x+(l.v1.p.x-p.x)*l.delta.y) > double.epsilon);
+	}
+	
+	static clearscope int BoxOnLineSide( double top, double bottom, double left, double right, Line l )
+	{
+		if ( !l ) return 0;
+		int p1, p2;
+		if ( l.delta.x == 0 )
+		{
+			// ST_VERTICAL:
+			p1 = (right < l.v1.p.x);
+			p2 = (left < l.v1.p.x);
+			if ( l.delta.y < 0 )
+			{
+				p1 ^= 1;
+				p2 ^= 1;
+			}
+		}
+		else if ( l.delta.y == 0 )
+		{
+			// ST_HORIZONTAL:
+			p1 = (top > l.v1.p.y);
+			p2 = (bottom > l.v1.p.y);
+			if ( l.delta.x < 0 )
+			{
+				p1 ^= 1;
+				p2 ^= 1;
+			}
+		}
+		else if ( (l.delta.x*l.delta.y) >= 0 )
+		{
+			// ST_POSITIVE:
+			p1 = PointOnLineSide((left,top),l);
+			p2 = PointOnLineSide((right,bottom),l);
+		}
+		else
+		{
+			// ST_NEGATIVE:
+			p1 = PointOnLineSide((right,top),l);
+			p2 = PointOnLineSide((left,bottom),l);
+		}
+		return (p1==p2)?p1:-1;
+	}
+	override void WorldLoaded( WorldEvent e )
+	{
+		BDPSecretSpawner.SpawnSecrets();
+	
+	
+	}
 	
 	
 	override void CheckReplacement(ReplaceEvent e)

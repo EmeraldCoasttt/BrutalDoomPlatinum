@@ -1,9 +1,10 @@
 Gameinfo
 {
 	StatusBarClass = "BDP_HUD"
+	AddEventHandlers = "WeaponSpawnHandler"
 	AddEventHandlers = "DoxBDHandler"
 	AddEventHandlers = "SalInvisHandler"
-	AddEventHandlers = "WeaponSpawnHandler"
+	
 	AddEventHandlers = "RollHandler"
 	AddEventHandlers = "TiltPlusPlusHandler"
 	AddEventHandlers = "BDPModifier_Events", "BDPMenuSwitcher"

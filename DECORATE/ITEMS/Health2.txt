@@ -148,7 +148,7 @@ Actor LightArmor : BasicArmorPickup Replaces GreenArmor
 ACTOR HeavyArmorSpawner: RandomSpawner Replaces BlueArmor
 {
 DropItem "HeavyArmor", 255, 9
-DropItem "EnergyArmor", 255, 4
+//DropItem "EnergyArmor", 255, 4
 DropItem "SkulltagArmor", 255, 2
 }
 

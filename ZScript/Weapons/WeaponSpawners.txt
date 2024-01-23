@@ -3,7 +3,7 @@
 	
 	class WeaponSpawnHandler : Staticeventhandler
 	{
-	
+	 
 	Array<string >ShotGunCommon;
 	Array<string >ShotGunUnCommon;
 	Array<string >ShotGunRare;
@@ -37,6 +37,10 @@
 	Array<string >BFGCommon;
 	Array<string >BFGUnCommon;
 	Array<string >BFGRare;
+	
+	Array<string >SecretCommon;
+	Array<string >SecretUnCommon;
+	Array<string >SecretRare;
 	
 
 
@@ -260,6 +264,28 @@
 						BFGrare.push(weaponstr[i]);
 					}
 				}
+				
+				
+				If(replacestr[i] == "secret")
+				{
+				
+				
+					If(raritystr[i] == "1")
+					{
+						
+						Secretcommon.push(weaponstr[i]);
+					}
+					Else if(raritystr[i] == "2")
+					{
+						
+						Secretuncommon.push(weaponstr[i]);
+					}
+					Else if(raritystr[i] == "3")
+					{
+						
+						Secretrare.push(weaponstr[i]);
+					}
+				}
 			}
 		}
 		
@@ -271,17 +297,6 @@
 	override void CheckReplacement(ReplaceEvent e)
 	{
 	int rarity;
-	//int raritygenerator = random(1,100);
-	//if (raritygenerator > 65)
-	//{
-	//console.printf("fuck");
-	//rarity = 1;
-	//}
-	//If (raritygenerator > 83)
-	//{
-	//console.printf("shit");
-	//rarity = 2;
-	//}
 
 	rarity = randompick(0, 0, 0, 0, 0, 0, 1, 1, 1, 2);
 	
@@ -446,10 +461,33 @@
 				e.Replacement = (BFGCommon[random(0, BFGCommon.Size()-1)]);
 			}
 		}
-	
 	}
 	
-	
+		void SpawnSecret(vector3 secretpos)
+		{
+			int rarity = randompick(0, 0, 0, 0, 0, 0, 1, 1, 1, 2);
+			String SpawnActor;
+			If(!rarity)
+			{
+				Spawnactor = (SecretCommon[random(0, SecretCommon.Size()-1)]);
+			}
+			 
+			else If(rarity == 1 && SecretUnCommon.size() > 0)
+			{
+				Spawnactor = (SecretUnCommon[random(0, SecretCommon.Size()-1)]);
+			}
+			
+			else If(rarity == 2 && Secretrare.size() > 0)
+			{
+				Spawnactor = (SecretRare[random(0, SecretCommon.Size()-1)]);
+			}
+			Else
+			{
+				Spawnactor = (SecretCommon[random(0, SecretCommon.Size()-1)]);
+			}
+			Actor.spawn(spawnactor,secretpos);
+			
+		}
 	
 	
 	}

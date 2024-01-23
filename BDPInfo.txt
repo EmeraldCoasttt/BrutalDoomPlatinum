@@ -9,9 +9,12 @@ shotgunspawner,shotgun,1
 ssgspawnerreplacer,supershotgun,1
 chaingunspawnerreplacer,chaingun,1
 RLSPAWNERREPLACER,rocketlauncher,1
-Tenderizer,rocketlauncher,3
 chainsawspawner,chainsaw,1
 plasmagunreplacer,plasmarifle,1
 bfgreplacer,bfg,1
+revolverspawner,secret,1
+Tenderizer,secret,3
+EnergyArmor,secret,2
+mg42,secret,3
 
 
