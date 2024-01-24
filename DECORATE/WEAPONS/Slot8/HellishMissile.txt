@@ -1,6 +1,6 @@
 //Changes made:
 //select, deselect, added recoil to firing
-ACTOR HellishMissileLauncher : BrutalWeapon
+ACTOR HellishMissileLauncher : BrutalWeapon 
 {
 	Height 20
 	Weapon.SelectionOrder 2600
