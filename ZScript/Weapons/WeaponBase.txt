@@ -3119,7 +3119,7 @@ CLASS TemporaryWeapon : BrutalWeapon
 	bool hasexploded;
 	Override void doeffect()
 	{
-		if (level.time % 35 == 0) {
+		if (level.time % 35 == 0 && owner.player.readyweapon is self.getclass()) {
 			if (owner.countinv(ammotype1) > 0)
 			{
 				

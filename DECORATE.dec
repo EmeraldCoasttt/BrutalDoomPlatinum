@@ -108,9 +108,10 @@ damage 0
 #Include DECORATE/WEAPONS/Slot8/DualFlameCannon.txt
 
 #include DECORATE/WEAPONS/Slot8/HellishMissile.txt
-
-#include DECORATE/WEAPONS/Slot8/CyberdemonsMissileLauncher.txt
-#include DECORATE/WEAPONS/Slot8/MastermindChaingun.txt
+//TEMPORARY
+#include DECORATE/WEAPONS/Temporary/CyberdemonsMissileLauncher.txt
+#include DECORATE/WEAPONS/Temporary/MastermindChaingun.txt
+#include DECORATE/WEAPONS/Temporary/MG42.txt
 //Unused
 #include DECORATE/WEAPONS/Unused/DRAGONSLAYER.txt
 #include DECORATE/WEAPONS/Unused/REVOLVER.txt
