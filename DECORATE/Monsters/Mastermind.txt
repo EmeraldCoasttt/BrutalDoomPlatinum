@@ -43,7 +43,7 @@ ACTOR TheSpiderMastermind Replaces SpiderMastermind
 	+MISSILEEVENMORE
 	+SHOOTABLE
 	Bloodtype "MastermindBlood"
-	DropItem "DemonRunespawner", 25
+	//DropItem "DemonRunespawner", 25
 DropItem "Demonstrengthrune", 25
 	SeeSound "spider/sight"
 	AttackSound "spider/attack"

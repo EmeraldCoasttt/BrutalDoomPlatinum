@@ -35,7 +35,7 @@ ACTOR TheCyberdemon: BDPCyberdemon Replaces Cyberdemon
 	PainChance "KillMe", 64
 	PainChance "Taunt", 255
 	PainChance "Cut", 5
-	DropItem "DemonRunespawner", 25
+//	DropItem "DemonRunespawner", 25
 DropItem "Demonstrengthrune", 25
 	Painchance "Fatality", 90
     BloodType "CyberDemon_Blood", "CyberDemon_SawBlood", "CyberDemon_Blood"

@@ -27,7 +27,7 @@ ACTOR Revenant1: Revenant Replaces Revenant
 	PainChance "HelperMarineFatality", 255
 	Obituary "$OB_UNDEAD"
 	
-	DropItem "DemonRunespawner", 3
+	//DropItem "DemonRunespawner", 3
 DropItem "Demonstrengthrune", 5
 	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
 	MaxStepHeight 24

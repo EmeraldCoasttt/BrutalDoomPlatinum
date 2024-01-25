@@ -14,7 +14,9 @@ plasmagunreplacer,plasmarifle,1
 bfgreplacer,bfg,1
 revolverspawner,secret,1
 Tenderizer,secret,3
-EnergyArmor,secret,2
+EnergyArmor,secret,1
+demonrunespawner,secret,2
+blursphere,secret,2
 mg42,secret,3
 
 

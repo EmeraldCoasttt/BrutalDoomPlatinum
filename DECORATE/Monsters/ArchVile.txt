@@ -22,8 +22,8 @@ ACTOR TehArchvile: baseArchvile Replaces Archvile
 	+FLOORCLIP 
 	+NOTARGET
     DamageType Burn
-	DropItem "DemonRunespawner", 4
-DropItem "Demonstrengthrune", 8
+	//DropItem "DemonRunespawner", 4
+	DropItem "Demonstrengthrune", 8
 	SeeSound "vile/sight"
 	PainSound "vile/pain"
 	DeathSound "vile/death"
