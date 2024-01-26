@@ -4,7 +4,7 @@ ACTOR DamageMultiplier: Inventory { Inventory.MaxAmount 30 }
 ACTOR AxeCounter: Inventory {Inventory.MaxAmount 2}
 ACTOR BrutalAxe : BrutalWeapon
 {
-	Obituary "%o was choped down by %k's axe."
+	Obituary "%o was chopped down by %k's axe."
     AttackSound "None"
     Inventory.PickupSound "AXEDRAW"
 	Inventory.Pickupmessage "You got your Axe back! (Slot 1)"
