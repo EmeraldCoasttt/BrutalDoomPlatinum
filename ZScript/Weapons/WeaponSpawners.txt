@@ -466,20 +466,17 @@
 		void SpawnSecret(vector3 secretpos)
 		{
 			int rarity = randompick(0, 0, 0, 0, 0, 0, 1, 1, 1, 2);
+			//console.printf("%d", rarity);
 			String SpawnActor;
-			If(!rarity)
-			{
-				Spawnactor = (SecretCommon[random(0, SecretCommon.Size()-1)]);
-			}
 			 
-			else If(rarity == 1 && SecretUnCommon.size() > 0)
+			If(rarity == 1 && SecretUnCommon.size() > 0)
 			{
-				Spawnactor = (SecretUnCommon[random(0, SecretCommon.Size()-1)]);
+				Spawnactor = (SecretUnCommon[random(0, SecretUnCommon.Size()-1)]);
 			}
 			
 			else If(rarity == 2 && Secretrare.size() > 0)
 			{
-				Spawnactor = (SecretRare[random(0, SecretCommon.Size()-1)]);
+				Spawnactor = (SecretRare[random(0, SecretRare.Size()-1)]);
 			}
 			Else
 			{

@@ -171,7 +171,7 @@ actor ChaingunSpawnerReplacer : BasicWeaponPickup// Replaces Chaingun
 	Spawn:
 		TNT1 A 0 NoDelay A_JumpIf(GetCvar("bd_SpawnSMG")==0&&GetCvar("bd_SpawnMachinegun")==0&&GetCvar("bd_SpawnMinigun")==0, "SpawnAmmo")
 		MARN A 0 A_JumpIf(GetCvar("bd_disablenewguns")==1, "Vanilla")//Check if advanced decorations are disabled.
-		TNT1 A 0 A_Jump(94, "Spawn2", "Spawn3")
+		TNT1 A 0 A_Jump(94, "Spawn2")
 	Vanilla:
 	Spawn1:
 		TNT1 A 0 A_JumpIf(GetCvar("bd_SpawnMinigun")==0, "Spawn")//Check if that weapon is disabled.

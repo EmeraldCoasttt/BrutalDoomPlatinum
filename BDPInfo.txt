@@ -18,5 +18,4 @@ EnergyArmor,secret,1
 demonrunespawner,secret,2
 blursphere,secret,2
 mg42,secret,3
-
-
+smgspawner,secret,1
