@@ -56,13 +56,13 @@
 					if ( (level.PointInSector(testpos.xy) != s) || !level.IsPointInLevel(testpos) ) continue;
 					double ceil = s.ceilingplane.ZAtPoint(testpos.xy);
 					bool blocked = false;
-					BlockLinesIterator bl = BlockLinesIterator.CreateFromPos(testpos,15,15,s);
+					BlockLinesIterator bl = BlockLinesIterator.CreateFromPos(testpos,16,16,s);
 					double tbox[4];
 					// top, bottom, left, right
-					tbox[0] = testpos.y+15;
-					tbox[1] = testpos.y-15;
-					tbox[2] = testpos.x-15;
-					tbox[3] = testpos.x+15;
+					tbox[0] = testpos.y+16;
+					tbox[1] = testpos.y-16;
+					tbox[2] = testpos.x-16;
+					tbox[3] = testpos.x+16;
 					while ( bl.Next() )
 					{
 						Line l = bl.CurLine;
@@ -94,26 +94,30 @@
 						}
 						if ( cz < bceil ) bceil = cz;
 						if ( cz-fz < 60 ) continue;	// too short
+						//check for actors
+						/*
 						bool blockedff = false;
 						BlockThingsIterator bt = BlockThingsIterator.CreateFromPos(testpos.x,testpos.y,fz,60,256,false);
 						while ( bt.Next() )
 						{
 							if ( !bt.Thing ) continue;
-							if ( abs(bt.Thing.pos.x-testpos.x) > 15+bt.Thing.Radius ) continue;
-							if ( abs(bt.Thing.pos.y-testpos.y) > 15+bt.Thing.Radius ) continue;
+							if ( abs(bt.Thing.pos.x-testpos.x) > 4+bt.Thing.Radius ) continue;
+							if ( abs(bt.Thing.pos.y-testpos.y) > 4+bt.Thing.Radius ) continue;
 							blockedff = true;
 							break;
 						}
 						if ( blockedff ) continue;
+						*/
 						let sp = new("bdpspawnspot");
 						sp.pos = (testpos.x,testpos.y,fz);
 						sp.angle = k+180;
 						spots.Push(sp);
 					}
 					// spawn at the real floor
-					if ( bceil-testpos.z < 60 ) continue;	// too short
+					if ( bceil-testpos.z < 8 ) continue;	// too short
 					// don't spawn on sky or hurtfloors if there are 3D floors
 					if ( (nffloor > 0) && ((s.GetTexture(0) == skyflatnum) || (s.damageamount > 0)) ) continue;
+					/*
 					BlockThingsIterator bt = BlockThingsIterator.CreateFromPos(testpos.x,testpos.y,testpos.z,60,256,false);
 					while ( bt.Next() )
 					{
@@ -123,7 +127,8 @@
 						blocked = true;
 						break;
 					}
-					if ( blocked ) continue;
+					*/
+					//if ( blocked ) continue;
 					let sp = new("bdpspawnspot");
 					sp.pos = testpos;
 					sp.angle = k+180;
