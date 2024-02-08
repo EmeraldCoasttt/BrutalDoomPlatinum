@@ -30,6 +30,7 @@ version "4.10.0"
 //Slot 5
 #include "Zscript/Weapons/Slot5/StickyGrenade.txt"
 #include "Zscript/Weapons/Slot5/TripMine.txt"
+#include "Zscript/Weapons/Slot5/RocketLauncher.txt"
 //Slot 6
 #include "Zscript/Weapons/Slot6/Freezer.txt"
 #include "Zscript/Weapons/Slot6/Needler.txt"
