@@ -28,6 +28,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 	}
 	
 	bool lastticklaser;
+	bool lasttickdetonate;
 	
 	override void DoEffect() 
 	{
@@ -45,6 +46,29 @@ CLASS Rocket_Launcher : BrutalWeapon
 		{
 			lastticklaser = false;
 			owner.A_startsound("LAZOFF",2);
+		}
+		If(owner.player.readyweapon is "Rocket_Launcher" && owner.player.cmd.buttons & BT_USER3)
+		{
+			If(!lasttickdetonate)
+			{
+				owner.A_startsound("DETROCK",2);
+				let it = ThinkerIterator.Create("Actor", STAT_DEFAULT);
+				Actor mo;
+				while (mo = Actor(it.Next()))
+				{
+					If(mo is "rocketcandetonate")
+					{
+						mo.giveinventory("rocketdetonate",1);
+						//console.printf("Gottem");
+						//Break;
+					}
+				}
+			}
+			lasttickdetonate = true;
+		}
+		Else if (lasttickdetonate)
+		{
+			lasttickdetonate = false;
 		}
 	}
 	States
