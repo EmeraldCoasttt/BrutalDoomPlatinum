@@ -51,7 +51,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 		{
 			If(!lasttickdetonate)
 			{
-				owner.A_startsound("DETROCK",2);
+				bool foundmo;
 				let it = ThinkerIterator.Create("Actor", STAT_DEFAULT);
 				Actor mo;
 				while (mo = Actor(it.Next()))
@@ -59,9 +59,18 @@ CLASS Rocket_Launcher : BrutalWeapon
 					If(mo is "rocketcandetonate")
 					{
 						mo.giveinventory("rocketdetonate",1);
+						foundmo = true;
 						//console.printf("Gottem");
 						//Break;
 					}
+				}
+				If(foundmo)
+				{
+					owner.A_startsound("DETROCK2",2);
+				}
+				Else
+				{
+					owner.A_startsound("DETROCK",2);
 				}
 			}
 			lasttickdetonate = true;
