@@ -148,13 +148,14 @@ class BDP_HUD : DoomStatusBar
 		If(ArrowTimer <= 66)
 		ArrowTimer++;
 	
-		let gammo = CPlayer.mo.FindInventory("GrenadeAmmo");
-		if (gammo)
-		{
+		//let gammo = CPlayer.mo.FindInventory("GrenadeAmmo");
+		//if (gammo)
+		//{
 			string nade = "";
 			string nade2 = "";
 			string nade3 = "";
 			string nade4 = "";
+			int nade1ammo = 0;
 			int nade2ammo = 0;
 			int nade3ammo = 0;
 			int nade4ammo = 0;
@@ -168,6 +169,7 @@ class BDP_HUD : DoomStatusBar
 				nade2 = "GRNDA";
 				nade3 = "GRNDB";
 				nade4 = "PIPBE";
+				nade1ammo = (CPlayer.mo.CountInv("AmmovoidGrenade"));
 				nade2ammo = (CPlayer.mo.CountInv("AmmoFragGrenade"));
 				nade3ammo = (CPlayer.mo.CountInv("AmmoIceGrenade"));
 				nade4ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
@@ -177,6 +179,7 @@ class BDP_HUD : DoomStatusBar
 				nade2 = "GRNDC";
 				nade3 = "GRNDA";
 				nade4 = "GRNDB";
+				nade1ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
 				nade2ammo = (CPlayer.mo.CountInv("AmmoVoidGrenade"));
 				nade3ammo = (CPlayer.mo.CountInv("AmmoFragGrenade"));
 				nade4ammo = (CPlayer.mo.CountInv("AmmoIceGrenade"));
@@ -186,6 +189,7 @@ class BDP_HUD : DoomStatusBar
 				nade2 = "PIPBE";
 				nade3 = "GRNDC";
 				nade4 = "GRNDA";
+				nade1ammo = (CPlayer.mo.CountInv("AmmoIceGrenade"));
 				nade2ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
 				nade3ammo = (CPlayer.mo.CountInv("AmmoVoidGrenade"));
 				nade4ammo = (CPlayer.mo.CountInv("AmmoFragGrenade"));
@@ -195,6 +199,7 @@ class BDP_HUD : DoomStatusBar
 				nade2 = "GRNDB";
 				nade3 = "PIPBE";
 				nade4 = "GRNDC";
+				nade1ammo = (CPlayer.mo.CountInv("AmmoFragGrenade"));
 				nade2ammo = (CPlayer.mo.CountInv("AmmoIceGrenade"));
 				nade3ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
 				nade4ammo = (CPlayer.mo.CountInv("AmmoVoidGrenade"));
@@ -206,7 +211,7 @@ class BDP_HUD : DoomStatusBar
 				//DrawString(fnt, String.Format("%d", gammo.amount), pos + (box.x / 2, -4), flags|DI_TEXT_ALIGN_RIGHT);
 				DrawString(
 				msmallfont,
-				String.Format("%d",gammo.amount),
+				String.Format("%d",nade1ammo),
 				pos + ((box.x / 6) + 5, -8),
 				DI_TEXT_ALIGN_RIGHT,
 				Font.CR_White
@@ -277,7 +282,7 @@ class BDP_HUD : DoomStatusBar
 				
 				return true;
 			}
-		}
+		//}
 		return false;
 	}
 

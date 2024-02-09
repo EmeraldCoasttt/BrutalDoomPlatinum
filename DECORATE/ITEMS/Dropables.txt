@@ -39,7 +39,9 @@ Height 0
 
   Spawn:
 	TNT1 A 0
-	TNT1 A 0 A_Jump(256, "Spawn1","spawn2","spawn3","spawn4")
+	TNT1 A 0 A_Jump(20,"spawn3")
+	TNT1 A 0 A_Jump(40,"spawn2")
+	TNT1 A 0 A_Jump(256, "Spawn1","spawn4")
 	
 	Spawn1:
         TNT1 A 0 A_CustomMissile ("DropedFragGrenade", 20, 0, random (0, 360), 2, random (30, 50))

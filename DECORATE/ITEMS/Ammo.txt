@@ -1050,9 +1050,9 @@ Actor AmmoPipeBomb : Ammo
 {
 	Inventory.PickupMessage "Picked up a Pipe Bomb."
 	Inventory.Amount 1
-	Inventory.MaxAmount 2
+	Inventory.MaxAmount 3
 	Ammo.BackpackAmount 1
-	Ammo.BackpackMaxAmount 3
+	Ammo.BackpackMaxAmount 4
 	Scale 0.7
 	Inventory.PickupSound "PIPESEL"
 	
@@ -1087,9 +1087,9 @@ Actor AmmoVoidGrenade : Ammo
 {
 	Inventory.PickupMessage "Picked up a Void Grenade."
 	Inventory.Amount 1
-	Inventory.MaxAmount 2
-	Ammo.BackpackAmount 1
-	Ammo.BackpackMaxAmount 3
+	Inventory.MaxAmount 1
+	Ammo.BackpackAmount 0
+	Ammo.BackpackMaxAmount 2
 	Scale 0.5
 	Inventory.PickupSound "VoidNadeBounce"
 
