@@ -14,6 +14,8 @@ Class Brutalweapon : DoomWeapon //Weapon
 	Bool clearoverlays;
 	Property clearoverlays : clearoverlays;
 	
+	Actor GuidedLaser;
+	
 	//Modifiers:
 	bool gunslinger;
 	int gunslingertics;
@@ -177,7 +179,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 	Action void a_SpawnLaser(class<Actor> Spawntype)
 	{
 		FLineTraceData lasersight;
-		LineTrace(angle, 4096, pitch, TRF_SOLIDACTORS|TRF_THRUHITSCAN, offsetz: player.viewz - pos.z, data: lasersight);
+		invoker.owner.LineTrace(invoker.owner.angle, 4096, invoker.owner.pitch, TRF_SOLIDACTORS|TRF_THRUHITSCAN, offsetz: invoker.owner.player.viewz - invoker.owner.pos.z, data: lasersight);
 		vector3 targetpos = lasersight.HitLocation;
 		if (lasersight.HitLine)
 		{
@@ -186,14 +188,16 @@ Class Brutalweapon : DoomWeapon //Weapon
 			wallnormal *= -1;
 			targetpos += (wallnormal * 18);
 		}
+		/*
 		if (lasersight.hittype == trace_hitceiling)
 				{
-					targetpos.z -= 13;
+					targetpos.z -= 2;
 				}
 		if (lasersight.hittype == trace_hitfloor)
 				{
-					targetpos.z += 13;
+					targetpos.z += 2;
 				}
+				*/
 		Spawn(spawntype,targetpos);
 	
 	}

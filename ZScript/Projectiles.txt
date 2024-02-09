@@ -1,8 +1,23 @@
 Class BrutalProjectile : Actor
 {
+	//Thanks RicardoLuis0 for the seeker code
+
+	bool Alive;
+    double RotSpeed;
+    double MaxRotAngle;
+    double OffsetX;
+    double OffsetY;
+    double OffsetZ;
+    
+    Property RotSpeed : RotSpeed;
+    Property MaxRotAngle : MaxRotAngle;
+    Property Offset : OffsetX, OffsetY, OffsetZ;
 	Default
 	{
 		Projectile;
+		BrutalProjectile.rotspeed 10;
+		BrutalProjectile.MaxRotAngle 360;
+		BrutalProjectile.offset 0,0,0;
 	}
 	
 	Override int specialmissilehit(actor Victim)
@@ -17,6 +32,73 @@ Class BrutalProjectile : Actor
 			Return -1;
 		}
 	
+	}
+	
+	 override int DoSpecialDamage(Actor target, int damage, name damagetype)
+    {
+        alive=false;
+        return super.DoSpecialDamage(target, damage, damagetype);
+    }
+	
+	 override void BeginPlay()
+    {
+        super.BeginPlay();
+        Alive = true;
+    }
+	
+	  private void Steer(Vector3 tpos)
+    {
+        vector3 targetAnglePitch = Level.SphericalCoords(pos, tpos);
+        
+        double adiff = DeltaAngle(angle, -targetAnglePitch.x);
+        double pdiff = DeltaAngle(pitch, targetAnglePitch.y);
+        
+        if( abs(adiff) <= MaxRotAngle
+         && abs(pdiff) <= MaxRotAngle)
+        {
+            if(abs(adiff) > RotSpeed)
+            {
+                angle += (adiff > 0) ? RotSpeed : -RotSpeed;
+            }
+            else
+            {
+                angle += adiff;
+            }
+            if(abs(pdiff) > RotSpeed)
+            {
+                pitch += (pdiff > 0) ? RotSpeed : -RotSpeed;
+            }
+            else
+            {
+                pitch += pdiff;
+            }
+            A_ChangeVelocity(
+                cos(angle) * cos(pitch) * speed,
+                sin(angle) * cos(pitch) * speed,
+                sin(pitch) * speed,
+                CVF_REPLACE
+            );
+        }
+    }
+	
+	Action Void A_GuidedRocket()
+	{
+		let it = ThinkerIterator.Create("Actor", STAT_DEFAULT);
+						Actor mo;
+					while (mo = Actor(it.Next()))
+			{
+				If(mo is "GuidedLaserNEO")
+				{
+				invoker.tracer = mo;
+				//console.printf("Gottem");
+				//Break;
+				}
+			}
+			If(invoker.tracer)
+			{
+				invoker.Steer(invoker.tracer.pos + (invoker.offsetX, invoker.offsetY, invoker.offsetZ));
+			}
+			//invoker.a_tracer2();
 	}
 
 }
