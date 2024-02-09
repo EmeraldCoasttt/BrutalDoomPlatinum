@@ -35,8 +35,7 @@ setslot 9 Flamethrower2 HandGrenades
    
 
 
-	addmenukey "Toss Grenade" grenadetoss
-   alias grenadetoss "pukename PressGrenade"
+	addmenukey "Toss Grenade" "+user2"
    defaultbind G grenadetoss
    
    addmenukey "Swap Grenades" swapgrenade

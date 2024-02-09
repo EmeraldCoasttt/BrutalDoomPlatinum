@@ -2489,7 +2489,8 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		ActuallyPipebomb:
 		TNT1 A 0 A_GunFlash("GrenadeThrowFlash");
 		TNT1 A 5;
-		NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb");
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_USER2, "DetonateTossedPipebomb");
+		//NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb");
 		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
 		"----" A 0 A_Takeinventory("HasPlasmaWeapon",1);
 		TNT1 A 0 A_TAkeinventory("HasCutingWeapon",1);
@@ -2522,8 +2523,6 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		NULL A 0 A_TakeInventory("TossGrenade",1);
 		Goto GoingToReady;
 	DetonateTossedPipebomb:
-		TNT1 A 0 A_GunFlash("GrenadeThrowFlash");
-		TNT1 A 5;
 		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
 		"----" A 0 A_Takeinventory("HasPlasmaWeapon",1);
 		TNT1 A 0 A_TAkeinventory("HasCutingWeapon",1);
@@ -2549,7 +2548,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 	TossGrenade:	
 		"----" "#" 0;
 		"----" "#" 0 A_TakeInventory("TossGrenade", 1);
-		"----" "#" 0 A_JumpIfInventory("HasThrownPipebomb",1,"detonatetossedpipebomb");
+		//"----" "#" 0 A_JumpIfInventory("HasThrownPipebomb",1,"detonatetossedpipebomb");
 		NULL A 0 A_JumpIf(CountInv("NadeType")==3,"TossVoidGrenade");
 		NULL A 0 A_JumpIf(CountInv("NadeType")==2,"TossPipebomb");
 		NULL A 0 A_JumpIf(CountInv("NadeType")==1,"TossGrenadeFreeze");
@@ -2573,7 +2572,8 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		ActuallyTossGrenade:
 		TNT1 A 0 A_GunFlash("GrenadeThrowFlash");
 		TNT1 A 5;
-		NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb");
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_USER2, "DetonateTossedPipebomb");
+		//NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb");
 		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
 		"----" A 0 A_Takeinventory("HasPlasmaWeapon",1);
 		TNT1 A 0 A_TAkeinventory("HasCutingWeapon",1);
@@ -2635,7 +2635,8 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		ActuallyTossVoid:
 		TNT1 A 0 A_GunFlash("GrenadeThrowFlash");
 		TNT1 A 5;
-		NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb");
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_USER2, "DetonateTossedPipebomb");
+		//NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb");
 		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
 		"----" A 0 A_Takeinventory("HasPlasmaWeapon",1);
 		TNT1 A 0 A_TAkeinventory("HasCutingWeapon",1);
@@ -2694,7 +2695,8 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		ActuallyTossFreeze:
 		TNT1 A 0 A_GunFlash("GrenadeThrowFlash");
 		TNT1 A 5;
-		NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb");
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_USER2, "DetonateTossedPipebomb");
+		//NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb");
 		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
 		"----" A 0 A_Takeinventory("HasPlasmaWeapon",1);
 		TNT1 A 0 A_TAkeinventory("HasCutingWeapon",1);
