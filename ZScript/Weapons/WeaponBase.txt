@@ -731,6 +731,24 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 				//setplayerproperty(0,0,4);
 			}
 			//player.readyweapon.A_setcvar("throwabletype",0);
+			
+			If(owner.countinv("nadetype") == 0 && owner.countinv("ammofraggrenade") == 0 && (owner.countinv("ammopipebomb") >= 1 || owner.countinv("ammoicegrenade") >= 1 || owner.countinv("ammovoidgrenade") >= 1))
+			{
+				owner.giveinventory("grenadeswapping",1);
+			}
+			If(owner.countinv("nadetype") == 1 && owner.countinv("AmmoIceGrenade") == 0 && (owner.countinv("ammopipebomb") >= 1 || owner.countinv("ammofraggrenade") >= 1 || owner.countinv("ammovoidgrenade") >= 1))
+			{
+				owner.giveinventory("grenadeswapping",1);
+			}
+			If(owner.countinv("nadetype") == 2 && owner.countinv("ammopipebomb") == 0 && (owner.countinv("ammofraggrenade") >= 1 || owner.countinv("ammoicegrenade") >= 1 || owner.countinv("ammovoidgrenade") >= 1))
+			{
+				owner.giveinventory("grenadeswapping",1);
+			}
+			If(owner.countinv("nadetype") == 3 && owner.countinv("ammovoidgrenade") == 0 && (owner.countinv("ammofraggrenade") >= 1 || owner.countinv("ammoicegrenade") >= 1 || owner.countinv("ammopipebomb") >= 1))
+			{
+				owner.giveinventory("grenadeswapping",1);
+			}
+			
 			If(owner.findinventory("grenadeswapping"))
 			{
 				Owner.takeinventory("grenadeswapping",1);
@@ -743,25 +761,25 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 				{
 					owner.giveinventory("nadetype",1);
 					owner.A_startSound ("ICEGPRE2",92);
-					owner.A_Print("\cnFreeze grenades selected.",2);
+					//owner.A_Print("\cnFreeze grenades selected.",2);
 				}
 				Else if(owner.CountInv("NadeType") == 1)
 				{
 					owner.giveinventory("nadetype",1);
 					owner.A_startSound ("PIPESEL",92);
-					owner.A_Print("\ccPipebombs selected.",2);
+					//owner.A_Print("\ccPipebombs selected.",2);
 				}
 				Else if(owner.CountInv("NadeType") == 2)
 				{
 					owner.giveinventory("nadetype",1);
 					owner.A_startSound ("GRNPIN",92);
-					owner.A_Print("\ctVoid grenades selected.",2);
+					//owner.A_Print("\ctVoid grenades selected.",2);
 				}
 				Else
 				{
 					owner.takeinventory("nadetype",666);
 					owner.A_startSound ("GRNPIN",92);
-					owner.A_Print("Cluster grenades selected.",2);
+					//owner.A_Print("Cluster grenades selected.",2);
 				}
 			}
   
