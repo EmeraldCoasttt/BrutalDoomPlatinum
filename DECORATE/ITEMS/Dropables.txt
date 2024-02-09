@@ -546,7 +546,7 @@ Spawn1:
 	
 	 Death:
 	 TNT1 A 0
-	 TNT1 A 0 A_SPawnItem("AmmoPipeBomb")
+	 TNT1 A 0 A_SPawnItem("PipeBombThrownIdle")
 	 Stop
 	
 
