@@ -141,7 +141,7 @@ class Z_TiltMe : CustomInventory
 			strafeInput *= dir;
 		}
 		
-		if (owner.findinventory("imrolling") && bIsPlayerAlive() || owner.findinventory("jetpack_active") && bIsPlayerAlive())
+		if (owner.findinventory("imrolling") && bIsPlayerAlive() || owner.findinventory("jetpackmoving") && bIsPlayerAlive())
 		{
 			int dir;
 			dir = 1;
