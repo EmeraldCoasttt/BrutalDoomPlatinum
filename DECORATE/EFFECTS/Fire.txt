@@ -97,6 +97,19 @@ ACTOR SmallFlameTrails: FlameTrails
 		}
 }
 
+ACTOR JetpackFlameTrails: FlameTrails
+{
+
+    Scale 0.15
+	States
+	{
+    Spawn:
+		TNT1 A 0
+        FRPR ABCDEFGH 3 BRIGHT
+        Stop
+		}
+}
+
 ACTOR SmallGreenFlameTrails: GreenFlameTrails
 {
 
