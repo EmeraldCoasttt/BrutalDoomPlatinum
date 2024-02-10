@@ -446,3 +446,43 @@ CLASS RiotShieldSpawner : CustomInventory
 		
 		}
 	}
+	
+	
+CLASS PlasmaShield : Actor
+	{
+	
+	Default
+	{
+		Renderstyle "Add";
+		Alpha 0.4;
+		+Bright;
+		//Scale 0.7;
+		+wallsprite;
+		Health 300;
+		+shootable;
+		+solid;
+		//+thruactors;
+		radius 100;
+		height 64;
+		BloodType "HoloBlood";
+	}
+	override bool CanCollideWith(Actor other, bool passive)
+	{
+		bool res = super.CanCollideWith(other, passive);
+		if (passive && other && res && other.bMISSILE)
+		{
+			double angto = DeltaAngle(angle, AngleTo(other));
+			if (abs(angto) < 45)
+			{
+				return false;
+			}
+		}
+		return res;
+		}
+	States
+		{
+			Spawn:
+			PSHL AB 3;
+			LOOP;
+		}
+	}
