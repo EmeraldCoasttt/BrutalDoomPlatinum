@@ -28,6 +28,11 @@ Actor UnmakerUnmorph : Inventory
 {
 inventory.maxamount 1
 }
+
+Actor jetpackmoving : Inventory
+{
+inventory.maxamount 1
+}
 Actor StaminaExhaustion : Inventory
 {
 inventory.maxamount 1

@@ -23,6 +23,45 @@ CLASS HellishMissileLauncher : BrutalWeapon
 		Inventory.AltHUDIcon "FATBD0";
 		BrutalWeapon.ClearOverlays 0;
 	}
+	
+	int jumptimer;
+	bool jetpackon;
+	
+	
+	override void DoEffect() 
+	{
+		super.DoEffect();
+		If(owner.player.readyweapon is "HellishMissileLauncher" && owner.player.cmd.buttons & BT_JUMP && countinv("gas") > 0 && jumptimer <= 0)
+		{
+			
+				owner.giveinventory("jetpackmoving",1);
+					owner.a_startsound("JETLOOP",6,CHANF_LOOPING);
+				jetpackon = true;
+				If(owner.vel.z < 20)
+				{
+					owner.vel.z = (owner.vel.z + 1.5);
+				}
+				if (level.time % 6 == 0)
+				{
+					owner.takeinventory("gas",1);
+				}
+			
+		}
+		Else if(jetpackon)
+		{
+			owner.A_StartSound("JETEND",6);
+			Jumptimer = 14;
+			jetpackon = false;
+		}
+		Else if(jumptimer > 0)
+		{
+		jumptimer--;
+		}
+		
+		
+		
+		
+	}
 	States
 	{
 	
