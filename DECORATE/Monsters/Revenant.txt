@@ -68,7 +68,7 @@ DropItem "Demonstrengthrune", 5
         TNT1 A 0 A_SpawnItem("HeadshotTarget20", 0, 70, 0)
         SKLA BA 2 A_FaceTarget
         TNT1 A 0 A_stop
-        Goto See	
+        Goto ContinueMissile
 		
 	Idle:
 	LookingForPlayer:
@@ -171,10 +171,6 @@ DropItem "Demonstrengthrune", 5
         TNT1 A 0 A_GiveInventory("EnemyMemory", 1)
         //TNT1 A 0 A_SpawnItemEx("FootSep", 0, 0, 20, 0, 0)
         TNT1 A 0 A_SpawnItemEx("HeadshotTarget4", 32, -8, 60)
-		TNT1 A 0 A_JumpIf(GetCvar("bd_JetpackRevenant")==1, 3)
-	    TNT1 A 0 A_JumpIfInventory("revjetpack",1,1)
-	    TNT1 A 0 A_jump(15,"jetpack")
-		TNT1 A 0
         SKEL AA 2 A_Chase
         
         TNT1 A 0 A_SpawnItemEx("HeadshotTarget4", 28, 0, 60)
@@ -241,6 +237,10 @@ DropItem "Demonstrengthrune", 5
 		Goto See	
 
 	Missile:
+	TNT1 A 0 A_JumpIf(GetCvar("bd_JetpackRevenant")==1, 3)
+	    TNT1 A 0 A_JumpIfInventory("revjetpack",1,1)
+	    TNT1 A 0 A_jump(25,"jetpack")
+		TNT1 A 0
       Continuemissile:
 	    TNT1 A 0
 	    TNT1 A 0 A_JumpIfInventory("Curbstomp_Marine", 1, "FatalityMarine")
