@@ -30,8 +30,8 @@ CLASS HellishMissileLauncher : BrutalWeapon
 	
 	override void DoEffect() 
 	{
-		super.DoEffect();
-		If(owner.player.readyweapon is "HellishMissileLauncher" && owner.player.cmd.buttons & BT_JUMP && countinv("gas") > 0 && jumptimer <= 0)
+		
+		If(owner.player.readyweapon is "HellishMissileLauncher" && owner.player.cmd.buttons & BT_JUMP && owner.countinv("gas") > 0 && jumptimer <= 0)
 		{
 			
 				owner.giveinventory("jetpackmoving",1);
@@ -49,14 +49,14 @@ CLASS HellishMissileLauncher : BrutalWeapon
 				"jetpackflametrails",
 				xofs:-5,
 				yofs:-8,
-				zofs:32,frandom(-1,1),frandom(-1,1),-3
+				zofs:36,frandom(-1,1),frandom(-1,1),-3
 				
 				);
 				owner.A_SpawnItemEx(
 				"jetpackflametrails",
 				xofs:-5,
 				yofs:8,
-				zofs:32,frandom(-1,1),frandom(-1,1),-3
+				zofs:36,frandom(-1,1),frandom(-1,1),-3
 				);
 			
 		}
@@ -70,7 +70,7 @@ CLASS HellishMissileLauncher : BrutalWeapon
 		{
 		jumptimer--;
 		}
-		
+		super.DoEffect();
 		
 		
 		
