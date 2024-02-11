@@ -193,6 +193,10 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	Override int takespecialdamage(Actor inflictor, Actor source, int damage, Name damagetype)
 		{
+			If(inflictor is "grenadeexplosion" && source == self)
+			{
+				Damage = (damage * 0.25);
+			}
 			If(source is "BDPBIKE" && !findinventory("veh_manager"))
 				{
 					damage = 0;
