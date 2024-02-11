@@ -91,6 +91,8 @@ class Brutal_PlayerBase : PlayerPawn
 	float	PendulumLength;
 	vector3	GrappleVel;
 	vector3 Rope;
+	int grapplesidespeed;
+	double lasttickrope;
 	
 	//////////////////
 	
@@ -511,7 +513,7 @@ class Brutal_PlayerBase : PlayerPawn
 
 			[friction, movefactor] = GetFriction();
 			bobfactor = friction < ORIG_FRICTION ? movefactor : ORIG_FRICTION_FACTOR;
-			if (!player.onground && !bNoGravity && !waterlevel && !jetpacking)
+			if (!player.onground && !bNoGravity && !waterlevel && !jetpacking && !rope.length())
 			{
 				// [RH] allow very limited movement if not on ground.
 				movefactor *= level.aircontrol;
@@ -584,30 +586,40 @@ class Brutal_PlayerBase : PlayerPawn
 		/*if(!brutal_playerbase.OnGround) */{ Grappled = True; }
 		
 		//Fun is over kids, go home
-		if(bNOGRAVITY || Rope.Length() <= 4.f * Radius || !CheckMove(Pos.XY + Vel.XY))
+		if(bNOGRAVITY || Rope.Length() <= 4.f * Radius || !CheckMove(Pos.XY + Vel.XY) || (lasttickrope && rope.length() > (lasttickrope + 30)))
 		{
 			StopHook();
 			return;
 		}
-		
+		lasttickrope = rope.length();
 		
 		Usercmd cmd = player.cmd;
 			GrappleVel = SafeUnit3(Rope) * GrappleVel.Length();
-			If(cmd.sidemove)
-			{
 			Vel = GrappleVel;
-			Acceleration.XY = RotateVector((((cmd.forwardmove) / 1000), - (cmd.sidemove) / 500), Angle);
-			double currentVel = vel.length();
+			If(cmd.sidemove > 0)
+			{
+				grapplesidespeed = grapplesidespeed + 2;
+			}
+			else if(cmd.sidemove < 0)
+			{
+				grapplesidespeed = grapplesidespeed - 2;
+			}
+			Acceleration.XY = RotateVector((0, -grapplesidespeed), Angle);
+			//
+			double currentvel = vel.length();
 			vel.xy = (vel.xy + acceleration.xy);
-			if (vel.length() < currentVel)
+			
+			
+			//console.printf("%i",rope.length());
+			If(!cmd.sidemove && grapplesidespeed > 0)
 			{
-			StopHook();
+				grapplesidespeed = grapplesidespeed - 2;
 			}
-			}
-			Else
+			Else if (!cmd.sidemove && grapplesidespeed < 0)
 			{
-			Vel = GrappleVel;	
+				grapplesidespeed = grapplesidespeed + 2;
 			}
+			
 	}
 	
 			
@@ -616,6 +628,8 @@ class Brutal_PlayerBase : PlayerPawn
 		Rope = GrappleVel = (0, 0, 0);
 		PendulumLength = 0;
 		GrappledMonster = Null;
+		grapplesidespeed = 0;
+		lasttickrope = 0;
 		
 	}
 		
