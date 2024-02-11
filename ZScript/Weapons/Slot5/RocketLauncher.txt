@@ -33,7 +33,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 	override void DoEffect() 
 	{
 		super.DoEffect();
-		If(owner.player.readyweapon is "Rocket_Launcher" && owner.player.cmd.buttons & BT_ALTATTACK)
+		If(owner.player && owner.player.readyweapon is "Rocket_Launcher" && owner.player.cmd.buttons & BT_ALTATTACK)
 		{
 			A_SpawnLaser("guidedlaserNEO");
 			If(!lastticklaser)
@@ -47,7 +47,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 			lastticklaser = false;
 			owner.A_startsound("LAZOFF",2);
 		}
-		If(owner.player.readyweapon is "Rocket_Launcher" && owner.player.cmd.buttons & BT_USER3)
+		If(owner.player && owner.player.readyweapon is "Rocket_Launcher" && owner.player.cmd.buttons & BT_USER3)
 		{
 			If(!lasttickdetonate)
 			{

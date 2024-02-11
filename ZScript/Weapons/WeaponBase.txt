@@ -644,7 +644,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		super.DoEffect();
   
 		let player = owner.player;
-		If(player.readyweapon is self.getclass())
+		If(player && player.readyweapon is self.getclass())
 		{
 			If(owner.findinventory("rollingstamina"))
 			{
