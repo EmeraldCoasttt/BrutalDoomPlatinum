@@ -668,6 +668,40 @@ FatalityImp:
 		SKL4 CD 4 A_CustomMissile ("Brutal_LiquidBlood", 10, 0, random (0, 360), 2, random (30, 110))
         TNT1 A 0 A_SpawnItem ("BlastedDeadSkeleton", 1)
         Stop
+	Death.Railgun:
+	TNT1 A 0 A_jump(75,"Death.ssg")
+		TNT1 A 0 A_NoBlocking
+		 TNT1 AAA 0 A_CustomMissile ("XDeath1", 30, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAA 0 A_CustomMissile ("RevenantDust", 30, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAA 0 A_CustomMissile ("RevenantDust2", 30, 0, random (0, 360), 2, random (0, 360))
+        TNT1 AA 0 A_CustomMissile ("XDeath2b", 16, 0, random (0, 360), 2, random (30, 150))
+		TNT1 AAAA 0 A_CustomMissile ("RevenantPiece", 37, 0, random (0, 360), 2, random (30, 150))
+		TNT1 A 0 A_CustomMissile ("MuchBlood2", 60, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_pain
+		SKL4 F 30
+		TNT1 A 0 A_pain
+		SKL4 G 20
+		TNT1 A 0 A_jump(60,2)
+		Goto xdeath
+		TNT1 A 0
+		TNT1 A 0 A_Scream
+		TNT1 A 0 A_NoBlocking
+		TNT1 A 0 A_PlaySound("misc/xdeath4")
+		TNT1 AAA 0 A_CustomMissile ("XDeath1", 60, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AA 0 A_CustomMissile ("XDeath2b", 60, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AA 0 A_CustomMissile ("XDeath3b", 60, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 0 A_SpawnItem("MuchBlood2", 0, 50)
+		TNT1 AAA 0 A_CustomMissile ("RevenantDust", 30, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAA 0 A_CustomMissile ("RevenantDust2", 30, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AA 0 A_CustomMissile ("BigLSPart1", 37, 0, random (0, 360), 2, random (30, 150))
+		TNT1 AA 0 A_CustomMissile ("BigLSPart2", 37, 0, random (0, 360), 2, random (30, 150))
+		TNT1 AAAAAAA 0 A_CustomMissile ("RevenantPiece", 37, 0, random (0, 360), 2, random (30, 150))
+		//TNT1 A 0 A_SpawnItem ("XDeadSkeleton22", 1)
+		TNT1 A 0 A_SpawnItem("HellishMissileLauncher", 0, 40)
+		TNT1 A 0 A_SpawnItem("RoamingLegs", 0, 1)
+		TNT1 A -1
+		Stop
+		
 		
     Death.SuperPlasma:
     Death.Plasma: Death.Plasma2:
