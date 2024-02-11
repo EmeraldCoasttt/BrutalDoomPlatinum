@@ -469,3 +469,34 @@ class SalInvisHandler : EventHandler
         }
 	}
 }
+
+
+CLASS PowerBoost : Powerup
+{
+	Default
+	{
+		Powerup.Duration 1;
+		+INVENTORY.HUBPOWER;
+	}
+}
+
+class BoosterFrame : CustomInventory
+{
+	Default
+	{
+		+COUNTITEM
+		+INVENTORY.ALWAYSPICKUP
+		Inventory.PickupMessage "You got a Booster Frame!";
+		Inventory.PickupSound "misc/p_pkup";
+		Scale 0.5;
+	}
+	States
+	{
+	Spawn:
+		BFRM A -1;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("PowerBoost");
+		Stop;
+	}
+}
