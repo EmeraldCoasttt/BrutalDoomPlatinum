@@ -27,6 +27,9 @@ class Brutal_PlayerBase : PlayerPawn
 	//Jumping
 	bool 	BlockJump;
 	bool	Jumped;
+	bool	doublejumpready;
+	bool	alreadyjumped;
+	bool	oldjump;
 	float	FloorAngle;
 	int		DoubleJumpCooler;
 	int		JumpSoundCooler;
@@ -570,8 +573,21 @@ class Brutal_PlayerBase : PlayerPawn
 	}
 	override void CheckJump()
 	{
+		
 		let player = self.player;
 		// [RH] check for jump
+		If(!player.onground && !doublejumpready && !oldjump)
+		{
+			doublejumpready = true;
+		
+		}
+		Else if(player.onground)
+		{
+			doublejumpready = false;
+			oldjump = false;
+			alreadyjumped = false;
+		}
+		
 		if (player.cmd.buttons & BT_JUMP)
 		{
 			if (player.crouchoffset != 0)
@@ -587,7 +603,7 @@ class Brutal_PlayerBase : PlayerPawn
 			{
 				Vel.Z = 3.;
 			}
-			else if (level.IsJumpingAllowed() && player.onground && player.jumpTics == 0)
+			else if (player.onground && player.jumpTics == 0 || doublejumpready && !oldjump && !alreadyjumped && vel.z < 4)
 			{
 				double jumpvelz = JumpZ * 35 / TICRATE;
 				double jumpfac = 0;
@@ -611,7 +627,16 @@ class Brutal_PlayerBase : PlayerPawn
 				bOnMobj = false;
 				player.jumpTics = -1;
 				if (!(player.cheats & CF_PREDICTING)) A_StartSound("*jump", CHAN_BODY);
+				If(doublejumpready)
+				{
+					alreadyjumped = true;
+				}
+				oldjump = true;
 			}
+		}
+		Else if (oldjump)
+		{
+			oldjump = false;
 		}
 	}
 	
