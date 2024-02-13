@@ -628,6 +628,34 @@ class Brutal_PlayerBase : PlayerPawn
 		}
 		
 		lasttickvellength = vel.length();
+		
+		If(boostlevel > 1)
+		{
+			
+			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.length() - 30,vel.z,0);
+			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.length() - 30,vel.z,0);
+			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.length() - 30,vel.z,0);
+			
+			Actor speedMo = Spawn("PlayerSpeedTrail", Pos, NO_REPLACE);
+			if (speedMo)
+			{
+				speedMo.Angle = Angle;
+				speedMo.Translation = Translation;
+				speedMo.target = Self;
+				speedMo.sprite = sprite;
+				speedMo.frame = frame;
+				speedMo.Floorclip = Floorclip;
+
+				// [BC] Also get the scale from the owner.
+				speedMo.Scale = Scale;
+
+				if (Self == players[consoleplayer].camera &&
+					!(player.cheats & CF_CHASECAM))
+				{
+					speedMo.bInvisible = true;
+				}
+			}
+		}
 	
 	}
 	override void CheckJump()
@@ -1431,4 +1459,25 @@ Class HookTrail : Actor
 		DespawnTrail:
 			Stop;
 	}
+}
+
+Class Speedline : Actor
+{
+	Default
+	{
+		+nogravity;
+		Renderstyle "Add";
+		Alpha 0.2;
+	}
+	
+	States
+	{
+		Spawn:
+			TRAC A 3;
+			Spawn2:
+			TRAC A 1 A_FadeOut(0.30);
+			LOOP;
+	
+	}
+
 }

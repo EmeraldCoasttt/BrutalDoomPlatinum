@@ -44,6 +44,17 @@ Model Tracer // Name of actor in DECORATE
    FrameIndex TRAC A 0 0 // The sprite lump, sprite frame, model index, frame number
 }
 
+Model Speedline // Name of actor in DECORATE
+{ 
+   Path "Models/Projectiles" // Path to model in PK3
+   SKIN 0 "speedtracer.tga" // Model index, model file
+   MODEL 0 "tracer2.md3" // Model index, texture (can be in any format supported by GZDoom)
+   Scale 40.5 0.8 0.8 // Scale values
+  // PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+  // pitchoffset 90
+   FrameIndex TRAC A 0 0 // The sprite lump, sprite frame, model index, frame number
+}
+
 Model RevolverTracer // Name of actor in DECORATE
 { 
    Path "Models/Projectiles" // Path to model in PK3
