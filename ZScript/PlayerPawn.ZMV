@@ -1473,7 +1473,7 @@ Class Speedline : Actor
 	States
 	{
 		Spawn:
-			TRAC A 3;
+			TRAC A 5;
 			Spawn2:
 			TRAC A 1 A_FadeOut(0.30);
 			LOOP;
