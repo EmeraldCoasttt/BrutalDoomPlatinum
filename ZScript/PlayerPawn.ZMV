@@ -699,6 +699,34 @@ class Brutal_PlayerBase : PlayerPawn
 		}
 	}
 	
+	override bool CanCollideWith(Actor other, bool passive)
+	{
+		bool allclear;
+		
+		If(boostlevel > 1 && other)
+		{
+			
+			other.damagemobj(self,self,100 + boostlevel,"extremepunches");
+			if(other && !other.bnodamagethrust && other.mass <  9999)
+			{
+				float yeetangle = angleto(other);
+				other.velfromangle(boostlevel * 5,yeetangle);
+				other.vel.z = 6;
+				allclear = true;
+			}
+		}
+		
+		If(!allclear)
+			{
+			Return True;
+			}
+		Else
+		{
+			Return False;
+		}
+		
+	}
+	
 	
 	bool HookLOS()
 	{
