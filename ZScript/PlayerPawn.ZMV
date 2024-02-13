@@ -97,6 +97,12 @@ class Brutal_PlayerBase : PlayerPawn
 	int grapplesidespeed;
 	double lasttickrope;
 	
+	//Booster Frame
+	int boosttics;
+	int boostlevel;
+	double lasttickvellength;
+	bool booster;
+	
 	//////////////////
 	
 	//View Bobbing
@@ -479,7 +485,16 @@ class Brutal_PlayerBase : PlayerPawn
 	{
 		let player = self.player;
 		UserCmd cmd = player.cmd;
+		If(countinv("powerboost") > 0)
+		{
+			Booster = true;
+		}
+		Else
+		{
+			Booster = false;
+		}
 
+		
 		// [RH] 180-degree turn overrides all other yaws
 		if (player.turnticks)
 		{
@@ -506,6 +521,31 @@ class Brutal_PlayerBase : PlayerPawn
 		}
 		
 		Bool jetpacking = countinv("jetpackmoving");
+		
+		If(booster && cmd.forwardmove && cmd.buttons & BT_SPEED)
+		{
+			boosttics++;
+			If(boosttics >= 35)
+			{
+				boostlevel++;
+				boosttics = 0;
+			}
+		}
+		Else if (boostlevel > 0)
+		{
+			boosttics++;
+			If(boosttics >= 5)
+			{
+				boostlevel--;
+				boosttics = 0;
+			}
+		}
+		Else
+		{
+			boosttics = 0;
+		}
+		console.printf("%i",vel.length());
+		
 		
 		if (cmd.forwardmove | cmd.sidemove)
 		{
@@ -535,6 +575,11 @@ class Brutal_PlayerBase : PlayerPawn
 				fm *= player.crouchfactor;
 				sm *= player.crouchfactor;
 				bobfactor *= player.crouchfactor;
+			}
+			
+			If(boostlevel >= 1)
+			{
+				fm = fm + (boostlevel * 10);
 			}
 
 			forwardmove = fm * movefactor * (35 / TICRATE);
@@ -567,8 +612,22 @@ class Brutal_PlayerBase : PlayerPawn
 			{
 				vel.xy *= 0.97;
 			}
+			
 		}
-		//console.printf("%i",vel.length());
+		If(boostlevel > 1 && vel.length() < (lasttickvellength * 0.5))
+		{
+			A_stop();
+			A_recoil(14);
+			vel.z = 10;
+			A_Quake(boostlevel,12,0,800);
+			boostlevel = 0;
+			boosttics = 0;
+			A_startsound("melee/backsmack",28);
+			
+			
+		}
+		
+		lasttickvellength = vel.length();
 	
 	}
 	override void CheckJump()
@@ -623,7 +682,7 @@ class Brutal_PlayerBase : PlayerPawn
 
 				Vel.Z += jumpvelz;
 				Vel.z += (vel.xy.length() * 0.25);
-				console.printf("%i",vel.z);
+				//console.printf("%i",vel.z);
 				bOnMobj = false;
 				player.jumpTics = -1;
 				if (!(player.cheats & CF_PREDICTING)) A_StartSound("*jump", CHAN_BODY);

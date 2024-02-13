@@ -475,7 +475,7 @@ CLASS PowerBoost : Powerup
 {
 	Default
 	{
-		Powerup.Duration 1;
+		Powerup.Duration 0x7FFFFFFD;
 		+INVENTORY.HUBPOWER;
 	}
 }
