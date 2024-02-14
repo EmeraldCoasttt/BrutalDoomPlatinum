@@ -19,3 +19,4 @@ demonrunespawner,secret,2
 blursphere,secret,2
 MG42Pickup,secret,3
 smgspawner,secret,1
+boosterframe,secret,1
