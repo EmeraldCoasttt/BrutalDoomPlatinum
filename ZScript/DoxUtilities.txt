@@ -141,7 +141,7 @@
 			let handler = WeaponSpawnHandler(StaticEventHandler.Find('WeaponSpawnHandler'));
 
 			Handler.SpawnSecret(spots[ws].pos);
-			console.printf("buttsex");
+			//console.printf("buttsex");
 			//c.angle = spots[ws].angle;
 			tboxes++;
 			if ( tboxes >= 3 ) break;	// already spawned 3 boxes in one map (which is a lot)

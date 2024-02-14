@@ -752,7 +752,7 @@ class Brutal_PlayerBase : PlayerPawn
 		If(boostlevel > 1 && other)
 		{
 			
-			other.damagemobj(self,self,10 + boostlevel,"extremepunches");
+			other.damagemobj(self,self,boostlevel * 4,"extremepunches");
 			if(other && !other.bnodamagethrust && other.mass <  9999)
 			{
 				float yeetangle = angleto(other);
