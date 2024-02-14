@@ -521,7 +521,18 @@ class BDP_HUD : DoomStatusBar
 		{
 			//name pwr = CPlayer.mo.FindInventory("NoFatality") ? 'HASBERK2' : 'HASBERK';
 			DrawImage('HASBERK', iconPos + smallIconOfs, DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
+			smallIconOfs.y = (smallIconOfs.y + 5);
 		}
+		if (CPlayer.mo.FindInventory("PowerBoost", true))
+		{
+			//name pwr = CPlayer.mo.FindInventory("NoFatality") ? 'HASBERK2' : 'HASBERK';
+			DrawImage('HASBSTR', iconPos + smallIconOfs, DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
+			smallIconOfs.y = (smallIconOfs.y + 5);
+		}
+		if (CPlayer.mo.CountInv("PowerShield") || CPlayer.mo.CountInv("PowerShield2"))
+			{
+				DrawImage("HASARMR", iconPos + smallIconOfs,DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
+			}
 		If (CPlayer.mo.countinv("extralife") > 0)
 		{
 			DrawString(
@@ -542,10 +553,7 @@ class BDP_HUD : DoomStatusBar
 			// armor icon
 			DrawInventoryIcon(armor, iconPos, iconflags); 
 			// power shield icon
-			if (CPlayer.mo.CountInv("PowerShield") || CPlayer.mo.CountInv("PowerShield2"))
-			{
-				DrawImage("HASARMR", iconPos + smallIconOfs,DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
-			}
+			
 			// armor amount
 			DrawString(
 				mSmallFont,
