@@ -486,7 +486,7 @@ class BoosterFrame : CustomInventory
 	{
 		+COUNTITEM
 		+INVENTORY.ALWAYSPICKUP
-		Inventory.PickupMessage "You got a Booster Frame!";
+		Inventory.PickupMessage "You got the Booster Frame!";
 		Inventory.PickupSound "misc/p_pkup";
 		Scale 0.5;
 	}
