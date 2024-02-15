@@ -173,7 +173,7 @@ map PSMAP58 "The Mansion"
 	secretnext = "PSMAP59"
 	//sky1 = "SKYCIT1"
 	sky1 = "SKYEAR3"
-	cluster = 1
+	cluster = 15
 	//par = 60
 	music = D_ROMERO
 }
@@ -182,18 +182,18 @@ map PSMAP59 "Club Doom"
 {
 	next = "MAP17"
 	sky1 = "SKYCITH"
-	cluster = 1
+	cluster = 16
 	par = 60
 	music = D_STALKS
 }
 
 map PSMAP29 "Twilight Descends"
 {
-	next = "MAP15"
+	next = "MAP14"
 	secretnext = "PSMAP57"
 	//sky1 = "SKYCIT1"
 	sky1 = "SKYEAR3"
-	cluster = 1
+	cluster = 13
 	//par = 60
 	music = d_in_cit	
 }
@@ -201,13 +201,43 @@ map PSMAP29 "Twilight Descends"
 
 map PSMAP57 "The Marshes"
 {
-	next = "MAP15"
-	secretnext = "MAP15"
+	next = "MAP14"
+	secretnext = "MAP14"
 	//sky1 = "SKYCIT1"
 	sky1 = "SKYEAR3"
-	cluster = 1
+	cluster = 14
 	//par = 60
 	music = d_shawn	
+}
+
+// Twilight Descends
+
+cluster 13
+{
+	flat = "$BGFLAT15"
+	entertext = "A shortcut through the corrupted sewers", "reveals an abandoned junkyard", "where demons are ready to Play.", "Station yourself for the task ahead."
+}
+
+// The Marshes
+
+cluster 14
+{
+	flat = "$BGFLAT31"
+	entertext = "Cold.", "Dark.", "Damp.", "Something's here,","And they're out to get you."
+}
+
+//The Mansion
+
+cluster 15
+{
+	entertext = "A monument to corruption", "Now sits in ruin,", "Hungry for it's next corpse."
+}
+
+//Club DOOM.
+
+cluster 16
+{
+	entertext = "Welcome to Club Doom.", "You can clock out any time you like", "But you can never leave!"
 }
 
 map PSMAP16 "Hellgate"
@@ -216,7 +246,7 @@ map PSMAP16 "Hellgate"
 	secretnext = "PSMAP57"
 	//sky1 = "SKYCIT1"
 	sky1 = "SKYHELF"
-	cluster = 1
+	cluster = 8
 	//par = 60
 	music = d_dead	
 }
@@ -228,7 +258,7 @@ map PSMAP17 "Blood Citadel"
 	secretnext = "MAP21"
 	//sky1 = "SKYCIT1"
 	sky1 = "SKYHELF"
-	cluster = 1
+	cluster = 8
 	//par = 60
 	music = d_doom	
 }
@@ -409,35 +439,3 @@ map MAP17B lookup "HUSTR_17"
 
 
 
-map PSXMAP16 "Hellgate"
-{
-	next = "MAP18"
-	secretnext = "MAP18"
-	sky1 = "SKYHEL1", 0.1
-	cluster = 7
-	par = 420
-	music = "$MUSIC_STLKS3"
-}
-
-
-
-map PSXMAP57 "The Marshes"
-{
-	next = "PSXMAP58"
-	secretnext = "PSXMAP58"
-	sky1 = "SKYEAR3", 0.1
-	cluster = 7
-	par = 420
-	music = "$MUSIC_ADRIAN"
-}
-
-
-map PSXMAP58 "Twilight Descends"
-{
-	next = "MAP15"
-	secretnext = "MAP15"
-	sky1 = "SKYEAR3", 0.1
-	cluster = 7
-	par = 420
-	music = "$MUSIC_ADRIAN"
-}
