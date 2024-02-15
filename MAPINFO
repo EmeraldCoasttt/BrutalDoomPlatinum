@@ -182,7 +182,7 @@ map PSMAP59 "Club Doom"
 {
 	next = "MAP17"
 	sky1 = "SKYCITH"
-	cluster = 16
+	cluster = 15
 	par = 60
 	music = D_STALKS
 }
