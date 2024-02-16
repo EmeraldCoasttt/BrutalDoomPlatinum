@@ -48,7 +48,7 @@ class BDP_DoorBuster : Thinker
 			// surface area. Smaller values mean MORE debris, but 0 means "do not
 			// spawn". Debris position is still randomized regardless of this.
 			double debrisDensity = 16.0, //= 1 piece per each 16x16 square
-			class<Actor> debrisType = null,
+			class<Actor> debrisType = "WallChunk",
 			// spawnAfter: if true, a separate thinker will keep spawning some debris
 			// along the top line of the door, falling down, once it's been destroyed
 			bool spawnAfter = true,
@@ -362,4 +362,78 @@ class BDP_DoorBuster : Thinker
 		}
 		duration--;
 	}
+}
+
+Class WallChunk : Actor
+{
+	Default
+	{
+		Scale 0.45;
+		bouncetype "Doom";
+		Height 2;
+		Radius 2;
+		+noblockmap;
+		bouncefactor 0.20;
+		+rollsprite;
+		+rollcenter;
+		Gravity 0.60;
+	}
+	float rollfactor;
+	States
+	{
+	Spawn:
+		TNT1 A 0 NODELAY
+		{
+			rollfactor = frandom(-25,25);
+		}
+		TNT1 A 0 A_JUMP(255,"Spawn1","Spawn2","Spawn3","Spawn4","Spawn5","Spawn6","Spawn7","Spawn8","Spawn9","Spawn10","Spawn11","Spawn12");
+	Spawn1:
+		WCHN A 0;
+		Goto StaySpawned;
+	Spawn2:
+		WCHN B 0;
+		Goto StaySpawned;
+	Spawn3:
+		WCHN C 0;
+		Goto StaySpawned;
+	Spawn4:
+		WCHN D 0;
+		Goto StaySpawned;
+	Spawn5:
+		WCHN E 0;
+		Goto StaySpawned;
+	Spawn6:
+		WCHN F 0;
+		Goto StaySpawned;
+	Spawn7:
+		WCHN G 0;
+		Goto StaySpawned;
+	Spawn8:
+		WCHN H 0;
+		Goto StaySpawned;
+	Spawn9:
+		WCHN I 0;
+		Goto StaySpawned;
+	Spawn10:
+		WCHN J 0;
+		Goto StaySpawned;
+	Spawn11:
+		WCHN K 0;
+		Goto StaySpawned;
+	Spawn12:
+		WCHN L 0;
+		Goto StaySpawned;
+	StaySpawned:
+		WCHN "#" 1 
+		{
+			Roll = roll + rollfactor;
+		}
+		TNT1 "#" 0 A_JumpIf(pos.Z <= floorz, "Death");
+		LOOP;
+	Death:
+		WCHN "#" -1;
+		LOOP;
+		
+	}
+
 }

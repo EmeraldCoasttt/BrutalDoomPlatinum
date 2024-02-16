@@ -557,6 +557,41 @@ ACTOR BarrelShrapnel1
     }
 }
 
+ACTOR BarrelShrapnel1Tiny : BarrelShrapnel1
+{
+	Decal none
+	Scale 0.5
+	States
+	{
+	 Spawn:
+	    TNT1 A 0 A_JumpIf(waterlevel > 1, "Underwater")
+        BRPT ABCDEFGH 1
+		TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0)
+        Goto Spawn2
+		Bounce.floor:
+
+		TNT1 A 0
+		Goto spawn2
+		Bounce.wall:
+		TNT1 A 0
+	Spawn2:
+	    TNT1 A 0 A_JumpIf(waterlevel > 1, "Underwater")
+	    BRPT ABCDEFGH 2
+		Loop
+		
+    Death:
+        //TNT1 A 0 A_SPawnItem("Brutal_Bloodnukage")
+
+		TNT1 A 0
+		BRPT I 300
+		//BRPT IIIIIIIII 2 A_FadeOut(0.1)
+       LOOP
+     Underwater:
+	 Splash:
+	    Goto Death
+		}
+}
+
 ACTOR BarrelShrapnel2: BarrelShrapnel1
 {
  Scale 1.7
@@ -570,6 +605,16 @@ ACTOR BarrelShrapnel3: BarrelShrapnel1
 ACTOR BarrelShrapnel4: BarrelShrapnel1
 {
  Scale 1.2
+}
+
+Actor BarrelShrapnel2Tiny: BarrelShrapnel1Tiny
+{
+	Scale 0.2
+}
+
+Actor BarrelShrapnel3Tiny: BarrelShrapnel1Tiny
+{
+	Scale 0.35
 }
 
 ACTOR BarrelShrapnel1burning
