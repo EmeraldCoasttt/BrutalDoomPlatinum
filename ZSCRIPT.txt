@@ -1,4 +1,4 @@
-version "4.10.0"
+version "4.11.0"
 
 #include "ZScript/math.zsc"
 #include "ZScript/PlayerPawn.ZMV"
@@ -6,6 +6,7 @@ version "4.10.0"
 #include "ZScript/Projectiles.txt"
 #include "Zscript/HeadShots.txt"
 #include "Zscript/GORE.txt"
+#include "Zscript/doorbuster.zs"
 
 #include "Zscript/BDP_hud.zs"
 
