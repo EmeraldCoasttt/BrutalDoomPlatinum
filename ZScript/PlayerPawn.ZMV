@@ -649,7 +649,7 @@ class Brutal_PlayerBase : PlayerPawn
 		
 		If(boostlevel > 1)
 		{
-			BDP_DoorBuster.DestroyDoor(self, newCeilTex: 'CEIL5_1', sfx: "weapons/rocklx", breakLocks: BDP_DoorBuster.LB_All, debug:true);
+			BDP_DoorBuster.DestroyDoor(self, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_CheckKey);
 			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,0,SXF_ABSOLUTEVELOCITY);
 			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,0,SXF_ABSOLUTEVELOCITY);
 			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,0,SXF_ABSOLUTEVELOCITY);

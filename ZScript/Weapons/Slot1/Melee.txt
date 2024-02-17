@@ -166,7 +166,7 @@ CLASS MeleeAttack : Actor
 			A_spraydecal("crackmelee",36);
 				If(DoorBuster)
 				{
-					BDP_DoorBuster.DestroyDoor(target, newCeilTex: 'CEIL5_1', sfx: "weapons/rocklx", breakLocks: BDP_DoorBuster.LB_CheckKey, debug:true);
+					BDP_DoorBuster.DestroyDoor(target, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_CheckKey);
 				}
 			}
 			If(target && target.findinventory("GREENBLOODONBOOTS"))
@@ -265,7 +265,7 @@ CLASS Meleeattackslide : MeleeAttack
 			A_spraydecal("crackmelee",36);
 			If(DoorBuster)
 				{
-					BDP_DoorBuster.DestroyDoor(target, newCeilTex: 'CEIL5_1', sfx: "weapons/rocklx", breakLocks: BDP_DoorBuster.LB_CheckKey, debug:true);
+					BDP_DoorBuster.DestroyDoor(target, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_CheckKey);
 				}
 			}
 			If(target && target.findinventory("GREENBLOODONBOOTS"))

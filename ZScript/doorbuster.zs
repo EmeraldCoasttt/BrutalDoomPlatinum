@@ -42,7 +42,7 @@ class BDP_DoorBuster : Thinker
 			double distance = 64, 
 			name newCeilTex = '', 
 			name newFloorTex = '', 
-			sound sfx = "", 
+			sound sfx = "world/destroywall", 
 			// DebrisDensity: determines the number of debris. For example at 8.0
 			// it'll spawn 1 piece of debris per each 8x8 square of the door
 			// surface area. Smaller values mean MORE debris, but 0 means "do not
@@ -247,7 +247,10 @@ class BDP_DoorBuster : Thinker
 				as.Destroy();
 			}
 		}
-
+		if(source)
+		{
+			Source.A_Quake(5,12,0,800);
+		}
 		double doorAngle = atan2(l.delta.y, l.delta.x) + 90; 
 		if (debrisDensity > 0)
 		{
@@ -377,6 +380,7 @@ Class WallChunk : Actor
 		+rollsprite;
 		+rollcenter;
 		Gravity 0.60;
+		+thruactors;
 	}
 	float rollfactor;
 	States
