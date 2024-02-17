@@ -136,5 +136,15 @@ class SequenceBreakPickup : BDPModifierpickup
 		+floatbob;
     }
 }
+class MaximumOverdrivePickup : BDPModifierpickup
+{
+ Default
+    {
+        Inventory.MaxAmount 1;
+		BDPModifierpickup.modifierclass "Modifier_MaximumOverdrive";
+		BDPModifierpickup.modifiermessage "Maximum Overdrive Unlocked!";
+		+floatbob;
+    }
+}
 
 //Man And A Half "200:207=[117,117,117]:[0,0,0]"

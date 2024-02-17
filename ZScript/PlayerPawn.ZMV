@@ -173,6 +173,7 @@ class Brutal_PlayerBase : PlayerPawn
 	bool istactical;
 	bool oneupmanship;
 	bool sequencebreak;
+	bool maximumoverdrive;
 	bool ultranightmare;
 	int ultraseed;
 	bool alreadyblacklisted;
@@ -357,6 +358,11 @@ class Brutal_PlayerBase : PlayerPawn
 			{
 				a_sethealth(100);
 			}
+		}
+		
+		If(maximumoverdrive && !findinventory("powerboost",TRUE) && health > 0)
+		{
+			GiveInventory("boosterframe",1);
 		}
 		
 		If(sequencebreak && !findinventory("sequencebreaker"))
