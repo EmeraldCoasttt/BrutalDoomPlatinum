@@ -17,6 +17,8 @@ Tenderizer,secret,3
 EnergyArmor,secret,1
 demonrunespawner,secret,2
 blursphere,secret,2
+quadsigil,secret,2
+hastesphere,secret,2
 MG42Pickup,secret,3
 smgspawner,secret,1
 boosterframe,secret,1

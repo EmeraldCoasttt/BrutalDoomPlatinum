@@ -335,8 +335,62 @@ Inventory.icon "SIG2A0"
 
 }
 
+*/
+ACTOR QuadSigil : PowerUpGiver
+{
+	+COUNTITEM
+	+NOGRAVITY
+	+FLOATBOB
+	FloatSpeed 1
+	+INVENTORY.ALWAYSPICKUP
+	Inventory.PickupMessage "Quad Rampage!"
+	Inventory.PickupSound "sigil/quake"
+	Tag "Soulsphere"
+	powerup.duration -30
+	powerup.color "purple"
+	powerup.type "Powerquakedamage"
+	+inventory.autoactivate
+	States
+	{
+	Spawn:
+	    TNT1 A 0 A_PlaySound("POWERHUM", 0, 0.4, 1)
+		QUAK BBBCCC 2 Bright// A_SpawnItem("PurpleFlareSmall",0,30)
+		Loop
+	Pickup:
+        TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360))
+		Stop
+	}
+}
 
 
+ACTOR HasteSphere : PowerUpGiver
+{
+	+COUNTITEM
+	+NOGRAVITY
+	+FLOATBOB
+	FloatSpeed 1
+	+INVENTORY.ALWAYSPICKUP
+	Inventory.PickupMessage "Haste Sphere!"
+	Inventory.PickupSound "sigil/haste"
+	Tag "Soulsphere"
+	powerup.duration -30
+	powerup.color "Yellow"
+	powerup.type "PowerSpeed2"
+	+inventory.autoactivate
+	States
+	{
+	Spawn:
+	    TNT1 A 0 A_PlaySound("POWERHUM", 0, 0.4, 1)
+		TURB AAABBBCCCBBB 2 Bright A_SpawnItem("YellowFlareSmall",0,20)
+		Loop
+	Pickup:
+        TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360))
+		Stop
+	}
+}
+
+
+/*
 
 ACTOR DemonProtectionSigil : custominventory
 {

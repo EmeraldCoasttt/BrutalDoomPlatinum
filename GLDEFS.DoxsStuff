@@ -55,10 +55,7 @@ pulselight NightVisionLight
 
 
 
-object DemonStrengthSigil
-{
-    frame DPRF { light StrengthSigilLight }
-}
+
  
 pulselight StrengthsigilLight
 {
@@ -69,10 +66,7 @@ pulselight StrengthsigilLight
     offset 0 16 0
 }
 
-object DemonBioSigil
-{
-    frame SIG3 { light BioSigilLight }
-}
+
  
 pulselight BiosigilLight
 {
@@ -82,9 +76,9 @@ pulselight BiosigilLight
     interval 2.0
     offset 0 16 0
 }
-object DemonQuakeSigil
+object QuadSigil
 {
-    frame SIG2 { light QuakeSigilLight }
+    frame Quak { light QuakeSigilLight }
 }
  
 pulselight QuakesigilLight
@@ -96,9 +90,9 @@ pulselight QuakesigilLight
     offset 0 16 0
 }
 
-object DemonHasteSigil
+object HasteSphere
 {
-    frame SIG4 { light HasteSigilLight }
+    frame TURB { light HasteSigilLight }
 }
 
 pulselight hastesigilLight
@@ -110,10 +104,7 @@ pulselight hastesigilLight
     offset 0 16 0
 }
 
-object DemonProtectionSigil
-{
-    frame SIG5 { light ProtectionSigilLight }
-}
+
 
 pulselight protectionsigilLight
 {
