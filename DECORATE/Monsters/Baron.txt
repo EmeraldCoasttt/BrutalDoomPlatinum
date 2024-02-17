@@ -37,7 +37,7 @@ ACTOR BaronofHell2 : BaronofHell Replaces BaronofHell
 	PainChance 25
 	Tag "Baron of Hell"
 //DropItem "DemonRunespawner", 5
-DropItem "Demonstrengthrune", 10
+//DropItem "Demonstrengthrune", 10
 	States
 	{
 	BeginCharge:

@@ -18,7 +18,7 @@ ACTOR PainElemental1 Replaces PainElemental
 	DeathSound "pain/death"
 	ActiveSound "pain/active"
     BloodType "Brutal_Blood", "SawBlood", "SawBlood" damagefactor "HangingHook", 0
-	DropItem "DemonStrengthRune" 5
+	//DropItem "DemonStrengthRune" 5
 	damagefactor "TeleportRemover", 0.0
 	DamageFactor "CauseSplash", 0.0 DamageFactor "CauseObjectsToSplashSlime", 0.0 DamageFactor "CauseObjectsToSplashNukage", 0.0
 	DamageFactor "CauseObjectsToSplashBlood", 0.0 DamageFactor "CauseObjectsToSplashLava", 0.0

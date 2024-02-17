@@ -2,7 +2,7 @@ ACTOR Spectro: BullDemon Replaces Spectre
 {
 	Mass 400
     -FASTER
-	DropItem "DemonStrengthRune" 2
+	//DropItem "DemonStrengthRune" 2
 	DropItem "SuperBlurSphere" 2
 	RenderStyle Add
     Alpha 0.45

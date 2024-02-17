@@ -43,7 +43,7 @@ ACTOR BullDemon: Demon Replaces Demon
 	MaxDropOffHeight 32
 	MeleeRange 100
 	Tag "Pinky Demon"
-	DropItem "DemonStrengthRune" 2
+	//DropItem "DemonStrengthRune" 2
 	States
 	{
 	

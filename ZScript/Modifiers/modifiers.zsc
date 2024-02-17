@@ -57,11 +57,6 @@ class Modifier_Mjolnir : BDPModifier
 			E.thing.destroy();
 		}
 		
-		If(e.thing && e.thing is "DemonProtectionSigil")
-		{
-			Actor.spawn("DemonStrengthRune",e.thing.pos);
-			E.thing.destroy();
-		}
 	}
 
 }
@@ -158,11 +153,6 @@ class Modifier_ManAndAHalf : BDPModifier
 			E.thing.destroy();
 		}
 		
-		If(e.thing && e.thing is "DemonStrengthSigil")
-		{
-			Actor.spawn("DemonStrengthRune",e.thing.pos);
-			E.thing.destroy();
-		}
 	}
 	
 }

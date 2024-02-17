@@ -44,7 +44,7 @@ ACTOR TheSpiderMastermind Replaces SpiderMastermind
 	+SHOOTABLE
 	Bloodtype "MastermindBlood"
 	//DropItem "DemonRunespawner", 25
-DropItem "Demonstrengthrune", 25
+//DropItem "Demonstrengthrune", 25
 	SeeSound "spider/sight"
 	AttackSound "spider/attack"
 	PainSound "SPIPAIN1"
@@ -686,7 +686,7 @@ ACTOR Titan
 	+SOLID
 	+MISSILEEVENMORE
 	+SHOOTABLE
-	DropItem "DemonStrengthRune" 25
+	//DropItem "DemonStrengthRune" 25
 	SeeSound "spider/sight"
 	AttackSound "spider/attack"
 	PainSound "SPIPAIN1"
