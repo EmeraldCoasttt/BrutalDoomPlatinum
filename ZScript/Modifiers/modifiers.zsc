@@ -253,3 +253,28 @@ class Modifier_UltraNightmare : BDPModifier
 	}
 
 }
+
+class Modifier_SequenceBreak : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "CYBST00";
+		BDPModifier.DisplayName "Sequence Break";
+		BDPModifier.Description "Doors can be kicked down whether you have the key or not.";
+	}
+	override void WorldTick()
+	{
+		for(int i = 0; i < MAXPLAYERS; i++)
+		{
+			if(!PlayerInGame[i]) continue;
+			PlayerInfo plr = players[i];
+			if(!plr) continue;
+			
+			let dplr = Brutal_PlayerBase(plr.mo);
+			if(!dplr) continue;
+			
+			dplr.sequencebreak = true;
+		}
+	}
+
+}

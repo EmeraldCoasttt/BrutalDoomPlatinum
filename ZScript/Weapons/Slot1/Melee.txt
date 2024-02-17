@@ -164,7 +164,11 @@ CLASS MeleeAttack : Actor
 			If(target && target.findinventory("powerstrength"))
 			{
 			A_spraydecal("crackmelee",36);
-				If(DoorBuster)
+				If(DoorBuster && target.findinventory("sequencebreaker"))
+				{
+					BDP_DoorBuster.DestroyDoor(target, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_All);
+				}
+				Else if(doorbuster)
 				{
 					BDP_DoorBuster.DestroyDoor(target, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_CheckKey);
 				}
@@ -262,8 +266,12 @@ CLASS Meleeattackslide : MeleeAttack
 			{
 			If(target && target.findinventory("powerstrength"))
 			{
-			A_spraydecal("crackmelee",36);
-			If(DoorBuster)
+				A_spraydecal("crackmelee",36);
+				If(DoorBuster && target.findinventory("sequencebreaker"))
+				{
+					BDP_DoorBuster.DestroyDoor(target, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_All);
+				}
+				Else if(doorbuster)
 				{
 					BDP_DoorBuster.DestroyDoor(target, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_CheckKey);
 				}

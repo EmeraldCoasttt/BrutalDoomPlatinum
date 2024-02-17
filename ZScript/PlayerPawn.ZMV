@@ -172,6 +172,7 @@ class Brutal_PlayerBase : PlayerPawn
 	bool shockfactor;
 	bool istactical;
 	bool oneupmanship;
+	bool sequencebreak;
 	bool ultranightmare;
 	int ultraseed;
 	bool alreadyblacklisted;
@@ -358,7 +359,10 @@ class Brutal_PlayerBase : PlayerPawn
 			}
 		}
 		
-		
+		If(sequencebreak && !findinventory("sequencebreaker"))
+		{
+			GiveInventory("SequenceBreaker",1);
+		}
 		
 		
 		If(shockfactor && level.time % 5 == 0)
@@ -649,7 +653,14 @@ class Brutal_PlayerBase : PlayerPawn
 		
 		If(boostlevel > 1)
 		{
-			BDP_DoorBuster.DestroyDoor(self, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_CheckKey);
+			If(sequencebreak)
+			{
+				BDP_DoorBuster.DestroyDoor(self, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_All);
+			}
+			Else
+			{
+				BDP_DoorBuster.DestroyDoor(self, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_CheckKey);
+			}
 			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,0,SXF_ABSOLUTEVELOCITY);
 			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,0,SXF_ABSOLUTEVELOCITY);
 			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,0,SXF_ABSOLUTEVELOCITY);
