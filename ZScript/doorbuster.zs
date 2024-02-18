@@ -396,6 +396,10 @@ Class WallChunk : Actor
 		TNT1 A 0 NODELAY
 		{
 			rollfactor = frandom(-25,25);
+			If(random(1,0) == 1)
+			{
+				bxflip = true;
+			}
 		}
 		TNT1 A 0 A_JUMP(255,"Spawn1","Spawn2","Spawn3","Spawn4","Spawn5","Spawn6","Spawn7","Spawn8","Spawn9","Spawn10","Spawn11","Spawn12");
 	Spawn1:
