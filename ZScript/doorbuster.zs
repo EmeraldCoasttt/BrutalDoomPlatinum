@@ -29,29 +29,35 @@ class BDP_DoorBuster : Thinker
 
 	int duration;
 	int init_duration;
-	uint debrisWait;
-	Vector2 v1;
-	Vector2 lineDelta;
-	double z;
+	Vector2 origin;
+	Sector debrisSector;
+	Vector2 doorDelta;
+	double doorLength;
+	double debrisZ;
+	int debrisNum;
 	class<Actor> debrisType;
+
 
 	static bool DestroyDoor(
 			Actor source, 
 			// distance: how far the effect extends. Source's radius is
 			// automatically added to this.
 			double distance = 64, 
-			name newCeilTex = '', 
+			name newCeilTex = 'BDASHWL', 
 			name newFloorTex = '', 
 			sound sfx = "world/destroywall", 
 			// DebrisDensity: determines the number of debris. For example at 8.0
 			// it'll spawn 1 piece of debris per each 8x8 square of the door
 			// surface area. Smaller values mean MORE debris, but 0 means "do not
 			// spawn". Debris position is still randomized regardless of this.
-			double debrisDensity = 16.0, //= 1 piece per each 16x16 square
+			double debrisDensity = 8.0, //= 1 piece per each 16x16 square
 			class<Actor> debrisType = "WallChunk",
+			class<Actor> AfterdebrisType = "WallChunk2",
 			// spawnAfter: if true, a separate thinker will keep spawning some debris
 			// along the top line of the door, falling down, once it's been destroyed
-			bool spawnAfter = true,
+			bool spawnAfterDebris = true,
+			// afterDebrisType: if null, uses particles, otherwise uses this actor class
+			class<Actor> afterDebrisType = null,
 			// breakLocks: interaction with locks
 			ELockBreaking breakLocks = LB_NONE,
 			// debug: print debug strings
@@ -164,49 +170,39 @@ class BDP_DoorBuster : Thinker
 		Vector2 checkPos = trac.HitLocation.xy;
 		let special = l.special;
 		double doorFloorZ = doorSector.floorplane.ZAtPoint(checkPos);
-		// Find the lowest nearby ceiling, so the raised door
-		// doesn't end up too high if another sector next to it
-		// is lower than the sector in front of it:
-		double nextLowestCeiling = l.frontsector.ceilingplane.ZAtPoint(checkPos);
+		// The door will only be raised to the lowest neighboring ceiling:
+		double nextLowestCeiling = doorSector.FindLowestCeilingSurrounding();
+		double doorHeight = nextLowestCeiling - doorFloorZ;
 		for (int i = 0; i < doorSector.Lines.Size(); i++)
 		{
 			Line sl = doorSector.Lines[i];
 			if (!sl)
 				continue;
-			// purge special (we don't want the door special to remain
-			// attached to any of the door sector's lines):
+			// purge door special from all lines of the doorsector
+			// that have it:
 			if (sl.special == special)
 			{
 				sl.special = 0;
 			}
-			Sector sec = sl.frontsector;
-			if (sec && sec != doorSector)
+			// Offset all top textures attached to the door sector
+			// that don't have the Upper Unpegged flag downward,
+			// to keep them in place when the sector moves:
+			if (sl.flags & Line.ML_DONTPEGTOP)
+				continue;
+			Side s = sl.sidedef[Line.front];
+			if (s)
 			{
-				double z = sec.ceilingplane.ZAtPoint(checkPos);
-				if (z < nextLowestCeiling && z > doorFloorZ)
-				{
-					nextLowestCeiling = z;
-				}
+				s.SetTextureYOffset(Side.top, -doorHeight);
 			}
-			sec = sl.backsector;
-			if (sec && sec != doorSector)
+			s = l.sidedef[Line.back];
+			if (s)
 			{
-				double z = sec.ceilingplane.ZAtPoint(checkPos);
-				if (z < nextLowestCeiling && z > doorFloorZ)
-				{
-					nextLowestCeiling = z;
-				}
+				s.SetTextureYOffset(Side.top, -doorHeight);
 			}
 		}
-		// Set Upper Unpegged flag, so that the texture doesn't move,
-		// in case the door is not depressed into the wall. This
-		// helps to create an impression that the door didn't move,
-		// since we want it to appear broken instead:
-		l.flags |= Line.ML_DONTPEGTOP;
 
 		// move plane:
-		double doorDistance = nextLowestCeiling - doorFloorZ;
-		doorsector.MoveCeiling(doorDistance, doorsector.ceilingplane.PointToDist(checkpos, nextLowestCeiling), 0, 1, false);
+		doorsector.MoveCeiling(doorHeight, doorsector.ceilingplane.PointToDist(checkpos, nextLowestCeiling), 0, 1, false);
 		// modify textures, if necessary:
 		if (newFloorTex)
 		{
@@ -252,15 +248,16 @@ class BDP_DoorBuster : Thinker
 			Source.A_Quake(5,12,0,800);
 		}
 		double doorAngle = atan2(l.delta.y, l.delta.x) + 90; 
+		double doorLength = l.delta.Length();
 		if (debrisDensity > 0)
 		{
 			FSpawnParticleParams junk;
 			class<Actor> debris = debristype;
-			double doorArea = l.delta.Length() * doorDistance;
+			double doorArea = doorLength * doorHeight;
 			int debrisNum = round((doorArea / (debrisDensity**2)));
 			if (debug)
 			{
-				Console.Printf("\cKDestoryDoor:\c-: Spawning debris. Door area: \cg%d\c- (%dx%d). Debris density: \cd1 per %dx%d\c-. Total debris: \cg%d\c-", doorArea, l.delta.Length(), doorDistance, debrisDensity, debrisDensity, debrisNum);
+				Console.Printf("\cKDestoryDoor:\c-: Spawning debris. Door area: \cg%d\c- (%dx%d). Debris density: \cd1 per %dx%d\c-. Total debris: \cg%d\c-", doorArea, doorLength, doorHeight, debrisDensity, debrisDensity, debrisNum);
 			}
 			if (!debristype)
 			{
@@ -272,7 +269,7 @@ class BDP_DoorBuster : Thinker
 			for (int i = debrisNum; i > 0; i--)
 			{
 				// Offset alongside the line:
-				vector3 junk_pos = (l.v1.p + l.delta * frandom[dbp](0.1, 0.9), doorFloorZ + doorDistance * frandom[dbp](0.1, 0.9));
+				vector3 junk_pos = (l.v1.p + l.delta * frandom[dbp](0.1, 0.9), doorFloorZ + doorHeight * frandom[dbp](0.1, 0.9));
 				vector3 junk_vel;
 				junk_vel.xy = Actor.RotateVector((15 * (frandom[dbp](0.05, 1.0)), 0), doorAngle + frandom[dbp](-15, 15));
 				junk_vel.z = junk.vel.xy.Length() * 0.5;
@@ -299,27 +296,30 @@ class BDP_DoorBuster : Thinker
 			}
 		}
 
-		if (spawnAfter)
+		if (spawnAfterDebris && debrisDensity > 0.0)
 		{
 			if (debug)
 				Console.Printf("\cKDestoryDoor:\c-: spawning lingering debris.");
-			BDP_DoorBuster.SpawnRemainingDebris(TICRATE * random[gbf](2, 4), l.v1.p, l.delta, nextLowestCeiling, debrisType);
+			BDP_DoorBuster.SpawnRemainingDebris(TICRATE * random[gbf](1, 4), doorsector, l.delta, debrisDensity * 10, afterDebrisType);
 		}
-
+		
 		return true;
 	}
 
-	static void SpawnRemainingDebris(int duration, Vector2 startPoint, Vector2 direction, double spawnHeight, class<Actor> debrisType)
+	static void SpawnRemainingDebris(int duration, Sector sec, Vector2 doorDelta, double density, class<Actor> debrisType)
 	{
 		let m = new('BDP_DoorBuster');
 		if (m)
 		{
 			m.duration = duration;
 			m.init_duration = duration;
-			m.v1 = startPoint;
-			m.lineDelta = direction;
-			m.z = spawnHeight;
 			m.debristype = debristype;
+			m.doorDelta = doorDelta;
+			m.doorLength = doorDelta.Length();
+			m.debrisNum = round(m.doorLength / density);
+			m.debrisSector = sec;
+			m.origin = sec.centerspot;
+			m.debrisZ = sec.ceilingplane.ZAtPoint(m.origin);
 		}
 	}
 	
@@ -334,16 +334,19 @@ class BDP_DoorBuster : Thinker
 		{
 			return;
 		}
-		if (debrisWait > 0)
+
+		for (int i = debrisNum; i > 0; i--)
 		{
-			debrisWait--;
-		}
-		else
-		{
-			vector3 junk_pos = (v1 + lineDelta * frandom[dbp](0.1, 0.9), z);
+			vector3 junk_pos = (origin, debrisz);
+			junk_pos.xy += doorDelta * frandom[dbp](-0.5, 0.5);
+
 			if (debrisType)
 			{
-				Actor.Spawn(debrisType, junk_pos);
+				let def = GetDefaultByType(debrisType);
+				if (def)
+				{
+					Actor.Spawn(debrisType, junk_pos - (0,0,def.height));
+				}
 			}
 			else
 			{
@@ -357,12 +360,13 @@ class BDP_DoorBuster : Thinker
 				junk.sizestep = -(junk.size / junk.lifetime);
 				// Offset alongside the line:
 				junk.color1 = BDP_DoorBuster.debrisColors[random[dbp](0, BDP_DoorBuster.debrisColors.Size()-1)];
-				junk.pos = junk_pos - (0,0,junk.size*0.5);
+				junk.pos = junk_pos;
 				junk.rollvel = frandom[dbp](-8, 8);
 				Level.SpawnParticle(junk);
 			}
-			debrisWait = (init_duration - duration) / 8;
 		}
+		debrisNum = round(debrisNum * (duration / double(init_duration)));
+
 		duration--;
 	}
 }
@@ -372,7 +376,6 @@ Class WallChunk : Actor
 	Default
 	{
 		Scale 0.45;
-		bouncetype "Doom";
 		Height 2;
 		Radius 2;
 		+noblockmap;
@@ -381,11 +384,15 @@ Class WallChunk : Actor
 		+rollcenter;
 		Gravity 0.60;
 		+thruactors;
+		+MOVEWITHSECTOR;
+		+noteleport;
+		+forcexybillboard;
 	}
 	float rollfactor;
 	States
 	{
 	Spawn:
+	ContinueSpawn:
 		TNT1 A 0 NODELAY
 		{
 			rollfactor = frandom(-25,25);
@@ -432,12 +439,39 @@ Class WallChunk : Actor
 		{
 			Roll = roll + rollfactor;
 		}
-		TNT1 "#" 0 A_JumpIf(pos.Z <= floorz, "Death");
+		TNT1 "#" 0 A_JumpIf(pos.Z <= floorz, "Floor");
 		LOOP;
-	Death:
-		WCHN "#" -1;
+	Floor:
+		WCHN "#" 1;
 		LOOP;
 		
 	}
+
+}
+
+
+CLASS WallChunk2 : WallChunk
+{
+	Default
+	{
+		Mass 500;
+	
+	}
+	States
+	{
+		Spawn:
+			TNT1 A 0 NODELAY
+			{
+				vel.x = frandom(-0.3,0.3);
+				vel.y = frandom(-0.3,0.3);
+			}
+		Goto ContinueSpawn;
+		
+		
+		
+	
+	}
+
+
 
 }

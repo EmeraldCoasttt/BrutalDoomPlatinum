@@ -661,11 +661,11 @@ class Brutal_PlayerBase : PlayerPawn
 		{
 			If(sequencebreak)
 			{
-				BDP_DoorBuster.DestroyDoor(self, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_All);
+				BDP_DoorBuster.DestroyDoor(self,  breakLocks: BDP_DoorBuster.LB_All);
 			}
 			Else
 			{
-				BDP_DoorBuster.DestroyDoor(self, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_CheckKey);
+				BDP_DoorBuster.DestroyDoor(self,  breakLocks: BDP_DoorBuster.LB_CheckKey);
 			}
 			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,0,SXF_ABSOLUTEVELOCITY);
 			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,0,SXF_ABSOLUTEVELOCITY);

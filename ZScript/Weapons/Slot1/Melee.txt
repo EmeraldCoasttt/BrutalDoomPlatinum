@@ -166,11 +166,11 @@ CLASS MeleeAttack : Actor
 			A_spraydecal("crackmelee",36);
 				If(DoorBuster && target.findinventory("sequencebreaker"))
 				{
-					BDP_DoorBuster.DestroyDoor(target, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_All);
+					BDP_DoorBuster.DestroyDoor(target, breakLocks: BDP_DoorBuster.LB_All);
 				}
 				Else if(doorbuster)
 				{
-					BDP_DoorBuster.DestroyDoor(target, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_CheckKey);
+					BDP_DoorBuster.DestroyDoor(target,  breakLocks: BDP_DoorBuster.LB_CheckKey);
 				}
 			}
 			If(target && target.findinventory("GREENBLOODONBOOTS"))
@@ -269,11 +269,11 @@ CLASS Meleeattackslide : MeleeAttack
 				A_spraydecal("crackmelee",36);
 				If(DoorBuster && target.findinventory("sequencebreaker"))
 				{
-					BDP_DoorBuster.DestroyDoor(target, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_All);
+					BDP_DoorBuster.DestroyDoor(target,  breakLocks: BDP_DoorBuster.LB_All);
 				}
 				Else if(doorbuster)
 				{
-					BDP_DoorBuster.DestroyDoor(target, newCeilTex: 'CEIL5_1', breakLocks: BDP_DoorBuster.LB_CheckKey);
+					BDP_DoorBuster.DestroyDoor(target,  breakLocks: BDP_DoorBuster.LB_CheckKey);
 				}
 			}
 			If(target && target.findinventory("GREENBLOODONBOOTS"))
