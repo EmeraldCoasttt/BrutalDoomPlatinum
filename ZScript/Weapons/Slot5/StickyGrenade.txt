@@ -4,13 +4,13 @@
 
 
 
-CLASS StickyGrenade : actor
+CLASS FreezeNade : actor
 {
 	Default
 	{
     Radius 4;
-	Height 15;
-	Speed 50;
+	Height 4;
+	Speed 30;
 
 
   //  +BLOODSPLATTER
@@ -18,16 +18,25 @@ CLASS StickyGrenade : actor
 	Damagefunction 0;
 	+MISSILE;
 	+FORCEXYBILLBOARD;
+	+rollsprite;
+	+ROLLCENTER;
+	Scale 0.2;
 	//+bloodlessimpact;
 	//+BLOODSPLATTER;
 	//+ripper;
-	Obituary "%o was stuck by a grenade";
+	Obituary "%o was stuck by a freeze grenade";
 	//SeeSound "weapons/chainsaw/loop"
 	//+ripper
 	+hittracer;
 	+explodeonwater;
 	+usebouncestate;
 	+skyexplode;
+	+bounceonwalls;
++bounceonfloors;
++bounceonceilings;
+bouncecount 5;
+-explodeonwater;
++canbouncewater;
 	}
 	
 
@@ -44,7 +53,7 @@ CLASS StickyGrenade : actor
 	Override void tick()
 	{
 	Super.tick();
-	A_spawnprojectile("GrenadeTrail", 5, 0, random (0, 360), 2, random (-80, -160));
+	A_spawnprojectile("GrenadeTrail", 10, 0, random (0, 360), 2, random (-80, -160));
 	If(Ihitsomething)
 		{
 		sawtimer = (sawtimer + 1);
@@ -115,11 +124,11 @@ CLASS StickyGrenade : actor
 	States
 	{
 	Spawn:
-		GBPJ AAAAAAAAABBBBBBBCCCCCDDDDDEEEEEFFFFFGGGGGHHHHH 1
+		GRND BBBBBBBB 2
 		{
 		//savedheight = floorz;
 		tracer = null;
-		
+		 A_SetRoll(roll+45);
 		}
 		Loop;
 		
@@ -128,7 +137,7 @@ CLASS StickyGrenade : actor
 
 		Xdeath:
 		TNT1 A 0;
-		TNT1 A 0 A_startsound("StickyGrenade/Hit");
+		//TNT1 A 0 A_startsound("StickyGrenade/Hit");
 		TNT1 A 0 
 		{
 		ihitsomething = true;
@@ -147,7 +156,7 @@ CLASS StickyGrenade : actor
 		}
 		}
 		Stuck:
-		GBPJ A 1 
+		GRND B 1 
 		{
 		
 		If(!tracer || tracer.health < 1)
@@ -191,10 +200,9 @@ CLASS StickyGrenade : actor
 		TNT1 A 0 
 		{
 		ihitsomething = true;
-		A_startsound("StickyGrenade/Hit");
+		//A_startsound("StickyGrenade/Hit");
 		tracer = null;
 		}
-		TNT1 A 0 A_checkfloor("deathfloor");
 		TNT1 A 0 A_checkceiling("deathceiling");
 		TNT1 A 0
 		{
@@ -202,13 +210,10 @@ CLASS StickyGrenade : actor
 		bnogravity = true;
 		}
 		StayDead:
-		GBPJ A 1;
+		GRND B 1;
 		LOOP;
 		
-		Deathfloor:
-		
-		GBPJ B 1;
-		LOOP;
+
 		
 		Deathceiling:
 		TNT1 A 0
@@ -217,8 +222,7 @@ CLASS StickyGrenade : actor
 		vel.z = 6;
 		}
 		
-		GBPJ H 1;
-		LOOP;
+		Goto staydead;
 		
 	
 	ExplodeTime:
@@ -227,32 +231,16 @@ CLASS StickyGrenade : actor
 	busebouncestate = false;
 	If(tracer && stuck)
 	{
-	A_damagetracer(frandom(120,200),"explosiveimpact");
+	A_damagetracer(frandom(120,200),"Ice");
 	}
-	}
-		TNT1 A 0 
+		
+		If(pos.Z <= floorz)
 		{
-		A_startSound("StickyGrenade/Explode", 1);
+		
+			A_SpawnItemEx ("IceShardsSpawner",random(-32,32),random(-32,32),-2,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		}
-		EXPL A 0 Radius_Quake (8, 8, 0, 128, 0);//(intensity, duration, damrad, tremrad, tid)
-		TNT1 A 0 A_SpawnItemEx ("StickyGrenadeExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
-	   TNT1 A 0 A_spawnprojectile("ExplosionSplashSpawner");
-		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
-	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
-		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
-	    TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
-        TNT1 AAAAAAAAAA 0 A_spawnprojectile ("BDExplosionparticles", 0, 0, random (0, 360), 2, random (0, 360));
-		TNT1 AAAAAAA 0 A_spawnprojectile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (0, 90));
-	   	TNT1 AAAA 0 A_spawnprojectile ("SmallExplosionFlamesBlue", 0, 0, random (0, 360), 2, random (0, 360));
-
-		TNT1 AA 0;
-		TNT1 AAAAAAA 0 A_spawnprojectile ("ExplosionFlamesBlue", 0, 0, random (0, 360), 2, random (0, 360));
-        TNT1 AAAAAAAAAAAAAA 0 A_spawnprojectile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180));
-        TNT1 AAAAAA 0 A_spawnprojectile ("ExplosionParticleHeavy", 0, 0, random (0, 180), 2, random (0, 180));
-
-		//TNT1 A 0 A_startSound("FAREXPL", 3);
-
-	    TNT1 A 0 A_spawnprojectile ("ExplosionSmoke", 1, 0, random (0, 360), 2, random (50, 130));
+		}
+		TNT1 A 0 A_SpawnItemEx("FreezenadeExplosion", 0, 0 ,2.5);
 		TNT1 A 10;
 		stop;
 		
@@ -272,23 +260,22 @@ CLASS StickyGrenade : actor
 	{
 	tracer = null;
 	bhitowner = TRUE;
-	A_startsound("stickygrenade/hit",2);
+	A_startsound("IceNadeBounce",2);
 	}
 	Goto spawn;
 	
 	}
 }
 
-CLASS StickyGrenadeBouncy : StickyGrenade
+CLASS FreezeNadeAlt : Freezenade
 {
 Default
 {
-+bounceonwalls;
-+bounceonfloors;
-+bounceonceilings;
-bouncecount 5;
--explodeonwater;
-+canbouncewater;
+-bounceonwalls;
+-bounceonfloors;
+-bounceonceilings;
++explodeonwater;
+-canbouncewater;
 
 }
 }
@@ -312,15 +299,14 @@ CLASS GrenadeTrail : Actor
     +CLIENTSIDEONLY;
 	RenderStyle "Add";
     Scale 0.3;
-	Alpha 0.6;
+	Alpha 0.2;
 	Gravity 0;
-	translation "spiritfire";
 	}
 	States
 	{
     Spawn:
         TNT1 A 0;
-        FRFX KLMNOP 3 BRIGHT;
+        FRPB BCDEFGH 3 BRIGHT;
         Stop;
 	}
 }

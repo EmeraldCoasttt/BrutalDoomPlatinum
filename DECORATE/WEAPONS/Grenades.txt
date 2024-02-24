@@ -819,7 +819,7 @@ ACTOR GrenadeGib4: GrenadeGib1
 }
 
 //Cat's freezenades
-ACTOR Freezenade: HandGrenade
+ACTOR OldFreezenade: HandGrenade
 {
     BounceSound "IceNadeBounce"
 	DeathSound "none"
@@ -860,7 +860,7 @@ ACTOR Freezenade: HandGrenade
 	}
 }
 
-ACTOR FreezenadeAlt: Freezenade
+ACTOR OldFreezenadeAlt: OldFreezenade
 {
 	Speed 10
 	States

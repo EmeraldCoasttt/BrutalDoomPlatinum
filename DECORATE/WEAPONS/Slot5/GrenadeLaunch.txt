@@ -82,7 +82,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 			if (CountInv("Unloading") == 1) { return state("Unload"); }
 			if (CountInv("FiredPrimary") == 1) { return state("Fire"); }
 			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
-			if (CountInv("startdualwield") == 1) { return state("dualwield"); }
+			//if (CountInv("startdualwield") == 1) { return state("dualwield"); }
 			//A_checksprint;
 			return state("");
 		}
@@ -344,7 +344,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		TNT1 A 0 A_TakeInventory("Reloading", 1)
 		Goto StrapIdle
 		
-	Dualwield:
+	//Dualwield:
 		TNT1 A 0 A_takeinventory("startdualwield",1)
 		NULL A 0 A_jumpif(Countinv("StickyGrenadeSelected")==1, "backtomonke")
 		
