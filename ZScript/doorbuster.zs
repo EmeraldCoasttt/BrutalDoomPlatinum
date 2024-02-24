@@ -106,20 +106,13 @@ class BDP_DoorBuster : Thinker
 			return false; //somehow we hit the back of a line, abort
 		}
 
-		// Detect if a door and if locked:
-		int lock = l.locknumber;
+	// Detect if a door:
 		bool isDoor = false;
 		switch (l.special)
 		{
 		case Generic_Door:
-			lock = l.Args[4];
-			isDoor = true;
-			break;
 		case Door_LockedRaise:
 		case Door_Animated:
-			lock = l.Args[3];
-			isDoor = true;
-			break;
 		case Door_Open:
 		case Door_Raise:
 			isDoor = true;
@@ -129,22 +122,43 @@ class BDP_DoorBuster : Thinker
 		{
 			if (debug)
 			{
-				Console.Printf("\cKDestoryDoor:\c- this is not a door");
+				Console.Printf("\cKDoorBuster:\c- this is not a door");
 			}
 			return false;
 		}
+		// Detect if locked:
+		int lock = l.locknumber;
+		if (!lock)
+		{
+			switch (l.special)
+			{
+			case Generic_Door:
+				lock = l.Args[4];
+				break;
+			case Door_LockedRaise:
+			case Door_Animated:
+				lock = l.Args[3];
+				break;
+			}
+		}
+		/*if (debug)
+		{
+			Console.Printf("\cKDoorBuster:\c- Line special: \cd%d\c- | Lock: \cd%d\c- | Arguments: \cd%d\c-, \cd%d\c-, \cd%d\c-, \cd%d\c-, \cd%d\c-", 
+				l.special, lock, l.args[0], l.args[1], l.args[2], l.args[3], l.args[4]
+			);
+		}*/
 		if (lock)
 		{
 			if (breakLocks == LB_None)
 			{
 				if (debug)
-					Console.Printf("\cKDestoryDoor:\c- hit a locked door but isn't allowed to destroy them");
+					Console.Printf("\cKDoorBuster:\c- hit a locked door but isn't allowed to destroy them");
 				return false;
 			}
 			if (breakLocks == LB_CheckKey && !source.CheckKeys(lock, false, true))
 			{
 				if (debug)
-					Console.Printf("\cKDestoryDoor:\c- hit a locked door but has no key for it");
+					Console.Printf("\cKDoorBuster:\c- hit a locked door but has no key for it");
 				return false;
 			}
 		}
@@ -154,17 +168,104 @@ class BDP_DoorBuster : Thinker
 		{
 			if (debug)
 			{
-				Console.Printf("\cKDestoryDoor:\c- couldn't obtain the door sector");
+				Console.Printf("\cKDoorBuster:\c- couldn't obtain the door sector");
 			}
 			return false;
 		}
+
 		if (doorSector.PlaneMoving(Sector.ceiling))
 		{
 			if (debug)
 			{
-				Console.Printf("\cKDestoryDoor:\c- door is currently moving, don't bust");
+				Console.Printf("\cKDoorBuster:\c- door is currently moving, don't bust");
 			}
 			return false;
+		}
+
+		// Now to detect if this is actually a switch:
+		// If there's a tag attached to the line, it's most likely a switch,
+		// but we'll perform extra checks just in case.
+		// (Generic_Door has an exception where first argument is just a lighttag
+		// if its flags contain 128)
+		if (l.args[0] != 0 && !(l.special == Generic_Door && (l.args[2] & 128))) 
+		{
+			// Iterate through doorsector's tags. Check for an edge case
+			// when for some reason the line HAS a tag, but the sector
+			// with that tag is directly behind it (for example, it opens
+			// multiple sectors at the same time):
+			bool good;
+			int id;
+			for (int i = 0; (id = doorsector.GetTag(i)) != 0; i++)
+			{
+				// If the doorsector's tag matches the line's tag,
+				// we're good:
+				if (id == l.args[0])
+				{
+					good = true;
+					break;
+				}
+			}
+			// Otherwise do not break:
+			if (!good)
+			{
+				if (debug)
+					Console.Printf("\cKDoorBuster:\c- This is most likely a switch, not a door");
+				return false;
+			}
+		}
+
+		// SUCCESS! All checks passed, proceed to door busting.
+
+		// Handle light tag:
+		int lighttag;
+		switch(l.special)
+		{
+		case Door_Raise:
+			lighttag = l.args[3];
+			break;
+		case Generic_Door:
+			lighttag = l.args[0];
+			break;
+		case Door_LockedRaise:
+			lighttag = l.args[4];
+			break;
+		}
+		if (lighttag)
+		{
+			int brightest = doorsector.lightlevel;
+			for (int i = 0; i < doorSector.Lines.Size(); i++)
+			{
+				Line sl = doorSector.Lines[i];
+				if (!sl)
+					continue;
+				
+				Sector bs = sl.frontsector;
+				if (bs && bs.lightlevel > brightest)
+				{
+					brightest = bs.lightlevel;
+				}
+				bs = sl.backsector;
+				if (bs && bs.lightlevel > brightest)
+				{
+					brightest = bs.lightlevel;
+				}
+			}
+			if (debug)
+				Console.Printf("\cKDoorBuster:\c- Found lighttag \cd%d\c- (special \cy%d\c-). Brightness: \cd%d\c-", lighttag, l.special, brightest);
+			for (int i = 0; i < Level.Sectors.Size(); i++)
+			{
+				Sector bs = Level.Sectors[i];
+				if (!bs)
+					continue;
+				int id;
+				for (int s = 0; (id = bs.GetTag(s)) != 0; s++)
+				{
+					if (id == lighttag)
+					{
+						bs.SetLightLevel(brightest);
+					}
+				}
+			}
 		}
 
 		Vector2 checkPos = trac.HitLocation.xy;
