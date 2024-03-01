@@ -20,5 +20,6 @@ blursphere,secret,2
 quadsigil,secret,2
 hastesphere,secret,2
 MG42Pickup,secret,3
+modifierspawner,secret,3
 smgspawner,secret,1
 boosterframe,secret,1

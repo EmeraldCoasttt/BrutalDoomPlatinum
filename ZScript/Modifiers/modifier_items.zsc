@@ -1,3 +1,18 @@
+class modifierspawner : randomspawner
+{
+	Default
+	{
+		Dropitem "MjolnirPickup";
+		Dropitem "ShockFactorPickup";
+		Dropitem "PerfectHatredPickup";
+		Dropitem "ManAndAHalfPickup";
+		Dropitem "GunSlingerPickup";
+		Dropitem "OneUpmanshipPickup";
+		DropItem "UltraNightmarePickup";
+		DropItem "SequenceBreakPickup";
+		DropItem "MaximumOverdrivePickUp";
+	}
+}
 class BDPModifierpickup : Inventory
 {
 	string modifierclass;
@@ -6,7 +21,7 @@ class BDPModifierpickup : Inventory
 	property modifiermessage : modifiermessage;
     Default
     {
-        Inventory.MaxAmount 1;
+        Inventory.MaxAmount 666;
 		BDPModifierpickup.modifierclass "Modifier_Example2";
 		Inventory.pickupsound "null";
 		Inventory.pickupmessage "You got a Modifier!";
@@ -46,7 +61,7 @@ class MjolnirPickup : BDPModifierpickup
 {
  Default
     {
-        Inventory.MaxAmount 1;
+        
 		BDPModifierpickup.modifierclass "Modifier_Mjolnir";
 		translation "200:207=[0,215,215]:[0,47,47]","240:247=244:247";
 		BDPModifierpickup.modifiermessage "Mjolnir Unlocked!";
@@ -58,7 +73,7 @@ class ShockFactorPickup : BDPModifierpickup
 {
  Default
     {
-        Inventory.MaxAmount 1;
+        
 		BDPModifierpickup.modifierclass "Modifier_ShockFactor";
 		translation "200:207=[236,0,0]:[81,0,0]","240:247=244:247";
 		BDPModifierpickup.modifiermessage "Shock Factor Unlocked!";
@@ -70,7 +85,7 @@ class PerfectHatredPickup : BDPModifierpickup
 {
  Default
     {
-        Inventory.MaxAmount 1;
+        
 		BDPModifierpickup.modifierclass "Modifier_PerfectHatred";
 		translation "200:207=[130,0,0]:[60,0,0]","240:247=244:247";
 		BDPModifierpickup.modifiermessage "Perfect Hatred Unlocked!";
@@ -82,7 +97,7 @@ class ManAndAHalfPickup : BDPModifierpickup
 {
  Default
     {
-        Inventory.MaxAmount 1;
+        
 		BDPModifierpickup.modifierclass "Modifier_ManAndAHalf";
 		translation "200:207=[117,117,117]:[0,0,0]","240:247=244:247";
 		BDPModifierpickup.modifiermessage "Man And A Half Unlocked!";
@@ -94,7 +109,7 @@ class GunSlingerPickup : BDPModifierpickup
 {
  Default
     {
-        Inventory.MaxAmount 1;
+        
 		BDPModifierpickup.modifierclass "Modifier_Gunslinger";
 		translation "200:207=[79,149,0]:[0,77,81]","240:247=244:247";
 		BDPModifierpickup.modifiermessage "Gunslinger Unlocked!";
@@ -106,7 +121,7 @@ class OneUpmanshipPickup : BDPModifierpickup
 {
  Default
     {
-        Inventory.MaxAmount 1;
+        
 		BDPModifierpickup.modifierclass "Modifier_OneUpmanship";
 		translation "200:207=[19,210,149]:[0,51,51]","240:247=244:247";
 		BDPModifierpickup.modifiermessage "One-Upmanship Unlocked!";
@@ -118,7 +133,7 @@ class UltranightmarePickup : BDPModifierpickup
 {
  Default
     {
-        Inventory.MaxAmount 1;
+        
 		BDPModifierpickup.modifierclass "Modifier_Ultranightmare";
 		translation "200:207=[19,210,149]:[0,51,51]","240:247=244:247";
 		BDPModifierpickup.modifiermessage "Ultra Nightmare Unlocked!";
@@ -130,7 +145,7 @@ class SequenceBreakPickup : BDPModifierpickup
 {
  Default
     {
-        Inventory.MaxAmount 1;
+        
 		BDPModifierpickup.modifierclass "Modifier_SequenceBreak";
 		BDPModifierpickup.modifiermessage "Sequence Break Unlocked!";
 		+floatbob;
@@ -140,7 +155,7 @@ class MaximumOverdrivePickup : BDPModifierpickup
 {
  Default
     {
-        Inventory.MaxAmount 1;
+        
 		BDPModifierpickup.modifierclass "Modifier_MaximumOverdrive";
 		BDPModifierpickup.modifiermessage "Maximum Overdrive Unlocked!";
 		+floatbob;
