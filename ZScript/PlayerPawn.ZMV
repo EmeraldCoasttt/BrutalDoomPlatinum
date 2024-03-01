@@ -162,6 +162,12 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	bool mercilessgranted;
 	
+	
+	//Flashlight
+	
+	bool flashon;
+	int flashtimer;
+	
 	//Skulls
 	bool spawnwitharmor;
 	bool spawnberserked;
@@ -229,6 +235,36 @@ class Brutal_PlayerBase : PlayerPawn
 		{
 		Super.playerthink();
 		
+		
+		If(health >= 1)
+		{
+			If(flashtimer > 0)
+			{
+				flashtimer--;
+			}
+			
+			If(findinventory("switchflashlight"))
+			{
+				If(flashon && !flashtimer)
+				{
+					flashon = false;
+					A_startsound("FLASHOFF",5);
+					A_takeinventory("BDP_flashlight",1);
+					flashtimer = 20;
+				}
+				Else if(!flashtimer)
+				{
+					flashon = true;
+					A_startsound("FLASHON",5);
+					A_giveinventory("BDP_flashlight",1);
+					flashtimer = 20;
+				}
+				Takeinventory("switchflashlight",1);
+			}
+			
+		
+		
+		}
 		
 		currentkills = Level.Killed_monsters;
 		If(currentkills > previouskills)
@@ -1512,4 +1548,230 @@ Class Speedline : Actor
 	
 	}
 
+}
+
+//DarkDoomZ flashlight!
+
+class BDP_Flashlight : CustomInventory {
+	BDP_Spotlight SelfLight1, SelfLight2;
+	bool Active;
+	int Quality,OldQuality;
+	int Type,OldType;
+	int Mount,OldMount;
+	int R,G,B;
+	int beamInner, beamOuter, beamRadius;
+	int spillInner, spillOuter, spillRadius;
+	double offsetAngle, offsetZ;
+	int inertia;
+	double spring, damping;
+
+	default {
+		+INVENTORY.PERSISTENTPOWER;
+		+inventory.autoactivate;
+	}
+	Override void detachfromowner()
+	{
+	
+	if(SelfLight1) { SelfLight1.Destroy(); }
+	if(SelfLight2) { SelfLight2.Destroy(); }
+	Super.detachfromowner();
+	}
+
+	override void DoEffect() {
+		super.DoEffect();
+		
+
+				if(SelfLight1) { SelfLight1.Destroy(); }
+				if(SelfLight2) { SelfLight2.Destroy(); }
+			
+
+			
+				//	R = 255;
+				//	G = 214;
+				//	B = 170;
+				//	beamInner = 0;
+				//	beamOuter = 25;
+				//	beamRadius = 384;
+					//spillInner = 15;
+				//	spillOuter = 45;
+				//	spillRadius = 128;
+				//	break;
+				//case 1: //Halogen
+					R = 255;
+					G = 237;
+					B = 162;
+					beamInner = 0;
+					beamOuter = 20;
+					beamRadius = 512;
+					spillInner = 10;
+					spillOuter = 60;
+					spillRadius = 384;
+					//break;
+				/*case 2: //LED
+					R = 248;
+					G = 255;
+					B = 255;
+					beamInner = 0;
+					beamOuter = 15;
+					beamRadius = 640;
+					spillInner = 15;
+					spillOuter = 75;
+					spillRadius = 256;
+					break;
+				case 3: //Red filter
+					R = 192;
+					G = 36;
+					B = 34;
+					beamInner = 0;
+					beamOuter = 20;
+					beamRadius = 256;
+					spillInner = 10;
+					spillOuter = 60;
+					spillRadius = 128;
+					break;
+					*/
+			
+
+			/*
+				case 0: //Handheld
+					spring = 0.25;
+					damping = 0.2;
+					inertia = 4;
+					offsetAngle = 0;
+					offsetZ = -13;
+					break;
+				case 1: //Left Shoulder
+					spring = 0.35;
+					damping = 0.75;
+					inertia = 2;
+					offsetAngle = 80;
+					offsetZ = -5;
+					break;
+				case 2: //Right Shoulder
+					spring = 0.35;
+					damping = 0.75;
+					inertia = 2;
+					offsetAngle = -80;
+					offsetZ = -5;
+					break;
+				case 3: //Helmet
+				*/
+					spring = 1;
+					damping = 1;
+					inertia = 1;
+					offsetAngle = 0;
+					offsetZ = 4;
+					//break;
+			
+
+			
+					if(!SelfLight1) {
+						SelfLight1 = BDP_Spotlight(Spawn("BDP_Spotlight",owner.pos,false));
+						SelfLight1.FollowTarget = owner;
+						SelfLight1.args[DynamicLight.LIGHT_RED] = R; //R
+						SelfLight1.args[DynamicLight.LIGHT_GREEN] = G; //G
+						SelfLight1.args[DynamicLight.LIGHT_BLUE] = B; //B
+						SelfLight1.args[DynamicLight.LIGHT_INTENSITY] = (beamRadius + spillRadius) / 2; //Radius
+						SelfLight1.SpotInnerAngle = (beamInner + spillInner) / 2;
+						SelfLight1.SpotOuterAngle = (beamOuter + spillOuter) / 2;
+						SelfLight1.angle = owner.angle;
+						SelfLight1.pitch = owner.pitch;
+						SelfLight1.spring = spring;
+						SelfLight1.damping = damping;
+						SelfLight1.inertia = inertia;
+						SelfLight1.offsetAngle = offsetAngle;
+						SelfLight1.offsetZ = offsetZ;
+					
+			
+					if(!SelfLight1) {
+						SelfLight1 = BDP_Spotlight(Spawn("BDP_Spotlight",owner.pos,false));
+						SelfLight1.FollowTarget = owner;
+						SelfLight1.args[DynamicLight.LIGHT_RED] = R; //R
+						SelfLight1.args[DynamicLight.LIGHT_GREEN] = G; //G
+						SelfLight1.args[DynamicLight.LIGHT_BLUE] = B; //B
+						SelfLight1.args[DynamicLight.LIGHT_INTENSITY] = beamRadius; //Radius
+						SelfLight1.SpotInnerAngle = beamInner;
+						SelfLight1.SpotOuterAngle = beamOuter;
+						SelfLight1.angle = owner.angle;
+						SelfLight1.pitch = owner.pitch;
+						SelfLight1.spring = spring;
+						SelfLight1.damping = damping;
+						SelfLight1.inertia = inertia;
+						SelfLight1.offsetAngle = offsetAngle;
+						SelfLight1.offsetZ = offsetZ;
+					
+				
+						SelfLight2 = BDP_Spotlight(Spawn("BDP_Spotlight",owner.pos,false));
+						SelfLight2.FollowTarget = owner;
+						SelfLight2.args[DynamicLight.LIGHT_RED] = int(R * 0.75); //R
+						SelfLight2.args[DynamicLight.LIGHT_GREEN] = int(G * 0.75); //G
+						SelfLight2.args[DynamicLight.LIGHT_BLUE] = int(B * 0.75); //B
+						SelfLight2.args[DynamicLight.LIGHT_INTENSITY] = spillRadius; //Radius
+						SelfLight2.SpotInnerAngle = spillInner;
+						SelfLight2.SpotOuterAngle = spillOuter;
+						SelfLight2.angle = owner.angle;
+						SelfLight2.pitch = owner.pitch;
+						SelfLight2.spring = spring;
+						SelfLight2.damping = damping;
+						SelfLight2.inertia = inertia;
+						SelfLight2.offsetAngle = offsetAngle;
+						SelfLight2.offsetZ = offsetZ;
+					
+			}
+		}
+		else {
+			if(SelfLight1) { SelfLight1.Destroy(); }
+			if(SelfLight2) { SelfLight2.Destroy(); }
+		}
+	}
+
+	States {
+	Spawn:
+		ROCK A -1;
+		stop;
+Use:
+		TNT1 A 1;
+		loop;
+	}
+
+
+}
+
+
+class BDP_Spotlight : DynamicLight {
+	actor FollowTarget;
+	double vela, velp;
+	double spring, damping;
+	double offsetAngle, offsetZ;
+	vector3 targetPos;
+	int inertia;
+
+	default {
+		DynamicLight.Type "Point";
+		+DYNAMICLIGHT.ATTENUATE;
+		+DYNAMICLIGHT.SPOT
+	}
+	override void Tick() {
+		super.Tick();
+		if(followTarget && followTarget.player) {
+			if(inertia == 0) inertia = 1;
+			targetpos = followTarget.vec3Angle(
+				2 + (6 * abs(sin(offsetAngle))),
+				followtarget.angle + offsetAngle,
+				followtarget.player.viewheight + offsetZ,
+				false);
+			vel.x += DampedSpring(pos.x, targetpos.x, vel.x, 1, 1);
+			vel.y += DampedSpring(pos.y, targetpos.y, vel.y, 1, 1);
+			vel.z += DampedSpring(pos.z, targetpos.z, vel.z, 1, 1);
+			vela  += DampedSpring(angle, followTarget.angle, vela, spring, damping);
+			velp  += DampedSpring(pitch, followTarget.pitch, velp, spring, damping);
+			setOrigin(pos + vel, true);
+			A_SetAngle(angle + (vela / inertia), true);
+			A_SetPitch(pitch + (velp / inertia), true);
+		}
+	}
+
+	double DampedSpring(double p, double r, double v, double k, double d) {
+		return -(d * v) - (k * (p - r));
+	}
 }
