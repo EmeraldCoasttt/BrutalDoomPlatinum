@@ -71,7 +71,7 @@
 						if ( tbox[3] < l.bbox[2] ) continue;
 						if ( tbox[0] < l.bbox[1] ) continue;
 						if ( tbox[1] > l.bbox[0] ) continue;
-						if ( DoxBDHandler.BoxOnLineSide(tbox[0],tbox[1],tbox[2],tbox[3],l) != -1 ) continue;
+						if ( BDPHandler.BoxOnLineSide(tbox[0],tbox[1],tbox[2],tbox[3],l) != -1 ) continue;
 						blocked = true;
 						break;
 					}
@@ -155,7 +155,7 @@
 		double angle;
 	}
 	
-	class DoxBDHandler : EventHandler
+	class BDPHandler : EventHandler
 	{
 	
 	static clearscope int PointOnLineSide( Vector2 p, Line l )
