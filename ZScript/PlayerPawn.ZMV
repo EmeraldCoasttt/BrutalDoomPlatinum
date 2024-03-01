@@ -3,10 +3,6 @@ class Brutal_PlayerBase : PlayerPawn
 {
 	//=========================
 	//Common
-	
-	const BOB_MIN_REALIGN 	 = 0.25f;
-	const GROUND_DASH_COOLER = 18;
-	
 	//Movement General
 	bool	Pain;
 	double	ViewAngleDelta;
