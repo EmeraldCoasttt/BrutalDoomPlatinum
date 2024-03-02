@@ -62,7 +62,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		SHTN A 0 A_JumpIfInventory("NoShotgunStrap",1,"Ready")
 		
 		GLR3 FEDCBAGHIJKLLLKJIHGABCDDDCBAGHIJJJIHG 1 {
-			A_WeaponReady(WRF_ALLOWRELOAD);
+			A_WeaponReadyDX(WRF_ALLOWRELOAD);
 						
 			if (CountInv("Kicking") == 1) {
 				if (CountInv("IsCrouching") == 1) {
@@ -141,7 +141,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		TNT1 A 0 A_CheckIfAmmo("GLAmmo")
 		TNT1 A 0 
 		TNT1 A 0 a_alertmonstersDX
-		TNT1 A 0 A_jumpif(Countinv("StickyGrenadeSelected")==1, "firesticky")
+		//TNT1 A 0 A_jumpif(Countinv("StickyGrenadeSelected")==1, "firesticky")
 		TNT1 A 0 A_TakeAmmo("GLAmmo", 1)
 		GLAN A 0 A_FireCustomMissile("RedFlareSpawn",-5,0,0,0)
 		TNT1 AAAAA 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, -1, 0, 0, random(-9,9))
@@ -166,7 +166,14 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		{
 		A_ZoomFactor(1.0);
 		//A_print("BEQUEATH");
-		A_FireCustomMissile("ShortGrenade", 0, 0, 0, 0);
+		If(Countinv("StickyGrenadeSelected")==1)
+		{
+			A_FireCustomMissile("LeadBurster", 0, 0, 0, 0);
+		}
+		Else
+		{
+			A_FireCustomMissile("ShortGrenade", 0, 0, 0, 0);
+		}
 	//A_FireCustomMissile("stickygrenade", 0, 0, 0, 0);
 		A_SetPitch(pitch-10, SPF_INTERPOLATE);
 		}
@@ -202,7 +209,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		A_ZoomFactor(1.0);
 		//A_print("BEQUEATH");
 		//A_FireCustomMissile("ShortGrenade", 0, 0, 0, 0);
-	A_FireCustomMissile("stickygrenade", 0, 0, 0, 0);
+	A_FireCustomMissile("leadburster", 0, 0, 0, 0);
 		A_SetPitch(pitch-10, SPF_INTERPOLATE);
 		}
 		GL2F F 1 BRIGHT A_SetPitch(2 + pitch, SPF_INTERPOLATE)
@@ -216,7 +223,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		TNT1 A 0 A_CheckIfAmmo("GLAmmo")
 		TNT1 A 0
 		TNT1 A 0 A_TakeAmmo("GLAmmo", 1)
-		TNT1 A 0 A_jumpif(Countinv("StickyGrenadeSelected")==1, "altfiresticky")
+		//TNT1 A 0 A_jumpif(Countinv("StickyGrenadeSelected")==1, "altfiresticky")
 		GLAN A 0 A_FireCustomMissile("RedFlareSpawn",-5,0,0,0)
 		TNT1 AAAAA 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, -1, 0, 0, random(-9,9))
 		TNT1 AA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, -1, 0, 0, random(-9,9))
@@ -238,7 +245,17 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		}
 		GLAF A 1 BRIGHT 
 		GLAN A 0 A_ZoomFactor(1.0)
-		GLAN A 0 A_FireCustomMissile("GrenadeMissile", 0, 1, 0, 0)
+		GLAN A 0 
+		{
+		If(Countinv("StickyGrenadeSelected")==1)
+		{
+			A_FireCustomMissile("LeadBurster", 0, 0, 0, 0);
+		}
+		Else
+		{
+		A_FireCustomMissile("GrenadeMissile", 0, 1, 0, 0);
+		}
+		}
 		GLAN A 0 A_SetPitch(pitch-10, SPF_INTERPOLATE)
 		GLAF F 1 BRIGHT A_SetPitch(2 + pitch, SPF_INTERPOLATE)
 		GLAF EDCB 1 A_SetPitch(2 + pitch, SPF_INTERPOLATE)
@@ -344,7 +361,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		TNT1 A 0 A_TakeInventory("Reloading", 1)
 		Goto StrapIdle
 		
-	//Dualwield:
+	Dualwield:
 		TNT1 A 0 A_takeinventory("startdualwield",1)
 		NULL A 0 A_jumpif(Countinv("StickyGrenadeSelected")==1, "backtomonke")
 		
@@ -365,7 +382,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		TNT1 A 0 {
 		ChangeAmmoIcon1("ROCKE0");
 		A_GiveInventory("StickyGrenadeSelected",1);
-		A_Print("\cySticky Grenades",2);
+		A_Print("\cdLeadburster Grenades",2);
 		}
 		GLAN A 0 A_PlaySound("Weapons/GrenadeLoad")
 		GLR4 W 1

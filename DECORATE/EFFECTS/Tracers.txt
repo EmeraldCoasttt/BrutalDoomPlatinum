@@ -86,6 +86,46 @@ Actor RevolverTracerWeak : RevolverTracer
 	damage (random(17,20))
 }
 
+Actor LeadBursterTracer 
+{
+	Projectile
+	Speed 140
+	renderstyle ADD
+	alpha 0.9
+	scale .15
+	radius 5
+	height 5
+	-DONTSPLASH
+	+BLOODSPLATTER 
+	-NOEXTREMEDEATH
+	damage (random(10,15))
+	DamageType "Shotgun"
+	Decal "BulletDecalNew1"
+	Deathsound "fistwallKD"
+	+bounceonwalls
+	+bounceonceilings
+	+bounceonfloors
+	Bouncecount 5
+	+hitowner
+	+DONTBOUNCEONSKY
+	bouncefactor 1.0
+	+ripper
+	States
+		{
+		Spawn:
+			TRAC A 10 BRIGHT
+		Spawn2:
+			TRAC A 1 A_fadeout(0.07)
+			LOOP
+		Death:
+		XDeath:
+		TNT1 A 0 A_SpawnItemEx ("RicoChet",0,0,-5,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 20
+		STOP
+		}
+
+}
+
 Actor DecorativeTracer: Tracer
 {
 //-DONTSPLASH

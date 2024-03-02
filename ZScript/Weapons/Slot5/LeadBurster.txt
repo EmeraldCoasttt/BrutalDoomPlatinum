@@ -1,0 +1,33 @@
+Class LeadBurster: Actor
+{
+	Default
+	{
+	Radius 4;
+	Height 4;
+	Speed 50;
+	Damagefunction 0;
+    +MISSILE;
+  //  +BLOODSPLATTER
+    Gravity 0.7;
+    
+	+SKYEXPLODE;
+	+EXPLODEONWATER;
+	DeathSound "SSHFIRE";
+	Obituary "$OB_MPROCKET";
+	Scale 0.7;
+	}
+	States
+	{
+	Spawn:
+		GBPJ AAAAAAAAABBBBBBBCCCCCDDDDDEEEEEFFFFFGGGGGHHHHH 1 A_CustomMissile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
+		Loop;
+	
+	
+	Death:
+	XDeath:
+	Crash:
+	TNT1 A 0 A_startsound("DistantFireSoundSSG",7);
+	TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_spawnprojectile("Leadburstertracer",0,0,frandom(0,360),CMF_AIMDIRECTION,frandom(0,360));
+	Stop;
+	}
+}
