@@ -37,9 +37,13 @@ CLASS HellishMissileLauncher : BrutalWeapon
 				owner.giveinventory("jetpackmoving",1);
 					owner.a_startsound("JETLOOP",6,CHANF_LOOPING);
 				jetpackon = true;
-				If(owner.vel.z < 20)
+				If(owner.vel.z < 15 && owner.vel.z > -10)
 				{
-					owner.vel.z = (owner.vel.z + 1.5);
+					owner.vel.z = (owner.vel.z + 1.35);
+				}
+				Else if(owner.vel.z < 15)
+				{
+					owner.vel.z = (owner.vel.z + 3);
 				}
 				if (level.time % 6 == 0)
 				{
