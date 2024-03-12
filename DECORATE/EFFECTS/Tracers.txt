@@ -264,7 +264,7 @@ Spawn:
 
 ACTOR LeadBursterTracer2 : MonsterTracer
 {
-damage (random(9,9))
+damage (random(19,19))
 Damagetype minigun
 
 }

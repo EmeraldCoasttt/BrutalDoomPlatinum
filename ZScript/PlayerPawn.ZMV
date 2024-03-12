@@ -210,7 +210,7 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	Override int takespecialdamage(Actor inflictor, Actor source, int damage, Name damagetype)
 		{
-			If(inflictor is "grenadeexplosion" && source == self)
+			If(inflictor is "grenadeexplosion" && source == self || inflictor is "leadburstertracer2")
 			{
 				Damage = (damage * 0.25);
 			}
