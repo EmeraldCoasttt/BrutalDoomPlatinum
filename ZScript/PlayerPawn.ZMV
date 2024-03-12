@@ -757,7 +757,7 @@ class Brutal_PlayerBase : PlayerPawn
 			{
 				Vel.Z = 3.;
 			}
-			else if (player.onground && player.jumpTics == 0 || doublejumpready && !oldjump && !alreadyjumped)
+			else if (player.onground && player.jumpTics == 0 || doublejumpready && !oldjump && !alreadyjumped && !(player.readyweapon is "hellishmissilelauncher" && countinv("gas") > 0))
 			{
 				double jumpvelz = JumpZ * 35 / TICRATE;
 				double jumpfac = 0;

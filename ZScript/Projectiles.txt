@@ -18,6 +18,7 @@ Class BrutalProjectile : Actor
 		BrutalProjectile.rotspeed 15;
 		BrutalProjectile.MaxRotAngle 360;
 		BrutalProjectile.offset 0,0,0;
+		+forcexybillboard;
 	}
 	
 	Override int specialmissilehit(actor Victim)
