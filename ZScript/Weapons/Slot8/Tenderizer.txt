@@ -322,7 +322,7 @@ CLASS Tenderizer : Brutalweapon
 			{
 				A_SetPitch(pitch-2.333, SPF_INTERPOLATE);
 				invoker.owner.A_setangle(invoker.owner.angle-0.83333,SPF_INTERPOLATE);
-				invoker.owner.vel.z = (invoker.owner.vel.z - 40);
+				//invoker.owner.vel.z = (invoker.owner.vel.z - 40);
 			}
 		FireHold:
 		//	HAMR G 1;
