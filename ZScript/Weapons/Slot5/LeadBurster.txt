@@ -28,6 +28,83 @@ Class LeadBurster: Actor
 	Crash:
 	TNT1 A 0 A_startsound("DistantFireSoundSSG",7);
 	TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_spawnprojectile("Leadburstertracer",0,0,frandom(0,360),CMF_AIMDIRECTION,frandom(0,360));
+	TNT1 A 0 A_spawnitemex("leadbursterexplosion");
 	Stop;
 	}
+}
+
+
+Class LeadBurster2 : Leadburster
+{
+	Default
+	{
+		DeathSound "NONE";
+	}
+	int anglecount;
+	int spincount;
+	int bulletoffset;
+	States
+	{
+		Death:
+		XDeath:
+		Crash:
+		TNT1 A 0 A_checkceiling("DeathCeiling");
+			GBPJ G 25
+			{
+				bulletoffset = 8;
+				bnogravity = true;
+			}
+		Goto fireloop;
+		DeathCeiling:
+			GBPJ C 25
+			{
+				bnogravity = true;
+				bulletoffset = -8;
+			}
+		FireLoop:
+		GBPJ "#" 1
+		{
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,0);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,-10);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,-20);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,-40);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,-60);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,10);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,20);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,40);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,60);
+			A_StartSound("SMGFIRE", 1);
+			angle = (angle + 5.625);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,0);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,-10);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,-20);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,-40);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,-60);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,10);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,20);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,40);
+			A_spawnprojectile("leadburstertracer2",bulletoffset,0,angle,CMF_AIMDIRECTION,60);
+			angle = (angle + 5.625);
+			anglecount++;
+		}
+		TNT1 "#" 0
+		{
+			If(anglecount >= 48)
+			{
+				anglecount = 0;
+				spincount++;
+				return resolvestate("death2");
+			}
+			Else
+			{
+				return resolvestate("fireloop");
+			}
+		}
+		LOOP;
+		
+		Death2:
+		TNT1 A 0 A_spawnitemex("leadbursterexplosion");
+		STOP;
+	}
+
 }

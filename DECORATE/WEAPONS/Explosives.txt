@@ -489,6 +489,36 @@ ACTOR TripMineExplosion
 	    Stop
 	}
 }
+
+ACTOR LeadBursterExplosion
+{
+
+
+    +NOGRAVITY
+   
+	+GHOST
+	+SPECTRAL
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_AlertMonsters
+		TNT1 AA 0 A_SpawnItemEx ("PipebombPiece2",random(5,-5),random(6,1),random(5,2),random(14,3),random(15,6),random(3,20),random(360,1),SXF_NOCHECKPOSITION,0)
+        TNT1 AA 0 A_SpawnItemEx ("PipebombPiece",random(5,-5),random(6,1),random(5,2),random(14,3),random(15,6),random(3,20),random(360,1),SXF_NOCHECKPOSITION,0)
+
+		TNT1 A 0 A_CustomMissile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
+		
+		TNT1 AA 0 A_AlertMonsters
+		
+		TNT1 A 0
+		//TNT1 A 0 A_PlaySound("FAREXPL", 3)
+		//TNT1 AAAAAAAAAAAAA 3 A_CustomMissile ("HeavyExplosionSmoke", 2, 0, random (0, 360), 2, random (0, 360))
+		Stop	
+	Death:
+	    tnt1 a 0
+	    Stop
+	}
+}
 		
 actor LiquidExplosionEffectSpawner
 {

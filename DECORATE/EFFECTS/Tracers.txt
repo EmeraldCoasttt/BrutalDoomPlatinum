@@ -262,6 +262,14 @@ Spawn:
 }
 
 
+ACTOR LeadBursterTracer2 : MonsterTracer
+{
+damage (random(9,9))
+Damagetype minigun
+
+}
+
+
 
 Actor MeatShieldTracer: Tracer
 {
