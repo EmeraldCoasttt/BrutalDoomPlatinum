@@ -3,8 +3,40 @@
 // Arachnotron2
 //
 //===========================================================================
-ACTOR Arachnotron2: Arachnotron1 2542
+ACTOR Arachnotron2 2542
 {
+	Monster
+	+FLOORCLIP
+	+BOSSDEATH
+    GibHealth 20
+	Radius 45
+	Height 74
+    damagefactor "Crush", 10.0
+	damagefactor "Avoid", 0.0
+	damagefactor "GibRemoving", 0.0 PainChance "HangingHook", 0
+	SeeSound "baby/sight"
+	PainSound "SPIPAIN2"
+	DeathSound "baby/death"
+	ActiveSound "baby/active"
+	damagefactor "TeleportRemover", 0.0
+	DamageFactor "CauseSplash", 0.0 DamageFactor "CauseObjectsToSplashSlime", 0.0 DamageFactor "CauseObjectsToSplashNukage", 0.0
+	DamageFactor "CauseObjectsToSplashBlood", 0.0 DamageFactor "CauseObjectsToSplashLava", 0.0
+	Obituary "$OB_BABY"
+    BloodType "ArachnotronBlood", "ArachnotronSawBlood", "ArachnotronBlood"
+	MaxStepHeight 24
+	DropItem "Berserker" 5
+	MaxDropOffHeight 24
+	PainChance "Kick", 255
+	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
+    Damage 25
+	Speed 8
+	Species "Spider"
+	+DONTHURTSPECIES
+	DeathHeight 4
+	BurnHeight 0
+	Tag "Arachnotron"
+	+ROLLSPRITE
+	+ROLLCENTER
 	//$category "BD Monsters"
 	Scale 1.4
 	Health 1250
@@ -482,6 +514,7 @@ ACTOR IonPuff: BulletPuff
   +CLIENTSIDEONLY
   Scale 1.1
   Translation "192:207=250:254"
+  RenderStyle Add
   states
   {
   Spawn:

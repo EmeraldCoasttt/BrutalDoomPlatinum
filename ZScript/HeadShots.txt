@@ -197,6 +197,18 @@ CLASS FATSOHEADSHOT : BASEHEADSHOT
 
 }
 
+CLASS VOLCABUSHEADSHOT : BASEHEADSHOT
+{
+
+	Default
+	{
+		baseheadshot.offsetz 78;
+		radius 18;
+		height 22;
+	}
+
+}
+
 
 CLASS KNIGHTHEADSHOT : BASEHEADSHOT
 {

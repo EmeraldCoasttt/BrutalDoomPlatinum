@@ -1,5 +1,40 @@
-Actor Volcabus : Mancubus 2543
+Actor Volcabus 2543
 {
+	monster
+	 Scale 1.1
+	MaxStepHeight 16
+	MaxDropOffHeight 24
+    damagefactor "Crush", 10.0
+	damagefactor "Avoid", 0.0
+	PainChance "Kick", 255
+	PainChance "ExtremePunches", 255 PainChance "HangingHook", 0
+	PainChance "Taunt", 255
+	PainChance "Explosive", 255
+	damagefactor "TeleportRemover", 0.0
+	damagefactor "GibRemoving", 0.0
+	DamageFactor "CauseSplash", 0.0 DamageFactor "CauseObjectsToSplashSlime", 0.0 DamageFactor "CauseObjectsToSplashNukage", 0.0
+	DamageFactor "CauseObjectsToSplashBlood", 0.0 DamageFactor "CauseObjectsToSplashLava", 0.0
+	DamageFactor "Shotgun", 0.8
+	PainChance "SSG", 255
+	PainChance "Railgun", 255
+	DamageFactor "SSG", 0.1
+	Radius 24
+	Height 60
+    GibHealth 30
+    Health 600
+	Mass 500
+	Speed 8
+	FAstSpeed 12
+    BloodType "Brutal_Blood", "SawBlood", "SawBlood"
+//	DropItem "DemonRunespawner", 3
+//DropItem "Demonstrengthrune", 5
+	Obituary "%o was incinerated by a Mancubus."
+	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
+    +DONTHURTSPECIES
+	+THRUGHOST
+	-FASTER
+	DeathHeight 6
+	BurnHeight 0
 	//$category "BD Monsters"
 	Health 2500
 	Scale 1.5
@@ -8,24 +43,19 @@ Actor Volcabus : Mancubus 2543
 	PainSound "Volcabus/pain"
 	DeathSound "Volcabus/death"
 	ActiveSound "fatso/active"
-	Height 62
+	Height 76
+	radius 50
 	Obituary "%o squashed by a Volcabus."
    States
    {
 
    Spawn:
-		FAT2 A 0 A_SpawnItem("HeadshotTarget20", 24, 62, 0)
+		TNT1 A 0 NODELAY A_spawnitemex("VolcabusHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
+	Spawn2:
 		FAT2 B 15 A_Look
-		TNT1 A 0 A_SpawnItem("HeadshotTarget20", 24, 62, 0)
-        FAT2 B 15 A_Look
-		TNT1 A 0 A_SpawnItem("HeadshotTarget20", 24, 62, 0)
 		Loop
 	
-    Spawn2:
-		 TNT1 A 0
-		 TNT1 A 0 A_SpawnItem("HeadshotTarget100", 24, 62, 0)
-         FAT2 BBBBBBBBBB 11 A_Look
-         Loop	
+
 	  
 	Pain.Killme:
 		TNT1 A 0 HealThing(1)
