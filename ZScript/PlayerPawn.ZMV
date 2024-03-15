@@ -794,6 +794,47 @@ class Brutal_PlayerBase : PlayerPawn
 		}
 	}
 	
+	override void CheckCrouch(bool totallyfrozen)
+	{
+		let player = self.player;
+		UserCmd cmd = player.cmd;
+
+		if (cmd.buttons & BT_JUMP)
+		{
+			cmd.buttons &= ~BT_CROUCH;
+		}
+		if (CanCrouch() && player.health > 0)
+		{
+			if (!totallyfrozen)
+			{
+				int crouchdir = player.crouching;
+
+				if (crouchdir == 0)
+				{
+					crouchdir = (cmd.buttons & BT_CROUCH) ? -1 : 1;
+				}
+				else if (cmd.buttons & BT_CROUCH)
+				{
+					player.crouching = 0;
+				}
+				if (crouchdir == 1 && player.crouchfactor < 1 && pos.Z + height < ceilingz)
+				{
+					CrouchMove(1);
+				}
+				else if (crouchdir == -1 && player.crouchfactor > 0.5)
+				{
+					CrouchMove(-1);
+				}
+			}
+		}
+		else
+		{
+			player.Uncrouch();
+		}
+
+		player.crouchoffset = -(ViewHeight) * (1 - player.crouchfactor);
+	}
+	
 	override bool CanCollideWith(Actor other, bool passive)
 	{
 		bool allclear;
