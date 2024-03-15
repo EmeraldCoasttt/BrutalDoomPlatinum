@@ -158,6 +158,8 @@
 	class BDPHandler : EventHandler
 	{
 	
+	bool mercilessgranted;
+	
 	static clearscope int PointOnLineSide( Vector2 p, Line l )
 	{
 		if ( !l ) return 0;
@@ -207,7 +209,7 @@
 	override void WorldLoaded( WorldEvent e )
 	{
 		BDPSecretSpawner.SpawnSecrets();
-	
+		mercilessgranted = false;
 	
 	}
 	
@@ -546,6 +548,23 @@
 		}
 		}
 	}
+	
+		Override void worldthingdied(worldevent e)
+		{
+			int currentkills = Level.Killed_monsters;
+		
+			If(currentkills == 0)
+			{
+				mercilessgranted = false;
+			}
+			If(!mercilessgranted && currentkills > 5 && currentkills >= Level.Total_Monsters)
+			{
+				mercilessgranted = true;
+				e.thing.a_dropitem("modifierspawner");
+				console.printf("buttsex");
+			}
+	
+		}
 	
 	}
 	
