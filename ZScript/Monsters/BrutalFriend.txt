@@ -1,6 +1,6 @@
 	CLASS BrutalFriend : BDPNotMonster
 		{
-			Action void A_friendchase(int chance = 2, int heightoffset = 30, string fogtype = "teleportationfogfriend")
+			Action void A_friendchase(int chance = 2, int heightoffset = 30, string fogtype = 'null')
 			{
 				
 				If(random(1,256) <= chance)
