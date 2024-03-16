@@ -556,16 +556,18 @@ ACTOR Brutal_BloodSpot
 	  
 	  SpawnNormally:
 			TNT1 A 0
-			TNT1 A 0 A_QueueCorpse
-			TNT1 A 0 A_Jump(255, "SpawnBFrameOnly", "SpawnCFrameOnly", "SpawnDFrameOnly")
+			TNT1 A 0 
+			{
+			bnointeraction = true;
+			A_changelinkflags(true);
+			}
+			TNT1 A 0 A_Jump(255, "SpawnAFrameOnly", "SpawnBFrameOnly", "SpawnCFrameOnly", "SpawnDFrameOnly")
 		SpawnAFrameOnly:
-			BPDL A 800 ACS_NamedExecuteAlways("BDCheckJanitor", 0, 0, 0, 0)
-			TNT1 A 0 A_JumpIfInventory("lowgraphicsmode", 1, "DoNothing")
+			BPDL A -1
 			Loop
 			
 		  SpawnBFrameOnly:
-			BPDL B 800 ACS_NamedExecuteAlways("BDCheckJanitor", 0, 0, 0, 0)
-			TNT1 A 0 A_JumpIfInventory("lowgraphicsmode", 1, "DoNothing")
+			BPDL B -1
 			Loop
 		  
 		  FadeA:
@@ -577,13 +579,11 @@ ACTOR Brutal_BloodSpot
 			Stop
 		  
 		  SpawnCFrameOnly:
-			BPDL C 800 ACS_NamedExecuteAlways("BDCheckJanitor", 0, 0, 0, 0)
-			TNT1 A 0 A_JumpIfInventory("lowgraphicsmode", 1, "DoNothing")
+			BPDL C -1
 			Loop
 		  
 		  SpawnDFrameOnly:
-			BPDL D 800 ACS_NamedExecuteAlways("BDCheckJanitor", 0, 0, 0, 0)
-			TNT1 A 0 A_JumpIfInventory("lowgraphicsmode", 1, "DoNothing")
+			BPDL D -1
 			Loop
 		  
 		  FadeC:
