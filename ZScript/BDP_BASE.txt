@@ -1,0 +1,1539 @@
+////////////////////////////////////////////////////////////
+/////////////////// ALL BASIC BDP OBJECTS //////////////////
+////////////////////////////////////////////////////////////
+
+// Original BDoom actor and related classes by Agent_Ash aka Jekyll Grim Payne
+// Modified for BDP by Emerald
+
+Class BDPActor : Actor abstract {
+	protected double pi;
+	protected name bcolor;
+	
+	//returns false if 8 points around the actor in a specified radius are at the same height as at its pos; used by blood pools:
+	bool CheckLandingSize (double cradius = 0, bool checkceiling = false) {
+		if (checkceiling) {
+			for (int i = 0; i < 360; i += 45) {
+				double curHeight = GetZAt (cradius, 0, i, GZF_ABSOLUTEANG | GZF_CEILING);
+				if (curHeight > ceilingz)
+					return true;
+			}
+		}
+		else {
+			for (int i = 0; i < 360; i += 45) {
+				double curHeight = GetZAt (cradius, 0, i, GZF_ABSOLUTEANG);
+				if (curHeight < floorz)
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	int BDP_Sign (double i) {
+		if (i >= 0)
+			return 1;
+		else
+			return -1;
+	}
+	
+	static const string BDP_LiquidFlats[] = { 
+		"BLOOD", "LAVA", "NUKAGE", "WATER", "SLIME01", "SLIME02", "SLIME03", "SLIME04", "SLIME05", "SLIME06", "SLIME07", "SLIME08", "BDT_"
+	};
+	//water check by Boondorl
+	double GetWaterTop()
+	{
+		if (CurSector.MoreFlags & Sector.SECMF_UNDERWATER)
+			return CurSector.ceilingPlane.ZAtPoint(pos.xy);
+		else
+		{
+			let hsec = CurSector.GetHeightSec();
+			if (hsec)
+			{
+				double top = hsec.floorPlane.ZAtPoint(pos.xy);
+				if ((hsec.MoreFlags & Sector.SECMF_UNDERWATERMASK)
+					&& (pos.z < top
+					|| (!(hsec.MoreFlags & Sector.SECMF_FAKEFLOORONLY) && pos.z > hsec.ceilingPlane.ZAtPoint(pos.xy))))
+				{
+					return top;
+				}
+			}
+			else
+			{
+				for (uint i = 0; i < CurSector.Get3DFloorCount(); ++i)
+				{
+					let ffloor = CurSector.Get3DFloor(i);
+					if (!(ffloor.flags & F3DFloor.FF_EXISTS)
+						|| (ffloor.flags & F3DFloor.FF_SOLID)
+						|| !(ffloor.flags & F3DFloor.FF_SWIMMABLE))
+					{
+						continue;
+					}
+						
+					double top = ffloor.top.ZAtPoint(pos.xy);
+					if (top > pos.z && ffloor.bottom.ZAtPoint(pos.xy) <= pos.z)
+						return top;
+				}
+			}
+		}			
+		return 0;
+	}
+	
+	//returns true if the floor texture below the actor is either defined as liquid in TERRAIN, or its name matches something in BDP_LiquidFlats array
+	bool CheckLiquidFlat() {
+		if (!self)
+			return false;
+		if (GetFloorTerrain().isLiquid == true)
+			return true;
+		string tex = TexMan.GetName(floorpic);
+		for (int i = 0; i < BDP_LiquidFlats.Size(); i++) {
+			if (tex.IndexOf(BDP_LiquidFlats[i]) >= 0 )
+				return true;
+		}
+		return false;
+	}
+	/*
+	//uses handler by 3saster that iterates through ANIMDEFS and ANIMATED lumps to check if the floor (or ceiling) texture is defined as animated:
+	static bool CheckAnimated(actor checker = null, bool ceiling = false) {
+		if (!checker)
+			return false;
+		let event = BDP_Animated_Handler(StaticEventHandler.Find("BDP_Animated_Handler"));
+		TextureID tex = (ceiling) ? checker.ceilingpic : checker.floorpic;
+		if (event && event.IsAnimated(tex)) {
+			return event.IsAnimated(tex);
+		}
+		return false;
+	}
+	*/
+	// function that aligns flat models to slopes by Boondorl:
+	// (Note: when hitting a slope, I don't do an overhang check because I can't be bothered with the maths required to do that)
+	static void AlignToPlane(Actor a, SecPlane sec = null, bool ceiling = false) {
+		if (!a)
+			return;
+		Vector3 norm;
+		a.pitch = 0;
+		a.roll = 0;
+		if (sec)
+			norm = sec.normal;
+		else {
+			FLineTraceData hit;
+			a.LineTrace(0,a.height+16,ceiling ? 90 : -90,flags:TRF_THRUACTORS|TRF_NOSKY,data:hit);
+			if (hit.Hit3DFloor) {
+				F3DFloor ff = hit.Hit3DFloor;
+				norm = ceiling ? ff.bottom.normal : -ff.top.normal;
+			}
+			else 
+				norm = ceiling ? a.CurSector.ceilingplane.normal : a.CurSector.floorplane.normal;
+		}
+		if (abs(norm.z) ~== 1) {
+			if (ceiling) {
+				a.pitch += 180;
+			}
+			return;		
+		}
+		a.angle = 0;
+		double ang = DeltaAngle(VectorAngle(norm.x, norm.y), a.angle);
+		double pch = 90 - asin(norm.z);
+		if (pch > 90)
+			pch -= 180;
+			
+		a.pitch = pch * cos(ang);
+		a.roll = pch * sin(ang);	
+		if (ceiling) {
+			a.pitch += 180;
+			a.roll *= -1;
+		}
+	}
+	
+	override void BeginPlay() {
+		super.BeginPlay();
+		pi = 3.141592653589793;
+	}	
+	
+	States {
+	Loadsprites:
+		LENR A 0;
+		LENB A 0;
+		LENG A 0;
+		LENY A 0;
+		LENC A 0;
+		LENS A 0;
+		SPRK A 0;
+		SMO2 A 0;
+		M000 A 0;
+		M001 A 0;
+		M002 A 0;
+		M003 A 0;
+		M004 A 0;
+		M005 A 0;
+		M006 A 0;
+		M007 A 0;
+		M008 A 0;
+		M009 A 0;
+		stop;
+	}
+}
+
+/*	A simple base class for control items that are given at game start
+	and shouldn't be ever removed from the inventory.
+*/
+Class BDP_DummyInventory : Inventory abstract {
+	Default {
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		+INVENTORY.PERSISTENTPOWER
+		inventory.maxamount 1;
+	}
+	override void Tick() {}
+}
+
+mixin class BDP_MovingSectorCheck {
+	protected bool checkedOnce;
+	protected double prevFloorZ;
+	protected double prevCeilingZ;
+	protected bool inMovingSector;
+	bool CheckMovingSetor() {
+		if (!checkedOnce) {
+			prevFloorZ = floorz;
+			prevCeilingZ = ceilingz;
+			checkedOnce = true;
+			inMovingSector	= false;
+			return false;
+		}
+		if (floorz != prevFloorZ || ceilingz != prevCeilingZ) {
+			prevFloorZ = floorz;
+			prevCeilingZ = ceilingz;
+			inMovingSector = true;
+			return true;
+		}
+		inMovingSector	= false;
+		return false;
+	}
+}		
+
+mixin class BDP_PlayerSightCheck {
+	protected bool canSeePlayer;
+	//a simple check that returns true if the actor is in any player's LOS:
+	bool CheckPlayerSights() {
+		for ( int i=0; i<MAXPLAYERS; i++ ) 	{
+			if ( playeringame[i] && players[i].mo && CheckSight(players[i].mo) )
+				return true;
+		}
+		return false;
+	}
+}
+
+mixin class BDP_LinearMapCheck {
+	double LinearMap(double val, double o_min, double o_max, double n_min, double n_max) {
+		return (val - o_min) * (n_max - n_min) / (o_max - o_min) + n_min;
+	}
+}
+
+//base class for most debris
+Class BDP_BaseDebris : BDPActor abstract {
+	protected bool landed;			//true if object landed on the floor (or ceiling, if can stick to ceiling)
+	protected bool moving; 		//marks actor as moving; sets to true automatically if actor spawns with non-zero vel
+	name sfxtype; //'debris', 'flames', 'blood', 'gibs' — based on the value the thing gets put into a special array that controls their number, see BDP_events.zc
+	property sfxtype : sfxtype;
+	Default {
+		BDP_BaseDebris.sfxtype 'debris';
+		+ROLLSPRITE
+		+FORCEXYBILLBOARD
+		+INTERPOLATEANGLES
+		+NOBLOCKMAP
+		/*+NOTAUTOAIMED
+		+MISSILE
+		+DROPOFF
+		+NOTELEPORT
+		+THRUACTORS
+		-ALLOWPARTICLES*/
+		renderstyle 'Translucent';
+		alpha 1.0;
+		radius 1;
+		height 1;
+		mass 1;
+		damage 0;
+	}
+	/*
+	Makes the object fly to its target within 20 tics using projectile motion formula; used by gibs for a resurrection animation
+	(thanks Gutawer for explaning the math and helping this function come to life)
+	*/
+	virtual void FlyBack() {
+		if (!target)
+			return;
+		SetZ(pos.z+5);
+		moving = true;
+		landed = false;
+		bFLATSPRITE = false;
+		bTHRUACTORS = true;
+		bNOGRAVITY = false;
+		gravity = 1.0;
+		A_FaceTarget();
+		
+		double dist = Distance2D(target);							//horizontal distance to target
+		double vdisp = target.pos.z - pos.z + frandom[bdsfx](8,32);		//height difference between gib and target + randomized height
+		double ftime = 20;											//time of flight
+		
+		double vvel = (vdisp + 0.5 * ftime*ftime) / ftime;
+		double hvel = dist / ftime;
+		
+		VelFromAngle(hvel,angle);
+		vel.z = vvel;
+	}
+	override void PostBeginPlay() {
+		if (!level.IsPointInLevel(pos)) {
+			destroy();
+			return;
+		}
+		super.PostBeginPlay();
+	}
+}
+
+//base inexpensive class for most FX actors
+Class BDP_SmallDebris : BDP_BaseDebris abstract {
+	protected bool onceiling;		//true if object is stuck on ceiling (must be combined with landed)
+	protected bool onliquid;
+	protected int bounces;
+	protected double Voffset;		//small randomized plane offset to reduce z-fighting for blood pools and such
+	double wrot;					//gets added to roll to imitate rotation during flying
+	double dbrake; 				//how quickly to reduce horizontal speed of "landed" particles to simulate sliding along the floor
+	property dbrake : dbrake;	
+	bool removeonfall;	//if true, object is removed when reaching the floor
+	property removeonfall : removeonfall;
+	protected bool removeonliquid;
+	property removeonliquid : removeonliquid;
+	protected double liquidheight;
+	property liquidheight : liquidheight;
+	protected bool hitceiling;		//if true, react to reaching the ceiling (otherwise ignore)
+	property hitceiling : hitceiling;
+	
+	protected vector2 wallnormal;
+	protected vector3 wallpos;
+	protected line wall;
+	
+	protected state d_spawn;
+	protected state d_death;
+	protected state d_ceiling;
+	protected state d_wall;
+	protected state d_liquid;
+	
+	protected sound liquidsound;
+	property liquidsound : liquidsound;
+	
+	Default {
+		gravity 0.8;
+		BDP_SmallDebris.liquidsound "";
+		BDP_SmallDebris.removeonfall false;
+		BDP_SmallDebris.removeonliquid true;
+		BDP_SmallDebris.dbrake 0;
+		BDP_SmallDebris.hitceiling false;
+		bouncecount 8;
+		+MOVEWITHSECTOR
+		+NOBLOCKMAP
+	}
+	
+	override void BeginPlay() {
+		super.BeginPlay();		
+		ChangeStatnum(110);
+	}
+	//a cheaper version of SetOrigin that also doesn't update floorz/ceilingz (because they're updated manually in Tick) - thanks phantombeta
+    void BDP_SetOrigin (Vector3 newPos) {
+        LinkContext ctx;
+        UnlinkFromWorld (ctx);
+        SetXYZ (newPos);
+        LinkToWorld (ctx);
+    }
+	override void PostBeginPlay() {
+		super.PostBeginPlay();
+		if (vel.length() != 0 || gravity != 0) //mark as movable if given any non-zero velocity or gravity
+			moving = true;
+		d_spawn = FindState("Spawn");
+		d_death = FindState("Death");
+		d_ceiling = FindState("HitCeiling");
+		d_wall = FindState("HitWall");
+		d_liquid = FindState("DeathLiquid");
+	}
+	//a chad tick override that skips Actor's super.tick!
+	override void Tick() {
+		if (alpha < 0){
+			destroy();
+			return;
+		}
+		if (isFrozen())
+			return;
+		//animation:
+		if (tics != -1) {
+			if (tics > 0) 
+				tics--;
+			while (!tics) {
+				if (!SetState (CurState.NextState)) // mobj was removed
+					return;
+			}
+		}
+		/*
+		Perform collision for the objects that don't have NOINTERACTION and are older than 1 tic.
+		The latter helps to avoid collision at the moment of spawning.
+		*/
+		if (!bNOINTERACTION && GetAge() > 1) {
+			UpdateWaterLevel(); //manually update waterlevel
+			FindFloorCeiling(); //manually update floorz/ceilingz
+			if (d_spawn && InStateSequence(curstate,d_spawn)) {
+				//check if hit ceiling: (if hitceiling is true)
+				if (hitceiling && pos.z >= ceilingz - 10 && vel.z > 0) {
+					BDP_Hitceiling();
+					if (!self)
+						return;
+				}
+				//check if hit wall:
+				else if (pos.z > floorz+Voffset) {
+					A_FaceMovementDirection(flags:FMDF_NOPITCH);
+					FLineTraceData hit;
+					LineTrace(angle,radius+16,1,flags:TRF_THRUACTORS|TRF_NOSKY,data:hit);
+					if (hit.HitLine && hit.hittype == TRACE_HITWALL) {
+						wall = hit.HitLine;
+						wallnormal = (-hit.HitLine.delta.y,hit.HitLine.delta.x).unit();
+						wallpos = hit.HitLocation;
+						if (!hit.LineSide)
+							wallnormal *= -1;
+						//if the actor can bounce off walls and isn't too close to the floor, it'll bounce:
+						if (bBOUNCEONWALLS){		
+							if (wallbouncesound)
+								A_StartSound(wallbouncesound);
+							else if (bouncesound)
+								A_StartSound(bouncesound);								
+							wrot *= -1;
+							vel = vel - (wallnormal,0) * 2 * (vel dot (wallnormal,0));
+							if (wallbouncefactor)
+								vel *= wallbouncefactor;
+							else
+								vel *= bouncefactor;
+							A_FaceMovementDirection();
+						}
+						//otherwise stop and call hitwall
+						else if (vel.x != 0 || vel.y != 0) {
+							SetOrigin(wallpos + wallnormal * radius,true);
+							A_Stop();
+							//console.printf("%s sticking to wall at %d:%d:%d",GetClassName(),pos.x,pos.y,pos.z);
+							BDP_HitWall();
+						}
+					}
+					if (!self)
+						return;
+				}
+			}
+			//stick to surface if already landed:
+			if (landed) {
+				//stick to ceiling if on ceiling
+				if (onceiling)
+					SetZ(ceilingz-Voffset);
+				//otherwise stick to floor (and, if necessary, slide on it)
+				else {
+					double i = floorz+Voffset;
+					if (pos.z > i)
+						landed = false;
+					else {
+						SetZ(i);
+						//do the slide if friction allows it (as defined by dbrake property)
+						if (dbrake > 0) {
+							if (!(vel.x ~== 0) || !(vel.y ~== 0)) {
+								vel.xy *= dbrake;
+								A_FaceMovementDirection(flags:FMDF_NOPITCH);
+								FLineTraceData hit;
+								LineTrace(angle,12,0,flags:TRF_THRUACTORS|TRF_NOSKY,offsetz:1,data:hit);
+								if (hit.HitLine && hit.hittype == TRACE_HITWALL /*&& (!hit.HitLine || hit.HitLine.flags & hit.Hitline.ML_BLOCKING || hit.LinePart == Side.Bottom)*/) {
+									//console.printf("%s hit wall at %d:%d:%f | pitch: %f",GetClassName(),hit.HitLocation.x,hit.HitLocation.y,hit.HitLocation.z,pitch);
+									wallnormal = (-hit.HitLine.delta.y,hit.HitLine.delta.x).unit();
+									wallpos = hit.HitLocation;
+									if (!hit.LineSide)
+										wallnormal *= -1;
+									vel = vel - (wallnormal,0) * 2 * (vel dot (wallnormal,0));
+									vel *= bouncefactor * 0.5;
+									A_FaceMovementDirection(flags:FMDF_NOPITCH);
+								}
+							}
+						}
+						else
+							vel.xy = (0,0);
+					}
+				}
+			}
+			//simulate falling if not yet landed:
+			else {
+				if (pos.z <= floorz+Voffset) {
+					bool liquid = CheckLiquidFlat();
+					if (bounces >= bouncecount || !bBOUNCEONFLOORS || liquid || abs(vel.z) <= 2) {
+						if (liquid)
+							onliquid = true;
+						BDP_HitFloor();	
+					}
+					else {
+						SetZ(floorz+Voffset);
+						vel.z *= -bouncefactor;
+						bounces++;
+						if (bouncesound)
+							A_StartSound(bouncesound);
+					}
+					if (!self)
+						return;
+				}
+				else if (!bNOGRAVITY) 
+					vel.z -= gravity;
+			}
+		}
+		//finally, manually move the object:
+		if (moving) {
+			//this cheaper version won't automatically update floorz/ceilingz, which is good for objects like smoke that don't interact with geometry
+			BDP_SetOrigin(level.vec3offset(pos, vel));
+		}
+	}
+	virtual void BDP_HitFloor() {			//hit floor if close enough
+		if (removeonfall) {
+			destroy();
+			return;
+		}
+		if (floorpic == skyflatnum) { 
+			destroy();
+			return;
+		}
+		landed = true;
+		vel.z = 0;
+		if (Voffset < 0)
+			Voffset = 0;
+		//landed on liquid:
+		if (onliquid) {
+			A_Stop();
+			A_StartSound(liquidsound,slot:CHAN_AUTO,flags:CHANF_DEFAULT,1.0,attenuation:3);
+			if (removeonliquid) {
+				destroy();
+				return;
+			}
+			/*
+			if it's a flat (non-3d-floor) liquid, we'll visually sink the object into it a bit
+			either by 50% of its height or by the value of its liquidheight property
+			*/
+			floorclip = (liquidheight == 0) ? (height * 0.5) : liquidheight;
+			//enter "DeathLiquid" state if present, otherwise enter "Death"
+			if (d_liquid)
+				SetState(d_liquid);
+			else if (d_death)
+				SetState(d_death);
+		}
+		//otherwise enter "Death" state if present
+		else if (d_death)
+			SetState(d_death);
+		SetZ(floorz+Voffset);
+	}
+	//stick to ceiling and enter "HitCeiling" state if present:
+	virtual void BDP_Hitceiling() {
+		if (ceilingpic == skyflatnum) {
+			destroy();
+			return;
+		}
+		SetZ(ceilingz-Voffset);
+		if (d_ceiling)
+			SetState(d_ceiling);
+	}
+	//enter "HitWall" state if present:
+	virtual void BDP_HitWall() {
+		if (d_wall)
+			SetState(d_wall);	
+	}
+	states {
+	Spawn:
+		#### # -1;
+		stop;
+	}
+}
+
+Class BDP_WaterBubble : BDP_SmallDebris {
+	double fade;
+	Default {
+		+NOINTERACTION
+		translation "0:255=%[0.28,0.27,0.55]:[0.82,1.08,1.47]";
+		renderstyle 'Translucent';
+		alpha 0.5;
+		scale 0.4;
+	}
+	override void PostBeginPlay() {
+		super.PostBeginPlay();
+		scale *= frandom[wrt](0.5,1);
+		fade = 0.01 * frandom[wrt](2,4);
+		roll = random[wrt](0,359);
+	}
+	override void Tick() {
+		super.Tick();
+		UpdateWaterLevel();
+		if (waterlevel < 3) {
+			destroy();
+			return;
+		}
+		if (isFrozen())
+			return;
+		A_FadeOut(fade);
+		vel *= 0.99;
+	}
+	States {
+	Spawn:
+		PUFF A 8;
+		PUFF BC 5;
+		PUFF D 1 {
+			scale *= 1.02;
+		}
+		wait;
+	}
+}
+		
+		
+/*
+	modifiable class for flares and flames
+	used both as a universal flare (setting fcolor will change its appearance)
+	and as a base class for fire FX
+*/
+Class BDP_BaseFlare : BDP_SmallDebris {
+	protected state mdeath;
+	protected state mxdeath;
+	name fcolor;		//flare of the color; can be set as a property or externally
+	double fscale;		//scale; used to when scale needs to be easily set externally from the spawner
+	double falpha;		//alpha; used to when scale needs to be easily set externally from the spawner
+	property fcolor : fcolor;
+	Default {
+		BDP_BaseDebris.sfxtype 'flames';
+		+BRIGHT
+		+NOINTERACTION
+		renderstyle 'Add';
+		alpha 0.4;
+		scale 0.4;
+		gravity 0;
+	}
+	override void PostBeginPlay() {
+		super.PostBeginPlay();
+		if (master) {
+			mdeath = master.FindState("Death");
+			mxdeath = master.FindState("XDeath");
+		}
+		SetColor();
+	}
+	virtual void SetColor() { //fcolor is meant to be set by the actor that spawns the flare
+		switch (fcolor) {
+			case 'red'		: sprite = GetSpriteIndex("LENR"); break;
+			case 'green'	: sprite = GetSpriteIndex("LENG"); break;
+			case 'blue'		: sprite = GetSpriteIndex("LENB"); break;
+			case 'yellow'	: sprite = GetSpriteIndex("LENY"); break;
+			case 'tech'		: sprite = GetSpriteIndex("LENS"); break; //tech lamps use a completely different flare
+			case 'cbra'		: sprite = GetSpriteIndex("LENC"); break; //so do candelabras
+		}
+		if (fscale != 0)
+			A_SetScale(fscale);
+		if (falpha != 0)
+			alpha = falpha;
+	}
+	states {
+	Spawn:
+		#### # -1;
+		stop;
+	}
+}
+
+/*
+base glow to be spawned alongside projectiles
+the projectile should be assigned as its master
+it'll follow the projectile and will disappear once the projectile enters "Death" or "XDeath" state (or disappears)
+*/
+Class BDP_ProjFlare : BDP_BaseFlare {
+	double xoffset;
+	Default {
+		BDP_BaseDebris.sfxtype "debris";
+		BDP_BaseFlare.fcolor "Red";
+		alpha 0.8;
+		scale 0.11;
+	}
+	override void Tick() {
+		super.Tick();
+		if (!master) {
+			destroy();
+			return;
+		}
+		if (isFrozen())
+			return;
+		Warp(master,xoffset,0,0,flags:WARPF_INTERPOLATE);
+		if (master.InstateSequence(master.curstate,mdeath) || master.InstateSequence(master.curstate,mxdeath)) {
+			Destroy();
+			return;
+		}
+	}
+}
+
+
+Class BDP_BaseParticleFire : BDP_BaseFlare abstract {
+	Default {
+		scale 0.5;
+		alpha 0.5;
+	}
+	Override void PostBeginPlay() {
+		super.PostBeginPlay();
+		bSPRITEFLIP = randompick(0,1);
+	}
+}
+
+// Small fire particle that spawns over torches and fades away
+Class BDP_FireParticle : BDP_BaseFlare {
+	Default {
+		alpha 0.5;
+		scale 0.04;
+	}
+	override void PostBeginPlay() {
+		super.PostBeginPlay();
+		scale *= frandom (0.8,1.1);
+	}
+	override void SetColor() {
+		sprite = GetSpriteIndex("SPRK");
+		if (fcolor == 'green')
+			frame = 1;
+		else if (fcolor == 'blue')
+			frame = 2;
+		else if (fcolor == 'yellow')
+			frame = 3;
+	}
+	override void Tick() {
+		super.Tick();
+		if (isFrozen())
+			return;
+		A_FadeOut(0.01);
+		scale*=0.95;
+	}
+}
+
+Class BDP_ParticleFire_Red : BDP_BaseParticleFire {
+	states {
+	Spawn:
+		FIPR ABCDEFGHIJKLMNOPQRST 1 A_FadeOut(0.03);
+		stop;
+	}
+}
+
+Class BDP_ParticleFire_Yellow : BDP_BaseParticleFire {
+	Default {
+		alpha 0.6;
+		scale 0.35;
+	}
+	states{
+	Spawn:
+		FIPY ABCDEFGHIJKL 2 A_FadeOut(0.06);
+		stop;
+	}
+}
+
+Class BDP_ParticleFire_Green : BDP_ParticleFire_Red {
+	Default {
+		translation "0:3=112:127","5:8=112:127","9:12=112:127","13:15=112:127","16:47=112:127","48:79=112:127","96:111=112:127","112:127=112:127","128:151=112:127","152:159=112:127","160:167=112:127","169:191=112:127","193:207=112:127","208:223=112:127","224:231=112:127","232:235=112:127","236:239=112:127","240:247=112:127","248:249=112:127","250:254=112:127","255:255=112:127";
+	}
+}
+
+
+
+///////////////
+//// SMOKE ////
+///////////////
+
+Class BDP_BaseSmoke : BDP_SmallDebris abstract {
+	Default {
+		+NOINTERACTION
+		BDP_BaseDebris.sfxtype 'debris';
+		gravity 0;
+		renderstyle 'Add';
+		alpha 0.3;
+		scale 0.1;
+	}
+	override void PostBeginPlay() {
+		super.PostBeginPlay();
+		if (waterlevel > 1) {
+			self.destroy();
+			return;
+		}
+		scale.x *= frandom[bdsfx](0.8,1.2);
+		scale.y *= frandom[bdsfx](0.8,1.2);
+		bSPRITEFLIP = randompick(0,1);
+	}
+	states	{
+	Spawn:
+		#### # 1 {
+			A_Fadeout(0.01);
+		}
+		loop;
+	}
+}
+
+//white smoke to spawn over heated weapons
+class BDP_WeaponSmoke : BDP_BaseSmoke {
+	Default {
+		alpha 0.25;
+		scale 0.15;
+	}
+	override void PostBeginPlay() {
+		super.PostBeginPlay();
+		roll = random[bdsfx](0,359);
+	}
+	states	{
+	Spawn:		
+		SMOK ABCDEFGHIJKLMNOPQR 1 {
+			A_FadeOut(0.01);
+		}
+		stop;
+	}
+}
+
+//medium-sized dark smoke that raises over burnt/plasmaburnt bodies
+class BDP_BlackSmoke : BDP_BaseSmoke {
+	Default {
+		renderstyle 'Translucent';
+		alpha 0.3;
+		scale 0.3;
+	}
+	override void Tick() {
+		if (isFrozen())
+			return;
+		vel *= 0.99;
+		super.Tick();
+	}
+	override void PostBeginPlay() {
+		super.PostBeginPlay();
+		roll += frandom[bdsfx](-40,40);
+	}
+	states	{
+	Spawn:
+		SMOK ABCDEFGHIJKLMNOPQ 2 NoDelay {
+			A_FadeOut(0.01);
+		}
+		SMOK R 2 {
+			A_FadeOut(0.005);
+			scale *= 0.99;
+		}
+		wait;
+	}
+}
+
+//even bigger smoke for bigger explosions
+class BDP_BigBlackSmoke : BDP_BlackSmoke {
+	Default {
+		alpha 0.6;
+		scale 0.45;
+	}
+	override void PostBeginPlay() {
+		super.PostBeginPlay();
+		wrot = frandom[bdsfx](0.3,1.2) * randompick(-1,1);
+	}
+	override void Tick() {
+		super.Tick();
+		if (isFrozen())
+			return;
+		if (GetAge() > 20)
+			roll+=wrot;
+		A_FadeOut(0.012);
+		scale *= 1.01;
+	}
+	states {
+	Spawn:
+		SMOK ABCDEFGH 2;
+		SMOK IJKLMNOPQR 3;
+		wait;
+	}
+}
+
+//dark small piece of smoke with a hint of flame — for "dirty" fires like burning barrel
+Class BDP_BurnSmokePiece : BDP_BaseSmoke {
+	Default {
+		renderstyle 'Translucent';
+		alpha 0.3;
+		scale 0.08;
+	}
+	states {
+	Spawn:
+		BSMO ABCDEFGHIJKLMNOPQRSTU 1 A_FadeOut(0.005);
+		stop;
+	}
+}
+
+
+//basic dark smoke behind a rocket
+Class BDP_RocketTrail : BDP_BaseSmoke {
+	Default {
+		scale 0.1;
+		renderstyle 'Translucent';
+		alpha 0.45;
+	}
+	states {
+	Spawn:
+		SMOK ABCDEFGHIJKLMNOPQ 1 NoDelay A_FadeOut(0.03);
+		stop;
+	}
+}
+
+//a particle that spawns thin smoke behind itself
+Class BDP_SmokingPiece : BDP_SmallDebris {
+	Default {
+		gravity 0.7;
+		alpha 1.0;
+		BDP_SmallDebris.removeonfall true;
+	}
+	states	{
+	Spawn:
+		TNT1 A 1 NoDelay {
+			if (alpha > 0) {
+				let a = Spawn("BDP_WeaponSmoke",pos,ALLOW_REPLACE);
+				if (a) {
+					a.alpha = alpha*0.5;
+					a.vel = (frandom(-0.5,0.5),frandom(-0.5,0.5),frandom(-0.5,0.5));
+				}				
+			}
+			A_FadeOut(0.015);
+		}
+		loop;
+	}
+}
+
+///////////////
+//// PUFFS ////
+///////////////
+
+//smoke coming out of wood walls
+Class BDP_WallSmoke : BDP_BaseSmoke {
+	Default {
+		+ROLLCENTER
+		scale 0.018;
+		renderstyle 'Translucent';
+		alpha 0.3;
+	}
+	override void PostBeginPlay() {
+		super.PostBeginPlay();
+		A_SetScale(frandom[bdsfx](0.028,0.032),frandom[bdsfx](0.028,0.032));
+		wrot = (random[bdsfx](3,10)*randompick(-1,1));
+		frame = random[bdsfx](0,5);
+	}
+	states {
+	Spawn:
+		SMO2 # 1 NoDelay {
+			if (GetAge() < 26) {
+				wrot *= 0.98;
+				A_Fadeout(0.006);
+				a_Setscale(clamp(scale.x*1.02,0.01,0.06),clamp(scale.y*1.02,0.01,0.06));
+				vel*=0.97;
+				roll+=wrot;
+			}
+			else {
+				alpha*=0.997;
+				wrot *= 0.97;
+				a_Setscale(clamp(scale.x*1.01,0.01,0.06),clamp(scale.y*1.01,0.01,0.06));
+				vel*=0.93;
+				roll+=wrot;
+				if (alpha < 0.1)
+					A_FadeOut(0.005);
+			}
+		}
+		loop;
+	}
+}
+
+//circular puff of smoke for hard walls (stone, brick)
+Class BDP_RingSmoke : BDP_WallSmoke {
+	Default {
+		alpha 0.4;
+	}
+	states {
+	Spawn:
+		SMO2 # 1 NoDelay {
+			if (GetAge() < 26) {
+				A_Fadeout(0.015);
+				scale*1.5;
+				vel*=0.8;
+				roll+=wrot;
+				wrot *= 0.96;
+			}
+			else {
+				A_Fadeout(0.01);
+				scale*1.2;
+				vel*=0.9;
+				roll+=wrot;
+				wrot *= 0.95;
+				if (alpha < 0.1)
+					A_FadeOut(0.005);
+			}
+		}
+		loop;
+	}
+}
+
+// Base puff class. Also holds arrays with texture names to simulate different effects for different "surfaces"
+Class BDPPuff : BDPActor abstract {
+	mixin BDP_DecalControl;
+	Default {
+		+NOBLOCKMAP
+		+NOGRAVITY
+		+FORCEXYBILLBOARD
+		-ALLOWPARTICLES
+		+DONTSPLASH
+		+ROLLSPRITE
+		-FLOORCLIP
+		radius 1;
+		height 1;
+	}
+}
+
+//used by stuff like decorative rails spawned by BFGball
+// and by line activator in BDP_Weapon
+Class BDP_NullPuff : Actor {
+	Default {
+		decal "none";
+		+NODECAL
+		+NOINTERACTION
+		+BLOODLESSIMPACT
+		+PAINLESS
+		+PUFFONACTORS
+		+NODAMAGETHRUST
+		+DONTSPLASH
+	}
+	states {
+		Spawn:
+			TNT1 A 1;
+			stop;
+	}
+}
+
+mixin class BDP_DecalControl {
+	protected string hittex; 				//name of texture that was hit. Needs to be string to use IndexOf for partial matches
+	name DebrisType;						//debris type (different shape/colors for wood, bricks, etc.)
+	protected int rchance; 				//ricochet chance
+	protected bool debris; 				//whether to spawn debris
+	protected int smoke; 					//0 - none, 1 - long directional, 2 - circular
+	protected int sparkchance; 			//spark spawn chance
+	protected double hitangle;				//angle at which the bullet hit a line
+	protected Vector3 hitnormal;			//vector normal of the hit 
+	protected string decaltype;			//type of decals to leave (wood hole, metal dent, stone chip, generic hole). Decals are strings, not names
+	protected FLineTraceData puffdata;	//gets all the data about hit location
+	
+	static const string BDP_PCheck_LiquidWalls[] = {
+		"WATER", "FALL", "BLOOD", "WFALL", "BDT_W", "BDT_B", "BDT_S"
+	};
+	static const string BDP_PCheck_HotWalls[] = {
+		"LAVA", "FIRE", "NUKAGE", "DBRAIN", "SFALL", "LFALL", "BDT_A", "BDT_L"
+	};
+	static const string BDP_PCheck_WoodWalls[] = {
+		"WOOD", "PAN", "CRAT", "PANEL", "STUCCO", "FLAT5_1", "FLAT5_2", "CEIL1_1", "FLOOR0_1", "FLOOR0_2", "FLOOR0_3", "FLOOR7_1", "FLAT5_5", "TANROCK2", "TANROCK3", "TANROCK8", "ZZWOLF5", "ZZWOLF6", "ZZWOLF7", "BIGDOOR5", "BIGDOOR6", "BIGDOOR7", "ZZWOLF5"
+	};
+	static const string BDP_PCheck_MetalWalls[] = {
+		"METAL", "SHAWN", "SILVER", "BRONZ", "PIPE", "SUPPORT", "TEK", "ZZZFACE6", "ZZZFACE7", "ZZZFACE8", "ZZZFACE9", "FLOOR0_6", "FLOOR0_7", "FLOOR3_3", "FLOOR4_1", "FLOOR4_5", "FLOOR4_8", "FLOOR5_1", "STEP", "CEIL5_2", "FLAT22", "FLAT23", "CONS", "CEIL1_1", "CEIL1_2", "CEIL1_1", "SLIME14", "SLIME15", "SLIME16", "LITE", "COMP", "COMM", "SW2MET", "BIGDOOR1", "BIGDOOR2", "BIGDOOR3", "BIGDOOR4", "DOOR", "EXITDOOR", "SPCDOOR", "BRNSMAL", "COMP", "MIDB", "MIDS", "PLAT"
+	};
+	static const string BDP_PCheck_BrickWalls[] = {
+		"BRICK", "BIGBRIK"
+	};
+	static const string BDP_PCheck_MarbleWalls[] = {
+		"MARB", "GST", "DEM", "FLOOR7_2"
+	};
+	static const string BDP_PCheck_GoreWalls[] = {
+		"SK_", "SKIN2", "SKINCUT", "SKINEDGE", "SKINFACE", "SFLR", "SPINE", "SNAKE", "SLOPPY", "SP_FACE"
+	};
+	static const string BDP_PCheck_SkinWalls[] = {
+		"SKIN", "ZFACE"
+	};
+
+	void CreateDecal() {
+		// First we fire linetrace, using angle and pitch of target (which is either the player or the bullet projectile)
+		if (target) {
+			angle = target.angle;
+			pitch = target.pitch;
+		}
+		// When spawned by hitscans and by bullets pos.z ends up different. Make sure linetrace is not executed inside floor/ceiling
+		double traceheight = pos.z;
+		//double tracelength = 128;
+		if (pos.z <= floorz)
+			traceheight = floorz+1;
+		else if (pos.z >= ceilingz)
+			traceheight = ceilingz-1;
+		vector3 tracepos = (pos.x,pos.y,traceheight);
+		//if (target && (vel ~== (0,0,0) || !Level.IsPointInLevel(tracepos)))
+			//tracepos = target.pos;
+		
+		LineTrace(angle,128,pitch,TRF_THRUACTORS|TRF_NOSKY|TRF_ABSPOSITION,tracepos.z,tracepos.x,tracepos.y,data:puffdata);	
+		if (puffdata.HitTexture == skyflatnum)
+			return;
+		
+		hittex = texman.GetName(puffdata.HitTexture);
+		hitnormal = -puffdata.HitDir;
+		
+		if (puffdata.HitType == TRACE_HitFloor) {
+			if (puffdata.Hit3DFloor) 
+				hitnormal = -puffdata.Hit3DFloor.top.Normal;
+			else 
+				hitnormal = puffdata.HitSector.floorplane.Normal;
+		}
+		else if (puffdata.HitType == TRACE_HitCeiling)	{
+			if (puffdata.Hit3DFloor) 
+				hitnormal = -puffdata.Hit3DFloor.bottom.Normal;
+			else 
+				hitnormal = puffdata.HitSector.ceilingplane.Normal;
+		}
+		else if (puffdata.HitType == TRACE_HitWall) {
+			hitnormal = (-puffdata.HitLine.delta.y,puffdata.HitLine.delta.x,0).unit();
+			if (!puffdata.LineSide) 
+				hitnormal *= -1;
+		}
+
+		// regular liquids — splash sound, no visuals
+		for (int i = 0; i < BDP_PCheck_LiquidWalls.Size(); i++) {
+			if (hittex.IndexOf(BDP_PCheck_LiquidWalls[i]) >= 0 ) {
+				A_StartSound("world/watersplashsmall",slot:CHAN_AUTO,flags:CHANF_DEFAULT,1.0,attenuation:3);
+				//console.Printf("Liquid Texture: %s",hittex);
+				destroy();
+				return;
+			}
+		}
+		// hot liquids — sizzle sound, no visuals
+		for (int i = 0; i < BDP_PCheck_HotWalls.Size(); i++) {
+			if (hittex.IndexOf(BDP_PCheck_HotWalls[i]) >= 0 ) {
+				A_StartSound("world/lavasizzlesmall",slot:CHAN_AUTO,flags:CHANF_DEFAULT,1.0,attenuation:3);
+				//console.Printf("Hot Texture: %s",hittex);
+				destroy();
+				return;
+			}
+		}
+		// wood walls — long smoke, no ricochet/sparks, decals are textured like wood
+		for (int i = 0; i < BDP_PCheck_WoodWalls.Size(); i++) {
+			if (hittex.IndexOf(BDP_PCheck_WoodWalls[i]) >= 0 ) {
+				decaltype = "BulletWchip";
+				DebrisType = 'wood';
+				debris = true;
+				smoke = 1;
+				rchance = 0;
+				sparkchance = 0;
+				A_StartSound("bullet/wood",slot:CHAN_AUTO,flags:CHANF_DEFAULT,1.0,attenuation:3);	
+				//console.Printf("Wood Texture: %s",hittex);
+			}
+		}
+		if (!decaltype) {
+			// Marble walls — same as stone but spawns marble-colored green/grey debris
+			for (int i = 0; i < BDP_PCheck_MarbleWalls.Size(); i++) {
+				if (hittex.IndexOf(BDP_PCheck_MarbleWalls[i]) >= 0 ) {
+					decaltype = "BulletSchip";
+					DebrisType = 'marble';
+					rchance = 20;
+					debris = true;
+					smoke = 2;
+					A_StartSound("bullet/stone",slot:CHAN_AUTO,flags:CHANF_DEFAULT,1.0,attenuation:3);	
+					//console.Printf("Marble Texture: %s",hittex);
+				}
+			}
+		}
+		if (!decaltype) {
+			// Metallic walls - high ricochet chance, high spark chance, no smoke, decals are shallow dents
+			for (int i = 0; i < BDP_PCheck_MetalWalls.Size(); i++) {
+				if (hittex.IndexOf(BDP_PCheck_MetalWalls[i]) >= 0 ) {
+					decaltype = "BulletMchip";
+					rchance = 40;
+					sparkchance = 50;
+					debris = false;
+					smoke = 0;
+					A_StartSound("bullet/metal",slot:CHAN_AUTO,flags:CHANF_DEFAULT,1.0,attenuation:3);	
+					//console.Printf("Metal Texture: %s",hittex);
+				}
+			}
+		}
+		if (!decaltype) {
+			// Brick walls - low ricochet chance, no sparks, circular smoke, decals are big shallow chips
+			for (int i = 0; i < BDP_PCheck_BrickWalls.Size(); i++) {
+				if (hittex.IndexOf(BDP_PCheck_BrickWalls[i]) >= 0 ) {
+					decaltype = "BulletSchip";
+					DebrisType = 'brick';
+					rchance = 15;
+					debris = true;
+					smoke = 2;
+					A_StartSound("bullet/stone",slot:CHAN_AUTO,flags:CHANF_DEFAULT,1.0,attenuation:3);	
+					//console.Printf("Brick Texture: %s",hittex);
+				}
+			}	
+		}
+		if (!decaltype) {
+			// Walls made of meat/gore - no ricochet, no sparks, no smoke, hits with a flesh sound, spawns a little blood
+			for (int i = 0; i < BDP_PCheck_GoreWalls.Size(); i++) {
+				if (hittex.IndexOf(BDP_PCheck_GoreWalls[i]) >= 0 ) {
+					decaltype = "Bulletchip";
+					DebrisType = 'bloody';
+					debris = true;
+					smoke = 0;
+					A_StartSound("bullet/body",slot:CHAN_AUTO,flags:CHANF_DEFAULT,1.0,attenuation:3);	
+					//console.Printf("Gore Texture: %s",hittex);
+				}
+			}	
+		}
+		if (!decaltype) {
+			// Dry skin walls - same as gore walls but no boood
+			for (int i = 0; i < BDP_PCheck_SkinWalls.Size(); i++) {
+				if (hittex.IndexOf(BDP_PCheck_SkinWalls[i]) >= 0 ) {
+					decaltype = "Bulletchip";
+					DebrisType = 'skin';
+					debris = false;
+					smoke = 0;
+					A_StartSound("bullet/body",slot:CHAN_AUTO,flags:CHANF_DEFAULT,1.0,attenuation:3);	
+					//console.Printf("Skin Texture: %s",hittex);
+				}
+			}	
+		}
+		if (!decaltype) {
+			//Generic - suitable for stone, gray walls, etc. Minor ricochet chance, no sparks, generic debris, circular smoke
+			if (puffdata.HitType != TRACE_HitNone) {
+				decaltype = "Bulletchip";
+				DebrisType = 'stone';
+				rchance = 25;
+				debris = true;
+				smoke = 2;
+				A_StartSound("bullet/stone",slot:CHAN_AUTO,flags:CHANF_DEFAULT,1.0,attenuation:3);	
+			}
+		}
+		//Console.Printf("Hittex: %s | decal type: %s | debris type: %s",hittex,decaltype,DebrisType);
+		if (decaltype) {
+			//spawn an actor with 3D model to emulate floor/ceiling decals
+			if (puffdata.HitType == TRACE_HitFloor) {
+				let pld = BDP_PlaneDecal(Spawn("BDP_PlaneDecal",(pos.x,pos.y,floorz),ALLOW_REPLACE));
+				if (pld)
+					pld.decaltype = decaltype;
+			}
+			else if (puffdata.HitType == TRACE_HitCeiling) {
+				let pld = BDP_PlaneDecal(Spawn("BDP_PlaneDecal",(pos.x,pos.y,ceilingz),ALLOW_REPLACE));
+				if (pld) {
+					pld.decaltype = decaltype;
+					pld.ceiling = true;
+				}
+			}
+			//or spray the decal we need
+			else if (puffdata.HitType == TRACE_HitWall) {
+				A_SprayDecal(decaltype,128);
+			}
+		}
+		double ofz = 0;
+		if (puffdata.HitType == TRACE_HitFloor)
+			ofz = 1;
+		else if (puffdata.HitType == TRACE_HitCeiling)
+			ofz = -1;
+		if (random[bdsfx](0,100) < rchance) {
+			A_SpawnItemEx("BDP_RicochetBullet",xvel:50,zvel:frandom[bdsfx](-10,10),angle:random[bdsfx](0,359));
+		}
+		if (smoke == 1) {
+			for (int i = random[bdsfx](6,9); i > 0; i--) {
+				actor wpart = Spawn("BDP_WallSmoke",Puffdata.Hitlocation + (0,0,ofz),ALLOW_REPLACE);
+				if (wpart) {
+					wpart.vel = (hitnormal + (frandom[bdsfx](-0.05,0.05),frandom[bdsfx](-0.05,0.05),frandom[bdsfx](-0.05,0.05))) * frandom[bdsfx](0.1,0.5);
+					wpart.target = self;
+				}
+			}
+		}
+		else if (smoke == 2) {						
+			for (int i = random[bdsfx](10,15); i > 0; i--)
+				A_SpawnItemEx("BDP_RingSmoke",xvel:frandom[bdsfx](-0.7,0.7),yvel:frandom[bdsfx](-0.7,0.7),zvel:frandom[bdsfx](-0.7,0.7));
+		}
+		if (debris) {
+			for (int i = random[bdsfx](4,7); i > 0; i--) {
+				actor wpart = Spawn("BDP_WallPart",Puffdata.Hitlocation + (0,0,ofz),ALLOW_REPLACE);
+				if (wpart) {
+					wpart.vel = (hitnormal + (frandom[bdsfx](-0.4,0.4),frandom[bdsfx](-0.4,0.4),frandom[bdsfx](-0.4,0.4))) * frandom[bdsfx](2.5,4);
+					wpart.target = self;
+					if (DebrisType == 'bloody') {
+						wpart.SetState(wpart.FindState("Bloody"));
+					}
+					if (DebrisType == 'wood') {
+						wpart.A_SetTranslation("DebrisWood");
+						wpart.A_setScale(frandom[bdsfx](0.14,0.18),frandom[bdsfx](0.06,0.09));
+					}
+					else if (DebrisType == 'marble') {
+						if (random[bdsfx](0,1) == 1)
+							wpart.A_SetTranslation("DebrisMarble1");
+						else
+							wpart.A_SetTranslation("DebrisMarble2");
+					}
+					else if (DebrisType == 'brick')
+						wpart.A_SetTranslation("DebrisBrick");
+				}
+			}
+		}
+		if (random[bdsfx](0,100) < sparkchance) {						
+			for (int i = random[bdsfx](5,8); i > 0; i--) {
+				actor wpart = Spawn("BDP_RicochetSpark",Puffdata.Hitlocation + (0,0,ofz),ALLOW_REPLACE);
+				if (wpart) {
+					wpart.vel = (hitnormal + (frandom[bdsfx](-0.7,0.7),frandom[bdsfx](-0.7,0.7),frandom[bdsfx](-0.7,0.7))) * frandom[bdsfx](1,3);
+					wpart.target = self;
+				}
+			}
+		}
+	}
+}
+
+// Spawned by hitscans or, in Modern Guns mode, by projectiles.
+// Simulates different effects based on texture name
+Class BDP_EnBulletPuff : BDPPuff {
+	Default {
+		+PUFFGETSOWNER
+		+HITTRACER
+		+PUFFONACTORS
+		//+ALWAYSPUFF
+		decal "none";
+		renderstyle 'Add';
+		scale 0.075;
+		alpha 0.8;
+		mass 1;
+	}
+	states {
+	XDeath:
+		TNT1 A 1;
+		stop;
+	Spawn:
+		TNT1 A 1;
+		TNT1 A 0 CreateDecal();
+		goto puffspawn;
+	PuffSpawn:
+		TNT1 A 0 {			
+			if (waterlevel > 1) {
+				for (int i = random[bdsfx](12,18); i > 0; i--)
+					A_SpawnItemEx("BDP_WaterBubble",xvel:frandom[bdsfx](-0.5,0.5),yvel:frandom[bdsfx](-0.5,0.5),zvel:frandom[bdsfx](-0.5,0.5));
+				return ResolveState("Null");
+			}
+			roll = frandom[sfx](0,360);
+			scale *= frandom[sfx](0.8,1.5);
+			bSPRITEFLIP = randompick[sfx](0,1);
+			return ResolveState(null);
+		}
+		BPUF ABCD 1 bright;
+		stop;
+	}
+}
+
+//3d-model "decal" to spawn on the floors and ceilings
+Class BDP_PlaneDecal : BDP_SmallDebris {
+	bool ceiling;
+	name decaltype;
+	Default {
+		renderstyle 'Shaded';
+		height 1;
+	}
+	override void PostBeginPlay() {
+		super.PostBeginPlay();
+		//if (BDPActor.CheckAnimated(self,ceiling:ceiling)) {
+		//	destroy();
+		//	return;
+		//}
+		switch (decaltype) {
+			case 'BulletChip'	: sprite = GetSpriteIndex("M000");	frame = random[bdsfx](0,4); alpha = 0.85; angle = random[bdsfx](0,360); break;
+			case 'BulletMChip'	: sprite = GetSpriteIndex("M001");	frame = random[bdsfx](0,4); alpha = 0.55; angle = random[bdsfx](0,360);break;
+			case 'BulletWChip'	: sprite = GetSpriteIndex("M002");	frame = random[bdsfx](0,4); alpha = 1.0; break;
+			case 'BulletSChip'	: sprite = GetSpriteIndex("M003");	frame = random[bdsfx](0,3); alpha = 0.75; angle = random[bdsfx](0,360);break;
+		}
+		if (ceiling) {
+			if (CurSector.CeilingPlane.Normal == (0,0,-1) && CheckLandingSize(2,checkceiling:true)) {
+				destroy();
+				return;
+			}
+			AlignToPlane(self,ceiling:true);
+		}
+		else {
+			if (CurSector.FloorPlane.Normal == (0,0,1) && CheckLandingSize(2)) {
+				destroy();
+				return;
+			}
+			AlignToPlane(self);
+		}
+	}
+	override void Tick() {
+		if (ceiling)
+			SetZ(ceilingz);
+		else
+			SetZ(floorz);
+	}
+	states {
+	//even though these are not real sprites, they still need to be defined for MODELDEF to attach the model properly
+	load:
+		0000 ABCDE 0;
+		0001 ABCDE 0;
+		0002 ABCDE 0;
+		0003 ABCD 0;
+	}
+}
+
+/*
+	A very small dark piece of debris spawned by hitting a wall.
+	Its shape and translation change depending on the "material" of the texture
+	that was shot.
+*/
+Class BDP_WallPart : BDP_SmallDebris {
+	Default {
+		BDP_SmallDebris.dbrake 0.8;
+		Renderstyle 'Translucent';
+		alpha 1.0;
+		scale 0.13;
+		gravity 0.4;
+		//translation "DebrisStone";
+	}
+	override void PostBeginPlay() {
+		super.PostBeginPlay();
+		wrot = frandom[bdsfx](8,14)*randompick(-1,1);
+		scale*=frandom[bdsfx](0.8,1.2);
+		bSPRITEFLIP = randompick(0,1);
+		if (!target || !(target is "BDP_EnBulletPuff"))
+			return;
+	}
+	override void Tick() {
+		super.Tick();
+		if (waterlevel > 0) {
+			bNOGRAVITY = true;
+			vel *= 0.9;
+		}
+	}
+	states {
+	Spawn:
+		BPRT A 1 {
+			A_FadeOut(0.005);
+			scale*=0.98;
+			if (pos.z > floorz)
+				roll+=wrot;
+		}
+		wait;
+	Bloody:
+		TNT1 A 0 {
+			A_SetScale(0.1,0.1);
+			static const string bsprite[] = {
+				"YBL7","YBL8","YBL9"
+			};
+			sprite = GetSpriteIndex(bsprite[random[bdsfx](0,2)]);
+		}
+		#### ABCDEFGHIJKLMNOPQRS 1 A_Fadeout(0.08);
+		stop;		
+	}
+}
+
+Class BDP_GlassPiece : BDP_WallPart {
+	Default {
+		renderstyle 'Add';
+		alpha 0.4;
+	}
+	states {
+	Bloody:
+		stop;
+	}
+}
+
+
+Class BDP_RocketDebris : BDP_WallPart {
+	private int burnage;
+	private int smokeage;
+	Default {
+		gravity 0.5;
+		scale 0.6;
+	}
+	override void PostBeginPlay() {
+		super.PostBeginPlay();
+		burnage = random[bdsfx](16,35);
+		smokeage = random[bdsfx](60,75);
+	}
+	override void Tick() {
+		if (isFrozen())
+			return;
+		if (GetAge() < smokeage)	 {
+			let a = Spawn("BDP_BlackSmoke",pos+(frandom(-3,3),frandom(-3,3),frandom(-3,3)));
+			if (a) {
+				a.A_SetScale(0.1);
+				a.vel = (frandom(-0.5,0.5),frandom(-0.5,0.5),frandom(-0.5,0.5));
+				a.alpha *= 0.6;
+			}
+		}
+		if (GetAge() < burnage)				
+			Spawn("BDP_RocketDebrisTrail",pos+(frandom(-3,3),frandom(-3,3),frandom(-3,3)));		
+		super.Tick();
+	}
+}
+
+Class BDP_RocketDebrisTrail : BDP_BaseFlare {
+	Default {
+		scale 0.12;		
+	}
+	override void PostBeginPlay() {
+		super.PostBeginPlay();
+		roll = random(0,359);
+	}
+	states {
+	Spawn:
+		BOM3 HIJKLMNOPQRSTU 1 {
+			scale *= 0.92;
+			A_FadeOut(0.04);
+		}
+		stop;
+	}
+}
+
+//small spark spawned by chainsaw, knuckle, bullets on metal
+Class BDP_RicochetSpark : BDP_SmallDebris {
+	Default {
+		BDP_SmallDebris.dbrake 0.9;
+		renderstyle 'Add';
+		alpha 1.0;
+		radius 3;
+		height 3;
+		scale 0.03;
+		+BRIGHT
+	}
+	override Void PostBeginPlay() {
+		if (waterlevel > 1) {
+			destroy();
+			return;
+		}
+		super.PostbeginPlay();
+	}
+	states {
+	Spawn:
+		SPRK A 1 {
+			A_FadeOut(0.03);
+			scale *= 0.95;
+		}
+		loop;
+	}
+}
+
+//fake bullet that ricochets from bulletpuffs
+Class BDP_RicochetBullet : BDP_SmallDebris {
+	Default {
+		renderstyle 'Add';
+		alpha 0.8;
+		+BRIGHT
+	}
+	states {
+	Spawn:
+		M000 A 3;
+		stop;
+	}
+}
+
+
+
+Class BDP_DebugSpot : Actor 
+{	
+	Default 
+	{
+		+NOINTERACTION
+		+NOBLOCKMAP
+		+SYNCHRONIZED
+		+DONTBLAST
+		+BRIGHT
+		+FORCEXYBILLBOARD
+		xscale 0.35;
+		yscale 0.292;
+		FloatBobPhase 0;
+		alpha 2;
+		health 3;
+		translation "1:255=%[0.00,1.01,0.00]:[1.02,2.00,0.00]";
+	}
+	
+	override void Tick() 
+	{
+		if (GetAge() > 35 * health)
+			Destroy();
+	}
+	
+	states 
+	{
+	Spawn:
+		AMRK A -1;
+		stop;
+	}
+}
