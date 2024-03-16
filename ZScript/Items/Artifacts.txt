@@ -477,6 +477,7 @@ CLASS PowerBoost : Powerup
 	{
 		Powerup.Duration 0x7FFFFFFD;
 		+INVENTORY.HUBPOWER;
+		+INVENTORY.NOTELEPORTFREEZE;
 	}
 }
 

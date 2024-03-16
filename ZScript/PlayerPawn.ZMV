@@ -1576,6 +1576,8 @@ Class Speedline : Actor
 		+nogravity;
 		Renderstyle "Add";
 		Alpha 0.2;
+		+noteleport;
+		+noclip;
 	}
 	
 	States
