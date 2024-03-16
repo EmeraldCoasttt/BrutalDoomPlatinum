@@ -691,12 +691,17 @@ actor GiantBloodSpot: Brutal_BloodSpot
 		TNT1 A 0
 		TNT1 A 0 ACS_NamedExecuteAlways("BD_CheckIfOverLiquid")//Check Floortype
 		TNT1 A 3
+		{
+			bnointeraction = true;
+			A_changelinkflags(true);
+		}
 		TNT1 A 0 A_JumpIfInventory("IsOverSlimy", 1, "Disappear")
 		TNT1 A 0 A_JumpIfInventory("IsOverWater", 1, "Disappear")
 		TNT1 A 0 A_JumpIfInventory("IsOverNukage", 1, "Disappear")
 		TNT1 A 0 A_JumpIfInventory("IsOverLava", 1, "Disappear")
 		TNT1 A 0 A_SpawnItemEx ("BootSmearerRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-		TNT1 A 0 A_QueueCorpse
+		TNT1 A 0 
+		
 		Goto SpawnAFrameOnly
 	
 	Disappear:
