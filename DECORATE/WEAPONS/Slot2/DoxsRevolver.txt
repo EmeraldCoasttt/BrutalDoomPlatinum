@@ -249,11 +249,15 @@ ACTOR DoxsRevolver : BrutalWeapon
 		REVO DC 1 A_SetPitch(Pitch+0.5, SPF_INTERPOLATE)
 		REVO FGHIJ 1 A_SetPitch(Pitch+0.6, SPF_INTERPOLATE)
 		REVO A 0 A_JumpIfInventory("Reloading",1,"Reload")
-		REVO A 3
+		TNT1 A 0 A_refire("SemiAutoLul")
+		//REVO A 3
 		//REVO A 1 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
 		Goto Ready
 		
-		
+		SemiAutoLul:
+		REVO A 1
+		TNT1 A 0 A_refire("SemiAutoLul")
+		Goto Ready
 		
 	AltFire:
 	    TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "NoAmmoFire")
