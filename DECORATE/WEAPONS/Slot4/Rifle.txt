@@ -259,7 +259,7 @@ ACTOR Rifle : BrutalWeapon
 		RIFL I 0 A_Jump(128,2)
 		RIFL A 0
 		RIFL "#" 0
-		RIFL D 1 BRIGHT A_FireBullets (0.4, 0.4, -1, 20, "HitPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
+		RIFL D 1 BRIGHT A_FireBullets (5.6, 5.6, -1, 20, "HitPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
 		RIFL C 0 A_ZoomFactor(0.98)
 		RIFL C 0 A_SpawnItemEx("PlayerMuzzle1",30,5,30)
 		NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
