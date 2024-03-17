@@ -1623,7 +1623,7 @@ class BDP_Flashlight : CustomInventory {
 	override void DoEffect() {
 		super.DoEffect();
 		
-
+				
 				if(SelfLight1) { SelfLight1.Destroy(); }
 				if(SelfLight2) { SelfLight2.Destroy(); }
 			
@@ -1766,6 +1766,19 @@ class BDP_Flashlight : CustomInventory {
 			if(SelfLight1) { SelfLight1.Destroy(); }
 			if(SelfLight2) { SelfLight2.Destroy(); }
 		}
+		if (level.time % 5 == 0)
+		{
+			FLineTraceData AlertTrace;
+			owner.LineTrace(Owner.Angle, 328, owner.pitch, TRF_SOLIDACTORS, owner.height * 0.5, data: AlertTrace);
+		
+			let alerter = Spawn("flashlightalert",alerttrace.hitlocation);
+			If(alerter)
+			{
+				Alerter.target = owner;
+				Alerter.a_alertmonsters(150);
+			}
+		}
+		
 	}
 
 	States {
@@ -1816,5 +1829,22 @@ class BDP_Spotlight : DynamicLight {
 
 	double DampedSpring(double p, double r, double v, double k, double d) {
 		return -(d * v) - (k * (p - r));
+	}
+}
+
+
+Class FlashlightAlert : Actor
+{
+	Default
+	{
+		projectile;
+	}
+	
+	States
+	{
+		Spawn:
+			TNT1 A 1;
+			STOP;
+	
 	}
 }
