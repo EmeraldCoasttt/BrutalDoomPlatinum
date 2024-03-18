@@ -473,6 +473,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -489,6 +490,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -510,6 +512,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -526,6 +529,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -547,6 +551,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -563,6 +568,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -584,6 +590,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -600,6 +607,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -621,6 +629,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -637,6 +646,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -658,6 +668,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -674,6 +685,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -695,6 +707,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -711,6 +724,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -732,6 +746,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -748,6 +763,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -771,6 +787,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 			CHAG A 0 A_ZoomFactor(0.99)
@@ -796,6 +813,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			//TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			//TNT1 A 0 A_TakeAmmo("CLip2",1)
@@ -826,6 +844,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 			CHAG A 0 A_ZoomFactor(0.99)
@@ -851,6 +870,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)

@@ -179,7 +179,7 @@ ACTOR DualSMG : BrutalWeapon
 		SM2G A 0 A_PlaySound("FARSHT", 6)
         SM2G A 0 A_PlaySound("SMGFIRE", 1)
 		SM2G A 0 A_ZoomFactor(0.99)
-		TNT1 A 0 A_GunLight
+		//TNT1 A 0 A_GunLight
 		TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-8,8), 0, 4, -1, 0, random(-9,9))
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("BDDualSMGAmmo")<=8) { A_PlaySound("MagClick", 7); }}}
 		SM2F B 1 BRIGHT A_FireBullets (8, 4, -1, 12, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-6,10)
