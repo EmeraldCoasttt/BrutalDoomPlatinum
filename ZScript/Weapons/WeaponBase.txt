@@ -52,7 +52,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 			SelfLight1.args[DynamicLight.LIGHT_RED] = lightr; //R
 			SelfLight1.args[DynamicLight.LIGHT_GREEN] = lightg; //G
 			SelfLight1.args[DynamicLight.LIGHT_BLUE] = lightb; //B
-			SelfLight1.args[DynamicLight.LIGHT_INTENSITY] = 270; //Intensity
+			SelfLight1.args[DynamicLight.LIGHT_INTENSITY] = 400; //Intensity
 			//SelfLight1.args[DynamicLight.LIGHT_SCALE] = 300.0; //Size
 			SelfLight1.SpotInnerAngle = 60;
 			SelfLight1.SpotOuterAngle = 90;
