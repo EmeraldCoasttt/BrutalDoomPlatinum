@@ -39,6 +39,22 @@ Class Brutalweapon : DoomWeapon //Weapon
 	}
 	
 	int guntimertics;
+	Action void A_GunLight(int lightr = 255, int lightg = 237, int lightb = 162)
+	{
+		if(getcvar("BDP_GunLight") == true)
+		{
+			BDP_Gunlight SelfLight1 = BDP_Gunlight(Spawn("BDP_Gunlight",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + invoker.owner.player.viewheight),false));
+			SelfLight1.args[DynamicLight.LIGHT_RED] = lightr; //R
+			SelfLight1.args[DynamicLight.LIGHT_GREEN] = lightg; //G
+			SelfLight1.args[DynamicLight.LIGHT_BLUE] = lightb; //B
+			SelfLight1.args[DynamicLight.LIGHT_INTENSITY] = 270; //Intensity
+			//SelfLight1.args[DynamicLight.LIGHT_SCALE] = 300.0; //Size
+			SelfLight1.SpotInnerAngle = 60;
+			SelfLight1.SpotOuterAngle = 90;
+			SelfLight1.angle = invoker.owner.angle;
+			SelfLight1.pitch = invoker.owner.pitch;
+		}
+	}
 	
 	//Lewisk3 :3
 	
@@ -3418,4 +3434,25 @@ CLASS GreenSuperBloodSplasher : GreenBloodSplasher
 		TNT1 A 0 A_JumpIfInTargetInventory("BloodSplasherGreenBlood", 1, "GreenBlood");
 		Stop;
 	}
+}
+
+class BDP_GunLight : DynamicLight 
+{
+
+	int alivetime;
+	default {
+		DynamicLight.Type "Point";
+		+DYNAMICLIGHT.ATTENUATE;
+		+DYNAMICLIGHT.SPOT
+	}
+	override void Tick() {
+		super.Tick();
+		alivetime++;
+		If(alivetime >= 2)
+		{
+			Destroy();
+		}
+	}
+
+	
 }

@@ -218,6 +218,7 @@ ACTOR DualRevolver : BrutalWeapon
 		REDF A 0 A_PlaySound("FARSHT", 6)
         REDF A 0 A_PlaySound("REVFIRE2", 1)
 		SHTN A 0 A_FireBullets (4, 3, 1, 60 , "RevolverPuff", FBF_NORANDOM)
+		TNT1 A 0 A_GunLight
 		REDF A 0 A_ZoomFactor(0.98)
 		//TNT1 A 0 A_FireCustomMissile("RevolverTracer", frandom(-1,1), 0, 5, 0, 0, frandom(2,3))
 		//TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 7)// For poor PCs
@@ -253,6 +254,7 @@ ACTOR DualRevolver : BrutalWeapon
 		REDF M 1 BRIGHT
 		REDF A 0 A_PlaySound("FARSHT", 6)
         REDF A 0 A_PlaySound("REVFIRE2", 1)
+		TNT1 A 0 A_GunLight
 		SHTN A 0 A_FireBullets (4, 3, 1, 60 , "RevolverPuff", FBF_NORANDOM)
 		REDF A 0 A_ZoomFactor(0.98)
 		//TNT1 A 0 A_FireCustomMissile("RevolverTracer", frandom(-1,1), 0, -5, 0, 0, frandom(2,3))

@@ -180,6 +180,7 @@ OptionMenu "DoxVisualOptions"
 	Submenu "Smart crosshair", "SmartCrosshairsMenu"
 	Slider "$DSPLYMNU_SCREENSIZE", "screenblocks", 3.0, 12.0, 1.0, 0
 	ScaleSlider "User interface scale", "uiscale", 0.0, 8.0, 1.0, "Adapt to screen size"
+	TiltPlusPlusOption "Enable weapon flashes", "[!!! EPILEPSY WARNING !!!] Muzzle flashes light up the room", "bdp_gunlight", "YesNo"
 	TiltPlusPlusOption "Enable Scanner", "Shows enemy names and health.", "bd_disablescanner", "NoYes"
 	TiltPlusPlusOption "Leg staining", "Configure blood-stains on first person legs.", "bd_LegStainingOptions", "LegStainingOption"
 	Option "Enable fancy firing [!!! DEPRECATED !!!]", "bd_FancyShooting", "NoYes"

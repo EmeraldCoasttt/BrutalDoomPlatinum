@@ -27,6 +27,8 @@ server int bd_PSXMonsters = 1;
 
 server int bd_disablenewguns = 0;
 
+server bool bdp_gunlight = false;
+
 server int bd_disablenewenemies = 0;
 
 server int bd_disablecrueltybonus = 0;
