@@ -205,7 +205,9 @@ CLASS Railgun : Brutalweapon
 				A_firenurailgun();
 				A_zoomfactor(0.7);
 			}
+			TNT1 A 0 A_GunLight();
 			RAIF A 1;
+			TNT1 A 0 A_GunLight();
 			TNT1 A 0 A_zoomfactor(1.0);
 			RAIF BCDEFG 1 A_setpitch(pitch + 1);
 			
@@ -481,6 +483,7 @@ CLASS Railgun : Brutalweapon
 	ZoomedFire:
 		TNT1 A 0 A_CheckIfAmmo("nurailgunammo",1,"NoAmmoZoomed");
 		TNT1 A 0 A_firenurailgun();
+		TNT1 A 0 A_GunLight();
 		SNIP C 2 BRIGHT;
 		SNIP CCCCCC 1 BRIGHT A_setpitch(pitch + 1);
 		SNIP C 18 BRIGHT;
