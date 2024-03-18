@@ -14,6 +14,10 @@ Class Brutalweapon : DoomWeapon //Weapon
 	Bool clearoverlays;
 	Property clearoverlays : clearoverlays;
 	
+	bool semiautofired;
+	bool semiclear;
+	bool refireq;
+	
 	Actor GuidedLaser;
 	
 	//Modifiers:
@@ -25,6 +29,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 	//name gunslingerammoname;
 	name gunslingermagname;
 	int gunslingermagsize;
+	
 	
 	Default
 	{
@@ -655,6 +660,36 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		}
 	}
 	
+	action void a_semiflag()
+	{
+		invoker.semiautofired = true;
+	}
+	
+	action state A_SemiRefire(statelabel RefireLabel, statelabel FailLabel)
+	{
+		If(invoker.refireq)
+		{
+			invoker.refireq = false;
+			invoker.semiautofired = false;
+			invoker.semiclear = false;
+			Return ResolveState(refirelabel);
+		}
+		Else if(invoker.owner.player.cmd.buttons & BT_ATTACK)
+		{
+			//invoker.refireq = false;
+			//invoker.semiautofired = false;
+			//invoker.semiclear = false;
+			Return resolvestate(FailLabel);
+		}
+		Else
+		{
+			invoker.refireq = false;
+			invoker.semiautofired = false;
+			invoker.semiclear = false;
+			Return resolvestate(null);
+		}
+	}
+	
 	override void DoEffect() 
 	{
 		super.DoEffect();
@@ -662,6 +697,16 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		let player = owner.player;
 		If(player && player.readyweapon is self.getclass())
 		{
+			If(semiautofired && !(player.cmd.buttons & BT_ATTACK))
+			{
+				semiclear = true;
+			}
+			
+			If(semiclear && player.cmd.buttons & BT_ATTACK)
+			{
+				refireq = true;
+			}
+			
 			If(owner.findinventory("rollingstamina"))
 			{
 				If(owner.findinventory("istacticalclass"))
