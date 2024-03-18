@@ -169,6 +169,7 @@ CLASS Unmaker : BrutalWeapon
 		Fire2:
 		 UNHF EFGH 1 BRIGHT
 		{
+		A_gunlight(255,0,0);
 		//invoker.A_unmakelevel(6);
 		A_startSOund("UNMLOP", 6,CHANF_LOOPING);
 			If(countinv("soulammo") < 1)
@@ -225,7 +226,8 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		
 		AltFire:
 		UNHG A 0 A_startSOund("UNMCRAK2");
-		UNHF ABCDE 1;
+		UNHF ABCD 1;
+		UNHF E 1 A_gunlight(255,0,0);
 		/*
 		TNT1 A 0 A_JumpIfInventory("UnmakerUpgrade",3,"ContinueAltFire3") //fires 3 shots.
 		TNT1 A 0 A_JumpIfInventory("UnmakerUpgrade",2,"ContinueAltFire2") //fires 2 shots, even faster.
@@ -280,6 +282,7 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		ContinueAltFire3: //3 tracers
 		UNHG A 0 
 		{
+		A_gunlight(255,0,0);
 		a_alertmonstersDX();
 		A_startSOund("UNMALT",1);
 			If(countinv("soulammo") < 1)
