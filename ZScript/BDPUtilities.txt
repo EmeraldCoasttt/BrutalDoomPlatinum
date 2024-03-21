@@ -208,7 +208,10 @@
 	}
 	override void WorldLoaded( WorldEvent e )
 	{
-		BDPSecretSpawner.SpawnSecrets();
+		If(level.getchecksum() != '3c9902e376cca1e9c3be8763bdc21df5')
+		{
+			BDPSecretSpawner.SpawnSecrets();
+		}
 		mercilessgranted = false;
 	
 	}
