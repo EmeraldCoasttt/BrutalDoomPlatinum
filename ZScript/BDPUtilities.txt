@@ -557,11 +557,15 @@
 			{
 				mercilessgranted = false;
 			}
-			If(!mercilessgranted && currentkills > 5 && currentkills >= Level.Total_Monsters)
+			If(!mercilessgranted && currentkills > 5 && currentkills == (Level.Total_Monsters - 1) && e.thing && e.thing.bcountkill)
 			{
 				mercilessgranted = true;
-				e.thing.a_dropitem("modifierspawner");
-				console.printf("buttsex");
+				let modspawn = Actor.spawn("modifierspawner",e.thing.pos);
+				If(modspawn)
+				{
+					modspawn.vel.z = 5;
+					console.printf("Modifier Spawned!");
+				}
 			}
 	
 		}

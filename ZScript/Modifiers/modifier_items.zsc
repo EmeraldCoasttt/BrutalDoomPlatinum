@@ -26,6 +26,7 @@ class BDPModifierpickup : Inventory
 		Inventory.pickupsound "null";
 		Inventory.pickupmessage "You got a Modifier!";
 		BDPModifierpickup.modifiermessage "YOU SHOULDN'T BE SEEING THIS";
+		+BRIGHT;
     }
 
     static void UnlockModifier(string modifierClass)
