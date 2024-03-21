@@ -56,7 +56,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 				Actor mo;
 				while (mo = Actor(it.Next()))
 				{
-					If(mo is "rocketcandetonate")
+					If(mo is "rocketcandetonate" && !mo.findinventory("rocketdetonate"))
 					{
 						mo.giveinventory("rocketdetonate",1);
 						foundmo = true;
