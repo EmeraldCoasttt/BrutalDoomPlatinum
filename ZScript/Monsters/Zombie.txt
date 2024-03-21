@@ -99,7 +99,7 @@ CLASS BrutalZombie : Actor
 							
 					}
 					
-					Idletimermax = (200 + (1500 * idletimermax));
+					Idletimermax = (200 + (5000 * idletimermax));
 					//console.printf("%i",idletimermax);
 	}
 	override void beginplay()
@@ -189,7 +189,7 @@ CLASS BrutalZombie : Actor
 			{
 				CheckZombies();
 				takeinventory("Resetidletimer",1);
-				Idletimer = random(75, IdleTimerMax);
+				Idletimer = random(IdleTImerMax * 0.25, IdleTimerMax);
 				//console.printf("%i",idletimer);
 			}
 			
