@@ -485,13 +485,13 @@ ACTOR DualPlasmaRifles : BrutalWeapon
 		TNT1 A 0 { A_Overlay(6,"Fire2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
 	FireLoop:
 	 DUPL A 0 A_CheckIfAmmo("DoublePlasmaAmmo")
-		DUPL A 0 A_PlaySound("PLSM9", CHAN_WEAPON)	
+		PLSN A 0 A_FirePitchDown("PLSM9", 1, 30, "DoublePlasmaAmmo")
 		TNT1 A 0 a_alertmonstersDX
 		TNT1 A 0 A_GunLight(0,128,255)
 		DUPL A 0 A_ZoomFactor(0.98)
 		DUPL A 0 A_SetPitch(Pitch-0.7, SPF_INTERPOLATE)
 		DUPL A 0 A_SetAngle(angle+random(-1,1), SPF_INTERPOLATE)
-		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("DoublePlasmaAmmo")<=16) { A_PlaySound("MagClick", 7); }}}
+		//"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("DoublePlasmaAmmo")<=16) { A_PlaySound("MagClick", 7); }}}
 		DUPL A 0 A_TakeAmmo("DoublePlasmaAmmo",1)
 		TNT1 A 0 A_GiveInventory("PlasmaCooldowncounter",1)
 		//DUPL A 0 A_JumpIf(CountInv("doubleplasmaammo"==0,2)
@@ -549,7 +549,7 @@ ACTOR DualPlasmaRifles : BrutalWeapon
 		DUPL A 0 A_CheckIfAmmo("DoublePlasmaAmmo",1,"Overlaynoammo")
 		//DUPL A 0 A_Takeinventory("doubleplasmaammo",1)
 		DUPL A 0 A_TakeAmmo("DoublePlasmaAmmo",1)
-		DUPL A 0 A_PlaySound("PLSM9", CHAN_WEAPON)
+		PLSN A 0 A_FirePitchDown("PLSM9", 1, 30, "DoublePlasmaAmmo")
 		TNT1 a 0 A_ZoomFactor(0.98)
 		TNT1 A 0 A_GunLight(0,128,255)
 		DUPL G 1 BRIGHT A_FireCustomMissile("Plasma_Ball", random(-4, 8), 1, 8, -3, 0, random(-3, 3))

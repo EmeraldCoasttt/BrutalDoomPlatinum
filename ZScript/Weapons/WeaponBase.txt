@@ -43,6 +43,22 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	}
 	
+	Action void A_FirePitchDown(sound soundname = "PLSM9", int soundchannel = 1, double ammocount = 8, name ammotype = "PlasmaAmmo")
+	{
+		If(invoker.owner.countinv(ammotype) > ammocount)
+		{
+			invoker.owner.a_startsound(soundname,soundchannel);
+		}
+		Else
+		{
+			float soundpitch;
+			soundpitch = (invoker.owner.countinv(ammotype) / (ammocount * 5));
+			soundpitch = (0.8 + soundpitch);
+			
+			invoker.owner.a_startsound(soundname,soundchannel, PITCH: soundpitch);
+		}
+	}
+	
 	int guntimertics;
 	Action void A_GunLight(int lightr = 255, int lightg = 237, int lightb = 162)
 	{
