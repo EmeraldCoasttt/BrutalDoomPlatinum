@@ -1,31 +1,4 @@
-//MEDIKITS
-brightmap sprite MEDKG0 { map "brightmaps/doom/Actors/MEDKA0.png" }
-brightmap sprite MEDKK0 { map "brightmaps/doom/Actors/MEDKA0.png" }
 
-brightmap sprite MEDKI0 { map "brightmaps/doom/Actors/MEDKE0.png" }
-brightmap sprite MEDKM0 { map "brightmaps/doom/Actors/MEDKE0.png" }
-
-brightmap sprite MEDKH0 { map "brightmaps/doom/Actors/MEDKB0.png" }
-brightmap sprite MEDKL0 { map "brightmaps/doom/Actors/MEDKB0.png" }
-
-brightmap sprite MEDKJ0 { map "brightmaps/doom/Actors/MEDKF0.png" }
-brightmap sprite MEDKN0 { map "brightmaps/doom/Actors/MEDKF0.png" }
-// Cross big
-brightmap sprite MEDKO0 { map "brightmaps/doom/Actors/MEDKA0.png" }
-brightmap sprite MEDKS0 { map "brightmaps/doom/Actors/MEDKA0.png" }
-brightmap sprite MEDKW0 { map "brightmaps/doom/Actors/MEDKA0.png" }
-// Back big
-brightmap sprite MEDKQ0 { map "brightmaps/doom/Actors/MEDKE0.png" }
-brightmap sprite MEDKU0 { map "brightmaps/doom/Actors/MEDKE0.png" }
-brightmap sprite MEDKY0 { map "brightmaps/doom/Actors/MEDKE0.png" }
-//cross small
-brightmap sprite MEDKP0 { map "brightmaps/doom/Actors/MEDKB0.png" }
-brightmap sprite MEDKT0 { map "brightmaps/doom/Actors/MEDKB0.png" }
-brightmap sprite MEDKX0 { map "brightmaps/doom/Actors/MEDKB0.png" }
-//back big
-brightmap sprite MEDKR0 { map "brightmaps/doom/Actors/MEDKF0.png" }
-brightmap sprite MEDKV0 { map "brightmaps/doom/Actors/MEDKF0.png" }
-brightmap sprite MEDKZ0 { map "brightmaps/doom/Actors/MEDKF0.png" }
 
 
 //armor bonus

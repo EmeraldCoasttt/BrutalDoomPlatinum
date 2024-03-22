@@ -479,54 +479,20 @@ ACTOR Stimpack2 : Health Replaces Stimpack
 	{
 	Spawn:
 	    TNT1 A 0
-	NULL A 0 A_jump(128,2)
-	NULL A 0 A_ChangeFlag("XFLIP",1)
+
 	TNT1 A 0
-		TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==false,"RandomizeSprite")
-		MEDK B 2
-		MEDK B -1
+		TNT1 A 0 A_Jump(100,"Spawn1","spawn2")
+		MEDK F -1
 		Stop
 		
-	RandomizeSprite:
-	    TNT1 A 0 A_Jump(255, "Regular", "RedBack", "GreenCross", "GreenBack", "BlueCross", "BlueBack", "PurpleCross", "PurpleBack", "PinkCross", "PinkBack", "OrangeCross", "OrangeBack")
-		Loop
 		
-	Regular:
-	MEDK B -1
-	Stop
-	GreenCross:
+	Spawn1:
 	MEDK H -1
 	Stop
-	RedBack:
-	MEDK J -1
+	Spawn2:
+	MEDK B -1
 	Stop
-	GreenBack:
-	MEDK F -1
-	Stop
-	BlueCross:
-	MEDK L -1
-	Stop
-	BlueBack:
-	MEDK N -1
-	Stop
-	GrayCross:
-	MEDK P -1
-	Stop
-	GrayBack:
-	MEDK R -1
-	Stop
-	PinkCross:
-	MEDK T -1
-	Stop
-	PinkBack:
-	MEDK V -1
-	Stop
-	OrangeCross:
-	MEDK X -1
-	Stop
-	OrangeBack:
-	MEDK Z -1
-	Stop
+	
 	}
 }
 
@@ -545,53 +511,18 @@ ACTOR Medikit2 : Health Replaces Medikit
 	{
 	Spawn:
 	    TNT1 A 0
-	NULL A 0 A_jump(128,2)
-	NULL A 0 A_ChangeFlag("XFLIP",1)
+
 	TNT1 A 0
-	    TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==false,"RandomizeSprite")
-		MEDK A 2
-		MEDK A -1
+		TNT1 A 0 A_Jump(100,"Spawn1","spawn2")
+		MEDK E -1
 		Stop
 		
-	RandomizeSprite:
-	    TNT1 A 0 A_Jump(255, "Regular", "RedBack", "GreenCross", "GreenBack", "BlueCross", "BlueBack", "PurpleCross", "PurpleBack", "PinkCross", "PinkBack", "OrangeCross", "OrangeBack")
-		Loop
 		
-	Regular:
-	MEDK A -1
-	Stop
-	RedBack:
-	MEDK I -1
-	Stop
-	GreenCross:
+	Spawn1:
 	MEDK G -1
 	Stop
-	GreenBack:
-	MEDK E -1
-	Stop
-	BlueCross:
-	MEDK K -1
-	Stop
-	BlueBack:
-	MEDK M -1
-	Stop
-	GrayCross:
-	MEDK O -1
-	Stop
-	GrayBack:
-	MEDK Q -1
-	Stop
-	PinkCross:
-	MEDK S -1
-	Stop
-	PinkBack:
-	MEDK U -1
-	Stop
-	OrangeCross:
-	MEDK W -1
-	Stop
-	OrangeBack:
-	MEDK Y -1
+	Spawn2:
+	MEDK A -1
 	Stop
 	}
 }
