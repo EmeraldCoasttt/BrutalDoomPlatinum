@@ -820,25 +820,25 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 				Else if(owner.CountInv("NadeType") == 0)
 				{
 					owner.giveinventory("nadetype",1);
-					owner.A_startSound ("ICEGPRE2",92);
+					//owner.A_startSound ("ICEGPRE2",92);
 					//owner.A_Print("\cnFreeze grenades selected.",2);
 				}
 				Else if(owner.CountInv("NadeType") == 1)
 				{
 					owner.giveinventory("nadetype",1);
-					owner.A_startSound ("PIPESEL",92);
+					//owner.A_startSound ("PIPESEL",92);
 					//owner.A_Print("\ccPipebombs selected.",2);
 				}
 				Else if(owner.CountInv("NadeType") == 2)
 				{
 					owner.giveinventory("nadetype",1);
-					owner.A_startSound ("GRNPIN",92);
+					//owner.A_startSound ("GRNPIN",92);
 					//owner.A_Print("\ctVoid grenades selected.",2);
 				}
 				Else
 				{
 					owner.takeinventory("nadetype",666);
-					owner.A_startSound ("GRNPIN",92);
+					//owner.A_startSound ("GRNPIN",92);
 					//owner.A_Print("Cluster grenades selected.",2);
 				}
 			}
