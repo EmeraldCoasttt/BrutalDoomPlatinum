@@ -11,6 +11,8 @@ ACTOR PainElemental1 Replaces PainElemental
 	+FLOAT 
 	+NOGRAVITY
 	+FORCEXYBILLBOARD
+	+missilemore
+	+dontharmspecies
 	SeeSound "pain/sight"
 	damagefactor "Avoid", 0.0
 	damagefactor "GibRemoving", 0.0 damagefactor "HumanBBQ", 0.0
@@ -31,6 +33,7 @@ ACTOR PainElemental1 Replaces PainElemental
 	damagefactor "ExplosiveImpact", 3.0
 	BurnHeight 0
 	Tag "Pain Elemental"
+	Species "meatball"
 	States
 	{
 	Spawn:
