@@ -220,6 +220,11 @@ class Brutal_PlayerBase : PlayerPawn
 					SetStateLabel("pain.bikelaunch");
 					
 				}
+			If(source is "Freezerbot" || source is "FreezeBot" || inflictor is "FreezeBot" || Inflictor is "Freezerbot")
+				{
+					damage = 0;
+					
+				}
 			If(grappled)
 				{
 					Damage = (damage * 0.25);

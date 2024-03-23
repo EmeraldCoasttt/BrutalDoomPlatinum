@@ -29,6 +29,10 @@ Actor SequenceBreaker : Inventory
 {
 inventory.maxamount 1
 }
+Actor FreezeBotAmmo : Inventory
+{
+inventory.maxamount 10
+}
 Actor UnmakerUnmorph : Inventory
 {
 inventory.maxamount 1
