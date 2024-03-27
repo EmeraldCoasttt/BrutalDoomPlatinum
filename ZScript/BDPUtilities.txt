@@ -450,6 +450,7 @@
 		If(e.thing && e.thing.bismonster && !e.thing.findinventory("monsterinventory"))
 			{
 			e.thing.giveinventory("monsterinventory",1);
+			e.thing.bdoshadowblock = true;
 			}
 		if(e.thing && level.mapname != 'TITLEMAP' && !e.thing.findinventory("nottitlemap") && e.thing is "playerpawn")
 			{
