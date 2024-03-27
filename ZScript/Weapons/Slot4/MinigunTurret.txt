@@ -20,6 +20,16 @@ CLASS MiniGunTurret : BDPNotMonster
 		//Dropitem "Minigun", 255;
 		}
 		
+		Override void tick()
+		{
+			//Avoid detonating explosive barrels
+			If(target && target is "explosivebarrelbase")
+			{
+				target = null;
+			}
+			Super.tick();
+		}
+		
 		States
 		{
 		
