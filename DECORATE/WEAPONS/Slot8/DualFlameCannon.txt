@@ -220,12 +220,14 @@ ACTOR DualFlameCannon : BrutalWeapon
         FLC2 A 0
 		TNT1 A 0 A_takeinventory("SwapRifleSpecial",1)
 		FLC2 A 0 A_JumpIf(waterlevel > 1, "DryFire")
-        FLC2 A 0 A_JumpIfInventory("Gas", 32, "SmokeFireball")
+        FLC2 A 0 A_JumpIfInventory("Gas", 16, "SmokeFireball")
 		FLC2 A 0 A_JumpIfInventory("PowerSpeed2", 1, "SmokeFireball")
 		FLC2 A 0 A_StopSound(CHAN_WEAPON)
 		Goto DryFire
 		
 	SmokeFireball:	
+		TNT1 A 0 A_jumpifinventory("SmokeScreenToken",1,"altsmoke")
+		TNT1 A 0 A_giveinventory("smokescreentoken",1)
 	    NULL A 0 A_playSound("MANCFIRE")
 		TNT1 A 0 a_alertmonstersDX
         FLC2 B 1 BRIGHT A_FireCustomMissile("SmokeSpewer", random(-3,-7), 0, -20, -6, random(-2,2))
@@ -236,6 +238,9 @@ ACTOR DualFlameCannon : BrutalWeapon
 		FLC2 A 0 A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0)
         FLC2 CD 1 BRIGHT A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE)
 		FLC2 EFGH 1
+		Goto Ready
+		AltSmoke:
+		TNT1 A 0 A_takeinventory("SmokeScreenToken",1)
 		NULL A 0 A_playSound("MANCFIRE")
         FLC2 I 1 BRIGHT A_FireCustomMissile("SmokeSpewer", random(3,7), 0, 20, -6, random(-2,2))
 		FLC2 A 0 A_SetPitch(-2.0 + pitch, SPF_INTERPOLATE)
@@ -245,7 +250,6 @@ ACTOR DualFlameCannon : BrutalWeapon
 		FLC2 A 0 A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0)
         FLC2 JK 1 BRIGHT A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE)
 		FLC2 LMNO 1
-		NULL A 0 A_ReFire
 		//FLC2 A 5
 		Goto Ready
 		

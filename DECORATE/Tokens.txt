@@ -25,6 +25,12 @@ Actor PistolFireAnimation1 : Inventory
 inventory.maxamount 1
 }
 
+Actor SmokeScreenToken : Inventory
+{
+inventory.maxamount 1
+}
+
+
 Actor SequenceBreaker : Inventory
 {
 inventory.maxamount 1
