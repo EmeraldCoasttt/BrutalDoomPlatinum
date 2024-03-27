@@ -479,6 +479,26 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		{
 			takeinventory("Zoomies",1);
 			A_weaponready(dxflags);
+			If(findinventory("powerstrength") && player.cmd.buttons & BT_USE)
+			{
+				FLineTraceData checkgrab;
+				invoker.owner.LineTrace(invoker.owner.angle, 64, invoker.owner.pitch, 0, offsetz: 41, data: checkgrab);
+				if (CheckGrab.HitActor && Checkgrab.HitActor is "TehLostSoul")
+				{
+					Invoker.owner.giveinventory("hasagib",1);
+					Invoker.owner.giveinventory("lostsoulfatality",1);
+					Invoker.owner.giveinventory("gofatality",1);
+					checkgrab.hitactor.destroy();
+					
+				}
+				if (CheckGrab.HitActor && Checkgrab.HitActor is "Explosivebarrel1")
+				{
+					Invoker.owner.giveinventory("hasagib",1);
+					Invoker.owner.giveinventory("hasbarrel",1);
+					Invoker.owner.giveinventory("gofatality",1);
+					checkgrab.hitactor.destroy();
+				}
+			}
 			If(findinventory("hasagib"))
 			{
 			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('Chooseyourgib'));

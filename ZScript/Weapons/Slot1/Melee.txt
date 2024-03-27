@@ -50,6 +50,7 @@ CLASS MeleeAttack : Actor
 	
 	Override int specialmissilehit(Actor victim)
 		{
+			/*
 			If(target && victim && victim is "ExplosiveBarrel1" && pickbarrel && target.findinventory("powerstrength") && !target.findinventory("hasagib"))
 				{
 					A_startsound("footmeat",3);
@@ -67,6 +68,7 @@ CLASS MeleeAttack : Actor
 					target.giveinventory("gofatality",1);
 					target.giveinventory("hasagib",1);
 				}
+			*/
 			If(target && target.findinventory("powerstrength"))
 				{
 					If(victim && victim is "ExplosiveBarrel1")
