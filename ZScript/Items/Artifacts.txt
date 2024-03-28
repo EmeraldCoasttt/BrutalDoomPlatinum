@@ -501,3 +501,48 @@ class BoosterFrame : CustomInventory
 		Stop;
 	}
 }
+
+
+
+
+CLASS PowerRage : PowerSpeed
+{
+Default
+	{
+		Powerup.Duration -30;
+		Powerup.Color "91 00 00";
+		Speed 2.0;
+		+INVENTORY.HUBPOWER
+	}
+	override void initeffect()
+	{
+		owner.giveinventory("PowerStrength",1);
+		Super.initeffect();
+	}
+	override void doeffect()
+	{
+		If(owner)
+		{
+			owner.A_selectweapon("melee_attacks");
+		}
+		Super.doeffect();
+	}
+	
+	override void ModifyDamage (int damage, Name damageType, out int newdamage, bool passive, Actor inflictor, Actor source, int flags)
+	{
+	
+		
+		If(passive)
+		{
+			newdamage = (damage * 0.25);
+		}
+		Else If(owner && damage > 1000)
+		{
+			Owner.givebody(10);
+			newdamage = damage;
+			source.a_startsound("Items/Rage/Kill",624);
+		}
+		
+	
+	}
+}

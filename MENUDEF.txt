@@ -469,6 +469,9 @@ OptionMenu "DoxCreditsGraphics"
 	StaticText ""
 	StaticText "Bjecinst", "LightBlue"
 	StaticText "Tpose Marine"
+	StaticText ""
+	StaticText "Captain Toenail", "LightBlue"
+	StaticText "Rage Sphere Graphics"
 }
 
 OptionMenu "DoxCreditsCode"

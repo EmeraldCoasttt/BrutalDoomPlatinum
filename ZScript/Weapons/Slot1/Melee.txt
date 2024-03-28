@@ -94,6 +94,10 @@ CLASS MeleeAttack : Actor
 					//If(target && target.findinventory("nofatality") || target && target.findinventory("hasagib") || !dofatality) {Damagetype = "ExtremePunches";}
 					Damagetype = "ExtremePunches";
 					Damagetodeal = berserkdamage;
+					If(target && target.findinventory("powerrage"))
+					{
+						Damagetodeal = 5000;
+					}
 					If(victim && uppercut && !victim.bspawnceiling && victim.bismonster)
 						{
 							A_startsound("bonecrack",27);
