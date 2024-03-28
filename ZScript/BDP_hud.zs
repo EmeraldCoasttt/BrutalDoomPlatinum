@@ -765,6 +765,11 @@ class BDP_HUD : DoomStatusBar
 					iconName = "SIG4A0";
 					col = Font.CR_Yellow;
 				}
+				else if (item is "PowerRage")
+				{
+					iconName = "DDMGA0";
+					col = Font.CR_RED;
+				}
 				// In other cases, check if the power-up has
 				// an icon defined, and use that:
 				else 
