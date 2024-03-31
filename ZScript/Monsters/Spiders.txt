@@ -84,7 +84,7 @@ CLASS mastermindgrenade : actor
 			{
 				Speed 30;
 				Species "marines";
-				
+				-bounceonactors;
 			
 			}
 		States
@@ -163,6 +163,18 @@ CLASS mastermindgrenade : actor
 	
 	Class Deadmastergrenadeplayer : deadmastergrenade
 		{
+		Override bool cancollidewith(Actor other, bool passive)
+		{
+			If(other && other is "playerpawn")
+			{
+				return false;
+			}
+			Else 
+			{
+				damagemobj(other,self,100,"Normal");
+				return true;
+			}
+		}
 		Default
 			{
 				Species "marines";
