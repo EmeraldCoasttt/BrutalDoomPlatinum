@@ -370,11 +370,11 @@ CLASS Tenderizer : Brutalweapon
 			HAMR A 0
 			{
 				A_startsound("GRBRFIRE",12);
-				If(countinv("soulammo") < 10)
+				If(countinv("soulammo") < 5)
 				{
 					A_damageself(3,"desintegrate");
 				}
-				takeinventory("soulammo",10);
+				takeinventory("soulammo",5);
 				A_dohammer(200,45,true,random(50,100),"ExtremePunches");
 				A_recoil3d(40);
 			}
