@@ -144,7 +144,7 @@
 			//console.printf("buttsex");
 			//c.angle = spots[ws].angle;
 			tboxes++;
-			if ( tboxes >= 3 ) break;	// already spawned 3 boxes in one map (which is a lot)
+			if ( tboxes >= 8 ) break;	// already spawned 8 secrets in one map (which is a lot)
 		}
 		}
 	}
