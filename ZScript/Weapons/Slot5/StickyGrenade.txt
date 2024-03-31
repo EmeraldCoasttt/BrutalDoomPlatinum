@@ -321,3 +321,15 @@ CLASS GrenadeTrail2 : GrenadeTrail
 	}
 }
 
+CLASS GrenadeTrail3 : GrenadeTrail
+{
+
+	States
+	{
+    Spawn:
+        TNT1 A 0;
+        FRFX KLMNOP 3 BRIGHT;
+        Stop;
+	}
+}
+

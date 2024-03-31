@@ -50,6 +50,7 @@ CLASS mastermindgrenade : actor
 			+BOUNCEONFLOORS;
 			+BOUNCEONWALLS;
 			+BOUNCEONCEILINGS;
+			+BOUNCEONACTORS;
 			+missile;
 			Gravity 0.7;
 			speed 15;
@@ -69,13 +70,10 @@ CLASS mastermindgrenade : actor
 	States
 		{
 			Spawn: 
-			BS2X AABBCCDD 1 A_spawnprojectile("GrenadeTrail2", 5, 0, random (0, 360), 2, random (-80, -160));
+			BS2X AABBCCDD 1 A_spawnprojectile("GrenadeTrail3", 5, 0, random (0, 360), 2, random (-80, -160));
 			LOOP;
-			Xdeath:
-			TNT1 A 5 A_spawnitemex("mastermindsplosion");
-			Stop;
 			Death:
-			TNT1 A 5 A_spawnitemex("deadmastergrenade");
+			TNT1 A 5 A_spawnitemex("DeadMasterGrenade");
 			Stop;
 		}
 	}
@@ -103,14 +101,21 @@ CLASS mastermindgrenade : actor
 		
 		}
 	
-	Class deadmastergrenade : mastermindgrenade
+	Class deadmastergrenade : Actor
 	{
+	
+		Override bool cancollidewith(Actor other, bool passive)
+		{
+			If(other && other is "playerpawn")
+			{
+				damagemobj(other,self,100,"Normal");
+				return true;
+			}
+			Else return false;
+		}
 		Default
 		{
-			-BOUNCEONFLOORS;
-			-BOUNCEONCEILINGS;
-			-bounceonwalls;
-			gravity 1.0;
+			
 			+shootable;
 			health 40;
 			gibhealth 1;
@@ -119,11 +124,13 @@ CLASS mastermindgrenade : actor
 			//+touchy;
 			+nodamagethrust;
 			+noblood;
+			+NORADIUSDMG;
 			-noblockmap;
 			+bright;
-			radius 64;
-			height 64;
+			+solid;
 			Species "spider";
+			height 16;
+			radius 16;
 			+thruspecies;
 			+mthruspecies;
 		}
@@ -145,7 +152,7 @@ CLASS mastermindgrenade : actor
 		BS2X D 0;
 		Goto stay;
 		Stay:
-		BS2X "#" 1 A_spawnprojectile("GrenadeTrail2", 5, 0, random (0, 360), 2, random (-80, -160));//A_spawnitemex("grenadetrail",0,0,5,frandom(-3,3),frandom(-3,3),frandom(3,10),frandom(0,360));
+		BS2X "#" 1 A_spawnprojectile("GrenadeTrail3", 5, 0, random (0, 360), 2, random (-80, -160));//A_spawnitemex("grenadetrail",0,0,5,frandom(-3,3),frandom(-3,3),frandom(3,10),frandom(0,360));
 		LOOP;
 		Death:
 			TNT1 A 5 A_spawnitemex("mastermindsplosion");
