@@ -56,13 +56,13 @@ painchance "Head", 255
 		TNT1 A 0 ThrustThing(angle*256/360+192, 12, 0, 0)
 		ZRO2 WVUTSRQ 2 A_FaceTarget
 		TNT1 A 0 A_CheckSight("SeeContinue")
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		Goto MissileCrouched
 	AvoidRightShort:
 		TNT1 A 0 ThrustThing(angle*256/360+64, 12, 0, 0)
 		ZRO2 STUVWXQ 2 A_FaceTarget
 		TNT1 A 0 A_CheckSight("SeeContinue")
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		Goto MissileCrouched
 		
 	MissileCrouched:
@@ -126,14 +126,14 @@ painchance "Head", 255
 	    TNT1 A 0 ThrustThing(angle*256/360+192, 15, 0, 0)
         ZRO2 XWVUTSRQ 2 A_FaceTarget
         TNT1 A 0 A_CheckSight("SeeContinue")
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		Goto MissileCrouched
 	AvoidRight:
 	    SP1S A 1 A_FaceTarget
 	    TNT1 A 0 ThrustThing(angle*256/360+64, 15, 0, 0)
         ZRO2 QRSTUVWX 2 A_FaceTarget
         TNT1 A 0 A_CheckSight("SeeContinue")
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		Goto MissileCrouched
 	
     Spawn:
@@ -187,7 +187,7 @@ painchance "Head", 255
 	TNT1 A 0 A_Jump(64, "Missile")
 	TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -5, 40,0)
 	TNT1 A 0 A_SpawnItem ("LegTarget4", 10)
-	TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+	
 	SP1S C 2 A_FaceTarget
 	SP1S C 2 A_Recoil(5)
 	TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -5, 40,0)
@@ -196,7 +196,7 @@ painchance "Head", 255
 	SP1S B 2 A_Recoil(5)
 	TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -5, 40,0)
 	TNT1 A 0 A_SpawnItem ("LegTarget4", 10)
-	TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+	
 	SP1S A 2 A_FaceTarget
 	SP1S A 2 A_Recoil(4)
 	TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -5, 40,0)
@@ -228,7 +228,7 @@ painchance "Head", 255
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 5, 40,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
 		SP1S A 10 A_Look
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		SP1S A 4 A_Look
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0)
 		TNT1 A 0 A_Wander
@@ -236,7 +236,7 @@ painchance "Head", 255
 		SP1S B 4 A_Look
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0)
 		TNT1 A 0 A_Wander
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		SP1S C 4 A_Look
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0)
 		TNT1 A 0 A_Wander
@@ -247,7 +247,7 @@ painchance "Head", 255
 		
 		
 		TNT1 A 0 A_Jump(128, "Idle")
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		SP1S A 4 A_Look
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0)
 		TNT1 A 0 A_Wander
@@ -255,7 +255,7 @@ painchance "Head", 255
 		SP1S B 4 A_Look
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0)
 		TNT1 A 0 A_Wander
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		SP1S C 4 A_Look
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0)
 		TNT1 A 0 A_Wander
@@ -286,7 +286,7 @@ painchance "Head", 255
 
 		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		SP1S AAA 2 A_Chase
 		TNT1 A 0 A_JumpIf(GetCvar("bd_RollingZombies")==1, 2)
 	    TNT1 A 0 A_Jump(8, "Pain.Avoid")
@@ -297,7 +297,7 @@ painchance "Head", 255
 		
 		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		SP1S CCC 2 A_Chase
 		
 		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0)
@@ -317,14 +317,14 @@ painchance "Head", 255
 		
 		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		SP1S AAA 2 A_Chase
 		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
 		SP1S BBB 2 A_Chase
 		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		SP1S CCC 2 A_Chase
 		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)

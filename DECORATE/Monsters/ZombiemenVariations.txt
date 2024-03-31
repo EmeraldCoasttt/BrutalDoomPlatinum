@@ -41,13 +41,13 @@ Tag "Pistol Zombie"
 		TNT1 A 0 ThrustThing(angle*256/360+192, 12, 0, 0)
 		ZRO1 ONMLKJI 2 A_FaceTarget		
 		TNT1 A 0 A_CheckSight("SeeContinue")
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		Goto Missile
 	AvoidRightShort:
 		TNT1 A 0 ThrustThing(angle*256/360+64, 12, 0, 0)
 		ZRO1 KLMNOPI 2 A_FaceTarget
 		TNT1 A 0 A_CheckSight("SeeContinue")
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		Goto Missile
 	  
    AvoidJumpLeft:
@@ -76,14 +76,14 @@ Tag "Pistol Zombie"
 	    TNT1 A 0 ThrustThing(angle*256/360+192, 15, 0, 0)
         ZRO1 PONMLKJI 2 A_FaceTarget
         TNT1 A 0 A_CheckSight("SeeContinue")
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		Goto Missile
 	AvoidRight:
 	    PSPO A 1 A_FaceTarget
 	    TNT1 A 0 ThrustThing(angle*256/360+64, 15, 0, 0)
         ZRO1 IJKLMNOP 2 A_FaceTarget
         TNT1 A 0 A_CheckSight("SeeContinue")
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		Goto Missile
 	
 	
@@ -142,7 +142,7 @@ Tag "Pistol Zombie"
 		PSPO A 10 A_Look
 		
 	StartSearching:	
-	    TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+	    
 		PSPO A 2 A_Look
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 4, 44,0)
 		TNT1 A 0 A_Wander
@@ -155,7 +155,7 @@ Tag "Pistol Zombie"
 		PSPO B 2 A_Look
 		TNT1 A 0 A_Wander
 		
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		PSPO C 2 A_Look
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 4, 44,0)
 		TNT1 A 0 A_Wander
@@ -186,7 +186,7 @@ Tag "Pistol Zombie"
 		TNT1 A 0 A_Jump(64, "Missile")
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -4, 44,0)
 		TNT1 A 0 A_SpawnItem ("LegTarget4", 10)
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		PSPO C 2 A_FaceTarget
 		PSPO C 2 A_Recoil(4)
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -4, 44,0)
@@ -195,7 +195,7 @@ Tag "Pistol Zombie"
 		PSPO B 2 A_Recoil(3)
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -4, 44,0)
 		TNT1 A 0 A_SpawnItem ("LegTarget4", 10)
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		PSPO A 2 A_FaceTarget
 		PSPO A 2 A_Recoil(3)
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
@@ -220,7 +220,7 @@ Tag "Pistol Zombie"
 
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget6", 4, 44,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		PSPO AAA 2 A_Chase
 		TNT1 A 0 A_JumpIf(GetCvar("bd_RollingZombies")==1, 2)
 	    TNT1 A 0 A_Jump(8, "Pain.Avoid")
@@ -231,7 +231,7 @@ Tag "Pistol Zombie"
 		
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget6", 4, 44,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		PSPO CCC 2 A_Chase
 		
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget6", 4, 44,0)
@@ -247,7 +247,7 @@ Tag "Pistol Zombie"
 		
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 4, 44,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		PSPO AA 2 A_Chase
 		
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 4, 44,0)
@@ -256,7 +256,7 @@ Tag "Pistol Zombie"
 		
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 4, 44,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
-		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("floorhardZombie",4); } }
+		
 		PSPO CC 2 A_Chase
 		
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 4, 44,0)
