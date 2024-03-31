@@ -592,6 +592,8 @@
 				If(!passive && inflictor && inflictor.findinventory("grabberdamage"))
 					{
 						Newdamage = (damage * 4.0);
+						owner.givebody(10);
+						owner.a_startsound("items/hellishhealthbonus",656);
 					}
 			}
 	}
