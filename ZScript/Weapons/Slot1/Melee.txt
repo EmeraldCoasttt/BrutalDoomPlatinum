@@ -131,15 +131,29 @@ CLASS MeleeAttack : Actor
 				{
 					Setstatelabel("death");
 				}
-				
+			int backsmackmod;
 			If(victim && absangle(angle,victim.angle) < 90)
 			{
 				//Console.printf("Backsmack!");
+				
+				
 				Damagetodeal = (damagetodeal*4);
+				If(victim.health <= 400 && target && target.findinventory("powerstrength"))
+				{
+					damagetodeal = victim.health;
+					backsmackmod = DMG_NO_FACTOR;
+					Console.printf("Backsmack!");
+				}
+				Else If(victim.health <= 200)
+				{
+					damagetodeal = victim.health;
+					backsmackmod = DMG_NO_FACTOR;
+					Console.printf("Backsmack!");
+				}
 				A_startsound("melee/backsmack",28);
 				Radius_Quake (6, 12, 0, 60, 0);
 			}
-			victim.damagemobj(self, target, damagetodeal, damagetype);
+			victim.damagemobj(self, target, damagetodeal, damagetype, backsmackmod);
 			
 			bmissile = false;
 			/*
