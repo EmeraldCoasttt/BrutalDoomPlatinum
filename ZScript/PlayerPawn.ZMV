@@ -96,6 +96,7 @@ class Brutal_PlayerBase : PlayerPawn
 	//Booster Frame
 	int boosttics;
 	int boostlevel;
+	int forwardtics;
 	double lasttickvellength;
 	bool booster;
 	bool boostersound;
@@ -588,12 +589,22 @@ class Brutal_PlayerBase : PlayerPawn
 				boostlevel--;
 				boosttics = 0;
 			}
+			If(!cmd.forwardmove)
+			{
+				forwardtics--;
+				//console.printf("%i",forwardtics);
+				If(forwardtics < -5)
+				{
+					boostlevel = 0;
+					forwardtics = 0;
+				}
+			}
 		}
 		Else
 		{
 			boosttics = 0;
 		}
-		//console.printf("%i",vel.length());
+		//console.printf("%i",boostlevel);
 		If(boostlevel > 1 && !boostersound)
 		{
 			Boostersound = true;
@@ -679,11 +690,13 @@ class Brutal_PlayerBase : PlayerPawn
 			}
 			
 		}
-		If(cmd.forwardmove && boostlevel > 1 && vel.length() < (lasttickvellength * 0.5))
+		
+		If(boostlevel > 7 && !checkmove(Pos.XY + AngleToVector(angle, 16), PCM_NOACTORS))
 		{
+			
 			A_stop();
-			//A_recoil(14);
-			//vel.z = 10;
+			A_recoil(14);
+			vel.z = 10;
 			A_Quake(boostlevel,12,0,800);
 			boostlevel = 0;
 			boosttics = 0;
