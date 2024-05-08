@@ -548,20 +548,9 @@ CLASS Tenderizer : Brutalweapon
 	
 		
 	Grabloop:
-		TNT1 A 0
-		{
-			If(invoker.owner.countinv("soulammo") <= 1)
-			{
-				A_damageself(1,"desintegrate");
-			}
-			Else
-			{
-				invoker.owner.takeinventory("soulammo",1);
-			}
-		}
 		HAMG LMNLMNLMN 1
 		{
-			//invoker.grabbedtimer = invoker.grabbedtimer + 1;
+			invoker.grabbedtimer++;
 			
 			A_startsound("GRBRLOOP",12,CHANF_LOOPING);
 			A_overlayoffset(overlayid(),frandom(-1,0),frandom(32,33));
@@ -575,7 +564,7 @@ CLASS Tenderizer : Brutalweapon
 					Return resolvestate("grabdie");
 					
 				}
-			If(invoker.grabbedactor && invoker.grabbedactor.health > 0)
+			If(invoker.grabbedactor && invoker.grabbedactor.health > 0 && invoker.grabbedtimer < 175)
 				{
 				
 			
