@@ -1465,7 +1465,7 @@ EXITMSG42 = "(PRESS Y TO QUIT)";
 EXITMSG43 = "Are you sure you want to leave LEGO Island? If you select the green brick, you go. If you select the red brick, you stay. Green go, red stay.";
 EXITMSG44 = "Thanks for the visit! And, you're welcome to come back any time! We'll miss you!";
 EXITMSG45 = "Ya missed one";
-EXITMSG46 = "Maximum fungal";
+EXITMSG46 = "Medium fungal";
 EXITMSG47 = "Later, nerd";
 EXITMSG48 = "Trans rights, motherfuckers!";
 EXITMSG49 = "100% satanism Free!";
@@ -1520,6 +1520,9 @@ EXITMSG97 = "No more doom, due to Woke.";
 EXITMSG98 = "Abort game?";
 EXITMSG99 = "Be a doomer, not a quitter";
 EXITMSG100 = "C'mon, one more map!";
+EXITMSG101 = "You thought you were finished\nwith Doom... Here are more\naccessories for your favorite game!\nHa, ha, ha...";
+EXITMSG102 = "More levels?\nMore Demons?\nNo, no, no!";
+EXITMSG103 = "You sound hella woke tbh";
 
 
 
