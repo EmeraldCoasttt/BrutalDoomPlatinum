@@ -660,7 +660,15 @@ CLASS SuperBFGBall : BFGBall replaces BFGBall
 					actor bfgextra; 
 					bfgextra = Spawn(sprayspawn, (tracer.pos.x,tracer.pos.y,tracer.pos.z + (tracer.height * 0.5)));
 					bfgextra.scale = (bfgextra.scale / bfgdivide);
-					tracer.damagemobj(self,target,(outputdamage * frandom(0.80,1.20)),"Disintegrate");
+					If(tracer.bboss)
+					{
+						//console.printf("daboss");
+						tracer.damagemobj(self,target,(outputdamage * frandom(0.10,0.60)),"Disintegrate");
+					}
+					Else
+					{
+						tracer.damagemobj(self,target,(outputdamage * frandom(0.80,1.20)),"Disintegrate");
+					}
 				}
 			
 			}
