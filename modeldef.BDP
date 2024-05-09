@@ -31,6 +31,17 @@ Model NukeDamage // Name of actor in DECORATE
    FrameIndex NUKF A 0 0 // The sprite lump, sprite frame, model index, frame number
 }
 
+Model ScannerEffect // Name of actor in DECORATE
+{ 
+   Path "Models/Projectiles" // Path to model in PK3
+   SKIN 0 "NUKE2.lmp" // Model index, model file
+   MODEL 0 "NukeShockwave.md3" // Model index, texture (can be in any format supported by GZDoom)
+   Scale 0.5 0.5 0.5 // Scale values
+   PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+   DONTCULLBACKFACES
+   FrameIndex NUKF A 0 0 // The sprite lump, sprite frame, model index, frame number
+}
+
 Model FlyingNail // Name of actor in DECORATE
 { 
    Path "Models" // Path to model in PK3

@@ -52,8 +52,8 @@ setslot 9 Flamethrower2 HandGrenades
    //addmenukey "Open Ammo Drop Menu" selectammodroper
   // alias selectammodroper "puke 309"
   
-   addmenukey "Scan area" scanner
-   alias scanner "pukename areascan" 
+   addmenukey "Scan Area" scanner
+   alias scanner "netevent togglescanner" 
    
   // addmenukey "Quick Pull Pistol" quickpistol
  //  alias quickpistol "puke 310"

@@ -182,6 +182,9 @@ class Brutal_PlayerBase : PlayerPawn
 	bool alreadyblacklisted;
 	bool extralifegranted;
 	
+	bool scanneractive;
+	int scannertimer;
+	
 	Default
     {
 		Player.DisplayName "ZMovement Player";
@@ -207,6 +210,19 @@ class Brutal_PlayerBase : PlayerPawn
 	{
 		if(VecToUnit.Length()) { VecToUnit /= VecToUnit.Length(); }
 		return VecToUnit;
+	}
+	
+	void togglescanner()
+	{
+		If(!scanneractive)
+		{
+			scanneractive = true;
+			a_startsound("areascanner",122);
+			//spawn("scannereffect",pos);
+			
+		}
+		Scannertimer = 130;
+
 	}
 	
 	Override int takespecialdamage(Actor inflictor, Actor source, int damage, Name damagetype)
@@ -244,6 +260,14 @@ class Brutal_PlayerBase : PlayerPawn
 		
 		If(health >= 1)
 		{
+			If(scannertimer > 0)
+			{
+				scannertimer--;
+			}
+			Else
+			{
+				scanneractive = false;
+			}
 			If(flashtimer > 0)
 			{
 				flashtimer--;
@@ -1865,4 +1889,26 @@ Class FlashlightAlert : Actor
 			STOP;
 	
 	}
+}
+
+Class ScannerEffect : Actor
+{
+	Int scalevalue;
+		Default
+			{
+				+nogravity;
+				renderradius 2000;
+				Alpha 0.2;
+			}
+			States
+			{
+				Spawn:
+					NUKF A 1 BRIGHT
+					{
+					scalevalue = (scalevalue + 45);
+					A_setscale(scalevalue,scalevalue);
+					A_fadeout(0.002);
+					}
+					LOOP;
+			}
 }

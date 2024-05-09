@@ -919,7 +919,7 @@ class BDP_OverlayUI : EventHandler
 		}
 		Else if(e.thing is "BDYellowCard")
 		{
-			AddNewKey2(e.thing, "Yellow");
+			AddNewKey2(e.thing, "Orange");
 		}
 		Else if(e.thing is "BDBlueSkull")
 		{
@@ -931,7 +931,7 @@ class BDP_OverlayUI : EventHandler
 		}
 		Else if(e.thing is "BDYellowSkull")
 		{
-			AddNewKey2(e.thing, "Yellow");
+			AddNewKey2(e.thing, "Orange");
 		}
 		Else if(e.thing is "NewAllMap")
 		{
@@ -946,18 +946,18 @@ class BDP_OverlayUI : EventHandler
 	override void RenderOverlay(RenderEvent e)
 	{	
 		// Get player
-		playerpawn BDPplr = playerpawn(e.Camera);
+		brutal_playerbase BDPplr = brutal_playerbase(e.Camera);
 		if(!BDPplr)
 		{
 			let BDPcam = BDPVehCamera(e.Camera);
-			if(BDPcam) BDPplr = playerpawn(BDPcam.source);
+			if(BDPcam) BDPplr = brutal_playerbase(BDPcam.source);
 			if(!BDPplr) return;
 		}
 		
 		
 		
 		// Draw HUD projections
-		if(!automapactive) 
+		if(!automapactive && BDPplr.scanneractive) 
 		{
 			DrawKeys(e);
 		}

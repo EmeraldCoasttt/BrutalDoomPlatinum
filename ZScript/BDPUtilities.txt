@@ -160,6 +160,18 @@
 	
 	bool mercilessgranted;
 	
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		PlayerInfo src = players[e.Player];
+		if(!src || !src.mo) return;
+		let bdplr = Brutal_Playerbase(src.mo);
+		
+		if(e.Name ~== "togglescanner" && bdplr)
+		{
+			bdplr.togglescanner();
+		}
+	}
+	
 	static clearscope int PointOnLineSide( Vector2 p, Line l )
 	{
 		if ( !l ) return 0;
