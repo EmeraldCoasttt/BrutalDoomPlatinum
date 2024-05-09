@@ -779,6 +779,111 @@ class BDPMath Abstract
 	
 }
 
+class StringHelper Abstract
+{
+	static bool IsUpper(uint ch)
+	{
+		return ch != 0 ? ch == String.CharUpper(ch) : false;
+	}
+	
+	static void SplitByUppercase(String src, out Array<String> tokens)
+	{
+		tokens.Clear();
+		uint len = src.Length();
+		uint foundat = src.Length();
+		
+		for(uint i = 0; i <= len; i++)
+		{
+			if(StringHelper.IsUpper(src.ByteAt(i)))
+			{
+				if(foundat >= 0) tokens.Push(src.Mid(foundat, i-foundat));
+				foundat = i;
+			}
+			else if(i >= len && foundat != len) 
+			{
+				tokens.Push(src.Mid(foundat, len));
+				break;
+			}
+		}
+	}
+	
+	// Attempt to automatically insert linebreaks in string.
+	static string formatLnBreaks(String str, int lineLen)
+	{
+		// Split string into words.
+		Array<string> words;
+		string newline = "\n";
+		str.Split(words, " ");
+		
+		string outStr;
+		int carriage = 0;
+		for(int i = 0; i < words.Size(); i++)
+		{
+			string word = words[i];
+			bool manualNewLine = word.IndexOf(newline, 0) != -1;
+			
+			int len = word.Length() + 1; // Add " " space at start of new word.
+			carriage += len;
+			
+			if(manualNewLine) carriage = len-1;
+			if(carriage > lineLen) 
+			{
+				outStr = outStr .. "\n";
+				carriage = len-1;
+			}
+
+			outStr = String.Format("%s %s", outStr, word);
+		}
+		
+		return outStr;
+	}
+	 
+	static bool, string parseStrElement(String type, String ln, bool filterNewLines = true, bool filterSpaces = true)
+	{
+		string quote = "\"";
+		string lnLower = ln.MakeLower();
+		type = type.MakeLower();
+		
+		int element_S = lnLower.IndexOf(type);
+		int elementStr_S = lnLower.IndexOf(quote, element_S);
+		int element_E = lnLower.IndexOf(quote, elementStr_S+1);
+		
+		/*
+		console.printf("Parsing: [%s] \nfor StringKeyword %s", ln, type);
+		console.printf("Starting At: %d -> %s \n", element_S, lnLower.Mid(element_S));
+		console.printf("String Starts: %d -> %s \n", elementStr_S, lnLower.Mid(elementStr_S));
+		console.printf("Ending At: %d -> %s \n", element_E, lnLower.Mid(element_E));
+		console.printf("\n\n");
+		*/
+		
+		if(element_S < 0 || element_E < 0) return false, "";
+		
+		String output = ln.Mid(elementStr_S+1, (element_E-elementStr_S)-1);	
+		if(filterNewLines) output.Replace("\n", "");
+		if(filterSpaces) 
+		{
+			output.Replace(" ", "");
+			output.Replace("\t", "");
+		}
+		
+		return true, output;
+	}
+	
+	static bool, int parseIntElement(String type, String ln)
+	{
+		string lnLower = ln.MakeLower();
+		type = type.MakeLower();
+				
+		int element_S = lnLower.IndexOf(type);
+		int element_E = lnLower.IndexOf("\n", element_S);
+		if(element_S < 0 || element_E < 0) return false, 0;
+		
+		string output = ln.Mid(element_S+type.Length(), element_E-element_S);
+		return true, output.ToInt();
+	}
+}
+
+
 class SkillInfo : Object
 {
 	string displayName;

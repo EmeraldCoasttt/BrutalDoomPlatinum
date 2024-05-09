@@ -857,3 +857,199 @@ class BDP_HUD : DoomStatusBar
 		pos.y += Ystep;
 	}
 }
+
+class BDP_OverlayUI : EventHandler
+{	
+	Array<Key> foundkeys;
+	Array<Actor> foundkeys2;
+	
+	ui double prevMS, deltatime;
+
+	void AddNewKey(Key k)
+	{
+		string colors = (
+			"Brick.Tan.Gray.Grey.Green.Brown.Gold.Red.Blue.Orange.White.Yellow."
+			"Black.LightBlue.Cream.Olive.DarkGreen.DarkRed.DarkBrown.Purple."
+			"DarkGray.Cyan.Ice.Fire.Sapphire.Teal" 
+		);
+		foundkeys.push(k);
+		
+			String keyname = k.GetClassName();
+			Array<String> keytype;
+			StringHelper.SplitByUppercase(keyname, keytype);
+			// Find first valid key color.
+			for(int i = 0; i < keytype.Size(); i++)
+			{
+				if(colors.IndexOf(keytype[i]) == -1) continue;
+				Color kcol = Color(keytype[i]);
+				k.SetShade(kcol);
+			}
+		
+		
+	}
+	
+	void AddNewKey2(Actor k, String kcol)
+	{
+		foundkeys2.push(k);
+		k.SetShade(kcol);
+			
+		
+		
+	}
+	
+	override void WorldLoaded(WorldEvent e)
+	{
+		foundkeys.Clear();
+		let key_it = ThinkerIterator.Create("Key");
+		Key foundkey;
+		while( foundkey = Key(key_it.Next()) ) AddNewKey(foundkey);
+		
+		
+	}	
+	override void WorldThingSpawned(WorldEvent e)
+	{
+		if(e.Thing is "Key") AddNewKey(Key(e.Thing));
+		Else if(e.thing is "BDBlueCard")
+		{
+			AddNewKey2(e.thing, "Blue");
+		}
+		Else if(e.thing is "BDRedCard")
+		{
+			AddNewKey2(e.thing, "Red");
+		}
+		Else if(e.thing is "BDYellowCard")
+		{
+			AddNewKey2(e.thing, "Yellow");
+		}
+		Else if(e.thing is "BDBlueSkull")
+		{
+			AddNewKey2(e.thing, "Blue");
+		}
+		Else if(e.thing is "BDRedSkull")
+		{
+			AddNewKey2(e.thing, "Red");
+		}
+		Else if(e.thing is "BDYellowSkull")
+		{
+			AddNewKey2(e.thing, "Yellow");
+		}
+		Else if(e.thing is "NewAllMap")
+		{
+			AddNewKey2(e.thing, "green");
+		}
+	}
+	
+	
+	
+
+	// Keys and Hitmarkers
+	override void RenderOverlay(RenderEvent e)
+	{	
+		// Get player
+		playerpawn BDPplr = playerpawn(e.Camera);
+		if(!BDPplr)
+		{
+			let BDPcam = BDPVehCamera(e.Camera);
+			if(BDPcam) BDPplr = playerpawn(BDPcam.source);
+			if(!BDPplr) return;
+		}
+		
+		
+		
+		// Draw HUD projections
+		if(!automapactive) 
+		{
+			DrawKeys(e);
+		}
+		
+		
+		// Keep track of time, always.
+		if(!prevMS)
+		{
+			prevMS = MSTime();
+			return;
+		}
+		double ftime = MSTime()-prevMS;
+		prevMS = MSTime();
+		double dtime = 1000.0 / 60.;
+		deltatime = (ftime/dtime);
+	}
+	
+	ui void DrawKeys(RenderEvent e)
+	{
+		Actor rendersrc = e.Camera;
+		// Very important to note here that, Keys should NEVER be removed
+		// from this Array. RenderOverlay runs at your NATIVE framerate and thus
+		// runs faster than the Play-scopes ability to write to foundkeys.
+		// This means, you can potentially get access out of bounds depending 
+		// on performance which is, really bad.
+		for(int i = 0; i < foundkeys.Size(); i++)
+		{
+			Key k = foundkeys[i];
+			if(k && !k.Owner)
+			{
+				// Project KeyNAV
+				HLViewProjection viewproj = HLSBS.GetEventViewerProj(e);
+				bool infront;
+				vector2 apos;
+				[infront, apos] = HLSBS.GetActorHUDPos (
+					viewproj,
+					k, 0, 0, k.height*1.5
+				);
+				if(infront) 
+				{
+					int keytint = k.fillcolor;
+					double dist = rendersrc.Distance3D(k);
+					vector2 distscale = (1,1);
+					distscale *= dist/200.;
+					distscale.x = clamp(distscale.x, 2.0, 2.0);
+					distscale.y = clamp(distscale.y, 2.0, 2.0);
+					
+					HLSBS.DrawImage("BDPNAV", apos, 0, 1, distscale, tint:keytint, absolute:true);
+					HLSBS.DrawString3D(
+						"BigFont", 
+						String.Format("%dm",dist/UNIT_METER), 
+						apos, 0, 
+						Font.CR_WHITE, 
+						scale:(2,2),
+						distance: 300.
+					);
+				}
+			}
+		}
+		for(int i = 0; i < foundkeys2.Size(); i++)
+		{
+			Actor k = foundkeys2[i];
+			if(k)
+			{
+				// Project KeyNAV
+				HLViewProjection viewproj = HLSBS.GetEventViewerProj(e);
+				bool infront;
+				vector2 apos;
+				[infront, apos] = HLSBS.GetActorHUDPos (
+					viewproj,
+					k, 0, 0, k.height*1.5
+				);
+				if(infront) 
+				{
+					int keytint = k.fillcolor;
+					double dist = rendersrc.Distance3D(k);
+					vector2 distscale = (1,1);
+					distscale *= dist/200.;
+					distscale.x = clamp(distscale.x, 2.0, 2.0);
+					distscale.y = clamp(distscale.y, 2.0, 2.0);
+					
+					HLSBS.DrawImage("BDPNAV", apos, 0, 1, distscale, tint:keytint, absolute:true);
+					HLSBS.DrawString3D(
+						"BigFont", 
+						String.Format("%dm",dist/UNIT_METER), 
+						apos, 0, 
+						Font.CR_WHITE, 
+						scale:(2,2),
+						distance: 300.
+					);
+				}
+			}
+		}
+	}
+}

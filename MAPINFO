@@ -8,6 +8,7 @@ Gameinfo
 	AddEventHandlers = "TiltPlusPlusHandler"
 	AddEventHandlers = "BDPModifier_Events", "BDPMenuSwitcher"
 	AddEventHandlers = "WeatherHandler"
+	AddEventHandlers = "BDP_OverlayUI"
 	quitmessages = "$EXITMSG1","$EXITMSG2","$EXITMSG3","$EXITMSG4","$EXITMSG5","$EXITMSG6","$EXITMSG7","$EXITMSG8",
 "$EXITMSG9","$EXITMSG10","$EXITMSG11","$EXITMSG12","$EXITMSG13","$EXITMSG14","$EXITMSG15","$EXITMSG16","$EXITMSG17","$EXITMSG18",
 "$EXITMSG19","$EXITMSG20","$EXITMSG21","$EXITMSG22","$EXITMSG23","$EXITMSG24","$EXITMSG25","$EXITMSG26","$EXITMSG27","$EXITMSG28",

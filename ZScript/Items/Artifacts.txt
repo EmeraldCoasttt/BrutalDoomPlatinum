@@ -18,8 +18,6 @@ Default
 	}
   Override void tick()
 	{	
-		
-		acs_namedexecutealways("areascantid",0,6);
 		Super.tick();
 	}
 	override bool TryPickup (in out Actor toucher)

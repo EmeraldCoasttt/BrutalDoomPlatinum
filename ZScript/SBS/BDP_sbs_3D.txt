@@ -1,0 +1,217 @@
+//            [-----------------------------------------------]				  \\
+// 		      [---]] Projection Math derived from LibEye [[---]				  \\
+//            [-----------------------------------------------]				  \\
+/*                 libeye (for projection and deprojection)
+				 written by KeksDose / MemeDose (May 2019)
+						   (updated July 2019)
+						   
+All rights etc. etc. who cares, you may reuse this as you wish and edit it, and
+leave this note intact.
+
+          //                                                                  
+          //                                                                  
+        /////((                                                               
+   @@//////////  ((                                                           
+ ((  %////((/////   ((     ((              ((                                 
+   (( @@//(((///////    (((  //////////////       ((                          
+     (  /////////////////////////(((((((//////////   ((                       
+        @@///@@@@@@//////////(((((((((//@@@//////////    ((                   
+      ((  /////  /////((((((((((((((//@@%  %%@///////////   ((                
+          //////////((((((((((((((//////((((( %%@@//////////  ((              
+        ((%%//////////@@%% @@//(((((((///    (  (((( %%/////////  (           
+        ((  ////////@@  (((  @@//(((((((///// ((    (  @@/////////            
+        ((/////////@  ((   ((  @@/(((((((/////    (( ((  @@/((((///((         
+      ((  ///((//@@ ((       ((  %@@@@@@//////////   ((((  /((((///  ((       
+      ((/////((//%%(              ////%%%@@//////////      @//((((///         
+        ////(((//            /////////   //@@/////////////////(((((//         
+     (  ////(((////(    //////////////////////@@@@////////////(((((////((     
+      ////(((((((//   ////////////////////////////   %%@@///(((((((((//  (    
+      //(((((((((///////////////////    ////////////     %%@//(((((((//// ((  
+      //(((((((((((////////////((///    ///////////////     @@//(((((((///    
+      //(((((((((((////////((     /////////((////////////  (  //(((((((///////
+      //(((((((  ((///////(  #####  ////(       ((///////  (  @@//(((((///////
+      //(((((((  (((//////(((  ###  ((((   #####  ((/////// ((  //(((///////@@
+      //((((((((((((@@/////////(((((((((((((((((((((/////     ///////////%  ((
+      //((((((((((((%%    ///////((((((((((((////////  //////////////@@%% ((  
+      @@//(((((((((/%%((   ///////////////////////  /////////////////  (((    
+     (  //(((((((((/    ((                    ///////////////////////         
+        %%//(((((((///((   ((                //////////////@///////%%         
+      ((  @@/((((((///((            ((   //////////////@@%% ///////  ((       
+        ((  /(((((((//           (    //////////////@%%     //////%((         
+          (( @@//(((////(( ((  /////(((((((///@@  (((    ///////  (           
+            (  @@(((((//  (  ////(((((((///@@%  (((( /////////%%((            
+             ((%%//(((/////////(((((((//@%%       //////////%%  ((            
+             ((////(((((///////(((((///////////////////////%  ((              
+            (  ////(((((/////(((((((((//////////((((///@@%% ((                
+             ////(((//////@//////(((((((((((((////@@@%%    (                  
+          (( /////////@@%% %%@@@@@@@@@@@@@@@@@@@%%     ((                     
+        ((  @@@@@%%   ((                                                      
+        ((       (((                                                          
+                                                                              
+                                                                              
+                                                                              
+                                    %%//%                                     
+                                 (  //((/  ((                                 
+                                 (  ///////((                                 
+                                 (  ///////((                                 
+                                    /////  ((                                 
+                                      //                                      
+                                      //                                      
+                                                                              
+                        ((          /////         ((                          
+*/
+
+class HLViewProjection : Object
+{
+	float FOV;
+	vector3 view_pos;
+	vector3 view_ang;
+}
+
+extend class HLSBS
+{
+	static Vector2 VRotate(Vector2 pos, double angle, bool invert=false)
+	{
+		if(invert)
+		{
+			double oldx = pos.x;
+			pos.x = pos.y;
+			pos.y = oldx;
+		}
+		return ( pos.y * cos(angle) - pos.x * sin(angle), 
+		         pos.y * sin(angle) + pos.x * cos(angle) );
+	}
+
+	static bool, vector2 GetActorHUDPos(HLViewProjection viewproj, Actor onactor, double xoffs=0, double yoffs=0, double zoffs=0, bool rotatecoords=true)
+	{
+		bool infront;
+		vector2 projpos;
+		
+		vector2 xyoffs = rotatecoords ? VRotate( (xoffs, yoffs), viewproj.view_ang.x ) : (xoffs, yoffs);
+		[infront, projpos] = ProjectToHUD(viewproj, onactor.pos, (xyoffs.x, xyoffs.y, zoffs) );
+		return infront, projpos;
+	}
+	
+	static HLViewProjection GetActorViewProj(Actor viewer)
+	{
+		PlayerInfo viewplr = viewer.Player;
+		if(!viewplr) return NULL;
+		
+		HLViewProjection vp = new("HLViewProjection");
+		vp.FOV = viewplr.FOV;
+		vp.view_pos = (viewer.pos.xy, viewplr.viewz);
+		vp.view_ang = (viewer.angle, viewer.pitch, viewer.roll);
+		
+		return vp;
+	}
+
+	static HLViewProjection GetEventViewerProj(RenderEvent ev)
+	{		
+		HLViewProjection vp = new("HLViewProjection");
+		vp.FOV = ev.Camera.player ? ev.Camera.player.FOV : 90;
+		vp.view_pos = ev.viewpos;
+		vp.view_ang = (ev.viewangle, ev.viewpitch, ev.viewroll);
+		
+		return vp;
+	}
+		
+	static HLViewProjection CreateViewProjection(float FOV, vector3 view_position, float viewer_angle, float viewer_pitch, float viewer_roll)
+	{
+		HLViewProjection vp = new("HLViewProjection");
+		vp.FOV = FOV;
+		vp.view_pos = view_position;
+		vp.view_ang = (viewer_angle, viewer_pitch, viewer_roll);
+		
+		return vp;
+	}
+		
+	static bool, vector2 ProjectToHUD(HLViewProjection viewp, vector3 _worldpos, vector3 projoffs)
+	{		
+		// Dependant variables
+		double pixel_stretch = level.pixelstretch;
+		float hor_fov = viewp.FOV;
+		vector3 world_view_pos = viewp.view_pos;
+		vector3 world_ang = viewp.view_ang;
+		vector3 world_pos = _worldpos;
+		 				
+		// Projection variables
+		vector2 resolution = (Screen.GetWidth(), Screen.GetHeight());
+		double aspect_ratio = max(4.0 / 3, Screen.GetAspectRatio());
+		vector2 tan_fov_2;		
+		tan_fov_2.x = tan(hor_fov / 2) * aspect_ratio / (4.0 / 3);
+		tan_fov_2.y = tan_fov_2.x / aspect_ratio;
+		
+		// [--]  .:Projection mathematics:. [--] \\
+		
+		// Pitch Correction
+		world_ang.y = VectorAngle( cos(world_ang.y), sin(world_ang.y) * pixel_stretch );
+		
+		// Get view angles
+		let cosang	= cos(world_ang.x);
+		let cosvang	= cos(world_ang.y);
+		let cosrang	= cos(world_ang.z);
+		let sinang	= sin(world_ang.x);
+		let sinvang	= sin(world_ang.y);
+		let sinrang	= sin(world_ang.z);
+		let right_no_roll = (sinang, -cosang, 0);
+		let down_no_roll  = ( -sinvang * cosang, -sinvang * sinang, -cosvang);
+		
+		// Get view units
+		vector3 forw_unit  = (cosvang * cosang, cosvang * sinang, -sinvang);
+		vector3 down_unit  = (cosrang *  down_no_roll) - (sinrang * right_no_roll);
+		vector3 right_unit = (cosrang * right_no_roll) + (sinrang *  down_no_roll);
+		vector3 forw_in	   = forw_unit;
+		vector3 right_in   = right_unit / tan_fov_2.x;
+		vector3 down_in	   = down_unit  / tan_fov_2.y;
+		
+        forw_in.z   *= pixel_stretch;
+        right_in.z  *= pixel_stretch;
+        down_in.z   *= pixel_stretch;
+		
+		// Get project difference and 3D depth
+		vector3 diff = levellocals.vec3diff(world_view_pos, world_pos + projoffs);
+		vector2 proj_pos = (diff dot right_in, diff dot down_in);
+		double  depth	 = diff dot forw_in;
+	
+		// Normalize
+		bool front = (0 < depth);
+		let normal_pos = proj_pos / depth + (1, 1);
+		
+		// Final
+		vector2 finalpos = 0.5 * (
+			normal_pos.x * resolution.x,
+			normal_pos.y * resolution.y );
+
+		return front, finalpos;
+	}
+	
+		
+	static void DrawString3D( Font fnt, String str, Vector2 pos, int flags = 0, int translation = Font.CR_UNTRANSLATED, 
+							double Alpha = 1., Vector2 scale = (1, 1), Color tint = Color(0,0,0,0), int linespacing = 20, 
+							float distance=0 )
+	{
+		Array<String> lines;
+		str.Split(lines, "\n");
+			
+		scale /= distance/300.0;
+	
+		vector2 resolution = (Screen.GetWidth(), Screen.GetHeight());
+		vector2 scaleratio = (resolution.x/GetBaseWidth(), resolution.y/GetBaseHeight());
+		vector2 nscale = (scale.x*scaleratio.x, scale.y*scaleratio.y);
+		pos.y *= GetStatusBarHeightRatio();
+		vector2 npos = _ProcessCoords(pos, flags);
+		
+		for(int i = 0; i < lines.Size(); i++)
+		{
+			 float lineoffs = (linespacing*i);
+			 Screen.DrawText(fnt, translation, npos.x/nscale.x, (npos.y/nscale.y)+lineoffs, 
+				lines[i],
+				DTA_KeepRatio, true,
+				DTA_Alpha, alpha,
+				DTA_VirtualWidth, int(resolution.x/nscale.x),
+				DTA_VirtualHeight,int(resolution.y/nscale.y),
+				DTA_ColorOverlay, tint
+			);
+		}		
+	}
+}

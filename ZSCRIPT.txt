@@ -9,6 +9,8 @@ version "4.11.0"
 #include "Zscript/GORE.txt"
 #include "Zscript/doorbuster.zs"
 
+#include "ZScript/SBS/BDP_sbs_base.txt"
+#include "ZScript/SBS/BDP_sbs_3D.txt"
 #include "Zscript/BDP_hud.zs"
 
 #include "Zscript/MapEnhancement.txt"
@@ -88,6 +90,8 @@ version "4.11.0"
 #include "ZScript/weather/weathertypes.txt"
 
 #include "ZScript/decorations/titlemapdecorations.txt"
+
+const UNIT_METER = 8.f;
 
 // Any decorations should inherit from this if they've got no special behaviors.
 // This uses a custom Tick override which only goes through States and checks for 
