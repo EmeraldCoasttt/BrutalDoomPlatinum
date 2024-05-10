@@ -190,6 +190,7 @@ scale 1.0;
 alpha 0.9;
 +nogravity;
 +thruactors;
++NOTONAUTOMAP;
 Renderstyle "Add";
 }
 States

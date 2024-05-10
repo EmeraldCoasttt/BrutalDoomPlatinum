@@ -165,8 +165,22 @@ ACTOR SmearingXDeath2
 }
 
 //piece of meat that got stuck in the ceiling
-actor CeilXDeath2: Brutal_BloodSpot
+actor CeilXDeath2
 {
+	radius 2
+	height 2
+	mass 1
+	+NOTELEPORT
+	+CLIENTSIDEONLY
+	+FORCEXYBILLBOARD
+	+MOVEWITHSECTOR
+	+FLOORCLIP
+	+DONTSPLASH
+	-SOLID
+	+THRUACTORS
+	Alpha 0.99
+	Scale 0.5
+	Decal BrutalBloodSplat
 	PROJECTILE
 	+MISSILE
 	+SPAWNCEILING

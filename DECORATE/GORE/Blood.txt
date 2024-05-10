@@ -528,7 +528,7 @@ actor BloodmistSpraySmall : BloodmistSpray
 /////////////////////// BLOOD SPOTS //////////////////////////
 
 //base bloodspot actor
-ACTOR Brutal_BloodSpot
+ACTOR Brutal_BloodSpot : BDP_BloodSpot
 {
 	radius 2
 	height 2
@@ -1030,7 +1030,7 @@ ACTOR CeilBloodLauncherLong: CeilBloodLauncher
 
 
 // The Ceil Blood Spot
-actor CeilBloodSpot
+actor CeilBloodSpot : BDP_BloodSpot
 {
 	+MISSILE
 	+CEILINGHUGGER
@@ -1282,7 +1282,7 @@ ACTOR GiantWallRedBlood: WallRedBlood
 
 ACTOR ChainsawWallRedBlood: GiantWallRedBlood
 {
- Decal BloodSplat
+ decal realbloodsplat
  speed 64
 }
 
@@ -1406,7 +1406,7 @@ ACTOR Underblood3: Underblood1
 
 actor SuperGore
 {
-	Decal BloodSplat
+	decal realbloodsplat
 	Alpha 0.6
 	Renderstyle Translucent
 	+FORCEXYBILLBOARD

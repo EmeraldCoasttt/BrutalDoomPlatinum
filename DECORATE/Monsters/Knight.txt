@@ -45,7 +45,7 @@ ACTOR HellKnight2 : HellKnight Replaces HellKnight
 	damagefactor "Avoid", 0.0
 	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
     BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood"
-	BloodColor "DarkGreen"
+	BloodColor "2f 63 23"
 	//DropItem "DemonStrengthRune" 5
 	Obituary "%o was slain by a Hell Knight."
 	DamageType HKF

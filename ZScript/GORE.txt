@@ -466,3 +466,39 @@ class GreenSquishyGibs : NAshgoresquishygibs
 			
 		}
 	}
+	
+	Class BDP_BloodSpot : Actor
+	{
+		bool bsloped;
+		double rndzoffset;
+		
+		Default
+		{
+			+notonautomap;
+		}
+	
+		override void BeginPlay(void)
+		{
+			//setorigin((pos.x, pos.y, pos.z + frandom(0.000001,0.5)),false);
+			scale.y = (frandom(0.00001, 20));
+			Super.BeginPlay();
+			
+			
+			
+		}
+		
+		override void tick()
+		{
+			If(nashgorestatics.bisonfloor(self) && !bsloped)
+			{
+				NashGoreStatics.AlignToPlane(self);
+				bSloped = true;
+			}
+			If(!bnotonautomap)
+			{
+				bnotonautomap = true;
+			}
+			Super.tick();
+		}
+		
+	}

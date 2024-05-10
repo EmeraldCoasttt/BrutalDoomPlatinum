@@ -1,15 +1,40 @@
 
+
+Stretcher Stretchy
+{
+	GoalY 1.5
+	StretchStart 0.001
+	StretchTime 15.0
+}
+
+Slider Slidey
+{
+	DistY -20
+	SlideStart 0.001
+	SlideTime 15.0
+}
+
+Combiner Yucky
+{
+	Stretchy
+	Slidey
+	//Bye
+}
+
+
+
 /// +++++++++++++++++////
 /// Blood Base
 /// +++++++++++++++++////
 decal BloodSplat001
 {
 pic BSPLNEW
-shade "65 00 00"
-x-scale 0.35
-y-scale 0.35
+//shade "65 00 00"
+//x-scale 0.35
+//y-scale 0.35
 randomflipx
 randomflipy
+OpaqueBlood
 //translucent 0.9
 //lowerdecal BrutalBloodSmearSmall
 }
@@ -17,11 +42,12 @@ randomflipy
 decal BloodSplat002
 {
 pic BSPLNEW2
-shade "65 00 00"
-x-scale 0.35
-y-scale 0.35
+//shade "65 00 00"
+//x-scale 0.35
+//y-scale 0.35
 randomflipx
 randomflipy
+OpaqueBlood
 //translucent 0.9
 //lowerdecal BrutalBloodSmearSmall
 }
@@ -29,22 +55,27 @@ randomflipy
 decal BloodSplat003
 {
 pic BSPLNEW3
-shade "65 00 00"
-x-scale 0.35
-y-scale 0.35
+//shade "65 00 00"
+//x-scale 0.35
+//y-scale 0.35
 randomflipx
 randomflipy
+OpaqueBlood
 //translucent 0.9
 //lowerdecal BrutalBloodSmearSmall
 }
 
 decalgroup BloodSplat
 {
+
+}
+
+decalgroup RealBloodSplat
+{
 BloodSplat001 6
 BloodSplat002 6
 BloodSplat003 6
 }
-
 
 
 stretcher BrutalBloodSmearer
@@ -69,23 +100,23 @@ stretcher BrutalBloodSmearerSmall
 decal BrutalBloodSmear1
 {
 	pic BSPLNEW4
-	x-scale 0.4
-	y-scale 0.4
+	//x-scale 0.4
+	//y-scale 0.4
 	//translucent 0.9
-	shade "65 00 00"
+	//shade "65 00 00"
 	randomflipx
-	animator BrutalBloodSmearer
+	animator yucky
 }
 
 decal BrutalBloodSmear2
 {
 	pic BSPLNEW5
-	x-scale 0.4
-	y-scale 0.4
+	//x-scale 0.4
+	//y-scale 0.4
 	randomflipx
 	//translucent 0.9
-	shade "65 00 00"
-	animator BrutalBloodSmearer
+	//shade "65 00 00"
+	animator yucky
 }
 
 decalgroup BrutalBloodSmear
@@ -99,22 +130,22 @@ decalgroup BrutalBloodSmear
 decal BrutalBloodSmearSmall1
 {
 	pic BSPLNEW8
-	x-scale 0.355
-	y-scale 0.355
+	//x-scale 0.355
+	//y-scale 0.355
 	randomflipx
 	//translucent 0.9
-	shade "65 00 00"
+	//shade "65 00 00"
 	animator BrutalBloodSmearerSmall
 }
 
 decal BrutalBloodSmearSmall2
 {
 	pic BSPLNEW7
-	x-scale 0.35
-	y-scale 0.35
+	//x-scale 0.35
+	//y-scale 0.35
 	randomflipx
 	//translucent 0.9
-	shade "65 00 00"
+	//shade "65 00 00"
 	animator BrutalBloodSmearerSmall
 }
 
@@ -133,22 +164,22 @@ decalgroup BrutalBloodSmearSmall
 decal BrutalBloodSplat01
 {
 pic BSPLNEW
-x-scale 0.355
-y-scale 0.355
+//x-scale 0.355
+//y-scale 0.355
 randomflipx
 randomflipy
-shade "65 00 00"
+//shade "65 00 00"
 //translucent 0.9
 }
 
 decal BrutalBloodSplat02
 {
 pic BSPLNEW2
-x-scale 0.355
-y-scale 0.355
+//x-scale 0.355
+//y-scale 0.355
 randomflipx
 randomflipy
-shade "65 00 00"
+//shade "65 00 00"
 //translucent 0.9
 }
 
@@ -173,11 +204,9 @@ BrutalBloodSplat02 6
 decal BrutalBloodSuper01
 {
 pic BSPLBIG1
-x-scale 0.45
-y-scale 0.45
 randomflipx
 randomflipy
-shade "65 00 00"
+//shade "65 00 00"
 //translucent 0.9
 lowerdecal BrutalBloodSmear
 }
@@ -185,10 +214,8 @@ lowerdecal BrutalBloodSmear
 decal BrutalBloodSuper02
 {
 pic BSPLBIG2
-x-scale 0.45
-y-scale 0.45
 randomflipx
-shade "65 00 00"
+//shade "65 00 00"
 //translucent 0.9
 lowerdecal BrutalBloodSmear
 }
@@ -208,7 +235,7 @@ x-scale 1.0
 y-scale 1.0
 randomflipx
 randomflipy
-shade "65 00 00"
+//shade "65 00 00"
 //translucent 0.9
 lowerdecal BrutalBloodSmear
 }
@@ -219,7 +246,7 @@ pic BSPLBIG2
 x-scale 1.0
 y-scale 1.0
 randomflipx
-shade "65 00 00"
+//shade "65 00 00"
 //translucent 0.9
 lowerdecal BrutalBloodSmear
 }
@@ -248,25 +275,21 @@ BrutalBloodGiant02 6
 
 decal GreenBloodSplat01
 {
-pic BSPLNEW
-x-scale 0.355
-y-scale 0.355
+pic GBSP1
 randomflipx
 randomflipy
 //translucent 0.9
-shade "00 45 00"
+opaqueblood
 //lowerdecal BrutalBloodSmearSmall
 }
 
 decal GreenBloodSplat02
 {
-pic BSPLNEW2
-x-scale 0.355
-y-scale 0.355
+pic GBSP2
 randomflipx
 randomflipy
 //translucent 0.9
-shade "00 45 00"
+opaqueblood
 //lowerdecal BrutalBloodSmear
 }
 
@@ -283,22 +306,18 @@ GreenBloodSplat02 6
 
 decal GreenBloodSuper01
 {
-pic BSPLBIG1
-x-scale 0.45
-y-scale 0.45
+pic GBSPBIG1
 randomflipx
 randomflipy
-shade "00 45 00"
+opaqueblood
 lowerdecal GreenBloodSmear
 }
 
 decal GreenBloodSuper02
 {
-pic BSPLBIG2
-x-scale 0.45
-y-scale 0.45
+pic GBSPBIG2
 randomflipx
-shade "00 45 00"
+opaqueblood
 lowerdecal GreenBloodSmear
 }
 
@@ -315,24 +334,21 @@ GreenBloodSuper02 6
 
 decal GreenBloodSmear1
 {
-	pic BSPLNEW4
-	x-scale 0.4
-	y-scale 0.4
+	pic GBSP4
 	//translucent 0.9
-	shade "00 45 00"
+	opaqueblood
 	randomflipx
-	animator BrutalBloodSmearer
+	animator yucky
+	opaqueblood
 }
 
 decal GreenBloodSmear2
 {
-	pic BSPLNEW5
-	x-scale 0.4
-	y-scale 0.4
+	pic GBSP5
 	randomflipx
 	//translucent 0.9
-	shade "00 45 00"
-	animator BrutalBloodSmearer
+	opaqueblood
+	animator yucky
 }
 
 decalgroup GreenBloodSmear
@@ -367,26 +383,28 @@ decalgroup GreenBloodSmear
 
 decal BlueBloodSplat01
 {
-pic BSPLNEW
-x-scale 0.355
-y-scale 0.355
+pic BBSP1
+//x-scale 0.355
+//y-scale 0.355
 randomflipx
 randomflipy
 //translucent 0.9
 shade "00 00 70"
 //lowerdecal BrutalBloodSmearSmall
+opaqueblood
 }
 
 decal BlueBloodSplat02
 {
-pic BSPLNEW2
-x-scale 0.355
-y-scale 0.355
+pic BBSP2
+//x-scale 0.355
+//y-scale 0.355
 randomflipx
 randomflipy
 //translucent 0.9
-shade "00 00 70"
+//shade "00 00 70"
 //lowerdecal BrutalBloodSmear
+opaqueblood
 }
 
 
@@ -402,23 +420,23 @@ BlueBloodSplat02 6
 
 decal BlueBloodSuper01
 {
-pic BSPLBIG1
-x-scale 0.45
-y-scale 0.45
+pic BBSPBIG1
+//x-scale 0.45
+//y-scale 0.45
 randomflipx
 randomflipy
-shade "00 00 70"
 lowerdecal BlueBloodSmear
+opaqueblood
 }
 
 decal BlueBloodSuper02
 {
-pic BSPLBIG2
-x-scale 0.45
-y-scale 0.45
+pic BBSPBIG2
+//x-scale 0.45
+//y-scale 0.45
 randomflipx
-shade "00 00 70"
 lowerdecal BlueBloodSmear
+opaqueblood
 }
 
 decalgroup BlueBloodSuper
@@ -431,24 +449,26 @@ BlueBloodSuper02 6
 
 decal BlueBloodSmear1
 {
-	pic BSPLNEW4
-	x-scale 0.4
-	y-scale 0.4
+	pic BBDSP4
+	//x-scale 0.4
+	//y-scale 0.4
 	//translucent 0.9
-	shade "00 00 70"
+	//shade "00 00 70"
 	randomflipx
-	animator BrutalBloodSmearer
+	animator yucky
+	opaqueblood
 }
 
 decal BlueBloodSmear2
 {
-	pic BSPLNEW5
-	x-scale 0.4
-	y-scale 0.4
+	pic BBSP5
+	//x-scale 0.4
+	//y-scale 0.4
 	randomflipx
 	//translucent 0.9
-	shade "00 00 70"
-	animator BrutalBloodSmearer
+	//shade "00 00 70"
+	animator yucky
+	opaqueblood
 }
 
 decalgroup BlueBloodSmear
@@ -462,8 +482,8 @@ decal SkullScorch1
 { 
    pic PLASMA1 
    shade "00 00 00" 
-   x-scale 0.6 
-   y-scale 0.6 
+  // x-scale 0.6 
+  // y-scale 0.6 
    randomflipx 
    randomflipy 
 } 
@@ -542,7 +562,7 @@ BStretch2
 decal BloodSplatSaw
 {
 pic BSPLNEW2
-shade "65 00 00"
+//shade "65 00 00"
 x-scale 1.0
 y-scale 1.0
 randomflipx
