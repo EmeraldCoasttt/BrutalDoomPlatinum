@@ -194,7 +194,7 @@ Actor ShotgunguyTracer: MonsterTracer
 +BLOODSPLATTER 
 -DONTSPLASH
 +MISSILE
-damage (random(12,12))
+damage (random(7,7))
 Decal "BulletDecalNew1"
 DamageType MonsterShotgunBullet
 States
@@ -225,7 +225,7 @@ States
 
 Actor ZombieManTracer: MonsterTracer
 {
-damage (random(10,10))
+damage (random(6,6))
 }
 
 
@@ -235,7 +235,7 @@ Actor MonsterMinigunTracer: MonsterTracer
 -DONTSPLASH
 speed 50
 
-damage (random(9,9))
+damage (random(6,6))
 seesound "DSMINIGUN"
 damagetype MonsterMinigun
 Decal "BulletDecalNew1"

@@ -804,7 +804,7 @@ ACTOR GreenPlasmaBall: BrutalProjectile Replaces BaronBall
 	+RANDOMIZE
 	+FORCEXYBILLBOARD
     +THRUGHOST
-    Damage (random(50,50))
+    Damage (random(25,25))
 	RenderStyle Add
 	Alpha 0.95
 	Scale 0.25
@@ -910,7 +910,7 @@ ACTOR KnightAttack: BrutalProjectile
     +THRUGHOST
 	RenderStyle Add
 	Alpha 0.6
-    Damage 10
+    damage (random(30,30))
     Speed 42
 	//HitObituary "$OB_IMPHIT"
 	SeeSound "none"

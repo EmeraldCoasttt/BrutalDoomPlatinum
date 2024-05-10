@@ -862,7 +862,7 @@ ACTOR revenantseekermissiles : BrutalProjectile Replaces RevenantTracer
 	Height 8
 	Speed 10
 	FastSpeed 10
-	Damage (random(40,40))
+	Damage (random(10,10))
 	PROJECTILE
 	+THRUGHOST
 	+SEEKERMISSILE

@@ -1463,7 +1463,7 @@ ACTOR BaronAttack: BrutalProjectile
     +THRUGHOST
 	RenderStyle Add
 	Alpha 0.6
-    Damage 25
+    damage (random(50,50))
     Speed 28
 	//HitObituary "$OB_IMPHIT"
 	SeeSound "none"
