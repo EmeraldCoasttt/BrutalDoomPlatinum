@@ -160,6 +160,7 @@ ACTOR Imp Replaces DoomImp
 		Goto Stand
 		
 	Stand:	
+	TNT1 A 0 A_jumpifinventory("imponceiling",1,"ceilingcrawl")
 		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 18, 48, 0)
 		TNT1 A 0 A_CheckSight("Stand2")
 		//TNT1 A 0 A_SpawnItem ("LegTarget100", 10)
@@ -172,6 +173,7 @@ ACTOR Imp Replaces DoomImp
 		
 	Idle:
 	LookingForPlayer:
+	TNT1 A 0 A_jumpifinventory("imponceiling",1,"CeilingDrop")
 	    TNT1 A 0 A_GiveInventory("SKImp", 1)
 	    TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 18, 48,0)
 		TROS A 10 A_Look
@@ -195,6 +197,7 @@ ACTOR Imp Replaces DoomImp
 		TROS B 10 A_Look
 		
 	LookingForPlayer2:	
+	TNT1 A 0 A_jumpifinventory("imponceiling",1,"ceilingdrop")
 		TROO DD 0 A_Wander
 		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("flesh/step",4); } }
 		TROO A 2 A_Look
@@ -874,6 +877,11 @@ ACTOR Imp Replaces DoomImp
 		Stop
 		
 	Pain.Melee:
+	TNT1 A 0 A_jumpifinventory("imponceiling",1,"Paincanfallfromceiling")
+	TNT1 A 0 A_ChangeFlag("FORCEXYBILLBOARD", 0)
+		TNT1 A 0 A_TakeInventory ("ImpOnCeiling")
+		TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0)//CEILINGHUGGER
+		TNT1 A 0 A_ChangeFlag("CEILINGHUGGER", 0)
 	TNT1 A 0 A_giveinventory("KillHeadSHotTargets",1)
 		 TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER)
 		TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0)
@@ -912,6 +920,11 @@ ACTOR Imp Replaces DoomImp
 		TNT1 A 0 A_Stop
 	Pain:
 	    TNT1 A 0
+		TNT1 A 0 A_jumpifinventory("imponceiling",1,"Paincanfallfromceiling")
+		TNT1 A 0 A_ChangeFlag("FORCEXYBILLBOARD", 0)
+		TNT1 A 0 A_TakeInventory ("ImpOnCeiling")
+		TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0)//CEILINGHUGGER
+		TNT1 A 0 A_ChangeFlag("CEILINGHUGGER", 0)
 		TNT1 A 0 A_giveinventory("KillHeadSHotTargets",1)
 		 TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER)
 		TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0)
@@ -928,6 +941,11 @@ ACTOR Imp Replaces DoomImp
 	
 	Pain.IsDown:
 		TNT1 A 0
+		TNT1 A 0 A_jumpifinventory("imponceiling",1,"Paincanfallfromceiling")
+		TNT1 A 0 A_ChangeFlag("FORCEXYBILLBOARD", 0)
+		TNT1 A 0 A_TakeInventory ("ImpOnCeiling")
+		TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0)//CEILINGHUGGER
+		TNT1 A 0 A_ChangeFlag("CEILINGHUGGER", 0)
 		TNT1 A 0 A_giveinventory("KillHeadSHotTargets",1)
 		 TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER)
 		TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0)
@@ -952,6 +970,11 @@ ACTOR Imp Replaces DoomImp
 
     Pain.Head:
 	Pain.Shrapnel:
+	TNT1 A 0 A_jumpifinventory("imponceiling",1,"Paincanfallfromceiling")
+	TNT1 A 0 A_ChangeFlag("FORCEXYBILLBOARD", 0)
+		TNT1 A 0 A_TakeInventory ("ImpOnCeiling")
+		TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0)//CEILINGHUGGER
+		TNT1 A 0 A_ChangeFlag("CEILINGHUGGER", 0)
 	TNT1 A 0 A_giveinventory("KillHeadSHotTargets",1)
 		// TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER)
 		TNT1 A 0 A_TakeInventory("SKImp", 1)
@@ -968,6 +991,11 @@ ACTOR Imp Replaces DoomImp
 	Pain.ExplosiveImpact:
 	Pain.Explosive:
 	Pain.ExtremePunches:
+	TNT1 A 0 A_jumpifinventory("imponceiling",1,"Paincanfallfromceiling")
+	TNT1 A 0 A_ChangeFlag("FORCEXYBILLBOARD", 0)
+		TNT1 A 0 A_TakeInventory ("ImpOnCeiling")
+		TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0)//CEILINGHUGGER
+		TNT1 A 0 A_ChangeFlag("CEILINGHUGGER", 0)
 	        TNT1 A 0
 			TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0)
 			TNT1 A 0 A_ChangeFlag("THRUSPECIES", 0)
@@ -983,6 +1011,11 @@ ACTOR Imp Replaces DoomImp
 		
 	 Pain.Slide:
         TNT1 A 0
+		TNT1 A 0 A_jumpifinventory("imponceiling",1,"Paincanfallfromceiling")
+		TNT1 A 0 A_ChangeFlag("FORCEXYBILLBOARD", 0)
+		TNT1 A 0 A_TakeInventory ("ImpOnCeiling")
+		TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0)//CEILINGHUGGER
+		TNT1 A 0 A_ChangeFlag("CEILINGHUGGER", 0)
 		TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1)
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
 		TNT1 A 0 A_ChangeFlag("NOPAIN", 1)
@@ -1001,6 +1034,7 @@ ACTOR Imp Replaces DoomImp
 	Pain.HeavyImpact:
 	Pain.Stomp:
         TNT1 A 0
+		TNT1 A 0 A_jumpifinventory("imponceiling",1,"Paincanfallfromceiling")
 		TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1)
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
 		TNT1 A 0 A_ChangeFlag("NOPAIN", 1)
