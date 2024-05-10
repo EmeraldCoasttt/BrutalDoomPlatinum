@@ -9,7 +9,7 @@ ACTOR TehArchvile: baseArchvile Replaces Archvile
 	Speed 15
 	Health 900
 	GibHealth 30
-	PainChance 10
+	PainChance 4
 	PainChance "Kick", 90
 	damagefactor "Avoid", 0.0 PainChance "HangingHook", 0
 	damagefactor "GibRemoving", 0.0
@@ -141,7 +141,7 @@ ACTOR TehArchvile: baseArchvile Replaces Archvile
 	Pain:
 		//DIAB Q 3
 		TNT1 A 0 A_KillChildren
-		TNT1 A 0 A_jump(200,"teleportaway")
+		TNT1 A 0 A_jump(250,"teleportaway")
 		PainAnyways:
 		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 16, 56,0)
 		DIAB Q 5   
