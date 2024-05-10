@@ -18,33 +18,11 @@ Radius 0
 		TNT1 AAAAAA 0 A_SpawnItemEx("Brutal_BloodSpot",random(64, -64),random(64, -64))
 		TNT1 A 0 A_SpawnItem("MediumBloodSpot")
 //First, it randomly chooses a palette. "SpawnContinue" uses no different palette.
-		TNT1 A 0 A_Jump(256, "Neon","Dox778","Yellow","YellowBlack","Gray","Gray2","GrayBlack","Gray2Black","Red","Red2","RedBlack","Red2Black","Brown","Brown2","Blue","Blue2","BlueBlack","Blue2Black","DarkGreen","Black","Orange","BlackBlack","OrangeBlack","SpawnContinue")
+		TNT1 A 0 A_Jump(256, "spawncontinue","Spawn2","spawn3")
 		loop
 ////////////////////////////
-        Dox778: NULL A 0 A_SetTranslation("DOX778") Goto SpawnContinue
-		Neon: NULL A 0 A_SetTranslation("NEON") Goto SpawnContinue //Hey Danny, that's you!
-		Yellow: NULL A 0 A_SetTranslation("YELLOW") Goto SpawnContinue
-		Gray: NULL A 0 A_SetTranslation("GRAY") Goto SpawnContinue
-		Gray2: NULL A 0 A_SetTranslation("GRAY2") Goto SpawnContinue
-		Red: NULL A 0 A_SetTranslation("RED") Goto SpawnContinue
-		Red2: NULL A 0 A_SetTranslation("RED2") Goto SpawnContinue
-		Brown: NULL A 0 A_SetTranslation("BROWN") Goto SpawnContinue
-		Brown2: NULL A 0 A_SetTranslation("BROWN2") Goto SpawnContinue
-		Blue: NULL A 0 A_SetTranslation("BLUE") Goto SpawnContinue
-		Blue2: NULL A 0 A_SetTranslation("BLUE2") Goto SpawnContinue
-		DarkGreen: NULL A 0 A_SetTranslation("DARKGREEN") Goto SpawnContinue
-		Black: NULL A 0 A_SetTranslation("BLACK") Goto SpawnContinue
-		Orange: NULL A 0 A_SetTranslation("ORANGE") Goto SpawnContinue
-		//Dark skinned variants
-		YellowBlack: NULL A 0 A_SetTranslation("YELLOWBlack") Goto SpawnContinue
-		GrayBlack: NULL A 0 A_SetTranslation("GRAYBlack") Goto SpawnContinue
-		Gray2Black: NULL A 0 A_SetTranslation("GRAY2Black") Goto SpawnContinue
-		RedBlack: NULL A 0 A_SetTranslation("REDBlack") Goto SpawnContinue
-		Red2Black: NULL A 0 A_SetTranslation("RED2Black") Goto SpawnContinue
-		BlueBlack: NULL A 0 A_SetTranslation("BLUEBlack") Goto SpawnContinue
-		Blue2Black: NULL A 0 A_SetTranslation("BLUE2Black") Goto SpawnContinue
-		BlackBlack: NULL A 0 A_SetTranslation("BLACKBlack") Goto SpawnContinue
-		OrangeBlack: NULL A 0 A_SetTranslation("ORANGEBlack")
+		Spawn2: NULL A 0 A_SetTranslation("BlackMarine") Goto SpawnContinue
+		Spawn3: NULL A 0 A_SetTranslation("TanMarine") Goto SpawnContinue
 		SpawnContinue: TNT1 A 0 A_Jump(256,"DukiNuki","Burned","Side","Torso","NoArm","NoArmNoHead","BurnedToCrisp","OnlyLegs","Curbstomped","Ate","Ripped","Fucked","doomed","Doomed2", "GotOwned", "RippedRight", "Rapped","Vanilla","NoArm2","VanillaFaceOnFloor","VanillaArmsForward") Loop
 //Then it spawns a random corpse, transferring its palette over to the next actor.
 		DukiNuki: TNT1 A 0 A_SpawnItemEx("DukeNukem1Marine", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION) Goto SpawnMaggots
@@ -908,33 +886,12 @@ ACTOR DeadDeadStick: DeadStick
 		TNT1 A 0 A_SpawnItem("GoreFliesWsound", 0, random(0, 45))
 		TNT1 AAAA 0 A_SpawnItem("GoreFlies", 0, random(0, 45))
 	    TNT1 A 0 A_SpawnItem("MediumBloodSpot",0,0)
-		TNT1 A 0 A_Jump(256, "Neon","Dox778","Yellow","YellowBlack","Gray","Gray2","GrayBlack","Gray2Black","Red","Red2","RedBlack","Red2Black","Brown","Brown2","Blue","Blue2","BlueBlack","Blue2Black","DarkGreen","Black","Orange","BlackBlack","OrangeBlack","SpawnContinue")
+		//First, it randomly chooses a palette. "SpawnContinue" uses no different palette.
+		TNT1 A 0 A_Jump(256, "spawncontinue","Spawn2","spawn3")
 		loop
 ////////////////////////////
-        Dox778: NULL A 0 A_SetTranslation("DOX778") Goto SpawnContinue
-		Neon: NULL A 0 A_SetTranslation("NEON") Goto SpawnContinue //Hey Danny, that's you!
-		Yellow: NULL A 0 A_SetTranslation("YELLOW") Goto SpawnContinue
-		Gray: NULL A 0 A_SetTranslation("GRAY") Goto SpawnContinue
-		Gray2: NULL A 0 A_SetTranslation("GRAY2") Goto SpawnContinue
-		Red: NULL A 0 A_SetTranslation("RED") Goto SpawnContinue
-		Red2: NULL A 0 A_SetTranslation("RED2") Goto SpawnContinue
-		Brown: NULL A 0 A_SetTranslation("BROWN") Goto SpawnContinue
-		Brown2: NULL A 0 A_SetTranslation("BROWN2") Goto SpawnContinue
-		Blue: NULL A 0 A_SetTranslation("BLUE") Goto SpawnContinue
-		Blue2: NULL A 0 A_SetTranslation("BLUE2") Goto SpawnContinue
-		DarkGreen: NULL A 0 A_SetTranslation("DARKGREEN") Goto SpawnContinue
-		Black: NULL A 0 A_SetTranslation("BLACK") Goto SpawnContinue
-		Orange: NULL A 0 A_SetTranslation("ORANGE") Goto SpawnContinue
-		//Dark skinned variants
-		YellowBlack: NULL A 0 A_SetTranslation("YELLOWBlack") Goto SpawnContinue
-		GrayBlack: NULL A 0 A_SetTranslation("GRAYBlack") Goto SpawnContinue
-		Gray2Black: NULL A 0 A_SetTranslation("GRAY2Black") Goto SpawnContinue
-		RedBlack: NULL A 0 A_SetTranslation("REDBlack") Goto SpawnContinue
-		Red2Black: NULL A 0 A_SetTranslation("RED2Black") Goto SpawnContinue
-		BlueBlack: NULL A 0 A_SetTranslation("BLUEBlack") Goto SpawnContinue
-		Blue2Black: NULL A 0 A_SetTranslation("BLUE2Black") Goto SpawnContinue
-		BlackBlack: NULL A 0 A_SetTranslation("BLACKBlack") Goto SpawnContinue
-		OrangeBlack: NULL A 0 A_SetTranslation("ORANGEBlack")
+		Spawn2: NULL A 0 A_SetTranslation("BlackMarine") Goto SpawnContinue
+		Spawn3: NULL A 0 A_SetTranslation("TanMarine") Goto SpawnContinue
 		SpawnContinue:
 	NULL A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFlip",1)
@@ -1124,33 +1081,13 @@ States
 	NULL A 0
 	TNT1 A 0 A_SpawnItem("MediumBloodSpot",0,0)
 	NULL A 0 A_PlaySound("TORTSCRM",1,1,1)
-	TNT1 A 0 A_Jump(256, "Neon","Dox778","Yellow","YellowBlack","Gray","Gray2","GrayBlack","Gray2Black","Red","Red2","RedBlack","Red2Black","Brown","Brown2","Blue","Blue2","BlueBlack","Blue2Black","DarkGreen","Black","Orange","BlackBlack","OrangeBlack","SpawnContinue")
+//First, it randomly chooses a palette. "SpawnContinue" uses no different palette.
+		TNT1 A 0 A_Jump(256, "spawncontinue","Spawn2","spawn3")
 		loop
 ////////////////////////////
-        Dox778: NULL A 0 A_SetTranslation("DOX778") Goto Stay
-		Neon: NULL A 0 A_SetTranslation("NEON") Goto Stay //Hey Danny, that's you!
-		Yellow: NULL A 0 A_SetTranslation("YELLOW") Goto Stay
-		Gray: NULL A 0 A_SetTranslation("GRAY") Goto Stay
-		Gray2: NULL A 0 A_SetTranslation("GRAY2") Goto Stay
-		Red: NULL A 0 A_SetTranslation("RED") Goto Stay
-		Red2: NULL A 0 A_SetTranslation("RED2") Goto Stay
-		Brown: NULL A 0 A_SetTranslation("BROWN") Goto Stay
-		Brown2: NULL A 0 A_SetTranslation("BROWN2") Goto Stay
-		Blue: NULL A 0 A_SetTranslation("BLUE") Goto Stay
-		Blue2: NULL A 0 A_SetTranslation("BLUE2") Goto Stay
-		DarkGreen: NULL A 0 A_SetTranslation("DARKGREEN") Goto Stay
-		Black: NULL A 0 A_SetTranslation("BLACK") Goto Stay
-		Orange: NULL A 0 A_SetTranslation("ORANGE") Goto Stay
-		//Dark skinned variants
-		YellowBlack: NULL A 0 A_SetTranslation("YELLOWBlack") Goto Stay
-		GrayBlack: NULL A 0 A_SetTranslation("GRAYBlack") Goto Stay
-		Gray2Black: NULL A 0 A_SetTranslation("GRAY2Black") Goto Stay
-		RedBlack: NULL A 0 A_SetTranslation("REDBlack") Goto Stay
-		Red2Black: NULL A 0 A_SetTranslation("RED2Black") Goto Stay
-		BlueBlack: NULL A 0 A_SetTranslation("BLUEBlack") Goto Stay
-		Blue2Black: NULL A 0 A_SetTranslation("BLUE2Black") Goto Stay
-		BlackBlack: NULL A 0 A_SetTranslation("BLACKBlack") Goto Stay
-		OrangeBlack: NULL A 0 A_SetTranslation("ORANGEBlack")
+		Spawn2: NULL A 0 A_SetTranslation("BlackMarine") Goto SpawnContinue
+		Spawn3: NULL A 0 A_SetTranslation("TanMarine") Goto SpawnContinue
+		SpawnContinue:
 	Stay:
 	TORT A random(10,30)
 	TNT1 A 0 A_Jump(256,"Twitch1","Twitch2")
@@ -1485,34 +1422,13 @@ Damagefactor "Melee", 0.1 DamageFactor "Kick", 0.1
 		TNT1 A 0
 	    TNT1 A 0 A_SpawnItem("MediumBloodSpot",0,0)
 		//First, it randomly chooses a palette. "Stand" uses no different palette.
-        TNT1 A 0 A_Jump(256, "Neon","Dox778","Yellow","YellowBlack","Gray","Gray2","GrayBlack","Gray2Black","Red","Red2","RedBlack","Red2Black","Brown","Brown2","Blue","Blue2","BlueBlack","Blue2Black","DarkGreen","Black","Orange","BlackBlack","OrangeBlack","SpawnContinue")
+       //First, it randomly chooses a palette. "SpawnContinue" uses no different palette.
+		TNT1 A 0 A_Jump(256, "spawncontinue","Spawn2","spawn3")
 		loop
 ////////////////////////////
-        Dox778: NULL A 0 A_SetTranslation("DOX778") Goto Stay
-		Neon: NULL A 0 A_SetTranslation("NEON") Goto Stay //Hey Danny, that's you!
-		Yellow: NULL A 0 A_SetTranslation("YELLOW") Goto Stay
-		Gray: NULL A 0 A_SetTranslation("GRAY") Goto Stay
-		Gray2: NULL A 0 A_SetTranslation("GRAY2") Goto Stay
-		Red: NULL A 0 A_SetTranslation("RED") Goto Stay
-		Red2: NULL A 0 A_SetTranslation("RED2") Goto Stay
-		Brown: NULL A 0 A_SetTranslation("BROWN") Goto Stay
-		Brown2: NULL A 0 A_SetTranslation("BROWN2") Goto Stay
-		Blue: NULL A 0 A_SetTranslation("BLUE") Goto Stay
-		Blue2: NULL A 0 A_SetTranslation("BLUE2") Goto Stay
-		DarkGreen: NULL A 0 A_SetTranslation("DARKGREEN") Goto Stay
-		Black: NULL A 0 A_SetTranslation("BLACK") Goto Stay
-		Orange: NULL A 0 A_SetTranslation("ORANGE") Goto Stay
-		//Dark skinned variants
-		YellowBlack: NULL A 0 A_SetTranslation("YELLOWBlack") Goto Stay
-		GrayBlack: NULL A 0 A_SetTranslation("GRAYBlack") Goto Stay
-		Gray2Black: NULL A 0 A_SetTranslation("GRAY2Black") Goto Stay
-		RedBlack: NULL A 0 A_SetTranslation("REDBlack") Goto Stay
-		Red2Black: NULL A 0 A_SetTranslation("RED2Black") Goto Stay
-		BlueBlack: NULL A 0 A_SetTranslation("BLUEBlack") Goto Stay
-		Blue2Black: NULL A 0 A_SetTranslation("BLUE2Black") Goto Stay
-		BlackBlack: NULL A 0 A_SetTranslation("BLACKBlack") Goto Stay
-		OrangeBlack: NULL A 0 A_SetTranslation("ORANGEBlack")
-		//Goto Stand
+		Spawn2: NULL A 0 A_SetTranslation("BlackMarine") Goto SpawnContinue
+		Spawn3: NULL A 0 A_SetTranslation("TanMarine") Goto SpawnContinue
+		SpawnContinue:
 	Stay:
 	NULL A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFlip",1)
@@ -1827,33 +1743,13 @@ ACTOR ImpaledMarineAlive2: ImpaledMarineAlive1
 		TNT1 A 0
 	    TNT1 A 0 A_SpawnItem("MediumBloodSpot",0,0)
 		//First, it randomly chooses a palette. "Stand" uses no different palette.
-        TNT1 A 0 A_Jump(256, "Neon","Dox778","Yellow","YellowBlack","Gray","Gray2","GrayBlack","Gray2Black","Red","Red2","RedBlack","Red2Black","Brown","Brown2","Blue","Blue2","BlueBlack","Blue2Black","DarkGreen","Black","Orange","BlackBlack","OrangeBlack","SpawnContinue")
+        //First, it randomly chooses a palette. "SpawnContinue" uses no different palette.
+		TNT1 A 0 A_Jump(256, "spawncontinue","Spawn2","spawn3")
 		loop
 ////////////////////////////
-        Dox778: NULL A 0 A_SetTranslation("DOX778") Goto Stay
-		Neon: NULL A 0 A_SetTranslation("NEON") Goto Stay //Hey Danny, that's you!
-		Yellow: NULL A 0 A_SetTranslation("YELLOW") Goto Stay
-		Gray: NULL A 0 A_SetTranslation("GRAY") Goto Stay
-		Gray2: NULL A 0 A_SetTranslation("GRAY2") Goto Stay
-		Red: NULL A 0 A_SetTranslation("RED") Goto Stay
-		Red2: NULL A 0 A_SetTranslation("RED2") Goto Stay
-		Brown: NULL A 0 A_SetTranslation("BROWN") Goto Stay
-		Brown2: NULL A 0 A_SetTranslation("BROWN2") Goto Stay
-		Blue: NULL A 0 A_SetTranslation("BLUE") Goto Stay
-		Blue2: NULL A 0 A_SetTranslation("BLUE2") Goto Stay
-		DarkGreen: NULL A 0 A_SetTranslation("DARKGREEN") Goto Stay
-		Black: NULL A 0 A_SetTranslation("BLACK") Goto Stay
-		Orange: NULL A 0 A_SetTranslation("ORANGE") Goto Stay
-		//Dark skinned variants
-		YellowBlack: NULL A 0 A_SetTranslation("YELLOWBlack") Goto Stay
-		GrayBlack: NULL A 0 A_SetTranslation("GRAYBlack") Goto Stay
-		Gray2Black: NULL A 0 A_SetTranslation("GRAY2Black") Goto Stay
-		RedBlack: NULL A 0 A_SetTranslation("REDBlack") Goto Stay
-		Red2Black: NULL A 0 A_SetTranslation("RED2Black") Goto Stay
-		BlueBlack: NULL A 0 A_SetTranslation("BLUEBlack") Goto Stay
-		Blue2Black: NULL A 0 A_SetTranslation("BLUE2Black") Goto Stay
-		BlackBlack: NULL A 0 A_SetTranslation("BLACKBlack") Goto Stay
-		OrangeBlack: NULL A 0 A_SetTranslation("ORANGEBlack")
+		Spawn2: NULL A 0 A_SetTranslation("BlackMarine") Goto SpawnContinue
+		Spawn3: NULL A 0 A_SetTranslation("TanMarine") Goto SpawnContinue
+		SpawnContinue:
 	Stay:
 	NULL A 0 A_Jump(128,2)
 	TNT1 A 0 A_ChangeFlag("XFlip",1)
@@ -2179,33 +2075,12 @@ States
 	{
    Spawn:
 		TNT1 A 0
-		TNT1 A 0 A_Jump(256, "Neon","Dox778","Yellow","YellowBlack","Gray","Gray2","GrayBlack","Gray2Black","Red","Red2","RedBlack","Red2Black","Brown","Brown2","Blue","Blue2","BlueBlack","Blue2Black","DarkGreen","Black","Orange","BlackBlack","OrangeBlack","SpawnContinue")
+		//First, it randomly chooses a palette. "SpawnContinue" uses no different palette.
+		TNT1 A 0 A_Jump(256, "spawncontinue","Spawn2","spawn3")
 		loop
 ////////////////////////////
-        Dox778: NULL A 0 A_SetTranslation("DOX778") Goto SpawnContinue
-		Neon: NULL A 0 A_SetTranslation("NEON") Goto SpawnContinue //Hey Danny, that's you!
-		Yellow: NULL A 0 A_SetTranslation("YELLOW") Goto SpawnContinue
-		Gray: NULL A 0 A_SetTranslation("GRAY") Goto SpawnContinue
-		Gray2: NULL A 0 A_SetTranslation("GRAY2") Goto SpawnContinue
-		Red: NULL A 0 A_SetTranslation("RED") Goto SpawnContinue
-		Red2: NULL A 0 A_SetTranslation("RED2") Goto SpawnContinue
-		Brown: NULL A 0 A_SetTranslation("BROWN") Goto SpawnContinue
-		Brown2: NULL A 0 A_SetTranslation("BROWN2") Goto SpawnContinue
-		Blue: NULL A 0 A_SetTranslation("BLUE") Goto SpawnContinue
-		Blue2: NULL A 0 A_SetTranslation("BLUE2") Goto SpawnContinue
-		DarkGreen: NULL A 0 A_SetTranslation("DARKGREEN") Goto SpawnContinue
-		Black: NULL A 0 A_SetTranslation("BLACK") Goto SpawnContinue
-		Orange: NULL A 0 A_SetTranslation("ORANGE") Goto SpawnContinue
-		//Dark skinned variants
-		YellowBlack: NULL A 0 A_SetTranslation("YELLOWBlack") Goto SpawnContinue
-		GrayBlack: NULL A 0 A_SetTranslation("GRAYBlack") Goto SpawnContinue
-		Gray2Black: NULL A 0 A_SetTranslation("GRAY2Black") Goto SpawnContinue
-		RedBlack: NULL A 0 A_SetTranslation("REDBlack") Goto SpawnContinue
-		Red2Black: NULL A 0 A_SetTranslation("RED2Black") Goto SpawnContinue
-		BlueBlack: NULL A 0 A_SetTranslation("BLUEBlack") Goto SpawnContinue
-		Blue2Black: NULL A 0 A_SetTranslation("BLUE2Black") Goto SpawnContinue
-		BlackBlack: NULL A 0 A_SetTranslation("BLACKBlack") Goto SpawnContinue
-		OrangeBlack: NULL A 0 A_SetTranslation("ORANGEBlack")
+		Spawn2: NULL A 0 A_SetTranslation("BlackMarine") Goto SpawnContinue
+		Spawn3: NULL A 0 A_SetTranslation("TanMarine") Goto SpawnContinue
 	SpawnContinue:
 		GOR1 F 1
 		NULL A 0 A_jump(128,2)
@@ -2405,33 +2280,12 @@ ACTOR HangingBodyMarine: HangingBody //Replaces Meat2
 	{
 		Spawn:
 		TNT1 A 0
-		TNT1 A 0 A_Jump(256, "Neon","Dox778","Yellow","YellowBlack","Gray","Gray2","GrayBlack","Gray2Black","Red","Red2","RedBlack","Red2Black","Brown","Brown2","Blue","Blue2","BlueBlack","Blue2Black","DarkGreen","Black","Orange","BlackBlack","OrangeBlack","SpawnContinue")
+		//First, it randomly chooses a palette. "SpawnContinue" uses no different palette.
+		TNT1 A 0 A_Jump(256, "spawncontinue","Spawn2","spawn3")
 		loop
 ////////////////////////////
-        Dox778: NULL A 0 A_SetTranslation("DOX778") Goto SpawnContinue
-		Neon: NULL A 0 A_SetTranslation("NEON") Goto SpawnContinue //Hey Danny, that's you!
-		Yellow: NULL A 0 A_SetTranslation("YELLOW") Goto SpawnContinue
-		Gray: NULL A 0 A_SetTranslation("GRAY") Goto SpawnContinue
-		Gray2: NULL A 0 A_SetTranslation("GRAY2") Goto SpawnContinue
-		Red: NULL A 0 A_SetTranslation("RED") Goto SpawnContinue
-		Red2: NULL A 0 A_SetTranslation("RED2") Goto SpawnContinue
-		Brown: NULL A 0 A_SetTranslation("BROWN") Goto SpawnContinue
-		Brown2: NULL A 0 A_SetTranslation("BROWN2") Goto SpawnContinue
-		Blue: NULL A 0 A_SetTranslation("BLUE") Goto SpawnContinue
-		Blue2: NULL A 0 A_SetTranslation("BLUE2") Goto SpawnContinue
-		DarkGreen: NULL A 0 A_SetTranslation("DARKGREEN") Goto SpawnContinue
-		Black: NULL A 0 A_SetTranslation("BLACK") Goto SpawnContinue
-		Orange: NULL A 0 A_SetTranslation("ORANGE") Goto SpawnContinue
-		//Dark skinned variants
-		YellowBlack: NULL A 0 A_SetTranslation("YELLOWBlack") Goto SpawnContinue
-		GrayBlack: NULL A 0 A_SetTranslation("GRAYBlack") Goto SpawnContinue
-		Gray2Black: NULL A 0 A_SetTranslation("GRAY2Black") Goto SpawnContinue
-		RedBlack: NULL A 0 A_SetTranslation("REDBlack") Goto SpawnContinue
-		Red2Black: NULL A 0 A_SetTranslation("RED2Black") Goto SpawnContinue
-		BlueBlack: NULL A 0 A_SetTranslation("BLUEBlack") Goto SpawnContinue
-		Blue2Black: NULL A 0 A_SetTranslation("BLUE2Black") Goto SpawnContinue
-		BlackBlack: NULL A 0 A_SetTranslation("BLACKBlack") Goto SpawnContinue
-		OrangeBlack: NULL A 0 A_SetTranslation("ORANGEBlack")
+		Spawn2: NULL A 0 A_SetTranslation("BlackMarine") Goto SpawnContinue
+		Spawn3: NULL A 0 A_SetTranslation("TanMarine") Goto SpawnContinue
 	SpawnContinue:
 		    TNT1 A 0
 		NULL A 0 A_jump(128,2)
@@ -2463,33 +2317,12 @@ ACTOR HangingBodyMarineHalf: HangingBody //Replaces Meat2
 	{
 		Spawn:
 		TNT1 A 0
-		TNT1 A 0 A_Jump(256, "Neon","Dox778","Yellow","YellowBlack","Gray","Gray2","GrayBlack","Gray2Black","Red","Red2","RedBlack","Red2Black","Brown","Brown2","Blue","Blue2","BlueBlack","Blue2Black","DarkGreen","Black","Orange","BlackBlack","OrangeBlack","SpawnContinue")
+		//First, it randomly chooses a palette. "SpawnContinue" uses no different palette.
+		TNT1 A 0 A_Jump(256, "spawncontinue","Spawn2","spawn3")
 		loop
 ////////////////////////////
-        Dox778: NULL A 0 A_SetTranslation("DOX778") Goto SpawnContinue
-		Neon: NULL A 0 A_SetTranslation("NEON") Goto SpawnContinue //Hey Danny, that's you!
-		Yellow: NULL A 0 A_SetTranslation("YELLOW") Goto SpawnContinue
-		Gray: NULL A 0 A_SetTranslation("GRAY") Goto SpawnContinue
-		Gray2: NULL A 0 A_SetTranslation("GRAY2") Goto SpawnContinue
-		Red: NULL A 0 A_SetTranslation("RED") Goto SpawnContinue
-		Red2: NULL A 0 A_SetTranslation("RED2") Goto SpawnContinue
-		Brown: NULL A 0 A_SetTranslation("BROWN") Goto SpawnContinue
-		Brown2: NULL A 0 A_SetTranslation("BROWN2") Goto SpawnContinue
-		Blue: NULL A 0 A_SetTranslation("BLUE") Goto SpawnContinue
-		Blue2: NULL A 0 A_SetTranslation("BLUE2") Goto SpawnContinue
-		DarkGreen: NULL A 0 A_SetTranslation("DARKGREEN") Goto SpawnContinue
-		Black: NULL A 0 A_SetTranslation("BLACK") Goto SpawnContinue
-		Orange: NULL A 0 A_SetTranslation("ORANGE") Goto SpawnContinue
-		//Dark skinned variants
-		YellowBlack: NULL A 0 A_SetTranslation("YELLOWBlack") Goto SpawnContinue
-		GrayBlack: NULL A 0 A_SetTranslation("GRAYBlack") Goto SpawnContinue
-		Gray2Black: NULL A 0 A_SetTranslation("GRAY2Black") Goto SpawnContinue
-		RedBlack: NULL A 0 A_SetTranslation("REDBlack") Goto SpawnContinue
-		Red2Black: NULL A 0 A_SetTranslation("RED2Black") Goto SpawnContinue
-		BlueBlack: NULL A 0 A_SetTranslation("BLUEBlack") Goto SpawnContinue
-		Blue2Black: NULL A 0 A_SetTranslation("BLUE2Black") Goto SpawnContinue
-		BlackBlack: NULL A 0 A_SetTranslation("BLACKBlack") Goto SpawnContinue
-		OrangeBlack: NULL A 0 A_SetTranslation("ORANGEBlack")
+		Spawn2: NULL A 0 A_SetTranslation("BlackMarine") Goto SpawnContinue
+		Spawn3: NULL A 0 A_SetTranslation("TanMarine") Goto SpawnContinue
 	SpawnContinue:
 		    TNT1 A 0
 		NULL A 0 A_jump(128,2)
@@ -2580,33 +2413,12 @@ ACTOR HangingPairOfLegsMarine: HangingPairOfLegs //Replaces Meat4
 	{
 		Spawn:
 		    TNT1 A 0
-		TNT1 A 0 A_Jump(256, "Neon","Dox778","Yellow","YellowBlack","Gray","Gray2","GrayBlack","Gray2Black","Red","Red2","RedBlack","Red2Black","Brown","Brown2","Blue","Blue2","BlueBlack","Blue2Black","DarkGreen","Black","Orange","BlackBlack","OrangeBlack","SpawnContinue")
+	//First, it randomly chooses a palette. "SpawnContinue" uses no different palette.
+		TNT1 A 0 A_Jump(256, "spawncontinue","Spawn2","spawn3")
 		loop
 ////////////////////////////
-        Dox778: NULL A 0 A_SetTranslation("DOX778") Goto SpawnContinue
-		Neon: NULL A 0 A_SetTranslation("NEON") Goto SpawnContinue //Hey Danny, that's you!
-		Yellow: NULL A 0 A_SetTranslation("YELLOW") Goto SpawnContinue
-		Gray: NULL A 0 A_SetTranslation("GRAY") Goto SpawnContinue
-		Gray2: NULL A 0 A_SetTranslation("GRAY2") Goto SpawnContinue
-		Red: NULL A 0 A_SetTranslation("RED") Goto SpawnContinue
-		Red2: NULL A 0 A_SetTranslation("RED2") Goto SpawnContinue
-		Brown: NULL A 0 A_SetTranslation("BROWN") Goto SpawnContinue
-		Brown2: NULL A 0 A_SetTranslation("BROWN2") Goto SpawnContinue
-		Blue: NULL A 0 A_SetTranslation("BLUE") Goto SpawnContinue
-		Blue2: NULL A 0 A_SetTranslation("BLUE2") Goto SpawnContinue
-		DarkGreen: NULL A 0 A_SetTranslation("DARKGREEN") Goto SpawnContinue
-		Black: NULL A 0 A_SetTranslation("BLACK") Goto SpawnContinue
-		Orange: NULL A 0 A_SetTranslation("ORANGE") Goto SpawnContinue
-		//Dark skinned variants
-		YellowBlack: NULL A 0 A_SetTranslation("YELLOWBlack") Goto SpawnContinue
-		GrayBlack: NULL A 0 A_SetTranslation("GRAYBlack") Goto SpawnContinue
-		Gray2Black: NULL A 0 A_SetTranslation("GRAY2Black") Goto SpawnContinue
-		RedBlack: NULL A 0 A_SetTranslation("REDBlack") Goto SpawnContinue
-		Red2Black: NULL A 0 A_SetTranslation("RED2Black") Goto SpawnContinue
-		BlueBlack: NULL A 0 A_SetTranslation("BLUEBlack") Goto SpawnContinue
-		Blue2Black: NULL A 0 A_SetTranslation("BLUE2Black") Goto SpawnContinue
-		BlackBlack: NULL A 0 A_SetTranslation("BLACKBlack") Goto SpawnContinue
-		OrangeBlack: NULL A 0 A_SetTranslation("ORANGEBlack")
+		Spawn2: NULL A 0 A_SetTranslation("BlackMarine") Goto SpawnContinue
+		Spawn3: NULL A 0 A_SetTranslation("TanMarine") Goto SpawnContinue
 	SpawnContinue:
 		NULL A 0 A_jump(128,2)
 		NULL A 0 A_ChangeFlag("XFLIP",1)
@@ -2774,33 +2586,12 @@ ACTOR HangingDeadMarineNoLeg: HangingDeadGuyNoLeg
 	
 	Spawn:
 		TNT1 A 0
-		TNT1 A 0 A_Jump(256, "Neon","Dox778","Yellow","YellowBlack","Gray","Gray2","GrayBlack","Gray2Black","Red","Red2","RedBlack","Red2Black","Brown","Brown2","Blue","Blue2","BlueBlack","Blue2Black","DarkGreen","Black","Orange","BlackBlack","OrangeBlack","SpawnContinue")
+		//First, it randomly chooses a palette. "SpawnContinue" uses no different palette.
+		TNT1 A 0 A_Jump(256, "spawncontinue","Spawn2","spawn3")
 		loop
 ////////////////////////////
-        Dox778: NULL A 0 A_SetTranslation("DOX778") Goto SpawnContinue
-		Neon: NULL A 0 A_SetTranslation("NEON") Goto SpawnContinue //Hey Danny, that's you!
-		Yellow: NULL A 0 A_SetTranslation("YELLOW") Goto SpawnContinue
-		Gray: NULL A 0 A_SetTranslation("GRAY") Goto SpawnContinue
-		Gray2: NULL A 0 A_SetTranslation("GRAY2") Goto SpawnContinue
-		Red: NULL A 0 A_SetTranslation("RED") Goto SpawnContinue
-		Red2: NULL A 0 A_SetTranslation("RED2") Goto SpawnContinue
-		Brown: NULL A 0 A_SetTranslation("BROWN") Goto SpawnContinue
-		Brown2: NULL A 0 A_SetTranslation("BROWN2") Goto SpawnContinue
-		Blue: NULL A 0 A_SetTranslation("BLUE") Goto SpawnContinue
-		Blue2: NULL A 0 A_SetTranslation("BLUE2") Goto SpawnContinue
-		DarkGreen: NULL A 0 A_SetTranslation("DARKGREEN") Goto SpawnContinue
-		Black: NULL A 0 A_SetTranslation("BLACK") Goto SpawnContinue
-		Orange: NULL A 0 A_SetTranslation("ORANGE") Goto SpawnContinue
-		//Dark skinned variants
-		YellowBlack: NULL A 0 A_SetTranslation("YELLOWBlack") Goto SpawnContinue
-		GrayBlack: NULL A 0 A_SetTranslation("GRAYBlack") Goto SpawnContinue
-		Gray2Black: NULL A 0 A_SetTranslation("GRAY2Black") Goto SpawnContinue
-		RedBlack: NULL A 0 A_SetTranslation("REDBlack") Goto SpawnContinue
-		Red2Black: NULL A 0 A_SetTranslation("RED2Black") Goto SpawnContinue
-		BlueBlack: NULL A 0 A_SetTranslation("BLUEBlack") Goto SpawnContinue
-		Blue2Black: NULL A 0 A_SetTranslation("BLUE2Black") Goto SpawnContinue
-		BlackBlack: NULL A 0 A_SetTranslation("BLACKBlack") Goto SpawnContinue
-		OrangeBlack: NULL A 0 A_SetTranslation("ORANGEBlack")
+		Spawn2: NULL A 0 A_SetTranslation("BlackMarine") Goto SpawnContinue
+		Spawn3: NULL A 0 A_SetTranslation("TanMarine") Goto SpawnContinue
 	SpawnContinue:
 	    TNT1 A 0
 		NULL A 0 A_jump(128,2)
@@ -2889,33 +2680,12 @@ ACTOR HangingLegMarine: DeadBloodyTwitchB
 	{
 	Spawn:
 	    TNT1 A 0
-		TNT1 A 0 A_Jump(256, "Neon","Dox778","Yellow","YellowBlack","Gray","Gray2","GrayBlack","Gray2Black","Red","Red2","RedBlack","Red2Black","Brown","Brown2","Blue","Blue2","BlueBlack","Blue2Black","DarkGreen","Black","Orange","BlackBlack","OrangeBlack","SpawnContinue")
+	//First, it randomly chooses a palette. "SpawnContinue" uses no different palette.
+		TNT1 A 0 A_Jump(256, "spawncontinue","Spawn2","spawn3")
 		loop
 ////////////////////////////
-        Dox778: NULL A 0 A_SetTranslation("DOX778") Goto SpawnContinue
-		Neon: NULL A 0 A_SetTranslation("NEON") Goto SpawnContinue //Hey Danny, that's you!
-		Yellow: NULL A 0 A_SetTranslation("YELLOW") Goto SpawnContinue
-		Gray: NULL A 0 A_SetTranslation("GRAY") Goto SpawnContinue
-		Gray2: NULL A 0 A_SetTranslation("GRAY2") Goto SpawnContinue
-		Red: NULL A 0 A_SetTranslation("RED") Goto SpawnContinue
-		Red2: NULL A 0 A_SetTranslation("RED2") Goto SpawnContinue
-		Brown: NULL A 0 A_SetTranslation("BROWN") Goto SpawnContinue
-		Brown2: NULL A 0 A_SetTranslation("BROWN2") Goto SpawnContinue
-		Blue: NULL A 0 A_SetTranslation("BLUE") Goto SpawnContinue
-		Blue2: NULL A 0 A_SetTranslation("BLUE2") Goto SpawnContinue
-		DarkGreen: NULL A 0 A_SetTranslation("DARKGREEN") Goto SpawnContinue
-		Black: NULL A 0 A_SetTranslation("BLACK") Goto SpawnContinue
-		Orange: NULL A 0 A_SetTranslation("ORANGE") Goto SpawnContinue
-		//Dark skinned variants
-		YellowBlack: NULL A 0 A_SetTranslation("YELLOWBlack") Goto SpawnContinue
-		GrayBlack: NULL A 0 A_SetTranslation("GRAYBlack") Goto SpawnContinue
-		Gray2Black: NULL A 0 A_SetTranslation("GRAY2Black") Goto SpawnContinue
-		RedBlack: NULL A 0 A_SetTranslation("REDBlack") Goto SpawnContinue
-		Red2Black: NULL A 0 A_SetTranslation("RED2Black") Goto SpawnContinue
-		BlueBlack: NULL A 0 A_SetTranslation("BLUEBlack") Goto SpawnContinue
-		Blue2Black: NULL A 0 A_SetTranslation("BLUE2Black") Goto SpawnContinue
-		BlackBlack: NULL A 0 A_SetTranslation("BLACKBlack") Goto SpawnContinue
-		OrangeBlack: NULL A 0 A_SetTranslation("ORANGEBlack")
+		Spawn2: NULL A 0 A_SetTranslation("BlackMarine") Goto SpawnContinue
+		Spawn3: NULL A 0 A_SetTranslation("TanMarine") Goto SpawnContinue
 	SpawnContinue:
 		NULL A 0 A_jump(128,2)
 		NULL A 0 A_ChangeFlag("XFLIP",1)
