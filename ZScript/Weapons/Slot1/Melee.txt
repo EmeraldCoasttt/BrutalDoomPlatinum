@@ -132,7 +132,7 @@ CLASS MeleeAttack : Actor
 					Setstatelabel("death");
 				}
 			int backsmackmod;
-			If(victim && absangle(angle,victim.angle) < 90)
+			If(victim && absangle(angle,victim.angle) < 90 && victim.bismonster)
 			{
 				//Console.printf("Backsmack!");
 				
