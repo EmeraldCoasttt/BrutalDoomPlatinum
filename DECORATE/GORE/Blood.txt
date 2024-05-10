@@ -690,6 +690,10 @@ actor GiantBloodSpot: Brutal_BloodSpot
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 ACS_NamedExecuteAlways("BD_CheckIfOverLiquid")//Check Floortype
+		 TNT1 A 0 A_CheckFloor("SpawnNormally")
+		 Goto Splash
+	  
+	  SpawnNormally:
 		TNT1 A 3
 		{
 			bnointeraction = true;
