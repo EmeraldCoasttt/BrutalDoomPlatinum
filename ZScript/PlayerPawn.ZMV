@@ -596,7 +596,7 @@ class Brutal_PlayerBase : PlayerPawn
 		
 		Bool jetpacking = countinv("jetpackmoving");
 		
-		If(booster && cmd.forwardmove && cmd.buttons & BT_SPEED)
+		If(booster && cmd.forwardmove && cmd.buttons & BT_SPEED && countinv("StaminaExhaustion") < 1)
 		{
 			boosttics++;
 			If(boosttics >= 20)
