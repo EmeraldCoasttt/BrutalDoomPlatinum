@@ -185,6 +185,10 @@ class Brutal_PlayerBase : PlayerPawn
 	bool scanneractive;
 	int scannertimer;
 	
+	float lasttichealth;
+	int paintimer;
+	int healtimer;
+	
 	Default
     {
 		Player.DisplayName "ZMovement Player";
@@ -257,6 +261,28 @@ class Brutal_PlayerBase : PlayerPawn
 		{
 		Super.playerthink();
 		
+		//Health Regen
+		//console.printf("%i",health);	
+		If(paintimer > 0)
+		{
+			paintimer--;
+		}
+		If(health < lasttichealth)
+		{
+			paintimer = 245;
+			healtimer = 0;
+		}
+		lasttichealth = health;
+		If(paintimer <= 0 && healtimer < 10)
+		{
+			healtimer++;
+		}
+		If(healtimer >= 10 && health < 20 && health > 0)
+		{
+			A_sethealth(health + 1);
+			healtimer = 0;
+		}
+			
 		
 		takeinventory("PausePowerup",1);
 		
