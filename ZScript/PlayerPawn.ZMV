@@ -258,6 +258,8 @@ class Brutal_PlayerBase : PlayerPawn
 		Super.playerthink();
 		
 		
+		takeinventory("PausePowerup",1);
+		
 		If(health >= 1)
 		{
 			If(scannertimer > 0)

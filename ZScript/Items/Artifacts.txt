@@ -517,6 +517,20 @@ Default
 		owner.giveinventory("PowerStrength",1);
 		Super.initeffect();
 	}
+	Override void tick()
+	{
+		if (Owner == NULL)
+		{
+			Destroy ();
+		}
+		If(owner && !owner.findinventory("pausepowerup"))
+		{
+		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
+		{
+			Destroy ();
+		}
+		}
+	}
 	override void doeffect()
 	{
 		If(owner)
@@ -544,3 +558,92 @@ Default
 	
 	}
 }
+
+CLASs BDPInvuln : PowerInvulnerable
+{
+Override void tick()
+	{
+		if (Owner == NULL)
+		{
+			Destroy ();
+		}
+		If(owner && !owner.findinventory("pausepowerup"))
+		{
+		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
+		{
+			Destroy ();
+		}
+		}
+	}
+}
+
+CLASS powerspeed2 : powerspeed
+{
+Default
+{
+Speed 1.7;
++INVENTORY.NOTELEPORTFREEZE;
+inventory.icon "TNT1A0";
+}
+Override void tick()
+	{
+		if (Owner == NULL)
+		{
+			Destroy ();
+		}
+		If(owner && !owner.findinventory("pausepowerup"))
+		{
+		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
+		{
+			Destroy ();
+		}
+		}
+	}
+
+}
+
+
+CLASS PowerquakeDamage : PowerDamage
+{
+Default
+{
+damagefactor "normal", 4;
+//Inventory.icon "SIG2A0"
+activesound "items/quaddamage";
+}
+
+Override void tick()
+	{
+		if (Owner == NULL)
+		{
+			Destroy ();
+		}
+		If(owner && !owner.findinventory("pausepowerup"))
+		{
+		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
+		{
+			Destroy ();
+		}
+		}
+	}
+}
+
+CLASs BDPBlur : PowerInvisibility
+{
+Override void tick()
+	{
+		if (Owner == NULL)
+		{
+			Destroy ();
+		}
+		If(owner && !owner.findinventory("pausepowerup"))
+		{
+		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
+		{
+			Destroy ();
+		}
+		}
+	}
+}
+
+

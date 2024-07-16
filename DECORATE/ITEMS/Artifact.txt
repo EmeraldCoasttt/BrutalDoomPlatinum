@@ -13,7 +13,7 @@ ACTOR InvulnerabilitySphere_  : PowerupGiver Replaces InvulnerabilitySphere
 	+INVENTORY.ALWAYSPICKUP
 	+INVENTORY.BIGPOWERUP
 	Inventory.MaxAmount 0
-	Powerup.Type Invulnerable
+	Powerup.Type "BDPInvuln"
 	Powerup.Colormap 0.0, 0.0, 0.0, 1.0,1.0,1.0
 	Inventory.PickupMessage "$GOTINVUL"
 	Tag "Invulnerability"
@@ -259,6 +259,8 @@ ACTOR SuperBlurSphere : Blursphere REPLACES Blursphere
   +INVENTORY.BIGPOWERUP
   RenderStyle Translucent
   Inventory.PickupMessage "$GOTINVIS"
+  powerup.type "BDPBlur"
+  Powerup.Duration -30
   States
   {
   Spawn:
@@ -419,12 +421,7 @@ Inventory.icon "SIG5A0"
 
 }
 */
-ACTOR powerspeed2 : powerspeed
-{
-Speed 1.7
-+INVENTORY.NOTELEPORTFREEZE
-inventory.icon "TNT1A0"
-}
+
 /*
 ACTOR DemonBioSigil : custominventory
 {

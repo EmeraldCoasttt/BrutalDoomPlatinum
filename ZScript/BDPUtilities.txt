@@ -567,6 +567,10 @@
 	
 		Override void worldthingdied(worldevent e)
 		{
+			If(e.thing && e.thing.target && e.thing.bismonster && e.thing.target is "Brutal_PlayerBase")
+			{
+				e.thing.target.giveinventory("PausePowerup",105);
+			}
 			int currentkills = Level.Killed_monsters;
 		
 			If(currentkills == 0)
