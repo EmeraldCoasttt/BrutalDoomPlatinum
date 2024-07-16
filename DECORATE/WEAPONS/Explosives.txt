@@ -373,7 +373,7 @@ States    {
 	TNT1 A 0
 	TNT1 A 0 A_SpawnItem("WhiteShockwave")
 	TNT1 A 3
-	TNT1 A 0 A_Explode(300,300)
+	TNT1 A 0 A_Explode(150,300)
         Stop}}
 		
 		actor HeadGoBoom
