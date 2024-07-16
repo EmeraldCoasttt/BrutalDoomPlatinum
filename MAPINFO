@@ -167,7 +167,7 @@ map TEST "UAC Testing Center"
 	sky1 = "SKYEAR6", 0.1
 	cluster = 1
 	//par = 60
-	music = ORB.ogg
+	music = D_ORB
 }
 
 map PSMAP58 "The Mansion"
