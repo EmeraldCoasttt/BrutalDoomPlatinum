@@ -1831,6 +1831,13 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		TNT1 A 0 A_SpawnItem("FrozenZombieman")
 		
 		Stop
+	Death.IceExplode:
+	ZFZD A 1
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+		TNT1 A 0 A_ChangeFlag("SOLID", 0)
+		TNT1 A 0 A_SpawnItem("FrozenZombiemanExplode")
+		
+		Stop
 		
 	Death.Massacre:
 	Goto Death

@@ -67,6 +67,19 @@ ACTOR FrozenZombieman
 	}
 }
 
+Actor FrozenZombiemanExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall")
+	TNT1 A 0 A_SpawnItem("RifleSpawner")
+	ZFZD C -1
+	}
+}
+
 //////////////////////////////////////////////////////////////
 ///														   ///
 ///				  Frozen PistolZombieman         		   ///
@@ -123,6 +136,18 @@ ACTOR FrozenPistolZombie :FrozenZombieman
 	TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
 	TNT1 A 0 A_SpawnItem("FrozenPistolZombie")
 	Stop
+	}
+}
+
+Actor FrozenPistolZombieExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall")
+	TNT1 A 0 A_SpawnItem("PistolSpawner")
+	ZFZD C -1
 	}
 }
 
@@ -186,6 +211,19 @@ ACTOR FrozenLabGuy : FrozenZombieman
 	}
 }
 
+Actor FrozenLabGuyExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall")
+	TNT1 A 0 A_SpawnItem("AxeSpawner")
+	LFZD C -1
+	}
+}
+
 //////////////////////////////////////////////////////////////
 ///														   ///
 ///				  Frozen Shotgun guy        			   ///
@@ -246,6 +284,19 @@ States
 	}
 }
 
+
+Actor FrozenShotgunGuyExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall")
+	TNT1 A 0 A_SpawnItem("shotgunspawnerdroped")
+	SFZD C -1
+	}
+}
 //////////////////////////////////////////////////////////////
 ///														   ///
 ///					  Frozen SMG guy        			   ///
@@ -365,6 +416,19 @@ States
 	}
 }
 
+Actor FrozenChaingunguyExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall")
+	TNT1 A 0 A_SpawnItem("MiniGunDrop")
+	XFZD C -1
+	}
+}
+
 //////////////////////////////////////////////////////////////
 ///														   ///
 ///				  Frozen Imp		        			   ///
@@ -424,6 +488,18 @@ TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall")
 	}
 }
 
+Actor FrozenImpExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall")
+	IFZD C -1
+	}
+}
+
 //////////////////////////////////////////////////////////////
 ///														   ///
 ///				  Frozen Lostsoul	        			   ///
@@ -480,6 +556,18 @@ ACTOR FrozenLostSoul : FrozenZombieman
 	TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
 	TNT1 A 0 A_SpawnItem("FrozenLostSoul")
 	Stop
+	}
+}
+
+Actor FrozenLostSoulExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerXS")
+	KFZD C -1
 	}
 }
 
@@ -568,6 +656,18 @@ States
 	}
 }
 
+Actor FrozenDemonExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedMedium")
+	PFZD C -1
+	}
+}
+
 Actor FrozenNightmareDemon : FrozenDemon
 {
 	States
@@ -601,6 +701,18 @@ Actor FrozenNightmareDemon : FrozenDemon
 	Stop
 	}
 
+}
+
+Actor FrozenNightmareDemonExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerMedium")
+	PFZD C -1
+	}
 }
 
 //////////////////////////////////////////////////////////////
@@ -687,6 +799,18 @@ States
 	}
 }
 
+Actor FrozenMancubusExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedLarge")
+	MFZD C -1
+	}
+}
+
 //////////////////////////////////////////////////////////////
 ///														   ///
 ///				  Frozen Revenant		       			   ///
@@ -749,6 +873,18 @@ States
 	}
 }
 
+Actor FrozenRevenantExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound ("DSBOTTLE")
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedMedium")
+	RFZD C -1
+	}
+}
 
 //////////////////////////////////////////////////////////////
 ///														   ///
@@ -809,6 +945,19 @@ States
 	TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
 	TNT1 A 0 A_SpawnItem("FrozenHellKnight")
 	Stop
+	}
+}
+
+Actor FrozenHellKnightExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound ("DSBOTTLE")
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerGreenMedium")
+	BFZD C -1
 	}
 }
 //////////////////////////////////////////////////////////////
@@ -872,7 +1021,18 @@ States
 	Stop
 	}
 }
-
+Actor FrozenBaronOfHellExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound ("DSBOTTLE")
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerGreenMedium")
+	BFZD C -1
+	}
+}
 
 //////////////////////////////////////////////////////////////
 ///														   ///
@@ -942,6 +1102,28 @@ States
 	}
 }
 
+Actor FrozenCacodemonExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound ("DSBOTTLE")
+	TNT1 A 0 A_NoBlocking
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerMedium")
+	TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("Blue_FlyingBlood", 50, 0, random (160, 200), 2, random (0, 50))
+	TNT1 A 0 A_CustomMissile ("CacoXDeath2", 50, 0, random (0, 360), 2, random (20, 40))
+	TNT1 A 0 A_CustomMissile ("CacoXDeath1", 50, 0, random (0, 360), 2, random (20, 40))
+	TNT1 A 0 A_CustomMissile ("CacoXDeath3", 50, 0, random (0, 360), 2, random (20, 40))
+	TNT1 A 0 A_CustomMissile ("CacoXDeath4", 50, 0, random (0, 360), 2, random (20, 40))
+	TNT1 AA 0 A_CustomMissile ("CacoXDeath5", 50, 0, random (0, 360), 2, random (20, 40))
+	TNT1 AAAA 0 A_CustomMissile ("CacoXDeath6", 50, 0, random (0, 360), 2, random (20, 40))
+	TNT1 AAAAAA 0 A_CustomMissile ("CacoXDeath7", 50, 0, random (0, 360), 2, random (20, 40))
+	STOP
+	}
+}
+
 //////////////////////////////////////////////////////////////
 ///														   ///
 ///				  Frozen Arachnotron	       			   ///
@@ -1004,6 +1186,19 @@ States
 	}
 }
 
+Actor FrozenArachnotronExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound ("DSBOTTLE")
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedMedium")
+	TFZD C -1
+	}
+}
+
 //////////////////////////////////////////////////////////////
 ///														   ///
 ///				  Frozen Pain elemental	       			   ///
@@ -1053,8 +1248,8 @@ States
 	TNT1 A 0 A_NoBlocking
 	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedLarge")
 	TNT1 A 0 A_SpawnItemEx("FreezenadeExplosion", 0, 0 ,2.5)
-	
-	TNT1 A 0 A_Explode (220,220)
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedMedium")
+	//TNT1 A 0 A_Explode (220,220)
 	TNT1 AAAAAA 0 bright A_CustomMissile ("SuperGoreSpawner", 5, 0, random (0, 360), 2, random (30, 180))
          TNT1 AAAAAAAAA 0 A_CustomMissile ("CeilBloodLauncherLong", 0, 0, random (0, 360), 2, random (50, 130))
 		 TNT1 AAAA 0 A_CustomMissile ("SmallBrainPiece", 32, 0, random (0, 360), 2, random (0, 160))
@@ -1065,7 +1260,7 @@ States
 		 TNT1 AAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 32, 0, random (0, 360), 2, random (0, 160))
 	//	EXPL A 0 A_SpawnItemEx("ExplosionParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
 	//EXPL AAAAAAAAAAAAAAAAA 0 A_CustomMissile ("FireBallExplosion", 6, 0, random (0, 360), 2, random (0, 360))
-		TNT1 A 0 BRIGHT A_PainDie
+		//TNT1 A 0 BRIGHT A_PainDie
 	Stop
 	Death.Freeze:
 	Death.Ice:
@@ -1075,6 +1270,30 @@ States
 	TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
 	TNT1 A 0 A_SpawnItem("FrozenPainElemental")
 	Stop
+	}
+}
+
+Actor FrozenPainElementalExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound ("DSBOTTLE")
+	TNT1 A 0 A_SpawnItemEx("FreezenadeExplosion", 0, 0 ,2.5)
+	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedMedium")
+	//TNT1 A 0 A_Explode (220,220)
+	TNT1 AAAAAA 0 bright A_CustomMissile ("SuperGoreSpawner", 5, 0, random (0, 360), 2, random (30, 180))
+         TNT1 AAAAAAAAA 0 A_CustomMissile ("CeilBloodLauncherLong", 0, 0, random (0, 360), 2, random (50, 130))
+		 TNT1 AAAA 0 A_CustomMissile ("SmallBrainPiece", 32, 0, random (0, 360), 2, random (0, 160))
+       // TNT1 AAAA 0 A_CustomMissile ("FrozenMeat1", 48, 0, random (0, 360), 2, random (0, 160))
+	//TNT1 AAAAA 0 A_CustomMissile ("FrozenMeat2", 48, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AAAAAAAA 0 A_CustomMissile ("PEPart1", 32, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAAA 0 A_CustomMissile ("PEPart2", 32, 0, random (0, 360), 2, random (0, 160))
+		 TNT1 AAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 32, 0, random (0, 360), 2, random (0, 160))
+	//	EXPL A 0 A_SpawnItemEx("ExplosionParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+	STOP
 	}
 }
 
@@ -1136,6 +1355,19 @@ States
 	TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
 	TNT1 A 0 A_SpawnItem("Frozenarchvile")
 	Stop
+	}
+}
+
+Actor FrozenArchVileExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound ("DSBOTTLE")
+TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedMedium")
+	AFZD C -1
 	}
 }
 //////////////////////////////////////////////////////////////
@@ -1317,7 +1549,28 @@ States
 	Stop
 	}
 }
-
+Actor FrozenBarrelExplode
+{
+	+movewithsector
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		BARI A 0
+	FBAR FGH 2 
+	FBXP CD 4 BRIGHT
+	TNT1 A 0 A_SpawnItemEx("FreezenadeExplosion", 0, 0 ,2.5)
+	TNT1 AA 0 A_CustomMissile ("BarrelShrapnel1", 25, 0, random (0, 360), 2, random (0, 160))
+	TNT1 A 0 A_CustomMissile ("BarrelShrapnel2", 15, 0, random (0, 360), 2, random (0, 160))
+	TNT1 A 0 A_CustomMissile ("BarrelShrapnel3", 5, 0, random (0, 360), 2, random (0, 160))
+	TNT1 A 0 A_CustomMissile ("BarrelShrapnel4", 5, 0, random (0, 360), 2, random (0, 160))
+	TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("XIceChunk1", 48, 0, random (0, 360), 2, random (0, 160))
+	TNT1 AAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("XIceChunk2", 48, 0, random (0, 360), 2, random (0, 160))
+	TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("XIceChunk3", 48, 0, random (0, 360), 2, random (40, 120))
+	BXPL AAAAAA 0 Bright A_SpawnItemEx ("IceShardsSpawner",random(-18,18),random(-18,18),-2,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	Stop
+	}
+}
 
 
 
