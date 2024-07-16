@@ -74,7 +74,7 @@ ACTOR BDoomer : Doomer
 	Speed 1.3
 	Player.RunHealth 999
 	Player.DisplayName "DOOM Marine"
-	Player.StartItem "Rifle"
+	//Player.StartItem "Rifle"
 	Player.StartItem "BrutalPistol"
 	Player.StartItem "Melee_Attacks"
 	//Player.StartItem "BIG_FUCKING_GUN"
