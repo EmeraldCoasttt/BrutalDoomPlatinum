@@ -169,7 +169,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		//A_print("BEQUEATH");
 		If(Countinv("StickyGrenadeSelected")==1)
 		{
-			A_FireCustomMissile("LeadBurster", 0, 0, 0, 0);
+			A_FireCustomMissile("RollingBomb", 0, 0, 0, 0);
 		}
 		Else
 		{
@@ -254,7 +254,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		{
 		If(Countinv("StickyGrenadeSelected")==1)
 		{
-			A_FireCustomMissile("LeadBurster2", 0, 0, 0, 0);
+			A_FireCustomMissile("RollingBombBounces", 0, 0, 0, 0);
 		}
 		Else
 		{
@@ -387,7 +387,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		TNT1 A 0 {
 		ChangeAmmoIcon1("ROCKE0");
 		A_GiveInventory("StickyGrenadeSelected",1);
-		A_Print("\cdLeadburster Grenades",2);
+		A_Print("\cdRolling Bombs",2);
 		}
 		GLAN A 0 A_PlaySound("Weapons/GrenadeLoad")
 		GLR4 W 1
