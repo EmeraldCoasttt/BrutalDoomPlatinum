@@ -1408,6 +1408,10 @@ TNT1 A 0  {if (CountInv("Kicking") == 1) {
 		 TNT1 A 0 A_takeinventory("swapriflespecial",1)
 		 TNT1 A 0 A_jumpifinventory("clip2",1,1)
 		 Goto ready
+		 TNT1 A 0 
+		  TNT1 A 0 A_jumpifinventory("miniguncount",1,1)
+		 Goto ready
+		 TNT1 A 0 
 		  CHGT ABC 1
 		  TNT1 A 0
 		  {
@@ -1420,9 +1424,6 @@ TNT1 A 0  {if (CountInv("Kicking") == 1) {
 		  
 		  }
 		  TNT1 A 10
-		  TNT1 A 0 A_jumpifinventory("miniguncount",1,"Andbackagain")
-		  TNT1 A 0 A_takeinventory("minigun",1)
-		  Goto ready
 		  
 		  Andbackagain:
 			CHAG A 0 A_JumpIfInventory("Clip2",1,"backagainButHasAmmo")

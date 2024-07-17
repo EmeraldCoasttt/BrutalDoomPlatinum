@@ -11,13 +11,11 @@ CLASS MiniGunTurret : BDPNotMonster
 		-Countkill;
 		+friendly;
 		Speed 0;
-		height 40;
+		height 35;
 		radius 16;
 		damagefactor "Stealth", 200.0;
 		+lookallaround;
-		//Species "Marines";
-		//+USESPECIAL;
-		//Dropitem "Minigun", 255;
+		Scale 0.75;
 		}
 		
 		Override void tick()
@@ -80,21 +78,32 @@ CLASS MiniGunTurret : BDPNotMonster
 		Ihavenoammo:
 		TNT1 A 0 A_startsound("beeep",24);
 		Stillnoammo: 
-		MGNT A 1;
-		LOOP;
+		MGNT A 10;
+		TNT1 A 0 A_spawnitemex("miniguncount",0,0,30);
+		STOP;
 		
 		Missile:
 		TNT1 A 0 A_Jumpifinventory("clip2",1,1);
 		Goto IHaveNoAmmo;
 			MGNT A 1 A_facetarget();
-			MGNT B 1 BRIGHT
+			MGNT B 1
 			{
 			A_takeinventory("clip2",1);
 			A_startSound("FARMGN", 6);
-			A_startSound("CHGNSHOT", 5);
-			A_spawnprojectile("MarineMinigunTracer", 32, 0, random(-2,2), CMF_OFFSETPITCH, random(-2,2));
+			A_startSound("DSPISTOL", 5);
+			A_spawnprojectile("MonsterMinigunTracer", 30, 0, random(-2,2), CMF_OFFSETPITCH, random(-2,2));
 			//A_SpawnItem ("RifleCaseSpawn", 0, 30,0)
 			A_SpawnItemEX("50CaseSpawn",0,0,30);
+			}
+			MGNT A 1 A_FaceTarget();
+			MGNT C 1
+			{
+			A_takeinventory("clip2",1);
+			A_startSound("FARMGN", 6);
+			A_startSound("DSPISTOL", 5);
+			A_spawnprojectile("MonsterMinigunTracer", 30, 0, random(-2,2), CMF_OFFSETPITCH, random(-2,2));
+			//A_SpawnItem ("RifleCaseSpawn", 0, 30,0)
+			A_SpawnItemEX("50CaseSpawn",0,0,30,0,0,0,180);
 			}
 			TNT1 A 0 A_MonsterRefire(0,"spawn2");
 			LOOP;

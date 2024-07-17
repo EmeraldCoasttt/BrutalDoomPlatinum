@@ -5,13 +5,20 @@
 
 ACTOR MiniGunCount : Ammo 
 {
-	Inventory.PickupMessage "Picked up a Minigun."
+	Inventory.PickupMessage "Picked up a Deployable Turret"
 	Inventory.Amount 1
 	Inventory.MaxAmount 5
-	Inventory.Icon "MGUNB0"
+	Inventory.Icon "MGNTD0"
 	Inventory.PickupSound "CLIPICK2"
 	ammo.backpackamount 0
-//	Scale 0.9
+	Scale 0.75
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		MGNT D -1
+		Stop
+	}
 }
 
 

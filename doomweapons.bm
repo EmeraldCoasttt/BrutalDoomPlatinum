@@ -601,14 +601,7 @@ brightmap sprite 3LGNG0 { map "brightmaps/doom/Weapons/Minigun/3LGNG0.png" disab
 brightmap sprite 7LGNA0 { map "brightmaps/doom/Weapons/Minigun/7LGNA0.png" disablefullbright }
 brightmap sprite 7LGNB0 { map "brightmaps/doom/Weapons/Minigun/7LGNB0.png" disablefullbright }
 
-brightmap sprite MGNTB1 { map "brightmaps/doom/Weapons/Minigun/MGNTB1.png" disablefullbright }
-brightmap sprite MGNTB2 { map "brightmaps/doom/Weapons/Minigun/MGNTB2.png" disablefullbright }
-brightmap sprite MGNTB3 { map "brightmaps/doom/Weapons/Minigun/MGNTB3.png" disablefullbright }
-brightmap sprite MGNTB4 { map "brightmaps/doom/Weapons/Minigun/MGNTB4.png" disablefullbright }
-brightmap sprite MGNTB5 { map "brightmaps/doom/Weapons/Minigun/MGNTB5.png" disablefullbright }
-brightmap sprite MGNTB6 { map "brightmaps/doom/Weapons/Minigun/MGNTB6.png" disablefullbright }
-brightmap sprite MGNTB7 { map "brightmaps/doom/Weapons/Minigun/MGNTB7.png" disablefullbright }
-brightmap sprite MGNTB8 { map "brightmaps/doom/Weapons/Minigun/MGNTB8.png" disablefullbright }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //rocket launcher
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
