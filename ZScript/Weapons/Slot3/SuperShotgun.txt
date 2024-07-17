@@ -43,7 +43,7 @@ CLASS SSG : BrutalWeapon
 		{
 			A_overlayAlpha(9,0.0);
 			invoker.theoverlayalpha = 0;
-			if(invoker.owner.findinventory("powerinvisibility"))
+			if(invoker.owner.findinventory("BDPBlur"))
 			{
 				A_overlay(9,"donothing");
 			}
