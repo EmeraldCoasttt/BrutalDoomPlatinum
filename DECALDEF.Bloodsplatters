@@ -281,6 +281,8 @@ randomflipy
 //translucent 0.9
 opaqueblood
 //lowerdecal BrutalBloodSmearSmall
+x-scale 0.75
+y-scale 0.75
 }
 
 decal GreenBloodSplat02
@@ -291,6 +293,8 @@ randomflipy
 //translucent 0.9
 opaqueblood
 //lowerdecal BrutalBloodSmear
+x-scale 0.75
+y-scale 0.75
 }
 
 
@@ -386,6 +390,8 @@ decal BlueBloodSplat01
 pic BBSP1
 //x-scale 0.355
 //y-scale 0.355
+x-scale 0.75
+y-scale 0.75
 randomflipx
 randomflipy
 //translucent 0.9
@@ -399,6 +405,8 @@ decal BlueBloodSplat02
 pic BBSP2
 //x-scale 0.355
 //y-scale 0.355
+x-scale 0.75
+y-scale 0.75
 randomflipx
 randomflipy
 //translucent 0.9
