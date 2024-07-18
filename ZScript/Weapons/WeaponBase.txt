@@ -695,7 +695,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	{
 		A_alertmonsters(maxdist,flags);
 		
-		if(invoker.owner.findinventory("powerinvisibility"))
+		if(invoker.owner.bshadow)
 		{
 			invoker.owner.giveinventory("moveblurspheretarget",1);
 		}
