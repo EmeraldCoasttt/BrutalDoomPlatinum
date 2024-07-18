@@ -30,8 +30,8 @@ decal BloodSplat001
 {
 pic BSPLNEW
 //shade "65 00 00"
-//x-scale 0.35
-//y-scale 0.35
+x-scale 0.75
+y-scale 0.75
 randomflipx
 randomflipy
 OpaqueBlood
@@ -43,8 +43,8 @@ decal BloodSplat002
 {
 pic BSPLNEW2
 //shade "65 00 00"
-//x-scale 0.35
-//y-scale 0.35
+x-scale 0.75
+y-scale 0.75
 randomflipx
 randomflipy
 OpaqueBlood
@@ -56,8 +56,8 @@ decal BloodSplat003
 {
 pic BSPLNEW3
 //shade "65 00 00"
-//x-scale 0.35
-//y-scale 0.35
+x-scale 0.75
+y-scale 0.75
 randomflipx
 randomflipy
 OpaqueBlood
@@ -164,8 +164,8 @@ decalgroup BrutalBloodSmearSmall
 decal BrutalBloodSplat01
 {
 pic BSPLNEW
-//x-scale 0.355
-//y-scale 0.355
+x-scale 0.75
+y-scale 0.75
 randomflipx
 randomflipy
 //shade "65 00 00"
@@ -175,8 +175,8 @@ randomflipy
 decal BrutalBloodSplat02
 {
 pic BSPLNEW2
-//x-scale 0.355
-//y-scale 0.355
+x-scale 0.75
+y-scale 0.75
 randomflipx
 randomflipy
 //shade "65 00 00"
