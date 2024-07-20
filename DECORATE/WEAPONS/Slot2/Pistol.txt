@@ -378,6 +378,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
         PIST F 0 A_CheckIfAmmo("BDPistolAmmo",1,"NoAmmo")
         TNT1 AAAA 0
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("BDPistolAmmo")<=6) { A_PlaySound("MagClick", 7); }}}
+		TNT1 A 0 A_semiflag
 		TNT1 A 0 A_JumpIfInventory("IsSilenced",1,"FireSilenced")
 		PIST F 0 A_AlertMonstersDX
 		
@@ -405,12 +406,19 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		NULL A 0 A_WeaponOffset(0,32)
 		PIST F 0 A_JumpIfInventory("Reloading",1,"Reload")
 		PIST F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		PIS2 F 3 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+	//	PIS2 F 3 //A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
 		PIST F 0 A_JumpIfInventory("Reloading",1,"Reload")
 		PIST F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		PIS2 F 3 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+	//	PIS2 F 3// A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
 		//PIST F 0 A_JumpIfInventory("Fire2Activate",1,"AltFire")
-		PIST F 0 A_REfire
+		TNT1 A 0 A_Semirefire("Fire","SemiAutoLul")
+		Goto Ready
+		
+		SemiAutoLul:
+		2ILE A 0 A_JumpIfInventory("IsSilenced",1,2)
+		PIS2 A 0
+		"####" F 1
+		TNT1 A 0 A_Semirefire("Fire","SemiAutoLul")
 		Goto Ready
 		
 	Fire2:
@@ -485,7 +493,8 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PIST F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
 		PIST F 0 A_JumpIfInventory("Reloading",1,"Reload")
 		PIST F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		PIS2 F 2 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+		PIS2 F 2
+		TNT1 A 0 A_Semirefire("Fire","SemiAutoLul")
 		Goto Ready	
 		
 	FireSilenced:	
@@ -506,12 +515,12 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		NULL A 0 A_WeaponOffset(0,32)
 		PIST F 0 A_JumpIfInventory("Reloading",1,"Reload")
 		PIST F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		2ILE F 3 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+	//	2ILE F 3// A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
 		PIST F 0 A_JumpIfInventory("Reloading",1,"Reload")
 		PIST F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		2ILE F 3 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+		//2ILE F 3// A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
 		//PIST F 0 A_JumpIfInventory("Fire2Activate",1,"AltFire")
-		PIST F 0 A_REfire
+		TNT1 A 0 A_Semirefire("Fire","SemiAutoLul")
 		Goto Ready
 		
 	Fire2Silenced:
@@ -596,6 +605,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
         Goto NoAmmo
         TNT1 AAAA 0
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("BDPistolAmmo")<=6) { A_PlaySound("MagClick", 7); }}}
+		TNT1 A 0 A_semiflag
 		PISC A 0 A_JumpIFInventory("IsSilenced", 1,"FireADSSilenced")
 		PIST F 0 A_AlertMonstersDX
 		PIST F 0 A_PlaySound("FARSHT", 6)
@@ -612,16 +622,13 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PISZ A 1 
 		PIST F 0 A_JumpIfInventory("Reloading",1,"Reload")
 		PIST F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		PISZ A 3 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+		//PISZ A 3 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
 		PIST F 0 A_JumpIfInventory("Reloading",1,"Reload")
 		PIST F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		PISZ A 3 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+		//PISZ A 3 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+		TNT1 A 0 A_Semirefire("FireADS","SemiAutoLulADS")
+		TNT1 A 0 A_WeaponZoom
 		
-		PIST A 0 A_JumpIfInventory("Aiming1",1,"HoldEnd1")
-		PIST A 0 A_JumpIfInventory("Aiming0",1,"HoldEnd")
-		PIST A 0 A_JumpIfInventory("FiredSecondary",1,"HoldAim")
-		PIST F 0 //A_REfire
-		Goto StopADS
 	FireADSSilenced:
         PIST F 0 A_PlaySound("PISTSLNT", 1)
 		PIST F 0 A_ZoomFactor(1.49)
@@ -635,16 +642,16 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PISZ A 1 
 		PIST F 0 A_JumpIfInventory("Reloading",1,"Reload")
 		PIST F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		PISZ A 3 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+		//PISZ A 3 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
 		PIST F 0 A_JumpIfInventory("Reloading",1,"Reload")
 		PIST F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		PISZ A 3 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+		TNT1 A 0 A_Semirefire("FireADS","SemiAutoLulADS")
+		TNT1 A 0 A_WeaponZoom
 		
-		PIST A 0 A_JumpIfInventory("Aiming1",1,"HoldEnd1")
-		PIST A 0 A_JumpIfInventory("Aiming0",1,"HoldEnd")
-		PIST A 0 A_JumpIfInventory("FiredSecondary",1,"HoldAim")
-		PIST F 0 //A_REfire
-		Goto StopADS
+	SemiAutoLulADS:
+		PISZ A 1
+		TNT1 A 0 A_Semirefire("Fire","SemiAutoLulADS")
+		TNT1 A 0 A_WeaponZoom
 	
 	HoldEnd1:
 		PIST F 0 A_JumpIfInventory("PressedOnce",1,"HoldDown1")
@@ -839,48 +846,24 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PISZ EF 1
 		PISZ A 3
 		
-		PIST A 0 A_TakeInventory("Fire2Activate",1)
-		PIST A 0 A_Takeinventory("PressedTwice",1)
-
-		PIST A 0 A_JumpIfInventory("Aiming0",1,"HoldAim1")
-		PIST A 0 A_TakeInventory("PressedOnce",1)
-
-		PIST A 0 A_JumpIfInventory("Aiming1",1,"HoldEnd1")
-		PIST A 0 A_JumpIfInventory("FiredSecondary",1,"HoldAim")
-	
-	HoldAim:
-	    PISZ A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
-		PISZ A 1 A_WeaponReady(WRF_ALLOWRELOAD)
-		PISZ A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
-		PISZ A 1 A_WeaponReady(WRF_ALLOWRELOAD)
-		PISZ A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
-		PISZ A 1 A_WeaponReady(WRF_ALLOWRELOAD)
-		
-		PISZ A 0 A_JumpIfInventory("FiredSecondary",1,"HoldAim")
-		Goto StopADS
-	
-	HoldAim1:
-		PISZ A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
-		PISZ A 1 A_WeaponReady(WRF_ALLOWRELOAD)
-		PISZ A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
-		PISZ A 1 A_WeaponReady(WRF_ALLOWRELOAD)
-		PISZ A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
-		PISZ A 1 A_WeaponReady(WRF_ALLOWRELOAD)
-		PISZ A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
-		PISZ A 1 A_WeaponReady(WRF_ALLOWRELOAD)
-		PISZ A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
-		PISZ A 1 A_WeaponReady(WRF_ALLOWRELOAD)
-		PISZ A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
-		PISZ A 1 A_WeaponReady(WRF_ALLOWRELOAD)
-		PISZ A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
-		PISZ A 1 A_WeaponReady(WRF_ALLOWRELOAD)
-		
-		PISZ A 0 A_TakeInventory("PressedOnce",1)
-		PISZ A 0 A_JumpIfInventory("FiredSecondary",1,"HoldAim")
-		Goto Ready2
-		
-		
-	StopADS:
+		StillAiming:
+		TNT1 A 0 A_WeaponZoom
+		Goto Aim2
+		Aim1:
+			SMGG A 0 A_ZoomFactor(1.5)
+			PISZ A 1 A_weaponready(WRF_NOSECONDARY | WRF_NOPRIMARY)
+			TNT1 A 0 A_jumpifinventory("reloading",1,"reload")
+			TNT1 A 0 A_jumpifinventory("firedprimary",1,"FireADS")
+			TNT1 A 0 A_jumpifinventory("firedsecondary",1,"Aim1")
+			Goto noaim
+		Aim2:
+			SMGG A 0 A_ZoomFactor(1.5)
+			PISZ A 1 A_weaponready(WRF_NOSECONDARY | WRF_NOPRIMARY)
+			TNT1 A 0 A_jumpifinventory("reloading",1,"reload")
+			TNT1 A 0 A_jumpifinventory("firedprimary",1,"FireADS")
+			TNT1 A 0 A_jumpifinventory("firedsecondary",1,"NoAim")
+			LOOP
+	NoAim:
 		PISZ A 0
 		PISZ A 0 A_Takeinventory("Zoomed",1)
 		PISZ A 0 A_Takeinventory("ZoomHold",1)
