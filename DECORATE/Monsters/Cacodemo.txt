@@ -175,10 +175,11 @@ ACTOR Cacodemon_ : CacodemonBase Replaces Cacodemon
         TNT1 A 0 A_Jump (50, "avoid")
         TNT1 AAA 0
 		HEAD B 4 A_FaceTarget
-		TNT1 A 0 A_Jump (150, "AltMissile")
+		Missile2:
 		HEAD C 4 A_FaceTarget
 		HEAD M 3 BRIGHT A_CustomMissile("CacodemonBall", 34, 0, 0, 0)
 		HEAD D 1 BRIGHT 
+		TNT1 A 0 A_jump(200,"missile2")
 		Goto See
 		
 	AltMissile:
@@ -186,13 +187,13 @@ ACTOR Cacodemon_ : CacodemonBase Replaces Cacodemon
 		HEAD M 3 BRIGHT A_CustomMissile("CacodemonBall", 34, random(-3,3), 0, 0)
 		HEAD D 1 BRIGHT
 		TNT1 A 0 cacomeleecheck()
-		TNT1 A 0 A_jump(200,"AltMissile")
+		
 		Goto See
 		
 	Melee:	
 		HEAD B 4 A_Facetarget
 		TNT1 A 0 A_Startsound("CACOBITE", 4,0,0.5)
-		HEAD C 4 A_Recoil(-20)
+		HEAD C 4 A_Recoil(-25)
 		TNT1 A 0 A_CustomMissile("CacodemonBite", 34, 0, 0, 0)
 		//TNT1 A 0 A_JumpIfInventory("Fatality_Marine", 1, "FatalityMarine")
 		HEAD D 4
