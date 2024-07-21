@@ -6,7 +6,7 @@ CLASS CacodemonBase : Cacodemon
 		{
 			FLineTraceData LOF;
 		
-			LineTrace(AngleTo(Target),400,0,TRF_SOLIDACTORS,0,data:LOF);
+			LineTrace(AngleTo(Target),400,0,TRF_SOLIDACTORS || TRF_BLOCKSELF,0,data:LOF);
 		
 			if (LOF.HitActor == Target && Distance3D(target) < 290)
 			{
