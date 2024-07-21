@@ -6,7 +6,7 @@ ACTOR Cacodemon_ : CacodemonBase Replaces Cacodemon
 	SpawnID 19
     GibHealth 25
     damagefactor "Crush", 10.0
-	damagefactor "SSG", 100.0
+	//damagefactor "SSG", 100.0
 	Radius 24
 	Height 56
 	Mass 400
