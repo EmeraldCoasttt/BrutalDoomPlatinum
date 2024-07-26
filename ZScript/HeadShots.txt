@@ -69,6 +69,7 @@ CLASS BASEHEADSHOT : ACTOR
 		Species = tracer.species;
 		A_warp(AAPTR_tracer,offsetx,offsety,offsetz,0,WARPF_NOCHECKPOSITION);
 		}
+		takeinventory("headshotpopflag",1);
 	}
 	
 	
@@ -103,13 +104,28 @@ CLASS BASEHEADSHOT : ACTOR
 				If(damagetype == "railgun" || damagetype == "Revolver" || damagetype == "head")
 				{
 					spawn("WhiteShockwave",pos);
-					A_Explode(90,250,0,FALSE,0,0,10,"BulletPuff","Head");
+					//A_Explode(90,250,0,FALSE,0,0,10,"BulletPuff","Head");
 					a_startsound("HEADSHOT",1,0,1.0,ATTN_NONE);
+					
+					BlockThingsIterator CheckFortracers = BlockThingsIterator.create(Self,250);
+					Actor CurrentActor;
+					While (CheckFortracers.Next())
+					{
+						CurrentActor = CheckFortracers.Thing;
+						
+						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
+						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
+						If (CurrentActor && CurrentActor is "baseheadshot" && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && currentactor.tracer && currentactor.tracer.health > 0 && !currentactor.findinventory("Headshotpopflag"))
+							{
+								currentactor.giveinventory("headshotpopflag",1);
+								currentactor.damagemobj(inflictor,source,damage * 0.75,damagetype);
+							}
+					
+					
+					}
 				}
 			}
 	}
-	
-	
 	
 	return -1;
 	}

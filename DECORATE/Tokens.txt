@@ -25,6 +25,11 @@ Actor PistolFireAnimation1 : Inventory
 inventory.maxamount 1
 }
 
+Actor HeadshotPopFlag : Inventory
+{
+inventory.maxamount 1
+}
+
 Actor PausePowerup : Inventory
 {
 inventory.maxamount 105
