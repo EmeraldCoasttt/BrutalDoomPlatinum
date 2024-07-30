@@ -647,6 +647,11 @@ Actor MachineGunBulletPuff: HitPuff
 DamageType Minigun
 }
 
+Actor BR45BulletPuff: HitPuff
+{
+DamageType Revolver
+}
+
 Actor MechMinigunPuff: HitPuff
 {
 DamageType Extreme

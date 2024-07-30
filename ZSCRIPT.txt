@@ -30,6 +30,7 @@ version "4.11.0"
 //Slot 3
 #include "Zscript/Weapons/Slot3/SuperShotgun.txt"
 //Slot 4
+#include "Zscript/Weapons/Slot4/BattleRifle.txt"
 #include "Zscript/Weapons/Slot4/MinigunTurret.txt"
 //Slot 5
 #include "Zscript/Weapons/Slot5/StickyGrenade.txt"

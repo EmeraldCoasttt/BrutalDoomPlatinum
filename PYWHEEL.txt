@@ -10,6 +10,7 @@ BDoomer, Doomer2, TacticalDoomer
 	rename "BrutalPistol", "Pistol";
 	rename "Chain_Saw", "Chainsaw";
 	rename "BrutalSMG", "Sub Machine Gun";
+	rename "BattleRifle", "Battle Rifle";
 	rename "Shot_Gun", "Shotgun";
 	rename "SSG", "Super Shotgun";
 	rename "AssaultShotgun", "Auto Shotgun";
