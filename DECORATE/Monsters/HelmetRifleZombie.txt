@@ -5,7 +5,7 @@ Health 60
 PainChance 175
 Speed 9
 FastSpeed 18
-DamageFactor "Head", 1
+DamageFactor "Head", 0.5
 DropItem "DroppedHelmetSpawner"
 DropItem "RifleDrop"
 Damagefactor "Head", 0.1
@@ -13,7 +13,6 @@ painchance "Head", 255
 	States
 	{
 	Pain.head:
-	Death.head:
 	TNT1 A 0 A_sethealth(0)
 		TNT1 A 0 A_spawnitemex("DroppedHelmetSpawner",0,0,40,0,0,0,0,SXF_NOCHECKPOSITIOn)
 		TNT1 A 0 A_ZPain

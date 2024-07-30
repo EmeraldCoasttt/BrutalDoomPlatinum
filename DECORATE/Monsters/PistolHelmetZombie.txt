@@ -9,12 +9,11 @@ DamageFactor "Head", 1
 DropItem "PistolDrop"
 DropItem "DroppedHelmetSpawner"
 Tag "Pistol Zombie"
-Damagefactor "Head", 0.1
+Damagefactor "Head", 0.5
 painchance "Head", 255
 	States
 	{
 	Pain.head:
-	Death.head:
 	TNT1 A 0 A_sethealth(0)
 		TNT1 A 0 A_spawnitemex("DroppedHelmetSpawner",0,0,40,0,0,0,0,SXF_NOCHECKPOSITIOn)
 		TNT1 A 0 A_ZPain

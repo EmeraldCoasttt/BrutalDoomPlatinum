@@ -39,6 +39,7 @@ CLASS BattleRifle : Brutalweapon
 
 	}
 	int reloadchannel;
+	bool altzoom;
 	
 	Action void a_spawnhologram()
 	{
@@ -285,6 +286,7 @@ CLASS BattleRifle : Brutalweapon
 			A_overlay(-5,"DoNothing");
 			A_ZoomFactor(3.0);
 			A_SetCrosshair(41);
+			invoker.altzoom = false;
 		}
 		BR4Z ABCD 1;
 		SMGG A 0 A_StartSound("ADSIN");
@@ -330,7 +332,9 @@ CLASS BattleRifle : Brutalweapon
 					A_takeinventory("powerlightampc",1);
 				}
 				*/
+				
 			}
+			TNT1 A 0 A_jumpif(invoker.altzoom,"Aim3");
 			//SMGG A 0 A_ZoomFactor(3.0);
 			BR4Z D 1 BRIGHT A_weaponready(WRF_NOSECONDARY | WRF_NOPRIMARY);
 			TNT1 A 0 A_jumpifinventory("reloading",1,"zoomedreload");
@@ -338,7 +342,8 @@ CLASS BattleRifle : Brutalweapon
 			TNT1 A 0 A_jumpifinventory("firedsecondary",1,"GoingToAim3");
 			LOOP;
 	GoingToAim3:
-	TNT1 A 0 A_ZoomFactor(9.0);
+	TNT1 A 0 {invoker.altzoom = true;}
+	TNT1 A 0 A_zoomfactor(9.0);
 	BR4Z D 5 BRIGHT;
 	Aim3:
 			TNT1 A 0 
