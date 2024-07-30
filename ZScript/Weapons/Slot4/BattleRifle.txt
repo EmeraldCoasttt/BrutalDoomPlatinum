@@ -224,11 +224,16 @@ CLASS BattleRifle : Brutalweapon
 			{
 				A_zoomfactor(1.0);
 				A_fireprojectile("riflecasespawnversion2",5,false,0,-14,0);
+				If(countinv("battlerifleammo") < 1)
+				{
+					A_fireprojectile("RifleClipSpawn",5,false,0,-14,0);
+				}
 			}
 			BR45 DDEFGH 1;
 			BR45 B 3;
-			TNT1 A 0 A_Semirefire("Fire","SemiAutoLul");
 			TNT1 A 0 A_CheckIfAmmo("BattleRifleAmmo",1,"reload");
+			TNT1 A 0 A_Semirefire("Fire","SemiAutoLul");
+			
 			Goto Ready;
 			
 			SemiAutoLul:
@@ -242,9 +247,19 @@ CLASS BattleRifle : Brutalweapon
 			{
 			
 			}
-			TNT1 A 0 A_CheckIfAmmo("clip2",1,"noammo");
 			TNT1 A 0 A_takeinventory("reloading",1);
-			BR4R ABCDEFGGGGGGHIJKLMNOP 1;
+			TNT1 A 0 A_CheckIfAmmo("clip2",1,"noammo");
+			TNT1 A 0 A_jumpifinventory("battlerifleammo",12,"ready");
+			
+			BR4R ABCDE 1;
+			TNT1 A 0
+			{
+			If(countinv("battlerifleammo") > 0)
+				{
+					A_fireprojectile("RifleClipSpawn",5,false,0,-14,0);
+				}
+			}
+			BR4R FGGGGGGHIJKLMNOP 1;
 			TNT1 A 0 A_reload("battlerifleammo", 12, "clip2");
 			BR4R QRSTUVWX 1;
 			Goto Ready;
@@ -280,32 +295,7 @@ CLASS BattleRifle : Brutalweapon
 		TNT1 A 0 A_WeaponZoom();
 		Goto Aim2;
 		Aim1:
-			TNT1 A 0 
-			{
-				If(countinv("startdualwield") > 0)
-				{
-					Takeinventory("startdualwield",1);
-					
-					If(countinv("raillightscope") > 0)
-					{
-						A_takeinventory("raillightscope",1);
-						a_startsound("bepbep",2);
-					}
-					Else
-					{
-						A_giveinventory("raillightscope",1);
-						a_startsound("bep",2);
-					}
-				}
-				If(countinv("raillightscope") > 0)
-				{
-					A_giveinventory("powerlightampc",1);
-				}
-				Else
-				{
-					A_takeinventory("powerlightampc",1);
-				}
-			}
+			TNT1 A 0;
 			SMGG A 0 A_ZoomFactor(3.0);
 			BR4Z D 1 BRIGHT A_weaponready(WRF_NOSECONDARY | WRF_NOPRIMARY);
 			TNT1 A 0 A_jumpifinventory("reloading",1,"zoomedreload");
@@ -315,6 +305,7 @@ CLASS BattleRifle : Brutalweapon
 		Aim2:
 			TNT1 A 0 
 			{
+			/*
 				If(countinv("startdualwield") > 0)
 				{
 					Takeinventory("startdualwield",1);
@@ -338,6 +329,7 @@ CLASS BattleRifle : Brutalweapon
 				{
 					A_takeinventory("powerlightampc",1);
 				}
+				*/
 			}
 			//SMGG A 0 A_ZoomFactor(3.0);
 			BR4Z D 1 BRIGHT A_weaponready(WRF_NOSECONDARY | WRF_NOPRIMARY);
@@ -402,16 +394,24 @@ CLASS BattleRifle : Brutalweapon
 			{
 				//A_zoomfactor(1.0);
 				A_fireprojectile("riflecasespawnversion2",5,false,15,-7,0);
+				If(countinv("battlerifleammo") < 1)
+				{
+					A_fireprojectile("RifleClipSpawn",5,false,15,-7,0);
+				}
 			}
 			BR4Z DD 1 BRIGHT A_setpitch(pitch + 1);
 			BR4Z D 7 BRIGHT;
+			TNT1 A 0 A_CheckIfAmmo("BattleRifleAmmo",1,"zoomedreload");
 			TNT1 A 0 A_Semirefire("ZoomedFire","SemiAutoLulZoomed");
+			
 			TNT1 A 0 A_WeaponZoom2();
 			Goto StillAiming;
 			
 			SemiAutoLulZoomed:
 			BR4Z D 1;
 			TNT1 A 0 A_Semirefire("ZoomedFire","SemiAutoLulZoomed");
+			TNT1 A 0 A_CheckIfAmmo("BattleRifleAmmo",1,"zoomedreload");
+			
 			TNT1 A 0 A_WeaponZoom2();
 			Goto StillAiming;
 			
@@ -433,7 +433,7 @@ CLASS BattleRifle : Brutalweapon
 	NoAmmoZoomed:
 			TNT1 A 0
 			{
-				If(countinv("nurailgunammo") < 1 && Countinv("AmmoCell") > 9)
+				If(countinv("battlerifleammo") < 1 && Countinv("clip2") > 0)
 					{
 						Return resolvestate("NoAmmoZoomed2");
 					}
@@ -444,10 +444,9 @@ CLASS BattleRifle : Brutalweapon
 			}
 			TNT1 A 0
 			{
-				A_startsound("RAILDRY",1);
 				A_startsound("weapons/empty",4);
 			}
-			SNIP CCCCCCCCCCCCCCCC 1 BRIGHT;
+			BR4Z D 1 BRIGHT;
 			TNT1 A 0 A_WeaponZoom2();
 		Goto StillAiming;
 	Noammozoomed2:	
@@ -457,10 +456,9 @@ CLASS BattleRifle : Brutalweapon
         RLNG A 0 A_ZoomFactor(1.0);
 	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
 		SMGG A 0 A_StartSound("ADSOUT");
-        RAIZ FE 1;
 		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
-		RAIZ DCBA 1;	
-        Goto Pumping;
+		BR4Z CBA 1;	
+        Goto Reload;
 		
 	ZoomedReload:	
 	    RLNG A 0 A_Light0();
@@ -469,9 +467,8 @@ CLASS BattleRifle : Brutalweapon
         RLNG A 0 A_ZoomFactor(1.0);
 	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
 		SMGG A 0 A_StartSound("ADSOUT");
-        RAIZ FE 1;
 		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
-		RAIZ DCBA 1;	
+		BR4Z CBA 1;	
         Goto Reload;
 		
 	NoAim:	
@@ -486,44 +483,7 @@ CLASS BattleRifle : Brutalweapon
         Goto Ready;
 		
 		
-		Pumpinghandlol:
-		TNT1 A 0 A_StartSound("foley/ShotgunReloadRaise", 6);
-			RAIH ABCD 1;
-			STOP;
-		Pumpinghandlol2:
-			RAIH IHFE 1;
-			STOP;
-		Pumpinghandlolreverse:
-		TNT1 A 0 A_StartSound("foley/ShotgunReloadLower", 6);
-			RAIH DCBA 1;
-			STOP;
-		Pumpinghandlol2reverse:
-			RAIH FHI 1;
-			STOP;
-		ReloadingHand1:
-			RAIH JKLM 1;
-			Stop;
-		ReloadingHand3:
-			RAIH MLKJ 1;
-			STOP;
-		ReloadingHand2:
-			TNT1 A 5;
-			TNT1 A 0 
-			{
-				If(invoker.reloadchannel >= 24)
-				{
-					invoker.Reloadchannel = 19;
-				}
-				If(invoker.reloadchannel < 19)
-				{
-					invoker.Reloadchannel = 19;
-				}
-				invoker.Reloadchannel = invoker.reloadchannel + 1;
-				A_startsound("Railgun/Insert",invoker.reloadchannel);
-			}
-			RAIH RQPONN 1;
-			RAIH STUV 1;
-			STOP;
+	
 			
 		DualWield:
 			TNT1 A 0 A_takeinventory("startdualwield",1);
