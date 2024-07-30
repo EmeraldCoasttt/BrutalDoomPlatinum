@@ -3,9 +3,9 @@ CLASS BattleRifleAmmo : Ammo
 	Default
 	{
    Inventory.Amount 0;
-   Inventory.MaxAmount 15;
+   Inventory.MaxAmount 12;
    Ammo.BackpackAmount 0;
-   Ammo.BackpackMaxAmount 15;
+   Ammo.BackpackMaxAmount 12;
    Inventory.Icon "RLAUA0";
    }
 }
@@ -215,17 +215,20 @@ CLASS BattleRifle : Brutalweapon
 				A_fireprojectile("shotgunparticles2",random(12,-12),false,0,0,0,random(9,-9));
 				A_FireBullets (0, 0, -1, 50, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 				A_startsound("REVFIRE2",1);
+				A_ALertMonstersDX();
+				A_takeammo("battlerifleammo",1);
 			}
 			TNT1 A 0 A_GunLight();
 			BR45 C 1;
 			TNT1 A 0 
 			{
 				A_zoomfactor(1.0);
-				A_fireprojectile("riflecasespawnversion2",5,false,0,-7,0);
+				A_fireprojectile("riflecasespawnversion2",5,false,0,-14,0);
 			}
 			BR45 DDEFGH 1;
 			BR45 B 3;
 			TNT1 A 0 A_Semirefire("Fire","SemiAutoLul");
+			TNT1 A 0 A_CheckIfAmmo("BattleRifleAmmo",1,"reload");
 			Goto Ready;
 			
 			SemiAutoLul:
@@ -237,66 +240,24 @@ CLASS BattleRifle : Brutalweapon
 		Reload:
 			TNT1 A 0
 			{
-				Takeinventory("reloading",1);
-				If(countinv("nurailgunammo") < 1 && Countinv("AmmoCell") > 9)
-					{
-						Return resolvestate("Pumping");
-					}
-				Else if (countinv("nurailgunammo") < 5 && Countinv("AmmoCell") > 9)
-					{
-						Return resolvestate(null);
-					}
-				Else
-					{
-						Return resolvestate("Fidget");
-					}
+			
 			}
-			TNT1 A 0 A_overlay(-5,"pumpinghandlol");
-			RAIL FGHIJKLMNYYOO 1;
-		ReloadInsertShells:
-			TNT1 A 0 A_WeaponReady(WRF_NOFIRE| WRF_NOBOB);
-			TNT1 A 0 A_CheckFire();
-			TNT1 A 0 A_overlay(-5,"ReloadingHand2");
-			RAIL O 7 A_CheckFire();
-			RAIR CDDC 1 A_CheckFire();
-			RAIL O 4 A_CheckFire();
-			TNT1 A 0
-			{
-				takeinventory("ammocell",10);
-				giveinventory("nurailgunammo",1);
-				If(countinv("nurailgunammo") < 5 && Countinv("AmmoCell") > 9)
-					{
-						Return resolvestate("ReloadInsertShells");
-					}
-				Else
-					{
-						Return resolvestate(null);
-					}
-			}
-			RAIL OOOOONMLKJ 1;
-			TNT1 A 0 A_overlay(-5,"pumpinghandlolreverse");
-			RAIL IHGF 1;
-			Goto ready;
+			TNT1 A 0 A_CheckIfAmmo("clip2",1,"noammo");
+			TNT1 A 0 A_takeinventory("reloading",1);
+			BR4R ABCDEFGGGGGGHIJKLMNOP 1;
+			TNT1 A 0 A_reload("battlerifleammo", 12, "clip2");
+			BR4R QRSTUVWX 1;
+			Goto Ready;
+		
 			
 		NoAmmo:
-			TNT1 A 0
-			{
-				If(countinv("nurailgunammo") < 1 && Countinv("AmmoCell") > 9)
-					{
-						Return resolvestate("Pumping");
-					}
-				Else
-					{
-						Return resolvestate(null);
-					}
-			}
-			TNT1 A 0
-			{
-				A_startsound("RAILDRY",1);
-				A_startsound("weapons/empty",4);
-			}
-			RAIL BCDEBCDEBCDEBCDE 1;
-			Goto ready;
+			TNT1 A 0 A_StartSound("weapons/empty", 3);
+		NoAmmo2:
+
+		BR45 B 1;
+		PISZ A 0 A_Refire("NoAmmo2");
+		TNT1 A 0 A_CheckIfAmmo("clip2",1,"ready");
+		Goto reload;
 			
 		AltFire:
 	//	RLNG A 0 ACS_NamedExecuteAlways("HoldAim");
@@ -432,6 +393,8 @@ CLASS BattleRifle : Brutalweapon
 				A_FireBullets (0, 0, -1, 50, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 				A_startsound("REVFIRE2",1);
 				A_setpitch(pitch - 3);
+				A_ALertMonstersDX();
+				A_takeammo("battlerifleammo",1);
 			}
 			TNT1 A 0 A_GunLight();
 			BR4Z D 1 BRIGHT A_setpitch(pitch + 1);
