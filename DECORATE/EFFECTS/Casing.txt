@@ -128,7 +128,7 @@ ACTOR EmptyClip: BaseMagActor
 
 ACTOR EmptyRifleClip: BaseMagActor
 {
-   BounceFactor 0.5
+   BounceFactor 0.6
    Scale 0.2
    SeeSound "null"
    DeathSound "BR45BOUNCE"
