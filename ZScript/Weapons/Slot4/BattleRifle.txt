@@ -214,7 +214,7 @@ CLASS BattleRifle : Brutalweapon
 				A_overlay(-5,"DoNothing");
 				A_zoomfactor(0.7);
 				A_fireprojectile("shotgunparticles2",random(12,-12),false,0,0,0,random(9,-9));
-				A_FireBullets (0, 0, -1, 30, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
+				A_FireBullets (0, 0, -1, 40, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 				A_startsound("BR45FIRE",1);
 				A_ALertMonstersDX();
 				A_takeammo("battlerifleammo",1);
@@ -392,7 +392,7 @@ CLASS BattleRifle : Brutalweapon
 				A_overlay(-5,"DoNothing");
 				//A_zoomfactor(0.7);
 				A_fireprojectile("shotgunparticles2",random(12,-12),false,0,0,0,random(9,-9));
-				A_FireBullets (0, 0, -1, 30, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
+				A_FireBullets (0, 0, -1, 40, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 				A_startsound("BR45FIRE",1);
 				A_setpitch(pitch - 3);
 				A_ALertMonstersDX();

@@ -21,3 +21,5 @@ hastesphere,secret,2
 ragesphere,secret,2
 smgspawner,secret,1
 boosterframe,secret,1
+battlerifle,shotgun,1
+battlerifle,secret,1
