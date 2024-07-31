@@ -6,7 +6,7 @@ CLASS BattleRifleAmmo : Ammo
    Inventory.MaxAmount 12;
    Ammo.BackpackAmount 0;
    Ammo.BackpackMaxAmount 12;
-   Inventory.Icon "RLAUA0";
+   Inventory.Icon "BR45A0";
    }
 }
 
@@ -262,7 +262,11 @@ CLASS BattleRifle : Brutalweapon
 				}
 			}
 			BR4R FGGGGGGHIJKLMNOP 1;
-			TNT1 A 0 A_reload("battlerifleammo", 12, "clip2");
+			TNT1 A 0 
+			{
+				A_startsound("BR45LOAD",3);
+				A_reload("battlerifleammo", 12, "clip2");
+			}
 			BR4R QRSTUVWX 1;
 			Goto Ready;
 		
@@ -548,7 +552,7 @@ CLASS BattleRifle : Brutalweapon
 			Goto Ready;
 			
 		Spawn:
-			SRCG A 1;
+			BR45 A -1;
 			LOOP;
 
 		Unload:
