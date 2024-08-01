@@ -341,7 +341,7 @@ CLASS SSG : BrutalWeapon
 		  }
 		}
 		SHTZ A 0;
-		SHTZ A 0 A_PlaySound("FARSSG", 1)
+		SHTZ A 0 A_PlaySound("FARSSG", 1);
 		SHO9 A 0 A_firebullets (0,0,1,40,"shotpuff",FBF_NORANDOM,300);
 		TNT1 A 0 a_alertmonstersDX();
 		
