@@ -252,7 +252,7 @@ ACTOR Shot_Gun : BrutalWeapon
 		SHTN A 0 A_JumpIfInventory("ShotgunWasEmpty", 1, "Pump2")
         SHTN A 0 A_AlertMonstersDX
         SHTN A 0 A_PlaySound("weapons/sg", 1)
-		RIFF A 0 A_FireCustomMissile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1))
+		RIFF A 0 A_PlaySound("FARSHT", 1)
         SHTN A 0
 		SHTN A 0 A_SpawnItemEx("PlayerMuzzle1",30,5,30)
 		TNT1 A 0 
@@ -517,7 +517,7 @@ ACTOR Shot_Gun : BrutalWeapon
 		SHTN A 0 A_FireBullets (6, 3, 5, 13, "ShotgunPuff2", FBF_NORANDOM,8192,"decorativetracer",-4)
 		SHTN A 0 A_SetPitch(pitch-10, SPF_INTERPOLATE)
 		SHTN A 0
-		RIFF A 0 A_FireCustomMissile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1))
+		RIFF A 0 A_PlaySound("FARSHT", 1)
 		//TNT1 AAAAA 0 A_FireCustomMissile("DecorativeTracer", random(-5,5), 0, 0, 0, 0, random(-5,5))
 		SHTN A 0 A_SetPitch(-10.0 + pitch, SPF_INTERPOLATE)
 		SHTN A 0 A_TakeAmmo("ShotgunAmmo",1)
@@ -539,7 +539,7 @@ ACTOR Shot_Gun : BrutalWeapon
 		SHTN A 0 A_FireBullets (0.3, 0.2, 1, 40, "ShotgunPuff2", FBF_NORANDOM)
 		SHTN A 0 A_SetPitch(pitch-10, SPF_INTERPOLATE)
 		SHTN A 0
-		RIFF A 0 A_FireCustomMissile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1))
+		RIFF A 0 A_PlaySound("FARSHT", 1)
 		//TNT1 AAAAA 0 A_FireCustomMissile("DecorativeTracer", random(-5,5), 0, 0, 0, 0, random(-5,5))
 		SHTN A 0 A_SetPitch(-10.0 + pitch, SPF_INTERPOLATE)
 		SHTN A 0 A_TakeAmmo("ShotgunAmmo",1)
