@@ -247,7 +247,7 @@ ACTOR Rifle : BrutalWeapon
         RIFL C 0 A_CheckIfAmmo("RifleAmmo")
         TNT1 AA 0
 		RIFL C 0 A_AlertMonstersDX
-		RIFF A 0 A_FireCustomMissile("DistantFireSoundRifle", random(-1,1), 0, 0, -12, 0, random(-1,1))
+		RIFF A 0 A_PlaySound("FARRIF", 1)
 		RIFL C 0 A_TakeAmmo("DoubleRifleAmmo",1)
 		RIFL C 0 A_TakeAmmo("RifleAmmo",1)
         RIFL C 0 A_PlaySound("weapons/rifle", 1)
@@ -289,7 +289,7 @@ ACTOR Rifle : BrutalWeapon
 	RIFL C 0 A_CheckIfAmmo("RifleAmmo")
         TNT1 AA 0
 		RIFL C 0 A_AlertMonstersDX
-		RIFF A 0 A_FireCustomMissile("DistantFireSoundRifle", random(-1,1), 0, 0, -12, 0, random(-1,1))
+		RIFF A 0 A_PlaySound("FARRIF", 1)
 		RIFL C 0 A_TakeAmmo("DoubleRifleAmmo",1)
 		RIFL C 0 A_TakeAmmo("RifleAmmo",1)
         RIFL C 0 A_PlaySound("weapons/rifle", 1)
