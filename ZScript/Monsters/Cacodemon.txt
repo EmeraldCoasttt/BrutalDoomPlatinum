@@ -2,7 +2,7 @@ CLASS CacodemonBase : Cacodemon
 {
 	Action state cacomeleecheck()
 	{
-		If(target && checksight(target) && distance3d(target) < 400)
+		If(target && checksight(target) && distance3d(target) < 300)
 		{
 			
 				return resolvestate("melee");
