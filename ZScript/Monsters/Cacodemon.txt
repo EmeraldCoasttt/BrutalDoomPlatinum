@@ -2,20 +2,11 @@ CLASS CacodemonBase : Cacodemon
 {
 	Action state cacomeleecheck()
 	{
-		If(target)
+		If(target && checksight(target) && distance3d(target) < 400)
 		{
-			FLineTraceData LOF;
-		
-			LineTrace(AngleTo(Target),400,0,TRF_SOLIDACTORS || TRF_BLOCKSELF,0,data:LOF);
-		
-			if (LOF.HitActor == Target && Distance3D(target) < 290)
-			{
+			
 				return resolvestate("melee");
-			}
-			Else
-			{
-				Return resolvestate(null);
-			}
+		
 		}
 		
 		Else
