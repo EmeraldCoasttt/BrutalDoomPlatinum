@@ -89,7 +89,7 @@ Actor RevolverTracerWeak : RevolverTracer
 Actor LeadBursterTracer 
 {
 	Projectile
-	Speed 140
+	Speed 100
 	renderstyle ADD
 	alpha 0.9
 	scale .15
@@ -98,7 +98,7 @@ Actor LeadBursterTracer
 	-DONTSPLASH
 	+BLOODSPLATTER 
 	-NOEXTREMEDEATH
-	damage (random(10,15))
+	damage (random(8,8))
 	DamageType "Shotgun"
 	Decal "BulletDecalNew1"
 	Deathsound "fistwallKD"
@@ -106,14 +106,13 @@ Actor LeadBursterTracer
 	+bounceonceilings
 	+bounceonfloors
 	Bouncecount 5
-	+hitowner
 	+DONTBOUNCEONSKY
 	bouncefactor 1.0
 	+ripper
 	States
 		{
 		Spawn:
-			TRAC A 10 BRIGHT
+			TRAC A 8 BRIGHT
 		Spawn2:
 			TRAC A 1 A_fadeout(0.07)
 			LOOP
