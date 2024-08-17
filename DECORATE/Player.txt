@@ -5469,6 +5469,54 @@ SFNZ C 8
 	}
 }
 
+ACTOR BDoomer : Doomer
+{
+	Speed 1.3
+	Player.RunHealth 999
+	Player.DisplayName "DOOM Marine"
+	//Player.StartItem "Rifle"
+	Player.StartItem "BrutalPistol"
+	Player.StartItem "Melee_Attacks"
+	//Player.StartItem "BIG_FUCKING_GUN"
+	Player.startitem "AmmoFragGrenade", 2
+	Player.startitem "AmmoPipeBomb", 1
+	//slot 2
+	Player.StartItem "Clip1", 60
+	Player.StartItem "BDPistolAmmo", 16
+	Player.StartItem "BDDualPistolAmmo", 32
+	Player.StartItem "BDSMGAmmo", 41
+	Player.StartItem "BDDualSMGAmmo", 82
+	Player.StartItem "MP40Ammo", 32
+	Player.StartItem "DualMP40Ammo", 64	
+	//slot 3
+	Player.StartItem "ShotgunAmmo", 8
+	Player.StartItem "AssaultShotgunAmmo", 16	
+	Player.StartItem "SSGAmmo", 2
+	//slot 4
+	Player.StartItem "RifleAmmo", 31
+	Player.StartItem "DoubleRifleAmmo", 62
+	Player.StartItem "Clip2", 60
+	Player.StartItem "NailgunAmmo", 75
+	Player.StartItem "MachineGunAmmo", 1
+	//slot 5
+	Player.StartItem "GLAmmo", 1
+	Player.StartItem "RocketRounds", 6
+	//slot 6
+	Player.StartItem "NuRailgunAmmo", 5
+	Player.StartItem "PlasmaAmmo", 50
+	Player.StartItem "DoublePlasmaAmmo", 100
+	player.StartItem "Nuke", 1
+	Player.StartItem "IsPlayer", 1
+	Player.StartItem "GrenadeAmmo", 2
+	Player.StartItem "JustStartedGame", 1
+	Player.StartItem "NeverSelectedShotgun", 1
+	
+	Player.StartItem "IsNOTTacticalClass", 1
+	DamageFactor "KillMeBot", 0.0
+	Player.StartItem "AmmoDroper"
+	Species "Marines"
+}
+
 ACTOR PowerNearDeath : PowerUp
 {
 	Powerup.Duration -45

@@ -12,7 +12,7 @@ setslot 5 Rocket_Launcher GrenadeLauncher ClassicRocketLauncher NukeLauncher
 setslot 6 Plasma_Gun RailGun Freezer ClassicPlasmaRifle
 setslot 7 BIG_FUCKING_GUN BFG10k Unmaker  VanillaBFG9000
 setslot 8 HellishMissileLauncher FlameCannon Tenderizer
-setslot 9 Flamethrower2 HandGrenades
+setslot 9 Flamethrower2
 //setslot 0 AmmoDroper
 
    addkeysection "BrutalDoom - Advanced Actions" BrutalDoomActions    
