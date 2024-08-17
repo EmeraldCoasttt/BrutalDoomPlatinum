@@ -83,6 +83,8 @@ OptionMenu "BrutalMenu"
 	StaticText "OPTIONS", "fire"
 	StaticText "-------------------------------------------------------", "black"
 	StaticText ""
+	Submenu "Keybinds", "BDPKeybinds", 0, 1
+	Submenu "GZDoom Setup", "BDPSetup", 0, 1
 	Submenu "Gameplay Options", "DoxGameplayOptions", 0, 1
 	Submenu "Visual Options", "DoxVisualOptions", 0, 1
 	Submenu "Weapon Spawns", "DoxWeaponSpawns", 0, 1
@@ -98,6 +100,37 @@ OptionMenu "BrutalMenu"
 	StaticText "-------------------------------------------------------------------------", "Black"
 	StaticText "For more information on this mod, addons, and the developers:", "fire"
 	Statictext "perfect-hatred.github.io", "fire"
+}
+
+OptionMenu "BDPKeybinds"
+{
+	Title "Keybinds"
+	Class "TiltPlusPlusMenu"
+	Position -32
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "BDP Specific Keybinds", "fire"
+	StaticText "Basic keybinds can be found in Options", "fire"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText ""
+	Control "Sprint", "+speed"
+	Control "Melee", "kickem"
+	Control "Reload", "reload"
+	Control "Special Action 1", "+user3"
+	Control "Special Action 2", "+user4"
+	Control "Flashlight", "flashlightswitch"
+	Control "Grenade", "+user2"
+	Control "Swap Grenades", "swapgrenade"
+	Control "Scan Area", "scanner"
+	Control "Taunt", "brutaltaunt"
+	Control "Roll", "rodirection"
+	StaticText ""
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "CHEATS"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText ""
+	Control "Slow Motion", "slowmobind"
+	Control "Give Everything!", "giveit"
+	
 }
 
 OptionMenu "DoxGameplayOptions"

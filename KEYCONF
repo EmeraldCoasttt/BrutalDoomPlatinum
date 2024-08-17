@@ -46,8 +46,6 @@ setslot 9 Flamethrower2
   // defaultbind B swapberserk
   // alias swapberserk "pukename swapberserkmode"
    
-   addmenukey "Unload Gun" unreloader
-   alias unreloader "pukename PressUnload"
    
    //addmenukey "Open Ammo Drop Menu" selectammodroper
   // alias selectammodroper "puke 309"
@@ -65,9 +63,6 @@ setslot 9 Flamethrower2
    //addmenukey "Use boss weapon" UseBossWeapon
    //alias UseBossWeapon "pukename UseBossWeapon"
    //defaultbind M UseBossWeapon
-   
-
-   addkeysection "Brutal Doom - Interactions" BrutalDoomInteractions  
 
   
    addmenukey "Offend" brutaltaunt
@@ -86,9 +81,6 @@ setslot 9 Flamethrower2
   // alias advtaunt "puke 304"
   // defaultbind J advtaunt
    
-   addmenukey "One-Liners" oneliner
-   alias oneliner "pukename OneLiner"
-   defaultbind K oneliner
    
   // addmenukey "Dual Wield/Special Action" dual
   // alias dual "puke 308"
