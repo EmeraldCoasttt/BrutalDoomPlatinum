@@ -523,7 +523,7 @@ GLOCK18       GLOCK18
 $limit blooddrop 3
 
 
-
+BDFirefade dstorcf
 
 BDFirePlace dstorch
 $limit BDfireplace 2
