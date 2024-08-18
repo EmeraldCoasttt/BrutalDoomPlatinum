@@ -108,3 +108,50 @@ Class LeadBurster2 : Leadburster
 	}
 
 }
+
+CLASS FireGrenade3 : Actor
+{
+	int burntime;
+	int burntimemax;
+	Default
+	{
+	damagetype "fire";
+	
+	projectile;
+	-nogravity;
+	speed 5;
+	Gravity 0.5;
+	+thruactors;
+	//+noclip;
+	+bounceonwalls;
+	}
+	States
+	{
+		Death:
+		TNT1 A 0 A_stop();
+		Goto spawn2;
+		Spawn:
+		
+		TNT1 A 0 NODELAY;
+		TNT1 A 0
+		{
+			invoker.burntimemax = random(25,35);
+			A_Startsound("BDFirePlace", 7,CHANF_LOOPING);
+		}
+		Spawn2:
+		TNT1 A 0 
+		{
+			A_explode(5,80,XF_HURTSOURCE);
+			invoker.burntime++;
+		}
+		TNT1 AAAAAAAA 1 A_spawnprojectile("GrenadeTrail3", 5, 0, random (0, 360), 2, random (-80, -160));
+		TNT1 A 0 A_jumpif(invoker.burntime >= invoker.burntimemax,"DIE");
+		LOOP;
+		
+		Die:
+		TNT1 A 0 A_stopsound(7);
+		STOP;
+		
+	}
+	
+}

@@ -806,6 +806,66 @@ Damagetype Explosive
 	}
 }
 
+ACTOR FireGrenade : ShortGrenade
+{
+	Damagetype "fire"
+	Radius 10
+	Height 10
+	States
+	{
+		Death:
+	XDeath:
+	Crash:
+	TNT1 A 1
+	Goto Explode
+	
+	Explode:
+	Death.Slime:
+	Death.Fire:
+	Death.Bullet:
+	Death.Shotgun:
+	Death.SSG:
+	Death.Cutless:
+	Death.Shrapnel:
+	    TNT1 A 0 A_stopsound(7)
+		TNT1 A 0 A_PlaySound("Explosion", 1)
+		EXPL A 0 Radius_Quake (8, 8, 0, 128, 0)//(intensity, duration, damrad, tremrad, tid)
+		
+		GRND AAAAAAAAAAAAAAA 0 A_SpawnItemEX ("FireGrenade3",0,0,0,frandom(-5,5),frandom(-5,5),frandom(0,5),frandom(0,360))
+		
+		//TNT1 A 0 A_SpawnItemEx ("GrenadeExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	   TNT1 A 0 A_CustomMissile("ExplosionSplashSpawner")
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+     ////   TNT1 AAAAAAAAAA 0 A_CustomMissile ("BDExplosionparticlesBig", 0, 0, random (0, 360), 2, random (0, 360))
+	//	TNT1 AAAAAAA 0 A_CustomMissile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (0, 90))
+	
+	   	TNT1 AAAA 0 A_CustomMissile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))   
+		TNT1 AA 0
+		//TNT1 AAAAAAA 0 A_CustomMissile ("ExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
+      //  TNT1 AAAAAAAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180))
+      //  TNT1 AAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 180), 2, random (0, 180))
+	//    EXPL A 0 Radius_Quake (2, 16, 0, 15, 0)
+	//	BEXP B 0 BRIGHT A_Scream
+        
+		//TNT1 AAAAAAA 0 A_CustomMissile ("BarrelParticle", 35, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_PlaySound("FAREXPL", 3)
+		NULL A 0 A_ChangeFlag("NOBOUNCESOUND",1)
+	//	TNT1 AAAAAAAAAA 4 A_CustomMissile ("ExplosionSmoke", 1, 0, random (0, 360), 2, random (50, 130))
+	    TNT1 A 0 A_CustomMissile ("ExplosionSmoke", 1, 0, random (0, 360), 2, random (50, 130))
+		stop
+	}
+}
+
+Actor FireGrenade2 : FireGrenade
+{
+
+}
+
+
+
 ACTOR RollingBomb : ShortGrenade
 {
 	+stepmissile
