@@ -537,11 +537,12 @@
 			e.thing.a_giveinventory("extractedsoul",1);
 			//e.thing.a_giveinventory("soulammo",1,AAPTR_TARGET);
 			
-				
+			/*	
 			If(e.thing.target is "demonplayer")
 			{
 			e.thing.target.health = (e.thing.target.health + 10);
 			}
+			*/
 			}
 	
 		If(e.thing.health < 1 && e.damagetype == "BlackHole")
@@ -567,7 +568,7 @@
 	
 		Override void worldthingdied(worldevent e)
 		{
-			If(e.thing && e.thing.target && e.thing.bismonster && e.thing.target is "Brutal_PlayerBase")
+			If(e.thing && e.thing.target && e.thing.bismonster && (e.thing.target is "Brutal_PlayerBase" || e.thing.target is "demonplayer"))
 			{
 				e.thing.target.giveinventory("PausePowerup",105);
 			}

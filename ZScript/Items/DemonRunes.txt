@@ -170,46 +170,25 @@ CLASS DemonPlayer : DoomPlayer
 	Property deadgibs : deadgibs;
 	Default
 	{
-	Health 700;
+	Health 30;
 	+buddha;
 	Player.TeleportFreezeTime 0;
 	Player.runhealth 999;
-	demonplayer.decayticks 4;
+	demonplayer.decayticks 35;
 	demonplayer.deadgibs "DeadMarineArtifact";
-	 damagefactor "Head", 0.0;
-	damagefactor "FriendBullet", 0.0;
-    damagefactor "Taunt", 0.0;
-    damagefactor "KillMe", 0.0;
-	damagefactor "Shotgun", 0.7;
-    damagefactor "SSG", 5.0;
-    damagefactor "Shrapnel", 0.0;
-    damagefactor "Blood", 0.5;
-    damagefactor "BlueBlood", 0.5;
-    damagefactor "GreenBlood", 0.5;
-    damagefactor "MinorHead", 0.0;
-    damagefactor "Decaptate", 0.0;
-	damagefactor "MonsterKnocked", 0.0;
-	damagefactor "CancelTeleportFog", 0.0;
-	damagefactor "BHFTOnBarrel", 0.0;
-	damagefactor "GibRemoving", 0.0;
-	Species "marines";
-	damagefactor "HelperMarineFatallity", 0.0;
-	damagefactor "Leg", 0.0;
-	damagefactor "SpawnMarine", 0.0;
-	damagefactor "TeleportRemover", 0.0;
-	DamageFactor "CauseObjectsToSplash", 0.0;
-	damagefactor "drowning", 0.0;
+	damagefactor 0.0;
 	}
 	int		DualTimer;
 	Int		SpecialTimer;
 	
 	Override void tick()
 	{
-	If(health > 700)
+	takeinventory("PausePowerup",1);
+	If(health > 30)
 	{
-	Health = 700;
+	Health = 30;
 	}
-	if ( decayrate >= decayticks) 
+	if ( decayrate >= decayticks && countinv("pausepowerup") < 1) 
 	{
 			If(health <= 1)
 			{
