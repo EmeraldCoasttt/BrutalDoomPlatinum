@@ -343,7 +343,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	
 		//A_customrailgun(8,0,"","",RGF_SILENT|RGF_NOPIERCING,1,20,"bfgpuff",0,0,0,0,1.0,1,"none",-10);
 		
-		A_spawnprojectile("hook",0);
+		A_spawnprojectile("hook",32);
 		A_takeinventory("meathook",1);
 		//A_fireprojectile("")
 		//A_takeinventory("meathook",1);
