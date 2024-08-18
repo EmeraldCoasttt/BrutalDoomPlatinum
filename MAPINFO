@@ -39,6 +39,7 @@ DoomEdNums
 	26025 = GunSlingerPickup
 	26026 = OneUpmanshipPickup
 	26027 = UltranightmarePickup
+	26028 = HeavyRain
 }
 	
 episode EDAY01

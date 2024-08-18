@@ -13,3 +13,11 @@ CLASS JungleRain : Weather
 		weather.weather_precipitationtype "MedRain";
 	}
 }
+
+CLASS HeavyRain : Weather
+{
+	Default
+	{
+		weather.weather_precipitationtype "MaxRain";
+	}
+}

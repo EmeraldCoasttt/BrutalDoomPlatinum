@@ -3050,6 +3050,32 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				Break;
 
 				Break;
+				
+				
+			//NERVE map01
+			case '3843b06a279eb9cedc18c30cf32074c2':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
+				{
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYEAR3",TexMan.Type_Any),TexMan.CheckForTexture("SKYEAR3",TexMan.Type_Any));
+					AddThing(26028, (0, 0, 0), 0);
+				}
+				Break;
+			//NERVE map02
+			case '3262c22dd1532df4dfcfeeb6ae0e11bb':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
+				{
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYEAR3",TexMan.Type_Any),TexMan.CheckForTexture("SKYEAR3",TexMan.Type_Any));
+					AddThing(26015, (0, 0, 0), 0);
+				}
+				Break;
+			//NERVE map03
+			case 'b2c6635ec41da8d96065166b0e14e78e':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
+				{
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYEAR7",TexMan.Type_Any),TexMan.CheckForTexture("SKYEAR7",TexMan.Type_Any));
+					//AddThing(26015, (0, 0, 0), 0);
+				}
+				Break;
 		}
 	}
 }

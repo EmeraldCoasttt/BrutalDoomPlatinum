@@ -22,15 +22,17 @@ precipitation "MaxRain"
 {
 	PrecipitationType = "Rain"
 	PrecipitationTag = "$WTHR_HEAVYRAIN"
-	PrecipitationAmount = 13
+	PrecipitationAmount = 50
 	PrecipitationRateTime = 0.02
 	PrecipitationSound = "weather/rain"
 	
+	FogIndoors
 	Foggy
-	FogAlpha = 0.05
+	FogAlpha = 0.275
+	FogColor = #0b3573;
 	
 	Stormy
-	LightningAlpha = 0.1
+	LightningAlpha = 0.5
 	ThunderSound = "weather/thunder"
 }
 
