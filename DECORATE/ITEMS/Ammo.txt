@@ -454,7 +454,7 @@ ACTOR AmmoCellPack : AmmoCell Replaces CellPack
 	{
 	Spawn:
 	TNT1 A 0
-	TNT1 A 0 A_jump(24,"spawnnuke")
+	TNT1 A 0 A_jump(5,"spawnnuke")
 	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1")
 	NULL A 0 A_jump(128,2)
 	NULL A 0 A_ChangeFlag("XFLIP",1)
@@ -1001,9 +1001,11 @@ ACTOR PickyNuke : Nuke
 	Spawn:
 		TNT1 A 0
 		TNT1 A 0 A_JumpIfInventory("BFG10k",1,"stay",AAPTR_PLAYER1)
+		nope:
 		 TNT1 A 0 A_SpawnItemEx ("AmmoCellPack",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_TRANSFERSPECIAL|SXF_TRANSFERAMBUSHFLAG,0, tid)
  		stop
 		Stay:
+		TNT1 A 0 A_JumpIfInventory("Nuke",1,"nope",AAPTR_PLAYER1)
 		NULL A 0 A_jump(128,2)
 		NULL A 0 A_ChangeFlag("XFLIP",1)
 		Stay2:
