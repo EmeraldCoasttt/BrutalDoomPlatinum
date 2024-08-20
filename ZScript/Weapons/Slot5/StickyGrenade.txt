@@ -152,7 +152,7 @@ bouncecount 5;
 		}
 		If(!tracer)
 		{
-		setstatelabel("fall");
+		setstatelabel("Death");
 		}
 		}
 		Stuck:
@@ -161,7 +161,7 @@ bouncecount 5;
 		
 		If(!tracer || tracer.health < 1)
 		{
-		setstatelabel("fall");
+		setstatelabel("Death");
 		}
 
 
