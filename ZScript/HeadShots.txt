@@ -118,7 +118,7 @@ CLASS BASEHEADSHOT : ACTOR
 						If (CurrentActor && CurrentActor is "baseheadshot" && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && currentactor.tracer && currentactor.tracer.health > 0 && !currentactor.findinventory("Headshotpopflag"))
 							{
 								currentactor.giveinventory("headshotpopflag",1);
-								currentactor.damagemobj(inflictor,source,damage * 0.75,damagetype);
+								currentactor.damagemobj(inflictor,source,100,damagetype);
 							}
 					
 					
