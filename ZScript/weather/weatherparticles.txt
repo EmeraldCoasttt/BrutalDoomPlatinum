@@ -3,7 +3,7 @@ class Rain : Precipitation
 	Default
 	{
 		RenderStyle "Add";
-		Alpha 0.5;
+		Alpha 0.2;
 		XScale 0.25;
 		VSpeed -48;
 		

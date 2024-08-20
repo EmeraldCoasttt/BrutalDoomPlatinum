@@ -3076,6 +3076,51 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					//AddThing(26015, (0, 0, 0), 0);
 				}
 				Break;
+			//NERVE map04
+			case 'ff635fb9a2f076566299910f8c78f707':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
+				{
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any),TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any));
+					}
+				Break;
+			//NERVE map05
+			case '7e0e3d6e3643082b86c153cc04a0d1d1':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
+				{
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any),TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any));
+					}
+				Break;
+				
+			//NERVE map06
+			case 'c7471af46cfda07ba0eb5c4d4de2e136':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
+				{
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any),TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any));
+					}
+				Break;
+				
+			//NERVE map07
+			case '047991bb81f9790b69c25b020df8b25c':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
+				{
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any),TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any));
+					}
+				Break;
+				
+			//NERVE map08
+			case '7eb864a03948c3f918f9223b2d1f8911':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
+				{
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any),TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any));
+					}
+				Break;
+			//NERVE map09
+			case 'fde03d8f2d3d8e37483fc4589b3d54e9':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
+				{
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any),TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any));
+					}
+				Break;
 		}
 	}
 }
