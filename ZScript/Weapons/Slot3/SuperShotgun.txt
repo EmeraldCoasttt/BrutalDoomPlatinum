@@ -176,6 +176,7 @@ CLASS SSG : BrutalWeapon
 		Stop;
 		
 	SprintOverlay:
+		TNT1 A 0 A_jumpif(countinv("ammoshell") > 1 && countinv("SSGAmmo") < 1,"reload");
 		TNT1 A 0 A_HookOverlay("SprintHook");
 		 SH69 PQRS 1;
 		KeepSprinting:
@@ -382,8 +383,8 @@ CLASS SSG : BrutalWeapon
 		
 		SHTZ A 0 A_JumpIfInventory("IsNOTTacticalClass", 1, 10);//Tactical Mode takes more time
 		SHTZ AAAAAAAAAA 1 A_SetPitch(pitch+0.5, SPF_INTERPOLATE);
-		SHTZ A 0 A_WeaponReadyDX(WRF_NOFIRE | WRF_NOBOB);
-		SHTZ A 0 A_WeaponReadyDX(WRF_NOFIRE | WRF_NOBOB);
+		SHTZ A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB);
+		SHTZ A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB);
 		//TNT1 A 0 A_JumpIfInventory("NoAutoReload", 1, 2)//Don't go to NoAmmo unless they try to fire again
 		TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"Ready");
 		Goto NoAmmo2;
@@ -638,7 +639,7 @@ CLASS SSG : BrutalWeapon
 		SHOF I 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
 		NULL A 0 offset(0,32);
 		SHTZ A 0 A_TakeInventory("SSGAlt", 1);
-		TNT1 A 0 A_JumpIf(GetCvar("bd_NoAutoReload")==1, "Ready3");
+		//TNT1 A 0 A_JumpIf(GetCvar("bd_NoAutoReload")==1, "Ready3");
 		TNT1 A 0 A_JumpIfInventory("PowerSpeed2",1, "Ready3");
 		TNT1 AA 0;
 		Goto Reload;
