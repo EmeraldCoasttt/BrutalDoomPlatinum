@@ -136,6 +136,7 @@ ACTOR EmptyRifleClip: BaseMagActor
    WallBounceSound "BR45BOUNCE"
    -doombounce
    bouncetype "doom"
+   +thruactors
    
    States
    {
