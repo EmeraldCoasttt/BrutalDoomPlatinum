@@ -523,12 +523,13 @@ Default
 		{
 			Destroy ();
 		}
-		If(owner && !owner.findinventory("pausepowerup"))
+		//console.printf("%i",EffectTics);
+		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 140)
 		{
-		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
-		{
+			if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
+			{
 			Destroy ();
-		}
+			}
 		}
 	}
 	override void doeffect()
@@ -567,7 +568,7 @@ Override void tick()
 		{
 			Destroy ();
 		}
-		If(owner && !owner.findinventory("pausepowerup"))
+		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 140)
 		{
 		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
 		{
@@ -591,7 +592,7 @@ Override void tick()
 		{
 			Destroy ();
 		}
-		If(owner && !owner.findinventory("pausepowerup"))
+		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 140)
 		{
 		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
 		{
@@ -618,7 +619,7 @@ Override void tick()
 		{
 			Destroy ();
 		}
-		If(owner && !owner.findinventory("pausepowerup"))
+		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 140)
 		{
 		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
 		{
@@ -636,7 +637,7 @@ Override void tick()
 		{
 			Destroy ();
 		}
-		If(owner && !owner.findinventory("pausepowerup"))
+		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 140)
 		{
 		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
 		{

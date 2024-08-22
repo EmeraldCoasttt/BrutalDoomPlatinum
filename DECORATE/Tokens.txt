@@ -37,7 +37,7 @@ inventory.maxamount 1
 
 Actor PausePowerup : Inventory
 {
-inventory.maxamount 105
+inventory.maxamount 50
 }
 
 Actor SmokeScreenToken : Inventory
