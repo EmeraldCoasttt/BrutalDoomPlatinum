@@ -471,3 +471,48 @@ Model TankBaseNotRealMoving3      // Name of actor in DECORATE
    FrameIndex TNK3 E 0 0         // The sprite lump, sprite frame, model index, frame number
 }
 
+Model BDPTank     // Name of actor in DECORATE
+{
+   Path "models/vehicles"    // Path to model in PK3
+   Model 0 "tankbase.md3"    // Model index, model file
+   Skin 0 "tankchasis.png"     // Model index, texture (can be in any format supported by GZDoom)
+   Scale 1.0 1.0 1.0           // Scale values
+   //ZOffset 0.1
+   USEACTORPITCH
+   USEACTORROLL
+   CORRECTPIXELSTRETCH
+   FrameIndex TNK1 B 0 0         // The sprite lump, sprite frame, model index, frame number
+   
+}
+
+Model Scorpion_TurretBase      // Name of actor in DECORATE
+{
+   Path "models/vehicles"    // Path to model in PK3
+   Model 0 "tankturret1base.md3"    // Model index, model file
+   Skin 0 "turret1.png"     // Model index, texture (can be in any format supported by GZDoom)
+   Scale 1.0 1.0 1.0           // Scale values
+  // ZOffset 0.1
+   USEACTORPITCH
+   USEACTORROLL
+   CORRECTPIXELSTRETCH
+   FrameIndex TNK1 B 0 0         // The sprite lump, sprite frame, model index, frame number
+  
+}
+
+
+Model Scorpion_TurretCannon      // Name of actor in DECORATE
+{
+   Path "models/vehicles"    // Path to model in PK3
+   Model 0 "tankturret1gun1.md3"    // Model index, model file
+   Skin 0 "turret1.png"     // Model index, texture (can be in any format supported by GZDoom)
+   Scale 1.0 1.0 1.0           // Scale values
+ //  ZOffset 0.1
+   USEACTORPITCH
+   USEACTORROLL
+   CORRECTPIXELSTRETCH
+   FrameIndex MODL A 0 0         // The sprite lump, sprite frame, model index, frame number
+   
+}
+
+
+

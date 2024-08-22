@@ -60,7 +60,7 @@ class BDPVehicle : VehBase
 		Mass 800;
 		Radius 32;
 		Height 16;
-		Scale 10.0;
+		//Scale 10.0;
 		+VehBase.FALLINGPITCH;
 		+SOLID;
 		+INTERPOLATEANGLES;

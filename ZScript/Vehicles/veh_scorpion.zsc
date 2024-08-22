@@ -1,0 +1,312 @@
+class Scorpion_TurretBase : VehPart
+{
+	Scorpion_TurretCannon cannon;
+	Default
+	{
+		Radius 16;
+		Height 16;
+		Scale 1.3;
+	}
+	
+	override void OnAttach()
+	{
+		cannon = Scorpion_TurretCannon( VehPart.Attach("Scorpion_TurretCannon", base,(4,0,4)) );
+		cannon.turretbase = self;
+	}
+	
+	override void UpdatePos(bool moving)
+	{
+		super.UpdatePos(moving);
+		if(!base || !base.driver) return;
+		
+		A_SetAngle(BDPMath.LerpAngle(angle, base.driver.angle, 0.15), SPF_INTERPOLATE);
+		A_SetRoll(base.roll, SPF_INTERPOLATE);
+		A_SetPitch(base.pitch, SPF_INTERPOLATE);
+	}
+	
+	States
+	{
+		Spawn:
+			TNK1 B 1;
+		loop;
+	}
+}
+
+class Scorpion_TurretCannon : VehPart
+{
+	uint cooldown;
+	uint cooldown_chaingun;
+	VehPart turretbase;
+	Default
+	{
+		Radius 16;
+		Height 16;
+	}
+	
+	override void UpdatePos(bool moving)
+	{
+		if(!turretbase) return;
+		vector3 finalpos = GetOffsetPos(turretbase);
+		SetOrigin(finalpos, moving);
+		
+		A_SetAngle(turretbase.angle, SPF_INTERPOLATE);
+		A_SetRoll(turretbase.roll, SPF_INTERPOLATE);
+		
+		double aimpitch = base.driver ? base.driver.pitch : 0;
+		aimpitch = clamp(aimpitch, -30, 15);
+		A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+		
+	}
+		
+	override void DoUpdate(VehCamera cam)
+	{
+		let tank = BDPTank(base);
+		if(!tank) return;
+		if(!cam) return;
+	
+		if(cooldown_chaingun) cooldown_chaingun--;
+		if(cooldown) 
+		{
+			cam.SetZoom(1.0, 0.1);
+			cooldown--;
+		}
+		if(CheckButtons(BT_ATTACK, VehButtons.BTS_PRESSED) && !cooldown)
+		{
+			//let misl = TankRocket.Fire(self, (350, 0, 30));
+			let misl = BDPMath.FireProjectile("TankRocket", pos, angle, pitch, 0, 175, 0, 1, 0);
+			if(misl) misl.target = base.driver;
+			
+			A_StartSound("TANKF", CHAN_WEAPON, CHANF_OVERLAP);
+			
+			double kickback = -0.1 * cos(base.angle-angle);
+			tank.AdjustTreads(kickback, kickback);
+			cam.SetZoom(0.93, 0.5);
+			cam.Quake(20,20,0,0.6);
+			pitch -= 10;
+			tank.driver.pitch -= 3;
+			
+			cooldown = 40;
+		}
+		if(CheckButtons(BT_ALTATTACK, VehButtons.BTS_DOWN) && !cooldown_chaingun)
+		{
+			double rmax = 1.5;
+			double arecoil = frandom(-rmax, rmax);
+			double precoil = frandom(-rmax, rmax);
+			//let proj = BDPMath.FireProjectile("BDPGPMG_Bullet", pos, angle + arecoil, pitch + precoil, 30, 175, 30, 1, 200);
+			
+			// We need to set the target of this projectile if we want hitmarkers to show up
+			// for the person who shoots it.
+			//proj.target = base.driver;
+			
+			A_StartSound("BDP/Weapons/GPMG/Fire", CHAN_WEAPON, CHANF_OVERLAP);
+			cooldown_chaingun = 12;
+		}
+	}
+	
+	States
+	{
+		Spawn:
+			MODL A 1;
+		loop;
+	}
+}
+
+class Scorpion_Tread : VehPart
+{
+	double traction;
+	double rotation;
+	Property Traction : traction;
+	
+	Default
+	{
+		//Radius 50;
+		//Height 35;
+		//+SOLID;
+		
+		Scorpion_Tread.Traction 0.5;
+	}
+	
+	override void Tick()
+	{
+		super.Tick();
+	}
+	
+	override void UpdatePos(bool moving)
+	{
+		super.UpdatePos(moving);
+		if(!base) return;
+		
+		let tank = BDPTank(base);
+		if(!tank) return;
+		
+		double tfric = ( 1.0-abs(rotation) ) * 0.05;
+		rotation *= (tank.friction + tfric);
+		rotation = clamp(rotation, -1.0, 1.0);
+		
+		double topitch = BDPMath.fmap(rotation, -1.0, 1.0, 0.5, 2.0); 
+		A_SoundPitch(CHAN_7, topitch);
+		
+		if(rotation > 0.001) 
+			A_StartSound("TANK1", CHAN_7, CHANF_LOOPING);
+		else
+			A_StopSound(CHAN_7);
+		
+		// Apply angular velocity based on rotation.
+		int dir = BDPMath.sign(posoffs.y);
+		double spdmod = BDPMath.fmap(base.vel.xy.Length(), 0, 15, 1.0, 2.0); 
+		double turnvel = (traction * rotation) * 0.5;
+		tank.angvel += turnvel * dir * spdmod;
+		base.vel.xy += AngleToVector(base.angle, turnvel * 16);
+				
+		A_SetAngle(base.angle, SPF_INTERPOLATE);
+		A_SetRoll(base.roll, SPF_INTERPOLATE);
+		
+		if(rotation >= 0.2 && tank.driver) 
+			tank.driver.A_AlertMonsters(2048, AMF_TARGETEMITTER);
+	}
+		
+	States
+	{
+		Spawn:
+			MODL A 1;
+		loop;
+	}
+}
+
+class Scorpion_TreadFR : Scorpion_Tread {}
+class Scorpion_TreadFL : Scorpion_Tread {}
+class Scorpion_TreadBL : Scorpion_Tread {}
+class Scorpion_TreadBR : Scorpion_Tread {}
+
+class BDPTank : BDPVehicle
+{
+	Scorpion_Tread TreadFL, TreadFR, TreadBL, TreadBR;
+	Scorpion_TurretBase turret;
+	double angvel;
+	double friction;
+	double throttle;
+	double accel;
+	
+	Property TreadFriction : friction;
+
+	Default
+	{
+		Radius 64;
+		Height 72;
+		Scale 2.0;
+		Mass 2400;
+		Health 2000;
+		BDPVehicle.Armored 4000;
+		BDPTank.TreadFriction 0.90;
+		MaxSlopeSteepness 0.4;
+	}
+	
+	override void BeginPlay()
+	{
+		super.BeginPlay();
+		
+		TreadFL = Scorpion_Tread(VehPart.Attach("Scorpion_TreadFL", self, ( 0, -30,0)));
+		TreadFR = Scorpion_Tread(VehPart.Attach("Scorpion_TreadFR", self, (  30, 0,0)));
+	//	TreadBL = Scorpion_Tread(VehPart.Attach("Scorpion_TreadBL", self, (-105,-105,0)));
+	//	TreadBR = Scorpion_Tread(VehPart.Attach("Scorpion_TreadBR", self, (-105, 105,0)));
+		turret = Scorpion_TurretBase(VehPart.Attach("Scorpion_TurretBase", self, (0,0,52)));
+	}
+	
+
+	override bool RemoveDriver(PlayerPawn user, vector3 exitpos)
+	{	
+		bool success = super.RemoveDriver(user, exitpos);
+		if(user == driver && success) 
+		{
+			A_StartSound("BDP/Scorpion/EngineOFF", flags:CHANF_OVERLAP);
+			A_StopSound(CHAN_7); // Engine Loop
+		}
+		return success;
+	}
+
+	override void TakeDriver(PlayerPawn user)
+	{
+		if(health <= 0) return;
+		if(user) driver = user;
+		let cam = SetupBDPCamera(dist:-260,100,40,200);
+		cam.followact = turret;
+		cam.source = driver;
+		
+		ReadyDriver(user);
+		SetCrosshair(user, "ScorpRet", (1.0,1.0));
+		A_StartSound("TNKENGS", flags:CHANF_OVERLAP);
+		A_StartSound("TANK2", CHAN_7, CHANF_LOOPING);
+	}
+	
+	override vector3 GetDrivePos()
+	{
+		return (-20,-5,0);
+	}
+	
+	override vector3 GetExitPos(PlayerPawn user)
+	{
+		if(user == driver) return (-300, 0, 30);
+		return (-20,-5,0);
+	}
+	
+	
+	void AdjustTreads(double left, double right)
+	{
+		TreadFL.rotation += left;
+		//TreadBL.rotation += left;
+		TreadFR.rotation += right;
+		//TreadBR.rotation += right;
+	}	
+	
+	override void DoMove(float forwardmove, float sidemove)
+	{	
+		// Friction
+		vel.xy *= 0.75;
+		angvel *= 0.75;
+
+		if(health <= 0)  
+		{
+			if(driver) RemoveDriver(driver, GetExitPos(driver));
+			Destroy();
+			return;
+		}
+		if(!driver) return;
+		
+		double movespd = 0.025;
+		double turnspd = 0.100;
+		accel = forwardmove;
+		if(forwardmove || sidemove)
+		{
+			vector2 movedir = (forwardmove, sidemove).Unit();
+			movedir.x *= movespd;
+			movedir.y *= turnspd;
+			movedir.y *= BDPMath.sign(movedir.x);
+			
+			// Forward and Back
+			AdjustTreads(movedir.x, movedir.x);
+			
+			// Left and Right
+			int dir = BDPMath.sign(movedir.y);
+			double left  = dir < 0 ? 0.5 : 1.0;
+			double right = dir > 0 ? 0.5 : 1.0;
+			AdjustTreads(movedir.y * left, -movedir.y * right);
+		}
+		
+		A_SetAngle(angle + angvel, SPF_INTERPOLATE);
+		DoCollisionDamage();
+	}
+	
+	States
+	{
+		Spawn:
+			TNK1 B 1;
+		loop;
+		
+		Death:
+			MODL A -1;
+		stop;
+	}
+	
+	
+}
+

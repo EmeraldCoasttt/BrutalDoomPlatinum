@@ -630,7 +630,7 @@ Stop
 
 
 
-ACTOR Tank: SwitchableDecoration 7261
+ACTOR Tank: SwitchableDecoration
 {
 	var int user_stationedtankbasedirection;
     Radius 64

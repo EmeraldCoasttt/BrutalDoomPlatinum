@@ -63,6 +63,7 @@ version "4.11.0"
 #include "ZScript/Vehicles/veh_parts.zsc"
 #include "ZScript/Vehicles/veh_halobase.zsc"
 #include "ZScript/Vehicles/veh_ghost.zsc"
+#include "ZScript/Vehicles/veh_scorpion.zsc"
 
 #include "Zscript/BDPMatrix.txt"
 #include "Zscript/BDPGutamatics/Include.zsc"
