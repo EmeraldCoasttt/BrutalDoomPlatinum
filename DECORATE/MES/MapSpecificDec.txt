@@ -149,6 +149,7 @@ ACTOR BDECDestroyedCar: BDdecorationBase 11004
 		
 		Death.Stomp:
 		TNT1 A 0
+		TNT1 A 0 A_stop
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SetScale (1.0, 0.2)
 		ELEC C -1

@@ -212,6 +212,11 @@ class Scorpion_Tread : VehPart
 		rotation = clamp(rotation, -1.0, 1.0);
 		
 		double topitch = BDPMath.fmap(rotation, -1.0, 1.0, 0.5, 2.0); 
+		If (topitch < 1.25)
+		{
+			topitch = 1.25;
+		}
+		//console.printf("%f",topitch);
 		A_SoundPitch(CHAN_7, topitch);
 		
 		if(rotation > 0.001 || rotation < -0.001) 
