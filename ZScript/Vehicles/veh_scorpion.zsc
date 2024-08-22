@@ -1,6 +1,7 @@
 class Scorpion_TurretBase : VehPart
 {
 	Scorpion_TurretCannon cannon;
+	Scorpion_TurretGun gun;
 	Default
 	{
 		Radius 32;
@@ -12,7 +13,9 @@ class Scorpion_TurretBase : VehPart
 	override void OnAttach()
 	{
 		cannon = Scorpion_TurretCannon( VehPart.Attach("Scorpion_TurretCannon", base,(10,0,4)) );
+		gun = Scorpion_TurretGun( VehPart.Attach("Scorpion_TurretGun", base,(9,5,5)) );
 		cannon.turretbase = self;
+		gun.turretbase = self;
 	}
 	
 	override void UpdatePos(bool moving)
@@ -88,19 +91,83 @@ class Scorpion_TurretCannon : VehPart
 			
 			cooldown = 40;
 		}
+
+	}
+	
+	States
+	{
+		Spawn:
+			MODL A 1;
+		loop;
+	}
+}
+
+class Scorpion_TurretGun : VehPart
+{
+	uint cooldown;
+	uint cooldown_chaingun;
+	VehPart turretbase;
+	bool guncycle;
+	Default
+	{
+		Radius 16;
+		Height 16;
+	}
+	
+	override void UpdatePos(bool moving)
+	{
+		if(!turretbase) return;
+		vector3 finalpos = GetOffsetPos(turretbase);
+		SetOrigin(finalpos, moving);
+		
+		A_SetAngle(turretbase.angle, SPF_INTERPOLATE);
+		A_SetRoll(turretbase.roll, SPF_INTERPOLATE);
+		
+		double aimpitch = base.driver ? base.driver.pitch : 0;
+		aimpitch = clamp(aimpitch, -30, 15);
+		A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+		
+	}
+		
+	override void DoUpdate(VehCamera cam)
+	{
+		let tank = BDPTank(base);
+		if(!tank) return;
+		if(!cam) return;
+	
+		if(cooldown_chaingun) cooldown_chaingun--;
+		if(cooldown) 
+		{
+			cam.SetZoom(1.0, 0.1);
+			cooldown--;
+		}
+		
 		if(CheckButtons(BT_ALTATTACK, VehButtons.BTS_DOWN) && !cooldown_chaingun)
 		{
 			double rmax = 1.5;
 			double arecoil = frandom(-rmax, rmax);
 			double precoil = frandom(-rmax, rmax);
-			//let proj = BDPMath.FireProjectile("BDPGPMG_Bullet", pos, angle + arecoil, pitch + precoil, 30, 175, 30, 1, 200);
+			If(guncycle)
+			{
+				let proj = BDPMath.FireProjectile("MonsterMinigunTracer", pos, angle + arecoil, pitch + precoil, 10, 20, 30, 1, 0);
+				guncycle = false;
+				// We need to set the target of this projectile if we want hitmarkers to show up
+				// for the person who shoots it.
+				proj.target = base.driver;
+			}
+			Else
+			{
+				let proj = BDPMath.FireProjectile("MonsterMinigunTracer", pos, angle + arecoil, pitch + precoil, 5, 20, 30, 1, 0);
+				guncycle = true;
+				// We need to set the target of this projectile if we want hitmarkers to show up
+				// for the person who shoots it.
+				proj.target = base.driver;
+			}
 			
-			// We need to set the target of this projectile if we want hitmarkers to show up
-			// for the person who shoots it.
-			//proj.target = base.driver;
 			
-			A_StartSound("BDP/Weapons/GPMG/Fire", CHAN_WEAPON, CHANF_OVERLAP);
-			cooldown_chaingun = 12;
+			
+			A_StartSound("DSPISTOL", CHAN_WEAPON);
+			cooldown_chaingun = 3;
 		}
 	}
 	

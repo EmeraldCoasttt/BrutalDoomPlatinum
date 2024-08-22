@@ -54,7 +54,7 @@ Stop
 
 
 
-ACTOR ArtilleryTank: Tank 7264
+ACTOR ArtilleryTank: Tank
 {
     Radius 64
 	Height 72
