@@ -259,7 +259,11 @@ Spawn:
 	Stop	
 }
 }
-
+Actor TankMachineGunTracer : MonsterMinigunTracer
+{
+	damage (random(15,15))
+	damagetype Shotgun
+}
 
 ACTOR LeadBursterTracer2 : MonsterTracer
 {

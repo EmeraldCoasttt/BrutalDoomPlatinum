@@ -149,7 +149,7 @@ class Scorpion_TurretGun : VehPart
 			double precoil = frandom(-rmax, rmax);
 			If(guncycle)
 			{
-				let proj = BDPMath.FireProjectile("MonsterMinigunTracer", pos, angle + arecoil, pitch + precoil, 10, 20, 30, 1, 0);
+				let proj = BDPMath.FireProjectile("TankMachineGunTracer", pos, angle + arecoil, pitch + precoil, 10, 10, 30, 1, 70);
 				guncycle = false;
 				// We need to set the target of this projectile if we want hitmarkers to show up
 				// for the person who shoots it.
@@ -157,7 +157,7 @@ class Scorpion_TurretGun : VehPart
 			}
 			Else
 			{
-				let proj = BDPMath.FireProjectile("MonsterMinigunTracer", pos, angle + arecoil, pitch + precoil, 5, 20, 30, 1, 0);
+				let proj = BDPMath.FireProjectile("TankMachineGunTracer", pos, angle + arecoil, pitch + precoil, 5, 10, 30, 1, 70);
 				guncycle = true;
 				// We need to set the target of this projectile if we want hitmarkers to show up
 				// for the person who shoots it.
@@ -166,7 +166,7 @@ class Scorpion_TurretGun : VehPart
 			
 			
 			
-			A_StartSound("DSPISTOL", CHAN_WEAPON);
+			A_StartSound("HMGFIRE", CHAN_WEAPON,CHANF_OVERLAP,0.5);
 			cooldown_chaingun = 3;
 		}
 	}
