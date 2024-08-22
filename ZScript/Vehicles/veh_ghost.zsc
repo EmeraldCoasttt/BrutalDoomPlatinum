@@ -130,6 +130,7 @@ class BDPBike : BDPVehicle
 	uint explosiontimer;
 	bool firstboost;
 	
+	
 	Default
 	{
 		Radius 32;
@@ -140,6 +141,7 @@ class BDPBike : BDPVehicle
 		BDPVehicle.Armored 0;
 		Scale 1.0;
 		MaxSlopeSteepness 0.1;
+		damagetype "extremepunches";
 	}
 	
 	override void tick()

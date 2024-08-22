@@ -138,7 +138,7 @@ class BDPVehicle : VehBase
 					{
 						roadkill.Thrust(force, angle - hitdiff.x);
 					}
-					roadkill.DamageMobj(self, self, vel.length() * dmgmod * massmod, "extremepunches", 0, hitang);
+					roadkill.DamageMobj(self, self, vel.length() * dmgmod, damagetype, 0, hitang);
 					if(hitsound) A_StartSound(hitsound, flags:CHANF_OVERLAP);
 				}
 			}
