@@ -214,7 +214,7 @@ class Scorpion_Tread : VehPart
 		double topitch = BDPMath.fmap(rotation, -1.0, 1.0, 0.5, 2.0); 
 		A_SoundPitch(CHAN_7, topitch);
 		
-		if(rotation > 0.001) 
+		if(rotation > 0.001 || rotation < -0.001) 
 			A_StartSound("TANK1", CHAN_7, CHANF_LOOPING);
 		else
 			A_StopSound(CHAN_7);
@@ -245,6 +245,75 @@ class Scorpion_TreadFR : Scorpion_Tread {}
 class Scorpion_TreadFL : Scorpion_Tread {}
 class Scorpion_TreadBL : Scorpion_Tread {}
 class Scorpion_TreadBR : Scorpion_Tread {}
+
+class ScorpionFlames1 : VehPart
+{
+
+	
+	Default
+	{
+
+	}
+	
+	override void Tick()
+	{
+		super.Tick();
+		
+		 BDPVehicle pBase = BDPVehicle(base);
+    if(!pBase) 
+        return;
+    
+    if(pBase.veharmor <= 2000)
+        A_SpawnProjectile("VehicleSmoke", 7, 0, random (0, 360), 2, random (-80, -100));
+    
+    if(pBase.veharmor <= 1000)
+        A_SpawnProjectile("FlameTrailsLongersmaller", 7, 0, random (0, 360), 2, random (-70, -120));
+	}
+	
+	
+		
+	States
+	{
+		Spawn:
+			tnt1 A 1;
+		loop;
+	}
+}
+
+class ScorpionFlames2 : VehPart
+{
+
+	
+	Default
+	{
+
+	}
+	
+	override void Tick()
+	{
+		super.Tick();
+		
+		 BDPVehicle pBase = BDPVehicle(base);
+    if(!pBase) 
+        return;
+    
+    if(pBase.veharmor <= 0)
+        A_SpawnProjectile("VehicleSmoke", 7, 0, random (0, 360), 2, random (-80, -100));
+    
+    if(pBase.health <= 1000)
+        A_SpawnProjectile("FlameTrailsLongersmaller", 7, 0, random (0, 360), 2, random (-70, -120));
+	}
+	
+	
+		
+	States
+	{
+		Spawn:
+			TNT1 A 1;
+		loop;
+	}
+}
+
 
 class BDPTank : BDPVehicle
 {
@@ -280,6 +349,8 @@ class BDPTank : BDPVehicle
 	//	TreadBL = Scorpion_Tread(VehPart.Attach("Scorpion_TreadBL", self, (-105,-105,0)));
 	//	TreadBR = Scorpion_Tread(VehPart.Attach("Scorpion_TreadBR", self, (-105, 105,0)));
 		turret = Scorpion_TurretBase(VehPart.Attach("Scorpion_TurretBase", self, (0,0,52)));
+		VehPart.Attach("scorpionflames1",self,(random(-64,64),random(-64,64),42));
+		VehPart.Attach("scorpionflames2",self,(random(-64,64),random(-64,64),42));
 	}
 	
 
@@ -342,8 +413,8 @@ class BDPTank : BDPVehicle
 		}
 		if(!driver) return;
 		
-		double movespd = 0.025;
-		double turnspd = 0.100;
+		double movespd = 0.035;
+		double turnspd = 0.150;
 		accel = forwardmove;
 		if(forwardmove || sidemove)
 		{
