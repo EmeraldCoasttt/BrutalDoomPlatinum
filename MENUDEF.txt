@@ -519,6 +519,9 @@ OptionMenu "DoxCreditsGraphics"
 	StaticText ""
 	StaticText "Captain Toenail", "LightBlue"
 	StaticText "Rage Sphere Graphics"
+	StaticText ""
+	StaticText "Lemony Lepid", "LightBlue"
+	StaticText "Tank model help"
 }
 
 OptionMenu "DoxCreditsCode"
