@@ -76,6 +76,7 @@ class BDP_HUD : DoomStatusBar
 			{
 				DrawInventoryBarEx(diparms, (-20, 150), 6, flags: DI_SCREEN_RIGHT_TOP, box: (20,20), vertical: true);
 			}
+			drawcrosshairs();
 		}
 	}
 	
@@ -855,6 +856,30 @@ class BDP_HUD : DoomStatusBar
 			Font.CR_White
 		);
 		pos.y += Ystep;
+	}
+	void DrawCrosshairs()
+	{		
+		// Get player
+		brutal_playerbase BDPplr = brutal_playerbase(Cplayer.mo);
+		let curvehicle = Veh_Manager(BDPplr.FindInventory("Veh_Manager"));
+		if(curvehicle && curvehicle.disableweaps)
+		{
+			string crosshair = curvehicle.crosshair;
+			vector2 retsize = curvehicle.crosshair_scale;
+			
+			Color crossTint = 0;
+			if(BDPVehicle(curvehicle.veh))
+			{
+				Actor aimAct = BDPVehicle(curvehicle.veh).aimActor;
+				bool hostileAim = aimAct && aimAct.isHostile(BDPplr) && aimAct.bISMONSTER && !(aimAct is "BDPVehicle");
+				if(hostileAim) crossTint = Color(0xC4, 0xD0,0,0);
+			}
+
+			vector2 midpos = (0,0);
+			//if(lowerxhair) midpos.y = haloplr.xhair_lowpos;
+			HLSBS.DrawImage(crosshair, midpos, HLSBS.SS_SCREEN_CENTER, 0.65, scale:retsize, tint:crossTint);
+			return;
+		}
 	}
 }
 

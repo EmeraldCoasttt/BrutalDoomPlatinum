@@ -80,6 +80,7 @@ ACTOR Rocket2 : BrutalProjectile
 Actor TankRocket : Rocket2
 {
 	Speed 100
+	Damage (random (600, 600))
 	States
 	{
 	Spawn:
@@ -94,6 +95,29 @@ Actor TankRocket : Rocket2
 		TNT1 A 0 A_SpawnItem ("OldschoolRocketSmokeTrail2")
 		TNT1 A 0 A_CustomMissile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-30, 30))
 		Loop
+	Death:
+		//TNT1 A 0 A_spawnitemex("nukedamage")
+		tnt1 A 0 A_giveinventory("rocketdetonate")
+        EXPL A 0 Radius_Quake (3, 8, 0, 15, 0)//(intensity, duration, damrad, tremrad, tid)
+		TNT1 A 0 A_CustomMissile("ExplosionSplashSpawner")
+        TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        TNT1 AAAAAA 0 A_CustomMissile ("BDExplosionparticles", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAA 0 A_CustomMissile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (0, 90))
+		TNT1 AAAA 0 A_CustomMissile ("MediumExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 0 A_SpawnItem("WhiteShockwave")
+	
+		TNT1 A 0
+		TNT1 A 0 A_stop
+		TNT1 A 2
+		TNT1 A 0 A_SpawnItemEx ("LiquidExplosionEffectSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_PlaySound("FAREXPL", 3)
+		TNT1 A 0 A_Explode(200,250)
+		TNT1 A 15
+		TNT1 A 0 A_PlaySound("distantexp", 5)
+		Stop
 	}
 }
 ACTOR RocketCandetonate : rocket2

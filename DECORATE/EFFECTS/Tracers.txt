@@ -261,7 +261,7 @@ Spawn:
 }
 Actor TankMachineGunTracer : MonsterMinigunTracer
 {
-	damage (random(15,15))
+	damage (random(45,45))
 	damagetype Shotgun
 }
 

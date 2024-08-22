@@ -82,7 +82,7 @@ class BDPVehicle : VehBase
 		int diff = veharmor-damage;
 		if(diff > 0)
 		{
-			console.printf("%s", inflictor.getclassname());
+			//console.printf("%s", inflictor.getclassname());
 			veharmor -= damage;
 			return 0;
 		}
