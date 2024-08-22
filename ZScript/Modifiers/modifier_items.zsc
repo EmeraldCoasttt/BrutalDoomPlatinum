@@ -11,6 +11,7 @@ class modifierspawner : randomspawner
 		DropItem "UltraNightmarePickup";
 		DropItem "SequenceBreakPickup";
 		DropItem "MaximumOverdrivePickUp";
+		DropItem "ReversalPickUp";
 	}
 }
 class BDPModifierpickup : Inventory
@@ -159,6 +160,17 @@ class MaximumOverdrivePickup : BDPModifierpickup
         
 		BDPModifierpickup.modifierclass "Modifier_MaximumOverdrive";
 		BDPModifierpickup.modifiermessage "Maximum Overdrive Unlocked!";
+		+floatbob;
+    }
+}
+
+class ReversalPickup : BDPModifierpickup
+{
+ Default
+    {
+        
+		BDPModifierpickup.modifierclass "Modifier_Reversal";
+		BDPModifierpickup.modifiermessage "Return To Sender Unlocked!";
 		+floatbob;
     }
 }

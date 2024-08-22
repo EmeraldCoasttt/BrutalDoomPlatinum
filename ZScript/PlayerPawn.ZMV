@@ -181,6 +181,7 @@ class Brutal_PlayerBase : PlayerPawn
 	int ultraseed;
 	bool alreadyblacklisted;
 	bool extralifegranted;
+	bool reversalmodifier;
 	
 	bool scanneractive;
 	int scannertimer;
@@ -464,6 +465,11 @@ class Brutal_PlayerBase : PlayerPawn
 		If(shockfactor && level.time % 5 == 0)
 		{
 			A_alertmonsters(0,AMF_TARGETEMITTER);
+		}
+		
+		If(reversalmodifier && !findinventory("canparry",TRUE) && health > 0)
+		{
+			GiveInventory("canparry",1);
 		}
 		
 		If(countinv("extralife") > 0)

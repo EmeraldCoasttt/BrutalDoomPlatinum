@@ -47,6 +47,99 @@ CLASS MeleeAttack : Actor
 	Int DamageToDeal;
 	String DecalToPrint;
 	
+	Override void postbeginplay()
+	{
+		If(target && target.findinventory("canparry") && target.findinventory("powerstrength"))
+		{
+			//Console.printf("parryready!");
+			Vector3 viewPos = (pos.xy, pos.z); // player view point
+				Vector3 viewDir = (AngleToVector(angle, cos(pitch)), -sin(pitch)); // player view direction
+				double maxAngle = cos(90);
+
+				let it = ThinkerIterator.Create("Actor", STAT_DEFAULT);
+						Actor mo;
+					while (mo = Actor(it.Next()))
+			{
+				// get the object's bounding box
+				Vector3 rel = mo.PosRelative(CurSector); // account for sector portals
+				Vector3 minBox = rel - (mo.radius, mo.radius, 0);
+				Vector3 maxBox = rel + (mo.radius, mo.radius, mo.height);
+
+				// get the point on the box nearest the view point
+				Vector3 nearest;
+				nearest.x = max(minBox.x, min(viewPos.x, maxBox.x));
+				nearest.y = max(minBox.y, min(viewPos.y, maxBox.y));
+				nearest.z = max(minBox.z, min(viewPos.z, maxBox.z));
+
+				Vector3 dir = nearest - viewPos;
+				double dist = dir.Length();
+				if (dist > 0)
+				{
+					if (dist > 100) // is it in range?
+						continue;
+
+					if (viewDir dot (dir / dist) < maxAngle) // is it within an acceptable angle?
+						continue;
+
+					If (!CheckSight(mo,SF_IGNOREWATERBOUNDARY))
+						continue;
+
+				}
+					If(mo.species == "marines")
+						Continue;
+				If(mo.bmissile && mo.target != target && mo.damage)
+				{
+					If(mo.bspawnceiling || mo.health < 1 || mo is "headkicking" || mo is "BDECGRASS" || mo is "Brutal_Bloodspot" || mo is "BaseHeadShot")
+					{
+						Continue;
+					}
+					
+					Vector3 HammerCoords = LevelLocals.SphericalCoords(mo.pos,pos);
+					
+					
+						actor PreviousTarget;
+						If(mo.target)
+						{
+							previoustarget = mo.target;
+						}
+						mo.target = target;
+						mo.pitch = (mo.pitch - 180);
+						mo.angle = (mo.angle - 180);
+						mo.vel.x = -mo.vel.x;
+						mo.vel.y = -mo.vel.y;
+						mo.vel.z = -mo.vel.z;
+						mo.giveinventory("grabberdamage",1);
+						A_startsound("PARRY",28);
+						Radius_Quake (12, 24, 0, 200, 0);
+						for (int i = 0; i < 11; i++)
+						{
+							let parryspark = spawn("sparkx",mo.pos);
+							If(parryspark)
+							{
+								//parryspark.angle = frandom(0,360);
+								//parryspark.pitch = frandom(0,360);
+								parryspark.vel.x = frandom (-10,10);
+								parryspark.vel.y = frandom (-10,10);
+								parryspark.vel.z = frandom (-10,10);
+							}
+						}
+						//Console.printf(mo.getclassname());
+						If(previousTarget)
+						{
+							mo.tracer = previoustarget;
+						}
+					
+					
+				}
+					Continue;
+
+        // grab it
+        break;
+		}
+		}
+		Super.postbeginplay();
+	}
+	
 	
 	Override int specialmissilehit(Actor victim)
 		{

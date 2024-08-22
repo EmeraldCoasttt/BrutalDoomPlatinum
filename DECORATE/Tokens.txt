@@ -30,6 +30,11 @@ Actor HeadshotPopFlag : Inventory
 inventory.maxamount 1
 }
 
+Actor CanParry : Inventory
+{
+inventory.maxamount 1
+}
+
 Actor PausePowerup : Inventory
 {
 inventory.maxamount 105
