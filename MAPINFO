@@ -40,6 +40,7 @@ DoomEdNums
 	26026 = OneUpmanshipPickup
 	26027 = UltranightmarePickup
 	26028 = HeavyRain
+	3134 = BattleRifle
 }
 	
 episode EDAY01

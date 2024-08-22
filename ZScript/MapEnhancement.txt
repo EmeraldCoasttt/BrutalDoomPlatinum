@@ -22,10 +22,14 @@ Class BDP_MapEnhancer : LevelPostProcessor
 			LevelLocals.ReplaceTextures ("SLIME07", "SLIME05",0);
 			LevelLocals.ReplaceTextures ("BLOOD3", "BLOOD1",0);
 			LevelLocals.ReplaceTextures ("BLOOD2", "BLOOD1",0);
-			LevelLocals.ReplaceTextures ("SBLOOD1", "BLOOD1",0);
-			LevelLocals.ReplaceTextures ("SBLOOD2", "BLOOD1",0);
-			LevelLocals.ReplaceTextures ("SBLOOD3", "BLOOD1",0);
-			LevelLocals.ReplaceTextures ("SBLOOD4", "BLOOD1",0);
+			
+			let id24tex = texman.checkfortexture("sblood1");
+			If(id24tex.isvalid())
+			{
+				LevelLocals.ReplaceTextures ("SBLOOD1", "BLOOD1",0);
+				LevelLocals.ReplaceTextures ("SBLOOD2", "BLOOD1",0);
+				LevelLocals.ReplaceTextures ("SBLOOD3", "BLOOD1",0);
+			}
 			
 			//Replace
 			LevelLocals.ReplaceTextures ("BFALL1", "BDBFALL1",0);//Internal Animated Wall(Doom2)
