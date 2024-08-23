@@ -1,0 +1,395 @@
+class HoverTank_TurretBase : VehPart
+{
+	HoverTank_TurretCannon cannon;
+	HoverTank_TurretGun gun;
+	Default
+	{
+		Radius 32;
+		Height 32;
+		Scale 1.3;
+		+SOLID;
+	}
+	
+	override void OnAttach()
+	{
+		cannon = HoverTank_TurretCannon( VehPart.Attach("HoverTank_TurretCannon", base,(10,0,4)) );
+		gun = HoverTank_TurretGun( VehPart.Attach("HoverTank_TurretGun", base,(9,5,5)) );
+		cannon.turretbase = self;
+		gun.turretbase = self;
+	}
+	
+	override void UpdatePos(bool moving)
+	{
+		super.UpdatePos(moving);
+		if(!base || !base.driver) return;
+		
+		A_SetAngle(BDPMath.LerpAngle(angle, base.driver.angle, 0.15), SPF_INTERPOLATE);
+		A_SetRoll(base.roll, SPF_INTERPOLATE);
+		A_SetPitch(base.pitch, SPF_INTERPOLATE);
+	}
+	
+	States
+	{
+		Spawn:
+			TNK1 B 1;
+		loop;
+	}
+}
+
+class HoverTank_TurretCannon : VehPart
+{
+	uint cooldown;
+	uint cooldown_chaingun;
+	VehPart turretbase;
+	Default
+	{
+		Radius 16;
+		Height 16;
+	}
+	
+	override void UpdatePos(bool moving)
+	{
+		if(!turretbase) return;
+		vector3 finalpos = GetOffsetPos(turretbase);
+		SetOrigin(finalpos, moving);
+		
+		A_SetAngle(turretbase.angle, SPF_INTERPOLATE);
+		A_SetRoll(turretbase.roll, SPF_INTERPOLATE);
+		
+		double aimpitch = base.driver ? base.driver.pitch - 6 : 0;
+		aimpitch = clamp(aimpitch, -30, 15);
+		A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+		
+	}
+		
+	override void DoUpdate(VehCamera cam)
+	{
+		let tank = BDPTank(base);
+		if(!tank) return;
+		if(!cam) return;
+	
+		if(cooldown_chaingun) cooldown_chaingun--;
+		if(cooldown) 
+		{
+			cam.SetZoom(1.0, 0.1);
+			cooldown--;
+		}
+		if(CheckButtons(BT_ATTACK, VehButtons.BTS_PRESSED) && !cooldown)
+		{
+			//let misl = TankRocket.Fire(self, (350, 0, 30));
+			let misl = BDPMath.FireProjectile("TankRocket", pos, angle, pitch, 0, 40, 0, 1, 0);
+			if(misl) misl.target = base.driver;
+			
+			A_StartSound("TANKF", CHAN_WEAPON, CHANF_OVERLAP);
+			A_StartSound("TANKRE", 2, CHANF_OVERLAP);
+			
+			double kickback = -0.1 * cos(base.angle-angle);
+			tank.AdjustTreads(kickback, kickback);
+			cam.SetZoom(0.93, 0.5);
+			cam.Quake(20,20,0,0.6);
+			pitch -= 10;
+			tank.driver.pitch -= 3;
+			
+			cooldown = 40;
+		}
+
+	}
+	
+	States
+	{
+		Spawn:
+			MODL A 1;
+		loop;
+	}
+}
+
+class HoverTank_TurretGun : VehPart
+{
+	uint cooldown;
+	uint cooldown_chaingun;
+	VehPart turretbase;
+	bool guncycle;
+	Default
+	{
+		Radius 16;
+		Height 16;
+	}
+	
+	override void UpdatePos(bool moving)
+	{
+		if(!turretbase) return;
+		vector3 finalpos = GetOffsetPos(turretbase);
+		SetOrigin(finalpos, moving);
+		
+		A_SetAngle(turretbase.angle, SPF_INTERPOLATE);
+		A_SetRoll(turretbase.roll, SPF_INTERPOLATE);
+		
+		double aimpitch = base.driver ? base.driver.pitch - 6 : 0;
+		aimpitch = clamp(aimpitch, -30, 15);
+		A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+		
+	}
+		
+	override void DoUpdate(VehCamera cam)
+	{
+		let tank = BDPTank(base);
+		if(!tank) return;
+		if(!cam) return;
+	
+		if(cooldown_chaingun) cooldown_chaingun--;
+		if(cooldown) 
+		{
+			cam.SetZoom(1.0, 0.1);
+			cooldown--;
+		}
+		
+		if(CheckButtons(BT_ALTATTACK, VehButtons.BTS_DOWN) && !cooldown_chaingun)
+		{
+			double rmax = 1.5;
+			double arecoil = frandom(-rmax, rmax);
+			double precoil = frandom(-rmax, rmax);
+			If(guncycle)
+			{
+				let proj = BDPMath.FireProjectile("TankMachineGunTracer", pos, angle + arecoil, pitch + precoil, 10, 10, 30, 1, 70);
+				guncycle = false;
+				// We need to set the target of this projectile if we want hitmarkers to show up
+				// for the person who shoots it.
+				proj.target = base.driver;
+			}
+			Else
+			{
+				let proj = BDPMath.FireProjectile("TankMachineGunTracer", pos, angle + arecoil, pitch + precoil, 5, 10, 30, 1, 70);
+				guncycle = true;
+				// We need to set the target of this projectile if we want hitmarkers to show up
+				// for the person who shoots it.
+				proj.target = base.driver;
+			}
+			
+			
+			
+			A_StartSound("HMGFIRE", CHAN_WEAPON,CHANF_OVERLAP,0.5);
+			cooldown_chaingun = 3;
+		}
+	}
+	
+	States
+	{
+		Spawn:
+			MODL A 1;
+		loop;
+	}
+}
+
+
+
+
+class BDPHoverTank : BDPVehicle
+{
+	HoverTank_TurretBase turret;
+
+	
+	int enginetics;
+	
+	double boostburn;
+	bool boost_wait;
+
+
+	Default
+	{
+		Radius 64;
+		Height 45;
+		Scale 2.0;
+		Mass 1600;
+		Health 2000;
+		BDPVehicle.Armored 4000;
+		MaxSlopeSteepness 0.4;
+		damagetype "stomp";
+		FloatBobStrength 0.125;
+		Gravity 0.20;
+	}
+	
+	override void BeginPlay()
+	{
+		super.BeginPlay();
+		VehPart.Attach("Scorpionflames1",self,(random(-64,64),random(-64,64),42));
+		VehPart.Attach("Scorpionflames2",self,(random(-64,64),random(-64,64),42));
+	}
+	
+
+	override bool RemoveDriver(PlayerPawn user, vector3 exitpos)
+	{	
+		bool success = super.RemoveDriver(user, exitpos);
+		if(user == driver && success) 
+		{
+			A_StartSound("TANK3", flags:CHANF_OVERLAP);
+			A_StopSound(CHAN_7); // Engine Loop
+			//bfloatbob = false;
+			//Gravity = 0.30;
+		}
+		return success;
+	}
+
+	override void TakeDriver(PlayerPawn user)
+	{
+		if(health <= 0) return;
+		if(user) driver = user;
+		let cam = SetupBDPCamera(dist:-260,100,40,200);
+		cam.followact = turret;
+		cam.source = driver;
+		
+		ReadyDriver(user);
+		SetCrosshair(user, "ScorpRet", (1.0,1.0));
+		A_StartSound("TNKENGS", flags:CHANF_OVERLAP);
+		enginetics = 70;
+		//bfloatbob = true;
+		//Gravity = 0.20;
+		//A_StartSound("TANK2", CHAN_7, CHANF_LOOPING);
+	}
+	
+	override vector3 GetDrivePos()
+	{
+		return (-20,-5,0);
+	}
+	
+	override vector3 GetExitPos(PlayerPawn user)
+	{
+		if(user == driver) return (0, 0, 64);
+		return (-20,-5,0);
+	}
+	
+	override void DoMove(float forwardmove, float sidemove)
+	{	
+	
+		If(driver)
+		{
+			vel.xy *= 0.97;
+		}
+		Else
+		{
+			//More friction when powered off
+			vel.xy *= 0.75;
+			return;
+		}
+		if(abs(boostburn) <= 0.1) boost_wait = false;
+	
+		if(health <= 0)  
+		{
+			if(driver) RemoveDriver(driver, GetExitPos(driver));
+			Destroy();
+			return;
+		}
+		
+		If(driver && enginetics)
+		{
+			enginetics--;
+		}
+		Else if (driver)
+		{
+			A_StartSound("TANK2", CHAN_7, CHANF_LOOPING);
+		}
+		
+		
+		// Rotation
+		double turnspd = 0.08;
+		double accel = 0.45;
+		double angdiff = BDPMath.AngleDiff(angle, driver.angle);
+		A_SetAngle(BDPMath.Lerp(angle, angle+angdiff, turnspd), SPF_INTERPOLATE);
+		
+		
+		// Boost
+		bool boosting;
+		if(CheckButtons(BT_ALTATTACK, VehButtons.BTS_DOWN) && !boost_wait)
+		{
+			/*
+			if(boostburn <= 1) 
+				A_StartSound("BDP/Wraith/BoostBegin", flags:CHANF_OVERLAP);
+			else
+				A_StartSound("BDP/Wraith/BoostLoop", CHAN_7, flags:CHANF_LOOPING);
+			*/
+			boosting = true;
+			boostburn++;
+			// Boost particles
+			/*
+			let trail = Spawn("WraithPlasma_Trail", BDPMath.RelativeV3Offset(self, 180,0,0, 150,0,10, 1.));
+			if(trail) trail.A_SetScale(0.4);
+			*/
+			if(boostburn >= 60) boost_wait = true;
+		}
+		else
+		{
+			boostburn *= 0.9;
+			boosting = false;
+			//A_StopSound(CHAN_7);
+		}
+		
+		// Movement
+		if(forwardmove || sidemove)
+		{
+			vector2 movedir = (forwardmove, -sidemove).Unit();
+			if(!boosting)
+			{
+				vel.xy += AngleToVector(angle, accel * movedir.x);
+				vel.xy += AngleToVector(angle + 90, (accel * movedir.y) * 0.75);
+			}
+		} 
+		double tankz = Pos.z;
+        double tankheight = tankz - Self.CurSector.FloorPlane.ZatPoint(Pos.xy);
+        
+        int nfloors = Self.CurSector.Get3DFloorCount();
+        
+        for(int i = 0; i < nfloors; i++)
+        {
+            F3DFloor ff = Self.CurSector.Get3DFloor(i);
+            if(ff.flags & (F3DFloor.FF_EXISTS | F3DFloor.FF_SOLID) == (F3DFloor.FF_EXISTS | F3DFloor.FF_SOLID))
+            {
+                double floorz = (ff.flags & F3DFloor.FF_INVERTSECTOR)
+                                ? ff.top.ZatPoint(Pos.xy)
+                                : ff.bottom.ZatPoint(Pos.xy);
+                if(floorz > tankz || (tankz - floorz) > tankheight) continue;
+                
+                tankheight = tankz - floorz;
+            }
+        }
+		
+		if (tankheight < 30 && vel.z < 1)
+		{
+			vel.z = (vel.z + 0.5);
+			console.printf("%f",vel.z);
+		}
+		
+		if(boosting)
+		{
+			vel.xy += AngleToVector(angle, accel * 2.0);
+		}
+		
+		DoCollisionDamage();
+	}
+	
+
+	
+	
+	States
+	{
+		Spawn:
+			TNK1 B 1;
+		loop;
+		
+		Death:
+			TNT1 A 0 A_noblocking();
+			TNT1 A 0 A_SpawnItemEX("BigExplosion1112");
+			TNT1 A 0 A_Startsound("weapons/explode");
+			TNT1 A 0 A_StartSound("EXPLOSIO", 3);
+			NULL AAAAAA 0 A_CustomMissile ("MetalShard1", 96, 0, random (0, 360), 2, random (0, 180));
+			NULL AAAAAA 0 A_CustomMissile ("MetalShard2", 96, 0, random (0, 360), 2, random (0, 180));
+			NULL AAAAAAAAA 0 A_CustomMissile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360));
+			ELEC A 0 A_Explode(100, 250);
+			TNT1 A 0 A_SpawnItemEX("DestroyedArmouredVehicle");
+			8762 A 5;
+			8762 A 100;
+			8762 A -1;
+			stop;
+	}
+	
+	
+}
+
