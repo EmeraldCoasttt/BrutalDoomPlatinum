@@ -367,8 +367,8 @@ class BDPHoverTank : BDPVehicle
 		bool success = super.RemoveDriver(user, exitpos);
 		if(user == driver && success) 
 		{
-			A_StartSound("TANK3", flags:CHANF_OVERLAP);
-			A_StopSound(CHAN_7); // Engine Loop
+			//A_StartSound("TANK3", flags:CHANF_OVERLAP);
+			//A_StopSound(CHAN_7); // Engine Loop
 			//bfloatbob = false;
 			//Gravity = 0.30;
 		}
@@ -385,8 +385,8 @@ class BDPHoverTank : BDPVehicle
 		
 		ReadyDriver(user);
 		SetCrosshair(user, "ScorpRet", (1.0,1.0));
-		A_StartSound("TNKENGS", flags:CHANF_OVERLAP);
-		enginetics = 70;
+	//	A_StartSound("TNKENGS", flags:CHANF_OVERLAP);
+	//	enginetics = 70;
 		//bfloatbob = true;
 		//Gravity = 0.20;
 		//A_StartSound("TANK2", CHAN_7, CHANF_LOOPING);
@@ -451,20 +451,27 @@ class BDPHoverTank : BDPVehicle
 			vel.z = (vel.z + 0.20);
 			//console.printf("%f",vel.z);
 		}
+		
+		
+		
 		Else if(boboffset)
 		{
 			boboffset--;
 		}
 		
-		If(driver && enginetics)
+		A_StartSound("TANKENG2", CHAN_7, CHANF_LOOPING);
+		//Pitch based on movement speed
+			double topitch = BDPMath.fmap(vel.length(), 0, 15.0, 0.7, 3.0); 
+		
+		//Prevent idle warbling
+		If(topitch < 0.9)
 		{
-			enginetics--;
+			topitch = 0.9;
 		}
-		Else if (driver)
-		{
-			A_StartSound("TANK2", CHAN_7, CHANF_LOOPING);
-		}
-		Else
+		//console.printf("%f",topitch);
+		A_SoundPitch(CHAN_7, topitch);
+		
+		If(!driver)
 		{
 			boosting = false;
 			return;
@@ -526,7 +533,10 @@ class BDPHoverTank : BDPVehicle
 			vel.xy += AngleToVector(angle, accel * 2.0);
 		}
 		
+	
+		
 		DoCollisionDamage();
+		//console.printf("%f",vel.length());
 	}
 	
 
