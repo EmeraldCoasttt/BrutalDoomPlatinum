@@ -438,7 +438,7 @@ class VehBase : Actor
 		onground = ((pos.z <= floorz) || bOnMobj || bMBFBouncer);
 		if( (vehflags & bALIGNTOPLANE) )
 		{
-			if(onground)
+			if(onground || bfloat)
 				BDPMath.AlignToPlane(self);
 			else 
 			{
