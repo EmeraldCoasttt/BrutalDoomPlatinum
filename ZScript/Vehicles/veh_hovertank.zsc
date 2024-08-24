@@ -180,6 +180,89 @@ class HoverTank_TurretGun : VehPart
 	}
 }
 
+class HoverPod : VehPart
+{
+	Float GetPodHeight()
+	{
+		double tankz = Pos.z;
+        double tankheight = tankz - Self.CurSector.FloorPlane.ZatPoint(Pos.xy);
+        
+        int nfloors = Self.CurSector.Get3DFloorCount();
+        
+        for(int i = 0; i < nfloors; i++)
+        {
+            F3DFloor ff = Self.CurSector.Get3DFloor(i);
+            if(ff.flags & (F3DFloor.FF_EXISTS | F3DFloor.FF_SOLID) == (F3DFloor.FF_EXISTS | F3DFloor.FF_SOLID))
+            {
+                double floorz = (ff.flags & F3DFloor.FF_INVERTSECTOR)
+                                ? ff.top.ZatPoint(Pos.xy)
+                                : ff.bottom.ZatPoint(Pos.xy);
+                if(floorz > tankz || (tankz - floorz) > tankheight) continue;
+                
+                tankheight = tankz - floorz;
+            }
+        }
+		return tankheight;
+	}
+		
+	
+		
+	States
+	{
+		Spawn:
+			tnt1 A 1;
+		loop;
+	}
+}
+
+
+class HoverPodFR : HoverPod
+{
+	override void Tick()
+	{
+		super.Tick();	
+		BDPHoverTank pBase = BDPHoverTank(base);
+		if(!pBase) 
+        return;	
+		pBase.HeightFR = GetPodHeight();
+	}
+}
+
+class HoverPodFL : HoverPod
+{
+	override void Tick()
+	{
+		super.Tick();	
+		BDPHoverTank pBase = BDPHoverTank(base);
+		if(!pBase) 
+        return;	
+		pBase.HeightFL = GetPodHeight();
+	}
+}
+
+class HoverPodBR : HoverPod
+{
+	override void Tick()
+	{
+		super.Tick();	
+		BDPHoverTank pBase = BDPHoverTank(base);
+		if(!pBase) 
+        return;	
+		pBase.HeightBR = GetPodHeight();
+	}
+}
+
+class HoverPodBL : HoverPod
+{
+	override void Tick()
+	{
+		super.Tick();	
+		BDPHoverTank pBase = BDPHoverTank(base);
+		if(!pBase) 
+        return;	
+		pBase.HeightBL = GetPodHeight();
+	}
+}
 
 
 
@@ -192,6 +275,11 @@ class BDPHoverTank : BDPVehicle
 	
 	double boostburn;
 	bool boost_wait;
+	
+	float heightFR;
+	float heightFL;
+	float heightBR;
+	float heightBL;
 
 
 	Default
@@ -206,6 +294,8 @@ class BDPHoverTank : BDPVehicle
 		damagetype "stomp";
 		FloatBobStrength 0.125;
 		Gravity 0.20;
+		+float;
+		-vehbase.fallingpitch;
 	}
 	
 	override void BeginPlay()
@@ -213,6 +303,10 @@ class BDPHoverTank : BDPVehicle
 		super.BeginPlay();
 		VehPart.Attach("Scorpionflames1",self,(random(-64,64),random(-64,64),42));
 		VehPart.Attach("Scorpionflames2",self,(random(-64,64),random(-64,64),42));
+		VehPart.Attach("HoverPodFR",self,(60,60,0));
+		VehPart.Attach("HoverPodFL",self,(-60,60,0));
+		VehPart.Attach("HoverPodBR",self,(60,-60,0));
+		VehPart.Attach("HoverPodBL",self,(-60,-60,0));
 	}
 	
 
@@ -351,7 +445,7 @@ class BDPHoverTank : BDPVehicle
             }
         }
 		
-		if (tankheight < 30 && vel.z < 1)
+		if ((tankheight < 30 || heightFR < 30 || heightFL < 30 || heightBR < 30 || heightBL < 30) && vel.z < 1)
 		{
 			vel.z = (vel.z + 0.5);
 			console.printf("%f",vel.z);

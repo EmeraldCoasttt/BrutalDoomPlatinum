@@ -440,7 +440,7 @@ class VehBase : Actor
 		{
 			if(onground)
 				BDPMath.AlignToPlane(self);
-			else
+			else 
 			{
 				pitch = BDPMath.Lerp(pitch, 0, 0.15);
 				roll = BDPMath.Lerp(roll, 0, 0.15);
@@ -450,7 +450,7 @@ class VehBase : Actor
 		// Do slope physics
 		SlopePhys();
 		
-		if( !onground && (vehflags & bFALLINGPITCH) && vel.z <= -3.0 && pitch < 35 )
+		if( !onground && (vehflags & bFALLINGPITCH) && vel.z <= -3.0 && pitch < 35)
 		{
 			double fallrate = BDPMath.fmap(abs(vel.z), 0, 10, 0.1, 2.0);
 			A_SetPitch(pitch + fallrate, SPF_INTERPOLATE); 
