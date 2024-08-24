@@ -265,6 +265,29 @@ class HoverPodBL : HoverPod
 }
 
 
+class hovertank_buttrocket : VehPart
+{
+
+	States
+	{
+		Spawn:
+			MODL A 1;
+		loop;
+	}
+	
+	override void UpdatePos(bool moving)
+	{
+		if(!base) return;
+		vector3 finalpos = GetOffsetPos(base);
+		SetOrigin(finalpos, moving);
+		
+		A_SetAngle(base.angle, SPF_INTERPOLATE);
+		A_SetRoll(base.roll, SPF_INTERPOLATE);
+		A_SetPitch(base.pitch);
+		
+	}
+}
+
 
 class BDPHoverTank : BDPVehicle
 {
@@ -307,6 +330,8 @@ class BDPHoverTank : BDPVehicle
 		VehPart.Attach("HoverPodFL",self,(-60,60,0));
 		VehPart.Attach("HoverPodBR",self,(60,-60,0));
 		VehPart.Attach("HoverPodBL",self,(-60,-60,0));
+		VehPart.Attach("Hovertank_buttrocket",self,(-56.5,-47,10));
+		VehPart.Attach("Hovertank_buttrocket",self,(-56.5, 47,10));
 	}
 	
 
