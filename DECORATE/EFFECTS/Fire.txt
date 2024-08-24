@@ -110,6 +110,11 @@ ACTOR JetpackFlameTrails: FlameTrails
 		}
 }
 
+ACTOR JetpackFlameTrailsLarge : JetpackFlameTrails
+{
+	Scale 0.40
+}
+
 ACTOR SmallGreenFlameTrails: GreenFlameTrails
 {
 

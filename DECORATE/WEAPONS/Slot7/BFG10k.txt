@@ -398,6 +398,36 @@ ACTOR GreenExplosionFire
 	}
 }
 
+ACTOR BlueExplosionFire
+{
+	Game Doom
+	Radius 1
+	Height 1
+	Speed 3
+	Damage 0 
+    +NOBLOCKMAP
+    +NOTELEPORT
+    +DONTSPLASH
+	+MISSILE
+	+FORCEXYBILLBOARD
+    +CLIENTSIDEONLY
+    +NOINTERACTION
+	+NOCLIP
+	RenderStyle Add
+    DamageType Flames
+    Scale 2.0
+	Alpha 1
+	Gravity 0
+	States
+	{
+    Spawn:
+        TNT1 A 1
+        EXPB ABCDEFG 3 BRIGHT
+        Stop
+	}
+}
+
+
 
 ACTOR GreenExplosionFireSmall: GreenExplosionFire
 {

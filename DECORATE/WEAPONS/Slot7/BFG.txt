@@ -217,6 +217,20 @@ Actor BFGDeathParticleFast: BFGDeathParticle
   }
 }
 
+Actor BFGDeathParticleFastBlue: BFGDeathParticle
+{
+  Speed 10
+  Scale 0.1
+  States
+  {
+  Spawn:
+  Death:
+	SPKB A 11 BRIGHT
+    SPKB AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 2 Bright A_FadeOut(0.06)
+    Stop
+  }
+}
+
 Actor BFGDeathParticleSuperFast: BFGDeathParticleFast
 {
   Speed 20
@@ -392,6 +406,18 @@ ACTOR BFGFOG
 ACTOR BFGBIGFOG: BFGFOG
 {
 	Scale 0.8
+}
+
+ACTOR BFGBIGFOGBLUE: BFGFOG
+{
+	Scale 0.8
+	States
+    {
+    Spawn:
+		TNT1 A 2
+        BBOG ABCDEF 1 BRIGHT 
+		Stop
+    }
 }
 
 ACTOR SmallGreenFog: BFGFOG

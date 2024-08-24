@@ -1,3 +1,65 @@
+
+
+CLASS HoverTank_Ball : Actor
+{
+	Default
+	{
+		Radius 10;
+		Height 2;
+		Speed 30;
+		Damagefunction (random(50, 300));
+		DamageType "desintegrate";
+		Decal "SmallerScorch";
+		Projectile;
+		+RANDOMIZE;
+		+SPECTRAL;
+		//+SHOOTABLE;
+		-NOBLOCKMAP;
+		+NOBLOOD;
+		+NORADIUSDMG;
+		+THRUSPECIES;
+		+MTHRUSPECIES;
+		+FORCEXYBILLBOARD;
+		-nogravity;
+		Gravity 0.5;
+		Scale 1.0;
+		renderstyle "ADD";
+		alpha 0.99;
+		Scale 0.4;
+		DeathSound "None";
+		SeeSound "None";
+		Obituary "$OB_MPPLASMARIFLE";
+	}
+	States
+	{
+
+		Spawn:
+			BFSB AB 1 BRIGHT A_spawnitemex("blueflare");
+			Loop;
+
+		Death:
+			TNT1 A 0 a_setscale(2.0,2.0);
+				PLSE ABC 2 BRIGHT A_SpawnItem("BlueFlare");
+		
+			//BG2G A 0 A_SpawnItem("RocketExplosion")
+			BG2G A 0 Radius_Quake(3, 2, 0, 12, 0);
+			BG2G A 0 Bright A_SpawnItem("WhiteShockWave",0,0,0);
+			EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BluePlasmaParticle", 0, 0, random (0, 360), 2, random (0, 360));
+			EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleFastBlue", 0, 0, random (0, 360), 2, random (0, 360));
+			EXPL AAAA 0 A_CustomMissile ("BFGBIGFOGBLUE", 0, 0, random (0, 360), 2, random (0, 360));
+			TNT1 AAAAAAA 0 A_CustomMissile ("BlueExplosionFire", 2, 0, random (0, 360), 2, random (0, 360));
+			EXPL AA 0 A_CustomMissile ("BigNeoSmoke", 0, 0, random (0, 360), 2, random (0, 360));
+			TNT1 A 0 A_Explode(200,250);
+			PLSE DE 2 Bright A_SpawnItemEX("BlueFlare");
+			BG2G A 0 A_StartSound("FAREXPL",7);
+			BG2G A 0 A_StartSound("Explosion");
+			TNT1 AAAA 2 A_CustomMissile ("BigNeoSmoke", 2, 0, random (0, 360), 2, random (0, 360));
+			TNT1 A 35;
+			Stop;
+	}
+}
+
+
 class HoverTank_TurretBase : VehPart
 {
 	HoverTank_TurretCannon cannon;
@@ -76,7 +138,7 @@ class HoverTank_TurretCannon : VehPart
 		if(CheckButtons(BT_ATTACK, VehButtons.BTS_PRESSED) && !cooldown)
 		{
 			//let misl = TankRocket.Fire(self, (350, 0, 30));
-			let misl = BDPMath.FireProjectile("ShortGrenade", pos, angle, pitch, 0, 50, 0, 1, 0);
+			let misl = BDPMath.FireProjectile("Hovertank_ball", pos, angle, pitch, 0, 50, 0, 1, 0);
 			if(misl) misl.target = base.driver;
 			
 			A_StartSound("TANKF", CHAN_WEAPON, CHANF_OVERLAP);
@@ -204,6 +266,7 @@ class hovertank_buttrocket : VehPart
 			MODL A 1;
 		loop;
 	}
+	bool wasboosting;
 	
 	override void UpdatePos(bool moving)
 	{
@@ -215,8 +278,28 @@ class hovertank_buttrocket : VehPart
 		A_SetRoll(base.roll, SPF_INTERPOLATE);
 		A_SetPitch(base.pitch, SPF_INTERPOLATE);
 		
+		
 	}
-	
+	override void Tick()
+	{
+		super.Tick();
+		
+		 BDPHoverTank pBase = BDPHoverTank(base);
+    if(!pBase) 
+        return;
+		If(pBase.boosting)
+		{
+			bdpmath.fireprojectile("jetpackflametrailsLarge",pos,angle + 180,-pitch,0,20,10);
+			wasboosting = true;
+			A_startsound("JETLOOP",CHAN_BODY,CHANF_LOOPING);;
+		}
+		Else if (wasboosting)
+		{
+			wasboosting = false;
+			A_stopsound(CHAN_BODY);
+			A_startsound("JETEND",CHAN_BODY);
+		}
+	}
 }
 
 
@@ -236,6 +319,7 @@ class BDPHoverTank : BDPVehicle
 	float heightFL;
 	float heightBR;
 	float heightBL;
+	bool boosting;
 
 
 	Default
@@ -322,6 +406,7 @@ class BDPHoverTank : BDPVehicle
 		If(driver)
 		{
 			vel.xy *= 0.97;
+			console.printf("%d",boostburn);
 		}
 		Else
 		{
@@ -347,19 +432,20 @@ class BDPHoverTank : BDPVehicle
 		}
 		Else
 		{
+			boosting = false;
 			return;
 		}
 		
 		
 		// Rotation
 		double turnspd = 0.08;
-		double accel = 0.45;
+		double accel = 0.30;
 		double angdiff = BDPMath.AngleDiff(angle, driver.angle);
 		A_SetAngle(BDPMath.Lerp(angle, angle+angdiff, turnspd), SPF_INTERPOLATE);
 		
 		
 		// Boost
-		bool boosting;
+		
 		if(CheckButtons(BT_ALTATTACK, VehButtons.BTS_DOWN) && !boost_wait)
 		{
 			/*
@@ -375,11 +461,15 @@ class BDPHoverTank : BDPVehicle
 			let trail = Spawn("WraithPlasma_Trail", BDPMath.RelativeV3Offset(self, 180,0,0, 150,0,10, 1.));
 			if(trail) trail.A_SetScale(0.4);
 			*/
-			if(boostburn >= 60) boost_wait = true;
+			if(boostburn >= 60) 
+			{
+				boost_wait = true;
+				boostburn = 120;
+			}
 		}
-		else
+		else if (boostburn)
 		{
-			boostburn *= 0.9;
+			boostburn --;
 			boosting = false;
 			//A_StopSound(CHAN_7);
 		}
@@ -413,7 +503,7 @@ class BDPHoverTank : BDPVehicle
             }
         }
 		
-		if ((tankheight < 20 || heightFR < 30 || heightFL < 30 || heightBR < 30 || heightBL < 30) && vel.z < 1)
+		if ((tankheight < 45 || heightFR < 45 || heightFL < 45 || heightBR < 45 || heightBL < 45) && vel.z < 1)
 		{
 			vel.z = (vel.z + 0.5);
 			//console.printf("%f",vel.z);
