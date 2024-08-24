@@ -320,6 +320,8 @@ class BDPHoverTank : BDPVehicle
 	float heightBR;
 	float heightBL;
 	bool boosting;
+	
+	int boboffset;
 
 
 	Default
@@ -333,7 +335,7 @@ class BDPHoverTank : BDPVehicle
 		MaxSlopeSteepness 0.4;
 		damagetype "stomp";
 		FloatBobStrength 0.125;
-		Gravity 0.20;
+		Gravity 0.10;
 		+float;
 		-vehbase.fallingpitch;
 	}
@@ -356,6 +358,7 @@ class BDPHoverTank : BDPVehicle
 		{
 			leftgun.setstatelabel("Spawn2");
 		}
+		boboffset = random(0, 35);
 	}
 	
 
@@ -403,16 +406,17 @@ class BDPHoverTank : BDPVehicle
 	override void DoMove(float forwardmove, float sidemove)
 	{	
 	
-		If(driver)
-		{
+		//If(driver)
+		//{
 			vel.xy *= 0.97;
-			console.printf("%d",boostburn);
-		}
+		//}
+		/*
 		Else
 		{
 			//More friction when powered off
 			vel.xy *= 0.75;
 		}
+		*/
 		if(abs(boostburn) <= 0.1) boost_wait = false;
 	
 		if(health <= 0)  
@@ -420,6 +424,36 @@ class BDPHoverTank : BDPVehicle
 			if(driver) RemoveDriver(driver, GetExitPos(driver));
 			Destroy();
 			return;
+		}
+		
+		//Hover
+		double tankz = Pos.z;
+        double tankheight = tankz - Self.CurSector.FloorPlane.ZatPoint(Pos.xy);
+        
+        int nfloors = Self.CurSector.Get3DFloorCount();
+        
+        for(int i = 0; i < nfloors; i++)
+        {
+            F3DFloor ff = Self.CurSector.Get3DFloor(i);
+            if(ff.flags & (F3DFloor.FF_EXISTS | F3DFloor.FF_SOLID) == (F3DFloor.FF_EXISTS | F3DFloor.FF_SOLID))
+            {
+                double floorz = (ff.flags & F3DFloor.FF_INVERTSECTOR)
+                                ? ff.top.ZatPoint(Pos.xy)
+                                : ff.bottom.ZatPoint(Pos.xy);
+                if(floorz > tankz || (tankz - floorz) > tankheight) continue;
+                
+                tankheight = tankz - floorz;
+            }
+        }
+		
+		if ((tankheight < 23 || heightFR < 23 || heightFL < 23 || heightBR < 23 || heightBL < 23) && vel.z < 1 && !boboffset)
+		{
+			vel.z = (vel.z + 0.20);
+			//console.printf("%f",vel.z);
+		}
+		Else if(boboffset)
+		{
+			boboffset--;
 		}
 		
 		If(driver && enginetics)
@@ -484,30 +518,8 @@ class BDPHoverTank : BDPVehicle
 				vel.xy += AngleToVector(angle + 90, (accel * movedir.y) * 0.75);
 			}
 		} 
-		double tankz = Pos.z;
-        double tankheight = tankz - Self.CurSector.FloorPlane.ZatPoint(Pos.xy);
-        
-        int nfloors = Self.CurSector.Get3DFloorCount();
-        
-        for(int i = 0; i < nfloors; i++)
-        {
-            F3DFloor ff = Self.CurSector.Get3DFloor(i);
-            if(ff.flags & (F3DFloor.FF_EXISTS | F3DFloor.FF_SOLID) == (F3DFloor.FF_EXISTS | F3DFloor.FF_SOLID))
-            {
-                double floorz = (ff.flags & F3DFloor.FF_INVERTSECTOR)
-                                ? ff.top.ZatPoint(Pos.xy)
-                                : ff.bottom.ZatPoint(Pos.xy);
-                if(floorz > tankz || (tankz - floorz) > tankheight) continue;
-                
-                tankheight = tankz - floorz;
-            }
-        }
 		
-		if ((tankheight < 45 || heightFR < 45 || heightFL < 45 || heightBR < 45 || heightBL < 45) && vel.z < 1)
-		{
-			vel.z = (vel.z + 0.5);
-			//console.printf("%f",vel.z);
-		}
+		
 		
 		if(boosting)
 		{
