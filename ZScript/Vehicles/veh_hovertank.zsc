@@ -52,7 +52,7 @@ CLASS HoverTank_Ball : Actor
 			TNT1 A 0 A_Explode(200,250);
 			PLSE DE 2 Bright A_SpawnItemEX("BlueFlare");
 			BG2G A 0 A_StartSound("FAREXPL",7);
-			BG2G A 0 A_StartSound("Explosion");
+			BG2G A 0 A_StartSound("HTANKE");
 			TNT1 AAAA 2 A_CustomMissile ("BigNeoSmoke", 2, 0, random (0, 360), 2, random (0, 360));
 			TNT1 A 35;
 			Stop;
@@ -134,22 +134,29 @@ class HoverTank_TurretCannon : VehPart
 		{
 			cam.SetZoom(1.0, 0.1);
 			cooldown--;
+			If(!cooldown)
+			A_StartSound("10kSELEC", 2, CHANF_OVERLAP);
 		}
 		if(CheckButtons(BT_ATTACK, VehButtons.BTS_PRESSED) && !cooldown)
 		{
 			//let misl = TankRocket.Fire(self, (350, 0, 30));
-			let misl = BDPMath.FireProjectile("Hovertank_ball", pos, angle, pitch, 0, 50, 0, 1, 0);
+			let misl = BDPMath.FireProjectile("Hovertank_ball", pos, angle, pitch, 0, 80, 0, 1, 0);
 			if(misl) misl.target = base.driver;
 			
-			A_StartSound("TANKF", CHAN_WEAPON, CHANF_OVERLAP);
-			A_StartSound("TANKRE", 2, CHANF_OVERLAP);
+			 for(int i = 0; i < 40; i++)
+			 {
+			BDPMath.FireProjectile("blueplasmaparticle", pos, angle + frandom(-11,11), pitch + frandom(-11,11), 0, 80, 0, 1, 0);
+			}
+			
+			A_StartSound("HTANKF", CHAN_WEAPON, CHANF_OVERLAP);
+			A_StartSound("10kFIRE", 2, CHANF_OVERLAP);
 			
 			cam.SetZoom(0.93, 0.5);
 			cam.Quake(20,20,0,0.6);
 			pitch -= 10;
 			tank.driver.pitch -= 3;
 			
-			cooldown = 40;
+			cooldown = 70;
 		}
 
 	}
