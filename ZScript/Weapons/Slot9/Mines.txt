@@ -17,24 +17,31 @@ CLASS PipeBombThrownIdle: CustomInventory
      States
    {
    Spawn:
-	PIPb C 15; //A_JumpIfInventory("NowBlowUpPleaseUwU",1,"MakeItExplode");
-	PIPb D 1 
+	PIPb D 1 A_startsound("minebep");
+	PIPb CCCCCCCCCCCCCCC 1 
 	{
-		A_startsound("minebep");
+		
 		bool scarymonster;
-		BlockThingsIterator CheckForTargets = BlockThingsIterator.Create(self,0.2);
+		BlockThingsIterator CheckForTargets = BlockThingsIterator.Create(self,10);
 		Actor CurrentActor; //A pointer to whatever actor the iterator is iterating through.
 		While (CheckForTargets.Next()) 
 		{
 			 CurrentActor = CheckForTargets.Thing;
 			//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
 			//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
-			If(CurrentActor && CurrentActor.bIsMonster && currentactor.bshootable && !currentactor.bfriendly && !currentactor.findinventory("isplayer") && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY))
+			If(CurrentActor && CurrentActor.bIsMonster && currentactor.bshootable && !currentactor.bfriendly && !currentactor.findinventory("isplayer") && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && currentactor.health > 0 && distance3d(currentactor) < ( 8 + currentactor.radius))
 			{
-				return ResolveState("MakeItExplode");
+				scarymonster = true;
+				If(currentactor.findstate("pain"))
+				{
+					currentactor.setstatelabel("pain.mine");
+				}
 			}
 		}
-          
+        If(scarymonster)
+		{
+			return ResolveState("MakeItExplode");
+		}
         return ResolveState(null);
 	}
       Loop;
