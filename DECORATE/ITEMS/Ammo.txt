@@ -1057,12 +1057,12 @@ Actor AmmoFragGrenade : Ammo
 
 Actor AmmoPipeBomb : Ammo
 {
-	Inventory.PickupMessage "Picked up a Pipe Bomb."
+	Inventory.PickupMessage "Picked up a Proximity Mine."
 	Inventory.Amount 1
 	Inventory.MaxAmount 3
 	Ammo.BackpackAmount 1
 	Ammo.BackpackMaxAmount 4
-	Scale 0.7
+	Scale 0.40
 	Inventory.PickupSound "PIPESEL"
 	
 	States

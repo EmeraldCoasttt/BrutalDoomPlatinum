@@ -48,6 +48,7 @@ version "4.11.0"
 #include "Zscript/Weapons/Slot8/RevenantJetpack.txt"
 #include "Zscript/Weapons/Slot8/Tenderizer.txt"
 //Slot 9
+#include "Zscript/Weapons/Slot9/Mines.txt"
 #include "Zscript/Weapons/Slot9/VoidGrenades.txt"
 
 #include "Zscript/Monsters/ExplosiveBarrel.txt"

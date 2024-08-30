@@ -526,8 +526,8 @@ Spawn1:
 
 Actor dropedPipeBomb : DropedFragGrenade
 {
-xscale 0.7
-yscale 0.7
+xscale 0.4
+yscale 0.4
  BounceSound "PIPBOING"
 States
 {
@@ -546,7 +546,7 @@ Spawn1:
 	
 	 Death:
 	 TNT1 A 0
-	 TNT1 A 0 A_SPawnItem("PipeBombThrownIdle")
+	 TNT1 A 0 A_SPawnItem("AmmoPipeBomb")
 	 Stop
 	
 

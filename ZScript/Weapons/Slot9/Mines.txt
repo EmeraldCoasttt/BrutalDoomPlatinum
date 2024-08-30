@@ -1,0 +1,56 @@
+CLASS PipeBombThrownIdle: CustomInventory
+{
+	Default
+	{
+    scale 0.4;
+    radius 8;
+    height 4;
+   //+THRUACTORS 
+	+FORCEXYBILLBOARD;
+	-BLOODSPLATTER;
+     Inventory.PickupMessage "Picked up a proximity mine.";
+     Inventory.PickupSound "PIPESEL";
+	 Species "ThrownPipebombs";
+	 +flatsprite;
+    +MOVEWITHSECTOR;
+	}
+     States
+   {
+   Spawn:
+	PIPb C 15; //A_JumpIfInventory("NowBlowUpPleaseUwU",1,"MakeItExplode");
+	PIPb D 1 
+	{
+		A_startsound("minebep");
+		bool scarymonster;
+		BlockThingsIterator CheckForTargets = BlockThingsIterator.Create(self,0.2);
+		Actor CurrentActor; //A pointer to whatever actor the iterator is iterating through.
+		While (CheckForTargets.Next()) 
+		{
+			 CurrentActor = CheckForTargets.Thing;
+			//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
+			//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
+			If(CurrentActor && CurrentActor.bIsMonster && currentactor.bshootable && !currentactor.bfriendly && !currentactor.findinventory("isplayer") && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY))
+			{
+				return ResolveState("MakeItExplode");
+			}
+		}
+          
+        return ResolveState(null);
+	}
+      Loop;
+    Pickup:
+	  TNT1 A 0;
+	  TNT1 A 0 A_GiveInventory("AmmoPipeBomb",1);
+	  stop;
+	MakeItExplode:
+      TNT1 AAA 0;
+	  NULL A 0 A_StartSound("MINEDING",CHAN_BODY,0,1.0);
+	  NULL A 0 A_StartSound("MINEBOOP",7,0,0.7);
+	  PIPb D 20;
+	  NULL A 0 A_StopSound();
+	  NULL A 0 A_StopSound(7);
+      TNT1 A 0 A_SpawnItemEx("PipebombExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION);
+	  TNT1 AAA 0;
+      stop;
+	}
+}

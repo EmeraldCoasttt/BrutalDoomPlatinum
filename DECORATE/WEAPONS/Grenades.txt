@@ -890,7 +890,7 @@ ACTOR PipeBombThrown
    Radius 6
    Speed 30
    Damage 2
-   Scale 0.7
+   Scale 0.4
    Projectile
    -NOTELEPORT
    +DOOMBOUNCE
@@ -914,7 +914,7 @@ ACTOR PipeBombThrown
    BounceType Doom
   +EXPLODEONWATER
 	+SKYEXPLODE
-	+BOUNCEONFLOORS
+	//+BOUNCEONFLOORS
 	+BOUNCEONWALLS
 	+BOUNCEONCEILINGS
    BounceFactor 0.60
@@ -927,16 +927,18 @@ ACTOR PipeBombThrown
    Species "ThrownPipebombs"
 	+THRUSPECIES
 	+MTHRUSPECIES
+	-bounceonfloors
++thruactors
    States
    {
    Spawn:
       TNT1 A 0
-      PIPb B 0 A_SetRoll(roll+45)
-	  PIPb BBBB 1 A_JumpIfInventory("NowBlowUpPleaseUwU",1,"MakeItExplode")
+     // PIPb B 0 A_SetRoll(roll+45)
+	  PIPb BBBB 1// A_JumpIfInventory("NowBlowUpPleaseUwU",1,"MakeItExplode")
       Loop
    Death:
       TNT1 A 0
-	  TNT1 A 0 A_JumpIfInventory("NowBlowUpPleaseUwU",1,"SpawnExplodingPipebomb")
+	//  TNT1 A 0 A_JumpIfInventory("NowBlowUpPleaseUwU",1,"SpawnExplodingPipebomb")
 	  TNT1 A 0 A_SpawnItemEx("PipeBombThrownIdle",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
       stop
    MakeItExplode:
@@ -965,37 +967,6 @@ ACTOR PipebombThrownQuickTossed: PipeBombThrown
       TNT1 A 0
 	  TNT1 A 0 A_JumpIfInventory("NowBlowUpPleaseUwU",1,"SpawnExplodingPipebomb")
 	  TNT1 A 0 A_SpawnItemEx("PipeBombThrownIdleQuickTossed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
-      stop
-	}
-}
-ACTOR PipeBombThrownIdle: CustomInventory
-{
-    scale 0.7
-    radius 8
-    height 4
-   //+THRUACTORS 
-	+FORCEXYBILLBOARD
-	-BLOODSPLATTER
-     Inventory.PickupMessage "Picked up a pipebomb."
-     Inventory.PickupSound "PIPESEL"
-	 Species "ThrownPipebombs"
-    //+MOVEWITHSECTOR
-     States
-   {
-   Spawn:
-      PIPb B 2 A_JumpIfInventory("NowBlowUpPleaseUwU",1,"MakeItExplode")
-      Loop
-    Pickup:
-	  TNT1 A 0
-	  TNT1 A 0 A_GiveInventory("AmmoPipeBomb",1)
-	  stop
-	MakeItExplode:
-      TNT1 AAA 0
-	  NULL A 0 A_PlaySound("BEEEP")
-	  PIPb B random(1,5)
-	  NULL A 0 A_StopSound
-      TNT1 A 0 A_SpawnItemEx("PipebombExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
-	  TNT1 AAA 0
       stop
 	}
 }
