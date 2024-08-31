@@ -5,7 +5,7 @@
 
 
 
-ACTOR HeavyMachinegun: SwitchableDecoration 5462
+ACTOR HeavyMachinegun: SwitchableDecoration
 {
     Radius 24
 	Height 64

@@ -1,0 +1,204 @@
+
+class BDPTurretGun : VehPart
+{
+	uint cooldown;
+	bool guncycle;
+	
+	Default
+	{
+
+	}
+	
+	override void UpdatePos(bool moving)
+	{
+		if(!base) return;
+		vector3 finalpos = GetOffsetPos(base);
+		SetOrigin(finalpos, moving);
+		
+		A_SetAngle(base.angle, SPF_INTERPOLATE);
+		A_SetRoll(base.roll, SPF_INTERPOLATE);
+		A_SetPitch(base.pitch, SPF_INTERPOLATE);
+		
+		
+	}
+	
+	override void Tick()
+	{
+		super.Tick();
+		
+		 BDPVehicle pBase = BDPVehicle(base);
+    if(!pBase) 
+        return;
+    
+	}
+	
+	override void DoUpdate(VehCamera cam)
+	{
+		If(!cam) return;
+		if(cooldown) 
+		{
+			cam.SetZoom(1.0, 0.5);
+			cooldown--;
+		}
+		if(CheckButtons(BT_ATTACK, VehButtons.BTS_DOWN) && !cooldown)
+		{
+			double rmax = 1.5;
+			double arecoil = frandom(-rmax, rmax);
+			double precoil = frandom(-rmax, rmax);
+			If(guncycle)
+			{
+				let proj = BDPMath.FireProjectile("TankMachineGunTracer", pos, angle + arecoil, base.driver.pitch + precoil, 5, 0, 0, 1, 70);
+				guncycle = false;
+				// We need to set the target of this projectile if we want hitmarkers to show up
+				// for the person who shoots it.
+				proj.target = base.driver;
+				Base.a_spawnprojectile("emptybrass",42,5,frandom(-100,-80),CMF_AIMDIRECTION,frandom(-20,-40));
+				Base.a_spawnprojectile("MGlinks",42,5,frandom(-100,-80),CMF_AIMDIRECTION,frandom(-20,-40));
+			}
+			Else
+			{
+				let proj = BDPMath.FireProjectile("TankMachineGunTracer", pos, angle + arecoil, base.driver.pitch + precoil, -5, 0, 0, 1, 70);
+				guncycle = true;
+				// We need to set the target of this projectile if we want hitmarkers to show up
+				// for the person who shoots it.
+				proj.target = base.driver;
+				Base.a_spawnprojectile("emptybrass",42,-5,frandom(100,80),CMF_AIMDIRECTION,frandom(-20,-40));
+				Base.a_spawnprojectile("MGlinks",42,-5,frandom(100,80),CMF_AIMDIRECTION,frandom(-20,-40));
+			}
+			
+			cam.SetZoom(0.95, 0.5);
+			//cam.Quake(20,20,0,0.6);
+			
+			
+			
+			A_StartSound("HMGFIRE", CHAN_WEAPON,CHANF_OVERLAP,0.5);
+			cooldown = 3;
+		}
+	}
+		
+	States
+	{
+		Spawn:
+			TNT1 A 1;
+		loop;
+	}
+}
+
+
+
+class BDPTurret : BDPVehicle
+{
+	
+	
+	
+	BDPTurretGun gun;
+
+	Default
+	{
+		Radius 16;
+		Height 42;
+		Scale 1.0;
+		Mass 300;
+		Health 200;
+		BDPVehicle.Armored 0;
+		MaxSlopeSteepness 0.4;
+		damagetype "stomp";
+		+dontthrust;
+	}
+	
+	override void BeginPlay()
+	{
+		super.BeginPlay();
+		gun = BDPTurretGun( VehPart.Attach("BDPTurretGun", self,(32,0,32)) );
+	}
+	
+
+	override bool RemoveDriver(PlayerPawn user, vector3 exitpos)
+	{	
+		bool success = super.RemoveDriver(user, exitpos);
+		if(user == driver && success) 
+		{
+			//A_StartSound("TANK3", flags:CHANF_OVERLAP);
+			//A_StopSound(CHAN_7); // Engine Loop
+			//bfloatbob = false;
+			//Gravity = 0.30;
+		}
+		return success;
+	}
+
+	override void TakeDriver(PlayerPawn user)
+	{
+		if(health <= 0) return;
+		if(user) driver = user;
+		let cam = SetupBDPCamera(dist:-50,50,40,80);
+		cam.source = driver;
+		
+		ReadyDriver(user);
+		SetCrosshair(user, "ScorpRet", (1.0,1.0));
+	//	A_StartSound("TNKENGS", flags:CHANF_OVERLAP);
+	//	enginetics = 70;
+		//bfloatbob = true;
+		//Gravity = 0.20;
+		//A_StartSound("TANK2", CHAN_7, CHANF_LOOPING);
+	}
+	
+	override vector3 GetDrivePos()
+	{
+		return (-20,-5,0);
+	}
+	
+	override vector3 GetExitPos(PlayerPawn user)
+	{
+		if(user == driver) return (-32, 0, 0);
+		return (-20,-5,0);
+	}
+	
+	override void DoMove(float forwardmove, float sidemove)
+	{	
+		vel.xy *= 0.25;
+		
+		if(health <= 0)  
+		{
+			if(driver) RemoveDriver(driver, GetExitPos(driver));
+			Destroy();
+			return;
+		}
+		
+		If(driver)
+		{
+			A_SetAngle(driver.angle, SPF_INTERPOLATE);
+		}
+		
+	}
+	
+
+	
+	
+	States
+	{
+		Spawn:
+			TNT1 A 0 A_JumpIf(driver,"Spawn2");
+			TTR1 A 1;
+		loop;
+		
+		Spawn2:
+			TTR2 A 1;
+			Goto spawn;
+		
+		Death:
+			NULL AAAAAAAAA 0 A_spawnprojectile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360));
+			TNT1 AAAAA 0 A_Spawnprojectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (20, 50));
+			TNT1 A 1 
+			{
+		//	A_dropitem("minigun");
+			A_spawnitemex("pipebombexplosion");
+			A_scream();
+			A_noblocking();
+			}
+			TNT1 A -1;
+			Stop;
+	}
+	
+	
+}
+

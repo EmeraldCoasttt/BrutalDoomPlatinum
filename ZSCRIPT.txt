@@ -66,6 +66,7 @@ version "4.11.0"
 #include "ZScript/Vehicles/veh_ghost.zsc"
 #include "ZScript/Vehicles/veh_scorpion.zsc"
 #include "ZScript/Vehicles/veh_hovertank.zsc"
+#include "ZScript/Vehicles/veh_turret.zsc"
 
 #include "Zscript/BDPMatrix.txt"
 #include "Zscript/BDPGutamatics/Include.zsc"
