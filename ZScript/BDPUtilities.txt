@@ -456,7 +456,31 @@
 			}
 		
 		}
+		
+		if(e.replacee == Checkpotentialactor('HeavyMachineGun'))
+		{
+			e.Replacement = "BDPTurret";
+		}
+
 	}
+	
+	
+	//GZ doesn't like it if we try to replace an actor that doesn't exist
+	
+	String Checkpotentialactor(String inputname)
+	{
+		class<actor> potentialactor = inputname;
+		If(potentialactor)
+		{
+			Return inputname;
+		}
+		Else
+		{
+			return 'null';
+		}
+	
+	}
+	
 	override void worldthingspawned(Worldevent e)
 	{
 		If(e.thing && e.thing.bismonster && !e.thing.findinventory("monsterinventory"))
