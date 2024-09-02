@@ -89,7 +89,7 @@ class Scorpion_TurretCannon : VehPart
 			cam.Quake(20,20,0,0.6);
 			pitch -= 10;
 			tank.driver.pitch -= 3;
-			
+			tank.driver.A_AlertMonsters(0, AMF_TARGETEMITTER);
 			cooldown = 40;
 		}
 

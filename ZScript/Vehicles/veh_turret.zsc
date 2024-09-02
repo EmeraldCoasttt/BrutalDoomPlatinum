@@ -42,6 +42,7 @@ class BDPTurretGun : VehPart
 		}
 		if(CheckButtons(BT_ATTACK, VehButtons.BTS_DOWN) && !cooldown)
 		{
+			base.driver.A_AlertMonsters(0, AMF_TARGETEMITTER);
 			double rmax = 1.5;
 			double arecoil = frandom(-rmax, rmax);
 			double precoil = frandom(-rmax, rmax);
