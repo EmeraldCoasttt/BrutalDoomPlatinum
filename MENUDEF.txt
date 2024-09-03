@@ -87,7 +87,7 @@ OptionMenu "BrutalMenu"
 	Submenu "GZDoom Setup", "BDPSetup", 0, 1
 	Submenu "Gameplay Options", "DoxGameplayOptions", 0, 1
 	Submenu "Visual Options", "DoxVisualOptions", 0, 1
-	Submenu "Weapon Spawns", "DoxWeaponSpawns", 0, 1
+	//Submenu "Weapon Spawns", "DoxWeaponSpawns", 0, 1
 	StaticText ""
 	StaticText "-------------------------------------------------------", "black"
 	StaticText "CREDITS", "fire"

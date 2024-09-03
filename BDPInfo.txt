@@ -5,13 +5,21 @@
 //value 3 is rarity, possible values are 1, 2, and 3
 //lower values are less rare
 
-shotgunspawner,shotgun,1
-ssgspawnerreplacer,supershotgun,1
-chaingunspawnerreplacer,chaingun,1
-RLSPAWNERREPLACER,rocketlauncher,1
-chainsawspawner,chainsaw,1
-plasmagunreplacer,plasmarifle,1
-bfgreplacer,bfg,1
+shot_gun,shotgun,1
+revolverspawner,shotgun,1
+ssg,supershotgun,1
+assaultshotgun,supershotgun,2
+chaingunspawner,chaingun,1
+rocket_launcher,rocketlauncher,1
+grenadelauncher,rocketlauncher,1
+chainsawspawned,chainsaw,1
+axespawner,chainsaw,2
+plasmagunspawner,plasmarifle,1
+freezer,plasmarifle,1
+railgun,plasmarifle,1
+big_fucking_gun,bfg,1
+bfg10k,bfg,1
+unmaker,bfg,1
 revolverspawner,secret,1
 Tenderizer,secret,3
 EnergyArmor,secret,1
