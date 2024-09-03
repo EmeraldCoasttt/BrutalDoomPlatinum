@@ -1,7 +1,13 @@
 ACTOR AxeThrowAltFire: Inventory { Inventory.MaxAmount 1 }
 ACTOR HeyIHaveAnAxeBTW: Inventory { Inventory.MaxAmount 1 } //Used to make the revenant's missile reflection work.
 ACTOR DamageMultiplier: Inventory { Inventory.MaxAmount 30 }
-ACTOR AxeCounter: Inventory {Inventory.MaxAmount 2}
+ACTOR AxeCounter: Ammo
+{
+Inventory.MaxAmount 2
+Inventory.Icon "AXE9A0"
+Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 3
+}
 ACTOR BrutalAxe : BrutalWeapon
 {
 	Obituary "%o was chopped down by %k's axe."
@@ -20,6 +26,7 @@ ACTOR BrutalAxe : BrutalWeapon
 	brutalweapon.handedness 2
 	BrutalWeapon.weight 1
 	Inventory.AltHUDIcon "AXE9A0"
+	Weapon.AmmoType1 "AxeCounter"
 	
 	States
 	{
