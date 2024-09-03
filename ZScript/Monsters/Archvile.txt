@@ -49,7 +49,7 @@
 			Int teleportcount;
 			bool teleportsuccess;
 			Actor viletarget;
-			while(!teleportsuccess && teleportcount < 30)
+			while(!teleportsuccess && teleportcount < 60)
 			{
 			FLineTraceData lasersight;
 				LineTrace(frandom(0,365), 1000, frandom(0,365), TRF_THRUACTORS | TRF_BLOCKSELF, offsetz: 64, data: lasersight);
@@ -65,9 +65,9 @@
 				{
 					targetpos.z -= 13;
 				}
-				VileTarget = Spawn("Viletarget",targetpos);
+				VileTarget = Spawn("Viletarget",(targetpos.x,targetpos.y,-999));
 				
-					If(viletarget && distance2d(viletarget) > 300)
+					If(viletarget && distance2d(viletarget) > 300 && checksight(viletarget))
 					{
 						teleportsuccess = true;
 						//console.printf("teleportsuccessful");
@@ -78,12 +78,13 @@
 					{
 						If(viletarget)
 						viletarget.destroy();
-						//console.printf("TeleportFailed");
+						//console.printf("TeleportFailed " "%i",teleportcount);
 						teleportcount++;
 					}
 				}
 				If(tracer && tracer is "viletarget" && teleportsuccess)
 				{
+					//A_startsound("Weapons/Unmaker/UseTeleporter",12);
 					Return resolvestate(teleportstate);
 				}
 				Else
@@ -97,7 +98,7 @@
 		{
 			//A_wander();
 			
-			A_spawnitemex("randomTinyBurningPiece");
+			A_spawnitemex("TinyBurningPieceArchvile");
 			A_checkforresurrection(resolvestate("stayteleported"));
 			A_facetracer();
 			vector3 movepos = Vec3Angle(34,angle,0);
@@ -109,6 +110,7 @@
 			{
 				if(tracer)
 				tracer.Destroy();
+				A_startsound("Weapons/Unmaker/UseTeleporter",12);
 				Return resolvestate(teleportback);
 				
 			}
@@ -116,6 +118,7 @@
 			{
 				if(tracer)
 				tracer.Destroy();
+				A_startsound("Weapons/Unmaker/UseTeleporter",12);
 				Return resolvestate(teleportback);
 			}
 			
@@ -127,7 +130,7 @@
 		{
 			//A_wander();
 			angle = frandom(0,360);
-			A_spawnitemex("randomTinyBurningPiece");
+			A_spawnitemex("TinyBurningPieceArchvile");
 			A_recoil(-6);
 			
 		}
@@ -175,9 +178,9 @@
 	EXPL A 0 A_spawnprojectile ("FlamethrowerFireParticles", 6, 0, random (0, 360), 2, random (0, -90));
 	//FRFX ZZZ 0 BRIGHT A_spawnprojectile ("BigBlackSmoke", 2, 0, random (0, 360), 2, random (0, 30))
 	//TNT1 A 2 A_SpawnItem("BurningGroundLowDamage")
-	TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15));
-	TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35));
-	TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35));
+	//TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15));
+	//TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35));
+	//TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35));
 	TNT1 AA 20 A_spawnprojectile ("BigBlackSmoke", 0, 0, random (0, 360), 2, random (-40, -160));
 	Stop;
 		}
@@ -185,21 +188,12 @@
 	
 	}
 	
-	CLASS VileTarget : ACTOR
+CLASS VileTarget : ACTOR
 { 
 	Default
 	{
-		Decal "None";
-		Mass 1;
-		Radius 1;
-		Height 2;
-		gravity 500.0;
-		+NOBLOCKMAP;
-		+BLOODLESSIMPACT;
-		+ALWAYSPUFF;
-		+PUFFONACTORS;
-		+DONTSPLASH;
-		+FORCEXYBILLBOARD;
+		Height 64;
+		+floorhugger;
 	}
 	
 	Override void tick()

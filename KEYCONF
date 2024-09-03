@@ -15,7 +15,7 @@ setslot 8 HellishMissileLauncher FlameCannon Tenderizer
 setslot 9 Flamethrower2
 //setslot 0 AmmoDroper
 
-   addkeysection "BrutalDoom - Advanced Actions" BrutalDoomActions    
+   addkeysection "BrutalDoom - Advanced Actions" BrutalDoomPlatinumActions    
    
    addmenukey "Kick" kickem
    alias kickem "pukename PressKick"

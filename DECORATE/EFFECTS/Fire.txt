@@ -1443,7 +1443,39 @@ Damagetype "Burn"
 }
 
 
-
+ACTOR TinyBurningPieceArchvile: BarrelExplosionSmokeColumn
+{
+Damagetype "Fire"
+    -CLIENTSIDEONLY
+	Alpha 0.9
+	RenderStyle Add
+	Scale 1.1
+	States
+	{
+	Spawn:
+	
+	CFCF ABC 1 BRIGHT// A_SpawnItem("RedFlareSmall", 0, 5)
+	CFCF D 1
+	//TNT1 A 0 A_Explode(2, 60)
+	CFCF EFG 1 BRIGHT// A_SpawnItem("RedFlareSmall", 0, 5)
+	CFCF H 1
+	CFCF IJK 1 BRIGHT// A_SpawnItem("RedFlareSmall", 0, 5)
+	CFCF L 1
+	CFCF ABC 1 BRIGHT// A_SpawnItem("RedFlareSmall", 0, 5)
+	CFCF D 1
+	//TNT1 A 0 A_Explode(2, 60)
+	CFCF EFG 1 BRIGHT// A_SpawnItem("RedFlareSmall", 0, 5)
+	CFCF H 1
+	CFCF IJK 1 BRIGHT// A_SpawnItem("RedFlareSmall", 0, 5)
+	CFCF L 1
+	//TNT1 A 0 A_Jump(24, "StopBurning")
+	//Loop
+	
+	StopBurning:
+	CFCF NOP 1 BRIGHT A_SpawnItem("RedFlareSmall", 0, 5)
+	Stop
+    }
+}
 
 
 
