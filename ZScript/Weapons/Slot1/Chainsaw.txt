@@ -131,7 +131,7 @@ CLASS ThrowedChainsaw : actor
 		A_spawnprojectile("sawdamagevertical",0,0,0,0,0,AAPTR_TRACER);
 		
 		A_startSound("weapons/chainsaw/loop",4);
-			If(tracer && tracer.findstate("pain"))
+			If(tracer && tracer.findstate("pain") && tracer.health > 0)
 				{
 					tracer.setstatelabel("pain.cut");
 				}
