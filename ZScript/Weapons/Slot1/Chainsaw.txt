@@ -95,7 +95,7 @@ CLASS ThrowedChainsaw : actor
 		CSAW BBBB 1
 		{
 		
-		If(!tracer || tracer.health < 1 || sawtimer > 115)
+		If(!tracer || tracer.health < 1 || sawtimer > 150)
 		{
 		If(tracer && !tracer.bnoblood)
 		{
@@ -103,7 +103,7 @@ CLASS ThrowedChainsaw : actor
 		}
 		setstatelabel("fall");
 		}
-		sawtimer = sawtimer + 1;
+		sawtimer++;
 		if(tracer) 
 			{ 
 			If(tracer.health > 0)
@@ -131,6 +131,10 @@ CLASS ThrowedChainsaw : actor
 		A_spawnprojectile("sawdamagevertical",0,0,0,0,0,AAPTR_TRACER);
 		
 		A_startSound("weapons/chainsaw/loop",4);
+			If(tracer && tracer.findstate("pain"))
+				{
+					tracer.setstatelabel("pain.cut");
+				}
 		}
 		LOOP;
 		
