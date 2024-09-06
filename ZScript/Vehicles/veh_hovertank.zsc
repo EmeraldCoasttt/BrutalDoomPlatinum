@@ -177,6 +177,12 @@ class HoverTank_TurretCannon : VehPart
 
 class HoverPod : VehPart
 {
+	/*
+	Default
+	{
+		+Noclip;
+	}
+	*/
 	Float GetPodHeight()
 	{
 		double tankz = Pos.z;
@@ -453,7 +459,8 @@ class BDPHoverTank : BDPVehicle
             }
         }
 		
-		if ((tankheight < 23 || heightFR < 23 || heightFL < 23 || heightBR < 23 || heightBL < 23) && vel.z < 1 && !boboffset)
+		//Float upwards if any hoverpod isn't far enough off the ground (but not below ground)
+		if ((tankheight < 23 || heightFR < 23 && heightFR > -10 || heightFL < 23 && heightFL > -10 || heightBR < 23 && heightBR > -10 || heightBL < 23 && heightBL > -10) && vel.z < 1 && !boboffset)
 		{
 			vel.z = (vel.z + 0.20);
 			//console.printf("%f",vel.z);
