@@ -546,12 +546,23 @@ CLASS MeleeAttackUppercut : MeleeAttackLeft
 		Default
 			{
 				MeleeAttack.basedamage 35;
-				MeleeAttack.berserkdamage 95;
-				MeleeAttack.uppercut TRUE;
+				MeleeAttack.berserkdamage 75;
 			}
 	
 	
-	
+		Override int specialmissilehit(Actor victim)
+		{
+			
+			If(target && target.findinventory("powerstrength"))
+			{
+				spawn("WhiteShockwave",pos);
+				A_startsound("bonecrack",27);
+				Radius_Quake (6, 12, 0, 60, 0);//(intensity, duration, damrad, tremrad, tid)
+				A_explode(100,250,0, DAMAGETYPE: "ExplosiveImpact");
+			}
+			Return Super.specialmissilehit(victim);
+		
+		}
 	
 	}
 
