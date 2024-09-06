@@ -179,7 +179,7 @@ ACTOR Cacodemon_ : CacodemonBase Replaces Cacodemon
 		HEAD C 4 A_FaceTarget
 		HEAD M 3 BRIGHT A_CustomMissile("CacodemonBall", 34, 0, 0, 0)
 		HEAD D 1 BRIGHT 
-		TNT1 A 0 A_jump(200,"missile2")
+		TNT1 A 0 A_jump(150,"missile2")
 		Goto See
 		
 	AltMissile:
