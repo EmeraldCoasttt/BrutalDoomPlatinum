@@ -116,13 +116,13 @@ CLASS mastermindgrenade : actor
 		Default
 		{
 			
-			+shootable;
+			
 			health 40;
 			gibhealth 1;
 			SeeSound "none";
 			+NOEXPLODEFLOOR;
 			//+touchy;
-			+nodamagethrust;
+			//+nodamagethrust;
 			+noblood;
 			+NORADIUSDMG;
 			-noblockmap;
@@ -131,8 +131,10 @@ CLASS mastermindgrenade : actor
 			Species "spider";
 			height 16;
 			radius 16;
-			+thruspecies;
-			+mthruspecies;
+			//+thruspecies;
+			//+mthruspecies;
+			+shootable;
+			+dontthrust;
 		}
 		States
 		{
