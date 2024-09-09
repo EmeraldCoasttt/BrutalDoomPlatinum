@@ -12,7 +12,7 @@ TNT1 A 0 A_Explode(random(60,64),118,0)
         Stop}}
 
 
-ACTOR HellKnight2 : HellKnight Replaces HellKnight
+ACTOR HellKnight2 : KnightBase Replaces HellKnight
 {
     Scale 1.0
     Speed 8
@@ -309,28 +309,16 @@ ReplaceVanilla:
 		BTS2 DEDF 2
 		BTS2 CBA 1 A_FaceTarget
 	CHARGE:
-		TNT1 A 0 A_Recoil (-4)
+
 		
-		BSCG A 4 A_FaceTarget
-	//	TNT1 A 0 A_JumpIf(Momx == 0 || Momy == 0, "JustMissile")
-		TNT1 A 0 A_Recoil (-4)
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 22, 52,0)
+		BSCG AAAA 1 A_NobleCharge()
 		TNT1 A 0 A_PlaySound("cyber/hoof",4)
-		BSCG B 4 A_FaceTarget
-	//	TNT1 A 0 A_JumpIf(Momx == 0 || Momy == 0, "JustMissile")
-		TNT1 A 0 A_Recoil (-4)
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 22, 52,0)
+		BSCG BBBB 1 A_NobleCharge()
 		TNT1 A 0 A_JumpIfCloser(250, "POUNCE")
-		BSCG C 4 A_FaceTarget
-		TNT1 A 0 A_JumpIf(Momx == 0 || Momy == 0, "JustMissile")
-		TNT1 A 0 A_Recoil (-4)
+		BSCG CCCC 1 A_NobleCharge()
 		TNT1 A 0 A_PlaySound("cyber/hoof",5)
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 22, 52,0)
-		BSCG D 4 A_FaceTarget
-		TNT1 A 0 A_Recoil (-4)
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 22, 52,0)
+		BSCG DDDD 1 A_NobleCharge()
 		TNT1 A 0 A_JumpIfCloser(250, "POUNCE")
-		TNT1 A 0 A_JumpIf(Momx == 0 || Momy == 0, "JustMissile")
 		loop		
 	POUNCE:
 		TNT1 A 0 A_Recoil (-8)

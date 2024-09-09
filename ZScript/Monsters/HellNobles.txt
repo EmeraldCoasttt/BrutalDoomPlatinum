@@ -17,3 +17,23 @@ Class BaronBase : BaronOfHell
 	}
 
 }
+
+Class KnightBase : HellKnight
+{
+
+	Action state a_noblecharge()
+	{
+		A_facetarget();
+		Vector2 NewPos = (Vec2Angle(20,angle,0));
+		If(trymove(NewPos,24))
+		{
+			Return resolvestate(null);
+		}
+		Else
+		{
+			Return resolvestate("pounce");
+		}
+	
+	}
+
+}
