@@ -1,5 +1,5 @@
 
-ACTOR BaronofHell2 : BaronofHell Replaces BaronofHell
+ACTOR BaronofHell2 : BaronBase Replaces BaronofHell
 {
     Scale 1.1
 	damagefactor "Crush", 10.0
@@ -54,34 +54,18 @@ ACTOR BaronofHell2 : BaronofHell Replaces BaronofHell
 		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 20, 66,0)
 		BARO F 4 A_FaceTarget
 		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 20, 66,0)
-		BARO G 4 A_Recoil (-2)
+		BARO GGGG 1 A_NobleCharge()
 		
 	CHARGE:
-		TNT1 A 0 A_Recoil (-6)
-		
-		BRCG S 4 A_FaceTarget
-		TNT1 A 0 A_JumpIf(Momx == 0 || Momy == 0, "pounce")
-		TNT1 A 0 A_Recoil (-6)
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 22, 52,0)
+		BRCG SSSS 1 A_NobleCharge()
 		TNT1 A 0 A_PlaySound("cyber/hoof",4)
-		BRCG T 4 A_FaceTarget
-		TNT1 A 0 A_JumpIf(Momx == 0 || Momy == 0, "pounce")
-		TNT1 A 0 A_Recoil (-6)
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 22, 52,0)
+		BRCG TTTT 1 A_NobleCharge()
 		TNT1 A 0 A_JumpIfCloser(250, "POUNCE")
-		BRCG U 4 A_FaceTarget
-		TNT1 A 0 A_JumpIf(Momx == 0 || Momy == 0, "pounce")
-		TNT1 A 0 A_Recoil (-6)
+		BRCG UUUU 1 A_NobleCharge()
 		TNT1 A 0 A_PlaySound("cyber/hoof",5)
-		TNT1 A 0 A_custommissile("evilmarinecheckfront")
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 22, 52,0)
-		BRCG V 4 A_FaceTarget
-		TNT1 A 0 A_Recoil (-6)
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 22, 52,0)
+		BRCG VVVV 1 A_NobleCharge()
 		TNT1 A 0 A_JumpIfCloser(250, "POUNCE")
 		TNT1 A 0 A_jump(10,"justmissile")
-		TNT1 A 0 A_JumpIfInventory("evmarinenoway", 1, "Jump")
-		TNT1 A 0 A_JumpIf(Momx == 0 || Momy == 0, "pounce")
 		loop		
 	POUNCE:
 	Jump:
