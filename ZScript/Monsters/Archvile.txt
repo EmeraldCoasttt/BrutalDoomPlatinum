@@ -67,7 +67,7 @@
 				}
 				VileTarget = Spawn("Viletarget",(targetpos.x,targetpos.y,-999));
 				
-					If(viletarget && distance2d(viletarget) > 300 && checksight(viletarget))
+					If(viletarget && distance2d(viletarget) > 300 && checkmove((viletarget.pos.x, viletarget.pos.y),PCM_DROPOFF || PCM_NOACTORS))
 					{
 						teleportsuccess = true;
 						//console.printf("teleportsuccessful");
