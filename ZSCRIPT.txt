@@ -98,6 +98,8 @@ version "4.11.0"
 
 #include "ZScript/decorations/titlemapdecorations.txt"
 
+#include "ZScript/effects/ricochet.txt"
+
 const UNIT_METER = 8.f;
 
 // Any decorations should inherit from this if they've got no special behaviors.

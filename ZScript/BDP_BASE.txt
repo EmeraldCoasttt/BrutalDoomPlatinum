@@ -6,8 +6,23 @@
 // Modified for BDP by Emerald
 
 Class BDPActor : Actor abstract {
+
+
+	Array<string> BDPDirtTexture;
+	
+	
+	
+	
 	protected double pi;
 	protected name bcolor;
+	
+	override void BeginPlay() {
+		super.BeginPlay();
+		pi = 3.141592653589793;
+		
+		BDPDirtTexture.push("DESERT01");
+		BDPDirtTexture.push("RROCK03");
+	}	
 	
 	//returns false if 8 points around the actor in a specified radius are at the same height as at its pos; used by blood pools:
 	bool CheckLandingSize (double cradius = 0, bool checkceiling = false) {
@@ -143,10 +158,7 @@ Class BDPActor : Actor abstract {
 		}
 	}
 	
-	override void BeginPlay() {
-		super.BeginPlay();
-		pi = 3.141592653589793;
-	}	
+	
 	
 	States {
 	Loadsprites:
