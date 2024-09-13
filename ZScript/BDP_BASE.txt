@@ -22,6 +22,26 @@ Class BDPActor : Actor abstract {
 		
 		BDPDirtTexture.push("DESERT01");
 		BDPDirtTexture.push("RROCK03");
+		BDPDirtTexture.push("GRASS1");
+		  BDPDirtTexture.push("GRASS2");
+		  BDPDirtTexture.push("GRASS3");
+		  BDPDirtTexture.push("BDGRASS1");
+		  BDPDirtTexture.push("BDGRASS2");
+		  BDPDirtTexture.push("RROCK19");
+		  BDPDirtTexture.push("RROCK20");
+		  BDPDirtTexture.push("FLAT10");
+		  BDPDirtTexture.push("FLAT5");
+		  BDPDirtTexture.push("FLOOR7_1");
+		  BDPDirtTexture.push("MFLR8_2");
+		  BDPDirtTexture.push("MFLR8_4");
+		  BDPDirtTexture.push("RROCK03");
+		  BDPDirtTexture.push("RROCK16");
+		  BDPDirtTexture.push("RROCK17");
+		  BDPDirtTexture.push("RROCK18");
+		  BDPDirtTexture.push("DESERT01");
+		  BDPDirtTexture.push("DESERT02");
+		  BDPDirtTexture.push("DESERT03");
+		  BDPDirtTexture.push("JUNKY15");
 	}	
 	
 	//returns false if 8 points around the actor in a specified radius are at the same height as at its pos; used by blood pools:
