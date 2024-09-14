@@ -476,9 +476,9 @@ Class walldebris : Actor
 {
 	Default
 	{
-		Scale 0.45;
-		Height 2;
-		Radius 2;
+		Scale 0.50;
+		Height 1;
+		Radius 1;
 		+noblockmap;
 		bouncefactor 0.20;
 		+rollsprite;
@@ -521,24 +521,6 @@ Class walldebris : Actor
 	Spawn6:
 		WCHN F 0;
 		Goto StaySpawned;
-	Spawn7:
-		WCHN G 0;
-		Goto StaySpawned;
-	Spawn8:
-		WCHN H 0;
-		Goto StaySpawned;
-	Spawn9:
-		WCHN I 0;
-		Goto StaySpawned;
-	Spawn10:
-		WCHN J 0;
-		Goto StaySpawned;
-	Spawn11:
-		WCHN K 0;
-		Goto StaySpawned;
-	Spawn12:
-		WCHN L 0;
-		Goto StaySpawned;
 	StaySpawned:
 		WCHN "#" 1 
 		{
@@ -547,7 +529,10 @@ Class walldebris : Actor
 		TNT1 "#" 0 A_JumpIf(pos.Z <= floorz, "Floor");
 		LOOP;
 	Floor:
-		WCHN "#" 1;
+		TNT1 "#" 0 A_Stop();
+		WCHN "#" random(1,65);
+	Fadeout:
+		WCHN "#" 1 A_FADEOUT(0.1);
 		LOOP;
 		
 	}
@@ -578,5 +563,16 @@ CLASS walldebris2 : walldebris
 	}
 
 
+
+}
+
+CLASS walldebris3 : walldebris
+{
+	Default
+	{
+		//projectile;
+		Speed 10;
+	
+	}
 
 }

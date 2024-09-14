@@ -1,7 +1,7 @@
 actor Spark_BD1
 {
   height 1
-  radius 2
+  radius 1
   mass 0
   speed 3
 +CLIENTSIDEONLY
@@ -41,6 +41,29 @@ actor Spark_BD13 : Spark_BD1 { speed 3.25 }
 actor Spark_BD14 : Spark_BD1 { speed 3.5  }
 actor Spark_BD15 : Spark_BD1 { speed 3.75 }
 actor Spark_BD16 : Spark_BD1 { speed 4.0  }
+
+
+actor randomspark : randomspawner
+{
+	dropitem "Spark_bD1"
+	dropitem "Spark_bd2"
+	dropitem "Spark_bd3"
+	dropitem "Spark_bd4"
+	dropitem "Spark_bd5"
+	dropitem "Spark_bd6"
+	dropitem "Spark_bd7"
+	dropitem "Spark_bd8"
+	dropitem "Spark_bd9"
+	dropitem "Spark_bd10"
+	dropitem "Spark_bd11"
+	dropitem "Spark_bd12"
+	dropitem "Spark_bd13"
+	dropitem "Spark_bd14"
+	dropitem "Spark_bd15"
+	dropitem "Spark_bd16"
+	
+
+}
 
 actor SparkFlare_BD1
 {
