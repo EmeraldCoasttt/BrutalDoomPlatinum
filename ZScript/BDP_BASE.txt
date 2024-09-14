@@ -16,6 +16,7 @@ Class BDPActor : Actor abstract {
 	Array<string> BDPBlood;
 	Array<string> BDPMetal;
 	Array<string> BDPMetalGreen;
+	Array<string> BDPMetalBrown;
 	Array<string> BDPTech;
 	
 	
@@ -71,14 +72,20 @@ Class BDPActor : Actor abstract {
 		BDPBlood.push('BLOOD1');
 		BDPBlood.push('BDBLOOD1');
 		
-		BDPMetal.push('METAL24');
-		BDPMetal.push('STARTAN3');
 		BDPMetal.push('DOOR3');
 		BDPMetal.push('STARG3');
 		BDPMetal.push('SLADWALL');
 		BDPMetal.push('COMPTILE');
+		BDPMetal.push('STARTAN3');
+		BDPMetal.push('FLOOR4_8');
+		BDPMetal.push('FLAT14');
 		
 		BDPMetalgreen.push('BROWNGRN');
+		
+		
+		BDPMetalBrown.push('STEP6');
+		BDPMetalBrown.push('METAL24');
+		BDPMetalBrown.push('METAL52');
 		
 		BDPTech.push('COMPTALL');
 		BDPTech.push('COMPUTE3');
