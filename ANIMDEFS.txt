@@ -688,8 +688,9 @@ warp texture SKSNAKE2
 
 warp flat LAVAFL
 warp flat MAGEFL
-warp flat SFLR6_1
-warp flat SFLR6_4
+//Looks weird with decals
+//warp flat SFLR6_1
+//warp flat SFLR6_4
 
 //warp2 flat SMK2B0 These cause bugs on software mode.
 //warp2 flat SMK2a0

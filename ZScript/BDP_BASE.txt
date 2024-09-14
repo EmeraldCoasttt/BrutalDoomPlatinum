@@ -19,6 +19,7 @@ Class BDPActor : Actor abstract {
 	Array<string> BDPMetalBrown;
 	Array<string> BDPTech;
 	Array<string> BDPWood;
+	Array<string> BDPGoreTexture;
 	
 	
 	
@@ -105,6 +106,11 @@ Class BDPActor : Actor abstract {
 		BDPWood.push('WOOD5');
 		BDPWood.push('FLAT5_2');
 		BDPWood.push('FLAT5_1');
+		
+		BDPGoreTexture.push('SKINLOW');
+		BDPGoreTexture.push('SKINTEK2');
+		BDPGoreTexture.push('SFLR6_1');
+		BDPGoreTexture.push('SFLR6_4');
 		
 		
 	}	
