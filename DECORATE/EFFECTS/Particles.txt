@@ -933,6 +933,13 @@ Gravity 0.1
 	}
 }
 
+Actor MarbleCloudSmall : BrownCloudSmall
+{
+
+	renderstyle shaded
+	Stencilcolor "73 78 54"
+}
+
 
 Actor BrownCloudShort: BrownCloudSmall
 {

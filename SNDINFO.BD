@@ -50,6 +50,15 @@ WOODBR3 WOODBR3
 $limit WoodDebris 3
 $rolloff WoodDebris 200 1000  
 
+$random StoneDebris { STONBR1 STONBR2 STONBR3 }
+
+STONBR1 STONBR1
+STONBR2 STONBR2
+STONBR3 STONBR3
+
+$limit StoneDebris 3
+$rolloff StoneDebris 200 1000  
+
 BSTRSTRT BSTRSTRT
 BSTRStop BSTRStop
 BSTRLoop BSTRLoop
