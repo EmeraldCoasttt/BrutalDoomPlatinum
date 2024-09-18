@@ -73,6 +73,12 @@ Class BDPActor : Actor abstract {
 		BDPDirtTexture.push("ZIMMER4");
 		BDPDirtTexture.push("ZIMMER5");
 		BDPDirtTexture.push("BROWNHUG");
+		BDPDirtTexture.push("A-CAMO1A");
+		BDPDirtTexture.push("BDASHWL");
+		BDPDirtTexture.push("CLIFF05C");
+		BDPDirtTexture.push("JUNKY16");
+		BDPDirtTexture.push("SANDS1");
+		BDPDirtTexture.push("SANDS2");
 		
 		  
 		BDPWater.push("FWATER1");
@@ -203,6 +209,34 @@ Class BDPActor : Actor abstract {
 		BDPMetal.push("DOOR1");
 		BDPMetal.push("DOORHI");
 		BDPMetal.push("GRAYDANG");
+		BDPMetal.push("BASE25");
+		BDPMetal.push("GRAYDANG");
+		BDPMetal.push("BDHAU1");
+		BDPMetal.push("BDHAU2");
+		BDPMetal.push("BDHAU5");
+		BDPMetal.push("BDHAU6");
+		BDPMetal.push("BDHAU7");
+		BDPMetal.push("BDHELL01");
+		BDPMetal.push("BDHELL02");
+		BDPMetal.push("BDHELL03");
+		BDPMetal.push("BDHELL05");
+		BDPMetal.push("BUNKER03");
+		BDPMetal.push("BUNKER04");
+		BDPMetal.push("FLAT2B");
+		BDPMetal.push("GREIND5");
+		BDPMetal.push("GREIND2");
+		BDPMetal.push("GREIND3");
+		BDPMetal.push("LIT05S");
+		BDPMetal.push("METAIND5");
+		BDPMetal.push("METAL51");
+		BDPMetal.push("METALIN25");
+		BDPMetal.push("METALIN8");
+		BDPMetal.push("METALIND");
+		BDPMetal.push("NEWDOR4");
+		BDPMetal.push("NEWDOR4B");
+		BDPMetal.push("TNTDOOR1");
+		BDPMetal.push("TNTDOOR2");
+		BDPMetal.push("TNTDOR1S");
 		
 		BDPMetalgreen.push("BROWNGRN");
 		BDPMetalgreen.push("BIGDOOR3");
