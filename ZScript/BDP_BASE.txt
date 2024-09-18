@@ -71,6 +71,7 @@ Class BDPActor : Actor abstract {
 		BDPDirtTexture.push("ZIMMER3");
 		BDPDirtTexture.push("ZIMMER4");
 		BDPDirtTexture.push("ZIMMER5");
+		BDPDirtTexture.push("BROWNHUG");
 		
 		  
 		BDPWater.push("FWATER1");
@@ -220,6 +221,54 @@ Class BDPActor : Actor abstract {
 		BDPMetalBrown.push("METAL24");
 		BDPMetalBrown.push("METAL52");
 		BDPMetalBrown.push("STARTAN2");
+		BDPMetalBrown.push("BRONZE1");
+		BDPMetalBrown.push("BRONZE2");
+		BDPMetalBrown.push("BRONZE3");
+		BDPMetalBrown.push("BRONZE4");
+		BDPMetalBrown.push("BROWN1");
+		BDPMetalBrown.push("BROWN144");
+		BDPMetalBrown.push("BROWN96");
+		BDPMetalBrown.push("BROWNPIP");
+		BDPMetalBrown.push("CEIL1_2");
+		BDPMetalBrown.push("CEIL3_1");
+		BDPMetalBrown.push("CEIL3_2");
+		BDPMetalBrown.push("CEIL3_3");
+		BDPMetalBrown.push("CEIL3_4");
+		BDPMetalBrown.push("CEIL5_2");
+		BDPMetalBrown.push("FLAT8");
+		BDPMetalBrown.push("FLOOR0_1");
+		BDPMetalBrown.push("FLOOR0_2");
+		BDPMetalBrown.push("FLOOR3_3");
+		BDPMetalBrown.push("FLOOR4_1");
+		BDPMetalBrown.push("FLOOR4_5");
+		BDPMetalBrown.push("FLOOR4_6");
+		BDPMetalBrown.push("FLOOR5_2");
+		BDPMetalBrown.push("FLOOR5_3");
+		BDPMetalBrown.push("NUKE24");
+		BDPMetalBrown.push("NUKEDGE1");
+		BDPMetalBrown.push("NUKEPOIS");
+		BDPMetalBrown.push("PIPE1");
+		BDPMetalBrown.push("PIPE2");
+		BDPMetalBrown.push("PIPE4");
+		BDPMetalBrown.push("PIPE6");
+		BDPMetalBrown.push("SLIME16");
+		BDPMetalBrown.push("SPACEW2");
+		BDPMetalBrown.push("SPACEW4");
+		BDPMetalBrown.push("SPCDOOR1");
+		BDPMetalBrown.push("SPCDOOR4");
+		BDPMetalBrown.push("STARBR2");
+		BDPMetalBrown.push("STARTAN3");
+		BDPMetalBrown.push("STARTAN2");
+		BDPMetalBrown.push("STEP6");
+		BDPMetalBrown.push("STEP5");
+		BDPMetalBrown.push("STEPLAD1");
+		BDPMetalBrown.push("STEPTOP");
+		BDPMetalBrown.push("SUPPORT3");
+		BDPMetalBrown.push("TEKBRON1");
+		BDPMetalBrown.push("TEKBRON2");
+		BDPMetalBrown.push("TEKLITE");
+		BDPMetalBrown.push("TEKLITE2");
+		
 		
 		BDPTech.push("COMPTALL");
 		BDPTech.push("COMPUTE3");
