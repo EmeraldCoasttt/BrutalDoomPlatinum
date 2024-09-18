@@ -940,6 +940,13 @@ Actor MarbleCloudSmall : BrownCloudSmall
 	Stencilcolor "73 78 54"
 }
 
+Actor StoneCloudSmall : BrownCloudSmall
+{
+
+	renderstyle shaded
+	Stencilcolor "70 70 70"
+}
+
 
 Actor BrownCloudShort: BrownCloudSmall
 {

@@ -20,6 +20,7 @@ Class BDPActor : Actor abstract {
 	Array<string> BDPTech;
 	Array<string> BDPWood;
 	Array<string> BDPGoreTexture;
+	Array<string> BDPStone;
 	Array<string> BDPStoneGreen;
 	
 	
@@ -31,92 +32,95 @@ Class BDPActor : Actor abstract {
 		super.BeginPlay();
 		pi = 3.141592653589793;
 		
-		BDPDirtTexture.push('DESERT01');
-		BDPDirtTexture.push('RROCK03');
-		BDPDirtTexture.push('GRASS1');
-		  BDPDirtTexture.push('GRASS2');
-		  BDPDirtTexture.push('GRASS3');
-		  BDPDirtTexture.push('BDGRASS1');
-		  BDPDirtTexture.push('BDGRASS2');
-		  BDPDirtTexture.push('RROCK19');
-		  BDPDirtTexture.push('RROCK20');
-		  BDPDirtTexture.push('FLAT10');
-		  BDPDirtTexture.push('FLAT5');
-		  BDPDirtTexture.push('FLOOR7_1');
-		  BDPDirtTexture.push('MFLR8_2');
-		  BDPDirtTexture.push('MFLR8_4');
-		  BDPDirtTexture.push('RROCK03');
-		  BDPDirtTexture.push('RROCK16');
-		  BDPDirtTexture.push('RROCK17');
-		  BDPDirtTexture.push('RROCK18');
-		  BDPDirtTexture.push('DESERT01');
-		  BDPDirtTexture.push('DESERT02');
-		  BDPDirtTexture.push('DESERT03');
-		  BDPDirtTexture.push('JUNKY15');
-		BDPDirtTexture.push('CLIFF05B');
+		BDPDirtTexture.push("DESERT01");
+		BDPDirtTexture.push("RROCK03");
+		BDPDirtTexture.push("GRASS1");
+		  BDPDirtTexture.push("GRASS2");
+		  BDPDirtTexture.push("GRASS3");
+		  BDPDirtTexture.push("BDGRASS1");
+		  BDPDirtTexture.push("BDGRASS2");
+		  BDPDirtTexture.push("RROCK19");
+		  BDPDirtTexture.push("RROCK20");
+		  BDPDirtTexture.push("FLAT10");
+		  BDPDirtTexture.push("FLAT5");
+		  BDPDirtTexture.push("FLOOR7_1");
+		  BDPDirtTexture.push("MFLR8_2");
+		  BDPDirtTexture.push("MFLR8_4");
+		  BDPDirtTexture.push("RROCK03");
+		  BDPDirtTexture.push("RROCK16");
+		  BDPDirtTexture.push("RROCK17");
+		  BDPDirtTexture.push("RROCK18");
+		  BDPDirtTexture.push("DESERT01");
+		  BDPDirtTexture.push("DESERT02");
+		  BDPDirtTexture.push("DESERT03");
+		  BDPDirtTexture.push("JUNKY15");
+		BDPDirtTexture.push("CLIFF05B");
 		  
-		BDPWater.push('FWATER1');
-		BDPWater.push('FWATER02');
-		BDPWater.push('BDFWATER');
+		BDPWater.push("FWATER1");
+		BDPWater.push("FWATER02");
+		BDPWater.push("BDFWATER");
 		
-		BDPSlime.push('SLIME01');
-		BDPSlime.push('SLIME05');
-		BDPSlime.push('BDSLIME1');
-		BDPSlime.push('BDSLIME2');
+		BDPSlime.push("SLIME01");
+		BDPSlime.push("SLIME05");
+		BDPSlime.push("BDSLIME1");
+		BDPSlime.push("BDSLIME2");
 		
-		BDPNukage.push('NUKAGE1');
-		BDPNukage.push('BDNUKE1');
+		BDPNukage.push("NUKAGE1");
+		BDPNukage.push("BDNUKE1");
 		
-		BDPLava.push('LAVA1');
-		BDPLava.push('LAV1');
-		BDPLava.push('LAVA02');
-		BDPLava.push('LAVAFL');
+		BDPLava.push("LAVA1");
+		BDPLava.push("LAV1");
+		BDPLava.push("LAVA02");
+		BDPLava.push("LAVAFL");
 		
-		BDPBlood.push('BLOOD1');
-		BDPBlood.push('BDBLOOD1');
+		BDPBlood.push("BLOOD1");
+		BDPBlood.push("BDBLOOD1");
 		
-		BDPMetal.push('DOOR3');
-		BDPMetal.push('STARG3');
-		BDPMetal.push('SLADWALL');
-		BDPMetal.push('COMPTILE');
-		BDPMetal.push('STARTAN3');
-		BDPMetal.push('FLOOR4_8');
-		BDPMetal.push('FLAT14');
-		BDPMetal.push('CEIL3_5');
+		BDPMetal.push("DOOR3");
+		BDPMetal.push("STARG3");
+		BDPMetal.push("SLADWALL");
+		BDPMetal.push("COMPTILE");
+		BDPMetal.push("STARTAN3");
+		BDPMetal.push("FLOOR4_8");
+		BDPMetal.push("FLAT14");
+		BDPMetal.push("CEIL3_5");
 		
-		BDPMetalgreen.push('BROWNGRN');
+		BDPMetalgreen.push("BROWNGRN");
 		
 		
-		BDPMetalBrown.push('STEP6');
-		BDPMetalBrown.push('METAL24');
-		BDPMetalBrown.push('METAL52');
-		BDPMetalBrown.push('STARTAN2');
+		BDPMetalBrown.push("STEP6");
+		BDPMetalBrown.push("METAL24");
+		BDPMetalBrown.push("METAL52");
+		BDPMetalBrown.push("STARTAN2");
 		
-		BDPTech.push('COMPTALL');
-		BDPTech.push('COMPUTE3');
-		BDPTech.push('COMPUTE2');
-		BDPTech.push('CONS1_7');
-		BDPTech.push('CONS1_1');
-		BDPTech.push('CONS1_5');
-		BDPTech.push('TEKWALL4');
-		BDPTech.push('FLAT22');
-		BDPTech.push('COMPSTA1');
-		BDPTech.push('COMPSTA2');
+		BDPTech.push("COMPTALL");
+		BDPTech.push("COMPUTE3");
+		BDPTech.push("COMPUTE2");
+		BDPTech.push("CONS1_7");
+		BDPTech.push("CONS1_1");
+		BDPTech.push("CONS1_5");
+		BDPTech.push("TEKWALL4");
+		BDPTech.push("FLAT22");
+		BDPTech.push("COMPSTA1");
+		BDPTech.push("COMPSTA2");
 		
-		BDPWood.push('WOOD1');
-		BDPWood.push('WOOD5');
-		BDPWood.push('FLAT5_2');
-		BDPWood.push('FLAT5_1');
+		BDPWood.push("WOOD1");
+		BDPWood.push("WOOD5");
+		BDPWood.push("FLAT5_2");
+		BDPWood.push("FLAT5_1");
 		
-		BDPGoreTexture.push('SKINLOW');
-		BDPGoreTexture.push('SKINTEK2');
-		BDPGoreTexture.push('SFLR6_1');
-		BDPGoreTexture.push('SFLR6_4');
+		BDPGoreTexture.push("SKINLOW");
+		BDPGoreTexture.push("SKINTEK2");
+		BDPGoreTexture.push("SFLR6_1");
+		BDPGoreTexture.push("SFLR6_4");
 		
-		BDPStoneGreen.push('GSTONE1');
-		BDPStoneGreen.push('GSTONE2');
-		BDPStoneGreen.push('DEM1_5');
-		BDPStoneGreen.push('DEM1_6');
+		BDPStone.push("STONE4");
+		BDPStone.push("FLAT5_4");
+		
+		BDPStoneGreen.push("GSTONE1");
+		BDPStoneGreen.push("GSTONE2");
+		BDPStoneGreen.push("DEM1_5");
+		BDPStoneGreen.push("DEM1_6");
 		
 		
 	}	
