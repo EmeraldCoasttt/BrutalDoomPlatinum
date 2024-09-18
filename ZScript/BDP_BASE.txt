@@ -22,6 +22,8 @@ Class BDPActor : Actor abstract {
 	Array<string> BDPGoreTexture;
 	Array<string> BDPStone;
 	Array<string> BDPStoneGreen;
+	Array<string> BDPStoneBrown;
+	Array<string> BDPStoneRed;
 	
 	
 	
@@ -121,6 +123,11 @@ Class BDPActor : Actor abstract {
 		BDPStoneGreen.push("GSTONE2");
 		BDPStoneGreen.push("DEM1_5");
 		BDPStoneGreen.push("DEM1_6");
+		
+		BDPStoneBrown.push("BRWINDOW");
+		BDPStoneBrown.push("BRICK7");
+		
+		BDPStoneRed.push("SP_HOT1");
 		
 		
 	}	
