@@ -256,6 +256,10 @@ Class BDPActor : Actor abstract {
 		BDPMetalgreen.push("NUKESLAD");
 		BDPMetalgreen.push("SLADRIP2");
 		BDPMetalgreen.push("SLADWALL");
+		BDPMetalgreen.push("A_CAMO-1");
+		BDPMetalgreen.push("METALIN4");
+		BDPMetalgreen.push("METALIN8");
+		BDPMetalgreen.push("SLADWALL");
 		
 		
 		
@@ -326,6 +330,26 @@ Class BDPActor : Actor abstract {
 		BDPMetalBrown.push("STARTAN1");
 		BDPMetalBrown.push("STEP2");
 		BDPMetalBrown.push("METAL53");
+		BDPMetalBrown.push("BASE26");
+		BDPMetalBrown.push("METAIND2");
+		BDPMetalBrown.push("METAIND4");
+		BDPMetalBrown.push("METAL53");
+		BDPMetalBrown.push("METAL12");
+		BDPMetalBrown.push("METAL53");
+		BDPMetalBrown.push("METAL21");
+		BDPMetalBrown.push("METAL22");
+		BDPMetalBrown.push("METAL23");
+		BDPMetalBrown.push("METAL24");
+		BDPMetalBrown.push("METAL24B");
+		BDPMetalBrown.push("METAL24C");
+		BDPMetalBrown.push("METAL52");
+		BDPMetalBrown.push("METAL54");
+		BDPMetalBrown.push("METALI2D");
+		BDPMetalBrown.push("METALIN2");
+		BDPMetalBrown.push("METAL53");
+		BDPMetalBrown.push("NEWDOR2");
+		BDPMetalBrown.push("NEWDOR3");
+		
 		
 		
 		BDPTech.push("COMPTALL");
@@ -425,6 +449,10 @@ Class BDPActor : Actor abstract {
 		BDPTech.push("TLITE6_5");
 		BDPTech.push("TLITE6_6");
 		BDPTech.push("SPACM0");
+		BDPTech.push("SPACM1");
+		BDPTech.push("SPACM2");
+		BDPTech.push("SPACM3");
+		BDPTech.push("SPACM4");
 		BDPTech.push("LITE2");
 		BDPTech.push("LITE96");
 		BDPTech.push("LITE3");
@@ -437,6 +465,20 @@ Class BDPActor : Actor abstract {
 		BDPTech.push("TEKWALL2");
 		BDPTech.push("LITEMET");
 		BDPTech.push("LITESTON");
+		BDPTech.push("BDSTEP04");
+		BDPTech.push("GREIND1");
+		BDPTech.push("GREIND4");
+		BDPTech.push("GRNLIT1B");
+		BDPTech.push("LIT05C");
+		BDPTech.push("LIT05S");
+		BDPTech.push("LITGEN6");
+		BDPTech.push("LITGEN7");
+		BDPTech.push("LITGEN7B");
+		BDPTech.push("LITGEN8");
+		BDPTech.push("LITGEN9");
+		BDPTech.push("LITGEN9B");
+		BDPTech.push("LITGEN9C");
+		BDPTech.push("LITGEN9D");
 		
 		BDPWood.push("WOOD1");
 		BDPWood.push("WOOD5");
@@ -503,6 +545,7 @@ Class BDPActor : Actor abstract {
 		BDPWood.push("ZZWOLF5");
 		BDPWood.push("ZZWOLF6");
 		BDPWood.push("ZZWOLF7");
+		BDPWood.push("NEWDOR1");
 		
 		
 		BDPGoreTexture.push("SKINLOW");
@@ -543,6 +586,7 @@ Class BDPActor : Actor abstract {
 		BDPGoreTexture.push("ZZZFACE8");
 		BDPGoreTexture.push("ZZZFACE9");
 		BDPGoreTexture.push("SKINBORD");
+		BDPGoreTexture.push("BDHEL08");
 		
 		BDPStone.push("STONE4");
 		BDPStone.push("FLAT5_4");
@@ -582,6 +626,33 @@ Class BDPActor : Actor abstract {
 		BDPStone.push("BUNKER05");
 		BDPStone.push("STONE2");
 		BDPStone.push("STONPOIS");
+		BDPStone.push("A-CAMO2A");
+		BDPStone.push("A-CAMO2C");
+		BDPStone.push("A-CAMO3A");
+		BDPStone.push("APOCTX1");
+		BDPStone.push("APOCTX2");
+		BDPStone.push("APOCTX3");
+		BDPStone.push("APOCTX1B");
+		BDPStone.push("BDHEL04B");
+		BDPStone.push("BDHEL06");
+		BDPStone.push("BDHEL04B");
+		BDPStone.push("BUNKER01");
+		BDPStone.push("BUNKER02");
+		BDPStone.push("CEMENTW9");
+		BDPStone.push("F_CHECK");
+		BDPStone.push("BDHEL04B");
+		BDPStone.push("F_LAB5");
+		BDPStone.push("F_LABW");
+		BDPStone.push("INDUS1");
+		BDPStone.push("INDUS4");
+		BDPStone.push("BDHEL04B");
+		BDPStone.push("METALIND6");
+		BDPStone.push("BDHEL04B");
+		BDPStone.push("TRGIMP");
+		BDPStone.push("W_LAB1");
+		BDPStone.push("W_LAB3");
+		BDPStone.push("W_LAB4");
+		BDPStone.push("W_LAB4B");
 		
 		BDPStoneGreen.push("GSTONE1");
 		BDPStoneGreen.push("GSTONE2");
@@ -628,6 +699,12 @@ Class BDPActor : Actor abstract {
 		BDPStoneGreen.push("ZIMMER2");
 		BDPStoneGreen.push("ZIMMER7");
 		BDPStoneGreen.push("ZIMMER8");
+		BDPStoneGreen.push("BDHEL04");
+		BDPStoneGreen.push("BDHEL09");
+		BDPStoneGreen.push("BDHEL10");
+		BDPStoneGreen.push("BDHEL11");
+		BDPStoneGreen.push("BDHEL11B");
+		BDPStoneGreen.push("BUNKER07");
 		
 		
 		BDPStoneBrown.push("BRWINDOW");
@@ -681,6 +758,8 @@ Class BDPActor : Actor abstract {
 		BDPStoneBrown.push("ZIMMER4");
 		BDPStoneBrown.push("SKULWALL");
 		BDPStoneBrown.push("SKULWAL3");
+		BDPStoneBrown.push("INDUS3");
+		BDPStoneBrown.push("INDUS1");
 		
 		BDPStoneRed.push("SP_HOT1");
 		BDPStoneRed.push("BRICK11");
