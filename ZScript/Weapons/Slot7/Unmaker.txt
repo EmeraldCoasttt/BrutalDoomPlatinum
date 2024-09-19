@@ -181,8 +181,8 @@ CLASS Unmaker : BrutalWeapon
 		A_fireprojectile("ShotgunParticles2", random(-12,12), 0, -1, 0, 0, random(-9,9));
 		a_alertmonstersDX();
 		A_RailAttack((random(150,300)), 0, 0, 0, "red", RGF_SILENT | RGF_CENTERZ | RGF_FULLBRIGHT, 0, "UnmakerLaserPuff", 0, 0, 8192, 1, 32.0, 0, "UnmakerLaserTrail2");
-		 A_SetAngle(random(1, -1) + angle, SPF_INTERPOLATE);
-		A_SetPitch(random(1, -1) + pitch, SPF_INTERPOLATE);
+		 A_SetAngle(random(0.5, -0.5) + angle, SPF_INTERPOLATE);
+		A_SetPitch( Pitch - 0.5, SPF_INTERPOLATE);
 	
 		A_Recoil3d(0.2);
 		
