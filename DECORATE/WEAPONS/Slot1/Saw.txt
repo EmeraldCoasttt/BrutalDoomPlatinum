@@ -22,6 +22,7 @@ Actor Chain_saw : BrutalWeapon
 	Inventory.PickupSound "weapons/chainsaw/draw"
 	Inventory.AltHUDIcon "CSAWA0"
 	scale 0.8
+	+weapon.noautofire
 	//brutalweapon.handedness 2
 states
 	{
@@ -330,12 +331,12 @@ states
 		"####" I 1
 		"####" A 0 A_TakeInventory("Reloading",1)
 		Goto Ready
-	
+	 
 	Ready:
 	Ready3:
 	ReadyToFire:
 		TNT1 A 0 A_Giveinventory("HasCutingWeapon",1)
-		TNT1 A 0 A_StopSound(4)
+		TNT1 A 0 A_StopSound(5)
 		TNT1 A 0 A_StopSound(1)
 		TNT1 A 0 A_playsoundex("weapons/chainsaw/idle", 6)
 		TNT1 A 0 A_FireCustomMissile("SmokeSpawner",0,0,0,5)
@@ -409,10 +410,8 @@ states
 		Goto Ready
 	
 	
-	//Unused, v21 style sawing
 	
-	//SawDirection is used as a checker for which direction to attack from.
-	/*
+	
     Fire:
 	    TNT1 A 0 A_JumpIfInventory("SawDirection",1,"Fire2")
 		CSR1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
@@ -423,36 +422,44 @@ states
 		"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
 		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
 		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		//"####" A 0 A_semiflag
 		"####" STU 1
 	FireNoStartup:
+		"####" A 0 A_bdpmeleestart(400)
 		"####" A 0 A_Giveinventory("HasCutingWeapon",1)
 		"####" A 0 A_PlaySound("weapons/chainsaw/loop",1)
 		"####" AB 1
-		"####" A 0 A_PlaySound("weapons/chainsaw/draw", 4)
-		"####" AAA 0 A_Saw("", "", 1, "SSawPuff2", 0 , 100, 32,0)
-		"####" C 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		"####" A 0 A_PlaySound("weapons/chainsaw/draw", 5)
+		//"####" AAA 0 A_Saw("", "", 1, "SSawPuff2", 0 , 100, 32,0)
+		"####" C 1 A_bdpmelee(150,"MeleeAttackSaw",0,false)
 		"####" A 0
 		{
+		/*
 		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinueRed"); }
 		If(CountInv("ChainsawHitBlue")==1) {Return State("FireContinueBlue"); }
 		If(CountInv("ChainsawHitGreen")==1) {Return State("FireContinueGreen"); }
+		*/
 		Return State("");}
 		
-		"####" D 1 A_FireCustomMissile("SawDamageHorizontal", 0, 0, 0, 0)
+		"####" D 1 A_bdpmelee(150,"MeleeAttackSaw",0,false)
 		"####" A 0
 		{
+		/*
 		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinueRed"); }
 		If(CountInv("ChainsawHitBlue")==1) {Return State("FireContinueBlue"); }
 		If(CountInv("ChainsawHitGreen")==1) {Return State("FireContinueGreen"); }
+		*/
 		Return State("");}
-		"####" E 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		"####" E 1 A_bdpmelee(150,"MeleeAttackSaw",0,false)
 		"####" A 0 
 		{
+		/*
 		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinueRed"); }
 		If(CountInv("ChainsawHitBlue")==1) {Return State("FireContinueBlue"); }
 		If(CountInv("ChainsawHitGreen")==1) {Return State("FireContinueGreen"); }
+		*/
 		Return State("");}
-		"####" F 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		"####" F 1 A_bdpmelee(150,"MeleeAttackSaw",0,false)
 		"####" A 0 
 		{
 		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinueRed"); }
@@ -462,9 +469,12 @@ states
 		"####" GHI 1 
 		"####" A 0 	{A_GiveInventory("QuickSwitchSSG",1); A_GiveInventory("SawDirection",1);}
 		"####" ZZ 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
-		"####" A 0 A_ReFire("Fire2NoStartup")
+		"####" A 0// A_ReFire("Fire2NoStartup")
+		//"####" A 0 A_Semirefire("Fire","ReturnFromFire")
 		"####" A 0 A_TakeInventory("QuickSwitchSSG",1)
+		ReturnFromFire:
 		"####" XWV 1
+		
 		Goto Ready//FireEnd
 	Fire2:
 		CSR1 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
@@ -475,14 +485,16 @@ states
 		"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
 		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
 		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
+		//"####" A 0 A_semiflag
 		"####" VWX 1
 	Fire2NoStartup:
+		"####" A 0 A_bdpmeleestart(200)
 		"####" A 0 A_Giveinventory("HasCutingWeapon",1)
 		"####" A 0 A_playsound("weapons/chainsaw/loop",1)
 		"####" JK 1
-		"####" A 0 A_PlaySound("weapons/chainsaw/draw", 4)
-		"####" AAA 0 A_Saw("", "", 1, "SSawPuff2", 0, 100, 32,0)
-		"####" L 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		"####" A 0 A_PlaySound("weapons/chainsaw/draw", 5)
+		//"####" AAA 0 A_Saw("", "", 1, "SSawPuff2", 0, 100, 32,0)
+		"####" L 1 A_bdpmelee(150,"MeleeAttackSaw",0,false)
 		"####" A 0
 		{
 		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinue2Red"); }
@@ -490,21 +502,21 @@ states
 		If(CountInv("ChainsawHitGreen")==1) {Return State("FireContinue2Green"); }
 		Return State("");}
 		
-		"####" M 1 A_FireCustomMissile("SawDamageHorizontal", 0, 0, 0, 0)
+		"####" M 1 A_bdpmelee(150,"MeleeAttackSaw",0,false)
 		"####" A 0
 		{
 		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinue2Red"); }
 		If(CountInv("ChainsawHitBlue")==1) {Return State("FireContinue2Blue"); }
 		If(CountInv("ChainsawHitGreen")==1) {Return State("FireContinue2Green"); }
 		Return State("");}
-		"####" N 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		"####" N 1 A_bdpmelee(150,"MeleeAttackSaw",0,false)
 		"####" A 0 
 		{
 		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinue2Red"); }
 		If(CountInv("ChainsawHitBlue")==1) {Return State("FireContinue2Blue"); }
 		If(CountInv("ChainsawHitGreen")==1) {Return State("FireContinue2Green"); }
 		Return State("");}
-		"####" O 1 A_FireCustomMissile("SawDamageHorizontal2", 0, 0, 0, 0)
+		"####" O 1 A_bdpmelee(150,"MeleeAttackSaw",0,false)
 		"####" A 0 
 		{
 		If(CountInv("ChainsawHitRed")==1) {Return State("FireContinue2Red"); }
@@ -514,10 +526,13 @@ states
 		"####" PQR 1
 		"####" A 0 	{A_GiveInventory("QuickSwitchSSG",1); A_TakeInventory("SawDirection",1);}
 		"####" ZZ 2 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB)
-		"####" A 0 A_ReFire("FireNoStartup")
+		//"####" A 0 A_Semirefire("Fire","ReturnFromFire2")
 		"####" A 0 A_TakeInventory("QuickSwitchSSG",1)
+		ReturnFromFire2:
 		"####" UTS 1
+		//TNT1 A 0 A_Semirefire("Fire","Ready")
 		Goto Ready//FireEnd
+		/*
 		
 	FireRed:
 	FireBlue:
@@ -661,7 +676,7 @@ states
 		goto readytofire
 	*/
 		
-	Fire:
+	AltFire:
 		CSR2 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,4)
 		CSG2 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,3)
 		CSB2 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
@@ -681,36 +696,36 @@ states
 		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
 		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
 		"####" A 0 A_PlaySound("weapons/chainsaw/loop",1)
-		"####" E 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2Smaller", 0, 80, 2,1); }
+		"####" E 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 100, 32,0); }
 		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "ContinueRed")
 		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "ContinueBlue")
 		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "ContinueGreen")
-		"####" E 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2Smaller", 0, 80, 2,1); }
+		"####" E 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 100, 32,0); }
 		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "ContinueRed")
 		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "ContinueBlue")
 		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "ContinueGreen")
-		"####" J 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2Smaller", 0, 80, 2,1); }
+		"####" J 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 100, 32,0); }
 		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "ContinueRed")
 		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "ContinueBlue")
 		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "ContinueGreen")
-		"####" J 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2Smaller", 0, 80, 2,1); }
+		"####" J 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 100, 32,0); }
 		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "ContinueRed")
 		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "ContinueBlue")
 		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "ContinueGreen")
 	FireLoop2:
-		"####" E 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2Smaller", 0, 80, 2,1); }
+		"####" E 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 100, 32,0); }
 		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "ContinueRed")
 		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "ContinueBlue")
 		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "ContinueGreen")
-		"####" E 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2Smaller", 0, 80, 2,1); }
+		"####" E 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 100, 32,0); }
 		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "ContinueRed")
 		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "ContinueBlue")
 		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "ContinueGreen")
-		"####" J 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2Smaller", 0, 80, 2,1); }
+		"####" J 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 100, 32,0); }
 		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "ContinueRed")
 		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "ContinueBlue")
 		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "ContinueGreen")
-		"####" J 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2Smaller", 0, 80, 2,1); }
+		"####" J 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 100, 32,0); }
 		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "ContinueRed")
 		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "ContinueBlue")
 		"####" A 0 A_JumpIfInventory("ChainsawHitGreen", 1, "ContinueGreen")
@@ -751,13 +766,13 @@ states
 		"####" FG 1
 		{
 		A_WeaponOffset( random(3,-3) , 32+random(3,-3), 0);
-		A_Saw("", "", 1, "SSawPuff2Smaller", 0, 80, 2,1);
+		A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 100, 32,0);
 		}
 		"####" A 0 A_JumpIf( CountInv("ChainsawHitRed")==0 && CountInv("ChainsawHitBlue")==0 && CountInv("ChainsawHitGreen")==0, "AltFireLoop2")
 		"####" HI 1
 		{
 		A_WeaponOffset( random(3,-3) , 32+random(3,-3), 0);
-		A_Saw("", "", 1, "SSawPuff2Smaller", 0, 80, 2,1);
+		A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 100, 32,0);
 		}
 		"####" A 0 
 		{

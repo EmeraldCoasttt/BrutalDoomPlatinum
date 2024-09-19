@@ -551,7 +551,7 @@ ACTOR SSawPuff: HitPuff
   RenderStyle Add
 scale 0.15
 alpha 0.7
-Radius 20
+Radius 5
 damagetype Saw
 decal "SawHorizontal"
   +NOBLOCKMAP
@@ -567,10 +567,11 @@ XDeath:
 		TNT1 A 0
 		TNT1 AB 1 bright
 		TNT1 A 0 A_Jump (128,3)
-		TNT1 A 0 A_SpawnItem ("Sparks", 0)
-		TNT1 AAAAAA 0 A_CustomMissile ("SparkX", 2, 0, random (0, 360), 2, random (30, 170))
-		BPUF C 1 bright A_PlaySound("weapons/chainsaw/hitwall")
-		BPUF D 1 bright
+		TNT1 A 0 A_SpawnItem ("Ricochet", 0)
+		//TNT1 AAAAAA 0 A_CustomMissile ("SparkX", 2, 0, random (0, 360), 2, random (30, 170))
+		//BPUF C 1 bright// A_PlaySound("weapons/chainsaw/hitwall")
+		//BPUF D 1 bright
+		TNT1 AAA 1
 		Stop	
 
 
