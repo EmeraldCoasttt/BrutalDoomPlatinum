@@ -30,7 +30,7 @@ Class RicoChet : BDPActor
         if (walltex.hittexture)
         {
 			RicochetWall = TexMan.GetName(walltex.hittexture);
-			console.printf(RicochetWall);
+			//console.printf(RicochetWall);
 		}
 		if (BDPDirtTexture.Find(RicochetWall) != BDPDirtTexture.Size())
 		{
@@ -127,7 +127,7 @@ Class RicoChet : BDPActor
 	{
 		string RicochetFloor;
 		RicochetFloor = TexMan.GetName(floorpic);
-		console.printf(RicochetFloor);
+		//console.printf(RicochetFloor);
 		if (BDPDirtTexture.Find(RicochetFloor) != BDPDirtTexture.Size())
 		{
 			Return resolvestate("spawnDirt");
@@ -220,7 +220,7 @@ Class RicoChet : BDPActor
 	{
 		string RicochetCeiling;
 		RicochetCeiling = TexMan.GetName(Ceilingpic);
-		console.printf(RicochetCeiling);
+		//console.printf(RicochetCeiling);
 		if (BDPDirtTexture.Find(RicochetCeiling) != BDPDirtTexture.Size())
 		{
 			Return resolvestate("spawnDirtCeiling");
