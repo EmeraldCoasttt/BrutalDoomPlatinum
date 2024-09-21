@@ -160,11 +160,11 @@ CLASS BattleRifle : Brutalweapon
 				A_fireprojectile("shotgunparticles2",random(12,-12),false,0,0,0,random(9,-9));
 				If(invoker.burstselected)
 				{
-					A_FireBullets (0, 0, -1, 27, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
+					A_FireBullets (0, 0, -1, 90, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 				}
 				Else
 				{
-					A_FireBullets (0, 0, -1, 40, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
+					A_FireBullets (0, 0, -1, 45, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 				}
 				A_startsound("BR45FIRE",1);
 				A_ALertMonstersDX();
