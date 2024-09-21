@@ -170,11 +170,11 @@ CLASS DemonPlayer : DoomPlayer
 	Property deadgibs : deadgibs;
 	Default
 	{
-	Health 30;
+	Health 666;
 	+buddha;
 	Player.TeleportFreezeTime 0;
 	Player.runhealth 999;
-	demonplayer.decayticks 35;
+	demonplayer.decayticks 3;
 	demonplayer.deadgibs "DeadMarineArtifact";
 	damagefactor 0.0;
 	}
@@ -184,11 +184,7 @@ CLASS DemonPlayer : DoomPlayer
 	Override void tick()
 	{
 	takeinventory("PausePowerup",1);
-	If(health > 30)
-	{
-	Health = 30;
-	}
-	if ( decayrate >= decayticks && countinv("pausepowerup") < 1) 
+	if ( decayrate >= decayticks) 
 	{
 			If(health <= 1)
 			{
