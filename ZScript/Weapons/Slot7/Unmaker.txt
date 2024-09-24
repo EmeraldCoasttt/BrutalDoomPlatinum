@@ -20,6 +20,7 @@ CLASS Unmaker : BrutalWeapon
 	BrutalWeapon.weight 3;
 	}
 		Actor TeleportPending;
+		int LaserCount;
 	States
 	{
 	
@@ -143,7 +144,7 @@ CLASS Unmaker : BrutalWeapon
         UNHW A 1;
         Loop;
 		
-	Fire:
+	AltFire:
 		UNHG A 0;
 		UNHG A 0 A_startSOund("UNMCRAK2", 1);
 		UNHF ABCD 1;
@@ -166,7 +167,7 @@ CLASS Unmaker : BrutalWeapon
 		A_SetPitch(-1 + pitch, SPF_INTERPOLATE);
 		}
 		*/
-		Fire2:
+		AltFire2:
 		 UNHF EFGH 1 BRIGHT
 		{
 		A_gunlight(255,0,0);
@@ -189,7 +190,7 @@ CLASS Unmaker : BrutalWeapon
 		}
 		
 		
-		UNHG A 0 A_Refire("fire2");
+		UNHG A 0 A_Refire("Altfire2");
 	
 		UNHG A 0 A_takeinventory("unmakerunmorph",1);
 		UNHG A 0 A_ZoomFactor(1.0);
@@ -224,62 +225,11 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		UNHF DCBA 1;
 		Goto Ready3;
 		
-		AltFire:
+		Fire:
 		UNHG A 0 A_startSOund("UNMCRAK2");
 		UNHF ABCD 1;
 		UNHF E 1 A_gunlight(255,0,0);
-		/*
-		TNT1 A 0 A_JumpIfInventory("UnmakerUpgrade",3,"ContinueAltFire3") //fires 3 shots.
-		TNT1 A 0 A_JumpIfInventory("UnmakerUpgrade",2,"ContinueAltFire2") //fires 2 shots, even faster.
-		TNT1 A 0 A_JumpIfInventory("UnmakerUpgrade",1,"ContinueAltFire1") //fires faster.			
-		ContinueAltFire: //Standard altfire
-		TNT1 A 0 A_TakeInventory("SoulAmmo",1)
-		UNHG A 0 A_StartSound("UNMALT",1)
-		TNT1 A 0 BRIGHT A_fireprojectile("UnmakerTracer", random(-1,1), 0, 0, -1, 0, frandom(-0.4,0.4))
-		TNT1 A 0 BRIGHT A_fireprojectile("ShotgunParticles", random(-12,12), 0, 0, 0, 0, random(-9,9))
-		TNT1 A 0 BRIGHT A_fireprojectile("ShotgunParticles2", random(-12,12), 0, 0, 0, 0, random(-9,9))
-		TNT1 A 0 A_SetAngle(angle+random(1,-1))
-		UNHF IJ 1 A_SetPitch(pitch-1)
-		UNHF K 1
-		UNHF LM 1 A_SetPitch(pitch+1)
-		UNHF N 1 
-		UNHF DDDD 1
-		TNT1 A 0 A_Refire("ContinueAltFire")
-		UNHF DCBA 1
-		Goto Ready
-		
-		ContinueAltFire1: //Faster fire
-		TNT1 A 0 A_TakeInventory("SoulAmmo",1)
-		UNHG A 0 A_StartSound("UNMALT",1)
-		TNT1 A 0 BRIGHT A_fireprojectile("UnmakerTracer", random(-1,1), 0, 0, -1, 0, frandom(-0.4,0.4))
-		TNT1 A 0 BRIGHT A_fireprojectile("ShotgunParticles", random(-12,12), 0, 0, 0, 0, random(-9,9))
-		TNT1 A 0 BRIGHT A_fireprojectile("ShotgunParticles2", random(-12,12), 0, 0, 0, 0, random(-9,9))
-		TNT1 A 0 A_SetAngle(angle+random(1,-1))
-		UNHF IJ 1 A_SetPitch(pitch-1)
-		UNHF K 1
-		UNHF LM 1 A_SetPitch(pitch+1)
-		UNHF N 1 
-		UNHF D 1
-		TNT1 A 0 A_Refire("ContinueAltFire1")
-		UNHF DCBA 1
-		Goto Ready
-		
-		ContinueAltFire2: //2 tracers, even faster
-		UNHG A 0 A_StartSound("UNMALT",1)
-		TNT1 A 0 A_TakeInventory("SoulAmmo",2)
-		TNT1 A 0 BRIGHT A_fireprojectile("UnmakerTracerStronger", random(-3,-1), 0, 0, -1, 0, frandom(-0.4,0.4))
-		TNT1 A 0 BRIGHT A_fireprojectile("UnmakerTracerStronger", random(3,1), 0, 0, -1, 0, frandom(-0.4,0.4))
-		TNT1 A 0 BRIGHT A_fireprojectile("ShotgunParticles", random(-12,12), 0, 0, 0, 0, random(-9,9))
-		TNT1 A 0 BRIGHT A_fireprojectile("ShotgunParticles2", random(-12,12), 0, 0, 0, 0, random(-9,9))
-		TNT1 A 0 A_SetAngle(angle+random(1,-1))
-		UNHF IJ 1 A_SetPitch(pitch-0.6)
-		UNHF K 1
-		UNHF MN 1 A_SetPitch(pitch+0.6)
-		TNT1 A 0 A_Refire("ContinueAltFire2")
-		UNHF DCBA 1
-		Goto Ready
-		*/
-		ContinueAltFire3: //3 tracers
+		ContinueFire:
 		UNHG A 0 
 		{
 		A_gunlight(255,0,0);
@@ -290,24 +240,30 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		A_damageself(3,"desintegrate");
 		}
 		A_TakeInventory("SoulAmmo",3);
-		/*
-		TNT1 A 0 BRIGHT A_fireprojectile("UnmakerTracerStronger", random(-6,-3), 0, 0, -1, 0, frandom(-0.4,0.4))
-		TNT1 A 0 BRIGHT A_fireprojectile("UnmakerTracerStronger", random(6,3), 0, 0, -1, 0, frandom(-0.4,0.4))
-		TNT1 A 0 BRIGHT A_fireprojectile("UnmakerTracerStronger", 0, 0, 0, -1, 0, frandom(-0.4,0.4))
-		TNT1 A 0 BRIGHT A_fireprojectile("ShotgunParticles", random(-12,12), 0, 0, 0, 0, random(-9,9))
-		TNT1 A 0 BRIGHT A_fireprojectile("ShotgunParticles2", random(-12,12), 0, 0, 0, 0, random(-9,9))
-		*/
-	A_fireprojectile("UnmakerLaser", 0, 1,0,-5);
-	  A_fireprojectile("UnmakerLaser", 3, 1, 0,-5);
-	  A_fireprojectile("UnmakerLaser", -3, 1, 0,-5);
-		A_SetAngle(angle+random(1,-1));
+		
+		
+		If(invoker.lasercount > 9)
+		{
+			Invoker.Lasercount = 0;
+		}
+		
+		//A_fireprojectile("UnmakerLaser", 0, 1,0,-5);
+		BDPMath.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle,invoker.owner.pitch,0,60);
+		BDPMath.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle + (3 + invoker.lasercount),invoker.owner.pitch,0,60);
+		BDPMath.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle - (3 + invoker.lasercount),invoker.owner.pitch,0,60);
+		//A_fireprojectile("UnmakerLaser", (3 + invoker.lasercount), 1, 0,-8);
+		//A_fireprojectile("UnmakerLaser", -(3 + invoker.lasercount), 1, 0,-8);
+		//A_SetAngle(angle+random(1,-1));
+		invoker.LaserCount++;
+		invoker.LaserCount++;
+		invoker.LaserCount++;
 	//	invoker.A_unmakelevel(60);
 		}
 		UNHF IJ 1 A_SetPitch(pitch-0.6);
 		UNHF K 1;
 		UNHF MN 1 A_SetPitch(pitch+0.6);
-		UNHF D 2;
-		TNT1 A 0 A_Refire("ContinueAltFire3");
+		//UNHF D 2;
+		TNT1 A 0 A_Refire("ContinueFire");
 		UNHF DCBA 1;
 		Goto Ready;
 		/*
@@ -462,7 +418,7 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		RIFG A 0 A_TakeInventory("Reloading",1);
 		Goto Ready3;
 		
-		
+		/*
 	SpecialAction:
 		TNT1 A 0 A_takeinventory("swapriflespecial",1);
 		TNT1 A 0 A_jumpifinventory("soulammo",1,1);
@@ -485,7 +441,7 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		}
 		TNT1 A -1;
 		Goto ready;
-		
+		*/
 		
 	}
 }

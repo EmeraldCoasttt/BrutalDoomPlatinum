@@ -80,7 +80,7 @@ actor UnmakerLaser : FastProjectile 9904
   radius 2
   height 2
   speed 120
-  scale 0.6
+  scale 1.0
   PROJECTILE
   +RANDOMIZE
   +EXTREMEDEATH
@@ -88,7 +88,7 @@ actor UnmakerLaser : FastProjectile 9904
   +activatepcross
   +activateimpact
   DAmagetype "Desintegrate"
-  Damage (random(70, 200))
+  Damage (random(60, 60))
   Renderstyle Add
   Decal "PENTAGRAM"
   Alpha 1
@@ -115,13 +115,11 @@ actor UnmakerLaser : FastProjectile 9904
 		TNT1 A 0 A_SpawnItemEx("UnmakerLaserTrail", (39*momx)/-35.0, -(39*momy)/-35.0, 2+(39*momz)/-35.0, 0,0,0, 0, SXF_ABSOLUTEANGLE)
 		lOOP
   Death:
-     TNT1 AAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 5, 0, random (0, 360), 2, random (0, 180))
-        TNT1 AAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 5, 0, random (0, 360), 2, random (0, 360))
-		TNT1 AAAAAAAAA 0 A_CustomMissile ("ExplosionParticleVeryFast", 5, 0, random (0, 360), 2, random (0, 360))
-    EXPL A 0 Radius_Quake (3, 8, 0, 15, 0)
-	TNT1 AAAAA 1 A_SpawnItem("RocketFlare")
-	 EXPL AAAAA 0 A_CustomMissile ("ExplosionSmokeFast22", 5, 0, random (0, 360), 2, random (0, 360))
-    Stop
+	EXPL A 0 A_CustomMissile ("ExplosionSmokeFast22", 5, 0, random (0, 360), 2, random (0, 360))
+		//TNT1 AAAAAAA 0 A_CustomMissile ("ExplosionParticle2", 5, 0, random (0, 360), 2, random (0, 360))
+	 StayDead:
+	 LAZR AAABBB 1 bright A_Fadeout(0.04)
+    LOOP
   }
 }
 
