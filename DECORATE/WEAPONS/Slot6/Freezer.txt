@@ -476,12 +476,12 @@ ACTOR Freezer : BrutalWeapon
 		NULL A 0 A_WeaponOffset(random(1,-1),32+random(-1,1))
 		TNT1 A 0 A_GunLight(145,248,255)
 		TNT1 A 0 A_SetPitch(pitch - 0.5, SPF_INTERPOLATE)
-		FR1D R 1 BRIGHT A_RailAttack((random(10,15)), 0, 0, 0, "blue", RGF_SILENT | RGF_CENTERZ | RGF_FULLBRIGHT, 0, "CryoPuff", 0, 0, 1000, 1, 32.0, 0, "CryoTracer")// A_FireBullets (0, 0, -1,Random(20,30), "Cryopuff", FBF_NORANDOM,8192,"cryotracer",-4)
+		FR1D R 1 BRIGHT A_RailAttack((random(10,15)), 0, 0, 0, "blue", RGF_SILENT | RGF_CENTERZ | RGF_FULLBRIGHT, 0, "CryoPuff", 0, 0, 9804, 1, 32.0, 0, "CryoTracer")// A_FireBullets (0, 0, -1,Random(20,30), "Cryopuff", FBF_NORANDOM,8192,"cryotracer",-4)
 		//RAIL A 0 A_Takeinventory("FreezerAmmo",1)
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("FreezerAmmo")<=12) { A_PlaySound("MagClick", 7); }}}
 		NULL A 0 A_WeaponOffset(random(1,-1),32+random(-1,1))
 		TNT1 A 0 A_SetPitch(pitch - 0.5, SPF_INTERPOLATE)
-		FR1D S 1 BRIGHT A_RailAttack((random(10,15)), 0, 0, 0, "blue", RGF_SILENT | RGF_CENTERZ | RGF_FULLBRIGHT, 0, "CryoPuff", 0, 0, 1000, 1, 32.0, 0, "CryoTracer")
+		FR1D S 1 BRIGHT A_RailAttack((random(10,15)), 0, 0, 0, "blue", RGF_SILENT | RGF_CENTERZ | RGF_FULLBRIGHT, 0, "CryoPuff", 0, 0, 9804, 1, 32.0, 0, "CryoTracer")
 		RAIL A 0 A_JumpIf(CountInv("FreezerAmmo")<1,"AltGoToNoAmmo")
 	//	RAIL A 0 A_JumpIfInventory("FreezerAmmo",2,2)
 	//	Goto NoAmmo
