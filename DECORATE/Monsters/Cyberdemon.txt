@@ -43,6 +43,8 @@ ACTOR TheCyberdemon: BDPCyberdemon Replaces Cyberdemon
 	Tag "Cyberdemon"
 	painchance "fire", 1
   damagefactor "fire", 0.3
+	damagefactor "desintegrate", 0.5
+	painchance "desintegrate", 1
 	States
 	{
 

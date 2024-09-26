@@ -62,6 +62,8 @@ ACTOR TheSpiderMastermind Replaces SpiderMastermind
 	+ROLLCENTER
 	Species "Spider"
 	+DONTHURTSPECIES
+	damagefactor "desintegrate", 0.5
+	painchance "desintegrate", 1
 	States
 	{
 	
