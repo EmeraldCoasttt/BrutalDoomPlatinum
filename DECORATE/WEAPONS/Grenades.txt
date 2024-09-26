@@ -651,7 +651,7 @@ States    {
 	TNT1 A 0
         TNT1 A 0 A_Explode(300,250,XF_HURTSOURCE ,1,100)
        // TNT1 A 0 A_SpawnItemEx ("BarrelExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
-	   TNT1 A 0 A_SpawnItemEx ("ExplosionSplashSpawner", 0, 0, -20)
+	   TNT1 A 0 A_SpawnItemEx ("RicochetExplosion")
 		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
@@ -1043,7 +1043,7 @@ ACTOR PipebombExplosion
 		//TNT1 A 1
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
         EXPL A 0 Radius_Quake (3, 8, 0, 15, 0)//(intensity, duration, damrad, tremrad, tid)
-		TNT1 A 0 A_SpawnItemEx ("ExplosionSplashSpawner", 0, 0, -20)
+		TNT1 A 0 A_SpawnItemEx ("RicochetExplosion")
        // TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 	    TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)

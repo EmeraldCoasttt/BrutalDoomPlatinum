@@ -98,7 +98,7 @@ Class RicoChet : BDPActor
 		}
 		Else
 		{
-			Return resolvestate(null);
+			Return resolvestate("Spark");
 		}
 		
 	}
@@ -194,7 +194,7 @@ Class RicoChet : BDPActor
 		}
 		Else
 		{
-			Return resolvestate(null);
+			Return resolvestate("sparkfloor");
 		}
 		
 	}
@@ -287,7 +287,7 @@ Class RicoChet : BDPActor
 		}
 		Else
 		{
-			Return resolvestate(null);
+			Return resolvestate("sparkceiling");
 		}
 		
 	}
@@ -715,6 +715,88 @@ Class RicoChet : BDPActor
 	Stop;
 	
   }
+}
+
+Class RicochetNoSpark : Ricochet
+{
+
+	States
+	{
+		Spark:
+		SparkFloor:
+		Sparkceiling:
+		TNT1 A 0;
+		STOP;
+	
+	}
+
+}
+
+Class RicochetExplosion : Actor
+{
+	int LineCount; 
+	property LineCount : LineCount;
+	int LineRange; 
+	property LineRange : LineRange;
+	Default
+	{
+		RicochetExplosion.LineCount 60;
+		RicochetExplosion.LineRange 200;
+	
+	}
+	States
+	{
+		Spawn:
+			TNT1 A 0 NODELAY
+			{
+				for (int i = 0; i < Invoker.LineCount; i++)
+				{
+					FLineTraceData lasersight;
+					float linetraceangle = frandom(0,365);
+					LineTrace(linetraceangle, Invoker.LineRange, frandom(0,365), TRF_THRUACTORS, 20, data: lasersight);
+					vector3 targetpos = lasersight.HitLocation;
+					if (lasersight.HitLine)
+					{
+						//console.printf("hitawall");
+						vector2 wallnormal = (-lasersight.HitLine.delta.y,lasersight.HitLine.delta.x).unit();
+						if (!lasersight.LineSide)
+						wallnormal *= -3;
+						targetpos += (wallnormal);
+					}
+					/*
+					if (lasersight.hittype == trace_hitceiling)
+					{
+						targetpos.z -= ;
+					}
+					if (lasersight.hittype == trace_hitfloor)
+					{
+						targetpos.z += 5;
+					}
+					*/
+					if (lasersight.hittype == trace_hitceiling || lasersight.hittype == trace_hitfloor || lasersight.hittype == trace_hitwall)
+					{
+						let ricochetspawn = spawn("ricochetNoSpark",targetpos);
+						If(ricochetspawn)
+						ricochetspawn.angle = (linetraceangle - 180);
+					}
+						
+					
+				}
+				
+			}
+			STOP;
+	
+	}
+}
+
+Class RicochetExplosionSmall : RicochetExplosion
+{
+	Default
+	{
+		RicochetExplosion.LineCount 30;
+		RicochetExplosion.LineRange 100;
+	
+	}
 }
 
 Class Spark_Debris : Actor
