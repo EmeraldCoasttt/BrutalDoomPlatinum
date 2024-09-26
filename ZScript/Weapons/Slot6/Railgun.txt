@@ -61,7 +61,7 @@ CLASS Railgun : Brutalweapon
 	Action void a_firenurailgun()
 	{
 		FLineTraceData railspawn;
-				LineTrace(angle, 4096, pitch, TRF_NOSKY | TRF_THRUACTORS, player.viewz - pos.z, data: railspawn);
+				LineTrace(angle, 8096, pitch, TRF_NOSKY | TRF_THRUACTORS, player.viewz - pos.z, data: railspawn);
 				if (railspawn.HitType != TRACE_HitNone)
 				{
 				vector3 targetpos = railspawn.HitLocation;
@@ -79,6 +79,15 @@ CLASS Railgun : Brutalweapon
 						beam.angle = angle;
 						beam.pitch = pitch;
 					}
+					for (int i = 0; i < 20; i++)
+					{
+						actor rico = Spawn("ricochet", targetpos);
+			  
+						if (rico)
+						{
+							rico.angle = angle + 180;
+						}
+					}
 				}
 				If(!findinventory("PowerSPeed2"))
 				{
@@ -92,6 +101,7 @@ CLASS Railgun : Brutalweapon
 				A_StartSound("RAILF01", 1);
 				A_takeAmmo("nurailgunammo",1);
 				A_setpitch(pitch - 6);
+				A_Recoil3d(20);
 	
 	}
 	States

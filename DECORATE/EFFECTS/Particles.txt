@@ -306,6 +306,7 @@ Actor BluePlasmaParticleWeaponRailgun: BluePlasmaParticle
   +NOGRAVITY
   Scale 0.30
   Speed 0
+  +nointeraction
   states
       {
 	  Spawn:
