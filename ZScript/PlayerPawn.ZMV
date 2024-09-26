@@ -270,15 +270,15 @@ class Brutal_PlayerBase : PlayerPawn
 		}
 		If(health < lasttichealth)
 		{
-			paintimer = 245;
+			paintimer = 180;
 			healtimer = 0;
 		}
 		lasttichealth = health;
-		If(paintimer <= 0 && healtimer < 10)
+		If(paintimer <= 0 && healtimer < 8)
 		{
 			healtimer++;
 		}
-		If(healtimer >= 10 && health < 20 && health > 0)
+		If(healtimer >= 8 && health < 20 && health > 0)
 		{
 			A_sethealth(health + 1);
 			healtimer = 0;
