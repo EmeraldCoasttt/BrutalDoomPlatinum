@@ -381,8 +381,8 @@ CLASS SSG : BrutalWeapon
 		TNT1 A 0 A_Gunlight();
 		SHOF DDEFGHI 1 A_SetPitch(pitch+1.5, SPF_INTERPOLATE);
 		
-		SHTZ A 0 A_JumpIfInventory("IsNOTTacticalClass", 1, 10);//Tactical Mode takes more time
-		SHTZ AAAAAAAAAA 1 A_SetPitch(pitch+0.5, SPF_INTERPOLATE);
+		//SHTZ A 0 A_JumpIfInventory("IsNOTTacticalClass", 1, 10);//Tactical Mode takes more time
+		//SHTZ AAAAAAAAAA 1 A_SetPitch(pitch+0.5, SPF_INTERPOLATE);
 		SHTZ A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB);
 		SHTZ A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB);
 		//TNT1 A 0 A_JumpIfInventory("NoAutoReload", 1, 2)//Don't go to NoAmmo unless they try to fire again
@@ -452,7 +452,7 @@ CLASS SSG : BrutalWeapon
 		SHTZ A 0 A_TakeInventory("HasUnloaded",1);
 		SHTZ YZ 1;
 		SH69 A 1 A_GiveInventory("QuickSwitchSSG",1);//allows for super fast quick switch
-		SH69 B 1 A_WeaponReadyDX(WRF_NOFIRE | WRF_NOBOB);	
+		SH69 B 1; //A_WeaponReadyDX(WRF_NOFIRE | WRF_NOBOB);	
 		TNT1 A 0 A_TakeInventory("QuickSwitchSSG",1);
 		SH69 CL 1;
 	FinishRegularReload:

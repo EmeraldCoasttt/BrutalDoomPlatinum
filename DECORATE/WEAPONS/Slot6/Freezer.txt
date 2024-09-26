@@ -501,7 +501,7 @@ ACTOR Freezer : BrutalWeapon
 	GoToNoAmmo:
 		TNT1 A 0 A_PlaySound("RAILRIP")
 		FR1D NOP 1
-		Goto Ready
+		Goto NoAmmo2
 		
 	AltGoToNoAmmo:
 		FLMT A 0 BRIGHT A_PlaySound("IceEnd", 1)
@@ -509,7 +509,7 @@ ACTOR Freezer : BrutalWeapon
 		TNT1 A 0 A_Overlay(3, "SpawnSmoke")
 		TNT1 A 0 A_PlaySound("RAILRIP")
 		FR1D NOP 1
-		Goto Ready
+		Goto NoAmmo2
 		
 	Reload:	
         RAIL A 0 A_Takeinventory("Reloading",1)
