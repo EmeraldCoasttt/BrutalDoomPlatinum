@@ -704,12 +704,12 @@ ACTOR AxeAttack: FastProjectile
 				TNT1 AB 0 bright
 				TNT1 A 0 A_giveToTarget("AxeHit", 1)
 				AXEG A 0 Radius_Quake (2, 6, 0, 5, 0)//(intensity, duration, damrad, tremrad, tid)
-				AXEG A 0 A_CheckFloor("SpawnFloor")
-				AXEG A 0 A_SpawnItem ("Sparks", 0)
-				AXEG A 0 A_PlaySound("AXECLN", 6)
+				//AXEG A 0 A_CheckFloor("SpawnFloor")
+				AXEG A 0 A_SpawnItemEX("AxeSparks",0,0,0,0,0,0,180)
+				//AXEG A 0 A_PlaySound("AXECLN", 6)
 				AXEG A 0 A_ALertMonsters(400)
-				
-				TNT1 AAAAAAAAAAAAAAAA 0 A_CustomMissile ("SparkX", 2, 0, random (0, 360), 2, random (30, 170))
+				AXEG A 0 A_PlaySound("FISTWALL", 6)
+				//TNT1 AAAAAAAAAAAAAAAA 0 A_CustomMissile ("SparkX", 2, 0, random (0, 360), 2, random (30, 170))
 				AXEG A 0 A_JumpIfInTargetInventory("PowerStrength", 1, "Berserk")
 				Stop
 				
@@ -861,6 +861,23 @@ Damagetype "Cut"
 //decal "AxeHorizontal"
 Speed 40
 Damage (random(50,50))
+	States
+	{
+	Death:
+				AXEG A 0
+				TNT1 AB 0 bright
+				TNT1 A 0 A_giveToTarget("AxeHit", 1)
+				AXEG A 0 Radius_Quake (2, 6, 0, 5, 0)//(intensity, duration, damrad, tremrad, tid)
+				//AXEG A 0 A_CheckFloor("SpawnFloor")
+				AXEG A 0 A_SpawnItemEX("AxeSparks",-10,0,0,0,0,0,180)
+				//AXEG A 0 A_PlaySound("AXECLN", 6)
+				AXEG A 0 A_ALertMonsters(400)
+				AXEG A 0 A_PlaySound("FISTWALL", 6)
+				//TNT1 AAAAAAAAAAAAAAAA 0 A_CustomMissile ("SparkX", 2, 0, random (0, 360), 2, random (30, 170))
+				AXEG A 0 A_JumpIfInTargetInventory("PowerStrength", 1, "Berserk")
+				Stop
+	
+	}
 }
 Actor AltAxeAttackStrong: AltAxeAttack
 {
@@ -1003,15 +1020,14 @@ ACTOR ThrowedAxe
 		Loop
 		
 	Bounce:
-	AXEG A 0 A_PlaySound("AXECLN", 6)
-	AXEG A 0 A_SpawnItem ("Sparks", 0)
+	AXEG A 0 A_PlaySound("FISTWALL", 6)
+	AXEG A 0 A_SpawnItemEX("AxeSparks",-8,0,0,0,0,0,0)
 	Goto Spawn
 	
 	Death:	
 	   //AXEG A 0 A_CheckFloor("SpawnFloor")
-		AXEG A 0 A_SpawnItem ("Sparks", 0)
+		AXEG A 0 A_SpawnItemEX("AxeSparks",0,0,0,0,0,0,180)
 		TNT1 A 0 A_StopSound
-		AXEG A 0 A_PlaySound("AXECLN", 6)
 	XDeath:
 		TNT1 A 0
 		TNT1 A 0 A_ALertMonsters(200)
