@@ -266,6 +266,7 @@ Actor SuperBFGExtra : BFGExtra Replaces BFGExtra
   {
   Spawn:
     BFGB A 0
+	TNT1 A 0 A_SpawnItemEx ("RicochetExplosion")
     TNT1 AAAAA 0 A_SpawnItemEx("BFGExtraParticle", 0, 0, 14, (0.1)*Random(10, 40), 0, (0.1)*Random(-40, 40), Random(0, 360), 128)
     TNT1 AAAAA 0 A_SpawnItemEx("BFGExtraParticle", 0, 0, 14, (0.1)*Random(10, 40), 0, (0.1)*Random(-40, 40), Random(0, 360), 128)
     TNT1 AAAAA 0 A_SpawnItemEx("BFGExtraParticle", 0, 0, 14, (0.1)*Random(10, 40), 0, (0.1)*Random(-40, 40), Random(0, 360), 128)
