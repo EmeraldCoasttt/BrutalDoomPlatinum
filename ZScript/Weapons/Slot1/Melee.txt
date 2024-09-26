@@ -20,7 +20,7 @@ CLASS MeleeAttack : Actor
 	Property DoorBuster : DoorBuster;
 	Default
 	{
-		Radius 12;
+		Radius 4;
 		Height 2;
 		DamageType "Kick";
 		Projectile;
@@ -277,6 +277,7 @@ CLASS MeleeAttack : Actor
 			If(target && target.findinventory("powerstrength"))
 			{
 			A_spraydecal("crackmelee",36);
+			A_spawnitemex("ricochetnospark", 0,0,0,0,0,0,180);
 				If(DoorBuster && target.findinventory("sequencebreaker"))
 				{
 					BDP_DoorBuster.DestroyDoor(target, breakLocks: BDP_DoorBuster.LB_All);
@@ -330,6 +331,7 @@ CLASS MeleeAttack : Actor
 		Stop;
 	//Death:
 	XDEath:
+
 			TNT1 A 0 A_AlertMonsters(32);
 			TNT1 A 0 A_CheckFloor("DeathOnGround");
 		    PUFF A 0 A_startSound("FOOTMEAT", 3);
@@ -365,6 +367,7 @@ CLASS Meleeattackslide : MeleeAttack
 		MeleeAttack.uppercut TRUE;
 		MeleeAttack.MeleeKnockback FALSE;
 		Speed 40;
+		radius 12;
 			}
 			
 		States
@@ -380,6 +383,7 @@ CLASS Meleeattackslide : MeleeAttack
 			If(target && target.findinventory("powerstrength"))
 			{
 				A_spraydecal("crackmelee",36);
+				A_spawnitemex("ricochetnospark", 0,0,0,0,0,0,180);
 				If(DoorBuster && target.findinventory("sequencebreaker"))
 				{
 					BDP_DoorBuster.DestroyDoor(target,  breakLocks: BDP_DoorBuster.LB_All);
@@ -495,7 +499,7 @@ CLASS MeleeAttackLeft : MeleeAttack
 						If(target && target.findinventory("powerstrength"))
 							{
 								A_spraydecal("crackmelee",36);
-			
+								A_spawnitemex("ricochetnospark", 0,0,0,0,0,0,180);
 							}
 					}
 				TNT1 A 0 A_AlertMonsters(32);
@@ -583,6 +587,7 @@ CLASS MeleeAttackRight : MeleeAttackLeft
 						If(target && target.findinventory("powerstrength"))
 							{
 								A_spraydecal("crackmelee",36);
+								A_spawnitemex("ricochetnospark", 0,0,0,0,0,0,180);
 			
 							}
 					}
