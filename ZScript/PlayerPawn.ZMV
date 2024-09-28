@@ -168,6 +168,7 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	bool flashon;
 	int flashtimer;
+	int flashburnout;
 	
 	//Skulls
 	bool spawnwitharmor;
@@ -302,6 +303,11 @@ class Brutal_PlayerBase : PlayerPawn
 				flashtimer--;
 			}
 			
+			If(flashburnout > 0)
+			{
+				flashburnout--;
+			}
+			
 			If(findinventory("switchflashlight"))
 			{
 				If(flashon && !flashtimer)
@@ -317,9 +323,19 @@ class Brutal_PlayerBase : PlayerPawn
 					A_startsound("FLASHON",5);
 					A_giveinventory("BDP_flashlight",1);
 					flashtimer = 20;
+					flashburnout = 700;
 				}
 				Takeinventory("switchflashlight",1);
 			}
+			
+			If(flashon && !flashburnout)
+				{
+					flashon = false;
+					A_startsound("FLASHOFF",5);
+					A_takeinventory("BDP_flashlight",1);
+					flashtimer = 20;
+					Takeinventory("switchflashlight",1);
+				}
 			
 		
 		
