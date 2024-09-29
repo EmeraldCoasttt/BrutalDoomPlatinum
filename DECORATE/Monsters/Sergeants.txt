@@ -1504,6 +1504,7 @@ Death.Revolver:
 	Raise:
 		SPOS L 5
 		SPOS KJIH 5
+		TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
 		Goto SeeContinue
      
 		

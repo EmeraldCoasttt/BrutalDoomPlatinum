@@ -661,6 +661,7 @@ ACTOR BaronofHell2 : BaronBase Replaces BaronofHell
 	Raise:
     BOSS O 8
     BOSS NMLKJI 8
+	TNT1 A 0 A_spawnitemex("BaronHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
     Goto See	
 	
 	Death.Nail:

@@ -1856,6 +1856,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	Raise:
     POSS K 5
     POSS JIH 5
+	TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION)
     Goto See
 		 
 		Death.Nail:
