@@ -33,6 +33,7 @@ ACTOR Arachnotron1: Arachnotron replaces Arachnotron
 	Tag "Arachnotron"
 	+ROLLSPRITE
 	+ROLLCENTER
+	+noinfightspecies
 	States
 	{
 	

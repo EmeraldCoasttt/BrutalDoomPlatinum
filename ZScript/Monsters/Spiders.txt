@@ -106,7 +106,7 @@ CLASS mastermindgrenade : actor
 	
 		Override bool cancollidewith(Actor other, bool passive)
 		{
-			If(other && other is "playerpawn")
+			If(other && other.getspecies() != 'spider')
 			{
 				damagemobj(other,self,100,"Normal");
 				return true;
@@ -124,7 +124,7 @@ CLASS mastermindgrenade : actor
 			//+touchy;
 			//+nodamagethrust;
 			+noblood;
-			+NORADIUSDMG;
+			//+NORADIUSDMG;
 			-noblockmap;
 			+bright;
 			+solid;
@@ -135,6 +135,7 @@ CLASS mastermindgrenade : actor
 			//+mthruspecies;
 			+shootable;
 			+dontthrust;
+			+dontharmspecies;
 		}
 		States
 		{
@@ -204,6 +205,8 @@ Radius 2;
 Height 2;
 deathsound "explosion";
 Damagetype "ExplosiveImpact";
++dontharmspecies;
+Species "spider";
 }
 States    {
     Spawn:
