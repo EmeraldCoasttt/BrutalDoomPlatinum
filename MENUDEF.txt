@@ -599,6 +599,9 @@ OptionMenu "DoxCreditsCode"
 	StaticText ""
 	StaticText "nemesisVampy", "LightBlue"
 	StaticText "MES overhauls, improved testmap, menus, and weapon pickup system."
+	StaticText ""
+	StaticText "m8f", "LightBlue"
+	StaticText "Turbonerd Modifier"
 }
 
 OptionMenu "DoxCreditsSound"

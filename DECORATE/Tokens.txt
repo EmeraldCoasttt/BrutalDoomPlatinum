@@ -30,6 +30,12 @@ Actor HeadshotPopFlag : Inventory
 inventory.maxamount 1
 }
 
+Actor UltraBonus : Inventory
+{
+inventory.maxamount 1
+}
+
+
 Actor CanParry : Inventory
 {
 inventory.maxamount 1

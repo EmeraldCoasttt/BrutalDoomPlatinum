@@ -175,4 +175,15 @@ class ReversalPickup : BDPModifierpickup
     }
 }
 
+class TurbonerdPickup : BDPModifierpickup
+{
+ Default
+    {
+        
+		BDPModifierpickup.modifierclass "Modifier_Turbonerd";
+		BDPModifierpickup.modifiermessage "Turbonerd Unlocked!";
+		+floatbob;
+    }
+}
+
 //Man And A Half "200:207=[117,117,117]:[0,0,0]"

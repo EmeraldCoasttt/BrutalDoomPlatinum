@@ -25,6 +25,233 @@ class Modifier_StayFrosty : BDPModifier
 
 }
 
+class Modifier_Turbonerd : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "STNERD";
+		BDPModifier.DisplayName "Turbonerd";
+		BDPModifier.Description "Pistol start every level";
+	}
+
+	override void worldloaded(WorldEvent E)
+	{
+		//console.printf("Sex");
+		for(int i = 0; i < MAXPLAYERS; i++)
+		{
+			
+			if(!PlayerInGame[i]) continue;
+			PlayerInfo plr = players[i];
+			if(!plr) continue;
+			
+			let playerPawn = PlayerPawn(plr.mo);
+			ResetHealthAndArmor(playerPawn);
+			ResetInventory     (playerPawn);
+			ResetWeapons       (playerPawn);
+			ResetAmmo          (playerPawn);
+		}
+	}
+ 
+
+// private: //////////////////////////////////////////////////////////////////
+
+
+
+  private static void ResetHealthAndArmor(PlayerPawn player)
+  {
+	//console.printf("Sex2");
+    player.A_SetHealth(player.GetSpawnHealth());
+    player.SetInventory("BasicArmor", 0);
+  }
+
+  private
+  bool ShouldRemoveItem(Array<String> keepWeapons, Inventory item)
+  {
+    bool   droppable     = !item.bUNDROPPABLE;
+    string className     = item.GetClassName();
+    bool   notArmor      = !(item is "BasicArmor" || item is "HexenArmor");
+    bool   shouldRemove  = droppable && notArmor;
+
+    return shouldRemove;
+  }
+
+  /**
+   * Resets health, armor, and droppable inventory items.
+   */
+  private
+  void ResetInventory(PlayerPawn player)
+  {
+    // remove everything that is droppable
+    Array<String> items;
+    Array<String> keepWeapons;
+    GetKeepWeapons(keepWeapons);
+
+    for (let item = player.Inv; item; item = item.Inv)
+    {
+      if (ShouldRemoveItem(keepWeapons, item))
+      {
+        items.push(item.GetClassName());
+      }
+    }
+    int size = items.Size();
+    for (int i = 0; i < size; ++i)
+    {
+      player.A_TakeInventory(items[i]);
+    }
+
+    // Restore default things
+    DropItem drop = player.GetDropItems();
+    if (drop != null)
+    {
+      for (DropItem di = drop; di != null; di=di.Next)
+      {
+        if (di.Name == "None") { continue; }
+
+        let weapon = (class<Weapon>)(di.Name);
+        if (weapon != null) { continue; }
+
+        let ammo = (class<Ammo>)(di.Name);
+        if (ammo != null) { continue; }
+
+        let inv = (class<Inventory>)(di.Name);
+
+        if (inv != null)
+        {
+          player.A_SetInventory(di.Name, di.Amount);
+        }
+      }
+    }
+  }
+
+  private
+  void GetKeepWeapons(out Array<String> keepWeapons)
+  {
+    keepWeapons.Clear();
+  }
+
+  private
+  bool WeaponIsInKeepList(Array<String> keepWeapons, String weaponClass)
+  {
+    uint index = keepWeapons.Find(weaponClass);
+    return index != keepWeapons.size();
+  }
+
+  private
+  bool ShouldRemoveWeapon(Array<String> keepWeapons, string weaponClass)
+  {
+    bool inKeepList = WeaponIsInKeepList(keepWeapons, weaponClass);
+
+    bool shouldRemoveWeapon = !inKeepList;
+
+    return shouldRemoveWeapon;
+  }
+
+  /**
+   * Resets weapons, even if they are undroppable.
+   * Ammo should be reset after resetting weapons.
+   */
+  private
+  void ResetWeapons(PlayerPawn player)
+  {
+    DropItem drop = player.GetDropItems();
+
+    Array<String> keepWeapons;
+    GetKeepWeapons(keepWeapons);
+
+    // remove weapons even if they are undroppable
+    // removing an item invalidates the iterator, so
+    // 1. remember weapon classes
+    Array<String> weapons;
+    for (let item = player.Inv; item; item = item.Inv)
+    {
+      if (item is "Weapon")
+      {
+        string weaponClass = item.GetClassName();
+        if (ShouldRemoveWeapon(keepWeapons, weaponClass))
+        {
+          weapons.push(weaponClass);
+        }
+      }
+    }
+
+    // 2. Remove remembered weapon classes
+    int size = weapons.Size();
+    for (int i = 0; i < size; ++i)
+    {
+      player.A_TakeInventory(weapons[i]);
+    }
+
+    // If the player has any weapons in StartItem, set them here
+    string lastStartWeapon = ""; // to set default weapon
+    if (drop != null)
+    {
+      for (DropItem di = drop; di != null; di=di.Next)
+      {
+        if (di.Name == "None") { continue; }
+
+        let weptype = (class<weapon>)(di.Name);
+
+        if (weptype != null)
+        {
+          lastStartWeapon = di.Name;
+          player.A_SetInventory(di.Name, di.Amount);
+        }
+      }
+    }
+    if (lastStartWeapon != "")
+    {
+      let weaponInInv = player.FindInventory(lastStartWeapon);
+      player.UseInventory(weaponInInv);
+    }
+  }
+
+  private
+  void ResetAmmo(PlayerPawn player)
+  {
+    DropItem drop = player.GetDropItems();
+
+    // Remove all ammo, except that with the UNDROPPABLE flag
+    // 1. Remember ammo classes
+    Array<string> ammos;
+    for (let item = player.Inv; item; item = item.Inv)
+    {
+      if (item is "Ammo") { ammos.Push(item.GetClassName()); }
+    }
+    // 2. Remove
+    int size = ammos.Size();
+    for (int i = 0; i < size; ++i)
+    {
+      player.A_TakeInventory(ammos[i]);
+    }
+
+    //If the player has any ammo in StartItem, set it here
+    if (drop != null)
+    {
+      for (DropItem di = drop; di != null; di = di.Next)
+      {
+        if (di.Name == "None") { continue; }
+
+        let ammotype = (class<ammo>)(di.Name);
+        if (ammotype != null)
+        {
+          player.A_SetInventory(di.Name, int(di.Amount));
+        }
+      }
+    }
+  }
+
+
+
+  private static
+  bool IsTitlemap()
+  {
+    bool isTitlemap = (level.mapname == "TITLEMAP");
+    return isTitlemap;
+  }
+
+
+}
+
 class Modifier_Mjolnir : BDPModifier
 {
 	Default
@@ -329,3 +556,4 @@ class Modifier_Reversal : BDPModifier
 	}
 
 }
+

@@ -442,10 +442,10 @@ class Brutal_PlayerBase : PlayerPawn
 			
 		}	
 		
-		if(ultranightmare && oneupmanship && !extralifegranted)
+		if(ultranightmare && oneupmanship && !findinventory("UltraBonus"))
 		{
 			A_giveinventory("extralife",3);
-			Extralifegranted = true;
+			A_giveinventory("ultrabonus",1);
 		}
 		
 		If(spawnwitharmor && !findinventory("powershield",TRUE) && health > 0)
