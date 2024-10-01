@@ -1,0 +1,117 @@
+Class GrenadeDetonates : Actor
+{
+	Default
+	{
+	Radius 4;
+	Height 4;
+	Speed 50;
+	Damagefunction (60);
+    +MISSILE;
+    Gravity 0.7;
+	+SKYEXPLODE;
+	+BOUNCEONFLOORS;
+	+BOUNCEONWALLS;
+	+BOUNCEONCEILINGS;
+	+bounceonactors;
+	+EXPLODEONWATER;
+	+THRUSPECIES;
+	+BOUNCEAUTOOFFFLOORONLY;
+	+usebouncestate;
+	Species "Marines";
+	DamageType "Kick";
+    BounceFactor 0.5;
+	WallBounceFactor 0.35;
+	BounceSound "Weapons/GrenadeBounce";
+	DeathSound "Weapons/GrenadeBounce";
+	Decal "Scorch";
+	Obituary "$OB_MPROCKET";
+	Scale 0.7;
+	}
+	States
+	{
+	Spawn:
+		GBPJ AAABBBCCCDDDEEEFFFGGGHHH 1 A_SpawnProjectile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
+		Goto bounce;
+	Spawn2:
+		GBPJ AAABBBCCCDDDEEEFFFGGGHHH 1 
+		{
+			A_SpawnProjectile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
+			If(target && target.player && target.player.cmd.buttons & BT_ATTACK)
+			{
+				Return resolvestate(null);
+			}
+			Else
+			{
+				Return resolvestate("Explode");
+			}
+		}
+		Loop;
+	Bounce:
+		TNT1 A 0
+		{
+			If(target && target.player && target.player.cmd.buttons & BT_ATTACK)
+			{
+				Return resolvestate("spawn2");
+			}
+			Else
+			{
+				Return resolvestate("Explode");
+			}
+		}
+	Death:
+	Xdeath:
+
+		GBPJ AAAA 3 
+		{
+			A_SpawnProjectile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
+			If(target && target.player && target.player.cmd.buttons & BT_ATTACK)
+			{
+				Return resolvestate(null);
+			}
+			Else
+			{
+				Return resolvestate("Explode");
+			}
+		
+		}
+		Loop;
+	
+	Explode:
+	    TNT1 A 0 A_stopsound(7);
+		TNT1 A 0 A_StartSound("Explosion", 1);
+		EXPL A 0 Radius_Quake (8, 8, 0, 128, 0);//(intensity, duration, damrad, tremrad, tid)
+		TNT1 A 0 A_SpawnItemEx ("GrenadeExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+	   TNT1 A 0 A_spawnitemex("ricochetexplosion");
+        TNT1 AAAAAAAAAA 0 A_spawnProjectile ("BDExplosionparticlesBig", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAAAAAA 0 A_SpawnProjectile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (0, -90));
+	   	TNT1 AAAA 0 A_spawnProjectile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))  ;
+		TNT1 AAAAAAA 0 A_SpawnProjectile ("ExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360));
+        TNT1 AAAAAAAAAAAAAA 0 A_SpawnProjectile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, -180));
+        TNT1 AAAAAA 0 A_SpawnProjectile ("ExplosionParticleHeavy", 0, 0, random (0, 180), 2, random (0, 180));
+		TNT1 A 0 A_StartSound("FAREXPL", 3);
+	//	TNT1 AAAAAAAAAA 4 A_CustomMissile ("ExplosionSmoke", 1, 0, random (0, 360), 2, random (50, 130))
+	    TNT1 A 0 A_SpawnProjectile ("ExplosionSmoke", 1, 0, random (0, 360), 2, random (-50, -130));
+		stop;
+	}
+}
+
+Class FireGrenade : GrenadeDetonates
+{
+	States
+	{
+	Explode:
+	    TNT1 A 0 A_stopsound(7);
+		TNT1 A 0 A_startSound("MANCFIREGRENADE");
+		EXPL A 0 Radius_Quake (8, 8, 0, 128, 0);
+		
+		GRND AAAAAAAAAAAAAAA 0 A_SpawnItemEX ("FireGrenade3",0,0,0,frandom(-7,7),frandom(-7,7),frandom(0,7),frandom(0,360));
+		
+		//TNT1 A 0 A_SpawnItemEx ("GrenadeExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	   TNT1 A 0 A_spawnitemex("ricochetexplosion");
+	
+	
+	    TNT1 A 0 A_SpawnProjectile ("ExplosionSmoke", 1, 0, random (0, 360), 2, random (-50, -130));
+		stop;
+	}
+
+}

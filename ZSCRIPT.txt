@@ -37,6 +37,7 @@ version "4.11.0"
 #include "Zscript/Weapons/Slot5/TripMine.txt"
 #include "Zscript/Weapons/Slot5/RocketLauncher.txt"
 #include "Zscript/Weapons/Slot5/LeadBurster.txt"
+#include "Zscript/Weapons/Slot5/GrenadeLauncher.txt"
 //Slot 6
 #include "Zscript/Weapons/Slot6/Freezer.txt"
 #include "Zscript/Weapons/Slot6/Needler.txt"
