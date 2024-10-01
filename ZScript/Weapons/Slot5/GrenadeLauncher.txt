@@ -30,11 +30,16 @@ Class GrenadeDetonates : Actor
 	States
 	{
 	Spawn:
-		GBPJ AAABBBCCCDDDEEEFFFGGGHHH 1 A_SpawnProjectile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
+		GBPJ AAABBBCCCDDDEEEFFF 1 
+		{
+			A_SpawnProjectile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
+			//A_SpawnItemEX("RocketFlare");
+		}
 		Goto bounce;
 	Spawn2:
 		GBPJ AAABBBCCCDDDEEEFFFGGGHHH 1 
 		{
+			A_SpawnItemEX("GrenadeFlare");
 			A_SpawnProjectile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
 			If(target && target.player && target.player.cmd.buttons & BT_ATTACK)
 			{
@@ -61,8 +66,9 @@ Class GrenadeDetonates : Actor
 	Death:
 	Xdeath:
 
-		GBPJ AAAA 3 
+		GBPJ AAAA 1 
 		{
+			A_SpawnItemEX("GrenadeFlare");
 			A_SpawnProjectile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
 			If(target && target.player && target.player.cmd.buttons & BT_ATTACK)
 			{
