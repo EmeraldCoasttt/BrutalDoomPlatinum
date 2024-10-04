@@ -109,7 +109,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 			
 			double inertia = BDPMath.GetInertia(victim.mass);
 			self.A_Quake(2,3,0,20,"");
-				
+			self.A_face(victim);
 			if(doHitThrust && victim.bsolid)
 			{
 				self.vel *= 0;
@@ -179,7 +179,9 @@ Class Brutalweapon : DoomWeapon //Weapon
 			LineTrace(angle, range, pitch, 0, player.viewheight, data:lt);
 			If(lt.hitactor && lt.hitactor.bsolid)
 			{
+				A_face(lt.hitactor);
 				A_Recoil3D(-20);
+				
 			}
 		
 		
