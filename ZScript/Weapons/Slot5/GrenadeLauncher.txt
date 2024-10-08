@@ -30,7 +30,7 @@ Class GrenadeDetonates : Actor
 	States
 	{
 	Spawn:
-		GBPJ AAABBBCCCDDDEEEFFF 1 
+		GBPJ AAABBBCCC 1 
 		{
 			A_SpawnProjectile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
 			//A_SpawnItemEX("RocketFlare");

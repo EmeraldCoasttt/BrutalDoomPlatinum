@@ -633,8 +633,16 @@
 				If(!passive && inflictor && inflictor.findinventory("grabberdamage"))
 					{
 						Newdamage = (damage * 4.0);
-						owner.givebody(10);
-						owner.a_startsound("items/hellishhealthbonus",656);
+						//owner.givebody(10);
+						//owner.a_startsound("items/hellishhealthbonus",656);
+						If(random(1,4) == 1)
+						{
+							Inflictor.A_SpawnItemEx("ArmorShardFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
+						}
+						Else
+						{
+							Inflictor.A_SpawnItemEx("HealthPlusFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
+						}
 					}
 			}
 	}
