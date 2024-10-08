@@ -61,6 +61,7 @@ version "4.11.0"
 #include "Zscript/Monsters/Cyberdemon.txt"
 #include "Zscript/Monsters/BrutalFriend.txt"
 #include "Zscript/Monsters/HellNobles.txt"
+#include "Zscript/Monsters/GoreNest.txt"
 
 #include "ZScript/Vehicles/Kinematics/kine_parts.zsc" 
 #include "ZScript/Vehicles/veh_parts.zsc"

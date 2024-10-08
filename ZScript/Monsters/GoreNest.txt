@@ -1,0 +1,28 @@
+Class GoreNest : Actor
+{
+	Default
+	{
+		Radius 32;
+		Height 64;
+		+shootable;
+		Health 500;
+	}
+	int spawncounter;
+	States
+	{
+		Spawn:
+		UMTP K 1 A_spawnitemex("zombieman",frandom(-64,64),frandom(-64,64),0,frandom(-30,30),frandom(-30,30),frandom(-30,30));
+		UMTP K 3
+		{
+			spawncounter++;
+		}
+		TNT1 A 0 A_jumpif(spawncounter > 150, "death");
+		LOOP;
+		
+		Death:
+		UMTP A 1;
+		STOP;
+	
+	}
+
+}
