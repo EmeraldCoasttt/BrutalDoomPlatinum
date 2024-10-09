@@ -649,7 +649,7 @@ class Brutal_PlayerBase : PlayerPawn
 		If(booster && cmd.forwardmove && cmd.buttons & BT_SPEED && countinv("StaminaExhaustion") < 1)
 		{
 			boosttics++;
-			If(boosttics >= 20)
+			If(boosttics >= 10)
 			{
 				boostlevel++;
 				boosttics = 0;
@@ -678,13 +678,14 @@ class Brutal_PlayerBase : PlayerPawn
 		{
 			boosttics = 0;
 		}
-		
+		/*
 		If (boostlevel > 9)
 		{
 			Boostlevel = 9;
 		}
+		*/
 		//console.printf("%i",boostlevel);
-		If(boostlevel > 1 && !boostersound)
+		If(boostlevel >=3 && !boostersound)
 		{
 			Boostersound = true;
 			A_startsound("BSTRSTRT",127);
@@ -693,7 +694,7 @@ class Brutal_PlayerBase : PlayerPawn
 			oldmaxstepheight = maxstepheight;
 			maxstepheight = (maxstepheight * 2);
 		}
-		Else if (boostlevel < 2 && boostersound)
+		Else if (boostlevel < 3 && boostersound)
 		{
 			boostersound = false;
 			A_StartSound("BSTRStop",127);
@@ -769,8 +770,8 @@ class Brutal_PlayerBase : PlayerPawn
 			}
 			
 		}
-		/*
-		If(boostlevel > 7 && !checkmove(Pos.XY + AngleToVector(angle, 16), PCM_NOACTORS))
+		
+		If(boostlevel > 3 && !checkmove(Pos.XY + AngleToVector(angle, 16), PCM_NOACTORS))
 		{
 			
 			A_stop();
@@ -783,11 +784,11 @@ class Brutal_PlayerBase : PlayerPawn
 			
 			
 		}
-		*/
+		
 		
 		lasttickvellength = vel.length();
 		
-		If(boostlevel > 1)
+		If(boostlevel >= 3)
 		{
 			If(sequencebreak)
 			{
@@ -937,17 +938,11 @@ class Brutal_PlayerBase : PlayerPawn
 	{
 		bool allclear;
 		
-		If(boostlevel > 1 && other)
+		If(boostlevel >= 3 && other)
 		{
-			If(findinventory("powerstrength"))
-			{
-				other.damagemobj(self,self,boostlevel * 8,"extremepunches");
-			}
 			
-			else
-			{
-				other.damagemobj(self,self,boostlevel * 4,"extremepunches");
-			}
+			other.damagemobj(self,self,boostlevel * 8,"extremepunches");
+			
 			if(other && !other.bnodamagethrust && other.mass <  9999)
 			{
 				float yeetangle = angleto(other);
