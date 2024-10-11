@@ -13,7 +13,6 @@ chaingunspawner,chaingun,1
 rocket_launcher,rocketlauncher,1
 grenadelauncher,rocketlauncher,1
 chainsawspawned,chainsaw,1
-axespawner,chainsaw,2
 plasmagunspawner,plasmarifle,1
 freezer,plasmarifle,1
 railgun,plasmarifle,1
@@ -27,7 +26,6 @@ demonrunespawner,secret,2
 quadsigil,secret,2
 hastesphere,secret,2
 ragesphere,secret,2
-smgspawner,secret,1
 boosterframe,secret,1
 battlerifle,shotgun,1
 battlerifle,secret,1
