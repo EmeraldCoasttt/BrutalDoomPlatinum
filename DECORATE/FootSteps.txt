@@ -105,6 +105,7 @@ ACTOR Doomer2 : Doomer
 	Player.StartItem "PlasmaAmmo", 50
 	Player.StartItem "DoublePlasmaAmmo", 100
 	player.StartItem "Nuke", 1
+	player.StartItem "SoulAmmo", 666
 	Player.StartItem "IsPlayer", 1
 	Player.StartItem "HandGrenades", 1
 	Player.StartItem "GrenadeAmmo", 2
@@ -210,6 +211,7 @@ ACTOR Doomer3 : Doomer
 	Player.StartItem "JustStartedGame", 1
 	Player.StartItem "NeverSelectedShotgun", 1
 	player.StartItem "Nuke", 1
+	player.StartItem "SoulAmmo", 666
 	
 	Player.StartItem "IsNOTTacticalClass", 1
 	DamageFactor "KillMeBot", 0.0

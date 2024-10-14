@@ -83,7 +83,7 @@ ACTOR Doomer : Brutal_PlayerBase Replaces DoomPlayer //PlayerPawn Replaces DoomP
 	Player.StartItem "HandGrenades", 1
 	Player.StartItem "JustStartedGame", 1
 	Player.StartItem "NeverSelectedShotgun", 1
-	
+	player.StartItem "SoulAmmo", 666
 	//Player.JumpZ 7.4
 	Player.GruntSpeed 256 //This thing will make the grunt sound effect play only after falling for some time.
 	Player.CrouchSprite "PLYC"
@@ -5510,7 +5510,7 @@ ACTOR BDoomer : Doomer
 	Player.StartItem "GrenadeAmmo", 2
 	Player.StartItem "JustStartedGame", 1
 	Player.StartItem "NeverSelectedShotgun", 1
-	
+	player.StartItem "SoulAmmo", 666
 	Player.StartItem "IsNOTTacticalClass", 1
 	DamageFactor "KillMeBot", 0.0
 	Player.StartItem "AmmoDroper"
