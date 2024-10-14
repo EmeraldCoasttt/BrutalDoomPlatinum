@@ -434,7 +434,7 @@ ACTOR RailCaseSpawn : RifleCaseSpawn
 	{
 	Spawn:
         TNT1 A 0
-		TNT1 A 1 A_CustomMissile("RailCasing",-9,20,random(-80,-100),2,random(10,20))
+		TNT1 A 1 A_CustomMissile("RailCasing",-9,20,random(-38,-48),2,random(10,20))
 		Stop
 	}
 } 
