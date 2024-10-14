@@ -4,7 +4,8 @@ CLASS TitlePhobos : actor
 	{
 		+forcexybillboard;
 		+bright;
-		Scale 0.14;
+		XScale 0.14;
+		YScale 0.168;
 		+rollsprite;
 		+nogravity;
 	}
@@ -22,7 +23,8 @@ CLASS TitleMars : TitlePhobos
 {
 	Default
 	{
-		Scale 1.0;
+		XScale 1.0;
+		Yscale 1.2;
 	}
 	States
 	{

@@ -22,7 +22,8 @@ ACTOR TheSpiderMastermind Replaces SpiderMastermind
 	Radius 60
 	Height 100
     damagefactor "Crush", 30.0
-    Scale 1.1
+    XScale 1.1
+	YScale 1.32
 	Mass 6000
 	Speed 20
 	PainChance 30
