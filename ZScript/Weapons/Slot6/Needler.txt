@@ -26,7 +26,7 @@ Class Needle : actor
 			renderstyle 'add';
 			Projectile;
 			//-nogravity
-			Speed 22;
+			Speed 40;
 			Radius 4;
 			//Gravity 0.3;
 			Height 4;
@@ -90,7 +90,7 @@ Class Needle : actor
 		Spawn:
 		PBAL E 1 BRIGHT 
 		{
-		A_seekermissile(2,4,SMF_LOOK,50,1);
+		A_seekermissile(2,4,SMF_LOOK,50,10);
 		A_SpawnItemEX("PINKFlareTiny");
 		}
 		Loop;
