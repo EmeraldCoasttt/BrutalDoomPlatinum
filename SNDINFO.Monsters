@@ -24,6 +24,10 @@ $rolloff  MasterMG 1200 3000
 
 $limit skeleton/tracex 8
 
+banshee/death DSBANDTH
+banshee/pain DSBANPAI
+banshee/sight DSBANACT
+
 RescuedMarine/pain MARIPAIN
 
 

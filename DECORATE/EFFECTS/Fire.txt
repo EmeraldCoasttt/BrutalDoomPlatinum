@@ -600,6 +600,12 @@ ACTOR FireballExplosionFlames: FlameTrails
 	}
 }
 
+ACTOR FireBallExplosionFlamesBanshee: FireBallExplosionFlames
+{
+	ALpha 0.03
+	Speed 0
+}
+
 ACTOR FireballExplosionFlamesSmall: FlameTrails
 {
     Scale 0.8

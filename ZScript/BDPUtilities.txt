@@ -466,6 +466,11 @@
 		{
 			e.Replacement = "BDECChairModern";
 		}
+		
+		if(e.replacee == Checkpotentialactor('deh_actor_151'))
+		{
+			e.Replacement = "BDPBanshee";
+		}
 
 	}
 	
