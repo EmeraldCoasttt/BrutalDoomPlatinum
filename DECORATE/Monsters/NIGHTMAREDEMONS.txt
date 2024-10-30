@@ -35,7 +35,7 @@ ACTOR NightmarePinky : Demon 25942
 	MaxStepHeight 32
 	MaxDropOffHeight 32
 	MeleeRange 100
-	Tag "Ghoul"
+	Tag "Nightmare Demon"
 	//DropItem "DemonStrengthRune" 2
 	Health 400
 	Renderstyle "Subtract"
