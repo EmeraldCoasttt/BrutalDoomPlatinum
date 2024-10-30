@@ -44,7 +44,7 @@ ACTOR NightmarePinky : Demon 25942
 	stealthalpha  0.3
 	bloodtype "Blue_Blood", "BlueSawBlood", "BlueSawBlood"
 	bloodcolor "Blue"
-	Obituary "%o couldn't see a Ghoul coming"
+	Obituary "%o couldn't see a Nightmare Demon coming"
 	States
 	{
 	
