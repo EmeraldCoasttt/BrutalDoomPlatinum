@@ -9,6 +9,13 @@ decal ShotgunSlugDecal
 }
 
 //frozen decals
+
+Fader IceMelt
+{
+	DecayStart	2.0
+	DecayTime	4.0
+}
+
 decal IceScorch 
 {
 	pic SCORCH1
@@ -18,6 +25,7 @@ decal IceScorch
 	randomflipx
 	randomflipy
 	fullbright
+	animator icemelt
 }
 
 decal IceScorchSmaller
@@ -29,6 +37,7 @@ decal IceScorchSmaller
 	randomflipx
 	randomflipy
 	fullbright
+	animator icemelt
 }
 
 decal IceScorchSmall
@@ -40,6 +49,7 @@ decal IceScorchSmall
 	randomflipx
 	randomflipy
 	fullbright
+	animator icemelt
 }
 
 decal IceScorchSmallest
@@ -51,6 +61,7 @@ decal IceScorchSmallest
 	randomflipx
 	randomflipy
 	fullbright
+	animator icemelt
 }
 
 
