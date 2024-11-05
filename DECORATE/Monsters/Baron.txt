@@ -1045,7 +1045,7 @@ ACTOR BaronofHell2 : BaronBase Replaces BaronofHell
 		
 		
 	FatalityImp:
-        TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+       // TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
 		TNT1 A 0 A_PlaySound("demon/pain")
         3HF2 ABABAB 4
 	   
