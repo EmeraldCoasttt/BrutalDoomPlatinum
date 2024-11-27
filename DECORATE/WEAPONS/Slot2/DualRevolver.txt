@@ -474,8 +474,10 @@ ACTOR DualRevolver : BrutalWeapon
 	InspectContinue:
 		TNT1 A 0 { A_Overlay(6,"InspectContinue2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
 		TNT1 A 0 A_takeinventory("reloading",1)
+		REVO A 0 A_StartSound("REVFLIP",13)
 		RSDF ABCDEFGH 1 A_WeaponReady
 		TNT1 A 0 A_jumpIfinventory("reloading",1,"InspectContinue")
+		REVO A 0 A_StartSound("REVFLIP",13)
 		RSDF ABCDEFGH 1 A_WeaponReady
 		TNT1 A 0 A_jumpIfinventory("reloading",1,"InspectContinue")
 		RFDF GHIJK 1 A_WeaponReady

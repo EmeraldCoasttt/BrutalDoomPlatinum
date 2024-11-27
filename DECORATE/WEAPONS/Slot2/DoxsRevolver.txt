@@ -424,8 +424,10 @@ ACTOR DoxsRevolver : BrutalWeapon
 		RFDF KIG 1
 	InspectContinue:
 		TNT1 A 0 A_takeinventory("reloading",1)
+		REVO A 0 A_StartSound("REVFLIP",13)
 		RSDF ABCDEFGH 1 A_WeaponReady
 		TNT1 A 0 A_jumpIfinventory("reloading",1,"InspectContinue")
+		REVO A 0 A_StartSound("REVFLIP",13)
 		RSDF ABCDEFGH 1 A_WeaponReady
 		TNT1 A 0 A_jumpIfinventory("reloading",1,"InspectContinue")
 		RFDF GIK 1 A_WeaponReady
