@@ -293,6 +293,81 @@ ACTOR DualRevolver : BrutalWeapon
 		TNT1 A 0 A_PlaySound("REVDRY", 4)
 		Goto ReadyNoAmmo
 		
+		Altfire:
+		TNT1 A 0 { A_Overlay(6,"AltFire2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		 TNT1 AAAA 0
+		 AltFireActive:
+	    REDF A 0 A_PlaySound("REVFIRE1")
+	   // RE3F ABB 1
+		REDF A 0 A_AlertMonstersDX
+		
+		//RIFF A 0 A_FireCustomMissile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1))
+		RFDF B 1 BRIGHT
+		REDF A 0 A_PlaySound("FARSHT", 6)
+        REDF A 0 A_PlaySound("REVFIRE2", 1)
+		SHTN A 0 A_FireBullets (4, 3, 1, 60 , "RevolverPuff", FBF_NORANDOM)
+		TNT1 A 0 A_GunLight
+		REDF A 0 A_ZoomFactor(0.98)
+		//TNT1 A 0 A_FireCustomMissile("RevolverTracer", frandom(-1,1), 0, 5, 0, 0, frandom(2,3))
+		//TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 7)// For poor PCs
+		TNT1 AAA 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, 5, 0, 0, random(-9,9))
+		TNT1 AA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 5, 0, 0, random(-9,9))
+		TNT1 A 0 A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 14, -7, 0, random(-1,1))
+		RFDF A 1 BRIGHT A_SetPitch(Pitch-3.6, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle-3, SPF_INTERPOLATE)
+		REDF A 0 A_ZoomFactor(1.0)
+		REDF A 0 A_TakeAmmo("BDRevolverAmmo",1)
+		REDF A 0 A_TakeAmmo("BDDualRevolverAmmo",1)
+		RSDF ABCDEFGHI 1
+		
+		RFDF G 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle+0.75, SPF_INTERPOLATE)
+		RFDF G 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle+0.75, SPF_INTERPOLATE)
+		RFDF H 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle+0.75, SPF_INTERPOLATE)
+		RFDF JK 1// A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+		TNT1 A 0 A_Refire("AltFireActive")
+		RFDF C 8
+		Goto Ready3
+		
+		AltFire2:
+		
+		RFDF C 8
+		AltFireActive2:
+		   REDF A 0 A_PlaySound("REVFIRE1")
+	   // RE3F ABB 1
+		REDF A 0 A_AlertMonstersDX
+		
+		//RIFF A 0 A_FireCustomMissile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1))
+		RFDF B 1 BRIGHT
+		REDF A 0 A_PlaySound("FARSHT", 6)
+        REDF A 0 A_PlaySound("REVFIRE2", 1)
+		SHTN A 0 A_FireBullets (4, 3, 1, 60 , "RevolverPuff", FBF_NORANDOM)
+		TNT1 A 0 A_GunLight
+		REDF A 0 A_ZoomFactor(0.98)
+		//TNT1 A 0 A_FireCustomMissile("RevolverTracer", frandom(-1,1), 0, 5, 0, 0, frandom(2,3))
+		//TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 7)// For poor PCs
+		TNT1 AAA 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, 5, 0, 0, random(-9,9))
+		TNT1 AA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 5, 0, 0, random(-9,9))
+		TNT1 A 0 A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 14, -7, 0, random(-1,1))
+		RFDF A 1 BRIGHT A_SetPitch(Pitch-3.6, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle+3, SPF_INTERPOLATE)
+		REDF A 0 A_ZoomFactor(1.0)
+		REDF A 0 A_TakeAmmo("BDRevolverAmmo",1)
+		REDF A 0 A_TakeAmmo("BDDualRevolverAmmo",1)
+		RSDF ABCDEFGHI 1
+		
+		RFDF G 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle-0.75, SPF_INTERPOLATE)
+		RFDF G 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle-0.75, SPF_INTERPOLATE)
+		RFDF H 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(Angle-0.75, SPF_INTERPOLATE)
+		RFDF JK 1// A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+		TNT1 A 0 A_Checkfire("AltFireActive2","altfireactive2")
+		RFDF C 16
+		STOP
 		
 		
 	NoAmmo:
