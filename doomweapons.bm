@@ -1580,3 +1580,18 @@ brightmap sprite REDFA0 { map "brightmaps/AUTO/REDFB0.png" disablefullbright }
 brightmap sprite REDFB0 { map "brightmaps/AUTO/REDFA0.png" disablefullbright }
 brightmap sprite REDFL0 { map "brightmaps/AUTO/REDFL0.png" disablefullbright }
 brightmap sprite REDFM0 { map "brightmaps/AUTO/REDFM0.png" disablefullbright }
+
+//DUAL ALT
+
+brightmap sprite RFDFA0 { map "brightmaps/AUTO/REDFB0.png" disablefullbright }
+brightmap sprite RFDFB0 { map "brightmaps/AUTO/REDFA0.png" disablefullbright }
+brightmap sprite RFDFC0 { map "brightmaps/AUTO/REDFC0.png" disablefullbright }
+brightmap sprite RFDFG0 { map "brightmaps/AUTO/REDFG0.png" disablefullbright }
+brightmap sprite RFDFH0 { map "brightmaps/AUTO/REDFH0.png" disablefullbright }
+brightmap sprite RFDFJ0 { map "brightmaps/AUTO/REDFJ0.png" disablefullbright }
+brightmap sprite RFDFK0 { map "brightmaps/AUTO/REDFK0.png" disablefullbright }
+brightmap sprite RFDFL0 { map "brightmaps/AUTO/REDFL0.png" disablefullbright }
+brightmap sprite RFDFM0 { map "brightmaps/AUTO/REDFM0.png" disablefullbright }
+
+brightmap sprite RSDFJ0 { map "brightmaps/AUTO/REVSL0.png" disablefullbright }
+brightmap sprite RSDFL0 { map "brightmaps/AUTO/REVSN0.png" disablefullbright }
