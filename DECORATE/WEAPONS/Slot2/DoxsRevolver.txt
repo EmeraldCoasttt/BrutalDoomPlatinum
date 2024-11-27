@@ -418,12 +418,27 @@ ACTOR DoxsRevolver : BrutalWeapon
 		REVO A 0 A_Takeinventory("HasUnloaded",1)
 		Goto InsertBullets
 		
+	Inspect:
+		TNT1 A 0 A_takeinventory("reloading",1)
+		RSDF JL 1
+		RFDF KIG 1
+	InspectContinue:
+		TNT1 A 0 A_takeinventory("reloading",1)
+		RSDF ABCDEFGH 1 A_WeaponReady
+		TNT1 A 0 A_jumpIfinventory("reloading",1,"InspectContinue")
+		RSDF ABCDEFGH 1 A_WeaponReady
+		TNT1 A 0 A_jumpIfinventory("reloading",1,"InspectContinue")
+		RFDF GIK 1 A_WeaponReady
+		RSDF LJ 1 A_weaponReady
+		Goto ready
+		
+		
     Reload:
 	    REVO A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
 	    REVO A 0 A_ZoomFactor(1.0)
 	    REVO A 0 A_Takeinventory("Reloading",1)
 	    TNT1 A 0 A_TakeInventory("RevolverContinueAlt",1)
-		REVO A 0 A_JumpIfInventory("BDRevolverAmmo",6,"Ready")
+		REVO A 0 A_JumpIfInventory("BDRevolverAmmo",6,"Inspect")
         REVO A 0 A_JumpIfInventory("Clip1",1,2)
         Goto NoAmmo
         TNT1 AAA 0
