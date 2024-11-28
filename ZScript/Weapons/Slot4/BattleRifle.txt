@@ -3,9 +3,9 @@ CLASS BattleRifleAmmo : Ammo
 	Default
 	{
    Inventory.Amount 0;
-   Inventory.MaxAmount 12;
+   Inventory.MaxAmount 15;
    Ammo.BackpackAmount 0;
-   Ammo.BackpackMaxAmount 12;
+   Ammo.BackpackMaxAmount 15;
    Inventory.Icon "BR45A0";
    }
 }
@@ -100,7 +100,7 @@ CLASS BattleRifle : Brutalweapon
 			TNT1 AAAAAAAAAAAAAA 0 A_Raise();
 			TNT1 A 1 A_Raise();
 			//TNT1 A 0 A_Giveinventory("RailgunSelected",1);
-			RIFL C 0 A_GunSlingerReload("battlerifleammo",12,"clip2",1);
+			RIFL C 0 A_GunSlingerReload("battlerifleammo",15,"clip2",1);
 		ReturnFromNothing:
 			TNT1 A 0 A_startSound("BR45PICK",1);
 			TNT1 AAA 0;
@@ -215,7 +215,7 @@ CLASS BattleRifle : Brutalweapon
 			}
 			TNT1 A 0 A_takeinventory("reloading",1);
 			TNT1 A 0 A_CheckIfAmmo("clip2",1,"noammo");
-			TNT1 A 0 A_jumpifinventory("battlerifleammo",12,"ready");
+			TNT1 A 0 A_jumpifinventory("battlerifleammo",15,"ready");
 			TNT1 A 0 A_startsound("BR45OPEN",3);
 			BR4R ABCDE 1;
 			TNT1 A 0
@@ -229,7 +229,7 @@ CLASS BattleRifle : Brutalweapon
 			TNT1 A 0 
 			{
 				A_startsound("BR45LOAD",3);
-				A_reload("battlerifleammo", 12, "clip2");
+				A_reload("battlerifleammo", 15, "clip2");
 			}
 			BR4R QRSTUVWX 1;
 			Goto Ready;
