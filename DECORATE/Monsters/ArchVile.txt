@@ -438,13 +438,6 @@ ACTOR TehArchvile: baseArchvile Replaces Archvile
 	TNT1 A 0 A_SpawnItem("FrozenArchvile")
 	Stop
 	
-	Death.IceExplode:
-	TNT1 A 0 A_KillChildren
-	TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
-	TNT1 A 0 A_ChangeFlag("SOLID", 0)
-	TNT1 A 0 A_SpawnItem("FrozenArchvileExplode")
-	Stop
-	
 	
 		DeathTeleport:
 		TNT1 A 0 A_jumpif(getcvar("bd_archvileteleport") == 1, "DeathAnyways")

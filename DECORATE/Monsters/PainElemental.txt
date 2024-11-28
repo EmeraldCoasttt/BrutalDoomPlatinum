@@ -170,12 +170,6 @@ SearchPlayer:
 	TNT1 A 0 A_ChangeFlag("SOLID", 0)
 	TNT1 A 0 A_SpawnItem("FrozenPainElemental")
 	Stop	
-	
-	Death.IceExplode:
-	TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
-	TNT1 A 0 A_ChangeFlag("SOLID", 0)
-	TNT1 A 0 A_SpawnItem("FrozenPainElementalExplode")
-	Stop	
 	}
 }
 

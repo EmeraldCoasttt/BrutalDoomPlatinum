@@ -214,13 +214,6 @@ ACTOR TehLostSoul: LostSoulBase Replaces LostSoul
 		//TNT1 A 0 A_GiveToTarget("SoulAmmo", 10)
 		Stop
 		
-	Death.IceExplode:
-		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
-		TNT1 A 0 A_ChangeFlag("SOLID", 0)
-		TNT1 A 0 A_SpawnItem("FrozenLostSoulExplode")
-		//TNT1 A 0 A_GiveToTarget("SoulAmmo", 10)
-		Stop
-		
 	Death.Nail:
 	LSOL F 1
 	TNT1 A 0 A_Jump(64, "Death")

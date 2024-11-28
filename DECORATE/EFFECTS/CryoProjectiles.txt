@@ -465,7 +465,7 @@ actor FreezenadeExplosion
 +MISSILE
 +DONTSPLASH
 +NOEXTREMEDEATH
-Damagetype "IceExplode"
+Damagetype "Ice"
 //DeathSound "IceExplo"
 Height 32
 RenderStyle Add
@@ -476,6 +476,7 @@ Scale 2.5
 +FORCERADIUSDMG
 //MissileHeight 8
 Decal "IceScorch"
++icedamage
 
 States    {
     Spawn:

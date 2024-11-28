@@ -231,7 +231,7 @@ bouncecount 5;
 	busebouncestate = false;
 	If(tracer && stuck)
 	{
-	A_damagetracer(frandom(120,200),"IceExplode");
+	A_damagetracer(frandom(120,200),"Ice");
 	}
 		
 		If(pos.Z <= floorz)

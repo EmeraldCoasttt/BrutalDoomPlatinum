@@ -316,11 +316,6 @@ ACTOR ExplosiveBarrel1 : explosivebarrelbase//Replaces ExplosiveBarrel
 		TNT1 A 0 A_ChangeFlag("SOLID", 0)
 		TNT1 A 0 A_SpawnItem("FrozenBarrel")
 		Stop	
-	Death.IceExplode:
-		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
-		TNT1 A 0 A_ChangeFlag("SOLID", 0)
-		TNT1 A 0 A_SpawnItem("FrozenBarrelExplode")
-		Stop	
 	}
 }
 

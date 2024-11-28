@@ -909,14 +909,6 @@ ACTOR BaronofHell2 : BaronBase Replaces BaronofHell
 	TNT1 A 0 A_SpawnItem("FrozenBaronOfHell")
 	Stop	
 	
-	Death.IceExplode:
-	TNT1 A 0
-	TNT1 A 0 A_BossDeath
-	TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
-	TNT1 A 0 A_ChangeFlag("SOLID", 0)
-	TNT1 A 0 A_SpawnItem("FrozenBaronOfHellExplode")
-	Stop	
-	
 	Death.Massacre:
 	Goto Death
 	

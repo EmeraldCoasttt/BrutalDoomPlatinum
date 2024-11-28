@@ -987,7 +987,7 @@ ACTOR Freezerbot
 	Height 32
 	Damage (Random(200,200))
 	seesound "Freezebot/Talk"
-	damagetype "iceexplode"
+	damagetype "ice"
 	+seekermissile
 	
 	States
@@ -1089,7 +1089,7 @@ ACTOR Freezerbot
 		
 		//BXPL A 0 Bright A_ChangeFlag("ICEDAMAGE", 1)
 		//BXPL A 0 Bright A_ChangeFlag("NODAMAGETHRUST", 0)
-		BXPL A 0 Bright A_Explode(200,200,0,true,32, 0,0,"none","iceexplode")  
+		BXPL A 0 Bright A_Explode(200,200,0,true,32, 0,0,"none","ice")  
 		
 		//Freezerballs
 		
