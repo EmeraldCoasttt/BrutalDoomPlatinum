@@ -467,7 +467,7 @@ ACTOR Labguy: RifleZombie 25943
 
 
 Death.Shotgun:
-Death.Revolver:
+//Death.Revolver:
 		TNT1 A 0 A_JumpIfCloser(90, "Death.Blast")
 		TNT1 A 0 A_JumpIfCloser(200, "Death.Shotgunontheface")
 		Goto Death

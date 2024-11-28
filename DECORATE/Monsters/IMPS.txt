@@ -1663,7 +1663,7 @@ DeathNoGuts:
         Stop
 
     Death.Blast:
-	Death.Revolver:
+	//Death.Revolver:
 	    TNT1 A 0
 		TNT1 A 0 A_FaceTarget
 		TNT1 A 0 A_Jump(12, "Death.Arm")

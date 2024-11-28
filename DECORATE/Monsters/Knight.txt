@@ -462,7 +462,7 @@ ReplaceVanilla:
 		Goto Missile	
 		
 	Death.Shotgun:
-	Death.revolver:
+	//Death.revolver:
 		TNT1 A 0
 		TNT1 A 0 A_Jump(96, "Death.Arm")
 		TNT1 A 0 A_JumpIfCloser(250, "Death.Blast")	

@@ -896,7 +896,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 
 	Death.MonsterShotgunBullet:
 	Death.Shotgun:
-	Death.Revolver:
+	//Death.Revolver:
 		POSR J 1 A_FaceTarget
 		
 		TNT1 A 0 A_SpawnItem("MuchBlood", 0, 40)
