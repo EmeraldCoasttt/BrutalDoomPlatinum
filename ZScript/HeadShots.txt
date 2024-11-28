@@ -115,7 +115,7 @@ CLASS BASEHEADSHOT : ACTOR
 						
 						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
 						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
-						If (CurrentActor && CurrentActor.bismonster && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY))
+						If (CurrentActor && CurrentActor.bismonster && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && distance3d(currentactor) < 150)
 							{
 								//currentactor.giveinventory("headshotpopflag",1);
 								currentactor.damagemobj(inflictor,source,100,"head");
