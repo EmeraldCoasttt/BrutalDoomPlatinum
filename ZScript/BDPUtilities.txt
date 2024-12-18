@@ -589,8 +589,10 @@
 		e.Thing.binvulnerable = true;
 		e.thing.bsolid = false;
 		e.thing.bshootable = false;
-		e.thing.giveinventory("voiddamage",1);
 		e.thing.a_stop();
+		e.thing.bnogravity = true;
+		e.thing.giveinventory("voiddamage",1);
+		
 		if(e.thing.player)
 		{
 		e.thing.giveinventory("disabletilting",1);

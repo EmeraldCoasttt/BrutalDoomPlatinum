@@ -205,6 +205,11 @@ Actor BluePlasmaParticle: ExplosionParticle
   }
 }
 
+Actor PurplePlasmaParticle : BluePlasmaParticle
+{
+	Translation "Plasmapurple2"
+}
+
 
 Actor RailgunTrailParticle : BluePlasmaParticle
 {

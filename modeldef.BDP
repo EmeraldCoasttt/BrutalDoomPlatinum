@@ -133,7 +133,7 @@ Model NEEDLE // Name of actor in DECORATE
    offset 40 0 0
    FrameIndex PBAL E 0 0 // The sprite lump, sprite frame, model index, frame number
 }
-
+/*
 Model VoidGrenadeVoid // Name of actor in DECORATE
 { 
    Path "Models/BloodSpot" // Path to model in PK3
@@ -154,7 +154,7 @@ Model VoidGrenadeVoid // Name of actor in DECORATE
    FrameIndex BHOL C 0 0
    //FrameIndex HEAD A 1 0 // The sprite lump, sprite frame, model index, frame number
 }
-
+*/
 
 
 Model cyberpentagram   // Name of actor in DECORATE
