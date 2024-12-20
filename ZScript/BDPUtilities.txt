@@ -579,27 +579,6 @@
 			*/
 			}
 	
-		If(e.thing.health < 1 && e.damagetype == "BlackHole")
-		{
-		//e.thing.bcountkill
-		e.thing.brollsprite = true;
-		e.thing.brollcenter = true;
-		e.thing.a_scream();
-		e.thing.tics = -1;
-		e.Thing.binvulnerable = true;
-		e.thing.bsolid = false;
-		e.thing.bshootable = false;
-		e.thing.a_stop();
-		e.thing.bnogravity = true;
-		e.thing.giveinventory("voiddamage",1);
-		
-		if(e.thing.player)
-		{
-		e.thing.giveinventory("disabletilting",1);
-		e.thing.a_startsound("BIGSCRE",7);
-		e.thing.acs_namedexecutealways("bdstartcamera",0,0,0,0);
-		}
-		}
 	}
 	
 		Override void worldthingdied(worldevent e)
@@ -723,14 +702,7 @@
 		(dur++);
 		owner.tics = -1;
 		Owner.scale = (owner.scale * 0.95);
-		If(flipped)
-		{
-		owner.roll = (owner.roll + newroll);
-		}
-		Else 
-		{
-		owner.roll = (owner.roll - newroll);
-		}
+		//owner.binvisible = true;
 		If(owner.player)
 		{
 		owner.player.viewheight = (owner.player.viewheight * 0.95);

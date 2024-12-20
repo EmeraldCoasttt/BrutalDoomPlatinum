@@ -861,6 +861,14 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		TNT1 A -1
         Stop
 		
+	 Death.BlackHole:
+		TNT1 A 0 A_stop
+		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_NoBlocking
+        ZWRL ABCDE 2
+		TNT1 A -1
+        Stop
+		
 		 
 	StealthKill:
 		TNT1 A 0
