@@ -366,7 +366,14 @@ States
 		FATT J 8
 		Goto See
 
-
+	Death.BlackHole:
+		TNT1 A 0 A_stop
+		TNT1 A 0 A_Scream
+		TNT1 A 0 A_NoBlocking
+        AWRL MNOPQR 2
+		TNT1 A 0 A_BossDeath
+		TNT1 A -1
+        Stop
 
     Death.Fatality:
 	    TNT1 A 0 A_Pain
