@@ -47,7 +47,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	Health 40
 	Radius 16
 	Height 40
-	Mass 300
+	Mass 100
     Speed 6
 	FastSpeed 12
 	PainChance 210
