@@ -2829,8 +2829,9 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 	BloodSplashRed:
 		TNT1 A 1
 		{
+		a_overlaypivotalign(overlayid(),PSPA_CENTER,PSPA_CENTER);
 		a_overlayflags(OverlayID(),PSPF_ADDWEAPON | PSPF_ADDBOB,false);
-		a_overlayoffset(OverlayID(),random(-180,180),random(-90,120));
+		a_overlayoffset(OverlayID(),random(-150,150),random(0,0));
 					
 						If(random(1,2)== 1)
 							{
@@ -2840,15 +2841,32 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 							{
 							a_overlayflags(OverlayID(),PSPF_FLIP,true);
 							}
-		}
-		SBDR AAAABCDEFGHIJK 2;
+			int randomrot = (random(0,3));
+			If(randomrot == 3)
+			{
+				a_overlayrotate(Overlayid(),90);
+			}
+			Else If(randomrot == 2)
+			{
+				a_overlayrotate(Overlayid(),180);
+			}
+			Else If(randomrot == 1)
+			{
+				a_overlayrotate(Overlayid(),270);
+			}
+			
+			A_overlayscale(overlayid(),frandom(0.3,1.5));
 		
+		}
+		SBDR A random(10,30);
+		SBDR AAAAAAAAAAAAAAAAAAAAA 1 A_overlayfadeout(0.05); 
 		Stop;
 	BloodSplashGreen:
-		TNT1 A 1
+	TNT1 A 1
 		{
+		a_overlaypivotalign(overlayid(),PSPA_CENTER,PSPA_CENTER);
 		a_overlayflags(OverlayID(),PSPF_ADDWEAPON | PSPF_ADDBOB,false);
-		a_overlayoffset(OverlayID(),random(-180,180),random(-90,120));
+		a_overlayoffset(OverlayID(),random(-150,150),random(0,0));
 					
 						If(random(1,2)== 1)
 							{
@@ -2858,16 +2876,33 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 							{
 							a_overlayflags(OverlayID(),PSPF_FLIP,true);
 							}
-		}
-		SBDG AAAABCDEFGHIJK 2;
+			int randomrot = (random(0,3));
+			If(randomrot == 3)
+			{
+				a_overlayrotate(Overlayid(),90);
+			}
+			Else If(randomrot == 2)
+			{
+				a_overlayrotate(Overlayid(),180);
+			}
+			Else If(randomrot == 1)
+			{
+				a_overlayrotate(Overlayid(),270);
+			}
+			
+			A_overlayscale(overlayid(),frandom(0.3,1.5));
 		
+		}
+		SBDG A random(10,30);
+		SBDG AAAAAAAAAAAAAAAAAAAAA 1 A_overlayfadeout(0.05); 
 		Stop;
 		
 	BloodSplashBlue:
 		TNT1 A 1
 		{
+		a_overlaypivotalign(overlayid(),PSPA_CENTER,PSPA_CENTER);
 		a_overlayflags(OverlayID(),PSPF_ADDWEAPON | PSPF_ADDBOB,false);
-		a_overlayoffset(OverlayID(),random(-180,180),random(-90,120));
+		a_overlayoffset(OverlayID(),random(-150,150),random(0,0));
 					
 						If(random(1,2)== 1)
 							{
@@ -2877,9 +2912,25 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 							{
 							a_overlayflags(OverlayID(),PSPF_FLIP,true);
 							}
-		}
-		SBDB AAAABCDEFGHIJK 2;
+			int randomrot = (random(0,3));
+			If(randomrot == 3)
+			{
+				a_overlayrotate(Overlayid(),90);
+			}
+			Else If(randomrot == 2)
+			{
+				a_overlayrotate(Overlayid(),180);
+			}
+			Else If(randomrot == 1)
+			{
+				a_overlayrotate(Overlayid(),270);
+			}
+			
+			A_overlayscale(overlayid(),frandom(0.3,1.5));
 		
+		}
+		SBDB A random(10,30);
+		SBDB AAAAAAAAAAAAAAAAAAAAA 1 A_overlayfadeout(0.05); 
 		Stop;
 	Gibfromnothing:
 		TNT1 A 0 A_giveinventory("needstoselect",1);
