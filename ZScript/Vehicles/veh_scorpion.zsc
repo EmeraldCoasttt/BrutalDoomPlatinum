@@ -65,7 +65,8 @@ class Scorpion_TurretCannon : VehPart
 	override void DoUpdate(VehCamera cam)
 	{
 		let tank = BDPTank(base);
-		if(!tank) return;
+		If(!tank) return;
+		
 		if(!cam) return;
 	
 		if(cooldown_chaingun) cooldown_chaingun--;

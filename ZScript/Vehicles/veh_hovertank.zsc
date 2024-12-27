@@ -62,7 +62,8 @@ CLASS HoverTank_Ball : Actor
 
 class HoverTank_TurretBase : VehPart
 {
-	HoverTank_TurretCannon cannon;
+	
+	Scorpion_TurretCannon cannon;
 	Default
 	{
 		Radius 32;
@@ -73,10 +74,8 @@ class HoverTank_TurretBase : VehPart
 	
 	override void OnAttach()
 	{
-		//cannon = HoverTank_TurretCannon( VehPart.Attach("HoverTank_TurretCannon", base,(10,0,4)) );
-		//gun = HoverTank_TurretGun( VehPart.Attach("HoverTank_TurretGun", base,(9,5,5)) );
+			//cannon = Scorpion_TurretCannon( VehPart.Attach("Scorpion_TurretCannon", base,(30,0,12)) );
 		//cannon.turretbase = self;
-		//gun.turretbase = self;
 	}
 	
 	override void UpdatePos(bool moving)
@@ -102,6 +101,7 @@ class HoverTank_TurretCannon : VehPart
 {
 	uint cooldown;
 	uint cooldown_chaingun;
+	bool guncycle;
 	Default
 	{
 		Radius 16;
@@ -117,8 +117,8 @@ class HoverTank_TurretCannon : VehPart
 		A_SetAngle(base.angle, SPF_INTERPOLATE);
 		A_SetRoll(base.roll, SPF_INTERPOLATE);
 		
-		double aimpitch = base.driver ? base.driver.pitch - 25 : 0;
-		aimpitch = clamp(aimpitch, -50, 0);
+		double aimpitch = base.driver ? base.driver.pitch - 5 : 0;
+		aimpitch = clamp(aimpitch, -50, 5);
 		A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
 		
 	}
@@ -134,29 +134,32 @@ class HoverTank_TurretCannon : VehPart
 		{
 			cam.SetZoom(1.0, 0.1);
 			cooldown--;
-			If(!cooldown)
-			A_StartSound("10kSELEC", 2, CHANF_OVERLAP);
 		}
-		if(CheckButtons(BT_ATTACK, VehButtons.BTS_PRESSED) && !cooldown)
+		if(CheckButtons(BT_ATTACK, VehButtons.BTS_DOWN) && !cooldown)
 		{
 			//let misl = TankRocket.Fire(self, (350, 0, 30));
-			let misl = BDPMath.FireProjectile("Hovertank_ball", pos, angle, pitch, 0, 80, 0, 1, 0);
-			if(misl) misl.target = base.driver;
-			
-			 for(int i = 0; i < 40; i++)
-			 {
-			BDPMath.FireProjectile("blueplasmaparticle", pos, angle + frandom(-11,11), pitch + frandom(-11,11), 0, 80, 0, 1, 0);
+			If(guncycle)
+			{
+				let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, -30, 0, 1, 0);
+				guncycle = false;
+				if(misl) misl.target = base;
+				A_StartSound("CHGNSHOT", CHAN_WEAPON,CHANF_OVERLAP,0.5);
+			}
+			Else
+			{
+				let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, -30, -10, 1, 0);
+				guncycle = true;
+				if(misl) misl.target = base;
 			}
 			
-			A_StartSound("HTANKF", CHAN_WEAPON, CHANF_OVERLAP);
-			A_StartSound("10kFIRE", 2, CHANF_OVERLAP);
 			
-			cam.SetZoom(0.93, 0.5);
-			cam.Quake(20,20,0,0.6);
-			pitch -= 10;
-			tank.driver.pitch -= 3;
+			cam.SetZoom(0.97, 0.5);
+			//cam.Quake(20,20,0,0.6);
+			//pitch -= 5;
+			//tank.driver.pitch -= 0.2;
+			
 			tank.driver.A_AlertMonsters(0, AMF_TARGETEMITTER);
-			cooldown = 70;
+			cooldown = 3;
 		}
 
 	}
@@ -167,6 +170,11 @@ class HoverTank_TurretCannon : VehPart
 			MODL A 1;
 		loop;
 		Spawn2:
+			MODL B 1
+			{
+				guncycle = TRUE;
+			}
+		KeepSpawned:
 			MODL B 1;
 		loop;
 		
@@ -321,6 +329,7 @@ class BDPHoverTank : BDPVehicle
 	HoverTank_TurretBase turret;
 	HoverTank_TurretCannon leftgun;
 	HoverTank_TurretCannon rightgun;
+	Scorpion_TurretCannon cannon;
 
 	
 	int enginetics;
@@ -365,12 +374,14 @@ class BDPHoverTank : BDPVehicle
 		VehPart.Attach("Hovertank_buttrocket",self,(-65,-45,5));
 		VehPart.Attach("Hovertank_buttrocket",self,(-65, 45,5));
 		turret = HoverTank_TurretBase(VehPart.Attach("HoverTank_TurretBase", self, (0,0,34)));
+		
 		leftgun = HoverTank_TurretCannon(VehPart.Attach("HoverTank_TurretCannon", self, (-15,-44,45)));
 		rightgun = HoverTank_TurretCannon(VehPart.Attach("HoverTank_TurretCannon", self, (-15,44,45)));
 		If(leftgun)
 		{
 			leftgun.setstatelabel("Spawn2");
 		}
+		
 		boboffset = random(0, 35);
 	}
 	
