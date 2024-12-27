@@ -22,8 +22,7 @@ ACTOR TheSpiderMastermind Replaces SpiderMastermind
 	Radius 60
 	Height 100
     damagefactor "Crush", 30.0
-    XScale 1.1
-	YScale 1.32
+    Scale 1.1
 	Mass 6000
 	Speed 20
 	PainChance 30
@@ -66,6 +65,7 @@ ACTOR TheSpiderMastermind Replaces SpiderMastermind
 	+noinfightspecies
 	damagefactor "desintegrate", 0.5
 	painchance "desintegrate", 1
+	+STRETCHPIXELS
 	States
 	{
 	

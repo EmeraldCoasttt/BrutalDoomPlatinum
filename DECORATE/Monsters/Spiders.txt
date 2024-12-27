@@ -26,8 +26,7 @@ ACTOR Arachnotron1: Arachnotron replaces Arachnotron
 	Speed 8
 	Species "Spider"
 	+DONTHURTSPECIES
-    XScale 1.1
-	YScale 1.32
+    Scale 1.1
 	Health 750
 	DeathHeight 4
 	BurnHeight 0
@@ -35,6 +34,7 @@ ACTOR Arachnotron1: Arachnotron replaces Arachnotron
 	+ROLLSPRITE
 	+ROLLCENTER
 	+noinfightspecies
+	+STRETCHPIXELS
 	States
 	{
 	
