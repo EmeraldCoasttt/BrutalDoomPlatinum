@@ -21,7 +21,7 @@ CLASS BattleRifle : Brutalweapon
 	Weapon.AmmoGive2 0;
 	Weapon.AmmoType1 "Clip2";
 	Weapon.AmmoType2 "BattleRifleAmmo";
-	Obituary "%o was pierced by %k's Railgun.";
+	Obituary "%o was pierced by %k's Battle Rifle.";
     Inventory.PickupSound "BR45PICK";
 	Inventory.Pickupmessage "You got the Battle Rifle! (Slot 4)";
 	+WEAPON.NOAUTOAIM;
@@ -33,7 +33,7 @@ CLASS BattleRifle : Brutalweapon
 	height 24;
 	damagetype "Revolver";
 	Weapon.SelectionOrder 1550;
-	Inventory.AltHUDIcon "SRCGA0";
+	Inventory.AltHUDIcon "BR45A0";
 	BrutalWeapon.weight 2;
 
 

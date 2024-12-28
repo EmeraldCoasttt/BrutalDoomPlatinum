@@ -20,7 +20,7 @@ ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 	+WEAPON.NOAUTOFIRE
 	Tag "Fists"
 	
-	Inventory.AltHUDIcon "PRNSF0"
+	Inventory.AltHUDIcon "MEDKC0"
 	
 	States
 	{
