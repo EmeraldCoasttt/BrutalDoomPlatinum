@@ -188,7 +188,10 @@ actor WeakPuff : HitPuff
 DamageType Minor
 }
 
-
+actor PistolPuff : HitPuff
+{
+DamageType Pistol
+}
 
 
 

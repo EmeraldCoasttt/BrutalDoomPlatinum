@@ -86,13 +86,13 @@ CLASS BASEHEADSHOT : ACTOR
 		
 	
 	damagetypetoactor = damagetypex;
-		If(damagetype == "precise" || damagetype == "railgun" || damagetype == "Revolver")
+		If(damagetype == "precise" || damagetype == "railgun" || damagetype == "Revolver" || damagetype == "Pistol")
 		{
-			damagetoactor = (damage * 1.8);
+			damagetoactor = (damage * 2.0);
 		}
 		Else
 		{
-			damagetoactor = (damage * 1.2);
+			damagetoactor = (damage * 1.3);
 		}
 	}
 	If(tracer && tracer != inflictor)
