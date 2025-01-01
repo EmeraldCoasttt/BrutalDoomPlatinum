@@ -219,7 +219,7 @@ ACTOR AssaultShotgun : BrutalWeapon
 		Goto Ready
 		
 	FireEnergy:
-		TNT1 A 0 A_GunLight(107, 54, 255)
+		TNT1 A 0 A_GunLight(500,2,107, 54, 255)
 		A12F U 1 BRIGHT A_AlertMonstersDX
 		NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 		A12G A 0 A_SpawnItemEx("PlayerMuzzle1",30,5,30)

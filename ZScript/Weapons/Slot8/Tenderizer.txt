@@ -117,7 +117,7 @@ CLASS Tenderizer : Brutalweapon
 			}
 		action void A_DoHammer(double range, double ang, bool damaging = true, int damage = 500, string damagetype = "normal")
 			{
-				A_GunLight(255,0,0);
+				A_GunLight(500,2,255,0,0);
 				Vector3 viewPos = (pos.xy, player.viewz); // player view point
 				Vector3 viewDir = (AngleToVector(angle, cos(pitch)), -sin(pitch)); // player view direction
 				double maxAngle = cos(ang);
@@ -355,7 +355,7 @@ CLASS Tenderizer : Brutalweapon
 				
 				}
 			}
-			HAMR PQ 1 A_GunLight(255,0,0);
+			HAMR PQ 1 A_GunLight(500,2,255,0,0);
 			HAMR RRRRRRRRRRRRRR 1 A_WeaponOffset( random(3,-3) , 32+random(3,-3), 0);
 			HAMR R 10;
 			//TNT1 A 0 A_refire("firehold");
@@ -381,9 +381,9 @@ CLASS Tenderizer : Brutalweapon
 			HAMG O 1 
 			{
 				A_ZoomFactor(0.96);
-				A_GunLight(255,0,0);
+				A_GunLight(500,2,255,0,0);
 			}
-        HAMG PP 1 A_GunLight(255,0,0);
+        HAMG PP 1 A_GunLight(500,2,255,0,0);
 		TNT1 A 0 A_SetPitch(Pitch-8, SPF_INTERPOLATE);
 		HAMG Q 1;
 		BFGN A 0 A_ZoomFactor(0.98);

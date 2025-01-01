@@ -60,7 +60,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 	}
 	
 	int guntimertics;
-	Action void A_GunLight(int lightr = 255, int lightg = 237, int lightb = 162)
+	Action void A_GunLight(int intensity = 500, int alivetime = 2, int lightr = 255, int lightg = 237, int lightb = 162)
 	{
 		if(getcvar("BDP_GunLight") == true)
 		{
@@ -68,11 +68,12 @@ Class Brutalweapon : DoomWeapon //Weapon
 			SelfLight1.args[DynamicLight.LIGHT_RED] = lightr; //R
 			SelfLight1.args[DynamicLight.LIGHT_GREEN] = lightg; //G
 			SelfLight1.args[DynamicLight.LIGHT_BLUE] = lightb; //B
-			SelfLight1.args[DynamicLight.LIGHT_INTENSITY] = 100; //Intensity
+			SelfLight1.args[DynamicLight.LIGHT_INTENSITY] = intensity; //Intensity
 			SelfLight1.SpotInnerAngle = 60;
 			SelfLight1.SpotOuterAngle = 90;
 			SelfLight1.angle = invoker.owner.angle;
 			SelfLight1.pitch = invoker.owner.pitch;
+			SelfLight1.alivetime = alivetime;
 		}
 	}
 	
@@ -3549,16 +3550,18 @@ CLASS GreenSuperBloodSplasher : GreenBloodSplasher
 class BDP_GunLight : DynamicLight 
 {
 
-	int alivetime;
+	int alivetime; 
+	property alivetime : alivetime;
 	default {
 		DynamicLight.Type "Point";
 		+DYNAMICLIGHT.ATTENUATE;
 		+DYNAMICLIGHT.SPOT
+		self.alivetime 2;
 	}
 	override void Tick() {
 		super.Tick();
-		alivetime++;
-		If(alivetime >= 2)
+		alivetime--;
+		If(alivetime <= 0)
 		{
 			Destroy();
 		}

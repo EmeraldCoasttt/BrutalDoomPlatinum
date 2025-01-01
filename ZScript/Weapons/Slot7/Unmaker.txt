@@ -170,7 +170,7 @@ CLASS Unmaker : BrutalWeapon
 		AltFire2:
 		 UNHF EFGH 1 BRIGHT
 		{
-		A_gunlight(255,0,0);
+		A_gunlight(500,2,255,0,0);
 		//invoker.A_unmakelevel(6);
 		A_startSOund("UNMLOP", 6,CHANF_LOOPING);
 			If(countinv("soulammo") < 1)
@@ -228,11 +228,11 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		Fire:
 		UNHG A 0 A_startSOund("UNMCRAK2");
 		UNHF ABCD 1;
-		UNHF E 1 A_gunlight(255,0,0);
+		UNHF E 1 A_gunlight(500,2,255,0,0);
 		ContinueFire:
 		UNHG A 0 
 		{
-		A_gunlight(255,0,0);
+		A_gunlight(500,2,255,0,0);
 		a_alertmonstersDX();
 		A_startSOund("UNMALT",1);
 			If(countinv("soulammo") < 1)
