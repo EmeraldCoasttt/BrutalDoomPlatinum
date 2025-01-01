@@ -494,7 +494,7 @@ States
 Actor MastermindTracerTank : MastermindTracer
 {
 	damage (random(65,65))
-	speed 240
+	speed 80
 }
 
 

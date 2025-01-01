@@ -102,6 +102,8 @@ class HoverTank_TurretCannon : VehPart
 	uint cooldown;
 	uint cooldown_chaingun;
 	bool guncycle;
+	bool guncycle2;
+	bool gun2;
 	Default
 	{
 		Radius 16;
@@ -138,27 +140,57 @@ class HoverTank_TurretCannon : VehPart
 		if(CheckButtons(BT_ATTACK, VehButtons.BTS_DOWN) && !cooldown)
 		{
 			//let misl = TankRocket.Fire(self, (350, 0, 30));
-			If(guncycle)
+			If(guncycle2)
 			{
-				let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, -30, 0, 1, 0);
-				guncycle = false;
-				if(misl) misl.target = base;
-				A_StartSound("CHGNSHOT", CHAN_WEAPON,CHANF_OVERLAP,0.5);
+				If(guncycle)
+				{
+					If(gun2)
+					{
+						let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2) - 3, pitch + frandom(-2,2), 0, 10, 0, 1, 0);
+						if(misl) misl.target = base;
+					}
+					
+					Else
+					{
+						let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2) + 3, pitch + frandom(-2,2), 0, 10, 0, 1, 0);
+						if(misl) misl.target = base;
+					}
+					guncycle = false;
+					A_StartSound("CHGNSHOT", CHAN_WEAPON,CHANF_OVERLAP,0.5);
+				}
+				Else
+				{
+					If(gun2)
+					{
+						let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2) - 3, pitch + frandom(-2,2), 0, 10, 0, 1, 0);
+						if(misl) misl.target = base;
+					}
+					Else
+					{
+						let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2) + 3, pitch + frandom(-2,2), 0, 10, 0, 1, 0);
+						if(misl) misl.target = base;
+					}
+					guncycle = true;
+					
+					A_StartSound("CHGNSHOT", CHAN_WEAPON,CHANF_OVERLAP,0.5);
+				}
+				guncycle2 = false;
+				cam.SetZoom(0.97, 0.5);
+				tank.driver.A_AlertMonsters(0, AMF_TARGETEMITTER);
 			}
-			Else
+			
+			else
 			{
-				let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, -30, -10, 1, 0);
-				guncycle = true;
-				if(misl) misl.target = base;
+				guncycle2 = true;
 			}
 			
 			
-			cam.SetZoom(0.97, 0.5);
+			
 			//cam.Quake(20,20,0,0.6);
 			//pitch -= 5;
 			//tank.driver.pitch -= 0.2;
 			
-			tank.driver.A_AlertMonsters(0, AMF_TARGETEMITTER);
+			
 			cooldown = 3;
 		}
 
@@ -173,6 +205,8 @@ class HoverTank_TurretCannon : VehPart
 			MODL B 1
 			{
 				guncycle = TRUE;
+				guncycle2 = TRUE;
+				gun2 = true;
 			}
 		KeepSpawned:
 			MODL B 1;
@@ -489,10 +523,13 @@ class BDPHoverTank : BDPVehicle
 			double topitch = BDPMath.fmap(vel.length(), 0, 15.0, 0.7, 3.0); 
 		
 		//Prevent idle warbling
+		topitch = (topitch * 0.80);
 		If(topitch < 0.9)
 		{
 			topitch = 0.9;
 		}
+		
+		
 		//console.printf("%f",topitch);
 		A_SoundPitch(CHAN_7, topitch);
 		
@@ -508,7 +545,7 @@ class BDPHoverTank : BDPVehicle
 		
 		// Rotation
 		double turnspd = 0.08;
-		double accel = 0.30;
+		double accel = 0.40;
 		double angdiff = BDPMath.AngleDiff(angle, driver.angle);
 		A_SetAngle(BDPMath.Lerp(angle, angle+angdiff, turnspd), SPF_INTERPOLATE);
 		
@@ -550,7 +587,7 @@ class BDPHoverTank : BDPVehicle
 			if(!boosting)
 			{
 				vel.xy += AngleToVector(angle, accel * movedir.x);
-				vel.xy += AngleToVector(angle + 90, (accel * movedir.y) * 0.75);
+				vel.xy += AngleToVector(angle + 90, (accel * movedir.y));
 			}
 		} 
 		
