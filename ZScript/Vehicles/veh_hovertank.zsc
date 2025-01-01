@@ -523,7 +523,7 @@ class BDPHoverTank : BDPVehicle
 			double topitch = BDPMath.fmap(vel.length(), 0, 15.0, 0.7, 3.0); 
 		
 		//Prevent idle warbling
-		topitch = (topitch * 0.80);
+		//topitch = (topitch * 0.80);
 		If(topitch < 0.9)
 		{
 			topitch = 0.9;
@@ -545,7 +545,7 @@ class BDPHoverTank : BDPVehicle
 		
 		// Rotation
 		double turnspd = 0.08;
-		double accel = 0.40;
+		double accel = 0.30;
 		double angdiff = BDPMath.AngleDiff(angle, driver.angle);
 		A_SetAngle(BDPMath.Lerp(angle, angle+angdiff, turnspd), SPF_INTERPOLATE);
 		
