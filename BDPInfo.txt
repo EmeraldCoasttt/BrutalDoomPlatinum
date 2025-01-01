@@ -20,7 +20,6 @@ big_fucking_gun,bfg,1
 bfg10k,bfg,1
 unmaker,bfg,1
 revolverspawner,secret,1
-Tenderizer,secret,3
 EnergyArmor,secret,1
 demonrunespawner,secret,2
 quadsigil,secret,2
