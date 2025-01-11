@@ -144,32 +144,20 @@ class HoverTank_TurretCannon : VehPart
 			{
 				If(guncycle)
 				{
-					If(gun2)
-					{
-						let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2) - 3, pitch + frandom(-2,2), 0, 10, 0, 1, 0);
-						if(misl) misl.target = base;
-					}
 					
-					Else
-					{
-						let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2) + 3, pitch + frandom(-2,2), 0, 10, 0, 1, 0);
-						if(misl) misl.target = base;
-					}
+					let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
+					if(misl) misl.target = base;
+					
 					guncycle = false;
 					A_StartSound("CHGNSHOT", CHAN_WEAPON,CHANF_OVERLAP,0.5);
 				}
 				Else
 				{
-					If(gun2)
-					{
-						let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2) - 3, pitch + frandom(-2,2), 0, 10, 0, 1, 0);
-						if(misl) misl.target = base;
-					}
-					Else
-					{
-						let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2) + 3, pitch + frandom(-2,2), 0, 10, 0, 1, 0);
-						if(misl) misl.target = base;
-					}
+					
+					let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
+					if(misl) misl.target = base;
+					
+					
 					guncycle = true;
 					
 					A_StartSound("CHGNSHOT", CHAN_WEAPON,CHANF_OVERLAP,0.5);
