@@ -393,7 +393,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		TNT1 A 0 {
 		ChangeAmmoIcon1("ROCKE0");
 		A_GiveInventory("StickyGrenadeSelected",1);
-		A_Print("\cdIncendiary Grenades",2);
+		A_Print("\cdThermite Grenades",2);
 		}
 		GLAN A 0 A_PlaySound("Weapons/GrenadeLoad")
 		GLR4 W 1
