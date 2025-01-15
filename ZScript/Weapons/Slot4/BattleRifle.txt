@@ -488,8 +488,12 @@ CLASS BattleRifle : Brutalweapon
 			
 		DualWield:
 			TNT1 A 0 A_takeinventory("startdualwield",1);
-			TNT1 A 0 
-			{ 
+			TNT1 A 0;
+			BR45 B 1 A_weaponoffset(0,33);
+			BR45 B 1
+			{
+				A_weaponoffset(0,34);
+				
 				A_startsound("dryfire",2);
 				If(invoker.burstselected)
 				{
@@ -503,6 +507,8 @@ CLASS BattleRifle : Brutalweapon
 				}
 			}
 			BR45 B 4;
+			BR45 "#" 1 A_weaponoffset(0,33);
+			BR45 "#" 1 A_weaponoffset(0,WEAPONTOP, WOF_INTERPOLATE);
 			TNT1 A 0 A_takeinventory("startdualwield",1);
 			Goto Ready;
 			
