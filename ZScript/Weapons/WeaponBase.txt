@@ -482,10 +482,13 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	A_takeinventory("hasimpfatality",666);
 	}
 	
-	Action void A_WeaponReadyDX(int dxflags = 0, bool kickflashes = true, bool cansprint = true)
+	Action state A_WeaponReadyDX(int dxflags = 0, bool kickflashes = true, bool cansprint = true)
 		{
+			//clean up Aim token
 			takeinventory("Zoomies",1);
+			//A_WeaponReadyDX acts as a wrapper for A_weaponready and accepts the same flags
 			A_weaponready(dxflags);
+			//Lost soul and monster grabbing (NEEDS REDONE)
 			If(findinventory("powerstrength") && player.cmd.buttons & BT_USE)
 			{
 				FLineTraceData checkgrab;
@@ -508,78 +511,64 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 					checkgrab.hitactor.destroy();
 				}
 			}
+			//Flag for if holding throwable object
 			If(findinventory("hasagib"))
 			{
-			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('Chooseyourgib'));
+				return resolvestate("ChooseYourGib");
 			}
 			
-			//A_checksprint();
+			
 			If(invoker.a_checksprint() && cansprint)
 			{
-				player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('SprintOverlay'));
+				return resolvestate('SprintOverlay');
 			}
+			
+			//Special Action 1
 			State DualWield = player.ReadyWeapon.FindState('DualWield');
 			if (DualWield != NULL && (CountInv("StartDualWield") == 1))
 			{
-			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('DualWield'));
+			return resolvestate('DualWield');
 			}
-			
+			//Special Action 2
 			State SpecialAction = player.ReadyWeapon.FindState('SpecialAction');
 			if (SpecialAction != NULL && (CountInv("SwapRifleSpecial") == 1))
 			{
-			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('SpecialAction'));
+			return resolvestate('SpecialAction');
 			}
+			
 			
 			State Reloading = player.ReadyWeapon.FindState('Reload');
 			if (Reloading != NULL && (CountInv("reloading") == 1))
 			{
-			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('Reload'));
+			return resolvestate('Reload');
 			}
 			
+			//DEPRECATED
 			State Unloading = player.ReadyWeapon.FindState('Unload');
 			if (Unloading != NULL && (CountInv("Unloading") == 1))
 			{
-			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('Unload'));
+			return resolvestate('Unload');
 			}
 			
-			
-				if (CountInv("IsCrouching") == 1 && CountInv("Kicking") == 1 && kickflashes) {
-					player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('SlideKickingStart'));
-				}
-				
-				Else if (Vel.Z != 0 && CountInv("Kicking") == 1 && kickflashes) {
-					player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('AirKickingFlash'));
-				}
-				
-				else If (CountInv("Kicking") == 1 && kickflashes){
-					player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('KickingFlash'));
-				}
-				
-			
-			if (CountInv("Taunting") == 1) {player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('Taunt')); }
-			if (CountInv("Salute1") == 1 || CountInv("Salute2") == 1) {player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('Salute')); }
-			if (CountInv("TossGrenade") == 1) {player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('TossGrenade')); }
-			/*
-			if (CountInv("StartDualWield") == 1) { return resolvestate("DualWield"); }
-						
-			if (CountInv("Kicking") == 1) {
-				if (CountInv("IsCrouching") == 1) {
-					return resolvestate("SlideKickingStart");
-				}
-				if (momZ != 0) {
-					return resolvestate("AirKickingFlash");
-				}
-				else {
-					return resolvestate("KickingFlash");
-				}
+			//Slidekick
+			if (CountInv("IsCrouching") == 1 && CountInv("Kicking") == 1 && kickflashes) {
+				return resolvestate('SlideKickingStart');
 			}
-
-			if (CountInv("Taunting") == 1) { return resolvestate("Taunt"); }
-			if (CountInv("Reloading") == 1) { return resolvestate("Reload"); }
-			if (CountInv("Salute1") == 1 || CountInv("Salute2") == 1) { return resolvestate("Salute"); }
-			if (CountInv("TossGrenade") == 1) { return resolvestate("TossGrenade"); }
+			//Airkick
+			Else if (Vel.Z != 0 && CountInv("Kicking") == 1 && kickflashes) {
+				return resolvestate('AirKickingFlash');
+			}
+			//Regular kick	
+			else If (CountInv("Kicking") == 1 && kickflashes){
+				return resolvestate('KickingFlash');
+			}
+				
+			//Middle finger
+			if (CountInv("Taunting") == 1) {return resolvestate('Taunt'); }
+			if (CountInv("TossGrenade") == 1) {return resolvestate('TossGrenade'); }
+			
 			return resolvestate(null);
-			*/
+			
 		
 		}
 	
