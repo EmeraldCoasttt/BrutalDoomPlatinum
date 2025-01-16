@@ -127,8 +127,7 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		{
 			Return resolvestate("grabloop");
 		}
-		A_WeaponReadyDX(0,TRUE,FALSE);
-		Return resolvestate(null);
+		Return A_WeaponReadyDX(0,TRUE,FALSE);
 		}
 		Loop;
 		

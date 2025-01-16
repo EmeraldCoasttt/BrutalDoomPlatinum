@@ -346,10 +346,7 @@ states
 	    SAW2 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
 		SAWG A 0 
 		
-		"####" ABAB 2 {
-			A_WeaponReadyDX(WRF_ALLOWRELOAD);
-			return state("");
-		}
+		"####" ABAB 2 A_WeaponReadyDX
 		"####" "#" 0 A_Jump(96,"Ready")
 		SSW3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"Ready.BloodDrip")
 	    SSW4 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"Ready.BloodDrip")
@@ -359,51 +356,9 @@ states
 	Ready.BloodDrip:
 		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
 		"####" A 0 A_FireCustomMissile("SmokeSpawner",0,0,0,5)
-		"####" CDEF 2 {
-			A_WeaponReadyDX;
-			if (CountInv("StartDualWield") == 1) { return state("DualWield"); }
-						
-			if (CountInv("Kicking") == 1) {
-				if (CountInv("IsCrouching") == 1) {
-					return state("SlideKickingStart");
-				}
-				if (momZ != 0) {
-					return state("AirKickingFlash");
-				}
-				else {
-					return state("KickingFlash");
-				}
-			}
-
-			if (CountInv("Taunting") == 1) { return state("Taunt"); }
-			if (CountInv("Reloading") == 1) { return state("Reload"); }
-			if (CountInv("Salute1") == 1 || CountInv("Salute2") == 1) { return state("Salute"); }
-			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
-			return state("");
-		}
+		"####" CDEF 2 A_WeaponReadyDX
 		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
-		"####" GHIJ 2 {
-			A_WeaponReadyDX;
-			if (CountInv("StartDualWield") == 1) { return state("DualWield"); }
-						
-			if (CountInv("Kicking") == 1) {
-				if (CountInv("IsCrouching") == 1) {
-					return state("SlideKickingStart");
-				}
-				if (momZ != 0) {
-					return state("AirKickingFlash");
-				}
-				else {
-					return state("KickingFlash");
-				}
-			}
-
-			if (CountInv("Taunting") == 1) { return state("Taunt"); }
-			if (CountInv("Reloading") == 1) { return state("Reload"); }
-			if (CountInv("Salute1") == 1 || CountInv("Salute2") == 1) { return state("Salute"); }
-			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
-			return state("");
-		}
+		"####" GHIJ 2 A_WeaponReadyDX
 		"####" A 0 {
 			
 		}

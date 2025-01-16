@@ -96,8 +96,9 @@ ACTOR DualRevolver : BrutalWeapon
 		REDF C 1 
 		{
 		A_ClearOverlays(6,6);
-		A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		
 		if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RevolverCrosshair"));}else{A_SetCrosshair(0);}
+		Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		}
 		Loop
 		

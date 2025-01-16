@@ -73,36 +73,10 @@ CLASS Unmaker : BrutalWeapon
 	Goto Ready;
 	Ready:
 	Ready3:
-		UNHG AABBCCDDDD 1 {
-			return a_jumpifinventory("unmakerunmorph",1,"unmakerunmorph");
-			A_WeaponReadyDX(0,TRUE,FALSE);
-			return resolvestate(null);
-		}
+		UNHG AABBCCDDDD 1 A_WeaponReadyDX(0,TRUE,FALSE);
 		UNHG A 0 A_startSound("UNMIDLE", 2);
-		UNHG DDCCBBAAAAAAAAAA 1 {	//DDCB AAAAA
-			A_WeaponReadyDX(0,TRUE,FALSE);
-			if (CountInv("GoFatality") == 1) { return resolvestate("Steady"); }
-									
-			if (CountInv("Kicking") == 1) {
-				if (CountInv("IsCrouching") == 1) {
-					return resolvestate("SlideKickingStart");
-				}
-				if (vel.Z != 0) {
-					return resolvestate("AirKickingFlash");
-				}
-				else {
-					return resolvestate("KickingFlash");
-				}
-			}
-
-			if (CountInv("Taunting") == 1) { return resolvestate("Taunt"); }
-			if (CountInv("Salute1")==1 || CountInv("Salute2")==1) { return resolvestate("Salute"); }
-			if (CountInv("Reloading") == 1) { return resolvestate("Reload"); }
-			if (CountInv("TossGrenade") == 1) { return resolvestate("TossGrenade"); }
-			if (CountInv("startdualwield") == 1) { return resolvestate("dualwield"); }
-			return a_jumpifinventory("unmakerunmorph",1,"unmakerunmorph");
-			return resolvestate(null);
-		}
+		UNHG DDCCBBAAAAAAAAAA 1 A_WeaponReadyDX(0,TRUE,FALSE);
+		
 		Goto Ready3;
 		
 		

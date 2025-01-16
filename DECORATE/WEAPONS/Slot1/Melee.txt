@@ -459,7 +459,7 @@ ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 		//	}
 			//else
 			//{
-			A_WeaponReadyDX(WRF_ALLOWRELOAD, FALSE);
+			
 			//}
 			//if (CountInv("IsDoingUpper") == 1) { return state("KickingFlash"); } //for pipebomb to work properly
 			if (CountInv("ExecuteDownedEnemy") == 1) { return state("DoExecution"); }
@@ -472,7 +472,7 @@ ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 			
 			//if (CountInv("Kicking") == 1) {	return state("KickingFlash");}
 
-			return state("");
+			return A_WeaponReadyDX(WRF_ALLOWRELOAD, FALSE);
 		}
 		Goto Ready
 	

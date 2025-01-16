@@ -128,7 +128,7 @@ ACTOR Shot_Gun : BrutalWeapon
 	    SHOI A 0 A_JumpIfInventory("NoShotgunStrap",1,"Ready")
 		
 		SHOI FEDCBAGHIJKLLLKJIHGABCDDDCBAGHIJJJIHG 1 {
-			A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			return A_WeaponReadyDX(WRF_ALLOWRELOAD);
 						
 		}
 		Goto Ready
