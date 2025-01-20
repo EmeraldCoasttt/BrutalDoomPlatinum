@@ -189,7 +189,7 @@ CLASS MeleeAttack : Actor
 					Damagetodeal = berserkdamage;
 					If(target && target.findinventory("powerrage"))
 					{
-						Damagetodeal = 5000;
+						Damagetodeal = 1500;
 					}
 					If(victim && uppercut && !victim.bspawnceiling && victim.bismonster)
 						{
