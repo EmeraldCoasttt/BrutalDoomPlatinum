@@ -24,7 +24,7 @@ EnergyArmor,secret,1
 demonrunespawner,secret,2
 quadsigil,secret,2
 hastesphere,secret,2
-ragesphere,secret,2
+ragesphere,secret,3
 boosterframe,secret,1
 battlerifle,shotgun,1
 battlerifle,secret,1
