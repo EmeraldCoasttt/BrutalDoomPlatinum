@@ -22,6 +22,7 @@ Class Freezer : BrutalWeapon
 		BrutalWeapon.weight 2;
 		Tag "Freeze Thrower";
 	}
+	Actor freezebuddy;
 	
 	States
 	{
@@ -532,9 +533,22 @@ Class Freezer : BrutalWeapon
 		Goto Taunt;
 		
 	
-	PlaceFreezeBot:
+	SpecialAction:
 	TNT1 A 0 A_takeinventory("swapriflespecial",1);
-	TNT1 A 0 A_CheckIfAmmo("freezerammo",15);
+	TNT1 A 0
+	{
+		If(invoker.freezebuddy)
+		{
+			A_print("Freezebot Deactivated");
+			invoker.freezebuddy.damagemobj(invoker.owner,invoker.owner,6666,"Betrayal");
+			return resolvestate("ready");
+			
+		}
+		Else
+		{
+			Return resolvestate(null);
+		}
+	}
 	TNT1 A 0;
 		TNT1 A 0 A_overlay(6,"PlaceFreezeBot2");
 		
@@ -547,8 +561,14 @@ Class Freezer : BrutalWeapon
 		TNT1 A 0 A_startsound("freezebot/talk",7);
 		TNT1 A 0 A_startsound("foley/ASGDrumOut",8);
 		FR2R ABCDEFGHIJJJJJJJJJ 1;
-		TNT1 A 0 A_takeAmmo("freezerammo",15);
-		TNT1 A 0 A_spawnitemex("freezebot",-40,-12,28,0,0,0,180);
+		TNT1 A 0 
+		{
+			Invoker.Freezebuddy = spawn("Freezebot",(pos.x,pos.y,pos.z + 40));
+			If(invoker.freezebuddy)
+			{
+				invoker.freezebuddy.angle = invoker.owner.angle + 180;
+			}
+		}
 		FR2R KLMNOPQRST 1;
 		Stop;
 	}

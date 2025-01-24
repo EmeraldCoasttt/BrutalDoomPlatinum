@@ -58,7 +58,7 @@ ACTOR EmptyFreezerMag : basemagactor
 ACTOR Freezebot : BrutalFriend
 {
 	Game Doom
-	Health 150
+	Health 75
 	Radius 16
 	Height 32
 	Mass 50
@@ -131,6 +131,7 @@ ACTOR Freezebot : BrutalFriend
 	Obituary "%o has been frozen down by a FreezeBot."
 	Mass 50
 	+friendly
+	MissileChanceMult 0.05
 	States
 	{
 	
@@ -277,6 +278,8 @@ ACTOR Freezebot : BrutalFriend
 
 		Goto Missile
 
+	Death.Betrayal:
+		TNT1 A 0 A_stop
 	Death:
 	TNT1 A 0 A_PlaySound("FreezeBot/Die",23)//, 3, 3)
 		FZB1 A 4 BRIGHT A_NoBlocking
