@@ -31,7 +31,7 @@
 //===========================================================================
 
 
-class NashGoreStatics play
+class BDPGoreStatics play
 {
 	//===========================================================================
 	//
@@ -90,7 +90,7 @@ class NashGoreStatics play
 
 	static bool CheckSky(Actor self)
 	{
-		if (NashGoreStatics.bIsOnfloor(self) && self.floorpic == skyflatnum)
+		if (BDPGoreStatics.bIsOnfloor(self) && self.floorpic == skyflatnum)
 		{
 			return true;
 		}
@@ -208,7 +208,7 @@ class NashGoreStatics play
 	}
 	}
 
-class NashGoreRealGibs : RealGibs
+class BDPGoreRealGibs : RealGibs
 {
 	//===========================================================================
 	//
@@ -223,7 +223,7 @@ class NashGoreRealGibs : RealGibs
 		{
 			
 			
-				A_SpawnItemEx("NashGoreSquishyGibs", flags: SXF_TRANSFERTRANSLATION);
+				A_SpawnItemEx("BDPGoreSquishyGibs", flags: SXF_TRANSFERTRANSLATION);
 				A_StartSound("misc/gibbed");
 			
 
@@ -244,7 +244,7 @@ class SquishMeRed : Actor
 	{
 		Height 10;
 		Radius 1;
-		SquishMeRed.spawnguts "NashGoreSquishyGibs";
+		SquishMeRed.spawnguts "BDPGoreSquishyGibs";
 		
 	}
 	Bool bsquished;
@@ -288,14 +288,14 @@ class SquishMeGreen : SquishMeRed
 	}
 }
 
-class NashGoreSquishyGibs : RealGibs
+class BDPGoreSquishyGibs : RealGibs
 {
 	Name Spawnblood;
 	Property spawnblood : Spawnblood;
 	Default
 	{
 		+FORCEYBILLBOARD
-		NashGoreSquishyGibs.spawnblood "blood"; 
+		BDPGoreSquishyGibs.spawnblood "blood"; 
 	}
 	Float MaxSquishY;
 	int SPRITE_HEIGHT;
@@ -308,8 +308,8 @@ class NashGoreSquishyGibs : RealGibs
 
 	override void BeginPlay(void)
 	{
-		NashGoreStatics.RandomXFlip(self);
-		NashGoreStatics.RandomYFlip(self);
+		BDPGoreStatics.RandomXFlip(self);
+		BDPGoreStatics.RandomYFlip(self);
 		Super.BeginPlay();
 		MaxSquishY = frandom(1.5,3.0);
 	}
@@ -367,11 +367,11 @@ class NashGoreSquishyGibs : RealGibs
 	}
 }
 
-class BlueSquishyGibs : NAshgoresquishygibs
+class BlueSquishyGibs : BDPgoresquishygibs
 	{
 		Default
 		{
-			NashGoreSquishyGibs.spawnblood "blue_blood"; 
+			BDPGoreSquishyGibs.spawnblood "blue_blood"; 
 		}
 	
 		States
@@ -395,11 +395,11 @@ class BlueSquishyGibs : NAshgoresquishygibs
 	}
 	}
 	
-class GreenSquishyGibs : NAshgoresquishygibs
+class GreenSquishyGibs : BDPgoresquishygibs
 	{
 		Default
 		{
-			NashGoreSquishyGibs.spawnblood "green_blood";
+			BDPGoreSquishyGibs.spawnblood "green_blood";
 		}
 	
 		States
@@ -489,9 +489,9 @@ class GreenSquishyGibs : NAshgoresquishygibs
 		
 		override void tick()
 		{
-			If(nashgorestatics.bisonfloor(self) && !bsloped)
+			If(BDPgorestatics.bisonfloor(self) && !bsloped)
 			{
-				NashGoreStatics.AlignToPlane(self);
+				BDPGoreStatics.AlignToPlane(self);
 				bSloped = true;
 			}
 			If(!bnotonautomap)

@@ -19,7 +19,7 @@ ACTOR XJunk1: XDeath1
         Loop
     Death:
 
-        //TNT1 A 0 A_SpawnItem("NashGore_BloodSpot",0,0,0,1)
+        //TNT1 A 0 A_SpawnItem("BDPGore_BloodSpot",0,0,0,1)
         JNK6 A 2000
         Stop
     Splash:
@@ -41,7 +41,7 @@ ACTOR XJunk2: XJunk1
         Loop
     Death:
 
-        //TNT1 A 0 A_SpawnItem("NashGore_BloodSpot",0,0,0,1)
+        //TNT1 A 0 A_SpawnItem("BDPGore_BloodSpot",0,0,0,1)
         JNK7 A 2000
         Stop
     Splash:
@@ -63,7 +63,7 @@ ACTOR XJunk3: XJunk1
         Loop
     Death:
 
-        //TNT1 A 0 A_SpawnItem("NashGore_BloodSpot",0,0,0,1)
+        //TNT1 A 0 A_SpawnItem("BDPGore_BloodSpot",0,0,0,1)
         JNK8 A 2000
         Stop
     Splash:
@@ -85,7 +85,7 @@ ACTOR XJunk4: XJunk1
         Loop
     Death:
 
-        //TNT1 A 0 A_SpawnItem("NashGore_BloodSpot",0,0,0,1)
+        //TNT1 A 0 A_SpawnItem("BDPGore_BloodSpot",0,0,0,1)
         JNK4 A 2000
         Stop
     Splash:
@@ -107,7 +107,7 @@ ACTOR XJunk5: XJunk1
         Loop
     Death:
 
-        //TNT1 A 0 A_SpawnItem("NashGore_BloodSpot",0,0,0,1)
+        //TNT1 A 0 A_SpawnItem("BDPGore_BloodSpot",0,0,0,1)
         JNK5 A 2000
         Stop
     Splash:
