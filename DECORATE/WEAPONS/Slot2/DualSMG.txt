@@ -167,6 +167,13 @@ ACTOR DualSMG : BrutalWeapon
 		TNT1 A 0 A_GunLight
 		TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-8,8), 0, -4, -1, 0, random(-9,9))
 		SM2F A 1 BRIGHT A_FireBullets (6, 6, -1, 12, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-6,-10)
+		TNT1 AAAAA 0
+		{
+			If(countinv("powerspeed2") > 0)
+			{
+				A_FireBullets (6, 6, -1, 12, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-6,-10);
+			}
+		}
 		SM2G A 0 A_ZoomFactor(1.0)
 		//RIFF A 0 A_FireCustomMissile("DecorativeTracer", random(-3,6), 0, -5, 0) 
 		SM2G A 0 A_TakeAmmo("BDDualSMGAmmo",1)
@@ -183,6 +190,13 @@ ACTOR DualSMG : BrutalWeapon
 		TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-8,8), 0, 4, -1, 0, random(-9,9))
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("BDDualSMGAmmo")<=8) { A_PlaySound("MagClick", 7); }}}
 		SM2F B 1 BRIGHT A_FireBullets (6, 6, -1, 12, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-6,10)
+		TNT1 AAAAA 0
+		{
+			If(countinv("powerspeed2") > 0)
+			{
+				A_FireBullets (6, 6, -1, 12, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-6,10);
+			}
+		}
 		SM2G A 0 A_ZoomFactor(1.0)
       //  RIFF A 0 A_FireCustomMissile("DecorativeTracer", random(-6,3), 0, 5, 0)
 	  //Super fast weapons are ammo efficient to make them feel better
