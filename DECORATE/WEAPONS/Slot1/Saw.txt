@@ -386,6 +386,7 @@ states
 		"####" AB 1 A_bdpmeleestart(300)
 		"####" A 0 A_PlaySound("weapons/chainsaw/draw", 5)
 		//"####" AAA 0 A_Saw("", "", 1, "SSawPuff2", 0 , 100, 32,0)
+		"####" A 0 A_QuadSound
 		"####" C 1 A_bdpmelee(200,"MeleeAttackSaw",0,false)
 		"####" D 1 A_bdpmelee(200,"MeleeAttackSaw",0,false)
 		"####" E 1 A_bdpmelee(200,"MeleeAttackSaw",0,false)
@@ -418,6 +419,7 @@ states
 		"####" JK 1 A_bdpmeleestart(300)
 		"####" A 0 A_PlaySound("weapons/chainsaw/draw", 5)
 		//"####" AAA 0 A_Saw("", "", 1, "SSawPuff2", 0, 100, 32,0)
+		"####" A 0 A_QuadSound
 		"####" L 1 A_bdpmelee(200,"MeleeAttackSaw",0,false)
 		"####" M 1 A_bdpmelee(200,"MeleeAttackSaw",0,false)
 		"####" N 1 A_bdpmelee(200,"MeleeAttackSaw",0,false)
@@ -596,6 +598,7 @@ states
 		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
 		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
 		"####" A 0 A_PlaySound("weapons/chainsaw/loop",1)
+		"####" A 0 A_QuadSound
 		"####" E 1 { A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);	A_Saw("", "", 1, "SSawPuff2", SF_NOPULLIN | SF_NOTURN, 100, 32,0); }
 		"####" A 0 A_JumpIfInventory("ChainsawHitRed", 1, "ContinueRed")
 		"####" A 0 A_JumpIfInventory("ChainsawHitBlue", 1, "ContinueBlue")
@@ -660,6 +663,7 @@ states
 		CSB2 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,2)
 		CSA2 A 0		
 		"####" A 0 A_playsound("weapons/chainsaw/loop",1)
+		"####" A 0 A_QuadSound
 		"####" A 0 A_TakeInventory("ChainsawHitRed", 1)
 		"####" A 0 A_TakeInventory("ChainsawHitBlue", 1)
 		"####" A 0 A_TakeInventory("ChainsawHitGreen", 1)
@@ -978,6 +982,7 @@ states
 	    AXEG A 0 A_PlaySound("weapons/gswing", 1)
 		//AXEG A 0 A_JumpIfInventory("PowerStrength", 1, "StrongThrow")
 		AXEG A 0 A_FireCustomMissile("ThrowedChainsaw", 0, 0, 0, 0)
+		"####" A 0 A_QuadSound
 		ContinueAltThrow:
 		AXEZ ABC 1
 		{

@@ -212,6 +212,10 @@ CLASS MeleeAttack : Actor
 			If(target && victim)
 			{
 			//A_startsound("footmeat",3);
+			If(target.findinventory("powerquakedamage"))
+			{
+				target.a_startsound("items/quaddamage/active", 103);
+			}
 			If(splatterblood && !victim.bnoblood)
 			{
 			victim.spawnblood(pos,-angle,damagetodeal);
