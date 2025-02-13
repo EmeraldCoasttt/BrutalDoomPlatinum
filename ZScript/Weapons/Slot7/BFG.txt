@@ -219,6 +219,7 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		TNT1 A 0 a_alertmonstersDX();
 		TNT1 AAAAAAAAA 0 BRIGHT A_FireProjectile("BFGFireParticle", random(-12,12), 0, -1, 0, 0, random(-9,9));
         BFGN A 0 A_startSound("BFGFIRE");
+		"####" A 0 A_QuadSound();
 		TNT1 A 0;
 		TNT1 AAA 0 A_FireProjectile("GreenFlareSpawn",0,0,0,0);
        // BFGN A 0 A_Recoil(8*cos(pitch))
@@ -299,7 +300,9 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		TNT1 A 0 a_alertmonstersDX();
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("AmmoCell")<=30) { A_startSound("MagClick", 7); }}}
 		TNT1 A 0 A_GunLight(500,2,0,255,0);
+		
         BFG2 G 1 BRIGHT A_FireProjectile("AlphaBFGBAll_RED", random(-8, 8), 0, 0, 0, 0, random(-2, 2));
+		"####" A 0 A_QuadSound();
 		TNT1 A 0 A_checkifammo("AmmoCell",1);
 		TNT1 A 0;
 		TNT1 A 0 A_TakeAmmo("AmmoCell",1);
@@ -307,6 +310,7 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("AmmoCell")<=30) { A_startSound("MagClick", 7); }}}
 		TNT1 A 0 A_GunLight(250,2,237,214,7);
 		BFG2 H 1 BRIGHT A_FireProjectile("AlphaBFGBall", random(-8, 8), 0, 0, 0, 0, random(-2, 2));
+		"####" A 0 A_QuadSound();
 		TNT1 A 0 A_checkifammo("AmmoCell",1);
 		TNT1 A 0;
 		TNT1 A 0 A_TakeAmmo("AmmoCell",1);
@@ -314,13 +318,16 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("AmmoCell")<=30) { A_startSound("MagClick", 7); }}}
 		TNT1 A 0 A_GunLight(255,0,0);
 		BFG2 I 1 BRIGHT A_FireProjectile("AlphaBFGBAll_RED", random(-8, 8), 0, 0, 0, 0, random(-2, 2));
+		"####" A 0 A_QuadSound();
 		TNT1 A 0 A_checkifammo("AmmoCell",1);
 		TNT1 A 0;
 		TNT1 A 0 A_TakeInventory("AmmoCell",1);
 		TNT1 A 0 a_alertmonstersDX();
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("AmmoCell")<=30) { A_startSound("MagClick", 7); }}}
 		TNT1 A 0 A_GunLight(250,2,237,214,7);
+		
 		BFG2 J 1 BRIGHT A_FireProjectile("AlphaBFGBall", random(-8, 8), 0, 0, 0, 0, random(-2, 2));
+		"####" A 0 A_QuadSound();
 		BFGN A 0 A_Refire("AltFireLoop");
 		BG2G A 0 A_startSound("BFGSTOP", 1);
 		Goto Ready;
