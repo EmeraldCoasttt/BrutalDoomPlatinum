@@ -610,7 +610,7 @@ Default
 {
 damagefactor "normal", 4;
 //Inventory.icon "SIG2A0"
-activesound "items/quaddamage";
+//activesound "items/quaddamage";
 }
 
 Override void tick()

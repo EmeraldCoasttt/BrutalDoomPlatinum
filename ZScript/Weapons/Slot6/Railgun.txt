@@ -100,6 +100,7 @@ CLASS Railgun : Brutalweapon
 				A_StartSound("RAILF01", 1);
 				A_takeAmmo("nurailgunammo",1);
 				A_setpitch(pitch - 6);
+				A_QuadSound();
 				if(invoker.owner.pos.z <= invoker.owner.floorz)
 				{
 					A_Recoil3d(3);

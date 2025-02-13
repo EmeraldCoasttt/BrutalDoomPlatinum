@@ -306,12 +306,7 @@ Dropitem "DemonProtectionSigil"
 */
 
 
-actor PowerquakeDamage : PowerDamage
-{
-damagefactor "normal", 4
-//Inventory.icon "SIG2A0"
-activesound "items/quaddamage"
-}
+
 /*
 ACTOR DemonQuakeSigil : powerupgiver
 {

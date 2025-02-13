@@ -43,6 +43,14 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	}
 	
+	Action void A_QuadSound()
+	{	
+		If(invoker.owner.findinventory("PowerQuakeDamage"))
+		{
+			invoker.owner.a_startsound("items/quaddamage/active", 103);
+		}
+	}
+	
 	Action void A_FirePitchDown(sound soundname = "PLSM9", int soundchannel = 1, double ammocount = 8, name ammotype = "PlasmaAmmo")
 	{
 		If(invoker.owner.countinv(ammotype) > ammocount)
@@ -2096,6 +2104,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		TNT1 A 0 A_Overlay(-610,"FirstPersonLegsKickRight");
 		TNT1 A 0 A_OverlayFlags(-610, PSPF_ADDWEAPON, False);
 		TNT1 A 0;
+		
 		TNT1 A 0 A_JumpIfInventory("IsCrouching", 1, "SlideAttack");
 	    TNT1 A 0 A_JumpIf (vel.Z != 0, "AirKick");
 		
@@ -2106,13 +2115,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 	//	TNT1 A 0 A_JumpIfInventory("IsRunning", 1, "AirKick") //sprinting
 		
 		
-		NULL A 0
-		{ if(CountInv("IsPlayingDoxMod")==0)
-		  {
-		  A_GunFlash("KickingFlash");
-		  }
-		 Return resolveState(null);
-		}//"####" A 0 A_Overlay(1,"KickingFlash")
+		//NULL A 0 A_GunFlash("KickingFlash"); //"####" A 0 A_Overlay(1,"KickingFlash")
 		//TNT1 A 0 A_JumpIfInventory("RifleSelected", 1, "RifleBash")
 		TNT1 A 0 A_StartSound("KICK",69);
 	//	TNT1 A 0 SetPlayerProperty(0,1,0);
@@ -2129,7 +2132,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
         "####" A 0;
 		"####" BCD 1 A_BDPmeleestart();
 		"####" A 0 {
-				
+				A_QuadSound();
 				A_BDPmelee();
 		}
 		
@@ -2209,6 +2212,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 			
 				//A_FireProjectile("MeleeAttackAir", 0, 0, 0, -31);
 				A_BDPmelee(200,"meleeattackair",-31);
+				A_QuadSound();
 			
 		}
        // "####" O 3
@@ -2308,6 +2312,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 	    1IK4 A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
 	    KIK4 N 0;
         "####" A 0;
+
 		"####" CEFFFFFFFFFFFFF 1
 		{
 		A_kickflags();
@@ -2377,7 +2382,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		}
 		//A_SetPitch(pitch-pitch/2, SPF_INTERPOLATE)
 		"####" A 0; //A_SetPItch(10, SPF_INTERPOLATE)
-		
+		"####" A 0 A_QuadSound();
 		NULL FFFFFFFFFFFFF 1 
 		{
 			A_Recoil (-3);
@@ -2401,13 +2406,8 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 	    "####" A 0; //A_SetPitch(10)
 		"####" A 0 A_WeaponReady();
 		"####" A 0 A_StartSound("SlideKickStop", 71);
-		"####" A 0
-		{ if(CountInv("IsPlayingDoxMod")==0)
-		  {
-		  A_GunFlash("SlideKickingEnd");
-		  }
-		 Return ResolveState(null);
-		}
+		"####" A 0;
+		
 		TNT1 GHIJ 1 
 		{
 		if(Pitch>=10)
@@ -2574,10 +2574,12 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		if(CountInv("TossGrenade")==1)
 			{
 			A_FireProjectile("PipebombThrownSlow",0,0,0,0);
+			A_QuadSound();
 			}
 		else
 			{
 			A_FireProjectile("PipebombThrownQuickTossed",0,0,0,0);
+			A_QuadSound();
 			}
 		}
 		BFGN A 0 A_TakeAmmo("AmmoPipeBomb", 1);
@@ -2673,6 +2675,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		TNT1 A 0 A_FireProjectile("FakeGrenade", 0, 0, 0, 0, 0, 0);
 	    TNT1 A 0 A_TakeInventory("FiredGrenade", 1);
 		TNT1 A 0 A_FireProjectile("HandGrenade", 0, 0, 0, 0, 0, 0);
+		"####" A 0 A_QuadSound();
 		GRTH Q 1;
 		GRTH RSTU 1;
 		TNT1 A 5; //32 frames in total for a flash.
@@ -2686,6 +2689,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		TNT1 A 0 A_FireProjectile("FakeGrenadeAlt", 0, 0, 0, 0, 0, 0);
 	    TNT1 A 0 A_TakeInventory("FiredGrenade", 1);
 		TNT1 A 0 A_FireProjectile("HandGrenadeAlt", 0, 0, 0, 0, 0, 0);
+		"####" A 0 A_QuadSound();
 		2RTH C 1;
 		2RTH DEFG 1;
 		TNT1 A 5;//36 frames in total for a flash.
@@ -2733,6 +2737,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 	//	TNT1 A 0 A_FireProjectile("FakeGrenade", 0, 0, 0, 0, 0, 0)
 	    TNT1 A 0 A_TakeInventory("FiredGrenade", 1);
 		TNT1 A 0 A_FireProjectile("VoidGrenade", 0, 0, 0, 0, 0, 0);
+		"####" A 0 A_QuadSound();
 		GRTH Q 1;
 		GRTH RSTU 1;
 		TNT1 A 5; //32 frames in total for a flash.
@@ -2745,6 +2750,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 	//	TNT1 A 0 A_FireProjectile("FakeGrenadeAlt", 0, 0, 0, 0, 0, 0)
 	    TNT1 A 0 A_TakeInventory("FiredGrenade", 1);
 		TNT1 A 0 A_FireProjectile("VoidGrenadeAlt", 0, 0, 0, 0, 0, 0);
+		"####" A 0 A_QuadSound();
 		2RTH C 1;
 		2RTH DEFG 1;
 		TNT1 A 5; //36 frames in total for a flash.
@@ -2791,6 +2797,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		//TNT1 A 0 A_FireProjectile("FakeGrenade", 0, 0, 0, 0, 0, 0)
 	    TNT1 A 0 A_TakeInventory("FiredGrenade", 1);
 		TNT1 A 0 A_FireProjectile("FreezeNade", 0, 0, 0, 0, 0, 0);
+		"####" A 0 A_QuadSound();
 		GRTH Q 1;
 		GRTH RSTU 1;
 		TNT1 A 5; //32 frames in total for a flash.
@@ -2804,6 +2811,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 	//	TNT1 A 0 A_FireProjectile("FakeGrenadeAlt", 0, 0, 0, 0, 0, 0)
 	    TNT1 A 0 A_TakeInventory("FiredGrenade", 1);
 		TNT1 A 0 A_FireProjectile("FreezeNadeAlt", 0, 0, 0, 0, 0, 0);
+		"####" A 0 A_QuadSound();
 		2RTH C 1;
 		2RTH DEFG 1;
 		TNT1 A 5; //36 frames in total for a flash.
@@ -3157,6 +3165,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		THRF A 0 
 		{
 		A_fireprojectile("ThrowedBarrel", 0, 1, 0, 0);
+		A_QuadSound();
 		}
         TNT1 A 0 A_startSound("skeleton/swing");
 		TNT1 A 0 A_Giveinventory("Punching",1);
@@ -3244,6 +3253,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		"####" ABCD 1;
         "####" A 0 A_StartSound("skeleton/swing");
 		"####" A 0 A_Giveinventory("Punching",1);
+		"####" A 0 A_QuadSound();
         "####" E 1 A_fireprojectile("PoorLostSoul", 0, 1, 0, 0);
         "####" GHIJ 1;
         "####" A 0 A_TakeInventory("LostSoulFatality",1);
