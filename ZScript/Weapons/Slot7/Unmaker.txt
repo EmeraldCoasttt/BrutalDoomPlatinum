@@ -5,7 +5,7 @@ CLASS Unmaker : BrutalWeapon
 	{
 	Height 20;
 	Weapon.SelectionOrder 2800;
-	Weapon.AmmoUse1 1;
+	Weapon.AmmoUse1 0;
 	Weapon.AmmoGive 0;
 	Weapon.AmmoType1 "SoulAmmo";
     Inventory.PickupSound "BFGREADY";
@@ -147,11 +147,11 @@ CLASS Unmaker : BrutalWeapon
 		A_gunlight(500,2,255,0,0);
 		//invoker.A_unmakelevel(6);
 		A_startSOund("UNMLOP", 6,CHANF_LOOPING);
-			If(countinv("soulammo") < 1)
+			If(countinv("soulammo") < 1 && !findinventory("powerspeed2"))
 			{
 				A_damageself(1,"desintegrate");
 			}
-			A_TakeInventory("SoulAmmo",1);
+			A_TakeAmmo("SoulAmmo",1);
 		A_fireprojectile("ShotgunParticles", random(-12,12), 0, -1, 0, 0, random(-9,9));
 		A_fireprojectile("ShotgunParticles2", random(-12,12), 0, -1, 0, 0, random(-9,9));
 		a_alertmonstersDX();
@@ -209,11 +209,11 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		A_gunlight(500,2,255,0,0);
 		a_alertmonstersDX();
 		A_startSOund("UNMALT",1);
-			If(countinv("soulammo") < 1)
+			If(countinv("soulammo") < 1 && !findinventory("powerspeed2"))
 		{
 		A_damageself(3,"desintegrate");
 		}
-		A_TakeInventory("SoulAmmo",3);
+		A_TakeAmmo("SoulAmmo",3);
 		
 		
 		If(invoker.lasercount > 9)

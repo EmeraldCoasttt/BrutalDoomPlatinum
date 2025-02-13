@@ -89,10 +89,9 @@ CLASS Railgun : Brutalweapon
 						}
 					}
 				}
-				If(!findinventory("PowerSPeed2"))
-				{
+				
 				A_giveinventory("railchambered",1);
-				}
+				
 				A_Fireprojectile("RailgunProjectile", 0, 0, 0, 0);
 				A_alertmonstersDX(500);
 				A_RailAttack(450, 0, 0, "Blue", "Blue", RGF_FULLBRIGHT, 1, "RailgunPuff2",0,0,0,0,1.2,2,"BluePlasmaParticleWeaponRailgun",0,360);
@@ -222,7 +221,7 @@ CLASS Railgun : Brutalweapon
 			RAIF BCDEFG 1 A_setpitch(pitch + 1);
 			
 			RAIL BCDEBCDEBCDEBCDE 1 A_WeaponReady(WRF_NOFIRE| WRF_NOBOB);
-			TNT1 A 0 A_jumpifinventory("PowerSPeed2",1,"Ready");
+			//TNT1 A 0 A_jumpifinventory("PowerSPeed2",1,"Ready");
 		Pumping:
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol");
 			RAIL FGHI 1;
@@ -497,7 +496,7 @@ CLASS Railgun : Brutalweapon
 		SNIP C 2 BRIGHT;
 		SNIP CCCCCC 1 BRIGHT A_setpitch(pitch + 1);
 		SNIP C 18 BRIGHT;
-		TNT1 A 0 A_jumpifinventory("PowerSPeed2",1,"StillAiming");
+		//TNT1 A 0 A_jumpifinventory("PowerSPeed2",1,"StillAiming");
 			SNIP CCCC 1 BRIGHT A_weaponZoom3();
 			
 			TNT1 A 0 A_StartSound("RAILMAG2", 5);

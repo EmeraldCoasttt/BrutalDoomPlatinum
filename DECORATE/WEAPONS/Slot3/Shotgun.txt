@@ -290,7 +290,7 @@ ACTOR Shot_Gun : BrutalWeapon
 		SHTN A 0 A_JumpIfInventory("IsNOTTacticalClass", 1, 7)//Tactical Mode is slower to pump
 		
 		SHTN AAAAAA 1 A_SetPitch(pitch+0.6, SPF_INTERPOLATE)
-		TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"InstaPump1")
+		//TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"InstaPump1")
 		TNT1 A 0 A_JumpIf(GetCvar("ManualShotgunPump")==1,"Ready") 
 		
 		Goto Pump1
@@ -323,7 +323,7 @@ ACTOR Shot_Gun : BrutalWeapon
 	//	SHTN A 0 A_JumpIfInventory("IsNOTTacticalClass", 1, "Pump1")//Tactical Mode is slower to pump
 		
 	//	SHTN AAAAAA 1 A_SetPitch(pitch+0.6, SPF_INTERPOLATE)
-	TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"InstaPump1")
+	//TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"InstaPump1")
 		TNT1 A 0 A_JumpIf(GetCvar("ManualShotgunPump")==1,"Ready") 
 		
 		Goto Pumpingslug
@@ -527,7 +527,7 @@ ACTOR Shot_Gun : BrutalWeapon
 		SHT8 G 1
 		SHT8 GHIA 1 A_SetPitch(+2.0 + pitch, SPF_INTERPOLATE)
 		SHT8 A 1
-		TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"InstaPump2")
+		//TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"InstaPump2")
 		TNT1 A 0 A_JumpIf(GetCvar("ManualShotgunPump")==1,1) 
 		Goto Pump3
 		TNT1 A 0 A_WeaponZoom
@@ -547,7 +547,7 @@ ACTOR Shot_Gun : BrutalWeapon
 		SHT8 G 1
 		SHT8 GHIA 1 A_SetPitch(+2.0 + pitch, SPF_INTERPOLATE)
 		SHT8 A 1
-		TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"InstaPump2")
+		//TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"InstaPump2")
 		TNT1 A 0 A_JumpIf(GetCvar("ManualShotgunPump")==1,1) 
 		Goto Pump3
 		TNT1 A 0 A_WeaponZoom

@@ -169,42 +169,41 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		
 	Fire:
 		BFGN A 0;
-		BFGN A 0 A_JumpIfInventory("AmmoCell",50,2);
-        Goto NoAmmo;
+		TNT1 A 0 A_checkifammo("AmmoCell",50);
 		BFGN A 0;
 		//BFGN A 0 A_TakeInventory("AmmoCell", 50)
         BFGN A 0 A_startSound("BFGCHARGE");
 		TNT1 A 0 a_alertmonstersDX();
 		BFGC ABCD 1 
 		{
-			A_GunLight(250,2,0,255,0);
-			A_TakeInventory("AmmoCell", 1); //4
+			A_GunLight(250,2,0,255,0); //4
+			A_TakeAmmo("AmmoCell",1);
 		}
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeInventory("AmmoCell", 1); //4
+			A_TakeAmmo("AmmoCell",1); //4
 		} //8
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeInventory("AmmoCell", 1); //4
+			A_TakeAmmo("AmmoCell",1); //4
 		} //12
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeInventory("AmmoCell", 2); //4
+			A_TakeAmmo("AmmoCell",2); //4
 		} //20
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeInventory("AmmoCell", 2); //4
+			A_TakeAmmo("AmmoCell",2); //4
 		} //28
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeInventory("AmmoCell", 3); //4
+			A_TakeAmmo("AmmoCell",3); //4
 		} //40
 		BFGC ABC 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeInventory("AmmoCell", 3); //4
+			A_TakeAmmo("AmmoCell",3); //4
 		} //49
-		TNT1 A 0 A_TakeInventory("AmmoCell", 1);
+		TNT1 A 0 A_TakeAmmo("AmmoCell",1);
 		
 		BFGA A 1 BRIGHT 
 		{
@@ -287,40 +286,35 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 
      AltFire:
        // BG2G A 0 A_startSound("10KFIRE", 1)
-        BFGN A 0 A_JumpIfInventory("AmmoCell", 4, 2);
-		Goto NoAmmo;
+      TNT1 A 0 A_checkifammo("AmmoCell",4);
 		TNT1 A 0;
 		BFGN A 0 A_startSound("BFGCHARGE", 1);
 		TNT1 A 0 a_alertmonstersDX();
 		BFGC ABCDABCDABCDABCD 1 A_GunLight(250,2,0,255,0);
 	AltFireLoop:
 		BG2G A 0 A_startSound("BFGLOOP", 1, 1, 1);
-		BFGN A 0 A_JumpIfInventory("AmmoCell", 1, 2);
-		Goto NoAmmo;
+		TNT1 A 0 A_checkifammo("AmmoCell",1);
 		TNT1 A 0;
 		TNT1 A 0 A_TakeInventory("AmmoCell",1);
 		TNT1 A 0 a_alertmonstersDX();
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("AmmoCell")<=30) { A_startSound("MagClick", 7); }}}
 		TNT1 A 0 A_GunLight(500,2,0,255,0);
         BFG2 G 1 BRIGHT A_FireProjectile("AlphaBFGBAll_RED", random(-8, 8), 0, 0, 0, 0, random(-2, 2));
-		BFGN A 0 A_JumpIfInventory("AmmoCell", 1, 2);
-		Goto NoAmmo;
+		TNT1 A 0 A_checkifammo("AmmoCell",1);
 		TNT1 A 0;
-		TNT1 A 0 A_TakeInventory("AmmoCell",1);
+		TNT1 A 0 A_TakeAmmo("AmmoCell",1);
 		TNT1 A 0 a_alertmonstersDX();
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("AmmoCell")<=30) { A_startSound("MagClick", 7); }}}
 		TNT1 A 0 A_GunLight(250,2,237,214,7);
 		BFG2 H 1 BRIGHT A_FireProjectile("AlphaBFGBall", random(-8, 8), 0, 0, 0, 0, random(-2, 2));
-		BFGN A 0 A_JumpIfInventory("AmmoCell", 1, 2);
-		Goto NoAmmo;
+		TNT1 A 0 A_checkifammo("AmmoCell",1);
 		TNT1 A 0;
-		TNT1 A 0 A_TakeInventory("AmmoCell",1);
+		TNT1 A 0 A_TakeAmmo("AmmoCell",1);
 		TNT1 A 0 a_alertmonstersDX();
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("AmmoCell")<=30) { A_startSound("MagClick", 7); }}}
 		TNT1 A 0 A_GunLight(255,0,0);
 		BFG2 I 1 BRIGHT A_FireProjectile("AlphaBFGBAll_RED", random(-8, 8), 0, 0, 0, 0, random(-2, 2));
-		BFGN A 0 A_JumpIfInventory("AmmoCell", 1, 2);
-		Goto NoAmmo;
+		TNT1 A 0 A_checkifammo("AmmoCell",1);
 		TNT1 A 0;
 		TNT1 A 0 A_TakeInventory("AmmoCell",1);
 		TNT1 A 0 a_alertmonstersDX();
