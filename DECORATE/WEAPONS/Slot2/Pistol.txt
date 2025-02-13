@@ -398,13 +398,6 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
         //RIFF A 0 A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, 0)
 		PIST F 0 A_TakeAmmo("BDPistolAmmo",1)
 		PIST F 0 A_TakeAmmo("BDDualPistolAmmo",1)
-		TNT1 AAAAA 0
-		{
-			If(countinv("powerspeed2") > 0)
-			{
-				A_FireBullets (3, 3, -1, 33, "Pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4);
-			}
-		}
         PIS2 B 1
 		PIST F 0 A_FireCustomMissile("PistolCaseSpawn",5,0,0,-9)
 		PIS2 C 1 A_SetPitch(pitch-0.4, SPF_INTERPOLATE)
@@ -462,13 +455,6 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PIS2 "#" 1 BRIGHT A_FireBullets (0.5, 0.5, -1, 33, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
 		NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )		
 		PIST F 0 A_ZoomFactor(1.0)
-		TNT1 AAAAA 0
-		{
-			If(countinv("powerspeed2") > 0)
-			{
-				A_FireBullets (3, 3, -1, 33, "Pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4);
-			}
-		}
      //   RIFF A 0 A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, 0)
 		PIST F 0 A_TakeAmmo("BDPistolAmmo",1)
 		PIST F 0 A_TakeAmmo("BDDualPistolAmmo",1)
@@ -521,13 +507,6 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PIST F 0 A_ZoomFactor(1.0)
 		PIST F 0 A_TakeAmmo("BDPistolAmmo",1)
 		PIST F 0 A_TakeAmmo("BDDualPistolAmmo",1)
-		TNT1 AAAAA 0
-		{
-			If(countinv("powerspeed2") > 0)
-			{
-				A_FireBullets (3, 3, -1, 33, "Pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4);
-			}
-		}
         2ILE B 1
 		PIST F 0 A_FireCustomMissile("PistolCaseSpawn",5,0,0,-9)
 		2ILE C 1 A_SetPitch(pitch-0.4, SPF_INTERPOLATE)
@@ -586,13 +565,6 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		//"####" A 0 A_SetPitch(pitch-1, SPF_INTERPOLATE)
 		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )		
 		"####" F 0 A_ZoomFactor(1.0)
-		TNT1 AAAAA 0
-		{
-			If(countinv("powerspeed2") > 0)
-			{
-				A_FireBullets (3, 3, -1, 33, "Pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4);
-			}
-		}
 		//"####" A 0 A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, 0)
 		"####" F 0 A_TakeAmmo("BDPistolAmmo",1)
 		"####" F 0 A_TakeAmmo("BDDualPistolAmmo",1)
@@ -640,13 +612,6 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
         PIST F 0 A_PlaySound("DSPISTOL", 1)
 		PIST F 0 A_ZoomFactor(1.49)
 		PISZ B 1 BRIGHT A_FireBullets (0.2, 0.1, -1, 33, "pistolpuff", FBF_NORANDOM)
-		TNT1 AAAAA 0
-		{
-			If(countinv("powerspeed2") > 0)
-			{
-				A_FireBullets (3, 3, -1, 33, "Pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4);
-			}
-		}
 		PIST F 0 A_ZoomFactor(1.5)
         RIFF A 0 A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, 3)
 		"####" F 0 A_TakeAmmo("BDPistolAmmo",1)
@@ -668,13 +633,6 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
         PIST F 0 A_PlaySound("PISTSLNT", 1)
 		PIST F 0 A_ZoomFactor(1.49)
 		SILE H 1 BRIGHT A_FireBullets (0.1, 0.1, -1, 33, "pistolpuff", FBF_NORANDOM)
-		TNT1 AAAAA 0
-		{
-			If(countinv("powerspeed2") > 0)
-			{
-				A_FireBullets (3, 3, -1, 33, "Pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4);
-			}
-		}
 		PIST F 0 A_ZoomFactor(1.5)
 		"####" F 0 A_TakeAmmo("BDPistolAmmo",1)
 		"####" F 0 A_TakeAmmo("BDDualPistolAmmo",1)

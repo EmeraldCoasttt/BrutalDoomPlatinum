@@ -795,13 +795,6 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_ZoomFactor(0.99)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
 			CHAF A 1 BRIGHT A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12)
-			TNT1 AA 0
-			{
-				If(countinv("powerspeed2") > 0)
-				{
-					A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12);
-				}
-			}
 			TNT1 A 0 A_SetPitch(Pitch-0.2, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
 
@@ -830,13 +823,6 @@ ACTOR MiniGun : BrutalWeapon
 			//RIFF A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, 0, -5, 0, 0)
 			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 			CHAF C 1 BRIGHT A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12)
-			TNT1 AA 0
-			{
-				If(countinv("powerspeed2") > 0)
-				{
-					A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12);
-				}
-			}
 			TNT1 A 0 A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE)
 			TNT1 A 0 A_SetPitch(Pitch-0.2, SPF_INTERPOLATE)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
@@ -866,13 +852,6 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_ZoomFactor(0.99)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
 			CHAF A 1 BRIGHT A_FireBullets(5, 5, -1, 16, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12)
-			TNT1 AA 0
-			{
-				If(countinv("powerspeed2") > 0)
-				{
-					A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12);
-				}
-			}
 			TNT1 A 0 A_SetPitch(Pitch-0.2, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
 
@@ -901,13 +880,6 @@ ACTOR MiniGun : BrutalWeapon
 			//RIFF A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, 0, -5, 0, 0)
 			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 			CHAF C 1 BRIGHT A_FireBullets(5, 5, -1, 16, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12)
-			TNT1 AA 0
-			{
-				If(countinv("powerspeed2") > 0)
-				{
-					A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12);
-				}
-			}
 			TNT1 A 0 A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE)
 			TNT1 A 0 A_SetPitch(Pitch-0.2, SPF_INTERPOLATE)
 			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
