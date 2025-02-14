@@ -190,6 +190,7 @@ class Brutal_PlayerBase : PlayerPawn
 	float lasttichealth;
 	int paintimer;
 	int healtimer;
+	int geigertimer;
 	
 	Default
     {
@@ -338,8 +339,36 @@ class Brutal_PlayerBase : PlayerPawn
 				}
 			
 		
-		
+			
+			
 		}
+		//geiger counter
+			If(CurSector.DamageAmount != 0)
+			{
+				If(geigertimer <= 0)
+				{
+					geigertimer = (pos.z - getzat());
+					geigertimer *= 0.04;
+					If(geigertimer < 0)
+					{
+						geigertimer *= -1;
+					}
+					geigertimer = clamp(geigertimer, 1, 20);
+					
+					geigertimer += random(-1,2);
+					
+					//console.printf("%i",geigertimer);
+					a_startsound("GEIGER",102,0);
+				}
+				
+				
+				
+			}
+			
+			If(geigertimer > 0)
+			{
+				geigertimer--;
+			}
 		
 		currentkills = Level.Killed_monsters;
 		If(currentkills > previouskills)
