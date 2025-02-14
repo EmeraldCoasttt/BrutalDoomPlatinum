@@ -514,7 +514,7 @@ DamageType Minigun
 
 Actor BR45BulletPuff: HitPuff
 {
-DamageType Revolver
+DamageType Pistol
 }
 
 Actor MechMinigunPuff: HitPuff
