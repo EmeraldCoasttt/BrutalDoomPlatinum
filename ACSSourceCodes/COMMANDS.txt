@@ -391,30 +391,30 @@ if (buttons2 & BT_CROUCH)
 //Faster
 script 852 (void)
 {
-		 SetActorProperty (0, APROP_Speed, 2.4);
+		
 		delay (12);
-		 SetActorProperty (0, APROP_Speed, 1.3); 
+	
 }
 
 //Slower
 script 853 (void)
 {
-	SetActorProperty (0, APROP_Speed, 1.3);
+	
 	delay (1);
 }
 
 script "fastplayer" (void)
 {
-		 SetActorProperty (0, APROP_Speed, 2.4);
+		
 		delay (12);
-		takeinventory("sprintbob",1);
-		 SetActorProperty (0, APROP_Speed, 1.3); 
+		
+		
 }
 
 //Slower
 script "slowplayer" (void)
 {
-	SetActorProperty (0, APROP_Speed, 1.3);
+
 	delay (1);
 }
 

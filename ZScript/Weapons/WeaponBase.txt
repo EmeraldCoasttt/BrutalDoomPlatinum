@@ -653,29 +653,18 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
         CVar.GetCVar(cvartoset, Player).SetInt(valuetoset);
     }
 	
-	Bool A_CheckExhaustion()
-	{
-		If(owner.findinventory("StaminaExhaustion"))
-		{
-			owner.A_startSound("Tired", 21,CHANF_NOSTOP);
-			Return True;
-		}
-		Else
-		{
-			Return False;
-		}
-	}
+
 	
 	Bool A_checksprint()
 	{
-		let player = owner.player;
-		If(player.cmd.buttons & BT_SPEED && !(player.cmd.buttons & BT_ATTACK || player.cmd.buttons & BT_ALTATTACK) && !A_CheckExhaustion())
+		Brutal_Playerbase Player = Brutal_playerbase(owner);
+		If(!Player || !Player.bsprinting)
 		{
-			Return True;
+			Return False;
 		}
 		Else
 		{
-			Return False;
+			Return True;
 		}
 	}
 	
@@ -885,10 +874,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 				}
 			}
   
-			If(owner.countinv("usedstamina") >= 99)
-				{
-					owner.giveinventory("StaminaExhaustion",1);
-				}
+		
 			
 			If(A_checksprint())
 			{
@@ -914,7 +900,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 				BobSpeed = 3.9;
 				//owner.speed = (owner.default.speed * 2);
 	
-				owner.acs_namedexecute("fastplayer",0,0,0,0);
+				//owner.acs_namedexecute("fastplayer",0,0,0,0);
 				//owner.takeinventory("sprintbob",1);
 			}
 			else
@@ -923,20 +909,8 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 				BobRangeY = 0.4;
 				BobSpeed = 2.9;
 				//owner.takeinventory("sprintbob",1);
-				owner.acs_namedexecute("slowplayer",0,0,0,0);
-				if (level.time % 2 == 0)
-				{
-					owner.takeinventory("usedstamina",1);
-	
-				}
-				If(owner.countinv("usedstamina") >= 60)
-				{
-					owner.giveinventory("StaminaExhaustion",1);
-				}
-				Else
-				{
-					Owner.takeinventory("staminaExhaustion",1);
-				}
+				//owner.acs_namedexecute("slowplayer",0,0,0,0);
+				
 				//owner.speed = owner.default.speed;
 			}
   

@@ -17,6 +17,8 @@ class Brutal_PlayerBase : PlayerPawn
 	playerinfo ZMPlayer;
 	vector2 OldVelXY;
 	vector3	Acceleration;
+	bool	Bsprinting;
+	bool exhausted;
 	
 	//////////////////
 	
@@ -194,7 +196,7 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	Default
     {
-		Player.DisplayName "ZMovement Player";
+		Player.DisplayName "Brutal Doom Player";
         PainChance 255;
     }
 	
@@ -646,8 +648,22 @@ class Brutal_PlayerBase : PlayerPawn
 		{
 			Booster = false;
 		}
-
 		
+		
+		If(countinv("usedstamina") >= 99)
+		{
+			exhausted = true;
+		}
+		Else if (countinv("usedstamina") < 60)
+		{
+			exhausted = false;
+		}
+		if (level.time % 2 == 0)
+		{
+			takeinventory("usedstamina",1);
+	
+		}
+				
 		// [RH] 180-degree turn overrides all other yaws
 		if (player.turnticks)
 		{
@@ -675,7 +691,7 @@ class Brutal_PlayerBase : PlayerPawn
 		
 		Bool jetpacking = countinv("jetpackmoving");
 		
-		If(booster && cmd.forwardmove && cmd.buttons & BT_SPEED && countinv("StaminaExhaustion") < 1)
+		If(booster && bsprinting)
 		{
 			boosttics++;
 			If(boosttics >= 10)
@@ -760,11 +776,37 @@ class Brutal_PlayerBase : PlayerPawn
 				fm *= player.crouchfactor;
 				sm *= player.crouchfactor;
 				bobfactor *= player.crouchfactor;
+				//Can't sprint while crouching
+				Bsprinting = false;
 			}
+			//Check sprint
+			else If((cmd.forwardmove || cmd.sidemove) && cmd.buttons & BT_SPEED)
+			{
+				If(!exhausted)
+				{
+					Bsprinting = true;
+				}
+				else
+				{
+					A_startSound("Tired", 21,CHANF_NOSTOP);
+					bsprinting = false;
+				}
+			}
+			Else
+			{
+				Bsprinting = false;
+			}
+		
 			
 			If(boostlevel >= 1)
 			{
 				fm = fm + (boostlevel * 10);
+			}
+			
+			If(bsprinting)
+			{
+				fm = fm * 2;
+				sm = sm * 2;
 			}
 
 			forwardmove = fm * movefactor * (35 / TICRATE);
@@ -798,6 +840,10 @@ class Brutal_PlayerBase : PlayerPawn
 				vel.xy *= 0.97;
 			}
 			
+		}
+		Else
+		{
+			Bsprinting = false;
 		}
 		
 		If(boostlevel > 3 && !checkmove(Pos.XY + AngleToVector(angle, 16), PCM_NOACTORS))
