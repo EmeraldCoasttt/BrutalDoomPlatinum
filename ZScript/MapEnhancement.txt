@@ -2048,6 +2048,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 
 			//map20
 			case '8898f5ec9cbdcd98019a1bc1bf892a8a':
+			case 'f42dbba1898907accf63215d2ba5630d':
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
 				{
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYCITH",TexMan.Type_Any),TexMan.CheckForTexture("SKYCITH",TexMan.Type_Any));
