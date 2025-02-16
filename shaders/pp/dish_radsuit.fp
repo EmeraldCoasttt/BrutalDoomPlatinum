@@ -2,7 +2,7 @@ void main()
 {
 	float outerRadius = 1.0;
 	float innerRadius = 0.4;
-	float intensity = 0.15;
+	//float intensity = 0.15;
 	
 	vec4 src = texture(InputTexture, TexCoord);
 	vec2 texSize = textureSize(InputTexture, 0);

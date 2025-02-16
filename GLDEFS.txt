@@ -1895,6 +1895,7 @@ HardwareShader PostProcess Scene
 {
 	Shader "shaders/pp/dish_radsuit.fp" 330
 	Name "radsuit"
+	uniform float "intensity"
 }
 
 HardwareShader PostProcess Scene
@@ -1907,24 +1908,28 @@ HardwareShader PostProcess Scene
 {
 	Shader "shaders/pp/dish_tempinv.fp" 330
 	Name "tempinv"
+	uniform float "intensity"
 }
 
 HardwareShader PostProcess Scene
 {
 	Shader "shaders/pp/dish_quad.fp" 330
 	Name "quad"
+	uniform float "intensity"
 }
 
 HardwareShader PostProcess Scene
 {
 	Shader "shaders/pp/dish_haste.fp" 330
 	Name "haste"
+	uniform float "intensity"
 }
 
 HardwareShader PostProcess Scene
 {
 	Shader "shaders/pp/dish_rage.fp" 330
 	Name "rage"
+	uniform float "intensity"
 }
 
 HardwareShader PostProcess BeforeBloom

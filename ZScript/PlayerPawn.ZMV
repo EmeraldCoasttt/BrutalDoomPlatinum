@@ -194,6 +194,13 @@ class Brutal_PlayerBase : PlayerPawn
 	int healtimer;
 	int geigertimer;
 	
+	//Shaders
+	float quadtimer;
+	float ragetimer;
+	float radsuittimer;
+	float hastetimer;
+	float invtimer;
+	
 	Default
     {
 		Player.DisplayName "Brutal Doom Player";
@@ -271,42 +278,57 @@ class Brutal_PlayerBase : PlayerPawn
 		if (findinventory("BDPInvuln"))
             {
                 PPShader.SetEnabled("tempinv", true);
+				invtimer = 1.0;
+				PPShader.SetUniform1f("tempinv","intensity",invtimer);
             }
-            else
+            else If(invtimer > 0)
             {
-                PPShader.SetEnabled("tempinv", false);
+                invtimer -= 0.04;
+				PPShader.SetUniform1f("tempinv","intensity",invtimer);
             }
 		if (findinventory("PowerIronFeet"))
             {
                 PPShader.SetEnabled("radsuit", true);
+				radsuittimer = 0.15;
+				PPShader.SetUniform1f("radsuit","intensity",radsuittimer);
             }
-            else
+            else If(radsuittimer > 0)
             {
-                PPShader.SetEnabled("radsuit", false);
+                radsuittimer -= 0.01;
+				PPShader.SetUniform1f("radsuit","intensity",radsuittimer);
             }
 		if (findinventory("PowerSpeed2"))
-            {
+             {
                 PPShader.SetEnabled("haste", true);
+				hastetimer = 0.30;
+				PPShader.SetUniform1f("haste","intensity",hastetimer);
             }
-            else
+            else If(hastetimer > 0)
             {
-                PPShader.SetEnabled("haste", false);
+                hastetimer -= 0.01;
+				PPShader.SetUniform1f("haste","intensity",hastetimer);
             }
 		if (findinventory("PowerRage"))
             {
                 PPShader.SetEnabled("rage", true);
+				ragetimer = 0.30;
+				PPShader.SetUniform1f("rage","intensity",ragetimer);
             }
-            else
+            else If(ragetimer > 0)
             {
-                PPShader.SetEnabled("rage", false);
+                ragetimer -= 0.01;
+				PPShader.SetUniform1f("rage","intensity",ragetimer);
             }
 		if (findinventory("PowerQuakeDamage"))
             {
                 PPShader.SetEnabled("quad", true);
+				quadtimer = 0.30;
+				PPShader.SetUniform1f("quad","intensity",quadtimer);
             }
-            else
+            else If(quadtimer > 0)
             {
-                PPShader.SetEnabled("quad", false);
+                quadtimer -= 0.01;
+				PPShader.SetUniform1f("quad","intensity",quadtimer);
             }
 		
 		

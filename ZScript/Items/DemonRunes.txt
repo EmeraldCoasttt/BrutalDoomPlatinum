@@ -180,6 +180,72 @@ CLASS DemonPlayer : DoomPlayer
 	}
 	int		DualTimer;
 	Int		SpecialTimer;
+	//Shaders
+	float quadtimer;
+	float ragetimer;
+	float radsuittimer;
+	float hastetimer;
+	float invtimer;
+	
+	Override void playerthink()
+	{
+		if (findinventory("BDPInvuln"))
+            {
+                PPShader.SetEnabled("tempinv", true);
+				invtimer = 1.0;
+				PPShader.SetUniform1f("tempinv","intensity",invtimer);
+            }
+            else If(invtimer > 0)
+            {
+                invtimer -= 0.04;
+				PPShader.SetUniform1f("tempinv","intensity",invtimer);
+            }
+		if (findinventory("PowerIronFeet"))
+            {
+                PPShader.SetEnabled("radsuit", true);
+				radsuittimer = 0.15;
+				PPShader.SetUniform1f("radsuit","intensity",radsuittimer);
+            }
+            else If(radsuittimer > 0)
+            {
+                radsuittimer -= 0.01;
+				PPShader.SetUniform1f("radsuit","intensity",radsuittimer);
+            }
+		if (findinventory("PowerSpeed2"))
+             {
+                PPShader.SetEnabled("haste", true);
+				hastetimer = 0.30;
+				PPShader.SetUniform1f("haste","intensity",hastetimer);
+            }
+            else If(hastetimer > 0)
+            {
+                hastetimer -= 0.01;
+				PPShader.SetUniform1f("haste","intensity",hastetimer);
+            }
+		if (findinventory("PowerRage"))
+            {
+                PPShader.SetEnabled("rage", true);
+				ragetimer = 0.30;
+				PPShader.SetUniform1f("rage","intensity",ragetimer);
+            }
+            else If(ragetimer > 0)
+            {
+                ragetimer -= 0.01;
+				PPShader.SetUniform1f("rage","intensity",ragetimer);
+            }
+		if (findinventory("PowerQuakeDamage"))
+            {
+                PPShader.SetEnabled("quad", true);
+				quadtimer = 0.30;
+				PPShader.SetUniform1f("quad","intensity",quadtimer);
+            }
+            else If(quadtimer > 0)
+            {
+                quadtimer -= 0.01;
+				PPShader.SetUniform1f("quad","intensity",quadtimer);
+            }
+		Super.playerthink();
+	}
 	
 	Override void tick()
 	{
