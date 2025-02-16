@@ -498,7 +498,7 @@ Default
 	{
 		Powerup.Duration -30;
 		//Powerup.Color "91 00 00";
-		Speed 2.0;
+		Speed 1.5;
 		+INVENTORY.HUBPOWER
 	}
 	override void initeffect()
