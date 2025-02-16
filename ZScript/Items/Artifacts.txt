@@ -513,6 +513,10 @@ Default
 			Destroy ();
 		}
 		//console.printf("%i",EffectTics);
+		If(effecttics == 104)
+		{
+			Owner.a_startsound("BRSKWARN",108);
+		}
 		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
 		{
 			if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
