@@ -561,6 +561,10 @@ Override void tick()
 		{
 			Destroy ();
 		}
+		If(effecttics == 104)
+		{
+			Owner.a_startsound("INVOFF",108);
+		}
 		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
 		{
 		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
@@ -584,6 +588,10 @@ Override void tick()
 		if (Owner == NULL)
 		{
 			Destroy ();
+		}
+		If(effecttics == 104)
+		{
+			Owner.a_startsound("HASTEOFF",108);
 		}
 		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
 		{
