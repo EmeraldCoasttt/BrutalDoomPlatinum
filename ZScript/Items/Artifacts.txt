@@ -513,7 +513,7 @@ Default
 			Destroy ();
 		}
 		//console.printf("%i",EffectTics);
-		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 140)
+		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
 		{
 			if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
 			{
@@ -557,7 +557,7 @@ Override void tick()
 		{
 			Destroy ();
 		}
-		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 140)
+		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
 		{
 		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
 		{
@@ -581,7 +581,7 @@ Override void tick()
 		{
 			Destroy ();
 		}
-		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 140)
+		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
 		{
 		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
 		{
@@ -608,7 +608,13 @@ Override void tick()
 		{
 			Destroy ();
 		}
-		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 140)
+		
+		If(EffectTics == 104)
+		{
+			Owner.a_startsound("items/quaddamage/warn",107);
+		}
+		
+		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
 		{
 		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
 		{
@@ -626,7 +632,7 @@ Override void tick()
 		{
 			Destroy ();
 		}
-		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 140)
+		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
 		{
 		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
 		{
