@@ -616,29 +616,87 @@ Override void tick()
 		
 		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
 		{
-		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
-		{
-			Destroy ();
-		}
+			if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
+			{
+				Destroy ();
+			}
 		}
 	}
 }
 
 CLASs BDPBlur : PowerInvisibility
 {
+	Default
+	{
+		+INVENTORY.NOSCREENBLINK;
+	}
 Override void tick()
 	{
 		if (Owner == NULL)
 		{
 			Destroy ();
 		}
+		If(effecttics == 104)
+		{
+			Owner.a_startsound("BLURWARN",108);
+		}
+		If(effecttics == 15)
+		{
+			Owner.a_startsound("INVISOFF",107);
+		}
 		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
 		{
 		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
 		{
+			
 			Destroy ();
 		}
 		}
+	}
+	
+	override void AlterWeaponSprite (VisStyle vis, in out int changed)
+	{
+		
+		if (changed == 1)
+		{
+			// something else set the weapon sprite back to opaque but this item is still active.
+			float ts = float((Strength / 100) * (special1 + 1));
+			vis.Alpha = clamp((1. - ts), 0., 1.);
+			switch (Mode)
+			{
+			case 'Fuzzy':
+				vis.RenderStyle = STYLE_OptFuzzy;
+				break;
+			case 'Opaque':
+				vis.RenderStyle = STYLE_Normal;
+				break;
+			case 'Additive':
+				vis.RenderStyle = STYLE_Add;
+				break;
+			case 'Stencil':
+				vis.RenderStyle = STYLE_Stencil;
+				break;
+			case 'TranslucentStencil':
+				vis.RenderStyle = STYLE_TranslucentStencil;
+				break;
+			case 'AddStencil':
+				vis.RenderStyle = STYLE_AddStencil;
+				break;
+			case 'None':
+			case 'Cumulative':
+			case 'Translucent':
+			default:
+				vis.RenderStyle = STYLE_Translucent;
+				break;
+			}
+		}
+		// Handling of Strife-like cumulative invisibility powerups, the weapon itself shouldn't become invisible
+		if ((vis.Alpha < 0.25f && special1 > 0) || (vis.Alpha == 0))
+		{
+			vis.Alpha = clamp((1. - Strength/100.), 0., 1.);
+			vis.invert = true;
+		}
+		changed = -1;	// This item is valid so another one shouldn't reset the translucency
 	}
 }
 

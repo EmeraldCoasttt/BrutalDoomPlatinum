@@ -35,6 +35,10 @@ $limit items/quaddamage 1 100000
 
 items/soulsphere MGSPHERE
 
+INVISON INVISON
+INVISOFF INVISOFF
+BLURWARN BLURWARN
+
 
 sigil/pickup SIGIL1
 

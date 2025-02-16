@@ -261,6 +261,7 @@ ACTOR SuperBlurSphere : Blursphere REPLACES Blursphere
   Inventory.PickupMessage "$GOTINVIS"
   powerup.type "BDPBlur"
   Powerup.Duration -30
+  Inventory.PickupSound "INVISON"
   States
   {
   Spawn:
