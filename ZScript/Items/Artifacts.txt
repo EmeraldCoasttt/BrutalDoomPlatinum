@@ -62,7 +62,7 @@ class PowerShield : Powerup
 	Default
 	{
 		Powerup.Duration 1;
-		Powerup.Color "00 00 FF", 0.5;
+		//Powerup.Color "00 00 FF", 0.5;
 		+INVENTORY.HUBPOWER
 	}
 	
@@ -174,18 +174,7 @@ class PowerShield : Powerup
 	super.detachfromowner();
 	}
 	
-	override color GetBlend ()
-	{
-		// slowly fade the berserk out
-		int cnt = 128 - (EffectTics>>3);
-
-		if (cnt > 0)
-		{
-			return Color(BlendColor.a*cnt/256,
-				BlendColor.r, BlendColor.g, BlendColor.b);
-		}
-		return 0;
-	}
+	
 	
 }
 
@@ -508,7 +497,7 @@ CLASS PowerRage : PowerSpeed
 Default
 	{
 		Powerup.Duration -30;
-		Powerup.Color "91 00 00";
+		//Powerup.Color "91 00 00";
 		Speed 2.0;
 		+INVENTORY.HUBPOWER
 	}

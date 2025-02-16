@@ -1867,3 +1867,135 @@ object HDFlamesGFX1
     frame NF1R { light BIGREDTORCHNOSELF }
 	frame NF2R { light BIGREDTORCHNOSELF }
 }
+
+// ==================================
+// SHADERS
+// ==================================
+
+HardwareShader PostProcess Scene
+{
+	Shader "shaders/pp/dish_blind.fp" 330
+	Name "blind"
+	//Enabled
+}
+
+HardwareShader PostProcess Scene
+{
+	Shader "shaders/pp/dish_scope.fp" 330
+	Name "scope"
+}
+
+HardwareShader PostProcess Scene
+{
+	Shader "shaders/pp/dish_grayscale.fp" 330
+	Name "grayscale"
+}
+
+HardwareShader PostProcess Scene
+{
+	Shader "shaders/pp/dish_radsuit.fp" 330
+	Name "radsuit"
+}
+
+HardwareShader PostProcess Scene
+{
+	Shader "shaders/pp/dish_inv.fp" 330
+	Name "inv"
+}
+
+HardwareShader PostProcess Scene
+{
+	Shader "shaders/pp/dish_tempinv.fp" 330
+	Name "tempinv"
+}
+
+HardwareShader PostProcess Scene
+{
+	Shader "shaders/pp/dish_quad.fp" 330
+	Name "quad"
+}
+
+HardwareShader PostProcess Scene
+{
+	Shader "shaders/pp/dish_haste.fp" 330
+	Name "haste"
+}
+
+HardwareShader PostProcess Scene
+{
+	Shader "shaders/pp/dish_rage.fp" 330
+	Name "rage"
+}
+
+HardwareShader PostProcess BeforeBloom
+{
+	Shader "shaders/pp/dish_visor.fp" 330
+	Name "visor"
+	//Enabled
+}
+
+HardwareShader PostProcess BeforeBloom
+{
+	Shader "shaders/pp/dish_tPickup.fp" 330
+	Name "tPickup"
+	uniform float intensity
+	//Enabled
+}
+
+HardwareShader PostProcess BeforeBloom
+{
+	Shader "shaders/pp/dish_lowhp.fp" 330
+	Name "lowhp"
+	Uniform float NewTime
+	// Enabled
+}
+
+HardwareShader PostProcess BeforeBloom
+{
+	Shader "shaders/pp/dish_death.fp" 330
+	Name "redDeath"
+	uniform float intensity
+	//Enabled
+}
+
+HardwareShader PostProcess BeforeBloom
+{
+	Shader "shaders/pp/dish_barmor.fp" 330
+	Name "blackArmor"
+	uniform float intensity
+	//Enabled
+}
+
+HardwareShader PostProcess scene
+{
+	Name "npcVingette"
+	Shader "shaders/pp/dish_npcving.fp" 330
+	Uniform float intensity
+	Uniform float falloff
+}
+
+HardwareShader PostProcess screen
+{
+	Name "blackFadeIn"
+	Shader "shaders/pp/dish_fadeIn.fp" 330
+	Uniform float intensity
+	//Enabled
+}
+
+HardwareShader PostProcess BeforeBloom
+{
+	Name "oneEye"
+	Shader "shaders/pp/dish_oneEye.fp" 330
+}
+
+HardwareShader PostProcess Screen
+{
+	Name "lowres"
+	Shader "shaders/pp/dish_lowres.fp" 330
+}
+
+HardwareShader PostProcess BeforeBloom
+{
+	Name "quantum"
+	Shader "shaders/pp/dish_quantum.fp" 330
+}

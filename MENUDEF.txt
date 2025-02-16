@@ -522,6 +522,9 @@ OptionMenu "DoxCreditsGraphics"
 	StaticText ""
 	StaticText "Lemony Lepid", "LightBlue"
 	StaticText "Tank model help"
+	StaticText ""
+	StaticText "Difficult Old Stuff (DOS)", "LightBlue"
+	StaticText "Powerup shaders"
 }
 
 OptionMenu "DoxCreditsCode"

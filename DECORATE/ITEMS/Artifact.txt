@@ -14,7 +14,7 @@ ACTOR InvulnerabilitySphere_  : PowerupGiver Replaces InvulnerabilitySphere
 	+INVENTORY.BIGPOWERUP
 	Inventory.MaxAmount 0
 	Powerup.Type "BDPInvuln"
-	Powerup.Colormap 0.0, 0.0, 0.0, 1.0,1.0,1.0
+	//Powerup.Colormap 0.0, 0.0, 0.0, 1.0,1.0,1.0
 	Inventory.PickupMessage "$GOTINVUL"
 	Tag "Invulnerability"
 	States
@@ -344,7 +344,7 @@ ACTOR QuadSigil : PowerUpGiver
 	Inventory.PickupSound "sigil/quake"
 	Tag "Soulsphere"
 	powerup.duration -30
-	powerup.color "purple"
+	//powerup.color "purple"
 	powerup.type "Powerquakedamage"
 	+inventory.autoactivate
 	States
@@ -371,7 +371,7 @@ ACTOR HasteSphere : PowerUpGiver
 	Inventory.PickupSound "sigil/haste"
 	Tag "Soulsphere"
 	powerup.duration -30
-	powerup.color "Yellow"
+	//powerup.color "Yellow"
 	powerup.type "PowerSpeed2"
 	+inventory.autoactivate
 	States
@@ -744,7 +744,7 @@ ACTOR RadSuit3 : PowerupGiver
   +INVENTORY.AUTOACTIVATE
   +INVENTORY.ALWAYSPICKUP
   Inventory.MaxAmount 0
-  
+  Powerup.Color "None"
   Inventory.PickupMessage "$GOTSUIT" 
   Powerup.Type "IronFeet"
   States

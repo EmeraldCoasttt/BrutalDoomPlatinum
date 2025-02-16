@@ -266,6 +266,50 @@ class Brutal_PlayerBase : PlayerPawn
 		{
 		Super.playerthink();
 		
+		
+		
+		if (findinventory("BDPInvuln"))
+            {
+                PPShader.SetEnabled("tempinv", true);
+            }
+            else
+            {
+                PPShader.SetEnabled("tempinv", false);
+            }
+		if (findinventory("PowerIronFeet"))
+            {
+                PPShader.SetEnabled("radsuit", true);
+            }
+            else
+            {
+                PPShader.SetEnabled("radsuit", false);
+            }
+		if (findinventory("PowerSpeed2"))
+            {
+                PPShader.SetEnabled("haste", true);
+            }
+            else
+            {
+                PPShader.SetEnabled("haste", false);
+            }
+		if (findinventory("PowerRage"))
+            {
+                PPShader.SetEnabled("rage", true);
+            }
+            else
+            {
+                PPShader.SetEnabled("rage", false);
+            }
+		if (findinventory("PowerQuakeDamage"))
+            {
+                PPShader.SetEnabled("quad", true);
+            }
+            else
+            {
+                PPShader.SetEnabled("quad", false);
+            }
+		
+		
 		//Health Regen
 		//console.printf("%i",health);	
 		If(paintimer > 0)
