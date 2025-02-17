@@ -20,11 +20,11 @@ big_fucking_gun,bfg,1
 bfg10k,bfg,1
 unmaker,bfg,1
 revolverspawner,secret,1
-EnergyArmor,secret,1
-demonrunespawner,secret,2
+EnergyArmor,secret,2
+demonrunespawner,secret,3
 quadsigil,secret,2
 hastesphere,secret,2
 ragesphere,secret,3
-boosterframe,secret,1
+boosterframe,secret,2
 battlerifle,shotgun,1
 battlerifle,secret,1
