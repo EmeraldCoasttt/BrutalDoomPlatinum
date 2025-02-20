@@ -31,6 +31,7 @@ class Brutal_PlayerBase : PlayerPawn
 	float	FloorAngle;
 	int		DoubleJumpCooler;
 	int		JumpSoundCooler;
+	int		jumpcooler;
 	
 	//Double Jump
 	bool	BlockDoubleJump;
@@ -1060,7 +1061,7 @@ class Brutal_PlayerBase : PlayerPawn
 			{
 				Vel.Z = 3.;
 			}
-			else if (player.onground || doublejumpready && !oldjump && !alreadyjumped && !(player.readyweapon is "hellishmissilelauncher" && countinv("gas") > 0))
+			else if (player.onground && jumpcooler < 5 || doublejumpready && !oldjump && !alreadyjumped && !(player.readyweapon is "hellishmissilelauncher" && countinv("gas") > 0))
 			{
 				double jumpvelz = JumpZ * 35 / TICRATE;
 				double jumpfac = 0;
@@ -1091,10 +1092,16 @@ class Brutal_PlayerBase : PlayerPawn
 				}
 				oldjump = true;
 			}
+			
+			jumpcooler++;
 		}
 		Else if (oldjump)
 		{
 			oldjump = false;
+		}
+		else if (jumpcooler)
+		{
+			jumpcooler = 0;
 		}
 	}
 	
