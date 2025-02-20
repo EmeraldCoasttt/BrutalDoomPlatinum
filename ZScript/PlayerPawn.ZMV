@@ -823,11 +823,17 @@ class Brutal_PlayerBase : PlayerPawn
 
 			[friction, movefactor] = GetFriction();
 			bobfactor = friction < ORIG_FRICTION ? movefactor : ORIG_FRICTION_FACTOR;
+			bool inair;
 			if (!player.onground && !bNoGravity && !waterlevel && !jetpacking && !rope.length())
 			{
 				// [RH] allow very limited movement if not on ground.
-				movefactor *= level.aircontrol;
+				movefactor *= 0.50;
+				inair = true;
 				bobfactor*= level.aircontrol;
+			}
+			If(rope.length())
+			{
+				bobfactor = 0;
 			}
 
 			fm = cmd.forwardmove;
@@ -879,17 +885,53 @@ class Brutal_PlayerBase : PlayerPawn
 
 			forwardmove = fm * movefactor * (35 / TICRATE);
 			sidemove = sm * movefactor * (35 / TICRATE);
-
-			if (forwardmove)
+			
+			//console.printf("Speed      : %010.5f u/s", forwardmove, DTA_HUDRules, true);
+			
+			If(!inair || rope.length())
 			{
-				Bob(Angle, cmd.forwardmove * bobfactor / 256., true);
-				ForwardThrust(forwardmove, Angle);
+			
+				if (forwardmove)
+				{
+					Bob(Angle, cmd.forwardmove * bobfactor / 256., true);
+					ForwardThrust(forwardmove, Angle);
+				}
+				if (sidemove)
+				{
+					let a = Angle - 90;
+					Bob(a, cmd.sidemove * bobfactor / 256., false);
+					Thrust(sidemove, a);
+				}
+				
 			}
-			if (sidemove)
+			else
 			{
-				let a = Angle - 90;
-				Bob(a, cmd.sidemove * bobfactor / 256., false);
-				Thrust(sidemove, a);
+				//Console.printf("JUMPING");
+				vector2 actualvelocity = rotatevector(vel.xy,-angle);
+				if (forwardmove > 0 && actualvelocity.x < (forwardmove * 9.6))
+				{
+					Bob(Angle, cmd.forwardmove * bobfactor / 256., true);
+					ForwardThrust(forwardmove, Angle);
+				}
+				if (forwardmove < 0 && actualvelocity.x > (forwardmove * 9.6))
+				{
+					Bob(Angle, cmd.forwardmove * bobfactor / 256., true);
+					ForwardThrust(forwardmove, Angle);
+				}
+				
+				if (sidemove > 0 && -actualvelocity.y < (sidemove * 9.6))
+				{
+					let a = Angle - 90;
+					Bob(a, cmd.sidemove * bobfactor / 256., false);
+					Thrust(sidemove, a);
+				}
+				if (sidemove < 0 && -actualvelocity.y > (sidemove * 9.6))
+				{
+					let a = Angle - 90;
+					Bob(a, cmd.sidemove * bobfactor / 256., false);
+					Thrust(sidemove, a);
+				}
+				
 			}
 
 			if (!(player.cheats & CF_PREDICTING) && (forwardmove != 0 || sidemove != 0))
