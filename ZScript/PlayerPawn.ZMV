@@ -1470,6 +1470,130 @@ class Brutal_PlayerBase : PlayerPawn
 		//Sprite animation
 		PlayIdle();
 	}
+	
+	Override void CalcHeight()
+	{
+		let player = self.player;
+		double angle;
+		double bob;
+		bool still = false;
+
+		// Regular movement bobbing
+		// (needs to be calculated for gun swing even if not on ground)
+
+		// killough 10/98: Make bobbing depend only on player-applied motion.
+		//
+		// Note: don't reduce bobbing here if on ice: if you reduce bobbing here,
+		// it causes bobbing jerkiness when the player moves from ice to non-ice,
+		// and vice-versa.
+
+		if (player.cheats & CF_NOCLIP2)
+		{
+			player.bob = 0;
+		}
+		else if (bNoGravity && !player.onground)
+		{
+			player.bob = min(abs(0.5 * FlyBob), MAXBOB);
+		}
+		else if (rope.length())
+		{
+			player.bob = 0;
+		}
+		else
+		{
+			player.bob = player.Vel dot player.Vel;
+			if (player.bob == 0)
+			{
+				still = true;
+			}
+			else
+			{
+				player.bob *= player.GetMoveBob();
+
+				if (player.bob > MAXBOB)
+					player.bob = MAXBOB;
+			}
+		}
+
+		double defaultviewheight = ViewHeight + player.crouchviewdelta;
+
+		if (player.cheats & CF_NOVELOCITY)
+		{
+			player.viewz = pos.Z + defaultviewheight;
+
+			if (player.viewz > ceilingz-4)
+				player.viewz = ceilingz-4;
+
+			return;
+		}
+
+		if (bFly && !GetCVar("FViewBob"))
+		{
+			bob = 0;
+		}
+		else if (still)
+		{
+			if (player.health > 0)
+			{
+				angle = Level.maptime / (120 * TICRATE / 35.) * 360.;
+				bob = player.GetStillBob() * sin(angle);
+			}
+			else
+			{
+				bob = 0;
+			}
+		}
+		else
+		{
+			angle = Level.maptime / (ViewBobSpeed * TICRATE / 35.) * 360.;
+			bob = player.bob * sin(angle) * (waterlevel > 1 ? 0.25f : 0.5f);
+		}
+
+		// move viewheight
+		if (player.playerstate == PST_LIVE)
+		{
+			player.viewheight += player.deltaviewheight;
+
+			if (player.viewheight > defaultviewheight)
+			{
+				player.viewheight = defaultviewheight;
+				player.deltaviewheight = 0;
+			}
+			else if (player.viewheight < (defaultviewheight/2))
+			{
+				player.viewheight = defaultviewheight/2;
+				if (player.deltaviewheight <= 0)
+					player.deltaviewheight = 1 / 65536.;
+			}
+			
+			if (player.deltaviewheight)	
+			{
+				player.deltaviewheight += 0.25;
+				if (!player.deltaviewheight)
+					player.deltaviewheight = 1/65536.;
+			}
+		}
+
+		if (Alternative)
+		{
+			bob = 0;
+		}
+		player.viewz = pos.Z + player.viewheight + (bob * clamp(ViewBob, 0. , 1.5)); // [SP] Allow DECORATE changes to view bobbing speed.
+
+		if (Floorclip && player.playerstate != PST_DEAD
+			&& pos.Z <= floorz)
+		{
+			player.viewz -= Floorclip;
+		}
+		if (player.viewz > ceilingz - 4)
+		{
+			player.viewz = ceilingz - 4;
+		}
+		if (player.viewz < floorz + 4)
+		{
+			player.viewz = floorz + 4;
+		}
+	}
 }
 
 
