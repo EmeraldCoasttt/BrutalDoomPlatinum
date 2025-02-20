@@ -102,6 +102,7 @@ version "4.14.0"
 #include "ZScript/decorations/titlemapdecorations.txt"
 
 #include "ZScript/effects/ricochet.txt"
+#include "ZScript/effects/footstep.txt"
 
 const UNIT_METER = 8.f;
 

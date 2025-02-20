@@ -243,7 +243,19 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	override void PlayerLandedMakeGruntSound(actor onmobj)
 	{
-	
+		bool grunted;
+
+		// [RH] only make noise if alive
+		if (self.health > 0 && !Alternative)
+		{
+			grunted = false;
+			// Why should this number vary by gravity?
+			if (self.Vel.Z < -10)
+			{
+				spawn("BDPLANDED",pos);
+				grunted = true;
+			}
+		}
 	}
 	
 	Override int takespecialdamage(Actor inflictor, Actor source, int damage, Name damagetype)
