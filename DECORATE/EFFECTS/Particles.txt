@@ -942,6 +942,7 @@ Gravity 0.1
 Actor MarbleCloudSmall : BrownCloudSmall
 {
 
+	Alpha 0.5
 	States
 	{
 	Spawn:
@@ -957,7 +958,7 @@ Actor MarbleCloudSmall : BrownCloudSmall
 
 Actor StoneCloudSmall : BrownCloudSmall
 {
-
+	Alpha 0.5
 	States
 	{
 	Spawn:
@@ -973,7 +974,7 @@ Actor StoneCloudSmall : BrownCloudSmall
 
 Actor RedCloudSmall : BrownCloudSmall
 {
-
+	Alpha 0.5
 	States
 	{
 	Spawn:
