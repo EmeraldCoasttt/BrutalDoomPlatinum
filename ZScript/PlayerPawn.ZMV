@@ -241,6 +241,11 @@ class Brutal_PlayerBase : PlayerPawn
 
 	}
 	
+	override void PlayerLandedMakeGruntSound(actor onmobj)
+	{
+	
+	}
+	
 	Override int takespecialdamage(Actor inflictor, Actor source, int damage, Name damagetype)
 		{
 			If(inflictor is "grenadeexplosion" && source == self || inflictor is "leadburstertracer2")
@@ -1028,12 +1033,14 @@ class Brutal_PlayerBase : PlayerPawn
 		
 		if (player.cmd.buttons & BT_JUMP)
 		{
+			
+			/*
 			if (player.crouchoffset != 0)
 			{
 				// Jumping while crouching will force an un-crouch but not jump
 				player.crouching = 1;
 			}
-			else if (waterlevel >= 2)
+			else*/ if (waterlevel >= 2)
 			{
 				Vel.Z = 4 * Speed;
 			}
@@ -1041,7 +1048,7 @@ class Brutal_PlayerBase : PlayerPawn
 			{
 				Vel.Z = 3.;
 			}
-			else if (player.onground && player.jumpTics == 0 || doublejumpready && !oldjump && !alreadyjumped && !(player.readyweapon is "hellishmissilelauncher" && countinv("gas") > 0))
+			else if (player.onground || doublejumpready && !oldjump && !alreadyjumped && !(player.readyweapon is "hellishmissilelauncher" && countinv("gas") > 0))
 			{
 				double jumpvelz = JumpZ * 35 / TICRATE;
 				double jumpfac = 0;
@@ -1064,10 +1071,11 @@ class Brutal_PlayerBase : PlayerPawn
 				//console.printf("%i",vel.z);
 				bOnMobj = false;
 				player.jumpTics = -1;
-				if (!(player.cheats & CF_PREDICTING)) A_StartSound("*jump", CHAN_BODY);
+				if (!(player.cheats & CF_PREDICTING)) A_StartSound("BDPJUMP", CHAN_BODY);
 				If(doublejumpready)
 				{
 					alreadyjumped = true;
+					if (!(player.cheats & CF_PREDICTING)) A_StartSound("JMPBOOT", CHAN_BODY);
 				}
 				oldjump = true;
 			}

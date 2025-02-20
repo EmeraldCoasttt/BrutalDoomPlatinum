@@ -85,7 +85,7 @@ ACTOR Doomer : Brutal_PlayerBase Replaces DoomPlayer //PlayerPawn Replaces DoomP
 	Player.StartItem "NeverSelectedShotgun", 1
 	player.StartItem "SoulAmmo", 666
 	//Player.JumpZ 7.4
-	Player.GruntSpeed 256 //This thing will make the grunt sound effect play only after falling for some time.
+	Player.GruntSpeed 9999 //This thing will make the grunt sound effect play only after falling for some time.
 	Player.CrouchSprite "PLYC"
 	Player.DamageScreenColor "Red", 2.0
 	Player.DamageScreenColor "Orange", 2.0, "Burn"
