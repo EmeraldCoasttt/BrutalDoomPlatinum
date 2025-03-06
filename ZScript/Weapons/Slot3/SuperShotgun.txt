@@ -1004,9 +1004,9 @@ class DragonsBreathSparkle : Actor
 			vel *= 0.1;
 			bnogravity = false;
 			bmissile = false;
-			gravity = frandom(0.1,0.5);
+			gravity = frandom(0.05,0.3);
 		}
-		SPRK "#" Random(20,60) Bright;
+		SPRK "#" Random(20,120) Bright;
 	Death:
 		SPRK "#" 1 bright A_FadeOut (0.05);
 		loop;
