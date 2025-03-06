@@ -47,6 +47,19 @@ flickerlight BFGEXPLO
 	chance 0.99
 }
 
+object DragonsBreathSparkle
+{
+    frame SPRKB { light DRAGONBREATH }
+}
+
+flickerlight DRAGONBREATH
+{
+    color 0.1 0.1 0.01
+    size 130
+	secondarySize 200
+	chance 0.50
+}
+
 
 object Candelabra1
 {

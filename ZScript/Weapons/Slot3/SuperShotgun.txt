@@ -310,11 +310,11 @@ CLASS SSG : BrutalWeapon
 		
 		
 	 FireDragonBreath:
-	    FLMT A 0 BRIGHT A_fireprojectile("FlamethrowerMissileProperFaster", random(-2,-4), 0, 4, -8, 0, 0);
-        FLMT A 0 BRIGHT A_fireprojectile("FlamethrowerMissileFaster", random(-2,-4), 0, 4, -8, 0, 0);
+	    FLMT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
+		{
+			A_FireProjectile("DragonsBreathSparkle",frandom(-6,6),false,0,0,0,frandom(-3,3));
+		}
 		"####" A 0 A_QuadSound();
-		FLMT A 0 BRIGHT A_fireprojectile("FlamethrowerMissileProperFaster", random(2,4), 0, -4, -8, 0, 0);
-        FLMT A 0 BRIGHT A_fireprojectile("FlamethrowerMissileFaster", random(2,4), 0, -4, -8, 0, 0);
 		
 		Goto ContinueRecoil;
 		
@@ -328,7 +328,6 @@ CLASS SSG : BrutalWeapon
 		TNT1 A 0 A_HookOverlay("RecoilHook");
 		SHTZ A 0 A_TakeAmmo("SSGAmmo", 2);
 		SHTZ A 0 A_ZoomFactor(1.6);
-		SHTZ A 0 A_JumpIfInventory("PowerStrength", 1, 2);
 		SHTZ A 0 
 		{
 		if(invoker.owner.pos.z <= invoker.owner.floorz)
@@ -342,7 +341,6 @@ CLASS SSG : BrutalWeapon
 		}
 		SHTZ A 0;
 		SHTZ A 0 A_fireprojectile("DistantFireSoundSSG", random(-1,1), 0, 0, -12, 0, random(-1,1));
-		SHO9 A 0 A_firebullets (0,0,1,40,"shotpuff",FBF_NORANDOM,300);
 		"####" A 0 A_QuadSound();
 		TNT1 A 0 a_alertmonstersDX();
 		
@@ -350,9 +348,15 @@ CLASS SSG : BrutalWeapon
 	    NULL A 0
 		{
 		If (CountInv("UsingDragonBreath")==1)
-		    { A_startsound("weapons/SSGDragonBreath", 1); }
+		    { 
+				A_startsound("weapons/SSGDragonBreath", 1); 
+			
+			}
 			else
-			{ A_startsound("SSHFIRE", 1); }
+			{ 
+				A_startsound("SSHFIRE", 1); 
+				A_firebullets (0,0,1,40,"shotpuff",FBF_NORANDOM,300);
+			}
 		}
 			
 		TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 31);// For poor PCs
@@ -534,15 +538,19 @@ CLASS SSG : BrutalWeapon
 		stop;
 
     AltFireDragonBreath:		
-	    FLMT A 0 BRIGHT A_fireprojectile("FlamethrowerMissileProperFaster", random(-1,-2), 0, 4, -8, 0, 0);
-        FLMT A 0 BRIGHT A_fireprojectile("FlamethrowerMissileFaster", random(-1,-2), 0, 4, -8, 0, 0);
+	    FLMT AAAAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
+		{
+			A_FireProjectile("DragonsBreathSparkle",frandom(-3,3),false,4,0,0,frandom(-3,3));
+		}
 		"####" A 0 A_QuadSound();
         Goto ContinueAlt1;
 
 
     AltFireDragonBreath2:
-        FLMT A 0 BRIGHT A_fireprojectile("FlamethrowerMissileProperFaster", random(1,2), 0, -4, -8, 0, 0);
-        FLMT A 0 BRIGHT A_fireprojectile("FlamethrowerMissileFaster", random(1,2), 0, -4, -8, 0, 0);
+         FLMT AAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
+		{
+			A_FireProjectile("DragonsBreathSparkle",frandom(-3,3),false,-4,0,0,frandom(-3,3));
+		}
 		"####" A 0 A_QuadSound();
         Goto ContinueAlt2;
 
@@ -558,7 +566,7 @@ CLASS SSG : BrutalWeapon
 		SHTZ A 0 A_GiveInventory("SSGAlt",1);
         SHTZ A 0 A_ALertMonstersDX();
 		//SHTZ AA 0 A_fireprojectile("GunFireSmoke", 0, 0, 2, 0, 0, 0)
-		TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 11);// For poor PCs
+	//	TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 11);// For poor PCs
 		TNT1 AAAAAAA 0 BRIGHT A_fireprojectile("ShotgunParticles", random(-12,12), 0, 6, -3, 0, random(-9,9));
 		TNT1 AAA 0 BRIGHT A_fireprojectile("ShotgunParticles2", random(-12,12), 0, 6, -3, 0, random(-9,9));	
 		NULL A 0 A_JumpIfInventory("UsingDragonBreath",1,"AltFireDragonBreath");
@@ -956,5 +964,51 @@ CLASS SSG : BrutalWeapon
 	MHKS ABCD 1;
 	Goto ready;
 	
+	}
+}
+
+class DragonsBreathSparkle : Actor
+{
+	Default
+	{
+		Radius 2;
+		Height 2;
+		Speed 60;
+		DamageFunction(5);
+		Projectile;
+		+RANDOMIZE
+		RenderStyle "Add";
+		Alpha 0.75;
+		Obituary "$OB_MPPLASMARIFLE";
+		Gravity 0.3;
+		damagetype "Fire";
+	}
+	
+	Override void beginplay()
+	{
+		Speed = frandom(90,120);
+		float potentialscale = frandom(0.05,0.09);
+		A_setscale(potentialscale,potentialscale);
+		Super.beginplay();
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_jump(200,"Spawn2");
+		TNT1 B 0;
+		Spawn2:
+		SPRK "#" Random(1,5) Bright;
+		TNT1 "#" 0
+		{
+			vel *= 0.1;
+			bnogravity = false;
+			bmissile = false;
+			gravity = frandom(0.1,0.5);
+		}
+		SPRK "#" Random(20,60) Bright;
+	Death:
+		SPRK "#" 1 bright A_FadeOut (0.05);
+		loop;
 	}
 }
