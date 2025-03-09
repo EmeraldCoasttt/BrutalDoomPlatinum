@@ -312,7 +312,7 @@ CLASS SSG : BrutalWeapon
 	 FireDragonBreath:
 	    FLMT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
 		{
-			A_FireProjectile("DragonsBreathSparkle",frandom(-6,6),false,0,0,0,frandom(-3,3));
+			A_FireProjectile("DragonsBreathSparkle",frandom(-6,6),false,0,-4,0,frandom(-3,3));
 		}
 		"####" A 0 A_QuadSound();
 		
@@ -540,7 +540,7 @@ CLASS SSG : BrutalWeapon
     AltFireDragonBreath:		
 	    FLMT AAAAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
 		{
-			A_FireProjectile("DragonsBreathSparkle",frandom(-3,3),false,4,0,0,frandom(-3,3));
+			A_FireProjectile("DragonsBreathSparkle",frandom(-3,3),false,4,-4,0,frandom(-3,3));
 		}
 		"####" A 0 A_QuadSound();
         Goto ContinueAlt1;
@@ -549,7 +549,7 @@ CLASS SSG : BrutalWeapon
     AltFireDragonBreath2:
          FLMT AAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
 		{
-			A_FireProjectile("DragonsBreathSparkle",frandom(-3,3),false,-4,0,0,frandom(-3,3));
+			A_FireProjectile("DragonsBreathSparkle",frandom(-3,3),false,-4,-4,0,frandom(-3,3));
 		}
 		"####" A 0 A_QuadSound();
         Goto ContinueAlt2;
