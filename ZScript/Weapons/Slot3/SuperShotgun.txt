@@ -983,6 +983,8 @@ class DragonsBreathSparkle : Actor
 		Gravity 0.3;
 		damagetype "Fire";
 		+forcexybillboard;
+		+bloodsplatter;
+		+ripper;
 	}
 	
 	Override void beginplay()
