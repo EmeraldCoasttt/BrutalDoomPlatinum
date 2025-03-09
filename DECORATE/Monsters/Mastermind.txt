@@ -57,7 +57,7 @@ ACTOR TheSpiderMastermind Replaces SpiderMastermind
 	Tag "Spiderdemon Mastermind"
 	//DropItem "MastermindChaingunDrop"
 	painchance "fire", 1
-  damagefactor "fire", 0.3
+ // damagefactor "fire", 0.3
   	+ROLLSPRITE
 	+ROLLCENTER
 	Species "Spider"

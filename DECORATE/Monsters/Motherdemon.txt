@@ -12,7 +12,7 @@ actor Motherdemon 2548
   painchance 20
   reactiontime 8
   painchance "fire", 1
-  damagefactor "fire", 0.3
+  //damagefactor "fire", 0.3
   speed 24
   seesound "mother/sight"
   attacksound "mother/attack"
