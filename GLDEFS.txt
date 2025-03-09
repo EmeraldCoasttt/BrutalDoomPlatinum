@@ -50,6 +50,7 @@ flickerlight BFGEXPLO
 object DragonsBreathSparkle
 {
     frame SPRKB { light DRAGONBREATH }
+	frame MODLB { light DRAGONBREATH }
 }
 
 flickerlight DRAGONBREATH

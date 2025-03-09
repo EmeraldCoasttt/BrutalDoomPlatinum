@@ -982,6 +982,7 @@ class DragonsBreathSparkle : Actor
 		Obituary "$OB_MPPLASMARIFLE";
 		Gravity 0.3;
 		damagetype "Fire";
+		+forcexybillboard;
 	}
 	
 	Override void beginplay()
@@ -998,7 +999,7 @@ class DragonsBreathSparkle : Actor
 		TNT1 A 0 A_jump(200,"Spawn2");
 		TNT1 B 0;
 		Spawn2:
-		SPRK "#" Random(1,5) Bright;
+		MODL "#" Random(1,5) Bright;
 		TNT1 "#" 0
 		{
 			vel *= 0.1;

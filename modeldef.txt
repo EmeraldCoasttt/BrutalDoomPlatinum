@@ -98,6 +98,26 @@ Model LeadBursterTracer2 // Name of actor in DECORATE
    FrameIndex TRAC A 0 0 // The sprite lump, sprite frame, model index, frame number
 }
 
+Model DragonsBreathSparkle // Name of actor in DECORATE
+{ 
+   Path "Models/Projectiles" // Path to model in PK3
+   SKIN 0 "tracer1.tga" // Model index, model file
+   MODEL 0 "Tracer2.md3" // Model index, texture (can be in any format supported by GZDoom)
+   Scale 1000.5 30.0 30.0 // Scale values
+   PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+ //  pitchoffset 90
+	FrameIndex MODL B 0 0 // The sprite lump, sprite frame, model index, frame number
+	Path "Models/Projectiles" // Path to model in PK3
+   SKIN 0 "tracer1.tga" // Model index, model file
+   MODEL 0 "Tracer2.md3" // Model index, texture (can be in any format supported by GZDoom)
+   Scale 1000.5 30.0 30.0 // Scale values
+   PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles
+   FrameIndex MODL A 0 0 // The sprite lump, sprite frame, model index, frame number
+   
+
+   
+}
+
 Model tripmineparticle // Name of actor in DECORATE
 { 
    Path "Models/Projectiles" // Path to model in PK3
