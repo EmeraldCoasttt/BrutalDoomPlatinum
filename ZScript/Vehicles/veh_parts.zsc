@@ -69,6 +69,8 @@ class VehPart : Actor
 	vector3 anim_posoffs;
 	vector2 anim_angoffs;
 	double anim_spd;
+	uint partflags;
+	FlagDef ALIGNTOBASE : partflags, 0;
 	
 	Default
 	{
@@ -119,6 +121,12 @@ class VehPart : Actor
 				pitch = BDPMath.Lerp(pitch, 0, 0.15);
 				roll = BDPMath.Lerp(roll, 0, 0.15);
 			}
+		}
+		If(partflags & bALIGNTOBASE)
+		{
+			angle = base.angle;
+			pitch = base.pitch;
+			roll = base.roll;
 		}
 	}
 	

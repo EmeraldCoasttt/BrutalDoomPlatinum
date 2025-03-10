@@ -16,6 +16,15 @@ CLASS BDPCHOPPER : BDPVehicle
 	
 	int enginetics;
 	
+	override void BeginPlay()
+	{
+		super.BeginPlay();
+
+		VehPart.Attach("ChopperBlades",self,(-17,0,120));
+		
+		
+	}
+	
 	override bool RemoveDriver(PlayerPawn user, vector3 exitpos)
 	{	
 		bool success = super.RemoveDriver(user, exitpos);
@@ -134,6 +143,8 @@ CLASS BDPCHOPPER : BDPVehicle
 		
 		
 		
+		
+		
 
 		
 	
@@ -149,5 +160,66 @@ CLASS BDPCHOPPER : BDPVehicle
 			LOOP;
 	
 	}
+
+}
+
+
+CLASS ChopperBlades : VehPart
+{
+	Default
+	{
+		+Vehpart.aligntobase;
+	}
+
+	States
+	{
+		Spawn:
+			MODB A 1
+			{
+				If(base && base.driver)
+				{
+					A_setrenderstyle(1.0,Style_Add);
+					Return resolvestate("Spin");
+				}
+				Else
+				{
+					A_setrenderstyle(1.0,Style_Normal);
+					Return resolvestate(null);
+				}
+			}
+			LOOP;
+		Spin:
+			MODL ABC 1
+			{
+				If(!base || !base.driver)
+				{
+					A_setrenderstyle(1.0,Style_Normal);
+					Return resolvestate("spindown");
+				}
+				Else
+				{
+					A_setrenderstyle(1.0,Style_Add);
+					Return resolvestate(null);
+				}
+			}
+			LOOP;
+		Spindown:
+			MODB ABCDABCDABCDAABBCCDDAABBCCDDAABBCCDD 1
+			{
+				If(base && base.driver)
+				{
+					A_setrenderstyle(1.0,Style_Add);
+					Return resolvestate("Spin");
+				}
+				Else
+				{
+					A_setrenderstyle(1.0,Style_Normal);
+					Return resolvestate(null);
+				}
+			}
+			Goto Spawn;
+	
+	}
+
 
 }
