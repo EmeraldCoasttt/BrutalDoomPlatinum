@@ -1,3 +1,35 @@
+
+
+CLASS ChopperGear : Vehpart
+{
+	Default
+	{
+		+Vehpart.aligntobase;
+	}
+
+	States
+	{
+		Spawn:
+			MODL A 1;
+			LOOP;
+		Retracted:
+			TNT1 A 1;
+			LOOP;
+	}
+
+}
+
+CLASS ChopperGearSmall : ChopperGear
+{
+
+	Default
+	{
+		Scale 0.85;
+	
+	}
+}
+
+
 CLASS BDPCHOPPER : BDPVehicle
 {
 
@@ -14,6 +46,9 @@ CLASS BDPCHOPPER : BDPVehicle
 		+vehbase.movementpitch;
 	}
 	
+	vehpart rightgear;
+	vehpart leftgear;
+	vehpart frontgear;
 	int enginetics;
 	
 	override void BeginPlay()
@@ -21,9 +56,9 @@ CLASS BDPCHOPPER : BDPVehicle
 		super.BeginPlay();
 
 		VehPart.Attach("ChopperBlades",self,(-17,0,140));
-		VehPart.Attach("ChopperGearSmall",self,(150,0,0));
-		VehPart.Attach("ChopperGear",self,(-120,-25,0));
-		VehPart.Attach("ChopperGear",self,(-120,25,0));
+		frontgear = VehPart.Attach("ChopperGearSmall",self,(150,0,0));
+		leftgear = VehPart.Attach("ChopperGear",self,(-120,-25,0));
+		rightgear = VehPart.Attach("ChopperGear",self,(-120,25,0));
 		
 		
 	}
@@ -45,7 +80,7 @@ CLASS BDPCHOPPER : BDPVehicle
 	{
 		if(health <= 0) return;
 		if(user) driver = user;
-		let cam = SetupBDPCamera(dist:-400,1000,20,300);
+		let cam = SetupBDPCamera(dist:-400,300,20,300);
 		cam.followact = self;
 		cam.source = driver;
 		
@@ -66,13 +101,28 @@ CLASS BDPCHOPPER : BDPVehicle
 	
 	override vector3 GetExitPos(PlayerPawn user)
 	{
-		if(user == driver) return (0, 0, 64);
+		if(user == driver) return (-17, -100, 0);
 		return (-20,-5,0);
 	}
 	
 	override void DoMove(float forwardmove, float sidemove)
 	{	
-	
+		If(!driver || onground)
+		{
+			If(leftgear && rightgear && frontgear)
+			{
+				leftgear.setstatelabel("spawn");
+				rightgear.setstatelabel("spawn");
+				frontgear.setstatelabel("spawn");
+			}
+		}
+		Else If(leftgear && rightgear && frontgear)
+		{
+			leftgear.setstatelabel("retracted");
+			rightgear.setstatelabel("retracted");
+			frontgear.setstatelabel("retracted");
+		}
+		
 		If(driver && enginetics)
 		{
 			enginetics--;
@@ -126,7 +176,11 @@ CLASS BDPCHOPPER : BDPVehicle
 		double turnspd = 0.08;
 		double accel = 0.30;
 		double angdiff = BDPMath.AngleDiff(angle, driver.angle);
-		A_SetAngle(BDPMath.Lerp(angle, angle+angdiff, turnspd), SPF_INTERPOLATE);
+		//Don't turn if touching floor
+		If(!onground)
+		{
+			A_SetAngle(BDPMath.Lerp(angle, angle+angdiff, turnspd), SPF_INTERPOLATE);
+		}
 		
 		
 		
@@ -135,7 +189,7 @@ CLASS BDPCHOPPER : BDPVehicle
 		accel = 0.60;
 		
 		// Movement
-		if(forwardmove || sidemove)
+		if(!onground && (forwardmove || sidemove))
 		{
 			vector2 movedir = (forwardmove, -sidemove).Unit();
 			
@@ -144,7 +198,17 @@ CLASS BDPCHOPPER : BDPVehicle
 			
 		} 
 		
+		accel = 0.45;
 		
+		If(driver && driver.player.cmd.buttons & BT_JUMP)
+		{
+			vel.z += accel;
+		}
+		
+		Else If(driver && driver.player.cmd.buttons & BT_CROUCH)
+		{
+			vel.z -= accel;
+		}
 		
 		
 		
@@ -230,32 +294,3 @@ CLASS ChopperBlades : VehPart
 }
 
 
-CLASS ChopperGear : Vehpart
-{
-	Default
-	{
-		+Vehpart.aligntobase;
-	}
-
-	States
-	{
-		Spawn:
-			TNT1 A 0 A_jumpif(base && base.driver,"Retracted");
-			MODL A 1;
-			LOOP;
-		Retracted:
-			TNT1 A 1;
-			Goto Spawn;
-	}
-
-}
-
-CLASS ChopperGearSmall : ChopperGear
-{
-
-	Default
-	{
-		Scale 0.85;
-	
-	}
-}
