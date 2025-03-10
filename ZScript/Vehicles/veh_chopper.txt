@@ -30,6 +30,113 @@ CLASS ChopperGearSmall : ChopperGear
 }
 
 
+class Chopper_TurretCannon : VehPart
+{
+	uint cooldown;
+	uint cooldown_chaingun;
+	bool guncycle;
+	bool guncycle2;
+	bool gun2;
+	Default
+	{
+		Radius 16;
+		Height 16;
+	}
+	
+	override void UpdatePos(bool moving)
+	{
+		if(!base) return;
+		vector3 finalpos = GetOffsetPos(base);
+		SetOrigin(finalpos, moving);
+		
+		A_SetAngle(base.angle, SPF_INTERPOLATE);
+		A_SetRoll(base.roll, SPF_INTERPOLATE);
+		
+		double aimpitch = base.driver ? base.driver.pitch - 5 : 0;
+		aimpitch = clamp(aimpitch, -50, 50);
+		A_SetPitch(BDPMath.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
+		
+	}
+		
+	override void DoUpdate(VehCamera cam)
+	{
+		let chopper = BDPChopper(base);
+		if(!chopper) return;
+		if(!cam) return;
+	
+		if(cooldown_chaingun) cooldown_chaingun--;
+		if(cooldown) 
+		{
+			cam.SetZoom(1.0, 0.1);
+			cooldown--;
+		}
+		if(CheckButtons(BT_ATTACK, VehButtons.BTS_DOWN) && !cooldown)
+		{
+			//let misl = chopperRocket.Fire(self, (350, 0, 30));
+			If(guncycle2)
+			{
+				If(guncycle)
+				{
+					
+					let misl = BDPMath.FireProjectile("MastermindTracertank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
+					if(misl) misl.target = base;
+					
+					guncycle = false;
+					A_StartSound("CHGNSHOT", CHAN_WEAPON,CHANF_OVERLAP,0.5);
+				}
+				Else
+				{
+					
+					let misl = BDPMath.FireProjectile("MastermindTracertank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
+					if(misl) misl.target = base;
+					
+					
+					guncycle = true;
+					
+					A_StartSound("CHGNSHOT", CHAN_WEAPON,CHANF_OVERLAP,0.5);
+				}
+				guncycle2 = false;
+				cam.SetZoom(0.97, 0.5);
+				chopper.driver.A_AlertMonsters(0, AMF_TARGETEMITTER);
+			}
+			
+			else
+			{
+				guncycle2 = true;
+			}
+			
+			
+			
+			//cam.Quake(20,20,0,0.6);
+			//pitch -= 5;
+			//chopper.driver.pitch -= 0.2;
+			
+			
+			cooldown = 3;
+		}
+
+	}
+	
+	States
+	{
+		Spawn:
+			MODL A 1;
+		loop;
+		Spawn2:
+			MODL B 1
+			{
+				guncycle = TRUE;
+				guncycle2 = TRUE;
+				gun2 = true;
+			}
+		KeepSpawned:
+			MODL B 1;
+		loop;
+		
+	}
+}
+
+
 CLASS BDPCHOPPER : BDPVehicle
 {
 
@@ -45,7 +152,8 @@ CLASS BDPCHOPPER : BDPVehicle
 		-vehbase.fallingpitch;
 		+vehbase.movementpitch;
 	}
-	
+	Chopper_TurretCannon leftgun;
+	Chopper_TurretCannon rightgun;
 	vehpart rightgear;
 	vehpart leftgear;
 	vehpart frontgear;
@@ -59,7 +167,12 @@ CLASS BDPCHOPPER : BDPVehicle
 		frontgear = VehPart.Attach("ChopperGearSmall",self,(150,0,0));
 		leftgear = VehPart.Attach("ChopperGear",self,(-120,-25,0));
 		rightgear = VehPart.Attach("ChopperGear",self,(-120,25,0));
-		
+		leftgun = Chopper_TurretCannon(VehPart.Attach("Chopper_TurretCannon", self, (125,-40,45)));
+		rightgun = Chopper_TurretCannon(VehPart.Attach("Chopper_TurretCannon", self, (125,40,45)));
+		If(leftgun)
+		{
+			leftgun.setstatelabel("Spawn2");
+		}
 		
 	}
 	
@@ -91,7 +204,7 @@ CLASS BDPCHOPPER : BDPVehicle
 		enginetics = 194;
 		//bfloatbob = true;
 		Gravity = 0.0;
-		//A_StartSound("TANK2", CHAN_7, CHANF_LOOPING);
+		//A_StartSound("chopper2", CHAN_7, CHANF_LOOPING);
 	}
 	
 	override vector3 GetDrivePos()
