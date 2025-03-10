@@ -4,7 +4,7 @@ CLASS BDPCHOPPER : BDPVehicle
 	Default
 	{
 		Radius 64;
-		Height 65;
+		Height 85;
 		Mass 1600;
 		Health 400;
 		BDPVehicle.Armored 600;
@@ -20,7 +20,10 @@ CLASS BDPCHOPPER : BDPVehicle
 	{
 		super.BeginPlay();
 
-		VehPart.Attach("ChopperBlades",self,(-17,0,120));
+		VehPart.Attach("ChopperBlades",self,(-17,0,140));
+		VehPart.Attach("ChopperGearSmall",self,(150,0,0));
+		VehPart.Attach("ChopperGear",self,(-120,-25,0));
+		VehPart.Attach("ChopperGear",self,(-120,25,0));
 		
 		
 	}
@@ -151,6 +154,8 @@ CLASS BDPCHOPPER : BDPVehicle
 		
 		DoCollisionDamage();
 		//console.printf("%f",vel.length());
+		
+	
 	}
 	
 	States
@@ -222,4 +227,35 @@ CLASS ChopperBlades : VehPart
 	}
 
 
+}
+
+
+CLASS ChopperGear : Vehpart
+{
+	Default
+	{
+		+Vehpart.aligntobase;
+	}
+
+	States
+	{
+		Spawn:
+			TNT1 A 0 A_jumpif(base && base.driver,"Retracted");
+			MODL A 1;
+			LOOP;
+		Retracted:
+			TNT1 A 1;
+			Goto Spawn;
+	}
+
+}
+
+CLASS ChopperGearSmall : ChopperGear
+{
+
+	Default
+	{
+		Scale 0.85;
+	
+	}
 }

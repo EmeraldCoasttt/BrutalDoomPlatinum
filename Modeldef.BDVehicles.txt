@@ -640,6 +640,7 @@ Model BDPCHOPPER     // Name of actor in DECORATE
    USEACTORROLL
    CORRECTPIXELSTRETCH
    Angleoffset -90.0
+   offset 0 0 20
    FrameIndex MODL A 0 0         // The sprite lump, sprite frame, model index, frame number
    
 }
@@ -687,5 +688,37 @@ Model CHOPPERBLADES     // Name of actor in DECORATE
    FrameIndex MODB C 0 0
    Angleoffset 270.0
    FrameIndex MODB D 0 0
+   
+}
+
+Model CHOPPERGEAR   // Name of actor in DECORATE
+{
+   Path "models/vehicles"    // Path to model in PK3
+   Model 0 "HeliBlades.obj"    // Model index, model file
+   Skin 0 "HeliGear.png"     // Model index, texture (can be in any format supported by GZDoom)
+   Scale 60.0 60.0 60.0           // Scale values
+   //ZOffset 0.1
+   USEACTORPITCH
+   USEACTORROLL
+   CORRECTPIXELSTRETCH
+   rolloffset 90
+   offset 0 0 25
+   FrameIndex MODL A 0 0         // The sprite lump, sprite frame, model index, frame number
+   
+}
+
+Model CHOPPERGEARSMALL   // Name of actor in DECORATE
+{
+   Path "models/vehicles"    // Path to model in PK3
+   Model 0 "HeliBlades.obj"    // Model index, model file
+   Skin 0 "HeliGear.png"     // Model index, texture (can be in any format supported by GZDoom)
+   Scale 60.0 60.0 60.0           // Scale values
+   //ZOffset 0.1
+   USEACTORPITCH
+   USEACTORROLL
+   CORRECTPIXELSTRETCH
+   rolloffset 90
+   offset 0 0 25
+   FrameIndex MODL A 0 0         // The sprite lump, sprite frame, model index, frame number
    
 }
