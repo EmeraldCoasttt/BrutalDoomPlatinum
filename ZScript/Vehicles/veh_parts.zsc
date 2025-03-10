@@ -191,6 +191,7 @@ class VehBase : Actor
 	uint vehflags;
 	FlagDef ALIGNTOPLANE : vehflags, 0;
 	FlagDef FALLINGPITCH : vehflags, 1;
+	FlagDef MOVEMENTPITCH : vehflags, 0;
 	
 	PlayerPawn driver;
 	VehCamera viewcam;
@@ -454,6 +455,35 @@ class VehBase : Actor
 		{
 			double fallrate = BDPMath.fmap(abs(vel.z), 0, 10, 0.1, 2.0);
 			A_SetPitch(pitch + fallrate, SPF_INTERPOLATE); 
+		}
+		
+		vector2 truevel = (rotatevector(vel.xy,-angle));
+		
+		if( !onground && (vehflags & bMOVEMENTPITCH) && pitch < 35 && pitch > -35)
+		{
+			double fallrate = BDPMath.fmap(abs(truevel.x), 0, 10, 0.1, 2.0);
+			If(truevel.x > 0)
+			{
+				A_SetPitch(pitch + fallrate, SPF_INTERPOLATE); 
+			}
+			If(truevel.x < 0)
+			{
+				A_SetPitch(pitch - fallrate, SPF_INTERPOLATE); 
+			}
+		
+		}
+		if( !onground && (vehflags & bMOVEMENTPITCH) && roll < 35 && roll > -35)
+		{
+			double fallrate = BDPMath.fmap(abs(truevel.y), 0, 10, 0.1, 2.0);
+			If(truevel.y > 0)
+			{
+				A_SetRoll(roll - fallrate, SPF_INTERPOLATE); 
+			}
+			If(truevel.y < 0)
+			{
+				A_SetRoll(roll + fallrate, SPF_INTERPOLATE); 
+			}
+		
 		}
 		
 		UpdatePassengers();

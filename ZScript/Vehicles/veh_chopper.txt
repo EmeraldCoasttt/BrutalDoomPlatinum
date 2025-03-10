@@ -1,5 +1,147 @@
-CLASS BDPCHOPPER : ACTOR
+CLASS BDPCHOPPER : BDPVehicle
 {
+
+	Default
+	{
+		Radius 64;
+		Height 65;
+		Mass 1600;
+		Health 400;
+		BDPVehicle.Armored 600;
+		MaxSlopeSteepness 0.4;
+		damagetype "stomp";
+		-vehbase.fallingpitch;
+		+vehbase.movementpitch;
+	}
+	
+	int enginetics;
+	
+	override bool RemoveDriver(PlayerPawn user, vector3 exitpos)
+	{	
+		bool success = super.RemoveDriver(user, exitpos);
+		if(user == driver && success) 
+		{
+			A_StartSound("HELSTOP", flags:CHANF_OVERLAP,0.50);
+			A_StopSound(7); // Engine Loop
+			//bfloatbob = false;
+			Gravity = 0.30;
+		}
+		return success;
+	}
+
+	override void TakeDriver(PlayerPawn user)
+	{
+		if(health <= 0) return;
+		if(user) driver = user;
+		let cam = SetupBDPCamera(dist:-400,1000,20,300);
+		cam.followact = self;
+		cam.source = driver;
+		
+		ReadyDriver(user);
+		SetCrosshair(user, "ScorpRet", (1.0,1.0));
+		A_StartSound("HELSTAR", 7, flags:CHANF_OVERLAP,0.75);
+		A_StartSound("HELILOP2", 8, CHANF_LOOPING,0.75);
+		enginetics = 194;
+		//bfloatbob = true;
+		Gravity = 0.0;
+		//A_StartSound("TANK2", CHAN_7, CHANF_LOOPING);
+	}
+	
+	override vector3 GetDrivePos()
+	{
+		return (-20,-5,0);
+	}
+	
+	override vector3 GetExitPos(PlayerPawn user)
+	{
+		if(user == driver) return (0, 0, 64);
+		return (-20,-5,0);
+	}
+	
+	override void DoMove(float forwardmove, float sidemove)
+	{	
+	
+		If(driver && enginetics)
+		{
+			enginetics--;
+		}
+		Else if (driver)
+		{
+			A_StartSound("HELILOP", 7, CHANF_LOOPING,0.75);
+			
+		}
+		Else
+		{
+			A_stopSound(7);
+			A_stopSound(8);
+		}
+		
+		vel.xy *= 0.97;
+		If(driver)
+		{
+			vel.z *= 0.97;
+		}
+	
+		if(health <= 0)  
+		{
+			if(driver) RemoveDriver(driver, GetExitPos(driver));
+			Destroy();
+			return;
+		}
+		
+		
+		
+		
+		
+		
+		
+	
+		
+		
+		
+		
+		If(!driver)
+		{
+			
+			return;
+		}
+		If(driver)
+		{
+			driver.A_AlertMonsters(2048, AMF_TARGETEMITTER);
+		}
+		
+		// Rotation
+		double turnspd = 0.08;
+		double accel = 0.30;
+		double angdiff = BDPMath.AngleDiff(angle, driver.angle);
+		A_SetAngle(BDPMath.Lerp(angle, angle+angdiff, turnspd), SPF_INTERPOLATE);
+		
+		
+		
+		
+		
+		accel = 0.60;
+		
+		// Movement
+		if(forwardmove || sidemove)
+		{
+			vector2 movedir = (forwardmove, -sidemove).Unit();
+			
+				vel.xy += AngleToVector(angle, accel * movedir.x);
+				vel.xy += AngleToVector(angle + 90, (accel * movedir.y));
+			
+		} 
+		
+		
+		
+
+		
+	
+		
+		DoCollisionDamage();
+		//console.printf("%f",vel.length());
+	}
+	
 	States
 	{
 		Spawn:
