@@ -1,0 +1,11 @@
+CLASS BDPCHOPPER : ACTOR
+{
+	States
+	{
+		Spawn:
+			MODL A 1;
+			LOOP;
+	
+	}
+
+}
