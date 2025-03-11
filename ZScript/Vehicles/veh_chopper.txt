@@ -113,7 +113,7 @@ class Chopper_TurretCannon : VehPart
 		if(cooldown_chaingun) cooldown_chaingun--;
 		if(cooldown) 
 		{
-			//cam.SetZoom(1.0, 0.1);
+			cam.SetZoom(1.0, 0.1);
 			cooldown--;
 		}
 		if(CheckButtons(BT_ATTACK, VehButtons.BTS_DOWN) && !cooldown)
@@ -124,25 +124,25 @@ class Chopper_TurretCannon : VehPart
 				If(guncycle)
 				{
 					
-					let misl = BDPMath.FireProjectile("TankMachineGunTracer", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 40, 0, 1, 0);
+					let misl = BDPMath.FireProjectile("MastermindTracertank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
 					if(misl) misl.target = base;
 					
 					guncycle = false;
-					A_StartSound("HMGFIRE", CHAN_WEAPON,CHANF_OVERLAP,0.5);
+					A_StartSound("CHGNSHOT", CHAN_WEAPON,CHANF_OVERLAP,0.5);
 				}
 				Else
 				{
 					
-					let misl = BDPMath.FireProjectile("TankMachineGunTracer", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 40, 0, 1, 0);
+					let misl = BDPMath.FireProjectile("MastermindTracertank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
 					if(misl) misl.target = base;
 					
 					
 					guncycle = true;
 					
-					A_StartSound("HMGFIRE", CHAN_WEAPON,CHANF_OVERLAP,0.5);
+					A_StartSound("CHGNSHOT", CHAN_WEAPON,CHANF_OVERLAP,0.5);
 				}
 				guncycle2 = false;
-				//cam.SetZoom(0.99, 0.5);
+				cam.SetZoom(0.97, 0.5);
 				chopper.driver.A_AlertMonsters(0, AMF_TARGETEMITTER);
 			}
 			
