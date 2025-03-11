@@ -51,7 +51,7 @@ CLASS ChopperLauncher : Vehpart
 				chopper.driver.A_AlertMonsters(0, AMF_TARGETEMITTER);
 			
 			
-				cooldown = 90;
+				cooldown = 45;
 		}
 
 	}
