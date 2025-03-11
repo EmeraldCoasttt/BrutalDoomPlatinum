@@ -339,11 +339,10 @@ CLASS BDPCHOPPER : BDPVehicle
 		double turnspd = 0.08;
 		double accel = 0.30;
 		double angdiff = BDPMath.AngleDiff(angle, driver.angle);
-		//Don't turn if touching floor
-		If(!onground)
-		{
-			A_SetAngle(BDPMath.Lerp(angle, angle+angdiff, turnspd), SPF_INTERPOLATE);
-		}
+
+		
+		A_SetAngle(BDPMath.Lerp(angle, angle+angdiff, turnspd), SPF_INTERPOLATE);
+		
 		
 		
 		
@@ -352,7 +351,7 @@ CLASS BDPCHOPPER : BDPVehicle
 		accel = 0.60;
 		
 		// Movement
-		if(!onground && (forwardmove || sidemove))
+		if(forwardmove || sidemove)
 		{
 			vector2 movedir = (forwardmove, -sidemove).Unit();
 			
