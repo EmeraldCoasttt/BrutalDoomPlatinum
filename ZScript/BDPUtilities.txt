@@ -462,6 +462,11 @@
 			e.Replacement = "BDPTurret";
 		}
 		
+		if(e.replacee == Checkpotentialactor('attackhelicopter'))
+		{
+			e.Replacement = "BDPChopper";
+		}
+		
 		if(e.replacee == Checkpotentialactor('deh_actor_199'))
 		{
 			e.Replacement = "BDECChairModern";

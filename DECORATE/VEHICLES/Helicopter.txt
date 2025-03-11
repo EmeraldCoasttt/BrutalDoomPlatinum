@@ -59,7 +59,7 @@ Stop
 
 
 
-ACTOR attackhelicopter: Tank 7262
+ACTOR attackhelicopter: Tank
 {
     Scale 1.0
 	Radius 36

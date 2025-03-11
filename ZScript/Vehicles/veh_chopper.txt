@@ -388,6 +388,7 @@ CLASS BDPCHOPPER : BDPVehicle
 	States
 	{
 		Spawn:
+			TNT1 A 0;
 			MODL A 1;
 			LOOP;
 		Death:
