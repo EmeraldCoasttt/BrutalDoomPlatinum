@@ -750,3 +750,126 @@ Class GuidedLaserNEO: Actor
 		Stop;
 	}
 }
+
+CLASS Rocket2 : BrutalProjectile
+{
+	Default
+	{
+		Radius 4;
+		Height 2;
+		Projectile;
+		Speed 50;
+		Damagefactor 300;
+		DamageType "Explosive";
+		MeleeDamage 0;
+		Scale 0.5;
+		Decal "Scorch";
+		Projectile;
+		+MISSILE;
+		+NOGRAVITY;
+		+EXTREMEDEATH;
+		+BLOODSPLATTER ;
+		+THRUSPECIES;
+		+MTHRUSPECIES;
+		+SPECTRAL;
+		SeeSound "weapons/RLL";
+		DeathSound "Explosion";
+		Obituary "$OB_MPROCKET";
+		Species "Marines";
+	}
+	States
+	{
+	Spawn:
+	
+		MISL A 0;
+		TNT1 A 0 A_PlaySound("DSRLAUN");
+		TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+		TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast2", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+		TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast3", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+		TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames1", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+		TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames2", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+		TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames3", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+		TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames4", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+		
+	Live:
+	    MISL A 1 Bright;
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "SpawnUnderwater");
+		TNT1 A 0 A_SpawnItem("RocketFlare",-20,0);
+		TNT1 A 0 A_SpawnItem ("OldschoolRocketSmokeTrail2");
+		TNT1 A 0 A_CustomMissile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-30, 30));
+		Loop;
+	
+	SpawnUnderwater:
+	    TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0);
+		TNT1 A 0 A_SpawnItem("RocketFlare",-20,0);
+	    TNT1 A 0 A_CustomMissile ("BUBULZ", 0, 0, random (0, 360), 2, random (0, 180));
+		MISL A 1 Bright;
+	    Goto Live;
+	
+	Death:
+		//TNT1 A 0 A_spawnitemex("nukedamage")
+		tnt1 A 0 A_giveinventory("rocketdetonate");
+        EXPL A 0 Radius_Quake (3, 8, 0, 15, 0);//(intensity, duration, damrad, tremrad, tid)
+		TNT1 A 0 A_spawnitemex("ricochetexplosion");
+        TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+	    TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+        TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+        TNT1 AAAAAA 0 A_CustomMissile ("BDExplosionparticles", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAAA 0 A_CustomMissile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (0, 90));
+		TNT1 AAAA 0 A_CustomMissile ("MediumExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_SpawnItemEx ("RocketExplosion",0,0,13,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0;
+		TNT1 A 0 A_stop();
+		TNT1 A 2;
+		TNT1 A 0 A_SpawnItemEx ("LiquidExplosionEffectSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_StartSound("FAREXPL", 3);
+		TNT1 A 15;
+		TNT1 A 0 A_StartSound("distantexp", 5);
+		Stop;
+	}
+}
+
+CLASS ChopperRocket : Rocket2
+{
+	Default
+	{
+		+seekermissile;
+		MAXTARGETRANGE 1012;
+		+friendly;
+	}
+	States
+	{
+		Spawn:
+		
+			MISL A 0;
+			TNT1 A 0 A_StartSound("DSRLAUN");
+			TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+			TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast2", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+			TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast3", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+			TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames1", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+			TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames2", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+			TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames3", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+			TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames4", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+		
+		Live:
+			MISL AAAAAAAAA 1 Bright
+			{
+				A_SpawnItem("RocketFlare",-20,0);
+				A_SpawnItem ("OldschoolRocketSmokeTrail2");
+				A_CustomMissile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-30, 30));
+			}
+		Live2:
+			MISL AA 1 Bright
+			{
+				A_SpawnItem("RocketFlare",-20,0);
+				A_SpawnItem ("OldschoolRocketSmokeTrail2");
+				A_CustomMissile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-30, 30));
+				
+			}
+			TNT1 A 0 A_SeekerMissile (12,24, SMF_LOOK);
+			Loop;
+	}
+
+}
+

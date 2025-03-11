@@ -19,6 +19,52 @@ CLASS ChopperGear : Vehpart
 
 }
 
+CLASS ChopperLauncher : Vehpart
+{
+	Default
+	{
+		+Vehpart.aligntobase;
+	}
+	uint cooldown;
+	
+	override void DoUpdate(VehCamera cam)
+	{
+		let chopper = BDPChopper(base);
+		if(!chopper) return;
+		if(!cam) return;
+	
+		
+		if(cooldown) 
+		{
+			cam.SetZoom(1.0, 0.1);
+			cooldown--;
+		}
+		if(CheckButtons(BT_ALTATTACK, VehButtons.BTS_DOWN) && !cooldown)
+		{
+			
+					
+				A_StartSound("DSRFIRE", CHAN_WEAPON,CHANF_OVERLAP,1.0);
+				let misl = BDPMath.FireProjectile("ChopperRocket", pos, angle + frandom(-2,2), pitch + frandom(-2,2));
+				if(misl) misl.target = base;
+				if(misl) misl.tracer = null;
+				cam.SetZoom(0.97, 0.5);
+				chopper.driver.A_AlertMonsters(0, AMF_TARGETEMITTER);
+			
+			
+				cooldown = 90;
+		}
+
+	}
+	
+	States
+	{
+		Spawn:
+			TNT1 A 1;
+			LOOP;
+	}
+
+}
+
 CLASS ChopperGearSmall : ChopperGear
 {
 
@@ -164,6 +210,8 @@ CLASS BDPCHOPPER : BDPVehicle
 		super.BeginPlay();
 
 		VehPart.Attach("ChopperBlades",self,(-17,0,140));
+		VehPart.Attach("Chopperlauncher",self,(-55,110,70));
+		VehPart.Attach("Chopperlauncher",self,(-55,-110,70));
 		frontgear = VehPart.Attach("ChopperGearSmall",self,(150,0,0));
 		leftgear = VehPart.Attach("ChopperGear",self,(-120,-25,0));
 		rightgear = VehPart.Attach("ChopperGear",self,(-120,25,0));
