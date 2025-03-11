@@ -202,6 +202,8 @@ class Brutal_PlayerBase : PlayerPawn
 	float hastetimer;
 	float invtimer;
 	
+	bool invehicle;
+	
 	Default
     {
 		Player.DisplayName "Brutal Doom Player";
@@ -265,7 +267,7 @@ class Brutal_PlayerBase : PlayerPawn
 			{
 				Damage = (damage * 0.25);
 			}
-			If(source is "BDPBIKE" && !findinventory("veh_manager"))
+			If(source is "BDPBIKE" && !invehicle)
 				{
 					damage = 0;
 					SetStateLabel("pain.bikelaunch");
@@ -1044,7 +1046,7 @@ class Brutal_PlayerBase : PlayerPawn
 			alreadyjumped = false;
 		}
 		
-		if (player.cmd.buttons & BT_JUMP)
+		if (!invehicle && player.cmd.buttons & BT_JUMP)
 		{
 			
 			/*
@@ -1247,7 +1249,16 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	Override void Tick()
     {
+	
 	If(findinventory("veh_manager"))
+	{
+		invehicle = true;
+	}
+	else
+	{
+		invehicle = false;
+	}
+	If(invehicle)
 		{
 		SetPlayerProperty(0,0,0);
 		player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState('InAVehicle'));

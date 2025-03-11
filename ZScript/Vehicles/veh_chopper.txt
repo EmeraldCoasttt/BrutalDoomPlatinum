@@ -98,7 +98,7 @@ class Chopper_TurretCannon : VehPart
 		A_SetAngle(base.angle, SPF_INTERPOLATE);
 		A_SetRoll(base.roll, SPF_INTERPOLATE);
 		
-		double aimpitch = base.driver ? base.driver.pitch - 5 : 0;
+		double aimpitch = base.driver ? base.driver.pitch - 10 : 0;
 		aimpitch = clamp(aimpitch, -50, 50);
 		A_SetPitch(BDPMath.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
 		
@@ -456,7 +456,7 @@ CLASS ChopperBlades : VehPart
 			}
 			LOOP;
 		Spindown:
-			MODB ABCDABCDABCDAABBCCDDAABBCCDDAABBCCDD 1
+			MODB ABCDABCDABCDABCDABCDABCDABCDABCDABCDAABBCCDDAABBCCDDAABBCCDDAABBCCDDAABBCCDDAABBCCDDAAABBBCCCDDDAAABBBCCCDDDAAABBBCCCDDDAAABBBCCCDDD 1
 			{
 				If(base && base.driver)
 				{
