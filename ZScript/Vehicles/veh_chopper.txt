@@ -241,6 +241,8 @@ CLASS BDPCHOPPER : BDPVehicle
 		{
 			A_StartSound("HELSTOP", flags:CHANF_OVERLAP,0.50);
 			A_StopSound(7); // Engine Loop
+			A_StopSound(8); 
+			A_StopSound(9); 
 			//bfloatbob = false;
 			Gravity = 0.30;
 		}
@@ -257,9 +259,9 @@ CLASS BDPCHOPPER : BDPVehicle
 		
 		ReadyDriver(user);
 		SetCrosshair(user, "ScorpRet", (1.0,1.0));
-		A_StartSound("HELSTAR", 7, flags:CHANF_OVERLAP,0.75);
+		A_StartSound("HELSTAR", 9, flags:CHANF_OVERLAP,0.75);
 		A_StartSound("HELILOP2", 8, CHANF_LOOPING,0.75);
-		enginetics = 194;
+		//enginetics = 184;
 		//bfloatbob = true;
 		Gravity = 0.0;
 		//A_StartSound("chopper2", CHAN_7, CHANF_LOOPING);
@@ -294,11 +296,8 @@ CLASS BDPCHOPPER : BDPVehicle
 			frontgear.setstatelabel("retracted");
 		}
 		
-		If(driver && enginetics)
-		{
-			enginetics--;
-		}
-		Else if (driver)
+		
+		if (driver)
 		{
 			A_StartSound("HELILOP", 7, CHANF_LOOPING,0.75);
 			
