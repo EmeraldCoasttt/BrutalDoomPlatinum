@@ -17,8 +17,18 @@ class BDPTurretGun : VehPart
 		
 		A_SetAngle(base.angle, SPF_INTERPOLATE);
 		A_SetRoll(base.roll, SPF_INTERPOLATE);
-		A_SetPitch(base.pitch, SPF_INTERPOLATE);
-		
+		double potentialpitch = getangletocamera();
+		double aimpitch;
+		If(potentialpitch)
+		{
+			aimpitch = potentialpitch;
+		}
+		Else
+		{
+			aimpitch = base.driver ? base.driver.pitch  : 0;
+		}
+		aimpitch = clamp(aimpitch, -50, 50);
+		A_SetPitch(BDPMath.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
 		
 	}
 	

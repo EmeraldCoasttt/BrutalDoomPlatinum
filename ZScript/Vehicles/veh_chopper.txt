@@ -97,8 +97,16 @@ class Chopper_TurretCannon : VehPart
 		
 		A_SetAngle(base.angle, SPF_INTERPOLATE);
 		A_SetRoll(base.roll, SPF_INTERPOLATE);
-		
-		double aimpitch = base.driver ? base.driver.pitch - 10 : 0;
+		double potentialpitch = getangletocamera();
+		double aimpitch;
+		If(potentialpitch)
+		{
+			aimpitch = potentialpitch;
+		}
+		Else
+		{
+			aimpitch = base.driver ? base.driver.pitch - 5 : 0;
+		}
 		aimpitch = clamp(aimpitch, -50, 50);
 		A_SetPitch(BDPMath.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
 		

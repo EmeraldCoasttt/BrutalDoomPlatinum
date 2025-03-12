@@ -56,7 +56,16 @@ class Scorpion_TurretCannon : VehPart
 		A_SetAngle(turretbase.angle, SPF_INTERPOLATE);
 		A_SetRoll(turretbase.roll, SPF_INTERPOLATE);
 		
-		double aimpitch = base.driver ? base.driver.pitch - 6 : 0;
+		double potentialpitch = getangletocamera();
+		double aimpitch;
+		If(potentialpitch)
+		{
+			aimpitch = potentialpitch;
+		}
+		Else
+		{
+			aimpitch = base.driver ? base.driver.pitch - 6 : 0;
+		}
 		aimpitch = clamp(aimpitch, -40, 5);
 		A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
 		
@@ -125,7 +134,16 @@ class Scorpion_TurretGun : VehPart
 		A_SetAngle(turretbase.angle, SPF_INTERPOLATE);
 		A_SetRoll(turretbase.roll, SPF_INTERPOLATE);
 		
-		double aimpitch = base.driver ? base.driver.pitch - 6: 0;
+		double potentialpitch = getangletocamera();
+		double aimpitch;
+		If(potentialpitch)
+		{
+			aimpitch = potentialpitch;
+		}
+		Else
+		{
+			aimpitch = base.driver ? base.driver.pitch - 6 : 0;
+		}
 		aimpitch = clamp(aimpitch, -40, 10);
 		A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
 		
