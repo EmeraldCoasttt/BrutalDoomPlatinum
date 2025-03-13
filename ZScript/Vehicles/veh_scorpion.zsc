@@ -378,6 +378,7 @@ class BDPTank : BDPVehicle
 		BDPTank.TreadFriction 0.90;
 		MaxSlopeSteepness 0.4;
 		damagetype "stomp";
+		+vehbase.ALIGNTOPLANE;
 	}
 	
 	override void BeginPlay()
