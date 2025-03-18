@@ -208,6 +208,7 @@ class Brutal_PlayerBase : PlayerPawn
 	bool berserktaunt;
 	int tauntcooldown;
 	int taunttimer;
+	int seetimer;
 	
 	bool invehicle;
 	
@@ -261,9 +262,13 @@ class Brutal_PlayerBase : PlayerPawn
 		{
 			taunttimer--;
 		}
+		If(seetimer)
+		{
+			seetimer--;
+		}
 		If(!tauntcooldown)
 		{
-			If(killtaunt && !taunttimer)
+			If(killtaunt && taunttimer < 1)
 			{
 				killtaunt = false;
 				tauntcooldown = 105;
@@ -276,6 +281,38 @@ class Brutal_PlayerBase : PlayerPawn
 				A_startsound("DGBRSK",455,CHANF_NOSTOP);
 			}
 		
+		}
+		
+		If(random(1,35) == 1 && !seetimer)
+		{
+			//console.printf("scanned");
+			bool seenmonster;
+			int seenmonstercount;
+			BlockThingsIterator CheckForTargets = BlockThingsIterator.create(Self,1000); //256 can be whatever range around the actor.
+			Actor CurrentActor; //A pointer to whatever actor the iterator is iterating through.
+			While (CheckForTargets.Next()) 
+			{
+				CurrentActor = CheckForTargets.Thing;
+				//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
+				//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
+				If (CurrentActor && CurrentActor.bIsMonster && !currentactor.bfriendly  && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && currentactor != self && !(currentactor is "explosivebarrel1") && currentactor.health > 0 && !currentactor.findinventory("youveseenme"))
+				{
+					vector3 targetpos = LevelLocals.SphericalCoords((pos.x,pos.y,player.viewz),currentactor.pos+(0,0,currentactor.default.height*0.5),(angle,pitch));    
+					if (abs(targetpos.x) <= 20 && abs(targetpos.y) <= 20)
+					{
+						console.printf(currentactor.getclassname());
+						seenmonster = true;
+						seenmonstercount++;
+						//HACKY AS HELL!!!
+						currentactor.giveinventory("youveseenme",1);
+					}
+				}
+			}
+			If(seenmonster && seenmonstercount > 2)
+			{
+				A_startsound("DGSEE",455,CHANF_NOSTOP);
+				seetimer = random(350,700);
+			}
 		}
 	}
 	

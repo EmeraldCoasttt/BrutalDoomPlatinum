@@ -56,11 +56,14 @@ class Modifier_Chatterbox : BDPModifier
 			//console.printf(e.damagetype);
 			//console.printf(e.damagesource.getclassname());
 			 brutal_playerbase BDPPlayer = brutal_playerbase(e.damagesource);
-			 If(BDPPlayer && !bdpplayer.tauntcooldown && e.damagetype == 'ExtremePunches' && random(1,3) > 1 )
+			 If(e.damagetype == 'ExtremePunches')
 			 {
-				BDPPlayer.berserktaunt = true;
+				 If(BDPPlayer && !bdpplayer.tauntcooldown && random(1,3) > 1 )
+				 {
+					BDPPlayer.berserktaunt = true;
+				 }
 			 }
-			 Else If(BDPPlayer && !bdpplayer.tauntcooldown && random(1,7) == 5 && !(e.damagetype == 'ExtremePunches'))
+			 Else If(BDPPlayer && !bdpplayer.tauntcooldown && random(1,7) == 1)
 			 {
 				BDPPlayer.killtaunt = true;
 				BDPPlayer.taunttimer = 15;
