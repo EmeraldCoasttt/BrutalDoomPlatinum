@@ -175,13 +175,13 @@ class ReversalPickup : BDPModifierpickup
     }
 }
 
-class TurbonerdPickup : BDPModifierpickup
+class ChatterboxPickup : BDPModifierpickup
 {
  Default
     {
         
-		BDPModifierpickup.modifierclass "Modifier_Turbonerd";
-		BDPModifierpickup.modifiermessage "Turbonerd Unlocked!";
+		BDPModifierpickup.modifierclass "Modifier_Chatterbox";
+		BDPModifierpickup.modifiermessage "Chatterbox Unlocked!";
 		+floatbob;
     }
 }
