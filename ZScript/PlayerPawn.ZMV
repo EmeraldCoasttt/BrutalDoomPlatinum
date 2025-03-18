@@ -300,7 +300,7 @@ class Brutal_PlayerBase : PlayerPawn
 					vector3 targetpos = LevelLocals.SphericalCoords((pos.x,pos.y,player.viewz),currentactor.pos+(0,0,currentactor.default.height*0.5),(angle,pitch));    
 					if (abs(targetpos.x) <= 20 && abs(targetpos.y) <= 20)
 					{
-						console.printf(currentactor.getclassname());
+						//console.printf(currentactor.getclassname());
 						seenmonster = true;
 						seenmonstercount++;
 						//HACKY AS HELL!!!
