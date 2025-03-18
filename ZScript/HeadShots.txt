@@ -97,7 +97,8 @@ CLASS BASEHEADSHOT : ACTOR
 	}
 	If(tracer && tracer != inflictor)
 	{
-	A_damagetracer(damagetoactor,damagetypetoactor,0,null,"none",AAPTR_TARGET);
+	//A_damagetracer(damagetoactor,damagetypetoactor,0,null,"none",source);
+	tracer.damagemobj(inflictor,source,damagetoactor,damagetypetoactor);
 		If(tracer && tracer.health < 1 && damagetypetoactor == "head")
 			{
 				a_startsound("HEADSHOT",1,0);
