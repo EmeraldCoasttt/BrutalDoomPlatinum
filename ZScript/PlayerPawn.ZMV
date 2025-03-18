@@ -267,13 +267,13 @@ class Brutal_PlayerBase : PlayerPawn
 			{
 				killtaunt = false;
 				tauntcooldown = 105;
-				A_startsound("DGKILL",455);
+				A_startsound("DGKILL",455,CHANF_NOSTOP);
 			}
 			If(berserktaunt)
 			{
 				berserktaunt = false;
 				tauntcooldown = 105;
-				A_startsound("DGBRSK",455);
+				A_startsound("DGBRSK",455,CHANF_NOSTOP);
 			}
 		
 		}
