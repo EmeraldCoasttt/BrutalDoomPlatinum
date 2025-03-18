@@ -203,6 +203,12 @@ class Brutal_PlayerBase : PlayerPawn
 	float hastetimer;
 	float invtimer;
 	
+	//Taunts
+	bool killtaunt;
+	bool berserktaunt;
+	int tauntcooldown;
+	int taunttimer;
+	
 	bool invehicle;
 	
 	Default
@@ -243,6 +249,34 @@ class Brutal_PlayerBase : PlayerPawn
 		}
 		Scannertimer = 130;
 
+	}
+	
+	void tauntthink()
+	{
+		If(tauntcooldown)
+		{
+			tauntcooldown--;
+		}
+		If(taunttimer)
+		{
+			taunttimer--;
+		}
+		If(!tauntcooldown)
+		{
+			If(killtaunt && !taunttimer)
+			{
+				killtaunt = false;
+				tauntcooldown = 105;
+				A_startsound("DGKILL",455);
+			}
+			If(berserktaunt)
+			{
+				berserktaunt = false;
+				tauntcooldown = 105;
+				A_startsound("DGBRSK",455);
+			}
+		
+		}
 	}
 	
 	override void PlayerLandedMakeGruntSound(actor onmobj)
@@ -380,6 +414,12 @@ class Brutal_PlayerBase : PlayerPawn
 		
 		If(health >= 1)
 		{
+			If(ischatterbox)
+			{
+				TauntThink();
+			}
+			
+			
 			If(scannertimer > 0)
 			{
 				scannertimer--;
