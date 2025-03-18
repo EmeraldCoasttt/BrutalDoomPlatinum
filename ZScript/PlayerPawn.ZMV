@@ -178,6 +178,7 @@ class Brutal_PlayerBase : PlayerPawn
 	bool spawnberserked;
 	bool shockfactor;
 	bool istactical;
+	bool ischatterbox;
 	bool oneupmanship;
 	bool sequencebreak;
 	bool maximumoverdrive;
