@@ -41,6 +41,7 @@ ACTOR Nailgun : BrutalWeapon
 	Weapon.SisterWeapon "MiniGun"
 	Inventory.AltHUDIcon "MGUNC0"
 	BrutalWeapon.weight 2
+	brutalweapon.voiceacted 0
 	States
 	{
 	

@@ -209,6 +209,7 @@ class Brutal_PlayerBase : PlayerPawn
 	int tauntcooldown;
 	int taunttimer;
 	int seetimer;
+	bool newweapon;
 	
 	bool invehicle;
 	
@@ -332,6 +333,27 @@ class Brutal_PlayerBase : PlayerPawn
 				A_startsound("DGSEE",455,CHANF_NOSTOP);
 				seetimer = random(350,3500);
 				tauntcooldown = 105;
+			}
+		}
+		If(!tauntcooldown && !taunttimer && newweapon)
+		{
+			newweapon = false;
+			tauntcooldown = 105;
+			If(player.readyweapon)
+			{
+				If(player.readyweapon is "Chain_Saw")
+				{
+					A_startsound("DGCSAW",455);
+				}
+				else if(player.readyweapon is "BIG_FUCKING_GUN")
+				{
+					A_startsound("DGBFG",455);
+				}
+				Else
+				{
+					A_startsound("DGITEM",455);
+				}
+			
 			}
 		}
 	}

@@ -26,6 +26,7 @@ ACTOR DualPlasmaRifles : BrutalWeapon
 	+INVENTORY.UNDROPPABLE
 	+Inventory.untossable
 	BrutalWeapon.handedness 2
+	brutalweapon.voiceacted 0
 	States
 	{
 	

@@ -28,6 +28,7 @@ ACTOR DualPistols : BrutalWeapon
 	Tag "Dual Pistols"
 	Inventory.AltHUDIcon "PISTH0"
 	brutalweapon.handedness 2
+	brutalweapon.voiceacted 0
 	States
 	{
 	

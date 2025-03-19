@@ -23,6 +23,7 @@ ACTOR DualRevolver : BrutalWeapon
 	Scale 0.9
 	Tag "Revolver"
 	brutalweapon.handedness 2
+	brutalweapon.voiceacted 0
 	States
 	{
 	

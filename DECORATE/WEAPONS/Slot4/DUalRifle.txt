@@ -29,6 +29,7 @@ ACTOR DualRifles : BrutalWeapon
 	Inventory.AltHUDIcon "RIFLB0"
 	brutalweapon.handedness 2
 	brutalweapon.weight 2
+	brutalweapon.voiceacted 0
 	States
 	{
 	SprintOverlay:

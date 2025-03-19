@@ -26,6 +26,7 @@ ACTOR BrutalPistol : BrutalWeapon
 	Scale 0.9
 	Tag "Pistol"
 	brutalweapon.handedness 1
+	brutalweapon.voiceacted 0
 	States
 	{
 	

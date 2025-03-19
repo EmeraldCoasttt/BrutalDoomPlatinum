@@ -24,6 +24,7 @@ ACTOR DualSMG : BrutalWeapon
 	Tag "Dual SMGs"
 	Inventory.AltHUDIcon "SMGZB0"
 	brutalweapon.handedness 2
+	brutalweapon.voiceacted 0
 	States
 	{
 	

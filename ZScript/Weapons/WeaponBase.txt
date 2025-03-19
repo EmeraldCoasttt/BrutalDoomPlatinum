@@ -13,6 +13,8 @@ Class Brutalweapon : DoomWeapon //Weapon
 	Property offhandkick : offhandkick;
 	Bool clearoverlays;
 	Property clearoverlays : clearoverlays;
+	Bool VoiceActed;
+	Property VoiceActed : VoiceActed;
 	
 	bool semiautofired;
 	bool semiclear;
@@ -30,6 +32,8 @@ Class Brutalweapon : DoomWeapon //Weapon
 	name gunslingermagname;
 	int gunslingermagsize;
 	
+	bool newweapon;
+	
 	
 	Default
 	{
@@ -40,6 +44,21 @@ Class Brutalweapon : DoomWeapon //Weapon
 	Weapon.BobSpeed 2.9;
 	Weapon.BobStyle "InverseAlpha";
 	brutalweapon.clearoverlays TRUE;
+	brutalweapon.VoiceActed TRUE;
+	
+	}
+	
+	Action void a_weaponvoiceline()
+	{
+		If(!invoker.newweapon && invoker.voiceacted)
+		{
+			let dplr = Brutal_PlayerBase(invoker.owner);
+			if(dplr)
+			{
+				dplr.newweapon = true;
+			}
+			invoker.newweapon = true;
+		}
 	
 	}
 	
@@ -1512,7 +1531,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		a_overlay(-610,"firstpersonlegsstand");
 		//player.SetPSprite(-10,player.ReadyWeapon.FindState("firstpersonlegsstand"));
 		}
-		
+		a_weaponvoiceline();
 		}
 		TNT1 A 0 A_jumpifinventory("hasagib",1,"gibfromnothing");
 		TNT1 A 0 A_Jump(256, "SelectContinue");

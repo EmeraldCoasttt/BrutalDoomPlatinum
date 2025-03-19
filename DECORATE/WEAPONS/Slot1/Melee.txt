@@ -21,6 +21,7 @@ ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 	Tag "Fists"
 	
 	Inventory.AltHUDIcon "MEDKC0"
+	brutalweapon.voiceacted 0
 	
 	States
 	{
