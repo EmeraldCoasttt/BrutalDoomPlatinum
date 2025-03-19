@@ -283,11 +283,14 @@ class Brutal_PlayerBase : PlayerPawn
 		
 		}
 		
-		If(random(1,35) == 1 && !seetimer)
+		If(random(1,35) == 1 && !seetimer && !tauntcooldown)
 		{
 			//console.printf("scanned");
 			bool seenmonster;
+			bool seencyber;
 			int seenmonstercount;
+			int cacocount;
+			
 			BlockThingsIterator CheckForTargets = BlockThingsIterator.create(Self,1000); //256 can be whatever range around the actor.
 			Actor CurrentActor; //A pointer to whatever actor the iterator is iterating through.
 			While (CheckForTargets.Next()) 
@@ -305,13 +308,30 @@ class Brutal_PlayerBase : PlayerPawn
 						seenmonstercount++;
 						//HACKY AS HELL!!!
 						currentactor.giveinventory("youveseenme",1);
+						if(currentactor is "Cacodemon" || currentactor is "PainElemental1")
+						cacocount++;
+						if(currentactor is "Cyberdemon")
+						seencyber = true;
 					}
 				}
 			}
-			If(seenmonster && seenmonstercount > 2)
+			If(seencyber)
+			{
+				A_startsound("DGCYB",455,CHANF_NOSTOP);
+				seetimer = random(350,3500);
+				tauntcooldown = 105;
+			}
+			Else If(seenmonster && cacocount > 2 && random(1,3) == 1)
+			{
+				A_startsound("DGCACO",455,CHANF_NOSTOP);
+				seetimer = random(350,3500);
+				tauntcooldown = 105;
+			}
+			Else If(seenmonster && seenmonstercount > 2)
 			{
 				A_startsound("DGSEE",455,CHANF_NOSTOP);
-				seetimer = random(350,700);
+				seetimer = random(350,3500);
+				tauntcooldown = 105;
 			}
 		}
 	}

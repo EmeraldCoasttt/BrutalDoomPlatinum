@@ -63,7 +63,7 @@ class Modifier_Chatterbox : BDPModifier
 					BDPPlayer.berserktaunt = true;
 				 }
 			 }
-			 Else If(BDPPlayer && !bdpplayer.tauntcooldown && random(1,7) == 1)
+			 Else If(BDPPlayer && !bdpplayer.tauntcooldown && random(1,20) == 1)
 			 {
 				BDPPlayer.killtaunt = true;
 				BDPPlayer.taunttimer = 15;
