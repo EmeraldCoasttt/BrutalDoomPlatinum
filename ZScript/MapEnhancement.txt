@@ -150,14 +150,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				AddThing(25867,(-328, -3232, 999),180);
 				}
 				
-				If(CVar.GetCvar("BD_PSXMonsters").getint() == 1)
-				{
-				//PSX
-				setlineflags(458,0,line.ML_BLOCKMONSTERS);
-				setlineflags(464,0,line.ML_BLOCKMONSTERS);
-				AddThing(71,(3644,-3136,104),135);
-				SetThingEdNum(87,65);
-				}
+			
 				
 				Break;
 			//e1m2	
@@ -223,11 +216,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				{
 				//PSX
 				
-				//Chaingunners
-				AddThing(65,(-1535,1375,999),270,MODES_ALL | MTF_AMBUSH);
-				AddThing(65,(0,864,999),270);
-				AddThing(65,(2238,1279,999),225,MODES_ALL | MTF_AMBUSH);
-				AddThing(65,(-2080,800,999),270,MODES_ALL | MTF_AMBUSH);
+				
 				
 				//Spectres
 				AddThing(58,(-544,896,999),180,MODES_ALL | MTF_AMBUSH);
@@ -264,13 +253,6 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(25870, (-1760, -1056, -999), 80);
 				}
 				
-				If(CVar.GetCvar("BD_PSXMonsters").getint() == 1)
-				{
-					AddThing(65,(-3040,-766,128),270);
-					AddThing(65,(-1504,-1759,128),270);
-					//replace
-					SetThingEdNum(170,65);
-				}
 				
 				Break;
 				
@@ -414,9 +396,6 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					SetThingEdNum(269,25942);
 					SetThingEdNum(65,25942);
 					
-					SetThingEdNum(30,65);
-					SetThingEdNum(31,65);
-					SetThingEdNum(78,65);
 				}
 				Break;
 			
@@ -451,11 +430,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					SetThingEdNum(243,25942);
 					AddThing(25942, (2496, -960, 999), 180);
 					
-					AddThing(65, (-272, -768, 999), 0);
-					AddThing(65, (512, 1424, 999), 270);
-					AddThing(65, (648, 1392, 999), 270);
-					AddThing(65, (3200, -1664, 999), 45);
-					SetThingEdNum(47,65);
+					
 				}
 				Break;
 				
