@@ -49,6 +49,8 @@ DoomRR/IncineratorFlame/fizzle DSINCHT3
 DoomRR/heatwave/charge DSHETCHG
 DoomRR/heatwave/fire DSHETSHT
 DoomRR/heatwave/explode DSHETXPL
+DoomRR/heatwave/ready DSHETRDY
+DoomRR/heatwave/select DSHETSEL
 
 MagClick MagClick
 ADSIN ADSIN //ads zoom in
