@@ -353,6 +353,10 @@ class Brutal_PlayerBase : PlayerPawn
 				{
 					A_startsound("DGPLAS",455);
 				}
+				else if(player.readyweapon is "MiniGun")
+				{
+					A_startsound("DGCGUN",455);
+				}
 				Else
 				{
 					A_startsound("DGITEM",455);
