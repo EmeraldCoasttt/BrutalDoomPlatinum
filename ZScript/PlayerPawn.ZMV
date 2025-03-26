@@ -349,6 +349,10 @@ class Brutal_PlayerBase : PlayerPawn
 				{
 					A_startsound("DGBFG",455);
 				}
+				else if(player.readyweapon is "PLASMA_GUN")
+				{
+					A_startsound("DGPLAS",455);
+				}
 				Else
 				{
 					A_startsound("DGITEM",455);
