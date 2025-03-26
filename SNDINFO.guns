@@ -36,6 +36,20 @@ BR45BON2 BR45BON2
 BR45BON3 BR45BON3
 BR45BON4 BR45BON4
 
+$random DoomRR/incinerator/fire { DoomRR/incinerator/fire1 DoomRR/incinerator/fire2 }
+DoomRR/incinerator/fire1 DSINCFI1
+DoomRR/incinerator/fire2 DSINCFI2
+
+DoomRR/IncineratorFlame/burn DSINCBRN
+$random DoomRR/IncineratorFlame/death { DoomRR/IncineratorFlame/death1 DoomRR/IncineratorFlame/death2 }
+DoomRR/IncineratorFlame/death1 DSINCHT1
+DoomRR/IncineratorFlame/death2 DSINCHT2
+DoomRR/IncineratorFlame/fizzle DSINCHT3
+
+DoomRR/heatwave/charge DSHETCHG
+DoomRR/heatwave/fire DSHETSHT
+DoomRR/heatwave/explode DSHETXPL
+
 MagClick MagClick
 ADSIN ADSIN //ads zoom in
 ADSOUT ADSOUT // ads zoom out
