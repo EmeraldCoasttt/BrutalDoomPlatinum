@@ -137,7 +137,7 @@ class CalamityBlade : BrutalWeapon
 			
 			invoker.heatwaveCharge++;
 			//A_GunFlash();
-			A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
+			A_StartSound("DoomRR/heatwave/charge", 6);
 			
 		}
 		HETC ABCDABCDABCDABCDABCDABCD 1 
@@ -159,13 +159,21 @@ class CalamityBlade : BrutalWeapon
 			//A_Gunlight(400,25,255,237,162);
 				invoker.heatwaveCharge++;
 				//A_GunFlash();
-				A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
+				A_StartSound("DoomRR/heatwave/charge", 6);
 			
 		}
 		HETC EFGHEFGHEFGHEFGHEFGHEFGH 1 
 		{
 			A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
 			invoker.A_Gunlight(400,2,255,237,162);
+			If(invoker.owner.player.cmd.buttons & BT_ATTACK)
+			{
+				return resolvestate(null);
+			}
+			else
+			{
+				return resolvestate("firetime");
+			}
 		}
 		TNT1 A 0 
 		{
@@ -182,13 +190,21 @@ class CalamityBlade : BrutalWeapon
 			//A_Gunlight(500,25,255,237,162);
 				invoker.heatwaveCharge++;
 				//A_GunFlash();
-				A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
+				A_StartSound("DoomRR/heatwave/charge", 6);
 			
 		}
 		HETC IJKLIJKLIJKLIJKLIJKLIJKL 1 
 		{
 			A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
 			invoker.A_Gunlight(500,2,255,237,162);
+			If(invoker.owner.player.cmd.buttons & BT_ATTACK)
+			{
+				return resolvestate(null);
+			}
+			else
+			{
+				return resolvestate("firetime");
+			}
 		}
 		TNT1 A 0 
 		{
@@ -205,13 +221,21 @@ class CalamityBlade : BrutalWeapon
 			//A_Gunlight(600,25,255,237,162);
 				invoker.heatwaveCharge++;
 				//A_GunFlash();
-				A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
+				A_StartSound("DoomRR/heatwave/charge", 6);
 			
 		}
 		HETC MNOPMNOPMNOPMNOPMNOPMNOP 1 
 		{
 			A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
 			invoker.A_Gunlight(600,2,255,237,162);
+			If(invoker.owner.player.cmd.buttons & BT_ATTACK)
+			{
+				return resolvestate(null);
+			}
+			else
+			{
+				return resolvestate("firetime");
+			}
 		}
 		TNT1 A 0 
 		{
@@ -228,13 +252,21 @@ class CalamityBlade : BrutalWeapon
 			//A_Gunlight(700,25,255,237,162);
 				invoker.heatwaveCharge++;
 				//A_GunFlash();
-				A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
+				A_StartSound("DoomRR/heatwave/charge", 6);
 			
 		}
 		HETC QRSTQRSTQRSTQRSTQRSTQRST 1
 		{
 			A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
 			invoker.A_Gunlight(700,2,255,237,162);
+			If(invoker.owner.player.cmd.buttons & BT_ATTACK)
+			{
+				return resolvestate(null);
+			}
+			else
+			{
+				return resolvestate("firetime");
+			}
 		}
 		Goto FireTime;
 		FireTime:
