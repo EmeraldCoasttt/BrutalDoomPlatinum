@@ -8,10 +8,10 @@ class CalamityBlade : BrutalWeapon
 		Tag "Calamity Blade";
 		Inventory.PickupMessage "You got the calamity blade!  Hot damn!";
 		Weapon.SlotNumber 7;
-		Weapon.AmmoType "Cell";
+		Weapon.AmmoType "AmmoCell";
 		Weapon.AmmoUse 10;
 		Weapon.AmmoGive 100;
-		Inventory.PickupSound "10kSELEC";
+		Inventory.PickupSound "DoomRR/heatwave/select";
 		BrutalWeapon.weight 3;
 	}
 
@@ -250,11 +250,12 @@ class HeatWaveRipper : Actor
 		Radius 16;
 		Height 8;
 		+RIPPER
+		-NOBOSSRIP;
 		+BRIGHT
 		+forcexybillboard;
 		RenderStyle 'Add';
 		Deathsound "DoomRR/heatwave/explode";
-		damagetype "Vivisect";
+		damagetype "Desintegrate";
 	}
 
 	States {

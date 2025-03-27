@@ -21,7 +21,6 @@ ACTOR TheCyberdemon: BDPCyberdemon Replaces Cyberdemon
 	Height 106
 	+MISSILEMORE
 	+MISSILEEVENMORE
-    +DONTRIP
     +NORADIUSDMG
 	+QUICKTORETALIATE
 	Speed 16

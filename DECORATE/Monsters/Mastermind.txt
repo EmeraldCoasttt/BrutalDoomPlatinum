@@ -34,7 +34,6 @@ ACTOR TheSpiderMastermind Replaces SpiderMastermind
 	BurnHeight 0
 	+BOSS
 	+FLOORCLIP
-    +DONTRIP
 	+DONTMORPH
 	+BOSSDEATH
     +NORADIUSDMG
