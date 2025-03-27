@@ -131,7 +131,7 @@ class CalamityBlade : BrutalWeapon
 		HETS EDCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
 	Fire:
-		HETG A 20
+		TNT1 A 0
 		{
 			if (invoker.DepleteAmmo(false))
 			{
@@ -140,13 +140,85 @@ class CalamityBlade : BrutalWeapon
 				A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
 			}
 		}
+		HETC ABCDABCDABCDABCDABCDABCD 1 A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
 		TNT1 A 0 
 		{
 			if (invoker.heatwaveCharge < 5 && invoker.CheckAmmo(PrimaryFire, false))
 			{
-				A_ReFire();
+				A_ReFire("fire2");
 			}
 		}
+		Goto FireTime;
+	Fire2:
+		TNT1 A 0
+		{
+			if (invoker.DepleteAmmo(false))
+			{
+				invoker.heatwaveCharge++;
+				//A_GunFlash();
+				A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
+			}
+		}
+		HETC EFGHEFGHEFGHEFGHEFGHEFGH 1 A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
+		TNT1 A 0 
+		{
+			if (invoker.heatwaveCharge < 5 && invoker.CheckAmmo(PrimaryFire, false))
+			{
+				A_ReFire("fire3");
+			}
+		}
+		Goto FireTime;
+	Fire3:
+		TNT1 A 0
+		{
+			if (invoker.DepleteAmmo(false))
+			{
+				invoker.heatwaveCharge++;
+				//A_GunFlash();
+				A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
+			}
+		}
+		HETC IJKLIJKLIJKLIJKLIJKLIJKL 1 A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
+		TNT1 A 0 
+		{
+			if (invoker.heatwaveCharge < 5 && invoker.CheckAmmo(PrimaryFire, false))
+			{
+				A_ReFire("fire4");
+			}
+		}
+		Goto FireTime;
+	Fire4:
+		TNT1 A 0
+		{
+			if (invoker.DepleteAmmo(false))
+			{
+				invoker.heatwaveCharge++;
+				//A_GunFlash();
+				A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
+			}
+		}
+		HETC MNOPMNOPMNOPMNOPMNOPMNOP 1 A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
+		TNT1 A 0 
+		{
+			if (invoker.heatwaveCharge < 5 && invoker.CheckAmmo(PrimaryFire, false))
+			{
+				A_ReFire("fire5");
+			}
+		}
+		Goto FireTime;
+	Fire5:
+		TNT1 A 0
+		{
+			if (invoker.DepleteAmmo(false))
+			{
+				invoker.heatwaveCharge++;
+				//A_GunFlash();
+				A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
+			}
+		}
+		HETC QRSTQRSTQRSTQRSTQRSTQRST 1 A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
+		Goto FireTime;
+		FireTime:
 		HETF A 3 A_FireIncinerator;
 		HETF B 5;
 		HETG HHHH 1;
