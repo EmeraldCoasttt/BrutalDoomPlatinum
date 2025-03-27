@@ -143,7 +143,7 @@ class CalamityBlade : BrutalWeapon
 		HETC ABCDABCDABCDABCDABCDABCD 1 
 		{
 			A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
-			invoker.A_Gunlight(300,1,255,237,162);
+			invoker.A_Gunlight(300,2,255,237,162);
 		}
 		TNT1 A 0 
 		{
@@ -165,7 +165,7 @@ class CalamityBlade : BrutalWeapon
 		HETC EFGHEFGHEFGHEFGHEFGHEFGH 1 
 		{
 			A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
-			invoker.A_Gunlight(400,1,255,237,162);
+			invoker.A_Gunlight(400,2,255,237,162);
 		}
 		TNT1 A 0 
 		{
@@ -188,7 +188,7 @@ class CalamityBlade : BrutalWeapon
 		HETC IJKLIJKLIJKLIJKLIJKLIJKL 1 
 		{
 			A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
-			invoker.A_Gunlight(500,1,255,237,162);
+			invoker.A_Gunlight(500,2,255,237,162);
 		}
 		TNT1 A 0 
 		{
@@ -211,7 +211,7 @@ class CalamityBlade : BrutalWeapon
 		HETC MNOPMNOPMNOPMNOPMNOPMNOP 1 
 		{
 			A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
-			invoker.A_Gunlight(600,1,255,237,162);
+			invoker.A_Gunlight(600,2,255,237,162);
 		}
 		TNT1 A 0 
 		{
@@ -234,7 +234,7 @@ class CalamityBlade : BrutalWeapon
 		HETC QRSTQRSTQRSTQRSTQRSTQRST 1
 		{
 			A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
-			invoker.A_Gunlight(700,1,255,237,162);
+			invoker.A_Gunlight(700,2,255,237,162);
 		}
 		Goto FireTime;
 		FireTime:
