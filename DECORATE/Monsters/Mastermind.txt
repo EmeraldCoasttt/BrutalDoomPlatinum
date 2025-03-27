@@ -62,7 +62,7 @@ ACTOR TheSpiderMastermind Replaces SpiderMastermind
 	Species "Spider"
 	+DONTHURTSPECIES
 	+noinfightspecies
-	damagefactor "desintegrate", 0.5
+	//damagefactor "desintegrate", 0.5
 	painchance "desintegrate", 1
 	+STRETCHPIXELS
 	States
