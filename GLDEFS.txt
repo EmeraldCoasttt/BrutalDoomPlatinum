@@ -61,6 +61,21 @@ flickerlight DRAGONBREATH
 	chance 0.50
 }
 
+object HeatWaveRipper
+{
+	frame HETBA { light HEATWAVE }
+	frame HETBB { light HEATWAVE }
+	frame HETBC { light HEATWAVE }
+}
+
+flickerlight HEATWAVE
+{
+    color 0.5 0.5 0.05
+    size 130
+	secondarySize 200
+	chance 0.50
+}
+
 
 object Candelabra1
 {

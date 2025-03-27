@@ -9,7 +9,6 @@ class CalamityBlade : BrutalWeapon
 		Inventory.PickupMessage "You got the calamity blade!  Hot damn!";
 		Weapon.SlotNumber 7;
 		Weapon.AmmoType "AmmoCell";
-		Weapon.AmmoUse 10;
 		Weapon.AmmoGive 100;
 		Inventory.PickupSound "DoomRR/heatwave/select";
 		BrutalWeapon.weight 3;
@@ -131,92 +130,112 @@ class CalamityBlade : BrutalWeapon
 		HETS EDCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
 	Fire:
+		TNT1 A 0 A_CheckIfAmmo("AmmoCell",10);
 		TNT1 A 0
 		{
-			if (invoker.DepleteAmmo(false))
-			{
-				invoker.heatwaveCharge++;
-				//A_GunFlash();
-				A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
-			}
+			A_TakeAmmo("AmmoCell",10);
+			
+			invoker.heatwaveCharge++;
+			//A_GunFlash();
+			A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
+			
 		}
-		HETC ABCDABCDABCDABCDABCDABCD 1 A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
+		HETC ABCDABCDABCDABCDABCDABCD 1 
+		{
+			A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
+			invoker.A_Gunlight(300,1,255,237,162);
+		}
 		TNT1 A 0 
 		{
-			if (invoker.heatwaveCharge < 5 && invoker.CheckAmmo(PrimaryFire, false))
-			{
-				A_ReFire("fire2");
-			}
+			
+			A_ReFire("fire2");
 		}
 		Goto FireTime;
 	Fire2:
+		TNT1 A 0 A_CheckIfAmmo("AmmoCell",10,"FireTime");
 		TNT1 A 0
 		{
-			if (invoker.DepleteAmmo(false))
-			{
+			A_TakeAmmo("AmmoCell",10);
+			//A_Gunlight(400,25,255,237,162);
 				invoker.heatwaveCharge++;
 				//A_GunFlash();
 				A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
-			}
+			
 		}
-		HETC EFGHEFGHEFGHEFGHEFGHEFGH 1 A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
+		HETC EFGHEFGHEFGHEFGHEFGHEFGH 1 
+		{
+			A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
+			invoker.A_Gunlight(400,1,255,237,162);
+		}
 		TNT1 A 0 
 		{
-			if (invoker.heatwaveCharge < 5 && invoker.CheckAmmo(PrimaryFire, false))
-			{
+			
 				A_ReFire("fire3");
-			}
+			
 		}
 		Goto FireTime;
 	Fire3:
+		TNT1 A 0 A_CheckIfAmmo("AmmoCell",10,"FireTime");
 		TNT1 A 0
 		{
-			if (invoker.DepleteAmmo(false))
-			{
+			A_TakeAmmo("AmmoCell",10);
+			//A_Gunlight(500,25,255,237,162);
 				invoker.heatwaveCharge++;
 				//A_GunFlash();
 				A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
-			}
+			
 		}
-		HETC IJKLIJKLIJKLIJKLIJKLIJKL 1 A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
+		HETC IJKLIJKLIJKLIJKLIJKLIJKL 1 
+		{
+			A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
+			invoker.A_Gunlight(500,1,255,237,162);
+		}
 		TNT1 A 0 
 		{
-			if (invoker.heatwaveCharge < 5 && invoker.CheckAmmo(PrimaryFire, false))
-			{
+			
 				A_ReFire("fire4");
-			}
+			
 		}
 		Goto FireTime;
 	Fire4:
+		TNT1 A 0 A_CheckIfAmmo("AmmoCell",10,"FireTime");
 		TNT1 A 0
 		{
-			if (invoker.DepleteAmmo(false))
-			{
+			A_TakeAmmo("AmmoCell",10);
+			//A_Gunlight(600,25,255,237,162);
 				invoker.heatwaveCharge++;
 				//A_GunFlash();
 				A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
-			}
+			
 		}
-		HETC MNOPMNOPMNOPMNOPMNOPMNOP 1 A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
+		HETC MNOPMNOPMNOPMNOPMNOPMNOP 1 
+		{
+			A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
+			invoker.A_Gunlight(600,1,255,237,162);
+		}
 		TNT1 A 0 
 		{
-			if (invoker.heatwaveCharge < 5 && invoker.CheckAmmo(PrimaryFire, false))
-			{
+			
 				A_ReFire("fire5");
-			}
+			
 		}
 		Goto FireTime;
 	Fire5:
+		TNT1 A 0 A_CheckIfAmmo("AmmoCell",10,"FireTime");
 		TNT1 A 0
 		{
-			if (invoker.DepleteAmmo(false))
-			{
+			A_TakeAmmo("AmmoCell",10);
+			//A_Gunlight(700,25,255,237,162);
 				invoker.heatwaveCharge++;
 				//A_GunFlash();
 				A_StartSound("DoomRR/heatwave/charge", CHAN_WEAPON);
-			}
+			
 		}
-		HETC QRSTQRSTQRSTQRSTQRSTQRST 1 A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
+		HETC QRSTQRSTQRSTQRSTQRSTQRST 1
+		{
+			A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
+			invoker.A_Gunlight(700,1,255,237,162);
+		}
 		Goto FireTime;
 		FireTime:
 		TNT1 A 0 A_FireIncinerator();
@@ -226,6 +245,7 @@ class CalamityBlade : BrutalWeapon
 		{
 			A_ZoomFactor(0.98);
 			A_SetPitch(Pitch-8, SPF_INTERPOLATE);
+			A_Gunlight(700,4,255,237,162);
 		}
 		HETF B 2
 		{
@@ -237,8 +257,12 @@ class CalamityBlade : BrutalWeapon
 		{
 			A_SetPitch(Pitch+0.8, SPF_INTERPOLATE);
 		}
-		TNT1 A 0 A_ReFire;
-		goto Ready;
+		Goto Ready;
+		
+		NoAmmo:
+		HETG A 1;
+		HETG A 2 A_startSound("weapons/empty", 1);
+		Goto Ready3;
 
 	
 	}
