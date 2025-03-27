@@ -87,7 +87,7 @@ class BDPLanded : BDPACTOR
 			TNT1 A 0;
 		SpawnDirt:
 			TNT1 A 0 A_Startsound("player/land/dirt");
-			TNT1 A 10;
+			Goto warp;
 			STOP;
 		SpawnWater:
 			TNT1 AAAAA 0 A_CustomMissile ("WaterParticleXFAster", 8, 0, random (0, 360), 2, random (30, 160));
@@ -129,21 +129,30 @@ class BDPLanded : BDPACTOR
 			Stop;
 		SpawnMetal:
 			TNT1 A 0 A_Startsound("player/land/metal");
-			TNT1 A 10;
+			Goto warp;
 			STOP;
 		SpawnGore:
 			TNT1 A 0 A_Startsound("player/land/gore");
-			TNT1 A 10;
+			Goto warp;
 			STOP;
 		SpawnStone:
 			TNT1 A 0 A_Startsound("player/land/stone");
-			TNT1 A 10;
+			Goto warp;
 			STOP;
 		SpawnWood:
 			TNT1 A 0 A_Startsound("player/land/wood");
-			TNT1 A 10;
+			Goto warp;
 			STOP;
-		
+			
+		Warp:
+			TNT1 AAAAAAAAAA 1
+			{
+				If(tracer)
+				{
+					setorigin(tracer.pos,false);
+				}
+			}
+		STOP;
 		
 		
 	}

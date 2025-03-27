@@ -377,7 +377,13 @@ class Brutal_PlayerBase : PlayerPawn
 			// Why should this number vary by gravity?
 			if (self.Vel.Z < -10)
 			{
-				spawn("BDPLANDED",pos);
+				let jumpland = spawn("BDPLANDED",pos);
+				
+				If(jumpland)
+				{
+					jumpland.tracer = self;
+				}
+				
 				grunted = true;
 			}
 		}
