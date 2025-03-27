@@ -219,11 +219,11 @@ class CalamityBlade : BrutalWeapon
 		HETC QRSTQRSTQRSTQRSTQRSTQRST 1 A_WeaponOffset( random(1,-1) , 32+random(1,-1), 0);
 		Goto FireTime;
 		FireTime:
-		HETF A 3 A_FireIncinerator;
-		HETF B 5;
+		HETF A 2 A_FireIncinerator;
+		HETF B 2;
 		HETG HHHH 1;
 		BFGN A 0 A_startSound("DoomRR/heatwave/ready");
-		HETG GFEDCB 1;
+		HETG HHGFEDCB 1;
 		TNT1 A 0 A_ReFire;
 		goto Ready;
 
