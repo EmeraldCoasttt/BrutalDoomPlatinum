@@ -254,7 +254,7 @@ class HeatWaveRipper : Actor
 		+forcexybillboard;
 		RenderStyle 'Add';
 		Deathsound "DoomRR/heatwave/explode";
-		damagetype "cut";
+		damagetype "Vivisect";
 	}
 
 	States {
