@@ -11,7 +11,6 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		Weapon.AmmoUse 0;
 		Weapon.AmmoGive 100;
 		Weapon.AmmoType "AmmoCell";
-		weapon.ammotype2 "Nuke";
 		Inventory.PickupSound "BFGREADY";
 		+FORCEXYBILLBOARD;
 		+WEAPON.BFG;
@@ -360,7 +359,7 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		BFGN A 0 BRIGHT A_FireProjectile("BFGBallWithTracers");
 		BFGN A 0;
 		Goto RecoilFire;
-		
+		/*
 		DualWield:
 		TNT1 A 0 A_takeinventory("startdualwield",1);
 		TNT1 A 0 A_jumpifinventory("nuke",1,"firenuke");
@@ -429,7 +428,7 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 	}
 	Goto ready;
 		
-		
+		*/
 		/*
 	 SpecialAction:
 		 TNT1 A 0 A_takeinventory("swapriflespecial",1)

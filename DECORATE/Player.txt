@@ -5505,7 +5505,7 @@ ACTOR BDoomer : Doomer
 	Player.StartItem "NuRailgunAmmo", 5
 	Player.StartItem "PlasmaAmmo", 50
 	Player.StartItem "DoublePlasmaAmmo", 100
-	player.StartItem "Nuke", 1
+	//player.StartItem "Nuke", 1
 	Player.StartItem "IsPlayer", 1
 	Player.StartItem "GrenadeAmmo", 2
 	Player.StartItem "JustStartedGame", 1
