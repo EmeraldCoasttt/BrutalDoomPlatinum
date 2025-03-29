@@ -464,11 +464,12 @@ xscale 9.6
 states
 	{
 	Spawn:
-	    LEYS G 120 BRIGHT
-		LEYS GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG 2 BRIGHT a_fADEouT(0.02)
+	    LEYS O 120 BRIGHT
+		LEYS ooooooooooooooooooooooooOOOOOOOOOOOOOOOOO 2 BRIGHT a_fADEouT(0.02)
 		Stop
 	}
 }
+
 
 
 

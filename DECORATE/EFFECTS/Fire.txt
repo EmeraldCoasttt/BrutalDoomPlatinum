@@ -301,7 +301,7 @@ Speed 5
 	States
 	{
     Spawn:
-        X00G ABCDEFGHIJKLMNOPQRSTUVWXYZ 4 BRIGHT
+        X003 ABCDEFGHIJKLMNOPQRSTUVWXYZ 4 BRIGHT
         Stop
 	}
 }
