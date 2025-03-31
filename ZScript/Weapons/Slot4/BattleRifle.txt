@@ -173,7 +173,11 @@ CLASS BattleRifle : Brutalweapon
 				invoker.burstcount++;
 			}
 			TNT1 A 0 A_GunLight();
-			BR45 C 1;
+			BR4F A 0 A_Jump(85,3);
+			BR4F B 0 A_Jump(85,2);
+			BR4F C 0;
+			BR4F "#" 0;
+			BR4F "#" 1;
 			TNT1 A 0 
 			{
 				A_zoomfactor(1.0);
