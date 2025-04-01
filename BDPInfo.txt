@@ -14,6 +14,7 @@ rocket_launcher,rocketlauncher,1
 grenadelauncher,rocketlauncher,1
 chainsawspawned,chainsaw,1
 plasmagunspawner,plasmarifle,1
+dualplasmaspawner,plasmarifle,2
 freezer,plasmarifle,1
 railgun,plasmarifle,1
 big_fucking_gun,bfg,1

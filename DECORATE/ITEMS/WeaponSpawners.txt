@@ -351,6 +351,18 @@ ACTOR PLasmagunSpawner : NVBasicWeaponSpawner
 	}
 }
 
+ACTOR DualPLasmaSpawner: PlasmagunSpawner
+{
+	States
+	{
+		Spawn:
+			TNT1 A 0
+			TNT1 A 0 A_spawnitemex("plasmagunspawner",20, 20)
+			PLAS A -1
+			WAIT
+	}
+}
+
 ACTOR DropedPlasmaGun: PlasmagunSpawner
 {
 	States
