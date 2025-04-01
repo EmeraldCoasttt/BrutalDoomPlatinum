@@ -357,6 +357,22 @@ class Brutal_PlayerBase : PlayerPawn
 				{
 					A_startsound("DGCGUN",455);
 				}
+				else if(player.readyweapon is "BrutalSMG")
+				{
+					A_startsound("DGSMG",455);
+				}
+				else if(player.readyweapon is "DoxsRevolver")
+				{
+					A_startsound("DGREV",455);
+				}
+				else if(player.readyweapon is "Unmaker")
+				{
+					A_startsound("DGUNM",455);
+				}
+				else if(player.readyweapon is "Rocket_Launcher")
+				{
+					A_startsound("DGROCK",455);
+				}
 				Else
 				{
 					A_startsound("DGITEM",455);
