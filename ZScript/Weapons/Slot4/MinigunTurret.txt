@@ -79,8 +79,7 @@ CLASS MiniGunTurret : BDPNotMonster
 		TNT1 A 0 A_startsound("beeep",24);
 		Stillnoammo: 
 		MGNT A 10;
-		TNT1 A 0 A_spawnitemex("miniguncount",0,0,30);
-		STOP;
+		Goto Death;
 		
 		Missile:
 		TNT1 A 0 A_Jumpifinventory("clip2",1,1);
