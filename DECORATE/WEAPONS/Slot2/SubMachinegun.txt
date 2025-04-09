@@ -223,9 +223,6 @@ ACTOR BrutalSMG : BrutalWeapon
 		//SMGG A 0 A_JumpIfInventory("IsTacticalClass", 1, 2)//Tactical mode skips a frame, fires faster
 		SMGF C 1 
 		
-		RIFG A 0 A_JumpIfInventory("IsNOTTacticalClass", 1, 2)//tactical mode has muzzle climb
-		RIFG A 0 A_SetPitch(pitch-1.0, SPF_INTERPOLATE)
-		RIFG A 0
 		RIFG A 0 A_JumpIfInventory("NoPitch", 1, 2)
 	    RIFG A 0 A_SetPitch(pitch+0.15, SPF_INTERPOLATE)
 		SHOI F 0 A_JumpIfInventory("Fire2Activate",1,"AltFire")
@@ -255,9 +252,6 @@ ACTOR BrutalSMG : BrutalWeapon
 		SMGG A 0 A_TakeAmmo("BDDualSMGAmmo",1)
         SMGA C 1
 		SMGG A 0 A_FireCustomMissile("PistolCaseSpawn",5,0,0,-9)
-		SMGG A 0 A_JumpIfInventory("IsTacticalClass", 1, 2)//Tactical mode skips a frame, fires faster
-		RIFG A 0 A_JumpIfInventory("IsNOTTacticalClass", 1, 2)//tactical mode has muzzle climb
-		RIFG A 0 A_SetPitch(pitch-0.5, SPF_INTERPOLATE)
 		RIFG A 0 A_jumpifinventory("firedprimary",1,"fire2")
 		TNT1 A 0 A_weaponzoom2
 	HoldEnd1:

@@ -403,7 +403,6 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
         PIS2 B 1
 		PIST F 0 A_FireCustomMissile("PistolCaseSpawn",5,0,0,-9)
 		PIS2 C 1 A_SetPitch(pitch-0.4, SPF_INTERPOLATE)
-		PIST F 0 A_JumpIfInventory("IsTacticalClass", 1, "FireEndTactical")
 		PIS2 D 1 A_SetPitch(pitch+0.4, SPF_INTERPOLATE)
 		NULL A 0 A_WeaponOffset(0,32)
 		PIST F 0 A_JumpIfInventory("Reloading",1,"Reload")
@@ -514,7 +513,6 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
         2ILE B 1
 		PIST F 0 A_FireCustomMissile("PistolCaseSpawn",5,0,0,-9)
 		2ILE C 1 A_SetPitch(pitch-0.4, SPF_INTERPOLATE)
-		SILE F 0 A_JumpIfInventory("IsTacticalClass", 1, "FireEndTactical")
 		2ILE D 1 A_SetPitch(pitch+0.4, SPF_INTERPOLATE)
 		NULL A 0 A_WeaponOffset(0,32)
 		PIST F 0 A_JumpIfInventory("Reloading",1,"Reload")
