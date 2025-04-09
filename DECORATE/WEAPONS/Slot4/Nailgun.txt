@@ -31,7 +31,6 @@ ACTOR Nailgun : BrutalWeapon
 	Inventory.Pickupmessage "You got the Nailgun... somehow."
     +WEAPON.NOAUTOAIM
     +WEAPON.NOALERT
-	+WEAPON.NOAUTOFIRE
 	+FORCEXYBILLBOARD
 	Tag "The Oscillator Nailgun"
     Scale 0.8
