@@ -1016,8 +1016,9 @@ Actor AmmoFragGrenade : Ammo
 	Inventory.Amount 1
 	Inventory.MaxAmount 2
 	Ammo.BackpackAmount 1
-	Ammo.BackpackMaxAmount 3
+	Ammo.BackpackMaxAmount 4
 	Inventory.PickupSound "GRNPIN"
+	Scale 0.5
 	States
 	{
 	Spawn:
@@ -1031,7 +1032,7 @@ Actor AmmoPipeBomb : Ammo
 {
 	Inventory.PickupMessage "Picked up a Proximity Mine."
 	Inventory.Amount 1
-	Inventory.MaxAmount 3
+	Inventory.MaxAmount 2
 	Ammo.BackpackAmount 1
 	Ammo.BackpackMaxAmount 4
 	Scale 0.40
