@@ -2511,27 +2511,7 @@ ACTOR XDeathMancubusArm: XDeathArm1
     }
 }
 
-Actor FlameCannonPickup : CustomInventory
-{
-Inventory.PickupMessage "You got the Mancubus' FlameCannon! (Slot 9)"
-Inventory.PickupSound "BFGREADY"
-States
-{
-Spawn:
-	MANA H 1
-	Loop
 
-Pickup:
-    TNT1 A 0
-	TNT1 A 0 A_JumpIfInventory("FlameCannon", 1, "PickupDual")
-	TNT1 A 0 A_GiveInventory("FlameCannon", 1)
-	Stop
-	
-PickupDual:
-	TNT1 A 0 A_GiveInventory("DualFlameCannon", 1)
-	Stop
-   }
-}
 
 ACTOR XDeathZombieManHead: XDeathBullArm1
 {

@@ -27,7 +27,7 @@ ACTOR BrutalAxe : BrutalWeapon
 	BrutalWeapon.weight 1
 	Inventory.AltHUDIcon "AXE9A0"
 	Weapon.AmmoType1 "AxeCounter"
-	
+	+WEAPON.CHEATNOTWEAPON
 	States
 	{
 	

@@ -22,6 +22,7 @@ CLASS HellishMissileLauncher : BrutalWeapon
 		Tag "Hellish Missile Launcher";
 		Inventory.AltHUDIcon "FATBD0";
 		BrutalWeapon.ClearOverlays 0;
+		+WEAPON.CHEATNOTWEAPON;
 	}
 	
 	int jumptimer;

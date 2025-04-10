@@ -478,6 +478,10 @@
 		{
 			e.Replacement = "BDPBanshee";
 		}
+		if(e.replacee == Checkpotentialactor('hellishmissilelauncher'))
+		{
+			e.Replacement = "deadrevenantlauncher";
+		}
 
 	}
 	

@@ -15,6 +15,7 @@ ACTOR FlameCannon : BrutalWeapon
 	Inventory.PickupMessage "You got the Mancubus' FlameCannon! (Slot 8)"
 	Tag "Mancubus FlameCannon"
 	Inventory.AltHUDIcon "MANAH0"
+	+WEAPON.CHEATNOTWEAPON
 	States
 	{
 	SprintOverlay:
@@ -342,6 +343,7 @@ ACTOR BlockingSmoke
 	+DOOMBOUNCE
 	+SHADOWBLOCK
 	+rollsprite
+	+thruactors
 	BounceFactor 0.5
 	ShadowPenaltyFactor 2.0
 	Radius 32
@@ -355,7 +357,7 @@ ACTOR BlockingSmoke
     {
     Spawn:
 		TNT1 A 0
-		TNT1 A 0 A_setroll(frandom(0,360))
+		TNT1 A 0 A_setroll(random(0,360))
 		TNT1 A 0 A_JumpIf(waterlevel > 1, "Stap")
 		smk2 AAAAA 2 A_FadeIn(0.05)
 		smk2 AAAAAAAAAAAAAAAAAAAAAAAA 2
