@@ -648,7 +648,6 @@ Class BDPActor : Actor abstract {
 		BDPStone.push("BDHEL04B");
 		BDPStone.push("METALIND6");
 		BDPStone.push("BDHEL04B");
-		BDPStone.push("TRGIMP");
 		BDPStone.push("W_LAB1");
 		BDPStone.push("W_LAB3");
 		BDPStone.push("W_LAB4");
