@@ -392,6 +392,7 @@ class BDPHoverTank : BDPVehicle
 		+float;
 		-vehbase.fallingpitch;
 		+vehbase.ALIGNTOPLANE;
+		-vehbase.movementpitch;
 	}
 	
 	override void BeginPlay()
