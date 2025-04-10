@@ -323,7 +323,7 @@ ACTOR Rifle : BrutalWeapon
         RIFL C 0 A_ZoomFactor(2.0)
 		RIFL C 0 A_Giveinventory("ADSmode",1)
 		RIFL C 0 A_GiveInventory("ZoomHold",1)
-		TNT1 A 0 A_SetCrosshair(41)
+		//TNT1 A 0 A_SetCrosshair(41)
 		SMGG A 0 A_PlaySound("ADSIN")
         RIFZ ABC 1
 		RIFZ D 2
