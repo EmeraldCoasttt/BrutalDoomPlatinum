@@ -451,13 +451,13 @@ ACTOR HandGrenades : BrutalWeapon
 
 ACTOR HandGrenade
 {
+	Scale 0.5
 	Radius 4
 	Height 4
 	Projectile
 	Speed 30
     Damage (random (2, 2))
     Gravity 0.7
-	Scale 0.4
 	Projectile
 	+MISSILE
     -NOGRAVITY
@@ -487,32 +487,33 @@ ACTOR HandGrenade
 	Species "Marines"
 	+THRUSPECIES
 	+MTHRUSPECIES
+	+XFLIP
 	States
 	{
 	Spawn:
 	    TNT1 A 0
 	 //   TNT1 A 0 A_PlaySound("GRENHISS")
-		GRND AA 1 A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
+		GRND AA 1// A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
 		NULL A 0 A_SetRoll(roll+45)
-		GRND AA 1 A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
+		GRND AA 1// A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
 		NULL A 0 A_SetRoll(roll+45)
-		GRND AA 1 A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
+		GRND AA 1// A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
 		NULL A 0 A_SetRoll(roll+45)
-		GRND AA 1 A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
+		GRND AA 1// A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
 		NULL A 0 {A_SetRoll(roll+45); A_SpawnItem("GrenadeAlerter");}
-		GRND AA 1 A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
+		GRND AA 1// A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
 		NULL A 0 A_SetRoll(roll+45)
-		GRND AA 1 A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
+		GRND AA 1// A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
 		NULL A 0 A_SetRoll(roll+45)
-		GRND AA 1 A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
+		GRND AA 1 //A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
 		NULL A 0 A_SetRoll(roll+45)
-		GRND AA 1 A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
+		GRND AA 1 //A_CustomMissile ("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360))
 		NULL A 0 {A_SetRoll(roll+45); A_SpawnItem("GrenadeAlerter");}
 		TNT1 A 0 A_GiveInventory("GrenadeTime", 1)
 		TNT1 A 0 A_JumpIfInventory("GrenadeTime", 3, "Explode")
 		loop
 	Death:
-	    TNT1 A 0 A_SetRoll(90)
+	    TNT1 A 0 A_SetRoll(45)
 		TNT1 A 0 A_StopSound
 		TNT1 A 0 A_AlertMonsters(128)
 		TNT1 A 0 A_SpawnItem("GrenadeAlerter")

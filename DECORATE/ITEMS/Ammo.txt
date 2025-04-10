@@ -1017,7 +1017,6 @@ Actor AmmoFragGrenade : Ammo
 	Inventory.MaxAmount 2
 	Ammo.BackpackAmount 1
 	Ammo.BackpackMaxAmount 3
-	Scale 0.5
 	Inventory.PickupSound "GRNPIN"
 	States
 	{
