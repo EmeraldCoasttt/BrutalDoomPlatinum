@@ -5479,7 +5479,6 @@ ACTOR BDoomer : Doomer
 	Player.StartItem "Melee_Attacks"
 	//Player.StartItem "BIG_FUCKING_GUN"
 	Player.startitem "AmmoFragGrenade", 2
-	Player.startitem "AmmoPipeBomb", 1
 	//slot 2
 	Player.StartItem "Clip1", 60
 	Player.StartItem "BDPistolAmmo", 16

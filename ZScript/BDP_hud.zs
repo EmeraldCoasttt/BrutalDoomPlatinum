@@ -154,109 +154,58 @@ class BDP_HUD : DoomStatusBar
 		//{
 			string nade = "";
 			string nade2 = "";
-			string nade3 = "";
-			string nade4 = "";
 			int nade1ammo = 0;
 			int nade2ammo = 0;
-			int nade3ammo = 0;
-			int nade4ammo = 0;
 			// Pick the grenade icon based on the amount of
 			// NadeType in inventory:
 			int nadeAmt = (CPlayer.mo.CountInv("NadeType"));
 			switch (nadeAmt)
 			{
-			case 3:
-				nade = "GRNDC"; 
-				nade2 = "GRNDA";
-				nade3 = "GRNDB";
-				nade4 = "PIPBE";
-				nade1ammo = (CPlayer.mo.CountInv("AmmovoidGrenade"));
-				nade2ammo = (CPlayer.mo.CountInv("AmmoFragGrenade"));
-				nade3ammo = (CPlayer.mo.CountInv("AmmoIceGrenade"));
-				nade4ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
-				break;
-			case 2:
-				nade = "PIPBE"; 
-				nade2 = "GRNDC";
-				nade3 = "GRNDA";
-				nade4 = "GRNDB";
-				nade1ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
-				nade2ammo = (CPlayer.mo.CountInv("AmmoVoidGrenade"));
-				nade3ammo = (CPlayer.mo.CountInv("AmmoFragGrenade"));
-				nade4ammo = (CPlayer.mo.CountInv("AmmoIceGrenade"));
-				break;
 			case 1:
-				nade = "GRNDB"; 
-				nade2 = "PIPBE";
-				nade3 = "GRNDC";
-				nade4 = "GRNDA";
-				nade1ammo = (CPlayer.mo.CountInv("AmmoIceGrenade"));
-				nade2ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
-				nade3ammo = (CPlayer.mo.CountInv("AmmoVoidGrenade"));
-				nade4ammo = (CPlayer.mo.CountInv("AmmoFragGrenade"));
+				nade2 = "GRNDA"; 
+				nade = "PIPBE";
+				nade2ammo = (CPlayer.mo.CountInv("AmmoFragGrenade"));
+				nade1ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
 				break;
 			case 0:
 				nade = "GRNDA"; 
-				nade2 = "GRNDB";
-				nade3 = "PIPBE";
-				nade4 = "GRNDC";
+				nade2 = "PIPBE";
 				nade1ammo = (CPlayer.mo.CountInv("AmmoFragGrenade"));
-				nade2ammo = (CPlayer.mo.CountInv("AmmoIceGrenade"));
-				nade3ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
-				nade4ammo = (CPlayer.mo.CountInv("AmmoVoidGrenade"));
+				nade2ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
 				break;
 			}
 			if (nade)
 			{
-				DrawImage(nade, pos, flags, box: box);
-				//DrawString(fnt, String.Format("%d", gammo.amount), pos + (box.x / 2, -4), flags|DI_TEXT_ALIGN_RIGHT);
-				DrawString(
-				msmallfont,
-				String.Format("%d",nade1ammo),
-				pos + ((box.x / 6) + 5, -8),
-				DI_TEXT_ALIGN_RIGHT,
-				Font.CR_White
-				//scale:(0.8, 0.8)
-				);
-				If(reversed)
-				pos = (pos + (17, 0));
-				else
-				pos = (pos + (-17, 0));
-				DrawImage(nade2, pos, flags, box: (11,11), scale:(0.5,0.5));
-				DrawString(
+				If(nade1ammo > 0)
+				{
+					DrawImage(nade, pos, flags, box: box);
+					//DrawString(fnt, String.Format("%d", gammo.amount), pos + (box.x / 2, -4), flags|DI_TEXT_ALIGN_RIGHT);
+					DrawString(
 					msmallfont,
-					String.Format("%d",nade2ammo),
-					pos + ( 3, -4),
+					String.Format("%d",nade1ammo),
+					pos + ((box.x / 6) + 5, -8),
 					DI_TEXT_ALIGN_RIGHT,
-					Font.CR_White,
-					scale:(0.5, 0.5)
-				);
-				If(reversed)
-				pos = (pos + (10, 0));
-				Else
-				pos = (pos + (-10, 0));
-				DrawImage(nade3, pos, flags, box: (11,11), scale:(0.5,0.5));
-				DrawString(
-					msmallfont,
-					String.Format("%d",nade3ammo),
-					pos + ( 3, -4),
-					DI_TEXT_ALIGN_RIGHT,
-					Font.CR_White,
-					scale:(0.5, 0.5)
-				);
-				If(reversed)
-				pos = (pos + (10, 0));
-				Else
-				pos = (pos + (-10, 0));
-				DrawImage(nade4, pos, flags, box: (11,11), scale:(0.5,0.5));
-				DrawString(
-					msmallfont,
-					String.Format("%d",nade4ammo),
-					pos + ( 3, -4),
-					DI_TEXT_ALIGN_RIGHT,
-					Font.CR_White,
-					scale:(0.5, 0.5)
-				);
+					Font.CR_White
+					//scale:(0.8, 0.8)
+					);
+				}
+				If(nade2ammo > 0)
+				{
+					If(reversed)
+					pos = (pos + (17, 0));
+					else
+					pos = (pos + (-17, 0));
+					DrawImage(nade2, pos, flags, box: (11,11), scale:(0.5,0.5));
+					DrawString(
+						msmallfont,
+						String.Format("%d",nade2ammo),
+						pos + ( 3, -4),
+						DI_TEXT_ALIGN_RIGHT,
+						Font.CR_White,
+						scale:(0.5, 0.5)
+					);
+				}
+				
 				
 				If(lasttickgrenade != CPlayer.mo.CountInv("NadeType"))
 				{
@@ -265,16 +214,7 @@ class BDP_HUD : DoomStatusBar
 				LastTickGrenade = CPlayer.mo.CountInv("NadeType");
 				
 				
-				If(reversed && ArrowTimer < 65)
-				{
-				pos = (pos + (10, -0));
-				DrawImage("INVGEML1", pos, flags, box: box);
-				}
-				Else if(ArrowTimer < 65)
-				{
-				pos = (pos + (-10, -0));
-				DrawImage("INVGEMR1", pos, flags, box: box);
-				}
+				
 				
 				
 				

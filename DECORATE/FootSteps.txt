@@ -79,7 +79,6 @@ ACTOR Doomer2 : Doomer
 	Player.StartItem "BrutalPistol"	
 	Player.StartItem "Melee_Attacks"
 	Player.startitem "AmmoFragGrenade", 2
-	Player.startitem "AmmoPipeBomb", 1
 	//slot 2
 	Player.StartItem "Clip1", 60
 	Player.StartItem "BDPistolAmmo", 16
@@ -180,7 +179,6 @@ ACTOR Doomer3 : Doomer
 	Player.DisplayName "Melee Start"
     Player.StartItem "Melee_Attacks"
 	Player.startitem "AmmoFragGrenade", 2
-	Player.startitem "AmmoPipeBomb", 1
 	//slot 2
 	Player.StartItem "Clip1", 60
 	Player.StartItem "BDPistolAmmo", 16
