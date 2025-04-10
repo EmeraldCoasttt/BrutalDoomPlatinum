@@ -759,7 +759,7 @@ CLASS Rocket2 : BrutalProjectile
 		Height 2;
 		Projectile;
 		Speed 50;
-		Damagefactor 300;
+		Damagefunction (300);
 		DamageType "Explosive";
 		MeleeDamage 0;
 		Scale 0.5;
@@ -768,7 +768,7 @@ CLASS Rocket2 : BrutalProjectile
 		+MISSILE;
 		+NOGRAVITY;
 		+EXTREMEDEATH;
-		+BLOODSPLATTER ;
+		+BLOODSPLATTER;
 		+THRUSPECIES;
 		+MTHRUSPECIES;
 		+SPECTRAL;
