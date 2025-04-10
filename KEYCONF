@@ -8,11 +8,11 @@ setslot 1 DSweap Melee_Attacks BrutalAxe Chain_Saw ClassicFist ClassicSaw
 setslot 2 BrutalPistol BrutalSMG DoxsRevolver ClassicPistol ClassicSMG MP40 //forcefully disables the revolver
 setslot 3 Shot_Gun SSG AssaultShotgun ClassicShotgun ClassicSSG
 setslot 4 Rifle BattleRifle MiniGun
-setslot 5 Rocket_Launcher GrenadeLauncher ClassicRocketLauncher NukeLauncher
+setslot 5 Rocket_Launcher GrenadeLauncher Flamethrower2 ClassicRocketLauncher NukeLauncher
 setslot 6 Plasma_Gun RailGun Freezer ClassicPlasmaRifle
 setslot 7 BIG_FUCKING_GUN CalamityBlade Unmaker
 setslot 8 HellishMissileLauncher FlameCannon Tenderizer
-setslot 9 Flamethrower2
+setslot 9 
 //setslot 0 AmmoDroper
 
    addkeysection "BrutalDoom - Advanced Actions" BrutalDoomPlatinumActions    

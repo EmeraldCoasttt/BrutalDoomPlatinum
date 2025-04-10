@@ -94,6 +94,7 @@ damage 0
 //5
 #include DECORATE/WEAPONS/Slot5/ROCKETLAUNCHER.txt
 #include DECORATE/WEAPONS/Slot5/GRENADELAUNCH.txt
+#include DECORATE/WEAPONS/Slot5/Flamethrower.txt
 //6
 #include DECORATE/WEAPONS/Slot6/PLASMA.txt
 #include DECORATE/WEAPONS/Slot6/DUALPLASMA.txt
@@ -116,7 +117,7 @@ damage 0
 #include DECORATE/WEAPONS/Unused/DRAGONSLAYER.txt
 #include DECORATE/WEAPONS/Unused/REVOLVER.txt
 #include DECORATE/WEAPONS/Unused/REVOLVER2.txt
-#include DECORATE/WEAPONS/Unused/Flamethrower.txt
+
 #include DECORATE/WEAPONS/Unused/NukeLauncher.txt
 //
 

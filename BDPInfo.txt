@@ -22,6 +22,7 @@ unmaker,bfg,1
 calamityblade,bfg,1
 revolverspawner,secret,1
 EnergyArmor,secret,2
+flamethrower2,secret,2
 demonrunespawner,secret,3
 quadsigil,secret,2
 hastesphere,secret,2
