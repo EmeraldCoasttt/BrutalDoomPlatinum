@@ -22,6 +22,8 @@ MasterMG MasterMG
 $limit MasterMG 20
 $rolloff  MasterMG 1200 3000
 
+$volume MasterMG 0.6
+
 $limit skeleton/tracex 8
 
 banshee/death DSBANDTH
