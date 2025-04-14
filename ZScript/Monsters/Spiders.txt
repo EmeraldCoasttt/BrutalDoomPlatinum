@@ -137,6 +137,7 @@ CLASS mastermindgrenade : actor
 			+dontthrust;
 			+dontharmspecies;
 		}
+		int livetimer;
 		States
 		{
 		Spawn:
@@ -155,7 +156,20 @@ CLASS mastermindgrenade : actor
 		BS2X D 0;
 		Goto stay;
 		Stay:
-		BS2X "#" 1 A_spawnprojectile("GrenadeTrail3", 5, 0, random (0, 360), 2, random (-80, -160));//A_spawnitemex("grenadetrail",0,0,5,frandom(-3,3),frandom(-3,3),frandom(3,10),frandom(0,360));
+		BS2X "#" 1 
+		{
+			A_spawnprojectile("GrenadeTrail3", 5, 0, random (0, 360), 2, random (-80, -160));
+			livetimer++;
+		}
+		BS2X "#" 0 A_jumpif(livetimer > 700,"fader");
+		LOOP;
+		
+		Fader:
+		BS2X "#" 1 
+		{
+			A_spawnprojectile("GrenadeTrail3", 5, 0, random (0, 360), 2, random (-80, -160));
+		}
+		BS2X "#" 0 A_FadeOut(0.01);
 		LOOP;
 		Death:
 			TNT1 A 5 A_spawnitemex("mastermindsplosion");
