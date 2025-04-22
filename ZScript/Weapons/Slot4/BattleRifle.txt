@@ -158,15 +158,13 @@ CLASS BattleRifle : Brutalweapon
 				A_overlay(-5,"DoNothing");
 				A_zoomfactor(0.7);
 				A_fireprojectile("shotgunparticles2",random(12,-12),false,0,0,0,random(9,-9));
-				If(invoker.burstselected)
-				{
+				
 					A_FireBullets (0, 0, -1, 25, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
-				}
-				Else
-				{
-					A_FireBullets (0, 0, -1, 40, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
-				}
-				A_startsound("BR45FIRE",1);
+					A_startsound("BR45FIRE",1,0,0.85);
+				
+				
+				
+				
 				A_QuadSound();
 				A_ALertMonstersDX();
 				A_takeammo("battlerifleammo",1);
@@ -187,11 +185,11 @@ CLASS BattleRifle : Brutalweapon
 					A_fireprojectile("RifleClipSpawn",5,false,0,-14,0);
 				}
 			}
-			TNT1 A 0 A_jumpif(invoker.burstselected && invoker.burstcount < 3,"burstfirerecoil");
+			TNT1 A 0 A_jumpif(invoker.burstcount < 3,"burstfirerecoil");
 			BR45 DDE 1;
 			
 			BR45 FGH 1;
-			//BR45 B 3;
+			BR45 B 7;
 			TNT1 A 0 
 			{
 				invoker.burstcount = 0;
@@ -369,15 +367,12 @@ CLASS BattleRifle : Brutalweapon
 				//console.printf("%i",invoker.savedzoom);
 				invoker.owner.player.fov = invoker.owner.player.fov * 0.7;
 				A_fireprojectile("shotgunparticles2",random(12,-12),false,0,0,0,random(9,-9));
-				If(invoker.burstselected)
-				{
+				
 					A_FireBullets (0, 0, -1, 25, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
-				}
-				Else
-				{
-					A_FireBullets (0, 0, -1, 40, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
-				}
-				A_startsound("BR45FIRE",1);
+					A_startsound("BR45FIRE",1,0,0.85);
+				
+			
+				
 				//A_setpitch(pitch - 1.5);
 				A_QuadSound();
 				A_ALertMonstersDX();
@@ -397,8 +392,8 @@ CLASS BattleRifle : Brutalweapon
 			}
 			BR4Z DD 1 BRIGHT; //A_setpitch(pitch + 0.5);
 			BR4Z D 1 BRIGHT;
-			TNT1 A 0 A_jumpif(invoker.burstselected && invoker.burstcount < 3,"ZoomedFire");
-			BR4Z D 3 BRIGHT;
+			TNT1 A 0 A_jumpif(invoker.burstcount < 3,"ZoomedFire");
+			BR4Z D 10 BRIGHT;
 			TNT1 A 0 
 			{
 				invoker.burstcount = 0;
@@ -492,7 +487,7 @@ CLASS BattleRifle : Brutalweapon
 		
 		
 	
-			
+			/*
 		DualWield:
 			TNT1 A 0 A_takeinventory("startdualwield",1);
 			TNT1 A 0;
@@ -518,6 +513,7 @@ CLASS BattleRifle : Brutalweapon
 			BR45 "#" 1 A_weaponoffset(0,WEAPONTOP, WOF_INTERPOLATE);
 			TNT1 A 0 A_takeinventory("startdualwield",1);
 			Goto Ready;
+			*/
 			
 		Spawn:
 			BR45 A -1;
