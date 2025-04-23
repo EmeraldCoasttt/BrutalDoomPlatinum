@@ -101,7 +101,7 @@ CLASS BattleRifle : Brutalweapon
 			TNT1 A 1 A_Raise();
 			//TNT1 A 0 A_Giveinventory("RailgunSelected",1);
 			RIFL C 0 A_GunSlingerReload("battlerifleammo",15,"clip2",1);
-			RIFL C 0 A_SetCrosshairDX("BR45Ret",2000,(0.5,0.5));
+			RIFL C 0 A_SetCrosshairDX("BR45Ret",2000,0.5);
 		ReturnFromNothing:
 			TNT1 A 0 A_startSound("BR45PICK",1);
 			TNT1 AAA 0;
@@ -131,7 +131,7 @@ CLASS BattleRifle : Brutalweapon
 			
 			BR45 B 1 A_weaponreadyDX(WRF_ALLOWRELOAD);
 			TNT1 A 0 A_jumpif(countinv("battlerifleammo") < 1 && countinv("clip2") > 0,"reload");
-			RIFL C 0 A_SetCrosshairDX("BR45Ret",2000,(0.5,0.5));
+			RIFL C 0 A_SetCrosshairDX("BR45Ret",2000,0.5);
 			LOOP;
 
 		Fidget:
@@ -460,7 +460,7 @@ CLASS BattleRifle : Brutalweapon
         RLNG A 0 A_ZoomFactor(1.0);
 	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
 		SMGG A 0 A_StartSound("ADSOUT");
-		RIFL C 0 A_SetCrosshairDX("BR45Ret",2000,(0.5,0.5));
+		RIFL C 0 A_SetCrosshairDX("BR45Ret",2000,0.5);
 		//NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
 		BR4Z CBA 1;	
         Goto Reload;
@@ -470,7 +470,7 @@ CLASS BattleRifle : Brutalweapon
 		RLNG A 0 A_Takeinventory("PowerLightAmp", 1);
 		RLNG A 0 A_Takeinventory("PowerLightAmpc", 1);
         RLNG A 0 A_ZoomFactor(1.0);
-		RIFL C 0 A_SetCrosshairDX("BR45Ret",2000,(0.5,0.5));
+		RIFL C 0 A_SetCrosshairDX("BR45Ret",2000,0.5);
 	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
 		SMGG A 0 A_StartSound("ADSOUT");
 		//NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
@@ -483,7 +483,7 @@ CLASS BattleRifle : Brutalweapon
 		TNT1 A 0 A_takeinventory("startdualwield",1);
 		RLNG A 0 A_Takeinventory("PowerLightAmpc", 1);
         RLNG A 0 A_ZoomFactor(1.0);
-		RIFL C 0 A_SetCrosshairDX("BR45Ret",2000,(0.5,0.5));
+		RIFL C 0 A_SetCrosshairDX("BR45Ret",2000,0.5);
 	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
 		SMGG A 0 A_StartSound("ADSOUT");
 		//NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}

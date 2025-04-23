@@ -62,13 +62,13 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	}
 	
-	Action void A_SetCrosshairDX(string crosshairname, int crosshairrange = 5000, vector2 crosshairscale = (1.0,1.0))
+	Action void A_SetCrosshairDX(string crosshairname, int crosshairrange = 5000, double crosshairscale = 1.0)
 	{
 		let dplr = Brutal_PlayerBase(invoker.owner);
 			if(dplr)
 			{
 				dplr.crosshair = crosshairname;
-				dplr.crosshairscale = crosshairscale;
+				dplr.crosshairscale = (crosshairscale,crosshairscale);
 				dplr.crosshairrange = crosshairrange;
 			}
 	

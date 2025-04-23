@@ -842,14 +842,6 @@ class BDP_HUD : DoomStatusBar
 				return;
 			
 			}
-			Else
-			{
-				vector2 retsize = (1.0,1.0);
-				Color crossTint = 0;
-				vector2 midpos = (0,0);
-				HLSBS.DrawImage("SPRRet", midpos, HLSBS.SS_SCREEN_CENTER, 0.65, scale:retsize, tint:crossTint);
-				return;
-			}
 			
 			
 			
