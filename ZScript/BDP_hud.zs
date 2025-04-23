@@ -62,6 +62,7 @@ class BDP_HUD : DoomStatusBar
 			{
 				DrawInventoryBarEx(diparms, (48, 169), 7, DI_ITEM_LEFT_TOP);
 			}
+			drawcrosshairs();
 		}
 		
 		// Fullscreen mode is fully custom:
@@ -822,6 +823,24 @@ class BDP_HUD : DoomStatusBar
 				HLSBS.DrawImage(crosshair, midpos, HLSBS.SS_SCREEN_CENTER, 0.65, scale:retsize, tint:crossTint);
 				return;
 			}
+			Else
+			{
+				string crosshair = bdpplr.crosshair;
+				vector2 retsize = bdpplr.crosshairscale;
+				
+				Color crossTint = 0;
+				Actor aimAct = bdpplr.aimActor; 
+				bool hostileAim = aimAct && aimAct.isHostile(bdpplr) && aimAct.bISMONSTER && !(aimAct is "BDPVehicle");
+				if(hostileAim) crossTint = Color(0xC4, 0xD0,0,0);
+				vector2 midpos = (0,0);
+				//if(lowerxhair) midpos.y = haloplr.xhair_lowpos;
+				HLSBS.DrawImage(crosshair, midpos, HLSBS.SS_SCREEN_CENTER, 0.65, scale:retsize, tint:crossTint);
+				return;
+			
+			}
+			
+			
+			
 		}
 	}
 }

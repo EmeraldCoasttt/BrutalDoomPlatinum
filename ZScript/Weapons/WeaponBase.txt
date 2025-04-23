@@ -62,6 +62,18 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	}
 	
+	Action void A_SetCrosshairDX(string crosshairname, int crosshairrange = 5000, vector2 crosshairscale = (1.0,1.0))
+	{
+		let dplr = Brutal_PlayerBase(invoker.owner);
+			if(dplr)
+			{
+				dplr.crosshair = crosshairname;
+				dplr.crosshairscale = crosshairscale;
+				dplr.crosshairrange = crosshairrange;
+			}
+	
+	}
+	
 	Action void A_QuadSound()
 	{	
 		If(invoker.owner.findinventory("PowerQuakeDamage"))

@@ -213,6 +213,16 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	bool invehicle;
 	
+	//crosshair
+	Actor aimActor_nearest; // Actor closest to aim;
+	vector3 aimActor_anglesTo; // Angles to closest aimed at actor.
+	vector3 aimActor_pos;
+	Actor aimActor;
+	vector3 aimpos;
+	string crosshair;
+	vector2 crosshairscale;
+	int crosshairrange;
+	
 	Default
     {
 		Player.DisplayName "Brutal Doom Player";
@@ -830,6 +840,8 @@ class Brutal_PlayerBase : PlayerPawn
 			{
 			giveinventory("firedprimary",1);
 			}
+			
+			
 	
 		
 		}
@@ -1407,6 +1419,12 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	Override void Tick()
     {
+	// Get Distance under crosshair.
+			FLineTraceData lt;
+			LineTrace(angle, crosshairrange, pitch, 0, player.viewz-pos.z, 0, data:lt);
+			
+			aimpos = lt.HitLocation;
+			aimActor = lt.HitActor;
 	
 	If(findinventory("veh_manager"))
 	{
