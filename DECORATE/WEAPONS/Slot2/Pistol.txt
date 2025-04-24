@@ -82,6 +82,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 	
 	LetsGetStarted:
 	    TNT1 A 0 A_TakeInventory("NeverSelectedShotgun",1)
+		TNT1 A 0 A_SetCrosshairDX("null")
 	    PONG A 20 A_WeaponReady
 	    PUNS BD 1 A_WeaponReady
 		PUNS EFF 1 A_WeaponReady
@@ -113,6 +114,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		TNT1 A 0 A_StartSound("letsago")
 		TNT1 A 0
 		PISS CBA 1 A_WeaponReady
+		TNT1 A 0 A_SetCrosshairDX("SMGRet", 1000,0.5)
 		Goto ready
 		
 	FuckYouFlash:
@@ -182,6 +184,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 	
 	Ready3:
 	Ready:
+		TNT1 A 0 A_SetCrosshairDX("SMGRet", 1000,0.5)
 	    PIST F 0 A_JumpIfInventory("Zoomed",1,"Ready2")
         PIST F 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
         PIST F 0 A_JumpIfInventory("Taunting",1,"Taunt")
@@ -325,7 +328,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		
 	Select:
 		TNT1 A 0 
-		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("PistolCrosshair"));}else{A_SetCrosshair(0);}}
+		TNT1 A 0 A_SetCrosshairDX("SMGRet", 1000,0.5)
 		Goto SelectFirstPersonLegs
 		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1) 
 		PIST F 0 A_Giveinventory("GoSpecial",1)
@@ -375,6 +378,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		TNT1 A 0 ChangeAmmoIcon2("SILEG0")
 		Goto ContinueSelect
     Fire:
+		TNT1 A 0 A_SetCrosshairDX("SMGRet", 1000,0.5)
 	    PIST F 0 A_JumpIfInventory("Zoomed",1,"FireADS")
         PIST F 0 A_CheckIfAmmo("BDPistolAmmo",1,"NoAmmo")
         TNT1 AAAA 0

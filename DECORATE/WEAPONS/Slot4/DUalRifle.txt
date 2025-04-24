@@ -138,7 +138,7 @@ ACTOR DualRifles : BrutalWeapon
 		
 	Select:
 		TNT1 A 0
-		RIFG A 0 {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RifleCrosshair"));}else{A_SetCrosshair(0);}}
+		TNT1 A 0 A_SetCrosshairDX("CGUNRet", 1000,1.0)
 		Goto SelectFirstPersonLegs
 		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1)
 			
