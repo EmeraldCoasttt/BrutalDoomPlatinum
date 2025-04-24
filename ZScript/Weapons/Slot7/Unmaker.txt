@@ -96,7 +96,7 @@ CLASS Unmaker : BrutalWeapon
 		Wait;
 	Select:
 		TNT1 A 0;
-		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("UnmakerCrosshair"));}else{A_SetCrosshair(0);}}
+		TNT1 A 0 A_SetCrosshairDX("UNMRet", 1000,1.0);
 		Goto SelectFirstPersonLegs;
 		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1); 
 		UNHG A 0 A_takeinventory("disabletilting",1);
