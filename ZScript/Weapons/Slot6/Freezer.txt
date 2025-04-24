@@ -299,7 +299,7 @@ Class Freezer : BrutalWeapon
 		
 	Select:
 		TNT1 A 0;
-		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+		TNT1 A 0 A_SetCrosshairDX("PLASRet", 1000,0.5);
 		Goto SelectFirstPersonLegs;
 		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1) ;
 		RIFL C 0 A_GunSlingerReload("FreezerAmmo",50,"AmmoCell");

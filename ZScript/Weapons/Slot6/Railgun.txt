@@ -160,7 +160,7 @@ CLASS Railgun : Brutalweapon
 	
 		Select:
 			TNT1 A 0;
-			NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+			TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000,1.0);
 			Goto SelectFirstPersonLegs;
 		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1); 
 			UNHG A 0 A_takeinventory("disabletilting",1);
@@ -190,6 +190,7 @@ CLASS Railgun : Brutalweapon
 				TNT1 A 1 A_Lower();
 				Wait;
 		Ready:
+			TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000,1.0);
 			TNT1 A 0 A_jumpifinventory("railchambered",1,"Pumping");
 			RAIL A 1 A_weaponreadyDX(WRF_ALLOWRELOAD);
 			LOOP;
@@ -385,7 +386,7 @@ CLASS Railgun : Brutalweapon
 			A_ZoomFactor(3.0);
 		}
 		RAIZ ABCD 1;
-		RLNG A 0 A_SetCrosshair(41);
+		TNT1 A 0 A_SetCrosshairDX("NULL", 10000,1.0);
 		SMGG A 0 A_StartSound("ADSIN");
 		RAIZ EF 1;
 	AltFireContinue:
@@ -587,7 +588,7 @@ CLASS Railgun : Brutalweapon
 	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
 		SMGG A 0 A_StartSound("ADSOUT");
         RAIZ FE 1;
-		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+		TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000,1.0);
 		RAIZ DCBA 1;	
         Goto Pumping;
 		
@@ -599,7 +600,7 @@ CLASS Railgun : Brutalweapon
 	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
 		SMGG A 0 A_StartSound("ADSOUT");
         RAIZ FE 1;
-		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+		TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000,1.0);
 		RAIZ DCBA 1;	
         Goto Reload;
 		
@@ -611,7 +612,7 @@ CLASS Railgun : Brutalweapon
 	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
 		SMGG A 0 A_StartSound("ADSOUT");
         RAIZ FE 1;
-		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+		TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000,1.0);
 		RAIZ DCBA 1;	
         Goto Ready;
 		
@@ -671,7 +672,7 @@ CLASS Railgun : Brutalweapon
 			TNT1 A 0 
 			{
 			A_startsound("BEP",4);
-			A_setcrosshair(41);
+			A_SetCrosshairDX("NULL", 10000,1.0);
 			}
 		HoldHologram:
 			RAIZ D 1
@@ -704,7 +705,7 @@ CLASS Railgun : Brutalweapon
 				A_startsound("bepbep",4);
 				A_SpawnHologram();
 				A_startsound("PISTFOL5",10);
-				{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
+				A_SetCrosshairDX("RAILRet", 10000,1.0);
 			}
 			RAIZ DCBA 1;
 			TNT1 A 0 A_takeinventory("startdualwield",1);
