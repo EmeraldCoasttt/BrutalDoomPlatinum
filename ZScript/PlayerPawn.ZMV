@@ -980,9 +980,9 @@ class Brutal_PlayerBase : PlayerPawn
 			boosttics = 0;
 		}
 		
-		If (boostlevel > 9)
+		If (boostlevel > 5)
 		{
-			Boostlevel = 9;
+			Boostlevel = 5;
 		}
 		
 		//console.printf("%i",boostlevel);
@@ -1060,11 +1060,11 @@ class Brutal_PlayerBase : PlayerPawn
 			}
 		
 			
-			If(boostlevel >= 1)
+			If(boostlevel >= 3)
 			{
-				fm *= (1 + (boostlevel * 0.15));
-				sm *= (1 + (boostlevel * 0.15));
-				//console.printf("%i",boostlevel);
+				fm *= 1.5;
+				sm *= 1.5;
+				//console.printf("%i",vel.length());
 			}
 			
 			If(bsprinting)
@@ -1146,13 +1146,13 @@ class Brutal_PlayerBase : PlayerPawn
 			Bsprinting = false;
 		}
 		
-		If(boostlevel > 8 && !checkmove(Pos.XY + AngleToVector(angle, 16), PCM_NOACTORS))
+		If(boostlevel > 3 && !checkmove(Pos.XY + AngleToVector(angle, 16), PCM_NOACTORS))
 		{
 			
 			A_stop();
 			//A_recoil(14);
 			//vel.z = 10;
-			A_Quake(boostlevel,12,0,800);
+			A_Quake(3,12,0,800);
 			boostlevel = 0;
 			boosttics = 0;
 			A_startsound("skeleton/melee",28);
@@ -1322,15 +1322,19 @@ class Brutal_PlayerBase : PlayerPawn
 	{
 		bool allclear;
 		
-		If(boostlevel >= 3 && other)
+		If(boostlevel >= 3 && other && !other.bmissile && vel.length() >= 15)
 		{
 			
-			other.damagemobj(self,self,boostlevel * 8,"extremepunches");
+			other.damagemobj(self,self,24,"extremepunches");
 			
 			if(other && !other.bnodamagethrust && other.mass <  9999)
 			{
+				If(other.vel.length() < 8)
+				{
+					A_startsound("skeleton/melee",28);
+				}
 				float yeetangle = angleto(other);
-				other.velfromangle(boostlevel * 5,yeetangle);
+				other.velfromangle(35,yeetangle);
 				other.vel.z = 6;
 				allclear = true;
 			}
