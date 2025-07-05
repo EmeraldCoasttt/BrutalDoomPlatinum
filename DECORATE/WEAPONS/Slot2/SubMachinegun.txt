@@ -363,7 +363,7 @@ ACTOR BrutalSMG : BrutalWeapon
 		SHTN A 0 A_TakeInventory("Fire2Activate",1)
 		SHTN A 0 A_Takeinventory("PressedTwice",1)
 		SHTN A 0 A_TakeInventory("PressedOnce",1)
-		SMGG A 0 A_JumpIfInventory("BDSMGAmmo", 41 ,"Fidget")
+		SMGG A 0 A_JumpIfInventory("BDSMGAmmo", 40 ,"Fidget")
 		SMGG A 1 {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("SMGCrosshair"));}else{A_SetCrosshair(0);}}
 
         SMGG A 0 A_JumpIfInventory("Clip1",1,3)

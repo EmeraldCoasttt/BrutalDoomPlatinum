@@ -391,7 +391,7 @@ ACTOR Rifle : BrutalWeapon
 	
     Reload:
 	    RIFL C 0 A_Takeinventory("Reloading",1)
-	    RIFL C 0 A_JumpIfInventory("RifleAmmo",31,"Fidget")
+	    RIFL C 0 A_JumpIfInventory("RifleAmmo",30,"Fidget")
 	//	RIFL C 1 A_WeaponReady
 		RIFL C 0 {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RifleCrosshair"));}else{A_SetCrosshair(0);}}
 		RIFL C 0 A_TakeInventory("RifleSpread", 10)
