@@ -394,7 +394,7 @@ ACTOR MiniGun : BrutalWeapon
 
 		Select:
 			TNT1 A 0
-			TNT1 A 0 A_SetCrosshairDX("CGUNRet", 500,1.5)
+			TNT1 A 0 A_SetCrosshairDX("CGUNRet2", 500,0.75)
 			Goto SelectFirstPersonLegs
 			SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1) 
 				
