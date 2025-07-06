@@ -683,9 +683,9 @@ ACTOR BuzzSawAmmo : Ammo
 ACTOR Gas : Ammo
 {
    Inventory.Amount 50
-   Inventory.MaxAmount 100
+   Inventory.MaxAmount 200
    Ammo.BackpackAmount 50
-   Ammo.BackpackMaxAmount 200
+   Ammo.BackpackMaxAmount 400
    Inventory.Icon "GSLNA0"
    Inventory.PickupMessage "You got Gasoline."
    Inventory.Pickupsound "GASPK"

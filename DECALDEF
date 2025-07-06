@@ -60,6 +60,16 @@ decal FlamethrowerScorch
 	randomflipy
 }
 
+decal FlamethrowerScorchNEO
+{
+	pic SCORCH75
+	shade "00 00 00"
+	x-scale 1.0
+	y-scale 1.0
+	randomflipx
+	randomflipy
+}
+
 decal SkullScorch1 
 { 
    pic PLASMA1 

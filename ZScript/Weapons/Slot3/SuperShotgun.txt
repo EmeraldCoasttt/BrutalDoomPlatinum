@@ -973,7 +973,6 @@ class DragonsBreathSparkle : Actor
 		Gravity 0.3;
 		damagetype "Fire";
 		+forcexybillboard;
-		+bloodsplatter;
 		+ripper;
 	}
 	
@@ -1035,76 +1034,4 @@ class DragonsBreathSparkle : Actor
 }
 
 
-Class Firetic : Inventory {
-	
-	
-	float duration; 
-	actor flamecauser;
-	Default {
-		+INVENTORY.UNDROPPABLE
-		+INVENTORY.UNTOSSABLE
-		inventory.maxamount 1;
-	}
-	
-
-	
-
-	//Items that don't spawn in the world don't need their Tick. Emptying it will actually help performace:
-	Override void Tick() {}
-	
-	//This function is executed every tic by items while they're in an actor's inventory:
-	Override void DoEffect() {
-		super.DoEffect();
-		//console.printf("%i",duration);
-		if (owner.isFrozen())
-			return;
-		if (level.time % 35 == 0) 
-		{
-			owner.damagemobj(flamecauser,flamecauser,40,"Fire");
-		}
-		if (owner && owner.health <= 0) {		
-			DepleteOrDestroy();
-			return;
-		}
-		else if(owner)
-		{
-		
-		
-			int rad = owner.radius*0.5; //we'll use the monster's radius as a base value for horizontal offset randomization
-			If (random(1,5) == 5)
-			{
-			
-			
-			owner.A_SpawnItemEx(
-				"flametrailstic2",
-							xofs:(frandom(-rad,rad)),
-				yofs:(frandom(-rad,rad)),
-				zofs:(frandom(0,owner.height)),xvel:frandom(-2,2),yvel:frandom(-2,2),zvel:frandom(0.5,3)
-				);
-			}
-			Else
-			{
-				owner.A_SpawnItemEx(
-				"flametrailstic",
-							xofs:(frandom(-rad,rad)),
-				yofs:(frandom(-rad,rad)),
-				zofs:(frandom(0,owner.height)),xvel:frandom(-2,2),yvel:frandom(-2,2),zvel:frandom(0.5,3)
-				);
-			}
-		}
-		
-			if (duration > 0)
-				duration--;
-			else {
-				DepleteOrDestroy();
-				return;
-			}
-		
-
-		
-
-
-		
-	}
-}
 
