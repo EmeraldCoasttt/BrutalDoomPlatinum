@@ -52,7 +52,6 @@ ACTOR Flamethrower2 : BrutalWeapon
 		
 	Ready:
 	Ready3:
-	Reload:
 		FLMT ABC 1 A_WeaponReadyDX
 		Goto Ready3
 		
