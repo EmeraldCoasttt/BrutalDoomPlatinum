@@ -1425,10 +1425,14 @@ class Brutal_PlayerBase : PlayerPawn
     {
 	// Get Distance under crosshair.
 			FLineTraceData lt;
-			LineTrace(angle, crosshairrange, pitch, 0, player.viewz-pos.z, 0, data:lt);
+			If(player)
+			{
+				LineTrace(angle, crosshairrange, pitch, 0, player.viewz-pos.z, 0, data:lt);
+				
+				aimpos = lt.HitLocation;
+				aimActor = lt.HitActor;
+			}
 			
-			aimpos = lt.HitLocation;
-			aimActor = lt.HitActor;
 	
 	If(findinventory("veh_manager"))
 	{
