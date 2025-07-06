@@ -53,6 +53,11 @@ object DragonsBreathSparkle
 	frame MODLB { light DRAGONBREATH }
 }
 
+object FlameTrailsTic2
+{
+    frame FRPR { light DRAGONBREATH }
+}
+
 flickerlight DRAGONBREATH
 {
     color 0.1 0.1 0.01
