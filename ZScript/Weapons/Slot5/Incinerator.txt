@@ -48,6 +48,8 @@ class NewIncineratorFlame : Actor // Incinerator Flame
 					if(flamer)
 					{
 						flamer.flamecauser = target;
+						if(flamer.duration < 90)
+						flamer.duration = 90;
 						If(flamer.duration < 500)
 						flamer.duration += 20;
 					}
