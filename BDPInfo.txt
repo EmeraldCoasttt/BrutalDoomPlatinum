@@ -12,6 +12,7 @@ assaultshotgun,supershotgun,2
 chaingunspawner,chaingun,1
 rocket_launcher,rocketlauncher,1
 grenadelauncher,rocketlauncher,1
+incinerator,rocketlauncher,1
 chainsawspawned,chainsaw,1
 plasmagunspawner,plasmarifle,1
 dualplasmaspawner,plasmarifle,2
@@ -22,7 +23,6 @@ unmaker,bfg,1
 calamityblade,bfg,1
 revolverspawner,secret,1
 EnergyArmor,secret,2
-flamethrower2,secret,1
 demonrunespawner,secret,3
 quadsigil,secret,2
 hastesphere,secret,2

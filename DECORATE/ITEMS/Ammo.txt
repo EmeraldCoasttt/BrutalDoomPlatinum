@@ -982,6 +982,16 @@ ACTOR BDDualPistolAmmo : Ammo
    Inventory.Icon PISTH0
 }
 
+ACTOR FlamerAmmo : Ammo
+{
+	Inventory.icon FLMTF0
+	Inventory.Amount 0
+   Inventory.MaxAmount 60
+   Ammo.BackpackAmount 0
+   Ammo.BackpackMaxAmount 60
+
+}
+
 
 
 

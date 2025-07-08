@@ -166,7 +166,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 		return victim;
 	}
 	
-	Action void A_reload(name mag, int magsize, name ammopool, int chamberbonus = 0, int conversion = 1, name secondarymag = "null")
+	Action void A_reload(name mag, int magsize, name ammopool, int chamberbonus = 0, int conversion = 1, name secondarymag = "null", bool multiplicative = false)
 	{
 		Int MagGoal;
 		If(countinv(mag) > 0)
@@ -182,13 +182,22 @@ Class Brutalweapon : DoomWeapon //Weapon
 		
 		While(!reloaded)
 		{
-			If(countinv(mag) < MagGoal && countinv(ammopool) >= conversion)
+			If(countinv(mag) < MagGoal && countinv(ammopool) >= conversion && !multiplicative)
 			{
 				takeinventory(ammopool,conversion);
 				giveinventory(mag,1);
 				If(secondarymag)
 				{
 					giveinventory(secondarymag,1);
+				}
+			}
+			Else If(countinv(mag) < MagGoal && multiplicative && countinv(ammopool) >= 1)
+			{
+				takeinventory(ammopool,1);
+				giveinventory(mag,conversion);
+				If(secondarymag)
+				{
+					giveinventory(secondarymag,conversion);
 				}
 			}
 			else
