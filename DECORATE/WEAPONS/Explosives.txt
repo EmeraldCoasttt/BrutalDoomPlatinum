@@ -331,6 +331,23 @@ States    {
 	TNT1 A 0 A_Explode(100,150)
         Stop}}
 		
+	actor RifleRocketExplosion
+{
++MISSILE
+Radius 2
+Height 2
+Damagetype ExplosiveImpact
+Obituary "%o was exploded by %k rocket."
+States    {
+    Spawn:
+	Goto Death
+	Death:
+	TNT1 A 0
+	TNT1 A 0 A_SpawnItem("WhiteShockwave")
+	TNT1 A 3
+	TNT1 A 0 A_Explode(75,170)
+        Stop}}
+		
 Actor rocketexplosionXL : RocketExplosion
 {
 

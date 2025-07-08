@@ -143,6 +143,46 @@ ACTOR HitPuff Replaces BulletPuff
   }
 }
 
+ACTOR GrenadePuff
+{
+	Scale 1.0
+	radius 0
+	height 0
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+FORCEXYBILLBOARD
+	+DONTSPLASH
+	+PUFFONACTORS
+	+ALWAYSPUFF
+	Gravity 0.01
+	DamageType ExplosiveImpact
+	Decal "Scorch"
+  states
+  {
+  Spawn:
+    TNT1 A 0
+	EXPL A 0 Radius_Quake (3, 8, 0, 15, 0)//(intensity, duration, damrad, tremrad, tid)
+		TNT1 A 0 A_spawnitemex("ricochetexplosion")
+        TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	    TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+        TNT1 AAAAAA 0 A_CustomMissile ("BDExplosionparticles", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAA 0 A_CustomMissile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (0, 90))
+		TNT1 AAAA 0 A_CustomMissile ("MediumExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 0 A_SpawnItemEx ("RifleRocketExplosion",0,0,13,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0
+		TNT1 A 0 A_stop
+		TNT1 A 2
+		TNT1 A 0 A_SpawnItemEx ("LiquidExplosionEffectSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_StartSound("FAREXPL", 3)
+		TNT1 A 15
+		TNT1 A 0 A_StartSound("distantexp", 5)
+		Stop
+	
+  }
+}
+
 
 ACTOR HitPuffTracer : HitPuff
 {
