@@ -368,7 +368,7 @@ CLASS Meleeattackslide : MeleeAttack
 		MeleeAttack.berserkdamage 55;
 		//MeleeAttack.pickbarrel FALSE;
 		//MeleeAttack.dofatality FALSE;
-		MeleeAttack.uppercut TRUE;
+		MeleeAttack.uppercut FALSE;
 		MeleeAttack.MeleeKnockback FALSE;
 		Speed 40;
 		radius 12;
@@ -610,8 +610,8 @@ CLASS MeleeAttackRight : MeleeAttackLeft
 {
 		Default
 			{
-				MeleeAttack.basedamage 35;
-				MeleeAttack.berserkdamage 95;
+				MeleeAttack.basedamage 45;
+				MeleeAttack.berserkdamage 105;
 				MeleeAttack.uppercut TRUE;
 			}
 	

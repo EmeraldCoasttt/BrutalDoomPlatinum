@@ -123,3 +123,13 @@ brightmap Texture SPACM4
 {
    map "brightmaps/SPACOM1B.png"
 }
+
+//rifle
+brightmap sprite RIFFA0 { map "brightmaps/Weapons/RIFFA0.png" disablefullbright} 
+brightmap sprite RIFFD0 { map "brightmaps/Weapons/RIFFA0.png" disablefullbright} 
+brightmap sprite RIFFE0 { map "brightmaps/Weapons/RIFFE0.png" disablefullbright} 
+brightmap sprite RI2FA0 { map "brightmaps/Weapons/RI2FA0.png" disablefullbright} 
+brightmap sprite RI2FD0 { map "brightmaps/Weapons/RI2FA0.png" disablefullbright} 
+brightmap sprite RI2FE0 { map "brightmaps/Weapons/RI2FE0.png" disablefullbright} 
+brightmap sprite 2IFFA0 { map "brightmaps/Weapons/2IFFA0.png" disablefullbright} 
+brightmap sprite 2IFFD0 { map "brightmaps/Weapons/2IFFA0.png" disablefullbright} 
