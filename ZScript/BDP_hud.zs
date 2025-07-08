@@ -590,10 +590,36 @@ class BDP_HUD : DoomStatusBar
 			DrawTeleBar(iconPos + (-32, -29), iconflags);
 		}
 		
+		int ammo3Amt;
+		Class<Inventory> Ammo3;
+		let weap = BrutalWeapon(CPlayer.mo.player.ReadyWeapon);
+		if (weap)
+		{
+			Ammo3 = Weap.Ammotype3;
+			If(Ammo3)
+			{
+				ammo3amt = CPlayer.mo.countinv(ammo3);
+			}
+		}
+		
+		
 		Ammo ammo1, ammo2;
 		int ammo1amt, ammo2amt;
 		[ammo1, ammo2, ammo1amt, ammo2amt] = GetCurrentAmmo();
 		
+		
+		if (ammo3)
+		{
+			iconPos.x += iconSpacing;
+			DrawInventoryIcon(CPlayer.mo.findinventory(ammo3), iconPos, iconFlags);
+			DrawString(
+				mHudfont, 
+				String.Format("%d", ammo3amt), 
+				iconPos + numOfs,
+				numFlags,
+				Font.CR_White
+			);
+		}
 		if (ammo1)
 		{
 			iconPos.x += iconSpacing;

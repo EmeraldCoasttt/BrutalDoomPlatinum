@@ -32,6 +32,9 @@ Class Brutalweapon : DoomWeapon //Weapon
 	name gunslingermagname;
 	int gunslingermagsize;
 	
+	name AmmoType3;
+	Property AmmoType3 : AmmoType3;
+	
 	bool newweapon;
 	
 	
