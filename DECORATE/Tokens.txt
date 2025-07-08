@@ -35,6 +35,11 @@ Actor youveseenme : Inventory
 inventory.maxamount 1
 }
 
+Actor RifleRPM : Inventory
+{
+inventory.maxamount 1
+}
+
 Actor UltraBonus : Inventory
 {
 inventory.maxamount 1
