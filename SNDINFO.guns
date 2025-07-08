@@ -56,6 +56,15 @@ DoomRR/heatwave/explode DSHETXPL
 DoomRR/heatwave/ready DSHETRDY
 DoomRR/heatwave/select DSHETSEL
 
+Rifle/Bolt1 bolt1
+Rifle/Bolt2 bolt2
+Rifle/Reload1 RIFLER1
+Rifle/Reload2 RIFLER2
+Rifle/ReloadGrenade RIFLER3 
+
+Rifle/Grenade1 GRLLO1
+Rifle/Grenade2 GRLLO2
+
 MagClick MagClick
 ADSIN ADSIN //ads zoom in
 ADSOUT ADSOUT // ads zoom out
