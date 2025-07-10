@@ -397,39 +397,6 @@ CLASS Meleeattackslide : MeleeAttack
 					BDP_DoorBuster.DestroyDoor(target,  breakLocks: BDP_DoorBuster.LB_CheckKey);
 				}
 			}
-			If(target && target.findinventory("GREENBLOODONBOOTS"))
-				{
-					If(target.findinventory("footleft"))
-						{
-							A_spraydecal("Footdecalgreensideleft",36);
-						}
-					Else
-						{
-							A_spraydecal("Footdecalgreenside",36);
-						}
-				}
-			Else If(target && target.findinventory("BlueBLOODONBOOTS"))
-				{
-					If(target.findinventory("footleft"))
-						{
-							A_spraydecal("Footdecalbluesideleft",36);
-						}
-					Else
-						{
-							A_spraydecal("Footdecalblueside",36);
-						}
-				}
-			Else If(target && target.findinventory("RedBLOODONBOOTS"))
-				{
-					If(target.findinventory("footleft"))
-						{
-							A_spraydecal("Footdecalredsideleft",36);
-						}
-					Else
-						{
-							A_spraydecal("Footdecalredside",36);
-						}
-				}
 			A_startSound("FOOTWALL", 3);
 			}
 			TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
