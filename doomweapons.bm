@@ -1595,3 +1595,100 @@ brightmap sprite RFDFM0 { map "brightmaps/AUTO/REDFM0.png" disablefullbright }
 
 brightmap sprite RSDFJ0 { map "brightmaps/AUTO/REVSL0.png" disablefullbright }
 brightmap sprite RSDFL0 { map "brightmaps/AUTO/REVSN0.png" disablefullbright }
+
+
+//RL
+brightmap sprite 2ISFA0 { map "brightmaps/Weapons/RL/2ISFA0.png" disablefullbright} 
+brightmap sprite 2ISFB0 { map "brightmaps/Weapons/RL/2ISFB0.png" disablefullbright} 
+brightmap sprite 2ISFC0 { map "brightmaps/Weapons/RL/2ISFC0.png"} 
+brightmap sprite 2ISFD0 { map "brightmaps/Weapons/RL/2ISFD0.png"} 
+brightmap sprite 2ISFE0 { map "brightmaps/Weapons/RL/2ISFE0.png"} 
+brightmap sprite 2ISFF0 { map "brightmaps/Weapons/RL/2ISFF0.png"} 
+brightmap sprite 2ISFG0 { map "brightmaps/Weapons/RL/2ISFG0.png"} 
+brightmap sprite 2ISFH0 { map "brightmaps/Weapons/RL/2ISFH0.png" disablefullbright} 
+brightmap sprite 2ISFI0 { map "brightmaps/Weapons/RL/2ISFI0.png" disablefullbright} 
+brightmap sprite 2ISFJ0 { map "brightmaps/Weapons/RL/2ISFJ0.png"} 
+brightmap sprite 2ISFK0 { map "brightmaps/Weapons/RL/2ISFK0.png"} 
+brightmap sprite 2ISFL0 { map "brightmaps/Weapons/RL/2ISFL0.png"} 
+brightmap sprite 2ISFM0 { map "brightmaps/Weapons/RL/2ISFM0.png"} 
+brightmap sprite 2ISFN0 { map "brightmaps/Weapons/RL/2ISFN0.png"} 
+brightmap sprite 2ISFO0 { map "brightmaps/Weapons/RL/2ISFO0.png" disablefullbright} 
+brightmap sprite 2ISFP0 { map "brightmaps/Weapons/RL/2ISFP0.png" disablefullbright} 
+brightmap sprite 2ISFQ0 { map "brightmaps/Weapons/RL/2ISFQ0.png"} 
+brightmap sprite 2ISFR0 { map "brightmaps/Weapons/RL/2ISFR0.png"} 
+brightmap sprite 2ISFS0 { map "brightmaps/Weapons/RL/2ISFS0.png"} 
+brightmap sprite 2ISFT0 { map "brightmaps/Weapons/RL/2ISFT0.png"} 
+brightmap sprite 2ISFU0 { map "brightmaps/Weapons/RL/2ISFU0.png"} 
+
+
+
+brightmap sprite MIR2D0 { map "brightmaps/Weapons/RL/MIR2D0.png"} 
+brightmap sprite MIR2E0 { map "brightmaps/Weapons/RL/MIR2E0.png"} 
+brightmap sprite MIR2F0 { map "brightmaps/Weapons/RL/MIR2F0.png"} 
+
+brightmap sprite MISFA0 { map "brightmaps/Weapons/RL/MISFA0.png" disablefullbright} 
+brightmap sprite MISFB0 { map "brightmaps/Weapons/RL/MISFB0.png" disablefullbright} 
+brightmap sprite MISFE0 { map "brightmaps/Weapons/RL/MISFE0.png"} 
+brightmap sprite MISFF0 { map "brightmaps/Weapons/RL/MISFF0.png"} 
+brightmap sprite MISFG0 { map "brightmaps/Weapons/RL/MISFG0.png"} 
+
+brightmap sprite MISFH0 { map "brightmaps/Weapons/RL/MISFA0.png" disablefullbright} 
+brightmap sprite MISFI0 { map "brightmaps/Weapons/RL/MISFB0.png" disablefullbright} 
+brightmap sprite MISFL0 { map "brightmaps/Weapons/RL/MISFL0.png"} 
+brightmap sprite MISFM0 { map "brightmaps/Weapons/RL/MISFM0.png"} 
+brightmap sprite MISFN0 { map "brightmaps/Weapons/RL/MISFN0.png"} 
+brightmap sprite MISFO0 { map "brightmaps/Weapons/RL/MISFA0.png" disablefullbright} 
+brightmap sprite MISFP0 { map "brightmaps/Weapons/RL/MISFB0.png" disablefullbright} 
+brightmap sprite MISFS0 { map "brightmaps/Weapons/RL/MISFS0.png"} 
+brightmap sprite MISFT0 { map "brightmaps/Weapons/RL/MISFT0.png"} 
+brightmap sprite MISFU0 { map "brightmaps/Weapons/RL/MISFU0.png"} 
+
+brightmap sprite MISGA0 { map "brightmaps/Weapons/RL/MISGA0.png" disablefullbright} 
+brightmap sprite MISGB0 { map "brightmaps/Weapons/RL/MISGA0.png" disablefullbright} 
+brightmap sprite MISGC0 { map "brightmaps/Weapons/RL/MISGA0.png" disablefullbright} 
+brightmap sprite MISGD0 { map "brightmaps/Weapons/RL/MISGA0.png" disablefullbright} 
+brightmap sprite MISGE0 { map "brightmaps/Weapons/RL/MISGA0.png" disablefullbright} 
+brightmap sprite MISGF0 { map "brightmaps/Weapons/RL/MISGA0.png" disablefullbright} 
+brightmap sprite MISGG0 { map "brightmaps/Weapons/RL/MISGA0.png" disablefullbright} 
+brightmap sprite MISGH0 { map "brightmaps/Weapons/RL/MISGA0.png" disablefullbright} 
+brightmap sprite MISGI0 { map "brightmaps/Weapons/RL/MISGA0.png" disablefullbright} 
+brightmap sprite MISGJ0 { map "brightmaps/Weapons/RL/MISGA0.png" disablefullbright} 
+brightmap sprite MISGK0 { map "brightmaps/Weapons/RL/MISGK0.png" disablefullbright} 
+brightmap sprite MISGL0 { map "brightmaps/Weapons/RL/MISGL0.png" disablefullbright} 
+brightmap sprite MISGM0 { map "brightmaps/Weapons/RL/MISGM0.png" disablefullbright} 
+
+brightmap sprite MISKA0 { map "brightmaps/Weapons/RL/MISKA0.png" disablefullbright} 
+brightmap sprite MISKB0 { map "brightmaps/Weapons/RL/MISKB0.png" disablefullbright} 
+brightmap sprite MISKC0 { map "brightmaps/Weapons/RL/MISKC0.png" disablefullbright} 
+brightmap sprite MISKD0 { map "brightmaps/Weapons/RL/MISKD0.png" disablefullbright} 
+brightmap sprite MISKE0 { map "brightmaps/Weapons/RL/MISKE0.png" disablefullbright} 
+
+brightmap sprite MISRA0 { map "brightmaps/Weapons/RL/MISRA0.png" disablefullbright} 
+brightmap sprite MISRB0 { map "brightmaps/Weapons/RL/MISRB0.png" disablefullbright} 
+brightmap sprite MISRC0 { map "brightmaps/Weapons/RL/MISRC0.png" disablefullbright} 
+brightmap sprite MISRD0 { map "brightmaps/Weapons/RL/MISRD0.png" disablefullbright}
+ 
+brightmap sprite MISRH0 { map "brightmaps/Weapons/RL/MISRH0.png" disablefullbright} 
+brightmap sprite MISRI0 { map "brightmaps/Weapons/RL/MISRI0.png" disablefullbright} 
+
+brightmap sprite MISSA0 { map "brightmaps/Weapons/RL/MISSA0.png"} 
+brightmap sprite MISSB0 { map "brightmaps/Weapons/RL/MISSB0.png"} 
+brightmap sprite MISSH0 { map "brightmaps/Weapons/RL/MISSH0.png"} 
+brightmap sprite MISSI0 { map "brightmaps/Weapons/RL/MISSI0.png"} 
+brightmap sprite MISSJ0 { map "brightmaps/Weapons/RL/MISSJ0.png"} 
+brightmap sprite MISSK0 { map "brightmaps/Weapons/RL/MISSK0.png"} 
+brightmap sprite MISSL0 { map "brightmaps/Weapons/RL/MISSL0.png"} 
+brightmap sprite MISSM0 { map "brightmaps/Weapons/RL/MISSM0.png"} 
+brightmap sprite MISSN0 { map "brightmaps/Weapons/RL/MISSN0.png"} 
+brightmap sprite MISSP0 { map "brightmaps/Weapons/RL/MISSP0.png"} 
+brightmap sprite MISSQ0 { map "brightmaps/Weapons/RL/MISSQ0.png"} 
+brightmap sprite MISSR0 { map "brightmaps/Weapons/RL/MISSR0.png"} 
+brightmap sprite MISSS0 { map "brightmaps/Weapons/RL/MISSS0.png"} 
+brightmap sprite MISSU0 { map "brightmaps/Weapons/RL/MISSU0.png"} 
+brightmap sprite MISSV0 { map "brightmaps/Weapons/RL/MISSV0.png"} 
+
+brightmap sprite MISLA1 { map "brightmaps/Weapons/RL/MISLA1.png" disablefullbright} 
+brightmap sprite MISLA2A8 { map "brightmaps/Weapons/RL/MISLA2A8.png" disablefullbright} 
+brightmap sprite MISLA3A7 { map "brightmaps/Weapons/RL/MISLA3A7.png" disablefullbright} 
+brightmap sprite MISLA4A6 { map "brightmaps/Weapons/RL/MISLA4A6.png" disablefullbright} 
+brightmap sprite MISLA5 { map "brightmaps/Weapons/RL/MISLA5.png" disablefullbright} 

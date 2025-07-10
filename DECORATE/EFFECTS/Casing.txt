@@ -183,7 +183,7 @@ ACTOR EmptypASGDrum : BaseMagActor
 
 ACTOR EmptyRocketChamber: BaseMagActor
 {
-   Scale 0.9
+   Scale 0.8
    BounceFactor 0.4
    SeeSound "weapons/barrelpain"
    DeathSound "weapons/barrelpain"
@@ -192,34 +192,17 @@ ACTOR EmptyRocketChamber: BaseMagActor
    {
    Spawn:
       TNT1 A 7 A_PlaySound("NULL")
-	  ECLI G 4
-	  ECLI GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG 4 A_SetRoll(roll-45)
+	 RCSE A 4
+	  RCSE AAAAAAAAAAAAAAAAAAAAAAAAAAA 4 A_SetRoll(roll-45)
       Stop
 	Death:
 	  TNT1 A 0
-	  TNT1 A 0 ACS_NamedExecuteAlways("BDCheckJanitor")//Check Effects
-	  TNT1 A 0 ACS_NamedExecuteAlways("BDCheckJanitor2")//Check Effects
-	  NULL A 0 A_Jump(255, "stay1","stay2","Stay3")
 	  stay1:
-	  ECLI G 350 A_SetRoll(90)
+	  RCSE I 350 A_SetRoll(0)
 	  "####" "#" 0 A_JumpIf(CountInv("LowGraphicsMode")==0,"stay1")
 	  "####" "#####" 1 A_FadeOut(0.2)
 	  stop
-	  stay2:
-	  ECLI G 350 A_SetRoll(180)
-	  "####" "#" 0 A_JumpIf(CountInv("LowGraphicsMode")==0,"stay2")
-	  "####" "#####" 1 A_FadeOut(0.2)
-	  stop
-	  stay3:
-	  ECLI G 350 A_SetRoll(270)
-	  "####" "#" 0 A_JumpIf(CountInv("LowGraphicsMode")==0,"stay3")
-	  "####" "#####" 1 A_FadeOut(0.2)
-	  stop
-	  stay4:
-	  ECLI G 350 A_SetRoll(0)
-	  "####" "#" 0 A_JumpIf(CountInv("LowGraphicsMode")==0,"stay4")
-	  "####" "#####" 1 A_FadeOut(0.2)
-	  stop
+	 
    }
 }
 
