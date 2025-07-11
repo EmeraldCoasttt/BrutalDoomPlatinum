@@ -196,7 +196,7 @@ class NewIncineratorFlame : Actor // Incinerator Flame
 			Double scalefactor = frandom(0.78,1.0);
 			A_setscale(scalefactor,scalefactor);
 		}
-		FIR3 ABABCDEFGHIJKLMNOP 1 BRIGHT;
+		FIR3 ABABABABCDCDCDEFGHIJKLMNOP 1 BRIGHT;
 		Stop;
 		
 	Death:
