@@ -148,12 +148,11 @@ brightmap sprite 4MGRW0 { map "brightmaps/Weapons/SMG/4MGRW0.png" }
 brightmap sprite 4MGRX0 { map "brightmaps/Weapons/SMG/4MGRX0.png" }
 brightmap sprite 4MGRY0 { map "brightmaps/Weapons/SMG/4MGRY0.png" }
 brightmap sprite 4MGRZ0 { map "brightmaps/Weapons/SMG/4MGRZ0.png" }
-brightmap sprite 4MGR[0 { map "brightmaps/Weapons/SMG/4MGR[0.png" }
-brightmap sprite 4MGR^0 { map "brightmaps/Weapons/SMG/4MGR^0.png" }
-brightmap sprite 4MGR]0 { map "brightmaps/Weapons/SMG/4MGR]0.png" }
+brightmap sprite 4M2RA0 { map "brightmaps/Weapons/SMG/4M2RA0.png" }
+brightmap sprite 4M2RB0 { map "brightmaps/Weapons/SMG/4M2RB0.png" }
+brightmap sprite 4M2RC0 { map "brightmaps/Weapons/SMG/4M2RC0.png" }
 
 // dual smg
-brightmap sprite SM2FA0 { map "brightmaps/Weapons/SMG/SM2FA0.png" disablefullbright}
 brightmap sprite SM2FB0 { map "brightmaps/Weapons/SMG/SM2FB0.png" disablefullbright}
 brightmap sprite SM2FC0 { map "brightmaps/Weapons/SMG/SM2FC0.png" }
 brightmap sprite SM2FD0 { map "brightmaps/Weapons/SMG/SM2FD0.png" }
