@@ -1635,7 +1635,15 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(25863, (-1632, -992, -999), 0);
 				}
 				Break;
-
+				
+			//Map11
+			case '73d9e03cee7bf1a97efd2ead86688ef8':
+			If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
+				{
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYEAR5",TexMan.Type_Any),TexMan.CheckForTexture("SKYEAR5",TexMan.Type_Any));
+				}
+				Break;
+	
 			//map12
 			case '1af4dec2627360a55b3eb397bc15c39d':
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
