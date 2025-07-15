@@ -471,248 +471,151 @@ ACTOR MiniGun : BrutalWeapon
 		Fire3:
 			NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoFire2")
 			CHAG A 0 A_PlaySound("CHAINSTA")
+			CHAG BB 1// BRIGHT A_FireBullets(3, 2, -1, 24, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
+			CHAG CC 1
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
 			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
 			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
 			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF M 1 BRIGHT A_FireBullets(3, 2, -1, 24, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
-			CHAG A 0 A_ZoomFactor(1.0)
-			"####" A 0 A_QuadSound
-			TNT1 A 0 A_SetPitch(Pitch-0.1, SPF_INTERPOLATE)
-			TNT1 A 0 A_SetAngle(angle + frandom(-0.2,0.2), SPF_INTERPOLATE)
-			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF NPPPP 1
-			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
-			TNT1 A 0 a_alertmonstersDX
-			CHAG A 0 A_PlaySound("FARMGN", 5)
-			TNT1 A 0 A_Gunlight
-			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
-			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
-			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
-			TNT1 A 0 A_TakeAmmo("CLip2",1)
-			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
-			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF Q 1 BRIGHT A_FireBullets(3, 2, -1, 24, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
+			CHAF G 1 BRIGHT A_FireBullets(3, 2, -1, 24, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
 			CHAG A 0 A_ZoomFactor(1.0)
 			"####" A 0 A_QuadSound
 			TNT1 A 0 A_SetPitch(Pitch-0.15, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.4,0.4), SPF_INTERPOLATE)
 			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF RTTTT 1
+			CHAG DEEFFAA 1
 			TNT1 A 0 A_ReFire("Fire4")
 			CHAG A 0 A_PlaySound("CHAINSTO") XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
 			Goto EndFire3
 		Fire4:
 		NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoFire2")
+		CHAG BB 1// BRIGHT A_FireBullets(3, 2, -1, 24, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
+			CHAG CC 1
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
 			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
 			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
 			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF M 1 BRIGHT A_FireBullets(3, 2, -1, 24, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
-			CHAG A 0 A_ZoomFactor(1.0)
-			"####" A 0 A_QuadSound
-			TNT1 A 0 A_SetPitch(Pitch-0.1, SPF_INTERPOLATE)
-			TNT1 A 0 A_SetAngle(angle + frandom(-0.2,0.2), SPF_INTERPOLATE)
-			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF NPPPP 1
-			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
-			TNT1 A 0 a_alertmonstersDX
-			CHAG A 0 A_PlaySound("FARMGN", 5)
-			TNT1 A 0 A_Gunlight
-			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
-			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
-			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
-			TNT1 A 0 A_TakeAmmo("CLip2",1)
-			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
-			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF Q 1 BRIGHT A_FireBullets(3, 2, -1, 24, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
+			CHAF J 1 BRIGHT A_FireBullets(3, 2, -1, 24, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
 			CHAG A 0 A_ZoomFactor(1.0)
 			"####" A 0 A_QuadSound
 			TNT1 A 0 A_SetPitch(Pitch-0.15, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.4,0.4), SPF_INTERPOLATE)
 			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF RTTTT 1
+			CHAG DEEFFAA 1
 			TNT1 A 0 A_ReFire("Fire5")
 			CHAG A 0 A_PlaySound("CHAINSTO") XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
 			Goto EndFire3
 		Fire5:
 		NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoFire2")
+		CHAG B 1// BRIGHT A_FireBullets(3, 2, -1, 24, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
+			CHAG C 1
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
 			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
 			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
 			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF M 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
-			CHAG A 0 A_ZoomFactor(1.0)
-			"####" A 0 A_QuadSound
-			TNT1 A 0 A_SetPitch(Pitch-0.1, SPF_INTERPOLATE)
-			TNT1 A 0 A_SetAngle(angle + frandom(-0.2,0.2), SPF_INTERPOLATE)
-			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF NPPP 1
-			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
-			TNT1 A 0 a_alertmonstersDX
-			CHAG A 0 A_PlaySound("FARMGN", 5)
-			TNT1 A 0 A_Gunlight
-			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
-			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
-			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
-			TNT1 A 0 A_TakeAmmo("CLip2",1)
-			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
-			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF Q 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
+			CHAF G 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
 			CHAG A 0 A_ZoomFactor(1.0)
 			"####" A 0 A_QuadSound
 			TNT1 A 0 A_SetPitch(Pitch-0.15, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.4,0.4), SPF_INTERPOLATE)
 			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF RTTT 1
+			CHAG EFA 1
 			TNT1 A 0 A_ReFire("Fire6")
 			CHAG A 0 A_PlaySound("CHAINSTO") XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
 			Goto EndFire2
 		Fire6:
 		NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoFire2")
+			CHAG B 1// BRIGHT A_FireBullets(3, 2, -1, 24, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
+			CHAG C 1
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
 			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
 			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
 			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF M 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
-			CHAG A 0 A_ZoomFactor(1.0)
-			"####" A 0 A_QuadSound
-			TNT1 A 0 A_SetPitch(Pitch-0.1, SPF_INTERPOLATE)
-			TNT1 A 0 A_SetAngle(angle + frandom(-0.2,0.2), SPF_INTERPOLATE)
-			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF NPPP 1
-			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
-			TNT1 A 0 a_alertmonstersDX
-			CHAG A 0 A_PlaySound("FARMGN", 5)
-			TNT1 A 0 A_Gunlight
-			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
-			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
-			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
-			TNT1 A 0 A_TakeAmmo("CLip2",1)
-			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
-			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF Q 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
+			CHAF J 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
 			CHAG A 0 A_ZoomFactor(1.0)
 			"####" A 0 A_QuadSound
 			TNT1 A 0 A_SetPitch(Pitch-0.15, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.4,0.4), SPF_INTERPOLATE)
 			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF RTTT 1
+			CHAG EFA 1
 			TNT1 A 0 A_ReFire("Fire7")
 			CHAG A 0 A_PlaySound("CHAINSTO") XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
 			Goto EndFire2
 		Fire7:
 		NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoFire2")
+			//CHAG B 1// BRIGHT A_FireBullets(3, 2, -1, 24, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
+			CHAG C 1
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
 			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
 			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
 			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF M 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
-			CHAG A 0 A_ZoomFactor(1.0)
-			"####" A 0 A_QuadSound
-			TNT1 A 0 A_SetPitch(Pitch-0.1, SPF_INTERPOLATE)
-			TNT1 A 0 A_SetAngle(angle + frandom(-0.2,0.2), SPF_INTERPOLATE)
-			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF NPP 1
-			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
-			TNT1 A 0 a_alertmonstersDX
-			CHAG A 0 A_PlaySound("FARMGN", 5)
-			TNT1 A 0 A_Gunlight
-			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
-			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
-			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
-			TNT1 A 0 A_TakeAmmo("CLip2",1)
-			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
-			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF Q 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
+			CHAF G 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
 			CHAG A 0 A_ZoomFactor(1.0)
 			"####" A 0 A_QuadSound
 			TNT1 A 0 A_SetPitch(Pitch-0.15, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.4,0.4), SPF_INTERPOLATE)
 			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF RTT 1
+			CHAG EA 1
 			TNT1 A 0 A_ReFire("Fire8")
 			CHAG A 0 A_PlaySound("CHAINSTO") XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
 			Goto EndFire2
 		Fire8:
 		//TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"Holding")
 		NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoFire2")
+			CHAG C 1
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
 			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
 			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
 			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF M 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
-			CHAG A 0 A_ZoomFactor(1.0)
-			"####" A 0 A_QuadSound
-			TNT1 A 0 A_SetPitch(Pitch-0.1, SPF_INTERPOLATE)
-			TNT1 A 0 A_SetAngle(angle + frandom(-0.2,0.2), SPF_INTERPOLATE)
-			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF NPP 1
-			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
-			TNT1 A 0 a_alertmonstersDX
-			CHAG A 0 A_PlaySound("FARMGN", 5)
-			TNT1 A 0 A_Gunlight
-			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
-			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
-			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
-			TNT1 A 0 A_TakeAmmo("CLip2",1)
-			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
-			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF Q 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
+			CHAF J 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
 			CHAG A 0 A_ZoomFactor(1.0)
 			"####" A 0 A_QuadSound
 			TNT1 A 0 A_SetPitch(Pitch-0.15, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.4,0.4), SPF_INTERPOLATE)
 			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF RTT 1
+			CHAG EA 1
 			TNT1 A 0 A_ReFire("Fire9")
 			CHAG A 0 A_PlaySound("CHAINSTO") XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
 			Goto EndFire2
@@ -724,77 +627,42 @@ ACTOR MiniGun : BrutalWeapon
 			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
 			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
 			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF M 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
-			CHAG A 0 A_ZoomFactor(1.0)
-			"####" A 0 A_QuadSound
-			TNT1 A 0 A_SetPitch(Pitch-0.1, SPF_INTERPOLATE)
-			TNT1 A 0 A_SetAngle(angle + frandom(-0.2,0.2), SPF_INTERPOLATE)
-			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF NP 1
-			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
-			TNT1 A 0 a_alertmonstersDX
-			CHAG A 0 A_PlaySound("FARMGN", 5)
-			TNT1 A 0 A_Gunlight
-			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
-			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
-			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
-			TNT1 A 0 A_TakeAmmo("CLip2",1)
-			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
-			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF Q 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
+			CHAF G 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
 			CHAG A 0 A_ZoomFactor(1.0)
 			"####" A 0 A_QuadSound
 			TNT1 A 0 A_SetPitch(Pitch-0.15, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.4,0.4), SPF_INTERPOLATE)
 			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF RT 1
+			CHAF B 1
 			TNT1 A 0 A_ReFire("Fire10")
 			CHAG A 0 A_PlaySound("CHAINSTO") XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
 			Goto EndFire2
 		Fire10:
 		NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoFire2")
+			NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoFire2")
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
 			TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
 			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
 			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF M 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
-			CHAG A 0 A_ZoomFactor(1.0)
-			"####" A 0 A_QuadSound
-			TNT1 A 0 A_SetPitch(Pitch-0.1, SPF_INTERPOLATE)
-			TNT1 A 0 A_SetAngle(angle + frandom(-0.2,0.2), SPF_INTERPOLATE)
-			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF NP 1
-			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
-			TNT1 A 0 a_alertmonstersDX
-			CHAG A 0 A_PlaySound("FARMGN", 5)
-			TNT1 A 0 A_Gunlight
-			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
-			CHAG A 0 A_ZoomFactor(0.99)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
-			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
-			TNT1 A 0 A_TakeAmmo("CLip2",1)
-			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
-			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, -12, 0, random(-2,2))
-			CHAF Q 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
+			CHAF J 1 BRIGHT A_FireBullets(3, 2, -1, 20, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
 			CHAG A 0 A_ZoomFactor(1.0)
 			"####" A 0 A_QuadSound
 			TNT1 A 0 A_SetPitch(Pitch-0.15, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.4,0.4), SPF_INTERPOLATE)
 			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
-			CHAF RT 1
+			CHAF B 1
 			TNT1 A 0 A_ReFire("HOLDING")
 			CHAG A 0 A_PlaySound("CHAINSTO") XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
 			Goto EndFire2
@@ -810,39 +678,27 @@ ACTOR MiniGun : BrutalWeapon
 			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 			CHAG A 0 A_ZoomFactor(0.99)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
-			CHAF A 1 BRIGHT A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12)
-			TNT1 A 0 A_SetPitch(Pitch-0.2, SPF_INTERPOLATE)
+			CHAF G 1 BRIGHT A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12)
+			TNT1 A 0 A_SetPitch(Pitch-0.4, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
 			"####" A 0 A_QuadSound
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
 			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
-			//CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-2,2), 0, 0, -12, 0, random(-2,2))
-			CHAG A 0 A_ZoomFactor(1.0)
-			//CHAG A 0 A_JumpIfInventory("IsTacticalClass", 1, 2)//Tactical mode skips a frame, fires faster
-			//CHAF B 1 A_SetPitch(Pitch-0.3, SPF_INTERPOLATE)
-			CHAG A 0
-			
-			//RIFG A 0 A_JumpIfInventory("IsNOTTacticalClass", 1, 2)//tactical mode has muzzle climb
-			//RIFG A 0 A_SetPitch(pitch-1.0, SPF_INTERPOLATE)
 			RIFG A 0
 			NULL A 0 A_WeaponOffset(0,32)
-	//NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoHOld2")
 			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
 			//TNT1 A 0 A_Gunlight
 			"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("Clip2")<=15) { A_PlaySound("MagClick", 7); }}}
 			CHAG A 0 A_ZoomFactor(0.99)
-			//TNT1 A 0 A_TakeAmmo("CLip2",1)
-			//TNT1 AA 0 A_FireCustomMissile("YellowFlareSpawn",0,0,0,0)
-			//RIFF A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, 0, -5, 0, 0)
 			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
-			CHAF C 1 BRIGHT A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12)
+			CHAF E 1 BRIGHT A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12)
 			TNT1 A 0 A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE)
-			TNT1 A 0 A_SetPitch(Pitch-0.2, SPF_INTERPOLATE)
+			TNT1 A 0 A_SetPitch(Pitch-0.4, SPF_INTERPOLATE)
 			"####" A 0 A_QuadSound
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
 			CHAG A 0 A_SpawnItemEx("PlayerMuzzle3",30,5,27)
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, 0, -6, 0, random(-9,9))
 			//CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-2,2), 0, 0, -12, 0, random(-2,2))
@@ -868,22 +724,19 @@ ACTOR MiniGun : BrutalWeapon
 			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 			CHAG A 0 A_ZoomFactor(0.99)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
-			CHAF A 1 BRIGHT A_FireBullets(5, 5, -1, 16, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12)
+			CHAF G 1 BRIGHT A_FireBullets(5, 5, -1, 16, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12)
 			TNT1 A 0 A_SetPitch(Pitch-0.2, SPF_INTERPOLATE)
 			"####" A 0 A_QuadSound
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
 
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
 			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
 			//CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-2,2), 0, 0, -12, 0, random(-2,2))
 			CHAG A 0 A_ZoomFactor(1.0)
 			//CHAG A 0 A_JumpIfInventory("IsTacticalClass", 1, 2)//Tactical mode skips a frame, fires faster
-			CHAF B 1 A_SetPitch(Pitch-0.3, SPF_INTERPOLATE)
+			CHAF B 1 A_SetPitch(Pitch-0.2, SPF_INTERPOLATE)
 			CHAG A 0
-			
-			//RIFG A 0 A_JumpIfInventory("IsNOTTacticalClass", 1, 2)//tactical mode has muzzle climb
-			RIFG A 0 A_SetPitch(pitch-1.0, SPF_INTERPOLATE)
 			RIFG A 0
 			NULL A 0 A_WeaponOffset(0,32)
 	NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoHOld2")
@@ -897,11 +750,11 @@ ACTOR MiniGun : BrutalWeapon
 			//TNT1 AA 0 A_FireCustomMissile("YellowFlareSpawn",0,0,0,0)
 			//RIFF A 0 A_FireCustomMissile("GunFireSmoke", 0, 0, 0, -5, 0, 0)
 			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
-			CHAF C 1 BRIGHT A_FireBullets(5, 5, -1, 16, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12)
+			CHAF E 1 BRIGHT A_FireBullets(5, 5, -1, 16, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO,8192,"decorativetracer",-12)
 			TNT1 A 0 A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE)
 			TNT1 A 0 A_SetPitch(Pitch-0.2, SPF_INTERPOLATE)
 			"####" A 0 A_QuadSound
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
 			CHAG A 0 A_SpawnItemEx("PlayerMuzzle3",30,5,27)
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, 0, -6, 0, random(-9,9))
 			//CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-2,2), 0, 0, -12, 0, random(-2,2))
@@ -911,8 +764,6 @@ ACTOR MiniGun : BrutalWeapon
 			CHAF D 1 A_SetPitch(Pitch-0.2, SPF_INTERPOLATE)
 			CHAG A 0
 			
-			//RIFG A 0 A_JumpIfInventory("IsNOTTacticalClass", 1, 2)//tactical mode has muzzle climb
-			//RIFG A 0 A_SetPitch(pitch-1.0, SPF_INTERPOLATE)
 			RIFG A 0
 			
 			NULL A 0 A_WeaponOffset(0,32)
@@ -922,18 +773,18 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_JumpIfInventory("Spin",1,"Ready2")	
 		 CHAG A 0 A_PlaySound("CHAINSTO") XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
 		 TNT1 A 0 A_Overlay(4,"MinigunSmoke")
-		 CHAG ABCDABCDABCD 1 A_ReFire("Holding")	
+		 CHAG ABCDEFABCDEFABCDEF 1 A_ReFire("Holding")	
 		 
 		EndFire2:
 		NULL A 0 A_JumpIf(CountInv("Clip2")==0,"NoAmmoFireEnd2")
-		 CHAG AABBCCDDAABBCCDD 1 
+		 CHAG AABBCCDDEEFFAABBCCDDEEFF 1 
 		{
-			A_ReFire("Fire8");
+			A_ReFire("Fire7");
 			//A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		}
 		EndFire3:
 		NULL A 0 A_JumpIf(CountInv("Clip2")==0,"NoAmmoFireEnd3")
-		 CHAG AAABBBCCCDDD 1 
+		 CHAG AAABBBCCCDDDEEEFFF 1 
 		{
 			A_ReFire("Fire");
 			//A_WeaponReadyDX(WRF_ALLOWRELOAD);
@@ -1253,7 +1104,7 @@ ACTOR MiniGun : BrutalWeapon
 			TNT1 A 0 A_SetPitch(Pitch-0.2, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
 
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
 			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
 			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-2,2), 0, 0, -12, 0, random(-2,2))
@@ -1273,7 +1124,7 @@ ACTOR MiniGun : BrutalWeapon
 			CHAF C 1 BRIGHT A_FireBullets(5, 5, -1, 16, "MachineGunBulletPuff", FBF_NORANDOM | FBF_USEAMMO)
 			TNT1 A 0 A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE)
 			TNT1 A 0 A_SetPitch(Pitch-0.2, SPF_INTERPOLATE)
-			CHAG A 0 A_Firecustommissile("50CaseSpawn",0,0,-12,-18)
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
 			CHAG A 0 A_SpawnItemEx("PlayerMuzzle3",30,5,27)
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, 0, -6, 0, random(-9,9))
 			CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-2,2), 0, 0, -12, 0, random(-2,2))
