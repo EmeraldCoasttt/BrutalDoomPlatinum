@@ -64,18 +64,9 @@ ACTOR Rifle : BrutalWeapon
 		Goto Ready
 	
 	 SlideKickingStart:
-	    RIFG JKLMN 1
-	    //RIFK EE 17 { //39 total
-		RIFG NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN 1 { //39 total
-			if (CountInv("Kicking") == 0) {
-				return state("SlideKickingEnd");
-			}
-			return state("");
-		}
-		Goto Ready
-
-	 SlideKickingEnd:
-		RIFG NNNNNNMLKJ 1 //10
+	    RIFG JKLM 1
+		RIFG NNNNNNNNNNNNNNNNNN 1 //18
+		RIFG MLKJ 1
 		Goto Ready
 		
 	FuckYouFlash:

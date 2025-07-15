@@ -619,21 +619,17 @@ brightmap sprite HBUSC0 { map "brightmaps/doom/Weapons/NaziGuns/HBUSC0.png" disa
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Minigun
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-brightmap sprite CHAFM0 { map "brightmaps/doom/Weapons/Minigun/CHAFM0.png" disablefullbright }
-brightmap sprite CHAFQ0 { map "brightmaps/doom/Weapons/Minigun/CHAFQ0.png" disablefullbright }
+brightmap sprite CHAFA0 { map "brightmaps/Weapons/Chaingun/CHAF0.png" disablefullbright }
+brightmap sprite CHAFC0 { map "brightmaps/Weapons/Chaingun/CHAF0.png" disablefullbright }
+brightmap sprite CHAFE0 { map "brightmaps/Weapons/Chaingun/CHAF0.png" disablefullbright }
 
-brightmap sprite CHAFA0 { map "brightmaps/doom/Weapons/Minigun/CHAFA0.png" disablefullbright }
-brightmap sprite CHAFB0 { map "brightmaps/doom/Weapons/Minigun/CHAFB0.png" disablefullbright }
-brightmap sprite CHAFC0 { map "brightmaps/doom/Weapons/Minigun/CHAFC0.png" disablefullbright }
-brightmap sprite CHAFD0 { map "brightmaps/doom/Weapons/Minigun/CHAFD0.png" disablefullbright }
+brightmap sprite CHAFG0 { map "brightmaps/Weapons/Chaingun/CHAFG0.png" disablefullbright }
+brightmap sprite CHAFJ0 { map "brightmaps/Weapons/Chaingun/CHAFJ0.png" disablefullbright }
+brightmap sprite CHAFM0 { map "brightmaps/Weapons/Chaingun/CHAFM0.png" disablefullbright }
 
-brightmap sprite 3LGNB0 { map "brightmaps/doom/Weapons/Minigun/3LGNB0.png" disablefullbright }
-brightmap sprite 3LGNC0 { map "brightmaps/doom/Weapons/Minigun/3LGNC0.png" disablefullbright }
-brightmap sprite 3LGNF0 { map "brightmaps/doom/Weapons/Minigun/3LGNF0.png" disablefullbright }
-brightmap sprite 3LGNG0 { map "brightmaps/doom/Weapons/Minigun/3LGNG0.png" disablefullbright }
-
-brightmap sprite 7LGNA0 { map "brightmaps/doom/Weapons/Minigun/7LGNA0.png" disablefullbright }
-brightmap sprite 7LGNB0 { map "brightmaps/doom/Weapons/Minigun/7LGNB0.png" disablefullbright }
+brightmap sprite CHAVG0 { map "brightmaps/Weapons/Chaingun/CHAVG0.png" disablefullbright }
+brightmap sprite CHAVJ0 { map "brightmaps/Weapons/Chaingun/CHAVJ0.png" disablefullbright }
+brightmap sprite CHAVM0 { map "brightmaps/Weapons/Chaingun/CHAVM0.png" disablefullbright }
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////

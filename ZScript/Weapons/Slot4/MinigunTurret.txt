@@ -39,17 +39,17 @@ CLASS MiniGunTurret : BDPNotMonster
 			{
 				If(tracer && tracer.findinventory("PowerSpeed2"))
 					{
-						giveinventory("clip2",200);
+						giveinventory("clip2",100);
 					}
 				Else If(tracer && tracer.countinv("clip2") < 100)
 					{
-						Giveinventory("clip2",(tracer.countinv("clip2") * 2));
+						Giveinventory("clip2",(tracer.countinv("clip2")));
 						tracer.takeinventory("clip2",100);
 					}
 				Else if (tracer)
 					{
 						tracer.takeinventory("clip2",100);
-						giveinventory("clip2",200);
+						giveinventory("clip2",100);
 					}
 				A_cleartracer();
 				A_startsound("bepbep",24);

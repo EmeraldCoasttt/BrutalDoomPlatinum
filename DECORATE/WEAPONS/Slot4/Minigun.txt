@@ -10,7 +10,6 @@ ACTOR MiniGun : BrutalWeapon
 	SpawnID 28
 	Weapon.SelectionOrder 700
 	Weapon.AmmoType1 "Clip2"
-	Weapon.AmmoType2 "MiniGunCount"
 	Weapon.AmmoGive 0
 	Weapon.AmmoUse1 0
 	+WEAPON.NOAUTOAIM
@@ -22,200 +21,134 @@ ACTOR MiniGun : BrutalWeapon
 	Inventory.PickupMessage "You got the Minigun! (Slot 4)"
 	Obituary "%o was mowed down by %k's Minigun."
 	AttackSound "none"
-	Scale 0.9
 	Inventory.AltHUDIcon "MGUNA0"
 	BrutalWeapon.weight 2
 	States
 	{
 	
 	GrenadeThrowFlash:
-	CHGS BCDE 1
+	CHAG A 0 A_JumpIfInventory("clip2",1,2)
+	CHAE A 0
+	"####" XWVU 1
 	TNT1 A 24
-	CHGS EDCB 1//32 in total
+	CHAG A 0 A_JumpIfInventory("clip2",1,2)
+	CHAE A 0
+	"####" UVWX 1
 	stop
 	
-	KickingFlash:
-	    CHAG A 0 A_JumpIfInventory("Clip2",1,1)
-		Goto KickNoAmmo
-		CHAG A 0 A_JumpIfInventory("Spin",1,"KickSpin")
-	    CHAG EFGHIIIIIIIIHGFE 1 //16
-	    Goto Ready
-	KickNoAmmo:
-	    CHAG JKLMNNNNNNNNMLKJ 1 //16
-	    Goto Ready
-	KickSpin:
-		CHAG OPQR 1
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI", 5)
-		CHAG STUV 1
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI", 5)
-		CHAG STUV 1
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI", 5)
-		CHAG WXYZ 1 //16
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI", 5)
-	    Goto Ready
 		
-     AirKickingFlash:
-	    CHAG A 0 A_JumpIfInventory("Clip2",1,1)
-		Goto AirKickNoAmmo
-		CHAG A 0 A_JumpIfInventory("Spin",1,"AirKickSpin")
-	    CHAG EFGHIIIIIIIIIIHGFE 1 //18
-	    Goto Ready
-	AirKickNoAmmo:
-	    CHAG JKLMNNNNNNNNNNMLKJ 1 //18
-	    Goto Ready
-	AirKickSpin:
-	    CHAG OPQR 1
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI", 5)
-		CHAG STUV 1
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI", 5)
-		CHAG STUV 1
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI", 5)
-		CHAG STWX 1
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI", 5)
-		CHAG YZ 1 //18
-	    Goto Ready
-		
-	SlideKickingStart:
-	    CHAG A 0 A_JumpIfInventory("Clip2",1,1)
-		Goto SlideStartNoAmmo
-		CHAG A 0 A_JumpIfInventory("Spin",1,"SlideStartSpin")
-	    CHAG EFGHI 1
-	    CHAG IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII 1 { //39 total
-			if (CountInv("Kicking") == 0) {
-				return state("SlideKickingEnd");
-			}
-			return state("");
-		}
+	KickingFlash: 
+		CHAG A 0 A_JumpIfInventory("clip2",1,2)
+		CHAE A 0
+		"####" A 0 A_JumpIfInventory("Spin",1,"SpinKickFlash")
+		"####" HIJK 1
+		"####" LLLLLLLL 1
+		"####" KJIH 1
 		Goto Ready
 		
-	SlideStartNoAmmo:
-	    CHAG JKLMN 1
-	    CHAG NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN 1 { //39 total
-			if (CountInv("Kicking") == 0) {
-				return state("SlideKickingEnd");
-			}
-			return state("");
-		}
+	SpinKickFlash: 
+		"####" A 0 A_PlaySound("ChAINSPI", 5)
+		"####" MNOP 1
+		"####" QRSTQRST 1
+		"####" A 0 A_PlaySound("ChAINSPI", 5)
+		"####" PONM 1
+		//TNT1 A 0 A_StopSound(1)
+		TNT1 A 0 A_JumpIfInventory("clip2",1,"Ready2")
+		Goto Ready2
+	
+	AirKickingFlash: 
+		CHAG A 0 A_JumpIfInventory("clip2",1,2)
+		CHAE A 0
+		"####" A 0 A_JumpIfInventory("Spin",1,"SpinAirKickFlash")
+		"####" HIJK 1
+		"####" LLLLLLLLLL 1
+		"####" KJIH 1
 		Goto Ready
-	SlideStartSpin:
-	    CHAG OPQR 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		TNT1 A 0 A_AlertMonstersDX(400)
-		TNT1 A 0 A_StopSound(5)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-	    CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-        CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1 { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1  { if (CountInv("Kicking") == 0) {return state("SlideKickingEnd");}return state("");}
-		//39 total
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-	    Goto Ready
+		
+	SpinAirKickFlash: 
+		"####" A 0 A_PlaySound("ChAINSPI", 5)
+		"####" MNOP 1
+		"####" QRSTQRSTQR 1
+		"####" A 0 A_PlaySound("ChAINSPI", 5)
+		"####" PONM 1
+		//TNT1 A 0 A_StopSound(1)
+		TNT1 A 0 A_JumpIfInventory("clip2",1,"Ready2")
+		Goto Ready2
+		
+	SlideKickingStart: 
+		CHAG A 0 A_JumpIfInventory("clip2",1,2)
+		CHAE A 0
+		"####" A 0 A_JumpIfInventory("Spin",1,"SpinSlideFlash")
+		"####" HIJK 1
+		"####" LLLLLLLLLLLLLLLLLL 1
+		"####" KJIH 1
+		Goto Ready
+		
+	SpinSlideFlash: 
+		"####" A 0 A_PlaySound("ChAINSPI", 5)
+		"####" MNOP 1
+		"####" QRSTQRSTQRSTQRSTQR 1
+		"####" A 0 A_PlaySound("ChAINSPI", 5)
+		"####" PONM 1
+		//TNT1 A 0 A_StopSound(1)
+		TNT1 A 0 A_JumpIfInventory("clip2",1,"Ready2")
+		Goto Ready2
+		
 
-	 SlideKickingEnd:
-	    CHAG A 0 A_JumpIfInventory("Clip2",1,1)
-		Goto SlideEndNoAmmo
-		CHAG A 0 A_JumpIfInventory("Spin",1,"SlideEndSpin")
-	    CHAG IIIIIIHGFE 1 //10
-	    Goto Ready
-	SlideEndNoAmmo:
-	    CHAG NNNNNNMLKJ 1 //10
-	    Goto Ready
-	SlideEndSpin:
-	    CHAG UV 1
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI")
-		CHAG STUV 1
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI", 5)
-		CHAG WXYZ 1 //10
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI", 5)
-	    Goto Ready
 		
-	FuckYouFlash:
-	CHAG A 0 A_JumpIfInventory("Clip2",1,1)
-    Goto FuckYouFlashNoAmmo
-	CHAG A 0 A_JumpIfInventory("Spin",1,"FuckYouSpin")
-	CHAG EFGHIIIIIIIIIIIIIIIIIIIIIIHGFE 1 //18
-	stop
-	
-	FuckYouFlashNoAmmo:
-	CHAG JKLMNNNNNNNNNNNNNNNNNNNNNNMLKJ 1 //28
-	stop
+	FuckYouFlash: 
+		CHAG A 0 A_JumpIfInventory("clip2",1,2)
+		CHAE A 0
+		"####" A 0 A_JumpIfInventory("Spin",1,"SpinFuckFlash")
+		"####" HIJK 1
+		"####" LLLLLLLLLLLLLLLLLLLLLL 1
+		"####" KJIH 1
+		Stop
 		
-	FuckYouSpin:
-	CHAG OPQR 1 //4
-	CHAG A 0 A_AlertMonstersDX(400)
-	CHAG A 0 A_PlaySound("CHAINSPI", 5)
-	CHAG STUV 1
-	CHAG A 0 A_AlertMonstersDX(400)
-	CHAG A 0 A_PlaySound("CHAINSPI", 5)
-	CHAG STUV 1
-	CHAG A 0 A_AlertMonstersDX(400)
-	CHAG A 0 A_PlaySound("CHAINSPI", 5)
-	CHAG STUV 1
-	CHAG A 0 A_AlertMonstersDX(400)
-	CHAG A 0 A_PlaySound("CHAINSPI", 5)
-	CHAG STUV 1
-	CHAG A 0 A_AlertMonstersDX(400)
-	CHAG A 0 A_PlaySound("CHAINSPI", 5)
-	CHAG STUVST 1
-	CHAG A 0 A_AlertMonstersDX(400)
-	CHAG A 0 A_PlaySound("CHAINSPI", 5)
-	CHAG WXYZ 1 //4
-	stop	
+	SpinFuckFlash: 
+		"####" A 0 A_PlaySound("ChAINSPI", 5)
+		"####" MNOP 1
+		"####" QRSTQRSTQRSTQRSTQRSTQR 1
+		"####" A 0 A_PlaySound("ChAINSPI", 5)
+		"####" PONM 1
+		//TNT1 A 0 A_StopSound(1)
+		Stop
 		
-	Reload:
+		
+		
+	SprintOverlay: 
+		CHAG A 0 A_JumpIfInventory("clip2",1,2)
+		CHAE A 0
+		"####" A 0 A_JumpIfInventory("Spin",1,"SpinSprintOverlay")
+		"####" HIJK 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
+	KeepSprinting:
+	CHAG A 0 A_JumpIfInventory("clip2",1,2)
+		CHAE A 0
+		"####" A 0 A_JumpIfInventory("Spin",1,"SpinKeepSprinting")
+		"####" L 1
+		"####" A 0 A_keepsprinting
+		
+	ReturnFromSprint:
+		CHAG A 0 A_JumpIfInventory("clip2",1,2)
+		CHAE A 0
+		"####" A 0 A_JumpIfInventory("Spin",1,"SpinRetunrFromSprint")
+		"####" KJIH 1
+		Goto Ready
+		
+	SpinSprintOverlay:
+		"####" A 0 A_PlaySound("ChAINSPI", 5)
+		"####" MNOP 1
+	SpinKeepSprinting:
+		"####" A 0 A_PlaySound("ChAINSPI", 5)
+		"####" QRST 1
+		"####" A 0 A_keepsprinting
+		
+	SpinReturnFromSprint:
+		"####" PONM 1
+		Goto Ready2
+		
+		
+	//Reload:
 		XXXX X 0 A_PlaySound("PISTFOL5", 10)
 	   CHAF EFGH 1 A_WeaponReady
 	   CHAF I 7 A_WeaponReady
@@ -269,101 +202,26 @@ ACTOR MiniGun : BrutalWeapon
 		
 		 Ready: 
 		 Ready3:
-		  CHAG A 0 A_JumpIfInventory("swapriflespecial",1,"PlaceTurret")
-		 TNT1 A 0 A_JumpIf(CountInv("Clip2") == 0, "IdleNoAmmo")
-		 CHAG A 0 A_JumpIfInventory("Spin",1,"Ready2")
-		  CHAG A 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
-		  CHAG A 0 A_JumpIfInventory("Salute1", 1, "Salute")
-		  CHAG A 0 A_JumpIfInventory("Salute2", 1, "Salute")
-		  CHAG A 0 A_JumpIfInventory("Taunting",1,"Taunt")
-		  CHAG A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD)
-		  CHAG A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		  CHAG A 0 A_JumpIfInventory("StartDualWield",1,"DualWield")
-		 
-		 // CHAG A 0 A_checksprint
-			
-		  CHAG A 0 A_JumpIfInventory("Reloading",1,"Reload")
-	//	  CHAG A 0 A_JumpIfInventory("Clip2",1,"Ready")
-	//	  Goto IdleNoAmmo
-		  loop
-		  
 		 IdleNoAmmo:
-		  CHAE A 1 A_WeaponReady
-		  CHAG A 0 A_TakeInventory ("Spin",1)
-		  CHAG A 0 A_JumpIfInventory("Clip2",1,"Ready")
-		  CHAG A 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
-		  CHAG A 0 A_JumpIfInventory("Taunting",1,"Taunt")
-		  CHAG A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		  CHAG A 0 A_JumpIfInventory("StartDualWield",1,"DualWield")
-		  Loop
+		TNT1 A 0 A_JumpIfInventory("Spin",1,"Ready2")
+		CHAG A 0 A_JumpIfInventory("clip2",1,2)
+		CHAE A 0
+		  "####" A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD)
+		 LOOP
+		  
 
 	Ready2:
 	    CHAG A 0 A_PlaySound("CHAINSPI", 5)
-	    CHAG ABCD 1 
-		{
-			A_WeaponReadyDX(WRF_ALLOWRELOAD);
-			if (CountInv("Clip2") == 0) { return state("Ready2Empty"); }
-			return state("");
-		}
-		Loop
-		
-	Ready2Empty:
-	    CHAG A 0 A_PlaySound("CHAINSPI", 5)
-	    CHAE ABCD 1 
-		{
-			A_WeaponReadyDX(WRF_ALLOWRELOAD);
-			if (CountInv("Clip2") >> 0) { return state("Ready2"); }
-			return state("");
-		}
-		Loop
+		CHAG A 0 A_JumpIfInventory("clip2",1,2)
+	CHAE A 0
+	    "####" ACDE 1 A_WeaponReadyDX
+		LOOP
+
 		
 		  
 
 		
-	SprintOverlay:
-	    CHAG A 0 A_JumpIfInventory("Clip2",1,1)
-		Goto Sprintnoammo
-		CHAG A 0 A_JumpIfInventory("Spin",1,"SprintSpin")
-	    CHAG EFGH 1 //16
-		KeepSprinting:
-		 CHAG A 0 A_JumpIfInventory("Clip2",1,1)
-		Goto KeepSprintingNoAmmo
-		CHAG A 0 A_JumpIfInventory("Spin",1,"SprintSpin2")
-		CHAG I 1 A_WeaponreadyDX(0,FALSE,FALSE)
-		TNT1 A 0 A_KeepSprinting
-	   Goto ReturnFromSprint
-	SprintNoAmmo:
-	    CHAG JKLM 1 //16
-		KeepSprintingNoAmmo:
-		CHAG N 1 A_WeaponreadyDX(0,FALSE,FALSE)
-		TNT1 A 0 A_KeepSprinting
-	   Goto ReturnFromSprintNoAmmo
-	SprintSpin:
-		CHAG OPQR 1
-		SprintSpin2:
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI", 5)
-		CHAG STUV 1 A_WeaponreadyDX(0,FALSE,FALSE)
-	TNT1 A 0 A_KeepSprinting
-		Goto ReturnFromSprint
-		
-		ReturnFromSprint:
-		CHAG A 0 A_JumpIfInventory("Clip2",1,1)
-		Goto ReturnFromSprintnoammo
-		CHAG A 0 A_JumpIfInventory("Spin",1,"ReturnFromSprintSpin")
-		CHAG HGFE 1
-		Goto ready
-		
-		Returnfromsprintnoammo:
-		CHAG MLKJ 1
-		Goto ready
-		
-		
-		ReturnFromSprintSpin:
-		CHAG WXYZ 1 //16
-		CHAG A 0 A_AlertMonstersDX(400)
-		CHAG A 0 A_PlaySound("CHAINSPI", 5)
-	    Goto Ready
+
 		
 		
 
@@ -377,8 +235,9 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_StopSound(5)
 			TNT1 A 0 A_JumpIfInventory("SwitchingDualModes", 1,"DeselectForNailgun")
 			TNT1 A 0 A_JumpIf(Countinv("NailgunModuleSelected")==1,"DeselectForNailgun")
-			CHAG A 0 A_JumpIfInventory("Clip2",1,"DecelectButHasAmmo")
-			CHGS ABCDE 1
+			CHAG A 0 A_JumpIfInventory("clip2",1,2)
+			CHAE A 0
+			"####" XWVU 1
 			TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower
 			TNT1 A 1 A_Lower
 			Wait
@@ -417,10 +276,11 @@ ACTOR MiniGun : BrutalWeapon
 		ReturnFromNothing:
 			CHAG A 0 A_PlaySound("CHGNPKUP")
 			CHAG A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
-			CHAG A 0 A_JumpIfInventory("Clip2",1,"SelectButHasAmmo")
-			CHGS EDCBA 1 A_WeaponReady(WRF_NOFIRE)
+			CHAG A 0 A_JumpIfInventory("clip2",1,2)
+			CHAE A 0
+			"####" UVWX 1
 			RIFG A 0 A_Takeinventory("StartDualWield",1)
-			Goto IdleNoAmmo
+			Goto Ready
         SelectButHasAmmo:
 		CHGS EDCGF 1 A_WeaponReady(WRF_NOFIRE)
 		RIFG A 0 A_Takeinventory("StartDualWield",1)
@@ -664,7 +524,7 @@ ACTOR MiniGun : BrutalWeapon
 			//TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
 			CHAF B 1
 			TNT1 A 0 A_ReFire("HOLDING")
-			CHAG A 0 A_PlaySound("CHAINSTO") XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
+			CHAG A 0 A_PlaySound("CHAINSTO",5) XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
 			Goto EndFire2
 		Holding:
 		
@@ -771,116 +631,88 @@ ACTOR MiniGun : BrutalWeapon
 			DoneHolding:
 			CHAG A 0 A_PlaySound("MINIGEN", 5)
 			CHAG A 0 A_JumpIfInventory("Spin",1,"Ready2")	
-		 CHAG A 0 A_PlaySound("CHAINSTO") XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
+		 CHAG A 0 A_PlaySound("CHAINSTO",5) XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
 		 TNT1 A 0 A_Overlay(4,"MinigunSmoke")
-		 CHAG ABCDEFABCDEFABCDEF 1 A_ReFire("Holding")	
+		 CHAG ABCDEFABCDEFABCDEF 1 
+		 {
+			A_ReFire("Holding");
+			Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		}
 		 
 		EndFire2:
 		NULL A 0 A_JumpIf(CountInv("Clip2")==0,"NoAmmoFireEnd2")
 		 CHAG AABBCCDDEEFFAABBCCDDEEFF 1 
 		{
 			A_ReFire("Fire7");
-			//A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		}
 		EndFire3:
 		NULL A 0 A_JumpIf(CountInv("Clip2")==0,"NoAmmoFireEnd3")
 		 CHAG AAABBBCCCDDDEEEFFF 1 
 		{
 			A_ReFire("Fire");
-			//A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
 			
 		}
 		Goto Ready
 		
 		NoAmmoFire:
 		TNT1 A 0 A_jumpifinventory("spin",1,"NoAmmoFire2")
-		CHAG A 0 A_PlaySound("CHAINSTA")
+		"####" A 0 A_PlaySound("ChAINSPI", 5)
 		TNT1 A 0 A_PlaySound("weapons/empty", 4)
-		CHAE AB 3
+		CHAE AC 1
 		TNT1 A 0 A_PlaySound("weapons/empty", 4)
-		CHAE CD 3
+		CHAE DE 1
 		TNT1 A 0 A_ReFire("Fire5")
-		CHAG A 0 A_PlaySound("CHAINSTO") XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
+		CHAG A 0 A_PlaySound("CHAINSTO",5) XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
 		Goto EndFire3
 		NoAmmoFire2:
+		"####" A 0 A_PlaySound("ChAINSPI", 5)
 		TNT1 A 0 A_PlaySound("weapons/empty", 4)
-		CHAE AB 2
+		CHAE AC 1
 		TNT1 A 0 A_PlaySound("weapons/empty", 4)
-		CHAE CD 2
+		CHAE DE 1
 		TNT1 A 0 A_ReFire("Holding")
-		CHAG A 0 A_PlaySound("CHAINSTO") XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
+		CHAG A 0 A_PlaySound("CHAINSTO",5) XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
 		Goto EndFire2
 		NoAmmoHold:
 		CHAG A 0 A_JumpIfInventory("Spin",1,"NoAmmoHoldSpin")
+		"####" A 0 A_PlaySound("ChAINSPI", 5)
 		TNT1 A 0 A_PlaySound("weapons/empty", 4)
-		CHAE A 1
+		CHAE AC 1
 		TNT1 A 0 A_PlaySound("weapons/empty", 4)	
 		NoAmmoHold2:
-		CHAE C 1
+		CHAE DE 1
 		TNT1 A 0 A_PlaySound("weapons/empty", 4)
 		TNT1 A 0 A_ReFire("Holding")
 		Goto DOneNoAmmoHOld
 		NoAMmoHoldSPin:
 		CHAG A 0 A_PlaySound("CHAINSPI", 5)
 		TNT1 A 0 A_PlaySound("weapons/empty", 4)
-		CHAE AB 1
+		CHAE ACDE 1
 		TNT1 A 0 A_PlaySound("weapons/empty", 4)	
-		CHAE CD 1
+		CHAE ACDE 1
 		TNT1 A 0 A_PlaySound("weapons/empty", 4)
 		TNT1 A 0 A_ReFire("Holding")
 		DOneNoAmmoHOld:
-		CHAG A 0 A_JumpIfInventory("Spin",1,"Ready2Empty")
-		CHAG A 0 A_PlaySound("CHAINSTO") XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
-		CHAE ABCDABCDABCD 1 A_ReFire("Holding")
+		CHAG A 0 A_JumpIfInventory("Spin",1,"Ready2")
+		CHAG A 0 A_PlaySound("CHAINSTO",5) XXXX X 0 A_StartSound("foley/MinigunInspectRotor", 10,0,0.9)
+		CHAE ACDEACDEACDE 1 A_ReFire("Holding")
 		NoAmmoFireEnd2:
-		CHAE AABBCCDDAABBCCDD 1 
+		CHAE ABCDEF 1 
 		{
-			A_WeaponReady;
+			
 			A_ReFire("Fire5");
-			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
-			if (CountInv("Taunting") == 1) { return state("Taunt"); }
-			if (CountInv("Reloading") == 1) { return state("Reload"); }
-			if (CountInv("Salute1") == 1 || CountInv("Salute2") == 1) { return state("Salute"); }
-			//A_checksprint;
-			if (CountInv("ExecuteDownedEnemy") == 1) { return state("DoExecution"); }
-			if (CountInv("Kicking") == 1) {
-				if (CountInv("IsCrouching") == 1) {
-					return state("SlideKickingStart");
-				}
-				if (momZ != 0) {
-					return state("AirKickingFlash");
-				}
-				else {
-					return state("KickingFlash");
-				}
-			}
-			if (CountInv("StartDualWield") == 1) { return state("DualWield"); }
-			return state("");
+			Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			
+		
 		}
 		NoAmmoFireEnd3:
-		CHAE AAABBBCCCDDD 1 
+		CHAE AABBCCDDEEFF 1 
 		{
-			A_WeaponReady;
 			A_ReFire("Fire");
-			if (CountInv("TossGrenade") == 1) { return state("TossGrenade"); }
-			if (CountInv("Taunting") == 1) { return state("Taunt"); }
-			if (CountInv("Reloading") == 1) { return state("Reload"); }
-			if (CountInv("Salute1") == 1 || CountInv("Salute2") == 1) { return state("Salute"); }
-			//A_checksprint;
-			if (CountInv("ExecuteDownedEnemy") == 1) { return state("DoExecution"); }
-			if (CountInv("Kicking") == 1) {
-				if (CountInv("IsCrouching") == 1) {
-					return state("SlideKickingStart");
-				}
-				if (momZ != 0) {
-					return state("AirKickingFlash");
-				}
-				else {
-					return state("KickingFlash");
-				}
-			}
-			if (CountInv("StartDualWield") == 1) { return state("DualWield"); }
-			return state("");
+			Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			
 		}
 		Goto IdleNoAmmo
 		
@@ -899,8 +731,9 @@ ACTOR MiniGun : BrutalWeapon
 		 CHAG A 0 A_JumpIfInventory("Spin",1,"StopAlt")
 		 CHAG A 0 A_GiveInventory ("Spin",1)
 		 CHAG A 0 A_PlaySound("CHAINSTA", 5)
-		 CHAG ABCDAB 3 
-		 CHAG CDABCD 2		 
+		 CHAG ABCDEF 3 
+		 CHAG ABCD 2
+		 CHAG EF 1
 		 Goto Ready2
 
 	  StopAlt:
@@ -909,9 +742,9 @@ ACTOR MiniGun : BrutalWeapon
 		 CHAG A 0 A_PlaySound("CHAINSTO", 6)
 		 CHAG A 0 A_StopSound(5)
 		 CHAG A 0 A_StopSound(1)
-		 CHAG ABCD 1
-		 CHAG ABCDABCD 2 A_WeaponReady
-		 CHAG ABCD 3 A_WeaponReady
+		 CHAG ABCDEF 1 A_WeaponReadyDX
+		 CHAG ABCDEF 2 A_WeaponReadyDX
+		 CHAG ABCDEF 3 A_WeaponReadyDX
 		 CHAG A 0
 		 Goto Ready
 		 
@@ -919,9 +752,10 @@ ACTOR MiniGun : BrutalWeapon
 		 CHAG A 0 A_JumpIfInventory("Spin",1,"StopAltNoAmmo")
 		 CHAG A 0 A_GiveInventory ("Spin",1)
 		 CHAG A 0 A_PlaySound("CHAINSTA", 5)
-		 CHAE ABCDAB 3 
-		 CHAE CDABCD 2		 
-		 Goto Ready2Empty
+		 CHAE ABCDEF 3 
+		 CHAE ABCD 2	
+		 CHAE EF 1
+		 Goto Ready2
 
 	  StopAltNoAmmo:
 		 CHAG A 0
@@ -929,9 +763,9 @@ ACTOR MiniGun : BrutalWeapon
 		 CHAG A 0 A_PlaySound("CHAINSTO", 6)
 		 CHAG A 0 A_StopSound(5)
 		 CHAG A 0 A_StopSound(1)
-		 CHAE ABCD 1
-		 CHAE ABCDABCD 2 A_WeaponReady
-		 CHAE ABCD 3 A_WeaponReady
+		 CHAE ABCDEF 1
+		 CHAE ABCDEF 2 A_WeaponReady
+		 CHAE ABCDEF 3 A_WeaponReady
 		 CHAG A 0
 		 Goto Ready
 		 
@@ -945,7 +779,7 @@ ACTOR MiniGun : BrutalWeapon
 			TNT1 A 10
 			Goto Ready2	
 				
-		DualWield:
+		//DualWield:
 		TNT1 A 0 A_TakeInventory("StartDualWield",1)
 		TNT1 A 0 A_GiveInventory("Nailgun",1)
 		TNT1 A 0 A_StopSound(5)
@@ -1010,7 +844,7 @@ ACTOR MiniGun : BrutalWeapon
 	CHAE C 1	
 	MNGG B 0 A_ReFire("LegacyHold")
 	CHAG A 0 A_PlaySound("MINIGEN", 5)
-    CHAG A 0 A_JumpIfInventory("Spin",1,"Ready2Empty")
+    CHAG A 0 A_JumpIfInventory("Spin",1,"Ready2")
 	CHAG A 0 A_PlaySound("CHAINSTO", 5)
 	CHAE ABCDAB 1
 	{
@@ -1273,15 +1107,15 @@ TNT1 A 0  {if (CountInv("Kicking") == 1) {
 		 goto Ready		
 		 
 		 
-		 Placeturret:
+		 SpecialAction:
 		 TNT1 A 0 A_takeinventory("swapriflespecial",1)
 		 TNT1 A 0 A_jumpifinventory("clip2",1,1)
 		 Goto ready
 		 TNT1 A 0 
-		  TNT1 A 0 A_jumpifinventory("miniguncount",1,1)
-		 Goto ready
-		 TNT1 A 0 
-		  CHGT ABC 1
+		 CHAG A 0 A_JumpIfInventory("clip2",1,2)
+			CHAE A 0
+		"####" "][" 1
+		"####" ZY 1
 		  TNT1 A 0
 		  {
 		  A_takeinventory("spin",1);
@@ -1295,10 +1129,11 @@ TNT1 A 0  {if (CountInv("Kicking") == 1) {
 		  TNT1 A 10
 		  
 		  Andbackagain:
-			CHAG A 0 A_JumpIfInventory("Clip2",1,"backagainButHasAmmo")
-			CHGS EDCBA 1 
+			CHAG A 0 A_JumpIfInventory("clip2",1,2)
+			CHAE A 0
+			"####" UVWX 1
 			RIFG A 0 A_Takeinventory("StartDualWield",1)
-			Goto IdleNoAmmo
+			Goto Ready
         backagainButHasAmmo:
 		CHGS EDCGF 1 
 		Goto ready

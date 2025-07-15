@@ -199,11 +199,11 @@ actor ChaingunSpawnerReplacer : BasicWeaponPickup// Replaces Chaingun
 ACTOR ChaingunSpawner : NVBasicWeaponSpawner
 {
 	Inventory.PickupSound "CBOXPKUP"
-	Inventory.PickupMessage "You got the Minigun with the Nailgun module! (Slot 4)"
+	Inventory.PickupMessage "You got the Minigun! (Slot 4)"
 	States
 	{
 	Spawn:
-		TNT1 A 0 NoDelay A_jump(80,"spawn2")
+		TNT1 A 0
 		MGUN A -1
 		Stop
 	Spawn2:
