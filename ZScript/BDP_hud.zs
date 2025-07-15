@@ -56,13 +56,10 @@ class BDP_HUD : DoomStatusBar
 			// in statusbar mode powerup indicators are drawn
 			// at the bottom right, above the statusbar:
 			DrawFullscreenPowerups((290, 158));		
-			// I have to duplicate this here because otherwise
-			// it'll be blocked by the 'Mag' image:
-			if (isInventoryBarVisible())
+			If(!automapactive)
 			{
-				DrawInventoryBarEx(diparms, (48, 169), 7, DI_ITEM_LEFT_TOP);
+				drawcrosshairs();
 			}
-			drawcrosshairs();
 		}
 		
 		// Fullscreen mode is fully custom:
@@ -73,11 +70,10 @@ class BDP_HUD : DoomStatusBar
 			DrawRightcorner();
 			DrawTopRight(mSmallFontNS, (-4, 1));
 			DrawFullscreenPowerups((0, -11), DI_SCREEN_CENTER_BOTTOM);
-			if (isInventoryBarVisible())
+			If(!automapactive)
 			{
-				DrawInventoryBarEx(diparms, (-20, 150), 6, flags: DI_SCREEN_RIGHT_TOP, box: (20,20), vertical: true);
+				drawcrosshairs();
 			}
-			drawcrosshairs();
 		}
 	}
 	
