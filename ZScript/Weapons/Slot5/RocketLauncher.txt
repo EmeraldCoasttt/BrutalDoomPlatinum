@@ -49,6 +49,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 			owner.A_startsound("LAZOFF",2);
 			A_SetCrosshairDX("ROCKRet",2000,1.0);
 		}
+		/*
 		If(owner.player && owner.player.readyweapon is "Rocket_Launcher" && owner.player.cmd.buttons & BT_USER3)
 		{
 			If(!lasttickdetonate)
@@ -81,6 +82,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 		{
 			lasttickdetonate = false;
 		}
+		*/
 	}
 	States
 	{
