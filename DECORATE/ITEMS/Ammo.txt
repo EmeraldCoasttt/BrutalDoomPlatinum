@@ -36,8 +36,22 @@ ACTOR AmmoSuply : BackpackItem Replaces Backpack
 	{
 	Spawn:
 		TNT1 A 0
+	    TNT1 A 0 A_Jump(64, "SpawnOriginal")
+	    TNT1 A 0 A_Jump(256, "Spawn1", "Spawn2", "Spawn3")
+		Loop
+		
+	SpawnOriginal:
 		BPAK A -1
-		Stop
+		
+	Spawn1:
+		BPAK BCDE 4
+		LOOP
+	Spawn2:
+		BPAK CDEB 4
+		LOOP
+	Spawn3:
+		BPAK DEBC 4
+		LOOP
 	}
 }
 
