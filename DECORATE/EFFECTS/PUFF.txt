@@ -557,6 +557,11 @@ Actor BR45BulletPuff: HitPuff
 DamageType Pistol
 }
 
+Actor BR45BulletPuff2 : BR45BulletPuff
+{
+Decal "None"
+}
+
 Actor MechMinigunPuff: HitPuff
 {
 DamageType Extreme

@@ -83,9 +83,10 @@ CLASS BattleRifle : Brutalweapon
 		//Console.printf("%f",BouncedAngle);
 		Vector3 NextShotPosition = level.Vec3Offset(ricochetData.hitlocation, hitnormal * 2.0);
 		
-		A_FireBullets (0, 0, -1, 25, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
+		
 		If(ricochetdata.HitType == TRACE_HitWall || ricochetdata.HitType == TRACE_HitFloor || ricochetdata.HitType == TRACE_HitCeiling)
 		{
+			A_FireBullets (0, 0, -1, 25, "BR45BulletPuff2", FBF_NORANDOM,8192,"decorativetracer",-12);
 			Invoker.Owner.LineAttack(NextShotAngle,8192,NextShotPitch,35,"Pistol","BR45BulletPuff",LAF_ABSPOSITION | LAF_ABSOFFSET,null,NextShotPosition.Z,NextShotPosition.x,NextShotPosition.y);
 			let ricochettracer = Invoker.owner.spawn("decorativetracer",nextshotposition);
 			If(ricochettracer)
@@ -95,6 +96,10 @@ CLASS BattleRifle : Brutalweapon
 				ricochettracer.vel3dfromangle(140,nextshotangle,nextshotpitch);
 			}
 			
+		}
+		Else
+		{
+			A_FireBullets (0, 0, -1, 25, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 		}
 	}
 	
