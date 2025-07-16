@@ -4,6 +4,30 @@ class BDPMath Abstract
 	const PI = 3.14159265358;
 	const RAD = 180.0/PI;
 	const TWOPI = 2*PI;
+	
+	static vector3 AngleToVector3( double length, double angle, double pitch)
+	{
+	  vector3 ret;
+	  double cospitch = cos(-pitch);
+	  ret.X = length * cospitch * Cos(angle);
+	  ret.Y = length * cospitch * Sin(angle);
+	  ret.Z = length * sin(-pitch);
+	  return ret;
+	}
+	
+	static double, double Vector3ToAngles (vector3 vec) 
+	{
+	  Vector3 vecUnit = vec.unit();
+	  double angle = atan2(vecUnit.y, vecUnit.x);
+	  double pitch = asin(-vecUnit.z);
+	  return angle, pitch;
+	}
+	
+	static vector3 BounceNormal(vector3 MoveVector, vector3 SurfNormal) //Thanks Godot's source code. Calculates the bounce angle of a velocity on a normal.
+	{
+	  vector3 ret = MoveVector - 2 * SurfNormal * (MoveVector dot SurfNormal);
+	  return ret;
+	}
 
 	// Lerps from angle a to b (both between 0.f and 360.f), taking the shortest path
 	static double LerpAngle(double a, double b, double lerpFactor) 
