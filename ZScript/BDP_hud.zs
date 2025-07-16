@@ -421,7 +421,7 @@ class BDP_HUD : DoomStatusBar
 			else
 				iconsize = box;
 			DrawTexture(icon, iconpos, flags, box: box);
-			iconpos.x += (iconsize.x + hofs);
+			iconpos.x -= (iconsize.x + hofs);
 		}
 	}
 	
@@ -515,7 +515,7 @@ class BDP_HUD : DoomStatusBar
 		iconPos.x += iconSpacing;
 		DrawSelectedInventory(iconPos, iconflags);
 		
-		DrawKeys((iconpos.x - 16, -2), DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_BOTTOM, (6,6));
+		
 	}
 	
 	int stambarFadeTime; //modified in Tick()
@@ -819,6 +819,7 @@ class BDP_HUD : DoomStatusBar
 			Font.CR_White
 		);
 		pos.y += Ystep;
+		DrawKeys((-4, pos.y), DI_SCREEN_RIGHT_TOP|DI_ITEM_RIGHT_TOP, (8,8));
 	}
 	void DrawCrosshairs()
 	{		
