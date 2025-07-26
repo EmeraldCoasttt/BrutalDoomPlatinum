@@ -210,7 +210,7 @@ class NewIncineratorFlame : Actor // Incinerator Flame
 	
 	Override int SpecialMissileHit(Actor victim) 
 		{
-			If(victim && target && victim != target && !(victim is "baseheadshot"))
+			If(victim && target && victim != target && !(victim is "baseheadshot") && victim.bshootable)
 			{
 				If(!Victim.findinventory("firetic"))
 				{
