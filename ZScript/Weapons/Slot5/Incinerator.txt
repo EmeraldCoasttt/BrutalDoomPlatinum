@@ -185,6 +185,9 @@ class NewIncineratorFlame : Actor // Incinerator Flame
 		Damagetype "fire";
 		//+rollsprite;
 		Decal "FlamethrowerScorchNEO";
+		+bounceonfloors;
+		+bounceonceilings;
+		bouncecount 2;
 	}
 
 	States
