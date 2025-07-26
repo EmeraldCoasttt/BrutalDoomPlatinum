@@ -1,5 +1,6 @@
-CLASS PipeBombThrownIdle: CustomInventory
+CLASS PipeBombThrownIdle: Actor
 {
+	float beepvolume;
 	Default
 	{
     scale 0.4;
@@ -7,9 +8,6 @@ CLASS PipeBombThrownIdle: CustomInventory
     height 4;
    //+THRUACTORS 
 	+FORCEXYBILLBOARD;
-	
-     Inventory.PickupMessage "Picked up a proximity mine.";
-     Inventory.PickupSound "PIPESEL";
 	 Species "ThrownPipebombs";
 	 +flatsprite;
     +MOVEWITHSECTOR;
@@ -24,10 +22,14 @@ CLASS PipeBombThrownIdle: CustomInventory
    Spawn:
 	TNT1 A 0;
 	TNT1 A 0 A_startsound("PIPBOING",8);
+	TNT1 A 0
+	{
+		beepvolume = 1.0;
+	}
    KeepSpawned:
 	PIPb D 1 
 	{
-		A_startsound("minebep");
+		A_startsound("minebep",CHAN_BODY,0,beepvolume);
 		A_alertmonsters();
 	}
 	PIPb CCCCCCCCCCCCCCC 1 
@@ -50,6 +52,10 @@ CLASS PipeBombThrownIdle: CustomInventory
 				}
 			}
 		}
+		If(beepvolume > 0.3)
+		{
+			Beepvolume -= 0.001;
+		}
         If(scarymonster)
 		{
 			return ResolveState("MakeItExplode");
@@ -57,10 +63,7 @@ CLASS PipeBombThrownIdle: CustomInventory
         return ResolveState(null);
 	}
       Loop;
-    Pickup:
-	  TNT1 A 0;
-	  TNT1 A 0 A_GiveInventory("AmmoPipeBomb",1);
-	  stop;
+
 	MakeItExplode:
 	
       TNT1 AAA 0;
