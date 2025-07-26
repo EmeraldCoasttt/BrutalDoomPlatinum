@@ -13,6 +13,7 @@ Default
   States
 	{
 	Spawn:
+		TNT1 A 0 NODELAY A_startsound("COMPFAN",1,CHANF_LOOPING,0.75);
 		PMAP ABCDCB 6 Bright;
 		Loop;
 	}
@@ -23,7 +24,7 @@ Default
 	override bool TryPickup (in out Actor toucher)
 	{
 		level.allmap = true;
-		
+		A_StopSound(1);
 	
 	If(GetCvar("bd_allmapdx") == 0)
 	{
