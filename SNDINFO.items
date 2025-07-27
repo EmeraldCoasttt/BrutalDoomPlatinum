@@ -30,6 +30,7 @@ items/energyshield ARMORSH
 items/quaddamage QDAMAGE
 items/quaddamage/active QDAMAGE2
 items/quaddamage/warn QUADWARN
+QUADHUM QUADHUM
 
 $limit items/quaddamage 1 100000
 
