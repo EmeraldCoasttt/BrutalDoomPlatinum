@@ -86,11 +86,11 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	MaxStepHeight 24
 	MaxDropOffHeight 32
     BloodType "Brutal_Blood", "SawBlood", "SawBlood"
-	//SeeSound "grunt/sight"
+	SeeSound "grunt/sight"
 	AttackSound "weapons/rifle"
-	//PainSound "grunt/pain"
-	//DeathSound "grunt/death"
-	//ActiveSound "grunt/active"
+	PainSound "grunt/pain"
+	DeathSound "grunt/death"
+	ActiveSound "grunt/active"
     damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
 	DropItem "RifleDrop"
 	//DropItem "GrenadeAmmo" 15
@@ -473,7 +473,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		TNT1 A 0
 		TNT1 A 0 HealThing(1)
 		TNT1 A 0 A_JumpIfInventory("Enraged", 1, "Missile")
-		POSR B 0 A_ZPain
+		POSR B 0 A_pain
 		TNT1 A 0 A_ChangeFlag("FASTER", 1)
 		TNT1 A 0 A_ChangeFlag("MISSILEMORE", 1)
 		TNT1 A 0 A_ChangeFlag("MISSILEEVENMORE", 1)
@@ -618,12 +618,12 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		POSR G 3
 		TNT1 A 0 A_TakeInventory("SKZombieman", 1)
 
-		POSR G 3 A_ZPain
+		POSR G 3 A_pain
 		TNT1 A 0 A_Jump(196, "Missile")
 	    Goto SeeContinue
 		PainIsDown:
         TNT1 AAAA 0
-        TNT1 A 0 A_ZPain
+        TNT1 A 0 A_pain
 		TNT1 A 0 A_ChangeFlag("SPECTRAL", 0)
 		TNT1 A 0 A_TAkeInventory("BarrelExpMeasure", 100)
         ID11 F 8
@@ -634,7 +634,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		POSR G 3
 		TNT1 A 0 A_TakeInventory("SKZombieman", 1)
 
-		POSR G 40 A_ZPain
+		POSR G 40 A_pain
 	    Goto SeeContinue
 		
 	Pain.Shrapnel:	
@@ -642,7 +642,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	    TNT1 A 0 A_SetSize(-1,40)
 		TNT1 A 0 A_TakeInventory("SKZombieman", 1)
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 0, 40,0)
-		POSH I 5 A_ZPain
+		POSH I 5 A_pain
 		TNT1 A 0 A_FaceTarget
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 4, 35,0)
 		POSH J 20
@@ -665,7 +665,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	
 	Pain.Stealth:
 		TNT1 A 0
-		TNT1 A 0 A_ZPain
+		TNT1 A 0 A_pain
 		//TNT1 A 0 A_JumpIfInventory ("SKZombieman", 1, "GotoStealthKill")
         //TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "GroundExecution")
 		Goto See
@@ -690,10 +690,10 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 0, 40,0)
 	    POSR G 4
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 0, 40,0)
-		POSR G 4 A_ZPain
+		POSR G 4 A_pain
 		Goto SeeContinue
         TNT1 AAAA 0
-        TNT1 A 0 A_ZPain
+        TNT1 A 0 A_pain
         ID11 FRRRQ 10
 		TNT1 A 0 A_TakeInventory("SKZombieman", 1)
         TNT1 A 0 A_TakeInventory("IsDown", 1)
@@ -720,7 +720,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		 TNT1 A 0 A_SetSize(-1,40)
 		 TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1)
 		 TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
-	     TNT1 A 0 A_ZPain
+	     TNT1 A 0 A_pain
 		 TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain")
 		 TNT1 A 0 A_TakeInventory("SKZombieman", 1)
          TNT1 A 0 A_GiveInventory("IsDown", 1)
@@ -736,7 +736,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		 TNT1 A 0 A_ChangeFlag("NOPAIN", 1)
 		 TNT1 A 0 A_ChangeFlag("GHOST", 1)
 		 TNT1 A 0 A_ChangeFlag("THRUGHOST", 1)
-         POS4 U 0 A_ZPain
+         POS4 U 0 A_pain
 		 
 		 TNT1 A 0 A_ChangeFlag("FORCEXYBILLBOARD", 1)
 		 TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain")
@@ -762,7 +762,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		 TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
 		 TNT1 A 0 A_ChangeFlag("NOPAIN", 1)
 		 TNT1 A 0 A_ChangeFlag("USESPECIAL", 1)
-         POS4 U 0 A_ZPain
+         POS4 U 0 A_pain
 		 TNT1 A 0 A_ChangeFlag("NOPAIN", 0)
 		 TNT1 A 0 A_ChangeFlag("FORCEXYBILLBOARD", 1)
 		 TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain")
@@ -827,7 +827,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		
 	Death.Fall:
 		TNT1 A 0
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBLocking
 		MARN A 0 A_SpawnItem("bdbodythud")
 		TNT1 AAAA 0 A_CustomMissile ("XDeath1", 32, 0, random (0, 360), 2, random (50, 130))
@@ -849,7 +849,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
 		TNT1 A 0 A_ChangeFLag("SLIDESONWALLS", 1)
 		TNT1 A 0 ThrustThingZ(0,30,0,1)
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBlocking
         TNT1 A 0 A_FaceTarget
         TNT1 A 0 A_Recoil (10)
@@ -863,7 +863,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		
 	 Death.BlackHole:
 		TNT1 A 0 A_stop
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBlocking
         ZWRL ABCDE 2
 		TNT1 A -1
@@ -889,7 +889,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	
    Death.Trample:	
    Death.Down:
-		POSR I 0 A_ZScream
+		POSR I 0 A_scream
 		TNT1 A 0 A_Stop
 		POSR J 0 A_NoBlocking
 		TNT1 AAA 0 A_CustomMissile ("XDeath1", 2, 0, random (0, 360), 2, random (0, 40))
@@ -924,13 +924,13 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	Death.Pierced:	
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_Stop
-		TNT1 A 0 A_ZPain
+		TNT1 A 0 A_pain
 		POSR H 1 A_FaceTarget
 		TNT1 A 0 A_Recoil(13)
 		TNT1 A 0 ThrustThingZ(0,20,0,1)
 		TNT1 A 0 A_Jump(96, "Death.Blast")
 		TNT1 A 0 A_Jump(128, "DeathShotgunontheface2")
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 AA 0 A_CustomMissile ("XDeath1", 35, 0, random (0, 360), 2, random (0, 160))
 		POS4 ABCD 4 A_CustomMissile ("Brutal_LiquidBlood3", 15, 0, random (0, 360), 2, random (0, 40))
 		POS4 EFGHIJ 4 A_JumpIf((MomY == 0), "DSFStop")
@@ -972,7 +972,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		TNT1 AA 0 A_CustomMissile ("BloodMist", 40, 0, random (0, 360), 2, random (30, 90))
 		TNT1 A 0 A_ChangeFLag("SLIDESONWALLS", 0)
 		TNT1 A 0 ThrustThingZ(0,30,0,1)
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBlocking
         TNT1 A 0 A_FaceTarget
         TNT1 A 0 A_Recoil (6)
@@ -1020,7 +1020,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	    TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_Jump(48, "Death.Variation1","Death.Variation2")
 		POSR Q 8 
-		POSR I 5 A_ZScream
+		POSR I 5 A_scream
 		POSR J 5 
 		POSR K 5
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
@@ -1033,7 +1033,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		
 	Death.Variation1:
 		POEX A 8 A_NoBlocking
-		POEX B 7 A_ZScream
+		POEX B 7 A_scream
 		POEX C 6 
 		POEX DE 6
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
@@ -1044,7 +1044,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		Stop
 	Death.Variation2:
 		POEX F 8 A_NoBlocking
-		POEX G 7 A_ZScream
+		POEX G 7 A_scream
 		POEX H 6 
 		POEX I 6
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
@@ -1062,7 +1062,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	Death.Rare:
 	    TNT1 A 0
 		TNT1 A 0 A_FaceTarget
-		12DG A 5 A_ZScream
+		12DG A 5 A_scream
 		TNT1 A 0 A_PlaySound("weapons/rifle")
 		TNT1 A 0 A_CustomMissile("DistantFireSoundRifle", 32, 0, 0, 1, 0)
 		TNT1 A 0 A_SpawnItem ("RifleCaseSpawn", 0, 30,0)
@@ -1086,7 +1086,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	DeathMirror:
 	    POSR R 8 A_NoBlocking
 	    POSR M 5
-		POSR N 5 A_ZScream
+		POSR N 5 A_scream
 		POSR O 5 
 		POSR P 5
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
@@ -1115,7 +1115,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		TNT1 AA 0 A_CustomMissile ("BloodMist", 40, 0, random (0, 360), 2, random (30, 90))
 		TNT1 A 0 A_Changeflag("NOBLOCKMONST", 1)
 		TNT1 A 0 A_NoBlocking
-		ZZD1 I 10 A_ZScream
+		ZZD1 I 10 A_scream
 		TNT1 A 0 A_SpawnItemEx ("DyingZombiemanNoArm",0,0 , 0, velx, vely, velz,0,SXF_NOCHECKPOSITION | SXF_ABSOLUTEVELOCITY,0)
 		//TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
         Stop
@@ -1124,7 +1124,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		TNT1 A 0 A_CustomMissile ("XDeathArm1", 35, 0, random (0, 360), 2, random (0, 160))
         
 		TNT1 AA 0 A_CustomMissile ("BloodMist", 40, 0, random (0, 360), 2, random (30, 90))
-		ZZD2 A 15 A_ZScream
+		ZZD2 A 15 A_scream
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItemEx ("DyingZombiemanNoArm",0,0 , 0, velx, vely, velz,0,SXF_NOCHECKPOSITION | SXF_ABSOLUTEVELOCITY,0)
 		//TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
@@ -1139,7 +1139,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		
 		TNT1 A 0 A_JumpIfHealthLower(-300,"DoubleLegRemove")
 		TNT1 A 0 A_JumpIfHealthLower(-25, "LegRemove")
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBlocking
 		POSL MO 6
 		POSR K 6
@@ -1151,7 +1151,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		Stop
 		
 	DoubleLegRemove:
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBlocking
 		TNT1 AA 0 A_CustomMissile ("XDeathZombieLeg", 15, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AAA 0 A_CustomMissile ("Blood", 15, 0, random (0, 360), 2, random (0, 160))
@@ -1173,7 +1173,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		TNT1 A 0 A_CustomMissile ("XDeathZombieLeg", 35, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
 		TNT1 A 0 A_NoBlocking
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		POS7 A 6
 		
 		TNT1 A 0 A_Jump(64, "LegRemoveRare")
@@ -1197,7 +1197,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	Death.HKFT:
         TNT1 A 0
         
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
   	    TNT1 O 0 A_NoBlocking
 		POSR Q 8
 		TNT1 A 0 A_CustomMissile ("MuchBlood2", 35, 0, random (0, 360), 2, random (0, 160))
@@ -1225,7 +1225,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	 Death.Minigun:
         TNT1 A 0
 		TNT1 A 0 A_FaceTarget
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 O 0 A_NoBlocking
         TNT1 A 0 A_SpawnItem ("BrutalizedZombieMan1", 1)
 		
@@ -1235,7 +1235,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		TNT1 A 0
         TNT1 A 0 A_CustomMissile ("MuchBlood", 15, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_SpawnItem ("ZombieLegOnFoot")
-		POS7 B 1 A_ZScream
+		POS7 B 1 A_scream
 		TNT1 A 0 A_NoBlocking
         TNT1 A 0 A_SpawnItem ("BrutalizedZombieManLeg")
 		
@@ -1261,7 +1261,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
     Death.Eat:
 	    TNT1 A 0
 		TNT1 A 0 A_NoBlocking
-	    TNT1 A 0 A_ZScream
+	    TNT1 A 0 A_scream
         TNT1 A 0 A_GiveToTarget("ZombieManFatality",1)
         Stop
 		
@@ -1272,7 +1272,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		TNT1 A 0 A_SpawnItemEx("Clip", 0, 0, 40, 0, 0, 0, 0, 0, 128)
 		TNT1 A 0 A_SpawnItemEx("HealthPlusFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8)
 		TNT1 A 0 A_SpawnItemEx("ArmorShardFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8)
-		TNT1 A 0 A_ZPain
+		TNT1 A 0 A_pain
         TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_JumpIfIntargetInventory("IsPlayer", 1, 1)
 		Goto Death.Hammered
@@ -1281,32 +1281,32 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		Goto Death.Fatality1
 	
 	Death.Fatality1:
-		TNT1 A 0 A_zscream
+		TNT1 A 0 A_scream
         TNT1 A 0 A_GiveToTarget("ZombieManFatality", 1)
 		TNT1 A 2
         Stop
 	Death.Fatality2:
-		TNT1 A 0 A_zscream
+		TNT1 A 0 A_scream
         TNT1 A 0 A_GiveToTarget("ZombieManFatality2", 1)
         Stop
 	Death.Fatality3:
-		TNT1 A 0 A_zscream
+		TNT1 A 0 A_scream
         TNT1 A 0 A_GiveToTarget("ZombieManFatality3", 1)
         Stop
 	Death.Fatality4:
-		TNT1 A 0 A_zscream
+		TNT1 A 0 A_scream
         TNT1 A 0 A_GiveToTarget("ZombieManFatality4", 1)
         Stop
 	Death.Fatality5:
-		TNT1 A 0 A_zscream
+		TNT1 A 0 A_scream
         TNT1 A 0 A_GiveToTarget("ZombieManFatality5", 1)
         Stop	
 		
 	Death.PussyGrab:
 	    TNT1 A 0
-		TNT1 A 0 A_ZPain
+		TNT1 A 0 A_pain
 		TNT1 A 0 A_Chase("","")
-		TNT1 A 0 A_ZPain
+		TNT1 A 0 A_pain
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_GiveToTarget("GrabbedAZombieman", 1)
 		
@@ -1314,17 +1314,17 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		
 	Death.HelperMarineFatallity:
 	    TNT1 A 0
-	    TNT1 A 1 A_ZPain
+	    TNT1 A 1 A_pain
 		TNT1 A 0 A_Chase("","")
-		TNT1 A 0 A_zscream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBlocking
         TNT1 A 0 A_GiveToTarget("ZombieManFatality3", 1)
         Stop		
 		
     Death.BHFT:
 	Death.RVFT:
-	    TNT1 A 1 A_ZPain
-		TNT1 A 0 A_zscream
+	    TNT1 A 1 A_pain
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBlocking
         TNT1 A 0 A_GiveToTarget("ZombieManFatality", 1)
         TNT1 A 0
@@ -1339,7 +1339,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	    TNT1 A 0 A_Jump (256, "deathminorhead2","Death.headexplode","death.decapitate","heavyhead")
 		//TNT1 A 0 A_Jump (110, "DeathMinorhead4")
 	DeathMinorHead1:	
-	    TNT1 A 0 A_zscream
+	    TNT1 A 0 A_scream
 		TNT1 A 0 A_FaceTarget
 		TNT1 AAAA 0 A_CustomMissile ("SmallBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
 		TNT1 A 0 A_CustomMissile ("BloodMist", 50, 0, random (0, 360), 2, random (30, 90))
@@ -1369,7 +1369,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		
 	DeathMinorHead4:
 	    TNT1 A 0
-	    TNT1 A 0 A_ZPain
+	    TNT1 A 0 A_pain
 		TNT1 A 0 A_FaceTarget
 		TNT1 A 0 A_CustomMissile ("Brains4GreenHair", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
 		TNT1 AAA 0 A_CustomMissile ("SmallBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
@@ -1381,7 +1381,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		12DG KKKK 2 A_CustomMissile ("Brutal_LiquidBlood2", 50, 0, 45, 2, random (40, 60))
 		12DG LLL 2 A_CustomMissile ("Brutal_LiquidBlood2", 50, -5, 45, 2, random (40, 60))
 		
-		TNT1 A 0 A_zscream
+		TNT1 A 0 A_scream
 		12DG M 6 A_NoBlocking
 		
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
@@ -1429,7 +1429,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	
 		
 	HeavyHead:	
-		POSL G 1 A_ZPain
+		POSL G 1 A_pain
 		TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1)
 		TNT1 A 0 A_PlaySound("misc/xdeath4")
 		TNT1 A 0 A_FaceTarget
@@ -1453,7 +1453,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	Death.Flames:
 	Death.Burn:
 	Death.FallInLava:
-        TNT1 A 0 A_zscream
+        TNT1 A 0 A_scream
         TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItem("BurningZombieMan", 0, 7)
 		
@@ -1563,7 +1563,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		TNT1 A 0 A_FaceTarget
 		TNT1 A 0 A_Jump(12, "Death.Arm")
 		TNT1 A 0 A_Jump(128, "Death.Blast2")
-		TNT1 A 0 A_zscream
+		TNT1 A 0 A_scream
 		TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (150, 210), 2, random (0, 40))
 		TNT1 AAA 0 A_CustomMissile ("XDeath1", 32, 0, random (150, 210), 2, random (0, 40))
 		TNT1 AAA 0 A_CustomMissile ("Xdeath3", 16, 0, random (170, 190), 2, random (0, 40))
@@ -1603,7 +1603,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	Death.Railgun:
 		TNT1 A 0
 		TNT1 A 0 A_Stop
-	    ZZD1 E 1 A_ZPain
+	    ZZD1 E 1 A_pain
 		ZZD1 E 1 A_FaceTarget
         //TNT1 A 0 A_CustomMissile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
 		//TNT1 AAA 0 A_CustomMissile ("XDeath1", 32, 0, random (170, 190), 2, random (0, 40))
@@ -1632,7 +1632,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
         Stop
 	
 	Death.SSGHead:
-	    ZZD1 E 1 A_ZPain
+	    ZZD1 E 1 A_pain
 		ZZD1 E 1 A_FaceTarget
         //TNT1 A 0 A_CustomMissile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AAA 0 A_CustomMissile ("XDeath1", 32, 0, random (170, 190), 2, random (0, 40))
@@ -1672,7 +1672,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		Stop
 
 	 Death.Stomp:
-		TNT1 A 0 A_zscream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBlocking
 		POSR IJK 2
 		TNT1 AA 0 A_SpawnItem("MeatDeathSmall")
@@ -1811,7 +1811,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 		TNT1 A 0 A_CustomMissile ("XDeathZombieLeg", 32, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_CustomMissile ("GibHand", 42, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 ThrustThingZ(0,25,0,1)
-		ID13 A 1 A_zscream
+		ID13 A 1 A_scream
 	    ID15 A 9
 		ID15 BCD 9 A_CheckFloor("Dead.Landmine")
 		ID15 DDDDD 9 A_CheckFloor("Dead.Landmine")
@@ -1864,7 +1864,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
 	     //TNT1 A 0 A_RadiusGive("MakeTheNailDissapear", 32, RGF_MISSILES, 1)
 		// TNT1 A 0 A_Jump(256, "Death.NailAlternative")
 		 TNT1 A 0 A_Jump(64, "Death.NailRipLegs")
-		 TNT1 A 0 A_zscream
+		 TNT1 A 0 A_scream
 		 TNT1 A 0 A_NoBlocking
 		 TNT1 A 0 A_FaceTarget
 		 TNT1 A 0 A_CustomMissile ("NailedZMan", 8, 0, 180, 2, random (5, 10))
@@ -1893,7 +1893,7 @@ ACTOR RifleZombie : BrutalZombie Replaces ZombieMan
         Stop
 	
 	Death.NailAlternative:
-	    TNT1 A 0 A_zscream
+	    TNT1 A 0 A_scream
 		TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (150, 210), 2, random (0, 40))
 		TNT1 AAA 0 A_CustomMissile ("XDeath1", 32, 0, random (150, 210), 2, random (0, 40))
 		TNT1 AAA 0 A_CustomMissile ("Xdeath3", 16, 0, random (170, 190), 2, random (0, 40))

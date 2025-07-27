@@ -102,11 +102,13 @@ CLASS BrutalZombie : Actor
 					Idletimermax = (200 + (5000 * idletimermax));
 					//console.printf("%i",idletimermax);
 	}
+	/*
 	override void beginplay()
 	{
 		CheckZombies();
 				Super.beginplay();
 	}
+	*/
 	Override void tick()
 	{
 		bnoinfightspecies = false;
@@ -114,6 +116,7 @@ CLASS BrutalZombie : Actor
 		bdontharmspecies = false;
 		bdontharmclass = false;
 		//console.printf("%i",idletimer);
+		/*
 		If(health > 0 && findinventory("KilledPlayer"))
 			{
 				Killedplayertics++;
@@ -195,6 +198,7 @@ CLASS BrutalZombie : Actor
 			
 			
 		}
+		*/
 		Super.tick();
 	}
 	Action void A_ZPain()

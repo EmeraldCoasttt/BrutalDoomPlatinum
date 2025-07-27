@@ -15,7 +15,7 @@ painchance "Head", 255
 	Pain.head:
 	TNT1 A 0 A_sethealth(0)
 		TNT1 A 0 A_spawnitemex("DroppedHelmetSpawner",0,0,40,0,0,0,0,SXF_NOCHECKPOSITIOn)
-		TNT1 A 0 A_ZPain
+		TNT1 A 0 A_pain
 		tnt1 a 0 a_playSOUND("RICMET",2)
 		TNT1 A 0 A_ChangeFlag("THRUACTORS", 1)
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0)
@@ -443,12 +443,12 @@ painchance "Head", 255
 		SP1S G 3
 		TNT1 A 0 A_TakeInventory("SKZombieman", 1)
 
-		SP1S G 3 A_ZPain
+		SP1S G 3 A_pain
 		TNT1 A 0 A_Jump(196, "Missile")
 	    Goto SeeContinue
 		PainIsDown:
         TNT1 AAAA 0
-        TNT1 A 0 A_ZPain
+        TNT1 A 0 A_pain
 		TNT1 A 0 A_ChangeFlag("SPECTRAL", 0)
 		TNT1 A 0 A_TAkeInventory("BarrelExpMeasure", 100)
         ID11 H 8
@@ -459,14 +459,14 @@ painchance "Head", 255
 		SP1S G 3
 		TNT1 A 0 A_TakeInventory("SKZombieman", 1)
 
-		SP1S G 40 A_ZPain
+		SP1S G 40 A_pain
 	    Goto SeeContinue
 		
 	Pain.Shrapnel:	
 	    TNT1 A 0 A_SetSize(-1,40)
 		TNT1 A 0 A_TakeInventory("SKShotgunguy", 1)
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 0, 40,0)
-		POSH Q 4 A_ZPain
+		POSH Q 4 A_pain
 		TNT1 A 0 A_FaceTarget
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 4, 35,0)
 		POSH R 12
@@ -481,10 +481,10 @@ painchance "Head", 255
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0)
 		SP1S G 4
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0)
-		SP1S G 4 A_ZPain
+		SP1S G 4 A_pain
 		Goto SeeContinue
         TNT1 AAAAA 0
-        TNT1 A 0 A_ZPain
+        TNT1 A 0 A_pain
         POS6 E 8
 		POS6 F 35
         TNT1 A 0 A_TakeInventory("IsDown", 1)
@@ -498,7 +498,7 @@ painchance "Head", 255
 	TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
 	TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1)
 	         TNT1 A 0 A_SetSize(-1,40)
-	         TNT1 A 0 A_ZPain
+	         TNT1 A 0 A_pain
 		 TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain")
 		 		    TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1)
          TNT1 A 0 A_GiveInventory("IsDown", 1)
@@ -513,7 +513,7 @@ painchance "Head", 255
 		  TNT1 A 0 A_ChangeFlag("GHOST", 1)
 		 TNT1 A 0 A_ChangeFlag("THRUGHOST", 1)	
 		 TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain")
-         ID11 G 1 A_ZPain
+         ID11 G 1 A_pain
 		 TNT1 A 0 A_GiveInventory("IsDown", 1)
 		 TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1)
         TNT1 A 0 ThrustThingZ(0,30,0,1)
@@ -538,7 +538,7 @@ painchance "Head", 255
 		TNT1 A 0 A_SetSize(-1,40)
 		TNT1 A 0 HealThing(1)
 		TNT1 A 0 A_JumpIfInventory("Enraged", 1, "Missile")
-		POSR B 0 A_ZPain
+		POSR B 0 A_pain
 		TNT1 A 0 A_ChangeFlag("FASTER", 1)
 		TNT1 A 0 A_ChangeFlag("MISSILEMORE", 1)
 		TNT1 A 0 A_ChangeFlag("MISSILEEVENMORE", 1)
@@ -556,7 +556,7 @@ painchance "Head", 255
 		 TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1)
 		 TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
 		 TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain")
-         POS6 A 1 A_ZPain
+         POS6 A 1 A_pain
 		 TNT1 A 0 A_GiveInventory("IsDown", 1)
 		 TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1)
         TNT1 A 0 ThrustThingZ(0,30,0,1)

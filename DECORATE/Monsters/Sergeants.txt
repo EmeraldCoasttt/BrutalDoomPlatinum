@@ -55,6 +55,10 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 	DamageFactor "CauseSplash", 0.0 DamageFactor "CauseObjectsToSplashSlime", 0.0 DamageFactor "CauseObjectsToSplashNukage", 0.0
 	DamageFactor "CauseObjectsToSplashBlood", 0.0 DamageFactor "CauseObjectsToSplashLava", 0.0
 	BrutalZombie.VoicePitch 0.9
+	SeeSound "grunt/sight"
+	PainSound "grunt/pain"
+	DeathSound "grunt/death"
+	ActiveSound "grunt/active"
 	States
 	{
 	Pain.Avoid:
@@ -518,12 +522,12 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 		SPOS G 3
 		TNT1 A 0 A_TakeInventory("SKZombieman", 1)
 
-		SPOS G 3 A_ZPain
+		SPOS G 3 A_pain
 		TNT1 A 0 A_Jump(196, "Missile")
 	    Goto SeeContinue
 		PainIsDown:
         TNT1 AAAA 0
-        TNT1 A 0 A_ZPain
+        TNT1 A 0 A_pain
 		TNT1 A 0 A_ChangeFlag("SPECTRAL", 0)
 		TNT1 A 0 A_TAkeInventory("BarrelExpMeasure", 100)
         ID11 H 8
@@ -534,7 +538,7 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 		SPOS G 3
 		TNT1 A 0 A_TakeInventory("SKZombieman", 1)
 
-		SPOS G 40 A_ZPain
+		SPOS G 40 A_pain
 	    Goto SeeContinue
 		
 	Pain.Head:
@@ -542,7 +546,7 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 	    TNT1 A 0 A_SetSize(-1,40)
 		TNT1 A 0 A_TakeInventory("SKShotgunguy", 1)
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 0, 40,0)
-		POSH K 5 A_ZPain
+		POSH K 5 A_pain
 		TNT1 A 0 A_FaceTarget
 		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 4, 35,0)
 		POSH L 20
@@ -558,10 +562,10 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0)
 		SPOS G 4
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0)
-		SPOS G 4 A_ZPain
+		SPOS G 4 A_pain
 		Goto SeeContinue
         TNT1 AAAAA 0
-        TNT1 A 0 A_ZPain
+        TNT1 A 0 A_pain
         ID11 H 8
 		ID11 S 35
         TNT1 A 0 A_TakeInventory("IsDown", 1)
@@ -570,7 +574,7 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 
 	Pain.Stealth:
 		TNT1 A 0
-		TNT1 A 0 A_ZPain
+		TNT1 A 0 A_pain
 		//TNT1 A 0 A_JumpIfInventory ("SKShotgunguy", 1, "GotoStealthKill")
        // TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "GroundExecution")
 		Goto See
@@ -593,7 +597,7 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 	TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
 	TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1)
 	         TNT1 A 0
-	         TNT1 A 0 A_ZPain
+	         TNT1 A 0 A_pain
 		 TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain")
 		 		    TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1)
          TNT1 A 0 A_GiveInventory("IsDown", 1)
@@ -619,7 +623,7 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 		
 		 Death.BlackHole:
 		TNT1 A 0 A_stop
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBlocking
         ZWRL FGHIJ 2
 		TNT1 A -1
@@ -633,7 +637,7 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 		  TNT1 A 0 A_ChangeFlag("GHOST", 1)
 		 TNT1 A 0 A_ChangeFlag("THRUGHOST", 1)	
 		 TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain")
-         ID11 G 1 A_ZPain
+         ID11 G 1 A_pain
 		 TNT1 A 0 A_GiveInventory("IsDown", 1)
 		 TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1)
         TNT1 A 0 ThrustThingZ(0,30,0,1)
@@ -659,7 +663,7 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 		TNT1 A 0 A_SetSize(-1,40)
 		TNT1 A 0 HealThing(1)
 		TNT1 A 0 A_JumpIfInventory("Enraged", 1, "Missile")
-		POSR B 0 A_ZPain
+		POSR B 0 A_pain
 		TNT1 A 0 A_ChangeFlag("FASTER", 1)
 		TNT1 A 0 A_ChangeFlag("MISSILEMORE", 1)
 		TNT1 A 0 A_ChangeFlag("MISSILEEVENMORE", 1)
@@ -678,7 +682,7 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 		 TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1)
 		 TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
 		 TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain")
-         ID11 G 1 A_ZPain
+         ID11 G 1 A_pain
 		 TNT1 A 0 A_GiveInventory("IsDown", 1)
 		 TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1)
         TNT1 A 0 ThrustThingZ(0,30,0,1)
@@ -722,7 +726,7 @@ ACTOR ShotgunGuy1: BrutalZOmbie Replaces ShotgunGuy
 		
 	Death.Fall:
 		TNT1 A 0
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBLocking
 		TNT1 A 0 A_Stop
 		TNT1 AAAA 0 A_CustomMissile ("XDeath1", 32, 0, random (0, 360), 2, random (50, 130))
@@ -767,11 +771,11 @@ Death.Shotgun:
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_Jump(128, "DeathShotgunontheface2")
 		TNT1 A 0 A_Stop
-		TNT1 A 0 A_ZPain
+		TNT1 A 0 A_pain
 		SPOS H 1 A_FaceTarget
 		TNT1 A 0 A_Recoil(13)
 		TNT1 A 0 ThrustThingZ(0,20,0,1)
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 AA 0 A_CustomMissile ("XDeath1", 35, 0, random (0, 360), 2, random (0, 160))
         SPO4 ABCD 4
 		SPO4 EFGHIJ 4 A_JumpIf((MomY == 0), "DSFStop")
@@ -789,9 +793,9 @@ Death.Shotgun:
 	DeathShotgunontheface2:	
 		TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1)
 		TNT1 A 0 A_Stop
-		TNT1 A 0 A_ZPain
+		TNT1 A 0 A_pain
 		SPOS H 1 A_FaceTarget
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_Recoil(13)
 		TNT1 A 0 ThrustThingZ(0,20,0,1)
 		TNT1 AA 0 A_CustomMissile ("XDeath1", 35, 0, random (0, 360), 2, random (0, 160))
@@ -812,7 +816,7 @@ Death.Shotgun:
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
 		TNT1 A 0 A_ChangeFLag("SLIDESONWALLS", 0)
 		TNT1 A 0 ThrustThingZ(0,30,0,1)
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBlocking
         TNT1 A 0 A_FaceTarget
         TNT1 A 0 A_Recoil (6)
@@ -839,7 +843,7 @@ Death.Shotgun:
     Death.Eat:
 	    TNT1 A 0
 		TNT1 A 0 A_NoBlocking
-	    TNT1 A 0 A_ZScream
+	    TNT1 A 0 A_scream
         TNT1 A 0 A_GiveToTarget("SergeantFatality",1)
         Stop
 		
@@ -849,7 +853,7 @@ Death.Shotgun:
 	    TNT1 A 0 ThrustThingZ(0,40,0,1)
 		TNT1 A 0 A_CustomMissile ("XDeathArm1", 35, 0, random (0, 360), 2, random (0, 160))
         TNT1 A 0 A_CustomMissile ("MuchBlood", 35, 0, random (0, 360), 2, random (0, 160))
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBlocking
          ID11 OP 15
          TNT1 A 0 A_SpawnItem ("DeadShotgunGuy_NoArm")
@@ -874,7 +878,7 @@ Death.Shotgun:
 	   		//TNT1 A 0 A_JumpIfInventory ("SKShotgunGuy", 1, "StealthKill")
          Death.Kick:
 		 TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
-		 TNT1 A 0 A_ZScream
+		 TNT1 A 0 A_scream
          TNT1 A 0 A_NoBlocking
         TNT1 A 0 ThrustThingZ(0,30,0,1)
         TNT1 A 0 A_FaceTarget
@@ -893,7 +897,7 @@ Death.Shotgun:
 	    TNT1 A 0 A_Jump(48, "Death.Leg")
 	Death.Minor:
 		TNT1 A 0
-		SPOS H 5 A_ZScream
+		SPOS H 5 A_scream
 		SPOS I 5 
 		SPOS J 5 A_NoBlocking
 		SPOS K 5
@@ -905,7 +909,7 @@ Death.Shotgun:
 	Death.Down:
 	Death.Trample:
         TNT1 A 0 
-        TNT1 A 0 A_ZScream
+        TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBlocking
 		TNT1 AAA 0 A_CustomMissile ("XDeath1", 2, 0, random (0, 360), 2, random (0, 40))
 		ID11 H 12
@@ -932,7 +936,7 @@ Death.Shotgun:
 
     Death.Arm:
 	    TNT1 A 0 A_JumpIfInTargetInventory("HasFreezerWeapon", 1, "Death.Freeze")
-        TNT1 A 0 A_ZScream
+        TNT1 A 0 A_scream
         TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_CustomMissile ("XDeathArm2", 35, 0, random (0, 360), 2, random (0, 160))
         SPO5 A 9 A_CustomMissile ("XDeath1", 40, 0, random (0, 360), 2, random (0, 160))
@@ -962,7 +966,7 @@ Death.Shotgun:
 		TNT1 A 0 A_CustomMissile ("XDeath1", 40, 0, random (100, 130), 2, random (0, 160))
 		TNT1 A 0 A_CustomMissile ("Brains3", 50, 0, random (90, 110), 2, random (0, 160))
 		TNT1 A 0 A_CustomMissile ("Brains5", 50, 0, random (100, 130), 2, random (0, 160))
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		SPOS TTTTUU 2 A_CustomMissile ("Brutal_LiquidBlood", 40, 0, 120, 2, random (0, 60))
 		SPOS VVV 2 A_CustomMissile ("Brutal_LiquidBlood2", 30, 0, 120, 2, random (60, 120))
 		TNT1 A 0 A_NoBlocking 
@@ -976,13 +980,13 @@ Death.Shotgun:
 	Death.MinorHeadLong:
 		TNT1 A 0
 	    TNT1 A 0 A_NoBlocking
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_SpawnItemEx("DyingShotgunguyHitInEye",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		Stop
 		
 	DeathMinorHead4:
 	    TNT1 A 0
-	    TNT1 A 0 A_ZPain
+	    TNT1 A 0 A_pain
 		TNT1 A 0 A_FaceTarget
 		TNT1 A 0 A_CustomMissile ("Brains4", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
 		TNT1 AA 0 A_CustomMissile ("SmallBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10))
@@ -992,7 +996,7 @@ Death.Shotgun:
 		13DG J 6
 		13DG KL 8
 		
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		13DG M 6 A_NoBlocking
 		TNT1 A 0 A_CustomMissile ("ArterialBloodSPray", 10, -10, 45, 2, random (0, 60))
 		TNT1 A 0 A_SpawnItem ("GrowingBloodPool")
@@ -1071,7 +1075,7 @@ Death.Shotgun:
 		TNT1 A 0
 		TNT1 A 0 A_Jump(32, "Death.ARm")
         TNT1 A 0 A_CustomMissile ("MuchBlood", 1, 0, random (0, 360), 2, random (0, 160))
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 O 0 A_NoBlocking
 	    SP2X AA 8
         TNT1 A 0 A_CustomMissile ("XDeath4", 40, 0, random (0, 360), 2, random (0, 160))
@@ -1085,7 +1089,7 @@ Death.Shotgun:
         Death.Minigun:
         TNT1 A 0
 		TNT1 A 0 A_FaceTarget
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 O 0 A_NoBlocking
         TNT1 A 0 A_SpawnItem ("BrutalizedSergeant1", 1)
 		Stop
@@ -1093,7 +1097,7 @@ Death.Shotgun:
         Death.LegMassacre:
         TNT1 A 0
 		TNT1 A 0 A_FaceTarget
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 O 0 A_NoBlocking
         TNT1 A 0 A_SpawnItem ("BrutalizedSergeantLeg", 1)
 		Stop
@@ -1105,7 +1109,7 @@ Death.Shotgun:
 		TNT1 A 0 A_Jump(12, "Death.Arm")
 		TNT1 A 0 A_Jump(128, "Death.Blast2")
 		TNT1 A 0 A_NoBlocking
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (150, 210), 2, random (0, 40))
 		TNT1 AAA 0 A_CustomMissile ("XDeath1", 32, 0, random (150, 210), 2, random (0, 40))
 		TNT1 AAA 0 A_CustomMissile ("Xdeath3", 16, 0, random (170, 190), 2, random (0, 40))
@@ -1143,7 +1147,7 @@ Death.Shotgun:
 	Death.Railgun:
 		TNT1 A 0
 		TNT1 A 0 A_Stop
-	    SZD1 E 1 A_ZPain
+	    SZD1 E 1 A_pain
 		TNT1 A 0 A_SpawnItem("Muchblood2", 0, 40)
 		SZD1 E 1 A_FaceTarget
 		
@@ -1165,7 +1169,7 @@ Death.Shotgun:
 	Death.Cut:
 		TNT1 A 0
 		TNT1 A 0 A_Stop
-	    SZD1 E 1 A_ZPain
+	    SZD1 E 1 A_pain
 		TNT1 A 0 A_SpawnItem("Muchblood2", 0, 40)
 		SZD1 E 1 A_FaceTarget
 	    TNT1 A 0 A_CustomMissile ("RipGuts", 32, 0, random (170, 190), 2, random (0, 40))
@@ -1272,7 +1276,7 @@ Death.Shotgun:
 		TNT1 A 0 A_SpawnItemEx("Shell", 0, 0, 40, 0, 0, 0, 0, 0, 128)
 		TNT1 A 0 A_SpawnItemEx("HealthPlusFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8)
 		TNT1 A 0 A_SpawnItemEx("ArmorShardFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8)
-		TNT1 A 0 A_ZPain
+		TNT1 A 0 A_pain
 		TNT1 A 0 A_JumpIfIntargetInventory("IsPlayer", 1, 2)
 		Goto Death.ExplosiveImpact
 		TNT1 A 0
@@ -1301,9 +1305,9 @@ Death.Shotgun:
 		
 	Death.PussyGrab:
 	    TNT1 A 0
-		TNT1 A 0 A_ZPain
+		TNT1 A 0 A_pain
 		TNT1 A 0 A_Chase("","")
-		TNT1 A 0 A_ZPain
+		TNT1 A 0 A_pain
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_GiveToTarget("GrabbedAShotgunguy", 1)
         Stop		
@@ -1312,9 +1316,9 @@ Death.Shotgun:
 	Death.BHFT:
 	Death.RVFT:
 		TNT1 A 0
-	    TNT1 A 1 A_ZPain
+	    TNT1 A 1 A_pain
 		TNT1 A 0 A_Chase("","")
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBlocking        
 		TNT1 A 0 A_GiveToTarget("SergeantFatality", 1)
 		Stop	
@@ -1323,7 +1327,7 @@ Death.Shotgun:
     Death.burn:
 	Death.FallInLava:
     Death.flames:
-        TNT1 A 0 A_ZScream
+        TNT1 A 0 A_scream
         TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_SpawnItem("BurningZombieMan", 0, 7)
         //TNT1 A 0 A_SpawnItem("BurningShotgunguy", 0, 10)
@@ -1352,7 +1356,7 @@ Death.Shotgun:
 	
 		
 	Death.Stomp:
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBlocking
 		SPOS IJK 2
 	    TNT1 AA 0 A_SpawnItem("MeatDeathSmall")
@@ -1493,7 +1497,7 @@ Death.Shotgun:
 	Death.LandMine:
 		TNT1 A 0 A_CustomMissile ("XDeathSargeLeg1", 32, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 ThrustThingZ(0,25,0,1)
-		ID16 A 1 A_ZScream
+		ID16 A 1 A_scream
 	    ID16 A 9
 		ID16 BCD 9 A_CheckFloor ("Dead.Landmine")
 		ID16 DDDD 9 A_CheckFloor ("Dead.Landmine")
@@ -1547,7 +1551,7 @@ Death.Shotgun:
 		// TNT1 A 0 A_RadiusGive("MakeTheNailDissapear", 32, RGF_MISSILES, 1, 0, "FlyingNailuwu")
 		 //TNT1 A 0 A_Jump(32, "Death.NailAlternative")
 		 TNT1 A 0 A_Jump(64, "Death.NailRipLegs")
-		 TNT1 A 0 A_ZScream
+		 TNT1 A 0 A_scream
 		 TNT1 A 0 A_FaceTarget
 		 TNT1 A 0 A_CustomMissile ("NailedShotgunguy", 8, 0, 180, 2, random (5, 10))
 		 TNT1 A 0 A_NoBlocking
@@ -1577,7 +1581,7 @@ Death.Shotgun:
 	
 	Death.NailAlternative:
 	    TNT1 A 0 A_NoBlocking
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (150, 210), 2, random (0, 40))
 		TNT1 AAA 0 A_CustomMissile ("XDeath1", 32, 0, random (150, 210), 2, random (0, 40))
 		TNT1 AAA 0 A_CustomMissile ("Xdeath3", 16, 0, random (170, 190), 2, random (0, 40))
@@ -2543,12 +2547,12 @@ Obituary "%o got punctured by a SMG Zombie."
 		PSS3 G 3
 		TNT1 A 0 A_TakeInventory("SKZombieman", 1)
 
-		PSS3 G 3 A_ZPain
+		PSS3 G 3 A_pain
 		TNT1 A 0 A_Jump(196, "Missile")
 	    Goto SeeContinue
 		PainIsDown:
         TNT1 AAAA 0
-        TNT1 A 0 A_ZPain
+        TNT1 A 0 A_pain
 		TNT1 A 0 A_ChangeFlag("SPECTRAL", 0)
 		TNT1 A 0 A_TAkeInventory("BarrelExpMeasure", 100)
         ID11 H 8
@@ -2559,7 +2563,7 @@ Obituary "%o got punctured by a SMG Zombie."
 		PSS3 G 3
 		TNT1 A 0 A_TakeInventory("SKZombieman", 1)
 
-		PSS3 G 40 A_ZPain
+		PSS3 G 40 A_pain
 	    Goto SeeContinue
 		
 	Pain.Melee:
@@ -2570,10 +2574,10 @@ Obituary "%o got punctured by a SMG Zombie."
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0)
 		PSS3 G 4
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0)
-		PSS3 G 4 A_ZPain
+		PSS3 G 4 A_pain
 		Goto SeeContinue
         TNT1 AAAAA 0
-        TNT1 A 0 A_ZPain
+        TNT1 A 0 A_pain
         ID11 H 8
 		ID11 S 35
         TNT1 A 0 A_TakeInventory("IsDown", 1)
@@ -2588,7 +2592,7 @@ Obituary "%o got punctured by a SMG Zombie."
 	TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
 	TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1)
 	         TNT1 A 0
-	         TNT1 A 0 A_ZPain
+	         TNT1 A 0 A_pain
 		 TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain")
 		 		    TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1)
          TNT1 A 0 A_GiveInventory("IsDown", 1)
@@ -2622,7 +2626,7 @@ Obituary "%o got punctured by a SMG Zombie."
 		  TNT1 A 0 A_ChangeFlag("GHOST", 1)
 		 TNT1 A 0 A_ChangeFlag("THRUGHOST", 1)	
 		 TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain")
-         ID11 G 1 A_ZPain
+         ID11 G 1 A_pain
 		 TNT1 A 0 A_GiveInventory("IsDown", 1)
 		 TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1)
         TNT1 A 0 ThrustThingZ(0,30,0,1)
@@ -2650,7 +2654,7 @@ Obituary "%o got punctured by a SMG Zombie."
 		 TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1)
 		 TNT1 A 0 A_ChangeFLag("NODROPOFF", 0)
 		 TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain")
-         ID11 G 1 A_ZPain
+         ID11 G 1 A_pain
 		 TNT1 A 0 A_GiveInventory("IsDown", 1)
 		 TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1)
         TNT1 A 0 ThrustThingZ(0,30,0,1)
@@ -2694,7 +2698,7 @@ Obituary "%o got punctured by a SMG Zombie."
 		
 	Death.Fall:
 		TNT1 A 0
-		TNT1 A 0 A_ZScream
+		TNT1 A 0 A_scream
 		TNT1 A 0 A_NoBLocking
 		TNT1 A 0 A_Stop
 		TNT1 AAAA 0 A_CustomMissile ("XDeath1", 32, 0, random (0, 360), 2, random (50, 130))
