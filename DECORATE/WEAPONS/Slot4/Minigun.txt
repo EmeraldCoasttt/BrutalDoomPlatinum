@@ -359,18 +359,16 @@ ACTOR MiniGun : BrutalWeapon
 		SpinFire:
 		CHAG A 0 A_StartSound("CHAINSPI", 5,CHANF_LOOPING)
 		NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoHOld")
-		TNT1 A 0 A_JumpIfInventory("FalseSpin",1,"SpinFireAnyways")
-			CHAG A 0 A_JumpIfInventory("Spin",1,"SpinFire2")
-			SpinFireAnyways:
-			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
+			CHAG A 0 A_StartSound("CHAINSHO", 1,CHANF_LOOPING,0.5)
+			//CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
-			CHAG A 0 A_PlaySound("FARMGN", 5)
+			//CHAG A 0 A_PlaySound("FARMGN", 5)
 			TNT1 A 0 A_Gunlight
 			
 			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 			CHAG A 0 A_ZoomFactor(0.99)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
-			CHAF G 1 BRIGHT A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
+			CHAF G 1 BRIGHT A_FireBullets(5, 5, -1, 7, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
 			TNT1 A 0 A_SetPitch(Pitch-0.4, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
 			"####" A 0 A_QuadSound
@@ -379,12 +377,12 @@ ACTOR MiniGun : BrutalWeapon
 			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
 			RIFG A 0
 			NULL A 0 A_WeaponOffset(0,32)
-			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
+			//CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
-			CHAG A 0 A_PlaySound("FARMGN", 5)
+			//CHAG A 0 A_PlaySound("FARMGN", 5)
 			CHAG A 0 A_ZoomFactor(0.99)
 			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
-			CHAF E 1 BRIGHT A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
+			CHAF B 1 A_FireBullets(5, 5, -1, 7, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
 			TNT1 A 0 A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE)
 			TNT1 A 0 A_SetPitch(Pitch-0.4, SPF_INTERPOLATE)
 			"####" A 0 A_QuadSound
@@ -396,10 +394,51 @@ ACTOR MiniGun : BrutalWeapon
 			CHAG A 0 A_ZoomFactor(1.0)
 			
 			NULL A 0 A_WeaponOffset(0,32)
-			MNGG B 0 A_ReFire("SpinFire")
+			CHAG A 0 A_StartSound("CHAINSHO", 1,CHANF_LOOPING,0.5)
+			//CHAG A 0 A_PlaySound("CHGNSHOT", 1)
+			TNT1 A 0 a_alertmonstersDX
+			//CHAG A 0 A_PlaySound("FARMGN", 5)
+			TNT1 A 0 A_Gunlight
+			
+			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
+			CHAG A 0 A_ZoomFactor(0.99)
+			TNT1 A 0 A_TakeAmmo("CLip2",1)
+			CHAF E 1 BRIGHT A_FireBullets(5, 5, -1, 7, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
+			TNT1 A 0 A_SetPitch(Pitch-0.4, SPF_INTERPOLATE)
+			TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
+			"####" A 0 A_QuadSound
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
+			CHAG A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27)
+			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, 0, -6, 0, random(-9,9))
+			RIFG A 0
+			NULL A 0 A_WeaponOffset(0,32)
+			//CHAG A 0 A_PlaySound("CHGNSHOT", 1)
+			TNT1 A 0 a_alertmonstersDX
+			//CHAG A 0 A_PlaySound("FARMGN", 5)
+			CHAG A 0 A_ZoomFactor(0.99)
+			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
+			CHAF D 1 A_FireBullets(5, 5, -1, 7, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
+			TNT1 A 0 A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE)
+			TNT1 A 0 A_SetPitch(Pitch-0.4, SPF_INTERPOLATE)
+			"####" A 0 A_QuadSound
+			CHAG A 0 A_Firecustommissile("50CaseSpawn2",0,0,12,-18)
+			CHAG A 0 A_SpawnItemEx("PlayerMuzzle3",30,5,27)
+			TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, 0, -6, 0, random(-9,9))
+			//CHAF A 0 BRIGHT A_FireCustomMissile("DecorativeTracer", random(-2,2), 0, 0, -12, 0, random(-2,2))
+			CHAG A 0 A_FireCustomMissile("SmokeSpawner11",0,0,0,0)
+			CHAG A 0 A_ZoomFactor(1.0)
+			
+			NULL A 0 A_WeaponOffset(0,32)
+			MNGG B 0 A_ReFire("SpinReFire")
+			TNT1 A 0 A_StartSound("CHAINSH2",1,0,0.5)
 			Goto DoneHolding
+			
+		SpinReFire:
+			NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoHOldWasFiring")
+			Goto SpinFire
+			
 		SpinFire2:
-			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
+			CHAG A 0 A_StartSound("CHAINSHO", 1,CHANF_LOOPING)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
 			TNT1 A 0 A_Gunlight
@@ -422,7 +461,7 @@ ACTOR MiniGun : BrutalWeapon
 			RIFG A 0
 			NULL A 0 A_WeaponOffset(0,32)
 	NULL A 0 A_CheckIfAmmo("CLip2",1,"NoAmmoHOld2")
-			CHAG A 0 A_PlaySound("CHGNSHOT", 1)
+			//CHAG A 0 A_PlaySound("CHGNSHOT", 1)
 			TNT1 A 0 a_alertmonstersDX
 			CHAG A 0 A_PlaySound("FARMGN", 5)
 			TNT1 A 0 A_Gunlight
@@ -449,6 +488,7 @@ ACTOR MiniGun : BrutalWeapon
 			
 			NULL A 0 A_WeaponOffset(0,32)
 			MNGG B 0 A_ReFire("SpinFire")
+			TNT1 A 0 A_StartSound("CHAINSH2",1)
 			DoneHolding:
 			TNT1 A 0 A_jumpifinventory("FalseSpin",1,"Doneholding2")
 			CHAG A 0 A_JumpIfInventory("Spin",1,"Ready2")	
@@ -549,9 +589,11 @@ ACTOR MiniGun : BrutalWeapon
 		TNT1 A 0
 		Goto SpinFire
 		
-		
+		NoAmmoHoldWasFiring:
+		TNT1 A 0 A_StartSound("CHAINSH2",1,0,0.5)
 		NoAmmoHold:
-		CHAG A 0 A_JumpIfInventory("Spin",1,"NoAmmoHoldSpin")
+		//TNT1 A 0 A_StopSound(1)
+		CHAG A 0
 		"####" A 0 A_StartSound("CHAINSPI", 5,CHANF_LOOPING)
 		//TNT1 A 0 A_PlaySound("weapons/empty", 4)
 		CHAE AC 1
