@@ -14,6 +14,7 @@ class CalamityBlade : BrutalWeapon
 		weapon.ammogive2 1;
 		Inventory.PickupSound "DoomRR/heatwave/select";
 		BrutalWeapon.weight 3;
+		Weapon.SelectionOrder 2850;
 	}
 
 	action void A_FireIncinerator()

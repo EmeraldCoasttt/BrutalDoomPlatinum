@@ -8,7 +8,7 @@ ACTOR IsDoingUpper: Inventory {Inventory.MaxAmount 1}
 ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 {
 	Game Doom
-	Weapon.SelectionOrder 4000
+	Weapon.SelectionOrder 1
 	Weapon.Kickback 100
 	
 	Obituary "%o was Ripped and Teared by 	%k"
