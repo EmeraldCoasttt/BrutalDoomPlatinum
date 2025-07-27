@@ -1906,6 +1906,11 @@ object HDFlamesGFX1
 // SHADERS
 // ==================================
 
+HardwareShader PostProcess scene{
+	Name "NiteVis"
+	Shader "shaders/pp/nightvision.fp" 330
+}
+
 HardwareShader PostProcess Scene
 {
 	Shader "shaders/pp/dish_blind.fp" 330
@@ -1924,6 +1929,7 @@ HardwareShader PostProcess Scene
 	Shader "shaders/pp/dish_grayscale.fp" 330
 	Name "grayscale"
 }
+
 
 HardwareShader PostProcess Scene
 {

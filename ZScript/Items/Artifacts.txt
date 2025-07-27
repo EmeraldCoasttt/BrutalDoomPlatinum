@@ -469,6 +469,15 @@ CLASS PowerBoost : Powerup
 	}
 }
 
+CLASS PowerNightVisNeo : Powerup
+{
+	Default
+	{
+		Powerup.Duration 0x7FFFFFFD;
+		+INVENTORY.HUBPOWER;
+	}
+}
+
 class BoosterFrame : CustomInventory
 {
 	Default

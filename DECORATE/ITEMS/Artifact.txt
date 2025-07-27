@@ -153,15 +153,17 @@ ACTOR NightVision : CustomInventory
 		Goto Spawn
 		
 	Pickup:
-		TNT1 A 1
-		TNT1 A 0 A_GiveInventory("HasInfrared", 1)
-		TNT1 A 0 A_GiveInventory("NightVisionGiver", 1)
-		TNT1 A 0 A_GiveInventory("HasInfraRed", 1)
-		TNT1 A 0 ACS_ExecuteAlways(398, 0, 0, 0, 0)
-		TNT1 A 1
+		TNT1 A 1 A_GiveInventory("NightVisionGiver",1)
 		Stop
 		
 	}
+}
+
+ACTOR NightVisionGiver : powerupgiver
+{
+	powerup.color none
+	powerup.type "powerNightVisNeo"
+	+inventory.autoactivate
 }
 
 

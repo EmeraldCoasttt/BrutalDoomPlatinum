@@ -223,6 +223,8 @@ class Brutal_PlayerBase : PlayerPawn
 	vector2 crosshairscale;
 	int crosshairrange;
 	
+	Actor Visorlight;
+	
 	Default
     {
 		Player.DisplayName "Brutal Doom Player";
@@ -560,7 +562,7 @@ class Brutal_PlayerBase : PlayerPawn
 				flashtimer--;
 			}
 			
-			If(flashburnout > 0)
+			If(flashburnout > 0 && !findinventory("powernightvisneo"))
 			{
 				flashburnout--;
 			}
@@ -569,18 +571,36 @@ class Brutal_PlayerBase : PlayerPawn
 			{
 				If(flashon && !flashtimer)
 				{
-					flashon = false;
-					A_startsound("FLASHOFF",5);
-					A_takeinventory("BDP_flashlight",1);
 					flashtimer = 20;
+					flashon = false;
+					If(!findinventory("powernightvisneo"))
+					{
+						A_startsound("FLASHOFF",5);
+					}
+					else
+					{
+						A_startsound("INFRAOFF",5);
+					}
+					A_takeinventory("BDP_flashlight",1);
+					
+					//PPShader.SetEnabled("NiteVis",false);
+
 				}
 				Else if(!flashtimer)
 				{
-					flashon = true;
-					A_startsound("FLASHON",5);
-					A_giveinventory("BDP_flashlight",1);
 					flashtimer = 20;
 					flashburnout = 700;
+					flashon = true;
+					If(!findinventory("powernightvisneo"))
+					{
+						A_startsound("FLASHON",5);
+					}
+					else
+					{
+						A_startsound("INFRAON",5);
+					}
+					A_giveinventory("BDP_flashlight",1);
+					//PPShader.SetEnabled("NiteVis",true);
 				}
 				Takeinventory("switchflashlight",1);
 			}
@@ -592,6 +612,18 @@ class Brutal_PlayerBase : PlayerPawn
 					A_takeinventory("BDP_flashlight",1);
 					flashtimer = 20;
 					Takeinventory("switchflashlight",1);
+				}
+				
+			If(findinventory("powernightvisneo") && flashon)
+				{
+					PPShader.SetEnabled("NiteVis",true);
+					
+					
+				}
+			Else
+				{
+					PPShader.SetEnabled("NiteVis",false);
+					
 				}
 			
 		
@@ -2277,9 +2309,17 @@ class BDP_Flashlight : CustomInventory {
 					beamInner = 0;
 					beamOuter = 20;
 					beamRadius = 512;
+					
+					
 					spillInner = 10;
 					spillOuter = 60;
 					spillRadius = 384;
+					
+					If (owner.findinventory("powernightvisneo"))
+					{
+						Beamradius = 1500;
+						SpillRadius = 1200;
+					}
 					//break;
 				/*case 2: //LED
 					R = 248;
@@ -2397,7 +2437,7 @@ class BDP_Flashlight : CustomInventory {
 			if(SelfLight1) { SelfLight1.Destroy(); }
 			if(SelfLight2) { SelfLight2.Destroy(); }
 		}
-		if (level.time % 5 == 0)
+		if (level.time % 5 == 0 && !owner.findinventory("powernightvisneo"))
 		{
 			FLineTraceData AlertTrace;
 			owner.LineTrace(Owner.Angle, 328, owner.pitch, TRF_SOLIDACTORS, owner.height * 0.5, data: AlertTrace);
@@ -2500,4 +2540,25 @@ Class ScannerEffect : Actor
 					}
 					LOOP;
 			}
+}
+
+class VisorLight: DynamicLight {
+
+	default {
+		DynamicLight.Type "Point";
+		+DYNAMICLIGHT.ATTENUATE;
+		+DYNAMICLIGHT.SPOT
+	}
+	override void tick(){
+		If(target)
+		{
+			SpotInnerAngle = 90;
+			SpotOuterAngle = 90;
+			setorigin((target.pos.xy,target.pos.z+target.height),true);
+			//console.printf("I'M ALIVE");
+			pitch = target.pitch;
+			angle = target.angle;
+			
+		}
+	}
 }
