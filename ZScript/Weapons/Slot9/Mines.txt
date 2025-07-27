@@ -1,6 +1,7 @@
 CLASS PipeBombThrownIdle: Actor
 {
 	float beepvolume;
+	int beeptics;
 	Default
 	{
     scale 0.4;
@@ -26,39 +27,110 @@ CLASS PipeBombThrownIdle: Actor
 	{
 		beepvolume = 1.0;
 	}
-   KeepSpawned:
+   Beep:
 	PIPb D 1 
 	{
 		A_startsound("minebep",CHAN_BODY,0,beepvolume);
 		A_alertmonsters();
+		beeptics = 0;
 	}
+	KeepSpawned:
 	PIPb CCCCCCCCCCCCCCC 1 
 	{
 		
+		
 		bool scarymonster;
-		BlockThingsIterator CheckForTargets = BlockThingsIterator.Create(self,30);
+		int beeppause;
+		beeptics++;
+		double closestmonster = 9000;
+		BlockThingsIterator CheckForTargets = BlockThingsIterator.Create(self,256);
 		Actor CurrentActor; //A pointer to whatever actor the iterator is iterating through.
 		While (CheckForTargets.Next()) 
 		{
 			 CurrentActor = CheckForTargets.Thing;
 			//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
 			//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
-			If(CurrentActor && CurrentActor.bIsMonster && currentactor.bshootable && !currentactor.bfriendly && !currentactor.findinventory("isplayer") && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && currentactor.health > 0 && distance3d(currentactor) < ( 30 + currentactor.radius))
+			If(CurrentActor && CurrentActor.bIsMonster && currentactor.bshootable && !currentactor.bfriendly && !currentactor.findinventory("isplayer") && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && currentactor.health > 0)
 			{
-				scarymonster = true;
-				If(currentactor.findstate("pain"))
+				
+				
+				If((distance3d(currentactor) - currentactor.radius) < closestmonster)
 				{
-					currentactor.setstatelabel("pain.mine");
+					closestmonster = distance3d(currentactor) - currentactor.radius;
+				}
+				
+				If(distance3d(currentactor) < ( 30 + currentactor.radius))
+				{
+					scarymonster = true;
+					If(currentactor.findstate("pain"))
+					{
+						currentactor.setstatelabel("pain.mine");
+					}
 				}
 			}
 		}
-		If(beepvolume > 0.3)
+		//console.printf("%d",closestmonster);
+		
+		If(beepvolume > 0.3 && closestmonster > 180)
 		{
 			Beepvolume -= 0.001;
+			BeepPause = 35;
+		}
+		Else If(closestmonster < 180)
+		{
+			Beepvolume = 1.0;
+			Beeppause = 30;
+			If(closestmonster > 165 && closestmonster < 180)
+			{
+				beeppause = 27;
+			}
+			Else If(closestmonster > 150)
+			{
+				beeppause = 24;
+			}
+			Else If(closestmonster > 135)
+			{
+				beeppause = 21;
+			}
+			Else If(closestmonster > 120)
+			{
+				beeppause = 18;
+			}
+			Else If(closestmonster > 105)
+			{
+				beeppause = 15;
+			}
+			Else If(closestmonster > 90)
+			{
+				beeppause = 12;
+			}
+			Else If(closestmonster > 75)
+			{
+				beeppause = 9;
+			}
+			Else If(closestmonster > 60)
+			{
+				beeppause = 6;
+			}
+			Else If(closestmonster < 60)
+			{
+				beeppause = 4;
+			}
+			
+			
+			
+		}
+		Else
+		{
+			beeppause = 35;
 		}
         If(scarymonster)
 		{
 			return ResolveState("MakeItExplode");
+		}
+		If(beeptics >= beeppause)
+		{
+			return resolvestate("beep");
 		}
         return ResolveState(null);
 	}
