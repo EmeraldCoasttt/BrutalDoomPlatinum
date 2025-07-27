@@ -925,6 +925,7 @@ CHGNSHOT CHGNSHOT
 $limit CHGNSHOT 0
 
 $volume CHGNSHOT 0.6
+$rolloff  CHGNSHOT 100 4000
 $volume weapons/chaingun/fire 0.6
 
 $volume DSPISTOL 0.6
@@ -1033,7 +1034,7 @@ RAILR1 RAILR1
 
 $rolloff weapons/sg 100 2200
 
-$rolloff CHGNSHOT 100 2200
+//$rolloff CHGNSHOT 100 2200
 
 
 
