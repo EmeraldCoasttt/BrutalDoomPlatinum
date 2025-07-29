@@ -64,9 +64,10 @@ CLASS Incinerator : BrutalWeapon
 		FLMT A 0 A_StartSound("weapons/empty");
 		Goto Ready;
 	NoAmmo:
-	    FLMT ABCABC 1;
 		FLMT A 0 A_StartSound("weapons/empty");
-		FLMT ABCABCABCABCABCABCABC 1;
+	    FLMT ABCABC 1;
+		
+		TNT1 A 0 A_Refire("NoAmmo");
 		TNT1 A 0 A_jumpifinventory("AmmoRocket",1,"reload");
 		Goto Ready;
 	
