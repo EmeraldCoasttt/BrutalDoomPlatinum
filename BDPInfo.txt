@@ -12,7 +12,7 @@ assaultshotgun,supershotgun,2
 chaingunspawner,chaingun,1
 rocket_launcher,rocketlauncher,1
 grenadelauncher,rocketlauncher,1
-incinerator,rocketlauncher,2
+incinerator,rocketlauncher,1
 chainsawspawned,chainsaw,1
 plasmagunspawner,plasmarifle,1
 dualplasmaspawner,plasmarifle,2
