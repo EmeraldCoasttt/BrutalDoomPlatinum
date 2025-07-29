@@ -393,6 +393,10 @@ class Brutal_PlayerBase : PlayerPawn
 				{
 					A_startsound("DGASS",455);
 				}
+				else if(player.readyweapon is "incinerator")
+				{
+					A_startsound("DGFLAM",455);
+				}
 				Else
 				{
 					A_startsound("DGITEM",455);
