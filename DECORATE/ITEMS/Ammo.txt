@@ -712,9 +712,8 @@ ACTOR Gas : Ammo
    }
 }
 
-ACTOR FlameCannonPickup : Gas
+ACTOR FlameCannonPickup
 {
-	Inventory.Amount 20
 	States
    {
 		Spawn:

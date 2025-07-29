@@ -27,7 +27,7 @@ damage 0
 ACTOR TehLostSoul: LostSoulBase Replaces LostSoul
 {
 	Game Doom
-	Health 16
+	Health 40
 	Radius 16
 	Height 32
 	Mass 50
@@ -39,7 +39,7 @@ ACTOR TehLostSoul: LostSoulBase Replaces LostSoul
 	PainChance "Kick", 255
 	damagefactor "GibRemoving", 0.0 damagefactor "HangingHook", 0
 	PainChance "Avoid", 255
-	damagefactor "Fire", 0 damagefactor "sAW", 4.0 damagefactor "Cut", 4.0
+	damagefactor "sAW", 4.0 damagefactor "Cut", 4.0
 	Monster
     +NOBLOOD
 	damagefactor "Blood", 0.0 damagefactor "BlueBlood", 0.0 damagefactor "GreenBlood", 0.0
