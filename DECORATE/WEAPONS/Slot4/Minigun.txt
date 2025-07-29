@@ -368,7 +368,7 @@ ACTOR MiniGun : BrutalWeapon
 			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 			CHAG A 0 A_ZoomFactor(0.99)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
-			CHAF G 1 BRIGHT A_FireBullets(5, 5, -1, 7, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
+			CHAF G 1 BRIGHT A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
 			TNT1 A 0 A_SetPitch(Pitch-0.4, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
 			"####" A 0 A_QuadSound
@@ -382,7 +382,7 @@ ACTOR MiniGun : BrutalWeapon
 			//CHAG A 0 A_PlaySound("FARMGN", 5)
 			CHAG A 0 A_ZoomFactor(0.99)
 			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
-			CHAF B 1 A_FireBullets(5, 5, -1, 7, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
+			CHAF B 1 A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
 			TNT1 A 0 A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE)
 			TNT1 A 0 A_SetPitch(Pitch-0.4, SPF_INTERPOLATE)
 			"####" A 0 A_QuadSound
@@ -403,7 +403,7 @@ ACTOR MiniGun : BrutalWeapon
 			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 			CHAG A 0 A_ZoomFactor(0.99)
 			TNT1 A 0 A_TakeAmmo("CLip2",1)
-			CHAF E 1 BRIGHT A_FireBullets(5, 5, -1, 7, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
+			CHAF E 1 BRIGHT A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
 			TNT1 A 0 A_SetPitch(Pitch-0.4, SPF_INTERPOLATE)
 			TNT1 A 0 A_SetAngle(angle + frandom(-0.6,0.6), SPF_INTERPOLATE)
 			"####" A 0 A_QuadSound
@@ -417,7 +417,7 @@ ACTOR MiniGun : BrutalWeapon
 			//CHAG A 0 A_PlaySound("FARMGN", 5)
 			CHAG A 0 A_ZoomFactor(0.99)
 			NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
-			CHAF D 1 A_FireBullets(5, 5, -1, 7, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
+			CHAF D 1 A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12)
 			TNT1 A 0 A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE)
 			TNT1 A 0 A_SetPitch(Pitch-0.4, SPF_INTERPOLATE)
 			"####" A 0 A_QuadSound
@@ -497,7 +497,7 @@ ACTOR MiniGun : BrutalWeapon
 			TNT1 A 0 A_giveinventory("spin",1)
 			TNT1 A 0 A_giveinventory("falsespin",1)
 			 CHAG A 0 A_JumpIfInventory("clip2",1,2)
-		CHAE A 0
+		Goto FireEnd
 		"####" ACDE 1 A_refire("RefireState3")
 		"####" A 0 A_WeaponReadyDX
 		"####" ACDE 1 A_refire("RefireState3")

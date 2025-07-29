@@ -217,6 +217,11 @@ class NewIncineratorFlame : Actor // Incinerator Flame
 		Stop;
 		
 	Death:
+		TNT1 A 0
+		{
+			Double scalefactor = frandom(0.78,1.0);
+			A_setscale(scalefactor,scalefactor);
+		}
 		TNT1 A 0 A_Explode(10, 128, 1, 0, 1);
 		FIR3 BCDEFGHIJKLMNOP 1 BRIGHT;
 		Stop;
