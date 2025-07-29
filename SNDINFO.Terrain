@@ -193,6 +193,10 @@ $rolloff BDWFALL3 500 1100
 BDWFALL3 BDWFALL3
 $limit BDWFALL3 6
 
+$volume BDWFALL1 0.3
+$volume BDWFALL2 0.3
+$volume BDWFALL3 0.3
+
 "weather/rain" RAIN
 "weather/wind" WIND
 
