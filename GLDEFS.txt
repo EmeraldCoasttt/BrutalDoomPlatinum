@@ -53,6 +53,11 @@ object DragonsBreathSparkle
 	frame MODLB { light DRAGONBREATH }
 }
 
+
+object NewIncineratorFlame
+{
+    frame FIR3 { light DRAGONBREATH }
+}
 object FlameTrailsTic2
 {
     frame FRPR { light DRAGONBREATH }

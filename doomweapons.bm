@@ -1301,13 +1301,7 @@ brightmap sprite FLC2K0 { map "brightmaps/doom/Weapons/Flamer/FLC2K0.png" disabl
 brightmap sprite FLC2P0 { map "brightmaps/doom/Weapons/Flamer/FLC2P0.png" disablefullbright }
 brightmap sprite FLC2Q0 { map "brightmaps/doom/Weapons/Flamer/FLC2Q0.png" disablefullbright }
 
-brightmap sprite FLMTD0 { map "brightmaps/doom/Weapons/Flamer/FLMTD0.png" disablefullbright }
-brightmap sprite FLMTE0 { map "brightmaps/doom/Weapons/Flamer/FLMTE0.png" disablefullbright }
-brightmap sprite FLMFA0 { map "brightmaps/doom/Weapons/Flamer/FLMFA0.png" disablefullbright }
-brightmap sprite FLMFB0 { map "brightmaps/doom/Weapons/Flamer/FLMFB0.png" disablefullbright }
-brightmap sprite FLMFC0 { map "brightmaps/doom/Weapons/Flamer/FLMFC0.png" disablefullbright }	
-brightmap sprite FLMFF0 { map "brightmaps/doom/Weapons/Flamer/FLMFF0.png" disablefullbright }
-brightmap sprite FLMFG0 { map "brightmaps/doom/Weapons/Flamer/FLMFG0.png" disablefullbright }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //TEMPORARY WEAPONS
