@@ -212,6 +212,7 @@ ACTOR MiniGun : BrutalWeapon
 
 	Ready2:
 		TNT1 A 0 A_Jumpifinventory("FalseSpin",1,"fireEnd")
+		TNT1 A 0 A_AlertMonstersDX
 	    CHAG A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5)
 		CHAG A 0 A_JumpIfInventory("clip2",1,2)
 	CHAE A 0
