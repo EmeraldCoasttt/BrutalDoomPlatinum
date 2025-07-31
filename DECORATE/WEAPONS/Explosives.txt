@@ -48,6 +48,7 @@ Actor TankRocket : Rocket2
 ACTOR RocketCandetonate : rocket2
 {
 +seekermissile
+Speed 30
 States
 {
 	Spawn:
