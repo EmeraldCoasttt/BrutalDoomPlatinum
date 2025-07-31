@@ -97,7 +97,27 @@ CLASS MiniGunTurret : BDPNotMonster
 			MGNT A 1 A_FaceTarget();
 			MGNT C 1
 			{
-			A_takeinventory("clip2",1);
+			//A_takeinventory("clip2",1);
+			A_startSound("FARMGN", 6);
+			A_startSound("DSPISTOL", 5);
+			A_spawnprojectile("MonsterMinigunTracer", 30, 0, random(-2,2), CMF_OFFSETPITCH, random(-2,2));
+			//A_SpawnItem ("RifleCaseSpawn", 0, 30,0)
+			A_SpawnItemEX("50CaseSpawn",0,0,30,0,0,0,180);
+			}
+			MGNT A 1 A_facetarget();
+			MGNT B 1
+			{
+			//A_takeinventory("clip2",1);
+			A_startSound("FARMGN", 6);
+			A_startSound("DSPISTOL", 5);
+			A_spawnprojectile("MonsterMinigunTracer", 30, 0, random(-2,2), CMF_OFFSETPITCH, random(-2,2));
+			//A_SpawnItem ("RifleCaseSpawn", 0, 30,0)
+			A_SpawnItemEX("50CaseSpawn",0,0,30);
+			}
+			MGNT A 1 A_FaceTarget();
+			MGNT C 1
+			{
+			//A_takeinventory("clip2",1);
 			A_startSound("FARMGN", 6);
 			A_startSound("DSPISTOL", 5);
 			A_spawnprojectile("MonsterMinigunTracer", 30, 0, random(-2,2), CMF_OFFSETPITCH, random(-2,2));
