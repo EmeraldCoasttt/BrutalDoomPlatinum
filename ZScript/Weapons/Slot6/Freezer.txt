@@ -536,8 +536,8 @@ Class Freezer : BrutalWeapon
 		Goto Taunt;
 		
 	
-	SpecialAction:
-	TNT1 A 0 A_takeinventory("swapriflespecial",1);
+	DualWield:
+	TNT1 A 0 A_takeinventory("startdualwield",1);
 	TNT1 A 0
 	{
 		If(invoker.freezebuddy)

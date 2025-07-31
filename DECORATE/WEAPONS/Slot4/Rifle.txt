@@ -603,7 +603,7 @@ ACTOR Rifle : BrutalWeapon
 		RIFL A -1
 		Stop
 		
-	DualWield:
+	//DualWield:
 		RIFG A 1
 		RIFG A 0 A_Takeinventory("StartDualWield",1)
 		RIFG A 0 A_startsound("dryfire",2)
@@ -785,8 +785,8 @@ ACTOR Rifle : BrutalWeapon
 	RIFG A 0 A_TakeInventory("Taunting",1)
 	Goto Ready
 	
-	specialaction:
-	"####" A 0 A_TakeInventory("swapRifleSpecial",1)
+	DualWield:
+	"####" A 0 A_TakeInventory("StartDualWield",1)
 	Goto Bash
 	ReturnToDualWield:
 	"####" A 0 A_TakeInventory("UseBashInstead",1)

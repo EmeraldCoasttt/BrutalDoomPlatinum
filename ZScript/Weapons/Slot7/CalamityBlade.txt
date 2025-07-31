@@ -299,8 +299,8 @@ class CalamityBlade : BrutalWeapon
 		HETG A 2 A_startSound("weapons/empty", 1);
 		Goto Ready3;
 		
-		SpecialAction:
-		TNT1 A 0 A_takeinventory("swapriflespecial",1);
+		DualWield:
+		TNT1 A 0 A_takeinventory("StartDualWield",1);
 		TNT1 A 0
 		{
 			If(findinventory("nuke"))

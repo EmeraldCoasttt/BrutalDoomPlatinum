@@ -1030,8 +1030,8 @@ TNT1 A 0  {if (CountInv("Kicking") == 1) {
 		 goto Ready		
 		 
 		 
-		 SpecialAction:
-		 TNT1 A 0 A_takeinventory("swapriflespecial",1)
+		 DualWield:
+		 TNT1 A 0 A_takeinventory("StartDualWield",1)
 		 TNT1 A 0 A_jumpifinventory("clip2",1,1)
 		 Goto ready
 		 TNT1 A 0 

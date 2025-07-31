@@ -26,8 +26,6 @@ setslot 9
    defaultbind R reload
    
    addMenuKey "Dual Wield/Special Action" "+user3"
-  
-   addMenuKey "Special Action 2" "+user4"
    
    addmenukey "Flashlight" flashlightswitch
    alias flashlightswitch "pukename PressFlashlight"

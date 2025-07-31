@@ -862,11 +862,7 @@ class Brutal_PlayerBase : PlayerPawn
 			dualtimer = 17;
 			giveinventory("startdualwield",1);
 			}
-		If(player.cmd.buttons & BT_USER4 && specialtimer <= 0)
-			{
-			specialtimer = 17;
-			giveinventory("swapriflespecial",1);
-			}
+
 		If(player.cmd.buttons & BT_USER2 && grenadetimer <= 0)
 			{
 			grenadetimer = 8;

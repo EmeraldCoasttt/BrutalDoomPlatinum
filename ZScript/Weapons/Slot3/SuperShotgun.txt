@@ -794,7 +794,7 @@ CLASS SSG : BrutalWeapon
 		PIST F 0 A_Print("You don't have Energy Shells!",2);
 		Goto Ready;
 		
-	DualWield:	
+	//DualWield:	
 	    RIFG A 0 A_Takeinventory("StartDualWield",1);
 		NULL A 0 A_JumpIfInventory("UsingDragonBreath",1,"BackToBuckshot");
 		//NULL A 0 A_ChangeFlag("WEAPON.NOAUTOFIRE",1);
@@ -927,8 +927,8 @@ CLASS SSG : BrutalWeapon
     TNT1 A 0 A_trymeathook(1600);
     Goto Ready;
 	
-	SpecialAction:
-	TNT1 A 0 A_takeinventory("swapriflespecial",1);
+	DualWield:
+	TNT1 A 0 A_takeinventory("startdualwield",1);
 	TNT1 A 0 A_jumpifinventory("meathook",1,1);
 	Goto noammo;
 	TNT1 A 0 A_HookOverlay("nomeathookoverlay");

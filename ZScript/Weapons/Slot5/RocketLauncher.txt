@@ -169,8 +169,8 @@ CLASS Rocket_Launcher : BrutalWeapon
 		TNT1 A 1 A_SpawnLaser("guidedlaser");
 		Loop;
 		
-	SpecialAction: 
-	TNT1 A 0 A_takeinventory("swapriflespecial",1);
+	DualWield: 
+	TNT1 A 0 A_takeinventory("Startdualwield",1);
 		TNT1 A 0 A_jumpifinventory("rocketrounds",1,1);
 		Goto noammo;
 		TNT1 A 0 A_overlay(15,"TripMineOverlay");
