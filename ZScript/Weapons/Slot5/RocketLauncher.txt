@@ -19,7 +19,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 		+WEAPON.NOALERT;
 		//+WEAPON.NO_AUTO_SWITCH
 		Inventory.PickupMessage "You got the Rocket Launcher! (Slot 5)";
-		Tag "Rocket Launcher";
+		Tag "$BDPROCKET";
 		scale 0.8;
 		radius 24;
 		height 24;

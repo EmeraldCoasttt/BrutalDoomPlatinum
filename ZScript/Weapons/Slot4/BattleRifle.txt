@@ -35,6 +35,7 @@ CLASS BattleRifle : Brutalweapon
 	Weapon.SelectionOrder 1550;
 	Inventory.AltHUDIcon "BR45A0";
 	BrutalWeapon.weight 2;
+	Tag "$BDPBR";
 
 
 	}

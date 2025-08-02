@@ -19,7 +19,7 @@ CLASS SSG : BrutalWeapon
 		Scale 0.8;
 		Radius 24;
 		Height 24;
-		Tag "Super Shotgun";
+		Tag "$BDPSSG";
 		Inventory.AltHUDIcon "SGN2A0";
 		BrutalWeapon.weight 1;
 	}

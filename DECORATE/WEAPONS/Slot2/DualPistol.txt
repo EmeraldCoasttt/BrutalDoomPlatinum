@@ -25,7 +25,7 @@ ACTOR DualPistols : BrutalWeapon
 	+Inventory.untossable
 	Scale 0.9
 	+WEAPON.NO_AUTO_SWITCH
-	Tag "Dual Pistols"
+	Tag "$BDPPISTOL"
 	Inventory.AltHUDIcon "PISTH0"
 	brutalweapon.handedness 2
 	brutalweapon.voiceacted 0

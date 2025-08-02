@@ -29,7 +29,7 @@ ACTOR AssaultShotgun : BrutalWeapon
 	Radius 24
 	Height 24
 	BrutalWeapon.weight 2
-	Tag "Assault Shotgun"
+	Tag "$BDPASG"
 	Inventory.AltHUDIcon "A12PA0"
 	States
 	{

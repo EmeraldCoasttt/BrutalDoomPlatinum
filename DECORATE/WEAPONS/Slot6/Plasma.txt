@@ -10,7 +10,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 	Weapon.AmmoType2 "PlasmaAmmo"
     +WEAPON.NOAUTOAIM
 	+FORCEXYBILLBOARD
-	Tag "Plasma Rifle"
+	Tag "$BDPPLASMA"
 	Inventory.PickupMessage "You got the Plasma Rifle! (Slot 6)"
 	inventory.althudicon "PLASA0"
 	inventory.maxamount 2

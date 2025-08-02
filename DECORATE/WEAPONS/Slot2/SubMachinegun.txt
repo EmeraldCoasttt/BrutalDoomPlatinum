@@ -20,7 +20,7 @@ ACTOR BrutalSMG : BrutalWeapon
 	+WEAPON.NOALERT
     +FORCEXYBILLBOARD
 	Scale 0.9
-	Tag "Sub-MachineGun"
+	Tag "$BDPSMG"
 	Inventory.AltHUDIcon "SMGZA0"
 	brutalweapon.handedness 1
 	States

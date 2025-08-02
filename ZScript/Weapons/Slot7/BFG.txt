@@ -18,7 +18,7 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		+WEAPON.NOAUTOFIRE;
 		+WEAPON.EXPLOSIVE;
 	//	+WEAPON.NO_AUTO_SWITCH
-		Tag "BFG 9000";
+		Tag "$BDPBFG";
 		Inventory.PickupMessage "You got the BFG-9000! Oh, yes. (Slot 7)";
 		Inventory.AltHUDIcon "BFUGA0";
 		BrutalWeapon.weight 3;

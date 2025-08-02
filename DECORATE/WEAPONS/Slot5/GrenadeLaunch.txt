@@ -16,7 +16,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 	//+WEAPON.NO_AUTO_SWITCH
 	Weapon.SelectionOrder 2700
 	Inventory.PickupMessage "You got the Grenade Launcher! (Slot 5)"
-	Tag "Grenade Launcher"
+	Tag "$BDPGRENADE"
 	scale 0.8
 	radius 24
 	height 24

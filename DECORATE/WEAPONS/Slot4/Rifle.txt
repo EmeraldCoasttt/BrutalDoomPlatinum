@@ -19,7 +19,7 @@ ACTOR Rifle : BrutalWeapon
     +WEAPON.NOAUTOAIM
     +WEAPON.NOALERT
 	+FORCEXYBILLBOARD
-	Tag "Assault Rifle"
+	Tag "$BDPRIFLE"
     Scale 0.8
 	Inventory.AltHUDIcon "RIFLA0"
 	

@@ -21,7 +21,7 @@ ACTOR DualRevolver : BrutalWeapon
 	Weapon.SisterWeapon "DoxsRevolver"
 	+POWERED_UP
 	Scale 0.9
-	Tag "Revolver"
+	Tag "$BDPREVOLVER"
 	brutalweapon.handedness 2
 	brutalweapon.voiceacted 0
 	States

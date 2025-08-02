@@ -25,7 +25,7 @@ ACTOR Shot_Gun : BrutalWeapon
 	scale 0.8
 	radius 24
 	height 24
-	Tag "Shotgun"
+	Tag "$BDPSHOTGUN"
 	Inventory.AltHUDIcon "SHTCD0"
 	States
 	{

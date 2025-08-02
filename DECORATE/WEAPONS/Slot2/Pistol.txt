@@ -25,7 +25,7 @@ ACTOR BrutalPistol : BrutalWeapon
 	//+WEAPON.WIMPY_WEAPON
     +FORCEXYBILLBOARD
 	Scale 0.9
-	Tag "Pistol"
+	Tag "$BDPPISTOL"
 	brutalweapon.handedness 1
 	brutalweapon.voiceacted 0
 	States

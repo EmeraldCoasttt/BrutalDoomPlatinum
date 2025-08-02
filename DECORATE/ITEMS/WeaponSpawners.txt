@@ -458,11 +458,11 @@ ACTOR ChainsawSpawned : NVBasicWeaponSpawner
 	{
 
 	Spawn:
-		CSAW A -1
+		CSAW A 0
+		CSAW A 0 A_spawnitemex("chain_saw")
 		Stop
 	Pickup:
-		TNT1 A 0 A_GiveInventory("Chain_Saw", 1)
-		TNT1 A 0 A_GiveInventory("Gas", 50)
+		
 		Stop
 	}
 }

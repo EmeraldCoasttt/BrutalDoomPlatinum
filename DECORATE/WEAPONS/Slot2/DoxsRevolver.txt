@@ -20,7 +20,7 @@ ACTOR DoxsRevolver : BrutalWeapon
     +FORCEXYBILLBOARD
 	+RIPPER
 	Scale 0.9
-	Tag "Revolver"
+	Tag "$BDPREVOLVER"
 	inventory.althudicon "REVOQ0"
 	inventory.maxamount 2
 	brutalweapon.handedness 1

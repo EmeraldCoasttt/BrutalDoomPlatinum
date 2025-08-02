@@ -15,9 +15,10 @@ CLASS Unmaker : BrutalWeapon
 	+WEAPON.EXPLOSIVE;
 	+WEAPON.AMMO_OPTIONAL;
 	//+WEAPON.NO_AUTO_SWITCH
-	Inventory.PickupMessage "You got the Unmaker, the power of hell itself! (Slot 8)";
+	Inventory.PickupMessage "What the hell is this!? (Slot 8)";
 	Inventory.AltHUDIcon "UNHWA0";
 	BrutalWeapon.weight 3;
+	Tag "UNMAKER";
 	}
 		Actor TeleportPending;
 		int LaserCount;

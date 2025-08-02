@@ -15,7 +15,7 @@ CLASS Incinerator : BrutalWeapon
 		+WEAPON.EXPLOSIVE;
 		//+WEAPON.NO_AUTO_SWITCH
 		Inventory.PickupMessage "You got the Incinerator! (Slot 5)";
-		Tag "Incinerator";
+		Tag "$BDPFLAMER";
 		Inventory.AltHUDIcon "FLMTF0";
 		+forcexybillboard;
 	}

@@ -21,7 +21,7 @@ ACTOR DualSMG : BrutalWeapon
 	+WEAPON.NO_AUTO_SWITCH
 	+POWERED_UP
 	Scale 0.9
-	Tag "Dual SMGs"
+	Tag "$BDPSMG"
 	Inventory.AltHUDIcon "SMGZB0"
 	brutalweapon.handedness 2
 	brutalweapon.voiceacted 0

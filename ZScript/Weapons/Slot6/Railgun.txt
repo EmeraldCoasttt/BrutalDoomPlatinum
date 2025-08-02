@@ -24,7 +24,7 @@ CLASS Railgun : Brutalweapon
 	Weapon.SelectionOrder 1550;
 	Inventory.AltHUDIcon "SRCGA0";
 	BrutalWeapon.weight 2;
-
+	Tag "$BDPRAILGUN";
 
 	}
 	int reloadchannel;

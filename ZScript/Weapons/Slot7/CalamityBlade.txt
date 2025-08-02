@@ -5,7 +5,7 @@ class CalamityBlade : BrutalWeapon
 
 	Default
 	{
-		Tag "Calamity Blade";
+		Tag "$BDPCALAMITY";
 		Inventory.PickupMessage "You got the calamity blade!  Hot damn!";
 		Weapon.SlotNumber 7;
 		Weapon.AmmoType "AmmoCell";

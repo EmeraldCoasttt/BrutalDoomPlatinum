@@ -23,6 +23,7 @@ ACTOR MiniGun : BrutalWeapon
 	AttackSound "none"
 	Inventory.AltHUDIcon "MGUNA0"
 	BrutalWeapon.weight 2
+	Tag "$BDPMINIGUN"
 	States
 	{
 	
