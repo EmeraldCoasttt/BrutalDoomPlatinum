@@ -6,8 +6,8 @@ CLASS Unmaker : BrutalWeapon
 	Height 20;
 	Weapon.SelectionOrder 2800;
 	Weapon.AmmoUse1 0;
-	Weapon.AmmoGive 0;
-	Weapon.AmmoType1 "SoulAmmo";
+	Weapon.AmmoGive 100;
+	Weapon.AmmoType1 "AmmoCell";
     Inventory.PickupSound "BFGREADY";
     +WEAPON.BFG;
 	+WEAPON.NOAUTOAIM;
@@ -15,7 +15,7 @@ CLASS Unmaker : BrutalWeapon
 	+WEAPON.EXPLOSIVE;
 	+WEAPON.AMMO_OPTIONAL;
 	//+WEAPON.NO_AUTO_SWITCH
-	Inventory.PickupMessage "What the hell is this!? (Slot 8)";
+	Inventory.PickupMessage "What the fuck is this!? (Slot 8)";
 	Inventory.AltHUDIcon "UNHWA0";
 	BrutalWeapon.weight 3;
 	Tag "UNMAKER";
@@ -131,7 +131,7 @@ CLASS Unmaker : BrutalWeapon
 		//invoker.A_unmakelevel(6);
 		//A_playSOund("UNMLOP", 6, 1, 1);
 		A_startSOund("UNMLOP", 6,CHANF_LOOPING);
-		If(countinv("soulammo") < 1)
+		If(countinv("AmmoCell") < 1)
 		{
 		A_damageself(1,"desintegrate");
 		}
@@ -148,11 +148,11 @@ CLASS Unmaker : BrutalWeapon
 		A_gunlight(500,2,255,0,0);
 		//invoker.A_unmakelevel(6);
 		A_startSOund("UNMLOP", 6,CHANF_LOOPING);
-			If(countinv("soulammo") < 1 && !findinventory("powerspeed2"))
+			If(countinv("AmmoCell") < 1 && !findinventory("powerspeed2"))
 			{
 				A_damageself(1,"desintegrate");
 			}
-			A_TakeAmmo("SoulAmmo",1);
+			A_TakeAmmo("AmmoCell",1);
 		A_fireprojectile("ShotgunParticles", random(-12,12), 0, -1, 0, 0, random(-9,9));
 		A_fireprojectile("ShotgunParticles2", random(-12,12), 0, -1, 0, 0, random(-9,9));
 		a_alertmonstersDX();
@@ -210,11 +210,11 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		A_gunlight(500,2,255,0,0);
 		a_alertmonstersDX();
 		A_startSOund("UNMALT",1);
-			If(countinv("soulammo") < 1 && !findinventory("powerspeed2"))
+			If(countinv("AmmoCell") < 1 && !findinventory("powerspeed2"))
 		{
 		A_damageself(3,"desintegrate");
 		}
-		A_TakeAmmo("SoulAmmo",3);
+		A_TakeAmmo("AmmoCell",3);
 		A_QuadSound();
 		
 		If(invoker.lasercount > 9)
@@ -295,12 +295,12 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 					invoker.owner.A_startsound("Weapons/Unmaker/PlaceTeleporter",18);
 					invoker.owner.A_spawnitemex("unmakerteleportdestination",64,0,0,0,0,0,0,SXF_SETTARGET);
 					//A_fireprojectile("unmakerteleportspawner");
-						If(invoker.owner.countinv("soulammo") < 40)
+						If(invoker.owner.countinv("AmmoCell") < 40)
 							{
 							A_damageself(10,"desintegrate");
 							
 							}
-						invoker.owner.takeinventory("soulammo",40);
+						invoker.owner.takeinventory("AmmoCell",40);
 						
 						Return resolvestate("aimteleport");
 					}
@@ -363,12 +363,12 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		invoker.owner.a_spawnitemex("teleportationfog");
 		invoker.teleportpending.destroy();
 		invoker.owner.A_startsound("Weapons/Unmaker/UseTeleporter",6);
-		If(invoker.owner.countinv("soulammo") < 15)
+		If(invoker.owner.countinv("AmmoCell") < 15)
 							{
 							A_damageself(10,"desintegrate");
 							
 							}
-						invoker.owner.takeinventory("soulammo",15);
+						invoker.owner.takeinventory("AmmoCell",15);
 		}
 		A_weaponoffset(random(-2,2),random(32,28));
 		A_zoomfactor(1);
@@ -396,7 +396,7 @@ LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
 		/*
 	SpecialAction:
 		TNT1 A 0 A_takeinventory("swapriflespecial",1);
-		TNT1 A 0 A_jumpifinventory("soulammo",1,1);
+		TNT1 A 0 A_jumpifinventory("AmmoCell",1,1);
 		Goto ready;
 		UNHG A 0 A_giveinventory("disabletilting",1);
 		UNHG A 0 A_takeinventory("invulnerabilitysphere",1);
@@ -468,7 +468,7 @@ CLASS UnmakerTeleportDestination : Actor
 			Pain.stealth:
 				TNT1 A 1 
 				{
-				A_givetotarget("soulammo",40);
+				A_givetotarget("AmmoCell",40);
 				
 					
 					A_noblocking();
@@ -902,7 +902,7 @@ class UnMakerPhaser : PlayerPawn
 		ACS_namedexecutealways("UnmakerFear",0,0,0,0);
 		if (level.time % 3 == 0)
 		{
-			takeinventory("soulammo",1);
+			takeinventory("AmmoCell",1);
 		}
 		
 		FLineTraceData collision;
@@ -919,7 +919,7 @@ class UnMakerPhaser : PlayerPawn
 			A_startsound("skeleton/melee",16);
 		}
 		
-		If(health < 1 || countinv("soulammo") < 1)
+		If(health < 1 || countinv("AmmoCell") < 1)
 			{
 				A_explode(450,240,XF_NOTMISSILE | XF_EXPLICITDAMAGETYPE,TRUE,0,0,0,"bulletpuff","disintegrate");
 				A_radiusthrust(256,276);
@@ -960,7 +960,7 @@ CLASS UnmakerPhaserWeapon : doomweapon
 {
 Default
 	{
-		Weapon.AmmoType1 "SoulAmmo";
+		Weapon.AmmoType1 "AmmoCell";
 	}
 States
 {
