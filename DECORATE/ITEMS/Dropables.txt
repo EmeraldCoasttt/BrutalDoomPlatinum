@@ -279,7 +279,7 @@ ACTOR DropedPistol : DropedRifle
 	 
 	Death:
 		 TNT1 A 0
-		 TNT1 A 0 A_SPawnItem("PistolSpawner")
+		 TNT1 A 0 A_SPawnItem("BrutalPistol")
 		 Stop
     }
 }
@@ -296,7 +296,7 @@ ACTOR DropedPistol2 : DropedPistol
 	 
 	 Death:
 		 TNT1 A 0
-		 TNT1 A 0 A_SPawnItem("PistolSpawner")
+		 TNT1 A 0 A_SPawnItem("BrutalPistol")
 		 Stop
     }
 }
@@ -347,7 +347,7 @@ ACTOR DropedSMG : DropedRifle
 	 
 	 Death:
 		 TNT1 A 0
-		 TNT1 A 0 A_SPawnItem("SMGSpawner")
+		 TNT1 A 0 A_SPawnItem("BrutalSMG")
 		 Stop
     }
 }
@@ -364,7 +364,7 @@ ACTOR DropedSMG2 : DropedSMG
 	 
 	 Death:
 		 TNT1 A 0
-		 TNT1 A 0 A_SPawnItem("SMGSpawner")
+		 TNT1 A 0 A_SPawnItem("BrutalSMG")
 		 Stop
     }
 }

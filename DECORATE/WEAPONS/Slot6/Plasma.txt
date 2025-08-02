@@ -2,7 +2,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 {
 	Weapon.SelectionOrder 100
 	Weapon.AmmoUse1 0
-	Weapon.AmmoGive1 0
+	Weapon.AmmoGive1 50
 	Weapon.AmmoUse2 0
 	Weapon.AmmoGive2 0
     Inventory.PickupSound "PLSDRAW"
@@ -13,6 +13,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 	Tag "Plasma Rifle"
 	Inventory.PickupMessage "You got the Plasma Rifle! (Slot 6)"
 	inventory.althudicon "PLASA0"
+	inventory.maxamount 2
 	BrutalWeapon.weight 1
 	States
 	{
@@ -709,11 +710,8 @@ ACTOR Plasma_Gun : BrutalWeapon
 
 	
 	Spawn:
-	    PLSN A 0
-		PLSN A 0 A_ChangeFLag("THRUACTORS", 1)
 		PLAS A 20
-		PLSN A 0 A_SpawnItem("DropedPlasmaGun")
-		Stop
+		LOOP
 		
 	NoAmmo:
 		RIFG A 0
@@ -837,7 +835,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 		PLSN A 0
 		PLSN A 0 A_Takeinventory("StartDualWield",1)
 	//	PLSN A 0 A_JumpIfInventory("IsTacticalClass", 1, "NoDual")//Tactical mode cant dual
-		PLSN A 0 A_JumpIfInventory("DualPlasmaRifles", 1, "GetDual")
+		PLSN A 0 A_JumpIfInventory("Plasma_gun", 2, "GetDual")
 		PLSN A 0 A_Print("You must have two plasma guns to dual wield!",2)
 		Goto Ready
 		
@@ -854,6 +852,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 		PLSN A 0 A_TakeInventory("Salute2", 1)
 		TNT1 A 0 A_GiveInventory("SwitchingDualModes",1)
 		TNT1 A 0 A_GiveInventory("RememberDualPlasma", 1)
+		TNT1 A 0 A_GiveInventory("DualPlasmaRifles", 1)
         PLSN A 0 A_ZoomFactor(1.0)
 		PLSN A 0 A_SelectWEapon("DualPlasmaRifles")
 		Goto Ready	

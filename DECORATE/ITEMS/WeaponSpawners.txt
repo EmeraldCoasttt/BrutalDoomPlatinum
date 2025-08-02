@@ -38,17 +38,9 @@ ACTOR PistolSpawner : NVBasicWeaponSpawner
 	States
 	{
 	Spawn:
-		PIST G -1
-		Stop
-	Pickup:
-		TNT1 A 0 A_JumpIfInventory("BrutalPistol", 1, "DualPistol")
-		TNT1 A 0 A_GiveInventory("BrutalPistol", 1)
-		TNT1 A 0 A_GiveInventory("Clip1", 10)
-		Stop
-	DualPistol:
-		TNT1 A 0 A_GiveInventory("DualPistols", 1)
-		TNT1 A 0 A_GiveInventory("Clip1", 10)
-		Stop
+		PIST G 0
+		PIST G 0 A_spawnitemex("brutalpistol")
+		STOP
 	}
 }
 
@@ -82,20 +74,10 @@ ACTOR RevolverSpawner : NVBasicWeaponSpawner 5874
 	States
 	{
 	Spawn:
-		REVO Q -1
+		REVO A 0
+		REVO A 0 A_SpawnItemex("DoxsRevolver")
 		Stop
-	Pickup:
-		TNT1 A 0 A_JumpIfInventory("DoxsRevolver", 1, "PickupDual")
-		TNT1 A 0 A_GiveInventory("DoxsRevolver", 1)
-		TNT1 A 0 A_GiveInventory("Clip1", 48)
-		TNT1 A 0 A_GiveInventory("BDRevolverAmmo", 6)
-		Stop
-	PickupDual:
-		TNT1 A 0 A_GiveInventory("DualRevolver", 1)
-		TNT1 A 0 A_GiveInventory("Clip1", 48)
-		TNT1 A 0 A_GiveInventory("BDRevolverAmmo", 6)
-		TNT1 A 0 A_GiveInventory("BDDualRevolverAmmo", 12)
-		Stop
+
 	}
 }
 
@@ -242,7 +224,8 @@ ACTOR SMGSpawner : NVBasicWeaponSpawner
 	{
 
 	Spawn:
-		SMGZ A -1
+		SMGZ A 0
+		SMGZ A 0 A_spawnitemex("brutalsmg")
 		Stop
 	Pickup:
 		TNT1 A 0 A_JumpIfInventory("BrutalSMG", 1, "Dual")
@@ -335,8 +318,13 @@ ACTOR PLasmagunSpawner : NVBasicWeaponSpawner
 	States
 	{
 	Spawn:
-		PLAS A -1
+		PLAS A 0
+		PLAS A 0 A_SpawnItemEx("Plasma_Gun")
+		TNT1 A 0 A_Jump(64,"spawn2")
 		Stop
+	Spawn2:
+		TNT1 A 0 A_spawnitemex("plasma_gun",20, 20)
+		STOP
 	Pickup:
 		TNT1 A 0 A_JumpIfInventory("Plasma_Gun", 1, "DualPlasma")
 	PickupNormal:

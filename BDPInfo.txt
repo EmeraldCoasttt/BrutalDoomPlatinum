@@ -6,7 +6,7 @@
 //lower values are less rare
 
 shot_gun,shotgun,1
-revolverspawner,shotgun,1
+doxsrevolver,shotgun,1
 ssg,supershotgun,1
 assaultshotgun,supershotgun,2
 chaingunspawner,chaingun,1
@@ -15,13 +15,12 @@ grenadelauncher,rocketlauncher,1
 incinerator,rocketlauncher,1
 chainsawspawned,chainsaw,1
 plasmagunspawner,plasmarifle,1
-dualplasmaspawner,plasmarifle,2
 freezer,plasmarifle,1
 railgun,plasmarifle,1
 big_fucking_gun,bfg,1
 unmaker,bfg,1
 calamityblade,bfg,1
-revolverspawner,secret,1
+doxsrevolver,secret,1
 EnergyArmor,secret,2
 demonrunespawner,secret,3
 quadsigil,secret,2

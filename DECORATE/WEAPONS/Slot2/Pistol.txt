@@ -7,7 +7,7 @@ ACTOR PistolSelected: Inventory {Inventory.MaxAmount 1}
 ACTOR BrutalPistol : BrutalWeapon
 {
 	Weapon.AmmoUse1 0
-	Weapon.AmmoGive1 0
+	Weapon.AmmoGive1 10
 	Weapon.AmmoUse2 0
 	Weapon.AmmoGive2 0
 	Weapon.AmmoType1 "Clip1"
@@ -17,6 +17,7 @@ ACTOR BrutalPistol : BrutalWeapon
     AttackSound "None"
     Inventory.PickupSound "CLIPIN"
 	Inventory.Pickupmessage "You got the Pistol! (Slot 2)"
+	Inventory.maxamount 2
     +WEAPON.NOAUTOAIM
 	+WEAPON.NOAUTOFIRE
 	+WEAPON.NOALERT
@@ -978,7 +979,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		TNT1 A 0
 		PIST F 0 A_Takeinventory("StartDualWield",1)
 		//TNT1 A 0 A_JumpIfinventory("issilenced",1,"nodualsilencer")
-		PIST F 0 A_JumpIfInventory("DualPistols", 1, "GetDual")
+		PIST F 0 A_JumpIfInventory("BrutalPistol", 2, "GetDual")
 		PIST F 0 A_Print("You must have two pistols to dual wield!",2)
 		Goto Ready
 		
@@ -995,6 +996,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PIST F 0 A_TakeInventory("Salute2", 1)
 		TNT1 A 0 A_GiveInventory("SwitchingDualModes", 1)
 		TNT1 A 0 A_GiveInventory("RememberDualPistol", 1)
+		TNT1 A 0 A_GiveInventory("DualPistols", 1)
         PIST F 0 A_ZoomFactor(1.0)
 		PIST F 0 A_SelectWEapon("DualPistols")
 		Goto Ready
