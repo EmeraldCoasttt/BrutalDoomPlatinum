@@ -13,7 +13,7 @@ Actor Chain_saw : BrutalWeapon
     +WEAPON.NOAUTOAIM
 	+WEAPON.AXEBLOOD
 	//+WEAPON.NO_AUTO_SWITCH
-	+WEAPON.MELEEWEAPON
+	//+WEAPON.MELEEWEAPON
 	+FORCEXYBILLBOARD
 	Inventory.PickupMessage "You got the Chainsaw! Find some meat! (Slot 1)"
 	Weapon.KickBack 0

@@ -17,17 +17,9 @@ ACTOR RifleSpawner : NVBasicWeaponSpawner Replaces Pistol
 	States
 	{
 	Spawn:
-		RIFL A -1
-		Stop
-	Pickup:
-		TNT1 A 0 A_JumpIfInventory("Rifle", 1, "DualRifle")
-		TNT1 A 0 A_GiveInventory("Rifle", 1)
-		TNT1 A 0 A_GiveInventory("Clip2", 10)
-		Stop
-	DualRifle:
-		TNT1 A 0 A_GiveInventory("DualRifles", 1)
-		TNT1 A 0 A_GiveInventory("Clip2", 10)
-		Stop
+		RIFL A 0
+		RIFL A 0 A_spawnitemex("rifle")
+		STOP
 	}
 }
 
@@ -186,15 +178,7 @@ ACTOR ChaingunSpawner : NVBasicWeaponSpawner
 	{
 	Spawn:
 		TNT1 A 0
-		MGUN A -1
-		Stop
-	Spawn2:
-		MGUN C -1
-		Stop
-	Pickup:
-		TNT1 A 0 A_GiveInventory("Minigun", 1)
-		TNT1 A 0 A_giveinventory("miniguncount",1)
-		TNT1 A 0 A_GiveInventory("Clip2", 60)
+		MGUN A 0 A_spawnitemex("Minigun")
 		Stop
 	}
 }
@@ -413,17 +397,10 @@ ACTOR UnmakerSpawner : NVBasicWeaponSpawner 8845
 	States
 	{
 	Spawn:
-		UNHW A -1
+		UNHW A 0
+		UNHW A 0 A_spawnitemex("unmaker")
 		Stop
-	Pickup:
-		TNT1 A 0 A_JumpIfInventory("Unmaker", 1, "PickupGiveUpgrade")
-		TNT1 A 0 A_GiveInventory("Unmaker", 1)
-		TNT1 A 0 A_GiveInventory("SoulAmmo", 100)
-		Stop
-	PickupGiveUpgrade:
-		TNT1 A 0 A_GiveInventory("UnmakerUpgrade", 1)
-		TNT1 A 0 A_GiveInventory("SoulAmmo", 100)
-		Stop
+	
 	}
 }
 

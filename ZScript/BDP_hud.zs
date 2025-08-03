@@ -8,6 +8,7 @@ class BDP_HUD : DoomStatusBar
 	HUDFont mSmallFontNS;
 	HUDFont mConfont;
 	HUDFont mDiginumber;
+	HUDFont weapPromptFnt;
 	Int ArrowTimer;
 	int lasttickgrenade;
 
@@ -37,6 +38,7 @@ class BDP_HUD : DoomStatusBar
 		fnt = "HUDFONT_DOOM";
 		mHUDFont = HUDFont.Create(fnt, fnt.GetCharWidth("0"), Mono_CellLeft, 1, 1);
 		Arrowtimer = 66;
+		weapPromptFnt = HUDFont.Create(Font.GetFont('BigUpper'));
 	}
 	
 	override void Draw (int state, double TicFrac)
@@ -73,6 +75,11 @@ class BDP_HUD : DoomStatusBar
 			If(!automapactive)
 			{
 				drawcrosshairs();
+				let plr = Brutal_Playerbase(CPlayer.mo);
+				if (plr && plr.focusWeapon)
+				{
+					DrawString(weapPromptFnt, plr.focusWeaponPrompt, (0, 32), DI_SCREEN_CENTER|DI_TEXT_ALIGN_CENTER, scale: (0.5, 0.5));
+				}
 			}
 		}
 	}

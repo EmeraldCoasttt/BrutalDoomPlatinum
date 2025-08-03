@@ -2,7 +2,7 @@ ACTOR FiringTiltCounter: Inventory { Inventory.MaxAmount 3 }
 ACTOR Rifle : BrutalWeapon
 {
 	Weapon.AmmoUse1 0
-	Weapon.AmmoGive1 0
+	Weapon.AmmoGive1 10
 	Weapon.AmmoUse2 0
 	Weapon.AmmoGive2 0
 	YScale 0.6

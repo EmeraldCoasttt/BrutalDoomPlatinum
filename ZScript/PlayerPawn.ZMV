@@ -187,6 +187,7 @@ class Brutal_PlayerBase : PlayerPawn
 	bool alreadyblacklisted;
 	bool extralifegranted;
 	bool reversalmodifier;
+	bool triathlon;
 	
 	bool scanneractive;
 	int scannertimer;
@@ -225,6 +226,24 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	Actor Visorlight;
 	
+	// List of weapons to be dropped because they were
+	// picked up above max amount:
+	array<Weapon> extraWeaponsToDrop;
+	// Weapon we're focusing on (pressing Use will pick
+	// it up):
+	Weapon focusWeapon;
+	// Text prompt to show for this weapon:
+	String focusWeaponPrompt;
+	// Will be set to true when pressing use to let
+	// the weapon be picked up:
+	bool manualPickup;
+	
+	// REPLACE WITH LANGUAGE STRINGS:
+	const PICKUPSTR_SWAP = "Press Use to swap for \cx%s\c-";
+	const PICKUPSTR_PICK = "Press Use to pick up \cx%s\c-";
+	const PICKUPSTR_DW = "Press Use to dual-wield \cx%s\c-";
+	const MAXOWNEDWEAPONS = 4;
+	
 	Default
     {
 		Player.DisplayName "Brutal Doom Player";
@@ -250,6 +269,257 @@ class Brutal_PlayerBase : PlayerPawn
 	{
 		if(VecToUnit.Length()) { VecToUnit /= VecToUnit.Length(); }
 		return VecToUnit;
+	}
+	
+	// Check if this player pawn is a voodoo doll:
+	clearscope bool IsVoodooDoll()
+	{
+		return self.player && self.player.mo != self;
+	}
+	
+	bool IsAABBColliding(Actor mo1, Actor mo2)
+	{	
+		Vector2 diff = level.Vec2Diff(mo1.pos.xy, mo2.pos.xy);
+		if (abs(diff.x) > (mo1.radius + mo2.radius) ||
+			abs(diff.y) > (mo1.radius + mo2.radius) ||
+			(mo2.pos.z > mo1.pos.z + mo1.height) ||
+			(mo2.pos.z + mo2.height < mo1.pos.z)
+			)
+		{
+			return false;
+		}
+		return true;
+	}
+
+	// Add given weapon to the list of weapons to be dropped:
+	void AddToDropList(Weapon weap)
+	{
+		if (weap)
+		{
+			extraWeaponsToDrop.Push(weap);
+		}
+	}
+	
+	// Counts all owned weapons:
+	int CountOwnedWeapons()
+	{
+		array<Weapon> countedWeapons;
+		for (Inventory item = inv; item; item = item.inv)
+		{
+			let weap = Weapon(item);
+			// Count the weapon. You can add more conditions
+			// to decide what should and shouldn't be counted:
+			if (weap &&
+				!weap.bPOWERED_UP && //skip sisterweapons
+				!weap.bMELEEWEAPON && //skip Fist
+				countedWeapons.Find(weap) == countedWeapons.Size() //skip already counted
+				)
+			{
+				countedWeapons.Push(weap);
+			}
+		}
+		return countedWeapons.Size();
+	}
+	
+	// Returns true if the provided weapon would exceed weapon capacity
+	// when picked up:
+	bool ExceedsWeapCapacity(Weapon weap)
+	{
+		// Modify to add your own logic. Currently returns true
+		// only if the given weapon is NOT dual-wieldable and
+		// the number of already owned weapons is larger than
+		// the given number:
+		return !IsDualWieldable(weap) && CountOwnedWeapons() >= MAXOWNEDWEAPONS && TRIATHLON;
+	}
+	
+	// Check if the given weapon is dual-wieldable:
+	bool IsDualWieldable(Weapon weap)
+	{
+		// Add your custom logic here.
+		If(weap && weap.maxamount > 1 && countinv(weap.getclassname()) < 2 && countinv(weap.getclassname()) > 0)
+		{
+			return true;
+		}
+		Else
+		{
+			return false;
+		}
+	}
+	
+	// This override handles what happens when touching
+	// an item:
+	override bool CanTouchItem(Inventory item)
+	{
+		// If not weapon, do the usual:
+		let weap = Weapon(item);
+		if (!weap) return true;
+		
+		
+	
+		bool overCap = ExceedsWeapCapacity(weap);
+		bool canDualWield = IsDualWieldable(weap);
+		bool isfists;
+		If(player.readyweapon && player.readyweapon is "Melee_attacks" && overcap && !isdualwieldable)
+		{
+			isfists = true;
+		}
+	
+		// Let voodoo dolls pick up weapons directly:
+		if (distance3d(weap) > 78)
+		{
+			// But if it would exceed capacity, add it
+			// to the drop list:
+			if (overCap)
+			{
+				AddToDropList(weap);
+			}
+			return true;
+		}
+		
+		// [verify] Do the same if it's being given
+		// directly (scripts/cheats):
+		if (weap.bNoSector)
+		{
+			if (overCap)
+			{
+				AddToDropList(weap);
+			}
+			return true;
+		}
+		
+		// If this is a weapon we're already getting a promopt about,
+		// and player pressed Use, pick it up:
+		if (weap == focusWeapon && manualPickup && !isfists)
+		{
+			// if over capacity, drop readyweapon:
+			if (overCap)
+			{
+				let rw = self.player.readyweapon;
+				if (rw)
+				{
+					DropInventory(rw, rw.amount);
+				}
+				player.pendingweapon = focusWeapon;
+			}
+			// if dual-wieldable, activate that:
+			if (canDualWield)
+			{
+				//player.pendingweapon = focusweapon;
+			}
+			// and flush the pointer:
+			focusWeapon = null;
+			manualPickup = false;
+			return true;
+		}
+		
+		// If we're here, we're NOT picking this weapon up,
+		// so, it's time to process it.
+		
+		// First, unconditionally pick up ammo from the weapon:
+		class<Ammo> amcls;
+		int amtToGive; //how much ammo will be given
+		for (int i = 1; i <= 2; i++)
+		{
+			// Initially set amtToGive to ammogive:
+			if (i == 1)
+			{
+				amcls = weap.ammoType1;
+				amtToGive = weap.ammoGive1;
+			}
+			else
+			{
+				amcls = weap.ammoType2;
+				amtToGive = weap.ammoGive2;
+			}
+
+			if (!amcls) continue;
+			// If player has this ammo, instead set amtToGive to
+			// make sure it doesn't exceed current maxamount:
+			Ammo am = Ammo(self.FindInventory(amcls));
+			if (am)
+			{
+				amtToGive = min(amtToGive, am.maxamount - am.amount);
+			}
+			// If amount-to-give is above 0, do the giving:
+			if (amtToGive > 0)
+			{
+				// We want the accompanying sound and pickupmessage
+				// to appear, so we'll actually spawn that ammo,
+				// modify its amount, and give it to the player
+				// directly by calling Touch() on it:
+				let amPickup = Ammo(Spawn(amcls, (0,0,0)));
+				if (amPickup)
+				{
+					amPickup.amount = amtToGive;
+					amPickup.bIGNORESKILL = true;
+					amPickup.Touch(self);
+			
+					// Reduce that weapon's ammogive by the amount of ammo
+					// we've given (so it doesn't become an endless
+					// source of ammo):
+					if (i == 1)
+					{
+						weap.ammoGive1 -= amtToGive;
+					}
+					else
+					{
+						weap.ammoGive2 -= amtToGive;
+					}
+				}
+			}
+		}
+		
+		// If weapon is already owned and is not dual-wieldable,
+		// nothing else needs to happen:
+		if (self.FindInventory(weap.GetClass()) && !canDualWield || ISFISTS)
+		{
+			return false;
+		}
+		
+		// Otherwise update prompt text and weapon pointer:
+		focusWeaponPrompt = PICKUPSTR_PICK; //base prompt
+		if (canDualWield)
+		{
+			focusWeaponPrompt = PICKUPSTR_DW; //dual-wield prompt
+		}
+		else if (overCap) //we're at capacity
+		{
+			focusWeaponPrompt = PICKUPSTR_SWAP; //swap prompt
+		}
+		// Construct the prompt (this assumes "%s" is present to pass
+		// the name of the weapon to, and calls StringTable.Localize
+		// so it'll be correctly localized if LANGUAGE is used):
+		
+		focusWeaponPrompt = String.Format(StringTable.Localize(focusWeaponPrompt), weap.GetTag());
+		
+		
+		focusWeapon = weap;
+		return false;
+	}
+	
+	// Called when an item is received:
+	override void HasReceived(Inventory item, class<Inventory> itemcls)
+	{
+		if (IsVoodooDoll()) return;
+		
+		let weap = Weapon(item);
+		if (!weap) return;
+		
+		// If this is in the to-drop list, have the real player pawn
+		// drop this weapon:
+		int id = extraWeaponsToDrop.Find(weap);
+		if (id < extraWeaponsToDrop.Size())
+		{
+			For(int i=0; i<= weap.amount; i++)
+			{
+				DropInventory(weap, weap.amount);
+				extraWeaponsToDrop.Delete(id);
+			}
+		}
+		if (weap == focusWeapon)
+		{
+			focusWeapon = null;
+		}
 	}
 	
 	void togglescanner()
@@ -1459,6 +1729,29 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	Override void Tick()
     {
+	
+		if (focusWeapon && !IsVoodooDoll())
+		{
+			// Check if our and weapon's collision boxes no longer align.
+			// If so, flush the focusWeapon pointer:
+			Vector2 diff = level.Vec2Diff(self.pos.xy, focusWeapon.pos.xy);
+			if (abs(diff.x) > (self.radius + focusWeapon.radius) ||
+				abs(diff.y) > (self.radius + focusWeapon.radius) ||
+				(focusWeapon.pos.z > self.pos.z + self.height) ||
+				(focusWeapon.pos.z + focusWeapon.height < self.pos.z)
+				)
+			{
+				focusWeapon = null;
+				manualPickup = false;
+			}
+			// Otherwise if player is pressing Use, let them
+			// pick this weapon up:
+			else if ((player.cmd.buttons & BT_USE) && !(player.oldbuttons & BT_USE))
+			{
+				manualPickup = true;
+				focusWeapon.Touch(self);
+			}
+		}
 	// Get Distance under crosshair.
 			FLineTraceData lt;
 			If(player)
