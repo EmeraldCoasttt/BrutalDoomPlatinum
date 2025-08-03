@@ -186,4 +186,15 @@ class ChatterboxPickup : BDPModifierpickup
     }
 }
 
+class TRIATHLONPickup : BDPModifierpickup
+{
+ Default
+    {
+        
+		BDPModifierpickup.modifierclass "Modifier_Triathlon";
+		BDPModifierpickup.modifiermessage "Triathlon Unlocked!";
+		+floatbob;
+    }
+}
+
 //Man And A Half "200:207=[117,117,117]:[0,0,0]"

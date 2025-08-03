@@ -273,7 +273,7 @@ server float sv_underwatertiltscalar = 1.0;
 server bool sv_deathtilt = true;
 
 server noarchive string bdp_active_modifiers = "";
-server string bdp_unlocked_modifiers = "Modifier_StayFrosty, Modifier_Turbonerd";
+server string bdp_unlocked_modifiers = "Modifier_StayFrosty, Modifier_Turbonerd, Modifier_Chatterbox, Modifier_Triathlon";
 server bool bdp_modifiers_allunlocked = false;
 
 nosave string bdp_seed_blacklist = "1,2,3,4";
