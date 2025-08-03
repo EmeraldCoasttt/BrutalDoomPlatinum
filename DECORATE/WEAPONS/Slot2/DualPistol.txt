@@ -257,6 +257,7 @@ ACTOR DualPistols : BrutalWeapon
 
 	Select:
 		TNT1 A 0 
+		TNT1 A 0 A_giveinventory("DualWieldedPistol",1)
 		TNT1 A 0 A_SetCrosshairDX("SMGRet", 500,0.7)
 		Goto SelectFirstPersonLegs
 		SelectContinue: 

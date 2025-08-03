@@ -51,6 +51,37 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	}
 	
+	override void ondrop(Actor dropper)
+	{
+		If(self is "BrutalSMG")
+		{
+			If(dropper.findinventory("Dualsmg"))
+			{
+				giveinventory("BrutalSMG",1);
+				Inventory drop = FindInventory("BrutalSMG");
+				Self.DropInventory(Drop,1);
+			}
+			
+			Dropper.takeinventory("Dualsmg",1);
+			Dropper.takeinventory("DualWieldedSMG",1);
+			Dropper.takeinventory("Rememberdualsmg",1);
+		}
+		
+		If(self is "BrutalPistol")
+		{
+			If(dropper.findinventory("DualPistols"))
+			{
+				giveinventory("BrutalPistol",1);
+				Inventory drop = FindInventory("BrutalPistol");
+				Self.DropInventory(Drop,1);
+			}
+			
+			Dropper.takeinventory("DualPistols",1);
+			Dropper.takeinventory("DualWieldedPistol",1);
+			Dropper.takeinventory("Rememberdualpistol",1);
+		}
+	}
+	
 	Action void a_weaponvoiceline()
 	{
 		If(!invoker.newweapon && invoker.voiceacted)

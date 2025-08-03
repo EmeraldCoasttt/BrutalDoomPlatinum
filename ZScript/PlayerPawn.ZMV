@@ -404,7 +404,7 @@ class Brutal_PlayerBase : PlayerPawn
 			// if dual-wieldable, activate that:
 			if (canDualWield)
 			{
-				//player.pendingweapon = focusweapon;
+				A_selectweapon(weap.getclassname());
 			}
 			// and flush the pointer:
 			focusWeapon = null;

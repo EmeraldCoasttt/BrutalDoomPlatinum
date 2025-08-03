@@ -30,6 +30,26 @@ Actor HeadshotPopFlag : Inventory
 inventory.maxamount 1
 }
 
+Actor DualWieldedPistol : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor DualWieldedSMG : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor DualWieldedRevolver : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor DualWieldedPlasma : Inventory
+{
+inventory.maxamount 1
+}
+
 Actor FalseSpin : Inventory
 {
 inventory.maxamount 1

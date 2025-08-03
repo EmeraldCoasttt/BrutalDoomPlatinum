@@ -186,6 +186,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 	Ready3:
 	Ready:
 		TNT1 A 0 A_SetCrosshairDX("SMGRet", 1000,0.5)
+		
 	    PIST F 0 A_JumpIfInventory("Zoomed",1,"Ready2")
         PIST F 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
         PIST F 0 A_JumpIfInventory("Taunting",1,"Taunt")
@@ -203,6 +204,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PIST F 0 A_JumpIfInventory("StartDualWield",1,"DualWield")
 		TNT1 A 0 A_JumpIfInventory("swapRifleSpecial",1,"Switchsilencer")
 		RIFG A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
+		TNT1 A 0 A_JumpIf(countinv("brutalpistol") > 1 && !findinventory("Dualwieldedpistol"),"DualWield")
 		Loop
 		
 	Ready2:
@@ -218,6 +220,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PIST F 0 A_Takeinventory("PistolFireAnimation1",1)
 		//PIST F 0 A_checksprint
 		PIST F 0 A_JumpIfInventory("StartDualWield",1,"DualWield")
+		TNT1 A 0 A_JumpIfInventory("NewDualWield",1,"DualWield")
 		Loop
 		
 		
@@ -322,6 +325,9 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
 		Wait
 		
+		RememberingDual:
+		TNT1 A 0 A_GiveInventory("RememberDualPistol", 1)
+		TNT1 A 0 A_GiveInventory("DualPistols", 1)
 	HasRememberedDual:
 	    TNT1 A 0
 		TNT1 A 0 A_SelectWeapon("DualPistols")
@@ -342,6 +348,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		}
 		TNT1 A 0 A_JumpIfInventory("NoSmartDualWield",1,2)//Checks if the Smart Dual Wielding option is disabled.
 		TNT1 A 0 A_JumpIfInventory("RememberDualPistol",1,"HasRememberedDual")
+		TNT1 A 0 A_JumpIf(countinv("brutalpistol") > 1 && !findinventory("Dualwieldedpistol"),"rememberingdual")
 		TNT1 A 0 A_JumpIfInventory ("SwitchingDualModes", 1, "SwitchDual")
 		TNT1 A 1
 		PIST F 0 A_Giveinventory("PistolSelected",1)
