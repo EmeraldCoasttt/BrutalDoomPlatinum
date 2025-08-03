@@ -80,6 +80,32 @@ Class Brutalweapon : DoomWeapon //Weapon
 			Dropper.takeinventory("DualWieldedPistol",1);
 			Dropper.takeinventory("Rememberdualpistol",1);
 		}
+		If(self is "DoxsRevolver")
+		{
+			If(dropper.findinventory("DualRevolver"))
+			{
+				giveinventory("DoxsRevolver",1);
+				Inventory drop = FindInventory("DoxsRevolver");
+				Self.DropInventory(Drop,1);
+			}
+			
+			Dropper.takeinventory("DualRevolver",1);
+			Dropper.takeinventory("DualWieldedRevolver",1);
+			Dropper.takeinventory("DualRevolverSelected",1);
+		}
+		If(self is "Plasma_Gun")
+		{
+			If(dropper.findinventory("DualPlasmaRifles"))
+			{
+				giveinventory("Plasma_gun",1);
+				Inventory drop = FindInventory("Plasma_gun");
+				Self.DropInventory(Drop,1);
+			}
+			
+			Dropper.takeinventory("DualPlasmaRifles",1);
+			Dropper.takeinventory("DualWieldedPlasma",1);
+			Dropper.takeinventory("RememberDualPlasma",1);
+		}
 	}
 	
 	Action void a_weaponvoiceline()
