@@ -217,7 +217,7 @@ ACTOR DropedShotgun : DropedRifle
 	 
 	 Death:
 		 TNT1 A 0
-		 TNT1 A 0 A_SPawnItem("ShotgunSpawnerDroped")
+		 TNT1 A 0 A_SPawnItem("Shot_gun")
 		 Stop
     }
 }
@@ -234,7 +234,7 @@ ACTOR DropedShotgun2 : DropedShotgun
 	 
 	 Death:
 		 TNT1 A 0
-		 TNT1 A 0 A_SPawnItem("ShotgunSpawnerDroped")
+		 TNT1 A 0 A_SPawnItem("Shot_gun")
 		 Stop
     }
 }

@@ -6,7 +6,7 @@ Class Freezer : BrutalWeapon
 		Weapon.AmmoUse1 0;
 		Weapon.AmmoUse2 0;
 		Weapon.AmmoGive1 100;
-		Weapon.AmmoGive2 50;
+		Weapon.AmmoGive2 0;
 		Weapon.AmmoType1 "AmmoCell";
 		Weapon.AmmoType2 "FreezerAmmo";
 		Obituary "%o was put on ice by %k's Freezer Beam.";

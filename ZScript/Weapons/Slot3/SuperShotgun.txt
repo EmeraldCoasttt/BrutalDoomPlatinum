@@ -17,8 +17,6 @@ CLASS SSG : BrutalWeapon
 		Obituary "$OB_MPSSHOTGUN";
 		Inventory.PickupSound "CLIPINSS";
 		Scale 0.8;
-		Radius 24;
-		Height 24;
 		Tag "$BDPSSG";
 		Inventory.AltHUDIcon "SGN2A0";
 		BrutalWeapon.weight 1;

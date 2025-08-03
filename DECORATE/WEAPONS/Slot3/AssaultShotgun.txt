@@ -26,8 +26,6 @@ ACTOR AssaultShotgun : BrutalWeapon
 	+WEAPON.NOALERT
 	+FORCEXYBILLBOARD
     Scale 0.8
-	Radius 24
-	Height 24
 	BrutalWeapon.weight 2
 	Tag "$BDPASG"
 	Inventory.AltHUDIcon "A12PA0"

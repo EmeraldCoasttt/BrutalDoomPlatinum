@@ -18,8 +18,6 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 	Inventory.PickupMessage "You got the Grenade Launcher! (Slot 5)"
 	Tag "$BDPGRENADE"
 	scale 0.8
-	radius 24
-	height 24
 	Inventory.AltHUDIcon "GLAPA0"
 	BrutalWeapon.weight 2
 	States

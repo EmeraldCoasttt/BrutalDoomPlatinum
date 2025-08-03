@@ -18,8 +18,6 @@ CLASS Railgun : Brutalweapon
 	+WEAPON.EXPLOSIVE;
 	+FORCEXYBILLBOARD;
 	scale 0.8;
-	radius 24;
-	height 24;
 	damagetype "Railgun";
 	Weapon.SelectionOrder 1550;
 	Inventory.AltHUDIcon "SRCGA0";

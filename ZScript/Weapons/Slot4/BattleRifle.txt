@@ -29,8 +29,6 @@ CLASS BattleRifle : Brutalweapon
 	+WEAPON.EXPLOSIVE;
 	+FORCEXYBILLBOARD;
 	scale 0.8;
-	radius 24;
-	height 24;
 	damagetype "Revolver";
 	Weapon.SelectionOrder 1550;
 	Inventory.AltHUDIcon "BR45A0";

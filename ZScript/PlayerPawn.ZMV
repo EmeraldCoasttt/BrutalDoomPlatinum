@@ -365,7 +365,7 @@ class Brutal_PlayerBase : PlayerPawn
 		}
 	
 		// Let voodoo dolls pick up weapons directly:
-		if (distance3d(weap) > 78)
+		if (distance3d(weap) > 128)
 		{
 			// But if it would exceed capacity, add it
 			// to the drop list:
