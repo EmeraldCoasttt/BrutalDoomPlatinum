@@ -55,6 +55,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	override void ondrop(Actor dropper)
 	{
+		
 		If(self is "BrutalSMG")
 		{
 			If(dropper.findinventory("Dualsmg"))
@@ -108,6 +109,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 			Dropper.takeinventory("DualWieldedPlasma",1);
 			Dropper.takeinventory("RememberDualPlasma",1);
 		}
+		
 	}
 	
 	Action void a_weaponvoiceline()

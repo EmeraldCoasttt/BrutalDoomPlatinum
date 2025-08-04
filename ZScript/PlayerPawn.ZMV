@@ -229,6 +229,9 @@ class Brutal_PlayerBase : PlayerPawn
 	// List of weapons to be dropped because they were
 	// picked up above max amount:
 	array<Weapon> extraWeaponsToDrop;
+	// List of weapons that were picked up from world
+	// (updated from CanTouchItem()):
+	array<Weapon> pickedUpWeapons;
 	// Weapon we're focusing on (pressing Use will pick
 	// it up):
 	Weapon focusWeapon;
@@ -271,34 +274,6 @@ class Brutal_PlayerBase : PlayerPawn
 		return VecToUnit;
 	}
 	
-	// Check if this player pawn is a voodoo doll:
-	clearscope bool IsVoodooDoll()
-	{
-		return self.player && self.player.mo != self;
-	}
-	
-	bool IsAABBColliding(Actor mo1, Actor mo2)
-	{	
-		Vector2 diff = level.Vec2Diff(mo1.pos.xy, mo2.pos.xy);
-		if (abs(diff.x) > (mo1.radius + mo2.radius) ||
-			abs(diff.y) > (mo1.radius + mo2.radius) ||
-			(mo2.pos.z > mo1.pos.z + mo1.height) ||
-			(mo2.pos.z + mo2.height < mo1.pos.z)
-			)
-		{
-			return false;
-		}
-		return true;
-	}
-
-	// Add given weapon to the list of weapons to be dropped:
-	void AddToDropList(Weapon weap)
-	{
-		if (weap)
-		{
-			extraWeaponsToDrop.Push(weap);
-		}
-	}
 	
 	// Counts all owned weapons:
 	int CountOwnedWeapons()
@@ -329,13 +304,32 @@ class Brutal_PlayerBase : PlayerPawn
 		// only if the given weapon is NOT dual-wieldable and
 		// the number of already owned weapons is larger than
 		// the given number:
-		return !IsDualWieldable(weap) && CountOwnedWeapons() >= MAXOWNEDWEAPONS && TRIATHLON;
+		return !IsDualWieldable(weap) && TRIATHLON && (CountOwnedWeapons() >= MAXOWNEDWEAPONS);
+	}
+	
+	void AddToPickupList(Weapon weap)
+	{
+		if (!weap) return;
+		if (pickedUpWeapons.Find(weap) == pickedUpWeapons.Size())
+		{
+			pickedUpWeapons.Push(weap);
+		}
+	}
+	
+	void DropOwnedWeapon(Weapon weap)
+	{
+		if (!weap) return;
+		if (weap.owner != self) return;
+		
+		self.DropInventory(weap, weap.amount);
+		//let sis = weap.sisterweapon;
+		//if (!sis || sis.owner != self) return;
+		//self.DropInventory(sis, sis.amount);
 	}
 	
 	// Check if the given weapon is dual-wieldable:
 	bool IsDualWieldable(Weapon weap)
 	{
-		// Add your custom logic here.
 		If(weap && weap.maxamount > 1 && countinv(weap.getclassname()) < 2 && countinv(weap.getclassname()) > 0)
 		{
 			return true;
@@ -353,37 +347,22 @@ class Brutal_PlayerBase : PlayerPawn
 		// If not weapon, do the usual:
 		let weap = Weapon(item);
 		if (!weap) return true;
-		
-		
 	
 		bool overCap = ExceedsWeapCapacity(weap);
 		bool canDualWield = IsDualWieldable(weap);
+		
 		bool isfists;
 		If(player.readyweapon && player.readyweapon is "Melee_attacks" && overcap && !isdualwieldable)
 		{
 			isfists = true;
 		}
 	
-		// Let voodoo dolls pick up weapons directly:
+		// Collision boxes not overlapping - this is being picked
+		// up elsewhere, by a voodoo doll. Let voodoo dolls pick up
+		// weapons directly:
 		if (distance3d(weap) > 128)
 		{
-			// But if it would exceed capacity, add it
-			// to the drop list:
-			if (overCap)
-			{
-				AddToDropList(weap);
-			}
-			return true;
-		}
-		
-		// [verify] Do the same if it's being given
-		// directly (scripts/cheats):
-		if (weap.bNoSector)
-		{
-			if (overCap)
-			{
-				AddToDropList(weap);
-			}
+			AddToPickupList(weap);
 			return true;
 		}
 		
@@ -394,11 +373,7 @@ class Brutal_PlayerBase : PlayerPawn
 			// if over capacity, drop readyweapon:
 			if (overCap)
 			{
-				let rw = self.player.readyweapon;
-				if (rw)
-				{
-					DropInventory(rw, rw.amount);
-				}
+				DropOwnedWeapon(self.player.readyweapon);
 				player.pendingweapon = focusWeapon;
 			}
 			// if dual-wieldable, activate that:
@@ -409,6 +384,7 @@ class Brutal_PlayerBase : PlayerPawn
 			// and flush the pointer:
 			focusWeapon = null;
 			manualPickup = false;
+			AddToPickupList(weap);
 			return true;
 		}
 		
@@ -471,7 +447,7 @@ class Brutal_PlayerBase : PlayerPawn
 		
 		// If weapon is already owned and is not dual-wieldable,
 		// nothing else needs to happen:
-		if (self.FindInventory(weap.GetClass()) && !canDualWield || ISFISTS)
+		if (self.FindInventory(weap.GetClass()) && !canDualWield  || ISFISTS)
 		{
 			return false;
 		}
@@ -489,39 +465,44 @@ class Brutal_PlayerBase : PlayerPawn
 		// Construct the prompt (this assumes "%s" is present to pass
 		// the name of the weapon to, and calls StringTable.Localize
 		// so it'll be correctly localized if LANGUAGE is used):
-		
 		focusWeaponPrompt = String.Format(StringTable.Localize(focusWeaponPrompt), weap.GetTag());
-		
 		
 		focusWeapon = weap;
 		return false;
 	}
 	
+	override bool CanReceive(Inventory item)
+	{
+		let weap = Weapon(item);
+		if (weap)
+		{
+			AddToPickupList(weap);
+		}
+		return true;
+	}
+	
 	// Called when an item is received:
 	override void HasReceived(Inventory item, class<Inventory> itemcls)
 	{
-		if (IsVoodooDoll()) return;
+		if (BDPHandler.IsVoodooDoll(self)) return;
 		
 		let weap = Weapon(item);
 		if (!weap) return;
 		
-		// If this is in the to-drop list, have the real player pawn
-		// drop this weapon:
-		int id = extraWeaponsToDrop.Find(weap);
-		if (id < extraWeaponsToDrop.Size())
+
+		// If it was in the picked-up list, remove it from there:
+		int id = pickedUpWeapons.Find(weap);
+		if (id < pickedUpWeapons.Size() && TRIATHLON && (CountOwnedWeapons() > MAXOWNEDWEAPONS))
 		{
-			For(int i=0; i<= weap.amount; i++)
-			{
-				DropInventory(weap, weap.amount);
-				extraWeaponsToDrop.Delete(id);
-			}
+			DropOwnedWeapon(weap);
+			pickedUpWeapons.Delete(id);
 		}
+		// If it was the focus weapon, flush the pointer:
 		if (weap == focusWeapon)
 		{
 			focusWeapon = null;
 		}
 	}
-	
 	void togglescanner()
 	{
 		If(!scanneractive)
@@ -1730,16 +1711,11 @@ class Brutal_PlayerBase : PlayerPawn
 	Override void Tick()
     {
 	
-		if (focusWeapon && !IsVoodooDoll())
+		if (focusWeapon && !BDPHandler.IsVoodooDoll(self))
 		{
 			// Check if our and weapon's collision boxes no longer align.
 			// If so, flush the focusWeapon pointer:
-			Vector2 diff = level.Vec2Diff(self.pos.xy, focusWeapon.pos.xy);
-			if (abs(diff.x) > (self.radius + focusWeapon.radius) ||
-				abs(diff.y) > (self.radius + focusWeapon.radius) ||
-				(focusWeapon.pos.z > self.pos.z + self.height) ||
-				(focusWeapon.pos.z + focusWeapon.height < self.pos.z)
-				)
+			if (!BDPHandler.IsAABBColliding(self, focusWeapon))
 			{
 				focusWeapon = null;
 				manualPickup = false;
