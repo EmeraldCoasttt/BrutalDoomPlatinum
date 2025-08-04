@@ -267,9 +267,12 @@ ACTOR SuperBlurSphere : Blursphere REPLACES Blursphere
   States
   {
   Spawn:
-     TNT1 A 0 A_PlaySound("POWERHUM", 0, 0.4, 1)
+		TNT1 A 0 A_startSound("INVISHUM",4,CHANF_LOOPING)
      PINS AABBCCDDCCBB 2 Bright A_SpawnItem("RedFlare", 0, 24)
      Loop
+	Pickup:
+		TNT1 A 0 A_stopsound(4)
+		STOP
   }
 }
 
