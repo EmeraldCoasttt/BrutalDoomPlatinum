@@ -4,7 +4,7 @@
 BDPSAW = "Chainsaw";
 BDPFISTS = "Fists";
 BDPPISTOL = "Pistol";
-BDPSMG = "Sub Machinegun";
+BDPSMG = "Submachine Gun";
 BDPREVOLVER = "Revolver";
 BDPSHOTGUN = "Shotgun";
 BDPSSG = "Super Shotgun";

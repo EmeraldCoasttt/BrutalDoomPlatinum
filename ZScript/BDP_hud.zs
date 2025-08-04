@@ -75,11 +75,7 @@ class BDP_HUD : DoomStatusBar
 			If(!automapactive)
 			{
 				drawcrosshairs();
-				let plr = Brutal_Playerbase(CPlayer.mo);
-				if (plr && plr.focusWeapon)
-				{
-					DrawString(weapPromptFnt, plr.focusWeaponPrompt, (0, 32), DI_SCREEN_CENTER|DI_TEXT_ALIGN_CENTER, scale: (0.5, 0.5));
-				}
+				
 			}
 		}
 	}
@@ -651,6 +647,14 @@ class BDP_HUD : DoomStatusBar
 		iconPos += (iconSpacing * 1, 17);
 		DrawGrenadeIndicator(mIndexfnt, iconPos, iconFlags, (22,22));
 		DrawWeaponSpecificStuff(basepos);
+		
+		let plr = Brutal_Playerbase(CPlayer.mo);
+		if (plr && plr.focusWeapon && !automapactive)
+		{
+			textureID focusicon = geticon(plr.focusweapon,0);
+			DrawString(weapPromptFnt, plr.focusWeaponPrompt, (-22, -48), DI_SCREEN_RIGHT_BOTTOM|DI_TEXT_ALIGN_RIGHT, scale: (0.5, 0.5));
+			Drawtexture(focusicon,(-22,-51),DI_SCREEN_RIGHT_BOTTOM|DI_ITEM_RIGHT_BOTTOM);
+		}
 		
 		
 	}

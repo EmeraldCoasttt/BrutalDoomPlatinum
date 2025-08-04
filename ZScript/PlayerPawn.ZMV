@@ -239,9 +239,9 @@ class Brutal_PlayerBase : PlayerPawn
 	bool manualPickup;
 	
 	// REPLACE WITH LANGUAGE STRINGS:
-	const PICKUPSTR_SWAP = "Press Use to swap for \cx%s\c-";
-	const PICKUPSTR_PICK = "Press Use to pick up \cx%s\c-";
-	const PICKUPSTR_DW = "Press Use to dual-wield \cx%s\c-";
+	const PICKUPSTR_SWAP = "Press Use to swap for \cg%s\c-";
+	const PICKUPSTR_PICK = "Press Use to pick up \cg%s\c-";
+	const PICKUPSTR_DW = "Press Use to dual wield \cg%s\c-"; 
 	const MAXOWNEDWEAPONS = 4;
 	
 	Default
