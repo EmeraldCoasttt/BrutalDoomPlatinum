@@ -49,6 +49,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 	brutalweapon.clearoverlays TRUE;
 	brutalweapon.VoiceActed TRUE;
 	Radius 32;
+	+forcexybillboard;
 	
 	}
 	

@@ -1569,7 +1569,6 @@ brightmap sprite REVOM0 { map "brightmaps/doom/Weapons/Revolver/REVOMB.png" disa
 brightmap sprite REVON0 { map "brightmaps/doom/Weapons/Revolver/REVONB.png" disablefullbright }
 brightmap sprite REVOO0 { map "brightmaps/doom/Weapons/Revolver/REVOOB.png" disablefullbright }
 brightmap sprite REVOP0 { map "brightmaps/doom/Weapons/Revolver/REVOPB.png" disablefullbright }
-brightmap sprite REVOQ0 { map "brightmaps/doom/Weapons/Revolver/REVOQB.png" disablefullbright }
 
 brightmap sprite REVRA0 { map "brightmaps/doom/Weapons/Revolver/REVRAB.png" disablefullbright }
 brightmap sprite REVRC0 { map "brightmaps/doom/Weapons/Revolver/REVRCB.png" disablefullbright }
