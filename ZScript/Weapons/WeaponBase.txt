@@ -603,29 +603,6 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			takeinventory("Zoomies",1);
 			//A_WeaponReadyDX acts as a wrapper for A_weaponready and accepts the same flags
 			A_weaponready(dxflags);
-			//Lost soul and monster grabbing (NEEDS REDONE)
-			If(findinventory("powerstrength") && player.cmd.buttons & BT_USE)
-			{
-				FLineTraceData checkgrab;
-				invoker.owner.LineTrace(invoker.owner.angle, 64, invoker.owner.pitch, 0, offsetz: 41, data: checkgrab);
-				if (CheckGrab.HitActor && Checkgrab.HitActor is "TehLostSoul")
-				{
-					invoker.owner.A_startSound("skeleton/swing",1);
-					Invoker.owner.giveinventory("hasagib",1);
-					Invoker.owner.giveinventory("lostsoulfatality",1);
-					Invoker.owner.giveinventory("gofatality",1);
-					checkgrab.hitactor.destroy();
-					
-				}
-				if (CheckGrab.HitActor && Checkgrab.HitActor is "Explosivebarrel1")
-				{
-					invoker.owner.A_startSound("skeleton/swing",1);
-					Invoker.owner.giveinventory("hasagib",1);
-					Invoker.owner.giveinventory("hasbarrel",1);
-					Invoker.owner.giveinventory("gofatality",1);
-					checkgrab.hitactor.destroy();
-				}
-			}
 			//Flag for if holding throwable object
 			If(findinventory("hasagib"))
 			{
@@ -1524,7 +1501,10 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		takeinventory("zoomed",1);
 		takeinventory("sprintbob",1);
 		A_zoomfactor(1.0);
-		
+		If(!(invoker is "Explosivebarrelweapon"))
+		{
+			Invoker.owner.takeinventory("explosivebarrelweapon",1);
+		}
 		
 		
 		

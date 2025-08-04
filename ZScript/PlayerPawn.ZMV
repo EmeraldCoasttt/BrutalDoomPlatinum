@@ -356,11 +356,17 @@ class Brutal_PlayerBase : PlayerPawn
 		{
 			isfists = true;
 		}
+		
+		bool isbarrel;
+		If(player.readyweapon && !(player.readyweapon is "ExplosiveBarrelWeapon") && weap is "explosivebarrelweapon")
+		{
+			isbarrel = true;
+		}
 	
 		// Collision boxes not overlapping - this is being picked
 		// up elsewhere, by a voodoo doll. Let voodoo dolls pick up
 		// weapons directly:
-		if (distance3d(weap) > 128)
+		if (distance3d(weap) > 128 && !(weap is "ExplosiveBarrelWeapon"))
 		{
 			AddToPickupList(weap);
 			return true;
@@ -368,7 +374,7 @@ class Brutal_PlayerBase : PlayerPawn
 		
 		// If this is a weapon we're already getting a promopt about,
 		// and player pressed Use, pick it up:
-		if (weap == focusWeapon && manualPickup && !isfists)
+		if (weap == focusWeapon && manualPickup && !isfists && !isbarrel)
 		{
 			// if over capacity, drop readyweapon:
 			if (overCap)
@@ -388,6 +394,15 @@ class Brutal_PlayerBase : PlayerPawn
 			return true;
 		}
 		
+		
+		if (weap == focusWeapon && manualPickup && isbarrel)
+		{
+			// and flush the pointer:
+			focusWeapon = null;
+			manualPickup = false;
+			AddToPickupList(weap);
+			return true;
+		}
 		// If we're here, we're NOT picking this weapon up,
 		// so, it's time to process it.
 		
@@ -447,7 +462,7 @@ class Brutal_PlayerBase : PlayerPawn
 		
 		// If weapon is already owned and is not dual-wieldable,
 		// nothing else needs to happen:
-		if (self.FindInventory(weap.GetClass()) && !canDualWield  || ISFISTS)
+		if (self.FindInventory(weap.GetClass()) && !canDualWield  || ISFISTS && !IsBarrel || IsBarrel && !self.FindInventory("PowerStrength"))
 		{
 			return false;
 		}
@@ -458,7 +473,7 @@ class Brutal_PlayerBase : PlayerPawn
 		{
 			focusWeaponPrompt = PICKUPSTR_DW; //dual-wield prompt
 		}
-		else if (overCap) //we're at capacity
+		else if (overCap && !isbarrel) //we're at capacity
 		{
 			focusWeaponPrompt = PICKUPSTR_SWAP; //swap prompt
 		}
