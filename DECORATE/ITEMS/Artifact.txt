@@ -44,14 +44,11 @@ ACTOR LifeSphere : CustomInventory Replaces SoulSphere
 	States
 	{
 	Spawn:
-	    TNT1 A 0 A_PlaySound("POWERHUM", 0, 0.4, 1)
-		TNT1 A 0 A_CheckSight("Spawn2")
+	   TNT1 A 0 NODELAY A_startSound("POWERHUM",4,CHANF_LOOPING)
 		SOUL AAABBBCCCDDDCCCBBB 2 Bright A_SpawnItem("BlueFlareMedium2",0,20)
 		Loop
-	Spawn2:
-		SOUL ABCDCB 2 BRIGHT
-		Goto Spawn
 	Pickup:
+		TNT1 A 0 A_stopsound(4)
         TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360))
 		TNT1 A 0 A_GiveInventory("SoulSphereHealth", 1)
 		Stop
@@ -63,6 +60,7 @@ ACTOR LifeSphereOneUp : LifeSphere
 	States
 	{
 	Pickup:
+		TNT1 A 0 A_stopsound(4)
         TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360))
 		TNT1 A 0 A_GiveInventory("ExtraLife", 1)
 		Stop
@@ -89,14 +87,12 @@ ACTOR EnergySphere : CustomInventory Replaces Megasphere
 	States
 	{
 	Spawn:
-	    TNT1 A 0 A_PlaySound("POWERHUM", 0, 0.4, 1)
-		TNT1 A 0 A_CheckSight("Spawn2")
+	    TNT1 A 0 A_StartSound("MEGAHUM",4,CHANF_LOOPING)
 		MEGA AABBCCDD 2 BRIGHT A_SpawnItem("LensFlare",0,35)
 		Loop
-	Spawn2:	
-		MEGA AABBCCDD 2 BRIGHT
-		Goto Spawn
+
 	Pickup:
+		TNT1 A 0 A_stopsound(4)
         TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360))
 		TNT1 A 0 A_GiveInventory("HeavyArmor", 1)
 		TNT1 AA 0 A_GiveInventory("SoulsphereHealth", 1)
@@ -110,6 +106,7 @@ ACTOR EnergySphereOneUp : EnergySphere
 	{
 	
 	Pickup:
+		TNT1 A 0 A_stopsound(4)
         TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360))
 		//TNT1 A 0 A_GiveInventory("HeavyArmor", 1)
 		TNT1 A 0 A_GiveInventory("ExtraLife", 3)
