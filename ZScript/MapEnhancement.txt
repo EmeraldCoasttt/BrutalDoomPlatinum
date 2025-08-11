@@ -666,6 +666,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 
 			//e2m4
 			case '1bc04d646b32d3a3e411daf3c1a38ff8':
+			case '48f17a6455a746c1ad8ba19a50758d0f':
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
 				{
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYDEI",TexMan.Type_Any),TexMan.CheckForTexture("SKYDEI",TexMan.Type_Any));
