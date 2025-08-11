@@ -18,6 +18,8 @@ CLASS MeleeAttack : Actor
 	Property MeleeKnockback : MeleeKnockback;
 	bool DoorBuster;
 	Property DoorBuster : DoorBuster;
+	bool Parry;
+	Property Parry : Parry;
 	Default
 	{
 		Radius 4;
@@ -43,13 +45,14 @@ CLASS MeleeAttack : Actor
 		//MeleeAttack.dofatality TRUE;
 		MeleeAttack.MeleeKnockback TRUE;
 		MeleeAttack.DoorBuster TRUE;
+		MeleeAttack.Parry TRUE;
 	}
 	Int DamageToDeal;
 	String DecalToPrint;
 	
 	Override void postbeginplay()
 	{
-		If(target && target.findinventory("canparry") && target.findinventory("powerstrength"))
+		If((target && target.findinventory("canparry") && target.findinventory("powerstrength") && Parry) || self is "MeleeAttackRifleBash")
 		{
 			//Console.printf("parryready!");
 			Vector3 viewPos = (pos.xy, pos.z); // player view point
@@ -108,8 +111,9 @@ CLASS MeleeAttack : Actor
 						mo.vel.x = -mo.vel.x;
 						mo.vel.y = -mo.vel.y;
 						mo.vel.z = -mo.vel.z;
+						mo.vel *= 4;
 						mo.giveinventory("grabberdamage",1);
-						A_startsound("PARRY",28);
+						A_startsound("FISTWALL",28);
 						Radius_Quake (12, 24, 0, 200, 0);
 						for (int i = 0; i < 11; i++)
 						{
@@ -370,6 +374,7 @@ CLASS Meleeattackslide : MeleeAttack
 		//MeleeAttack.dofatality FALSE;
 		MeleeAttack.uppercut FALSE;
 		MeleeAttack.MeleeKnockback FALSE;
+		MeleeAttack.Parry FALSE;
 		Speed 40;
 		radius 12;
 			}
@@ -443,6 +448,7 @@ CLASS MeleeAttackAir : MeleeAttackSlide
 		MeleeAttack.berserkdamage 95;
 		MeleeAttack.pickbarrel TRUE;
 		//MeleeAttack.dofatality TRUE;
+		
 		Speed 40;
 			}
 	
@@ -458,6 +464,7 @@ CLASS MeleeAttackLeft : MeleeAttack
 				DamageType "Melee";
 				MeleeAttack.splatterblood TRUE;
 				MeleeAttack.bonushealth TRUE;
+				MeleeAttack.Parry FALSE;
 			}
 		States
 			{
