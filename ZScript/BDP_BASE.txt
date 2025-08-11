@@ -784,7 +784,8 @@ Class BDPActor : Actor abstract {
 	
 	Action state A_checkCeilingLatch (int maxceilingheight = 250, statelabel FailState = "see")
 	{
-		If((abs(pos.z) + abs(ceilingz)) > maxceilingheight)
+		//console.printf("%i",pos.z - getzat(FLAGS:GZF_CEILING));
+		If(pos.z - getzat(FLAGS:GZF_CEILING) < -maxceilingheight)
 		{
 			//console.printf("%i",(abs(pos.z) + abs(ceilingz)));
 			Return resolvestate(failstate);
