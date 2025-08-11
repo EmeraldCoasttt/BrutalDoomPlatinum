@@ -82,9 +82,6 @@ version "4.14.0"
 #include "zscript/6dof/quaternion.zs"
 #include "zscript/6dof/roll_handler.zs"
 
-#include "zscript/TiltPlusPlus/TiltPlusPlus.zc"
-#include "zscript/TiltPlusPlus/TiltPlusPlusMenu.zc"
-
 #include "ZScript/Modifiers/modifier_base.zsc"
 #include "ZScript/Modifiers/modifiers.zsc"
 #include "ZScript/Modifiers/modifier_events.zsc"

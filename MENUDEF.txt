@@ -86,7 +86,7 @@ OptionMenu "BrutalMenu"
 	Submenu "Keybinds", "BDPKeybinds", 0, 1
 	Submenu "GZDoom Setup", "BDPSetup", 0, 1
 	Submenu "Gameplay Options", "DoxGameplayOptions", 0, 1
-	Submenu "Visual Options", "DoxVisualOptions", 0, 1
+	//Submenu "Visual Options", "DoxVisualOptions", 0, 1
 	//Submenu "Weapon Spawns", "DoxWeaponSpawns", 0, 1
 	StaticText ""
 	StaticText "-------------------------------------------------------", "black"
@@ -105,7 +105,7 @@ OptionMenu "BrutalMenu"
 OptionMenu "BDPKeybinds"
 {
 	Title "Keybinds"
-	Class "TiltPlusPlusMenu"
+	Class "BDPMenu"
 	Position -32
 	StaticText "-------------------------------------------------------", "black"
 	StaticText "BDP Specific Keybinds", "fire"
@@ -115,14 +115,12 @@ OptionMenu "BDPKeybinds"
 	Control "Sprint", "+speed"
 	Control "Melee", "kickem"
 	Control "Reload", "reload"
-	Control "Special Action 1", "+user3"
-	Control "Special Action 2", "+user4"
+	Control "Special Action", "+user3"
 	Control "Flashlight", "flashlightswitch"
 	Control "Grenade", "+user2"
 	Control "Swap Grenades", "swapgrenade"
 	Control "Scan Area", "scanner"
 	Control "Taunt", "brutaltaunt"
-	Control "Roll", "rodirection"
 	StaticText ""
 	StaticText "-------------------------------------------------------", "black"
 	StaticText "CHEATS"
@@ -136,15 +134,15 @@ OptionMenu "BDPKeybinds"
 OptionMenu "BDPSetup"
 {
 	Title "GZDoom Setup"
-	Class "TiltPlusPlusMenu"
+	Class "BDPMenu"
 	Position -32
 	StaticText "-------------------------------------------------------", "black"
 	StaticText "Quick dev-reccomended options for new players", "fire"
 	StaticText "Select an option to see dev reccomendation", "fire"
 	StaticText "-------------------------------------------------------", "black"
 	StaticText ""
-	TiltPlusPlusOption "Disable Clean Menu Scaling (Should be OFF)", "Disable Clean Menu Scaling Should be OFF if you can't see the full menu logo", "m_cleanscale", "OffOn"
-	TiltPlusPlusOption "Texture Filtering Mode (Should be NONE)", "Texture filtering should be NONE if you want crisp pixels",		gl_texture_filter,				"FilterModes"
+	BDPOption "Disable Clean Menu Scaling (Should be OFF)", "Disable Clean Menu Scaling Should be OFF if you can't see the full menu logo", "m_cleanscale", "OffOn"
+	BDPOption "Texture Filtering Mode (Should be NONE)", "Texture filtering should be NONE if you want crisp pixels",		gl_texture_filter,				"FilterModes"
 	Slider "Max Decals (May impact performance)", "cl_maxdecals", 0, 10000, 100, 0
 	
 }
@@ -152,220 +150,49 @@ OptionMenu "BDPSetup"
 OptionMenu "DoxGameplayOptions"
 {
 	Title "Gameplay Options"
-	Class "TiltPlusPlusMenu"
+	Class "BDPMenu"
 	Position -32
 	StaticText ""
-	StaticText "-------------------------------------------------------", "black"
-	StaticText "LEVEL CHANGES", "fire"
-	StaticText "-------------------------------------------------------", "black"
-	StaticText ""
-	TiltPlusPlusOption "Level Enhancement System", "Adds new textures, decorations and enemies to vanilla maps.", "bd_disablemapenhancements", "DisabledEnabled"
-	TiltPlusPlusOption "PSX Monsters", "Adds PSX Monster placements to The Ultimate Doom.", "bd_PSXMonsters", "EnabledDisabled"
-	StaticText ""
-	StaticText "-------------------------------------------------------", "black"
-	StaticText "PLAYER/WEAPON OPTIONS", "fire"
-	StaticText "-------------------------------------------------------", "black"
-	StaticText ""
-	TiltPlusPlusOption "Ledge Grab", "Allows you to grab onto a ledge and lift yourself up. Use with care.", "donotclimb", "NoYes"
-	TiltPlusPlusOption "Double Jump", "Allows you to perform a second jump in mid air. Use with care.", "donotdoublejump", "NoYes"
-	TiltPlusPlusOption "Enable Auto Reload", "Automatically reload your gun when it runs out of ammo.", "bd_NoAutoReload", "NoYes"
-	TiltPlusPlusOption "Enable smart dual wielding", "Weapons remember if they were dual wielded when selecting them again.", "bd_SmartDualWield", "NoYes"
-	TiltPlusPlusOption "Enable Weapon Pitch Changes", "Makes weapons change the screen pitch while recoiling.", "bd_Pitch", "NoYes"
-	TiltPlusPlusOption "ADS mode", "Change how aiming down sights is controlled.", "bd_Aim", "AimOption"
-	TiltPlusPlusOption "Manual shotgun pump", "The shotgun must be pumped by pressing fire.", "ManualShotgunPump", "YesNo"
-	TiltPlusPlusOption "BDv21 Minigun firing", "The minigun spins up faster, but cannot fire while spinning up.", "bd_LegacyMinigunFire", "YesNo"
-	TiltPlusPlusOption "Rocket Launcher backblast", "Deals damage to enemies behind players using Rocket Launchers.", "bd_rocketbackblast", "YesNo"
-	StaticText ""
-	StaticText "-------------------------------------------------------", "black"
-	StaticText "MONSTER ABILITIES", "fire"
-	StaticText "-------------------------------------------------------", "black"
-	StaticText ""
-	TiltPlusPlusOption "Monsters wander", "Monsters move around after spawning, instead of standing still.", "bd_WanderingOnSpawn", "YesNo"
-	TiltPlusPlusOption "Zombies infight", "Zombies will not attack ohter zombies if provoked. They can still damage each other.", "bd_NoZombieInfight", "NoYes"
-	TiltPlusPlusOption "Zombies roll", "Zombies dodge-roll in combat.", "bd_RollingZombies", "NoYes"
-	TiltPlusPlusOption "Imps crawl on ceiling", "Imps can jump to the ceiling and crawl on it.", "bd_CeilingImps", "NoYes"
-	TiltPlusPlusOption "Imps jump attack", "Imps will jump while throwing fireballs.", "bd_JumpingImps", "NoYes"
-	TiltPlusPlusOption "Arachnotrons walk on ceiling", "Arachnotrons can jump to the ceiling and walk on it.", "bd_CeilingSpiders", "NoYes"
-	TiltPlusPlusOption "Revenants use jetpack", "Revenants can activate their jetpacks to fly.", "bd_JetpackRevenant", "NoYes"
-	TiltPlusPlusOption "Hell Knights rush & slam", "Hell Knights can rush the player and slam the ground.", "bd_HKslam", "NoYes"
-	TiltPlusPlusOption "Barons of Hell rush & slam", "Barons of Hell can rush the player and slam the ground.", "bd_Baronslam", "YesNo"
-	TiltPlusPlusOption "Archviles teleport", "Archviles have a chance to teleport if hit.", "bd_archvileteleport", "NoYes"
-	TiltPlusPlusOption "Cyberdemons airstrike", "Cyberdemons fire rockets into the air and airstrike the player.", "bd_CYBERFIREUP", "YesNo"
-}
-
-OptionMenu "DoxVisualOptions"
-{
-	Title "Visual Options"
-	Class "TiltPlusPlusMenu"
-	Position -32
-	StaticText ""
-	TiltPlusPlusOption "Replace Decorations", "Enable fancier decorations.", "bd_disabledecorations", "DisabledEnabled"
-	StaticText ""
-	Title "Visual Options"
 	StaticText "-------------------------------------------------------", "black"
 	StaticText "PERFORMANCE OPTIONS", "fire"
 	StaticText "-------------------------------------------------------", "black"
 	StaticText ""
 	Slider "Max Decals", "cl_maxdecals", 0, 10000, 100, 0
 	Slider "Max Gibs and Blood Pools", "sv_corpsequeuesize", 0, 50000, 100, 0
-	TiltPlusPlusOption "Blood Amount", "Amount of blood from hitting enemies.", "bd_bloodamount", "BrutalBlood"
-	TiltPlusPlusOption "Gibs Janitor", "Makes gibs disappear after 30 seconds.", "bd_lowgraphicsmode", "EnabledDisabled"
-	TiltPlusPlusOption "Casings janitor", "Makes casings disappear after 10 seconds.", "bd_infinitecasings", "DisabledEnabled"
+	BDPOption "Blood Amount", "Amount of blood from hitting enemies.", "bd_bloodamount", "BrutalBlood"
+	BDPOption "Gibs Janitor", "Makes gibs disappear after 30 seconds.", "bd_lowgraphicsmode", "EnabledDisabled"
+	BDPOption "Casings janitor", "Makes casings disappear after 10 seconds.", "bd_infinitecasings", "DisabledEnabled"
 	StaticText ""
 	StaticText "-------------------------------------------------------", "black"
-	StaticText "DETAIL OPTIONS", "fire"
+	StaticText "LEVEL CHANGES", "fire"
 	StaticText "-------------------------------------------------------", "black"
 	StaticText ""
-	Option "Water Ripple Effects", "bd_disablewaterripples2", "DisabledEnabled"
+	BDPOption "Replace Decorations", "Enable fancier decorations.", "bd_disabledecorations", "DisabledEnabled"
+	BDPOption "Level Enhancement System", "Adds new textures, decorations and enemies to vanilla maps.", "bd_disablemapenhancements", "DisabledEnabled"
+	BDPOption "PSX Monsters", "Adds PSX Monster placements to The Ultimate Doom.", "bd_PSXMonsters", "EnabledDisabled"
+	StaticText ""
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "PLAYER/WEAPON OPTIONS", "fire"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText ""
+	BDPOption "Ledge Grab", "Allows you to grab onto a ledge and lift yourself up. Use with care.", "donotclimb", "NoYes"
+	BDPOption "Double Jump", "Allows you to perform a second jump in mid air. Use with care.", "donotdoublejump", "NoYes"
+	BDPOption "Enable smart dual wielding", "Weapons remember if they were dual wielded when selecting them again.", "bd_SmartDualWield", "NoYes"
+	BDPOption "ADS mode", "Change how aiming down sights is controlled.", "bd_Aim", "AimOption"
+	BDPOption "Manual shotgun pump", "The shotgun must be pumped by pressing fire.", "ManualShotgunPump", "YesNo"
 	Option "Computer Area Map reveals actors", "bd_allmapdx", "NoYes"
-	TiltPlusPlusOption "Randomized pickup sprites", "Enables visual variants of ammo and weapon pickups.", "Dox_SimplePickups", "DisabledEnabled"
-	StaticText ""
-	StaticText "-------------------------------------------------------", "black"
-	StaticText "PLAYER/WEAPON GRAPHICAL OPTIONS", "fire"
-	StaticText "-------------------------------------------------------", "black"
-	StaticText ""
-	Submenu "Smart crosshair", "SmartCrosshairsMenu"
-	Slider "$DSPLYMNU_SCREENSIZE", "screenblocks", 3.0, 12.0, 1.0, 0
-	ScaleSlider "User interface scale", "uiscale", 0.0, 8.0, 1.0, "Adapt to screen size"
-	TiltPlusPlusOption "Enable weapon flashes", "[!!! EPILEPSY WARNING !!!] Muzzle flashes light up the room", "bdp_gunlight", "YesNo"
-	TiltPlusPlusOption "Enable Scanner", "Shows enemy names and health.", "bd_disablescanner", "NoYes"
-	TiltPlusPlusOption "Leg staining", "Configure blood-stains on first person legs.", "bd_LegStainingOptions", "LegStainingOption"
-	Option "Enable fancy firing [!!! DEPRECATED !!!]", "bd_FancyShooting", "NoYes"
-	TiltPlusPlusOption "Swaying Shotgun & GL straps", "Makes straps on weapons sway back and forth.", "bd_ShotgunStrap", "NoYes"
-	TiltPlusPlusOption "Enable First Person Legs", "Show the player's legs in first person.", "bd_Legs", "NoYes"
-	TiltPlusPlusOption "Screen Effects", "Enable blood splatters and bullet holes on the screen.", "bd_ScreenFX", "ScreenTypes"
-	TiltPlusPlusOption "Blood Trail Splash", "Enables blood splashing when enemies are bleeding out. If screen effects are disabled, this will also be disabled.", "bd_BloodTrail", "NoYes"
-	TiltPlusPlusOption "3D Nails", "Enables 3D models for nailgun and glass slug projectiles.", "Dox_3DNail", "YesNo"
-	TiltPlusPlusOption "Magazine clicks on low ammo", "Adds an audio indicator when your mag's ammo is low.", "BD_MagGoClicky", "YesNo" 
-	StaticText ""
-	StaticText "-------------------------------------------------------", "black"
-	StaticText "VIEW TILTING", "fire"
-	StaticText "-------------------------------------------------------", "black"
-	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_STRAFETILT_TITLE", 1
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED", "$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT", "sv_strafetilt", "YesNo"
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_INVERT", "$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_INVERT", "sv_strafetiltinvert", "YesNo"
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SPEED", "$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_SPEED", "sv_strafetiltspeed", 0.1, 2.0, 0.01, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_ANGLE", "$TILTPLUSPLUSMNU_HELPTEXT_STRAFETILT_ANGLE", "sv_strafetiltangle", 0.1, 1.0, 0.01, 2
-	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_MOVETILT_TITLE", 1
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED", "$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT", "sv_movetilt", "YesNo"
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SPEED", "$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_SPEED", "sv_movetiltspeed", 0.1, 20.0, 0.1, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_ANGLE", "$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_ANGLE", "sv_movetiltangle", 0.01, 0.10, 0.01, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SCALAR", "$TILTPLUSPLUSMNU_HELPTEXT_MOVETILT_SCALAR", "sv_movetiltscalar", 0.0, 1.0, 0.1
-	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_TURNTILT_TITLE", 1
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED", "$TILTPLUSPLUSMNU_HELPTEXT_TURNTILT", "sv_turntilt", "YesNo"
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_INVERT", "$TILTPLUSPLUSMNU_HELPTEXT_TURNTILT_INVERT", "sv_turntiltinvert", "YesNo"
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SCALAR", "$TILTPLUSPLUSMNU_HELPTEXT_TURNTILT_SCALAR", "sv_turntiltscalar", 0.0, 20.0, 0.1
-	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_UNDERWATERTILT_TITLE", 1
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED", "$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT", "sv_underwatertilt", "YesNo"
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SPEED", "$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_SPEED", "sv_underwatertiltspeed", 0.1, 20.0, 0.1, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_ANGLE", "$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_ANGLE", "sv_underwatertiltangle", 0.01, 0.5, 0.01, 2
-	TiltPlusPlusSlider "$TILTPLUSPLUSMNU_SCALAR", "$TILTPLUSPLUSMNU_HELPTEXT_UNDERWATERTILT_SCALAR", "sv_underwatertiltscalar", 0.0, 1.0, 0.1
-	StaticText ""
-	StaticText "$TILTPLUSPLUSMNU_DEATHTILT_TITLE", 1
-	TiltPlusPlusOption "$TILTPLUSPLUSMNU_ENABLED", "$TILTPLUSPLUSMNU_HELPTEXT_DEATHTILT", "sv_deathtilt", "YesNo"
+	BDPOption "Enable weapon flashes", "[!!! EPILEPSY WARNING !!!] Muzzle flashes light up the room", "bdp_gunlight", "YesNo"
+	BDPOption "Leg staining", "Configure blood-stains on first person legs.", "bd_LegStainingOptions", "LegStainingOption"
+	BDPOption "Swaying Shotgun & GL straps", "Makes straps on weapons sway back and forth.", "bd_ShotgunStrap", "NoYes"
+	BDPOption "Screen Effects", "Enable blood splatters and bullet holes on the screen.", "bd_ScreenFX", "ScreenTypes"
+	BDPOption "Blood Trail Splash", "Enables blood splashing when enemies are bleeding out. If screen effects are disabled, this will also be disabled.", "bd_BloodTrail", "NoYes"
+	BDPOption "3D Nails", "Enables 3D models for nailgun and glass slug projectiles.", "Dox_3DNail", "YesNo"
+	BDPOption "Magazine clicks on low ammo", "Adds an audio indicator when your mag's ammo is low.", "BD_MagGoClicky", "YesNo" 
 }
 
-OptionMenu "DoxWeaponSpawns"
-{
-	Title "Weapon Spawns"
-	Class "TiltPlusPlusMenu"
-	Position -32
-	StaticText ""
-	StaticText "-------------------------------------------------------", "black"
-	StaticText "WEAPON SPAWNS", "fire"
-	StaticText "-------------------------------------------------------", "black"
-	StaticText ""
-	Option "Axe", "bd_SpawnAxe", "EnabledDisabled"
-	Option "Chainsaw", "bd_SpawnSaw", "EnabledDisabled"
-	StaticText ""
-	Option "Pistol", "bd_SpawnPistol", "EnabledDisabled"
-	Option "Sub-Machinegun", "bd_SpawnSMG", "EnabledDisabled"
-	Option "Revolver", "bd_SpawnRevolver", "EnabledDisabled"
-	StaticText ""
-	Option "Shotgun", "bd_SpawnShotgun", "EnabledDisabled"
-	Option "Super Shotgun", "bd_SpawnSSG", "EnabledDisabled"
-	Option "Assault Shotgun", "bd_SpawnASG", "EnabledDisabled"
-	TiltPlusPlusOption "SSG spawns on Shotgun", "Allows the SSG to spawn instead of a Shotgun.", "bd_SSGreplacesShotgun", "YesNo"
-	TiltPlusPlusSlider "SSG spawn multiplier", "Chance for the SSG to spawn.", "bd_SSGreplacementMultiplier", 1, 8, 1, 1, "bd_SSGreplacesShotgun"
-	StaticText ""
-	Option "Rifle", "bd_SpawnRifle", "EnabledDisabled"
-	Option "Minigun", "bd_SpawnMinigun", "EnabledDisabled"
-	Option "Machinegun", "bd_SpawnMachinegun", "EnabledDisabled"
-	StaticText ""
-	Option "Rocket Launcher", "bd_SpawnRL", "EnabledDisabled"
-	Option "Grenade Launcher", "bd_SpawnGL", "EnabledDisabled"
-	StaticText ""
-	Option "Plasma rifle", "bd_SpawnPlasmagun", "EnabledDisabled"
-	Option "Railgun", "bd_SpawnRailgun", "EnabledDisabled"
-	Option "FreezeThrower", "bd_SpawnFreezer", "EnabledDisabled"
-	StaticText ""
-	Option "BFG9000", "bd_SpawnBFG", "EnabledDisabled"
-	Option "BFG10K", "bd_SpawnBFG10K", "EnabledDisabled"
-	Option "Unmaker", "bd_SpawnUnmaker", "EnabledDisabled"
-	StaticText ""
-	StaticText "-------------------------------------------------------", "black"
-	StaticText "ENEMY WEAPON DROPS", "fire"
-	StaticText "-------------------------------------------------------", "black"
-	Statictext ""
-	Option "Pistol", "bd_Spawnpistoldrop", "EnabledDisabled"
-	Option "SMG", "bd_SpawnSMGDrop", "EnabledDisabled"
-	Option "Shotgun", "bd_SpawnshotgunDrop", "EnabledDisabled"
-	Option "Rifle", "bd_SpawnRifleDrop", "EnabledDisabled"
-	Option "Minigun", "bd_SpawnMiniGunDrop", "EnabledDisabled"
-}
 
-OptionMenu "SmartCrosshairsMenu"
-{
-	Title "Smart Crosshair Options"
-	Class "TiltPlusPlusMenu"
-	Position -32
-	StaticText ""
-	TiltPlusPlusOption "$HUDMNU_FORCECROSSHAIR", "Disable this option to use Smart Crosshairs.", "crosshairforce", "OnOff"
-	TiltPlusPlusOption "Enable Smart Crosshairs", "Gives each weapon a different crosshair. 0 is the default crosshair. 41 is nothing at all.", "bd_SmartCrosshairs", "YesNo"
-	StaticText "Crosshair Settings", "fire"
-	StaticText ""
-	StaticText "Slot 2:", "fire"
-	Slider "Pistol", "PistolCrosshair", 0, 99, 1
-	Slider "Sub-machinegun", "SMGCrosshair", 0, 99, 1
-	Slider "Revolver", "RevolverCrosshair", 0, 99, 1
-	Slider "MP40", "MP40Crosshair", 0, 99, 1
-	StaticText ""
-	StaticText "Slot 3:", "fire"
-	Slider "Assault Shotgun", "ASGCrosshair", 0, 99, 1
-	Slider "Shotgun", "ShotgunCrosshair", 0, 99, 1
-	Slider "SSG", "SSGCrosshair", 0, 99, 1
-	StaticText ""
-	StaticText "Slot 4:", "fire"
-	Slider "Machinegun", "LMGCrosshair", 0, 99, 1
-	Slider "Rifle", "RifleCrosshair", 0, 99, 1
-	Slider "Minigun", "MinigunCrosshair", 0, 99, 1
-	StaticText ""
-	StaticText "Slot 5:", "fire"
-	Slider "Grenade Launcher", "GLCrosshair", 0, 99, 1
-	Slider "Rocket Launcher", "RLCrosshair", 0, 99, 1
-	StaticText ""
-	StaticText "Slot 6:", "fire"
-	Slider "Plasmagun", "PlasmaCrosshair", 0, 99, 1
-	Slider "Railgun", "RailgunCrosshair", 0, 99, 1
-	Slider "Freezethrower", "FreezethrowerCrosshair", 0, 99, 1
-	StaticText ""
-	StaticText "Slot 7:", "fire"
-	Slider "BFG9000", "BFGCrosshair", 0, 99, 1
-	Slider "BFG10K", "BFG10kCrosshair", 0, 99, 1
-	Slider "Unmaker", "UnmakerCrosshair", 0, 99, 1
-	StaticText ""
-	StaticText "Slot 8:", "fire"
-	Slider "Flamecannon", "FlamecannonCrosshair", 0, 99, 1
-	Slider "Hellish Missile Launcher", "HMLCrosshair", 0, 99, 1
-	StaticText ""
-	Command "Restore to default values", "pukename SmartCrosshairsDefault"
-	StaticText ""
-	StaticText "Default crosshairs provided by Xeno1979.", "fire"
-}
+
+
 
 OptionMenu "DoxCreditsGraphics"
 {

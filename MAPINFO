@@ -5,7 +5,6 @@ Gameinfo
 	AddEventHandlers = "BDPHandler"
 	AddEventHandlers = "SalInvisHandler"
 	AddEventHandlers = "RollHandler"
-	AddEventHandlers = "TiltPlusPlusHandler"
 	AddEventHandlers = "BDPModifier_Events", "BDPMenuSwitcher"
 	AddEventHandlers = "WeatherHandler"
 	AddEventHandlers = "BDP_OverlayUI"
