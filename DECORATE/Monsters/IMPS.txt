@@ -85,7 +85,7 @@ ACTOR MonsterTargetCheckFaster: FastProjectile
 	}
 }
 
-ACTOR Imp Replaces DoomImp
+ACTOR Imp : BDPActor Replaces DoomImp
 {
 	Game Doom
     Scale 1.04
@@ -275,9 +275,8 @@ ACTOR Imp Replaces DoomImp
 	    TNT1 A 0 A_JumpIfCloser(600, 2)
 		Goto SeeContinue
 		TNT1 A 0
-		TNT1 A 0 A_JumpIf( (z - ceilingz) >= 250, "SeeContinue")
+		TNT1 A 0 A_CheckCeilingLatch(200,"seecontinue")
 		TNT1 AAA 0
-		TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, "SeeContinue")
 		TNT1 A 0 A_ChangeFlag("FORCEXYBILLBOARD", 1)
 		//TNT1 A 0 A_CheckSight(2)
 		TNT1 A 0 A_PlaySound("imp/sight",6)
@@ -311,7 +310,7 @@ ACTOR Imp Replaces DoomImp
 		TNT1 A 0 A_JumpIf(waterlevel == 3, "Swim")
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 48,0)
 		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10)
-		TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, "CeilingPounce")
+		TNT1 A 0 A_CheckCeilingLatch(200,"CeilingPounce")
 		//TNT1 A 0 A_JumpIf(momz != 0, "CeilingPounce")
 		TNT1 A 0 ThrustThingZ(0,40,0,1)
 		2M40 II 2 A_Chase("CeilingPounce", "CeilingMissile")
@@ -336,7 +335,7 @@ ACTOR Imp Replaces DoomImp
 		2M40 JJ 2 A_Chase("CeilingPounce", "CeilingMissile")
 		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("flesh/step",4); } }
 		TNT1 A 0 
-		TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, "CeilingPounce")
+		TNT1 A 0 A_CheckCeilingLatch(200,"CeilingPounce")
 		TNT1 A 0 A_JumpIf(momz != 0, "CeilingPounce")
 		//ContinueCeilingCrawl4:
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 48,0)
@@ -349,7 +348,7 @@ ACTOR Imp Replaces DoomImp
 		TNT1 A 0 ThrustThingZ(0,40,0,1)
 		2M40 KK 2 A_Chase("CeilingPounce", "CeilingMissile")
 		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("flesh/step",4); } }
-		TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, "CeilingPounce")
+		TNT1 A 0 A_CheckCeilingLatch(200,"CeilingPounce")
 		TNT1 A 0 A_JumpIf(momz != 0, "CeilingPounce")
 		//ContinueCeilingCrawl6:
 		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 48,0)
@@ -362,7 +361,7 @@ ACTOR Imp Replaces DoomImp
 		TNT1 A 0 ThrustThingZ(0,40,0,1)
 		2M40 HH 2 A_Chase("CeilingPounce", "MaybeCeilingPounce")
 		TNT1 A 0 { if(GetCvar("bd_MonsterFootsteps") == 1) { A_PlaySound("flesh/step",4); } }
-		TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, "CeilingPounce")
+		TNT1 A 0 A_CheckCeilingLatch(200,"CeilingPounce")
 		TNT1 A 0 A_JumpIf(momz != 0, "CeilingPounce")
 		TNT1 A 0 A_JumpIfTargetInLOS(1)
 		Goto CeilingDrop
