@@ -3,7 +3,7 @@
 // Spider boss
 //
 //===========================================================================
-ACTOR TheSpiderMastermind Replaces SpiderMastermind
+ACTOR TheSpiderMastermind : BDPActor Replaces SpiderMastermind
 {
     damagefactor "BFG", 0.2	damagefactor "Desintegrate", 0.4
     damagefactor "HKFT", 0.05
@@ -77,8 +77,7 @@ ACTOR TheSpiderMastermind Replaces SpiderMastermind
 		//TNT1 A 0 A_JumpIf(ceilingz >= 12000, "see")
 		//Goto Pain
 		TNT1 A 0 A_jumpifinventory("spideronceiling",1,"ceilingdrop")
-		TNT1 AAA 0
-		TNT1 A 0 A_JumpIf(CallACS("IsThisSky") == 1, "See")
+		TNT1 A 0 A_CheckCeilingLatch(1000,"see")
 		TNT1 A 0 A_PlaySound("spider/sight",6)
 		TNT1 A 0 A_changeflag("forcexybillboard",true)
 		SPID A 1 a_changeflag("nopain",true)
@@ -187,7 +186,7 @@ ACTOR TheSpiderMastermind Replaces SpiderMastermind
 	//	TNT1 A 0 A_JumpIf(x == 1600, "ReplaceForBOSS")
 	//	TNT1 A 0 A_JumpIf(x == -2720, "ReplaceForMotherdemon1")
 	//	TNT1 A 0 A_JumpIf(x == 0, "ReplaceForMotherdemon2")
-		TNT1 A 0 ACS_NamedExecuteAlways("BDCHeckClassicMonsters", 0, 0, 0, 0)//Check if Vanilla Mode is activated
+	//	TNT1 A 0 ACS_NamedExecuteAlways("BDCHeckClassicMonsters", 0, 0, 0, 0)//Check if Vanilla Mode is activated
 		Goto Stand
 	
 	ReplaceForBOSS:
@@ -232,13 +231,13 @@ ACTOR TheSpiderMastermind Replaces SpiderMastermind
 		Loop
 		
 	See:
-		
+		TNT1 A 0 A_Jump(32,"CeilingJump")
 		SPID A 2 A_Metal
 		SPID A 2 A_Chase
 		SPID B 2 A_Chase
 		SPID B 2 A_Chase
 		SPID C 2 A_Chase
-		TNT1 A 0 A_Jump(32,"CeilingJump")
+		
 		SPID C 2 A_Chase
 		SPID D 2 A_Chase
 		SPID D 2 A_Metal
@@ -260,7 +259,6 @@ ACTOR TheSpiderMastermind Replaces SpiderMastermind
 		
 		SPID G 3 A_FaceTarget
 		SPID H 2 BRIGHT A_CustomMissile("MastermindTracer", 42, 0, random(-3, 3), 1, random(-2, 2))
-		TNT1 A 0 A_SpawnItem ("MasterMindCaseSpawn", 0, 60,0)
 		
 		TNT1 A 0 A_GiveInventory ("BrutalCounter2", 1)
 		TNT1 A 0 A_JumpIfInventory ("BrutalCounter2", 30, "StopFiring")
