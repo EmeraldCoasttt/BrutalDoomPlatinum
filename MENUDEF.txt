@@ -355,6 +355,8 @@ OptionMenu "DoxCreditsGraphics"
 	StaticText ""
 	StaticText "Difficult Old Stuff (DOS)", "LightBlue"
 	StaticText "Powerup shaders"
+	StaticText "Horror Movie Guy", "LightBlue"
+	StaticText "Zombieguy sprites"
 }
 
 OptionMenu "DoxCreditsCode"

@@ -502,6 +502,14 @@
 		{
 			e.Replacement = "deadrevenantlauncher";
 		}
+		if(e.replacee == Checkpotentialactor('labguy'))
+		{
+			e.Replacement = "zombieguy";
+		}
+		if(e.replacee == Checkpotentialactor('BDmummy'))
+		{
+			e.Replacement = "zombieguy";
+		}
 
 	}
 	

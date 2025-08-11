@@ -32,6 +32,26 @@ banshee/sight DSBANACT
 
 RescuedMarine/pain MARIPAIN
 
+$random ZombieFodder/Sight { FODDERSEE1 FODDERSEE2 FODDERSEE3 }
+FODDERSEE1	FODDSEE1
+FODDERSEE2	FODDSEE2
+FODDERSEE3	FODDSEE3
+
+ZombieFodder/Active FODDACT
+
+ZombieFodder/Pain	FODDPAIN
+
+$random ZombieFodder/Death { FODDERDIE1 FODDERDIE2 }
+FODDERDIE1	FODDDIE1
+FODDERDIE2	FODDDIE2
+
+ZombieFodder/Melee DSCLAW
+ZombieFodder/Soul	FODDSOUL
+
+ZFlesh/Throw	FODDATK
+ZFlesh/Miss		FODDMISS
+ZFlesh/Hit		FODDHIT
+
 
 //Marine Voices
 $random FriendlyMarine/Reload { MRNAR1 MRNAR2 }
