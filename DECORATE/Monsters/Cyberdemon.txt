@@ -127,7 +127,6 @@ ACTOR TheCyberdemon: BDPCyberdemon Replaces Cyberdemon
 		TNT1 A 0 A_JumpIfCloser(800, "MaybeCharge")
 	    TNT1 A 0 A_JumpIfCloser(180, "Stomp")
 	MissileAnyways:
-		TNT1 A 0 A_JumpIf(GetCvar("bd_cyberfireup")==0, 2)
 		TNT1 A 0 A_jump(40,"meteor")
 		TNT1 A 0
 		TNT1 A 0 A_JumpIfInventory("Enraged", 1, "SpecialAttack")

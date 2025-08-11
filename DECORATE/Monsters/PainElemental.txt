@@ -37,7 +37,7 @@ ACTOR PainElemental1 Replaces PainElemental
 	States
 	{
 	Spawn:
-	    PAIN A 0 A_JumpIf(GetCvar("bd_WanderingOnSpawn")==1, "Idle")
+
 		PAIN A 10 A_Look
 		Loop
 

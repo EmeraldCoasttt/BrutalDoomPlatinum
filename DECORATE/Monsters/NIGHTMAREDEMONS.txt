@@ -51,7 +51,7 @@ ACTOR NightmarePinky : Demon 25942
 	
     Spawn:
 		SARG Y 1 
-		TNT1 A 0 A_JumpIf(GetCvar("bd_WanderingOnSpawn")==1, "Idle")
+
 	Spawned:	
 		TNT1 A 0 A_JumpIfInventory("EatMe", 1, "Eat")
 		SARG YZYZYZYZYZ 10 A_Look
