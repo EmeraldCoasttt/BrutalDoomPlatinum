@@ -114,7 +114,7 @@ CLASS MeleeAttack : Actor
 						mo.vel *= 4;
 						mo.giveinventory("grabberdamage",1);
 						A_startsound("FISTWALL",28);
-						Radius_Quake (12, 24, 0, 200, 0);
+						target.A_quake(2,12,0,200,"null");
 						for (int i = 0; i < 11; i++)
 						{
 							let parryspark = spawn("sparkx",mo.pos);
