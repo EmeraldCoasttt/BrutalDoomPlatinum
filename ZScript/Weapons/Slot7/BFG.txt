@@ -665,6 +665,7 @@ CLASS SuperBFGBall : BFGBall replaces BFGBall
 		+THRUSPECIES;
 		+MTHRUSPECIES;
 		+skyexplode;
+		+forcexybillboard;
 	}
 	States
 	{

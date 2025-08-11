@@ -111,7 +111,6 @@ CLASS Unmaker : BrutalWeapon
 		Goto SelectAnimation;
 		
 	SelectAnimation:
-	TNT1 A 1 a_jumpifinventory("unmakerunmorph",1,"unmakerunmorph");
 		UNHS EDCBA 1 A_WeaponReady(WRF_NOFIRE);
 		GOto Ready;
 		
