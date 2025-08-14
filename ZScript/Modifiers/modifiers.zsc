@@ -461,6 +461,36 @@ class Modifier_ScoreMaster : BDPModifier
 			dplr.scoremaster = true;
 		}
 	}
+	
+	Override void worldthingdamaged(Worldevent e)
+	{
+		If(e.thing && e.thing.bisMonster && e.thing.health <= 0 && e.damagesource && e.damagesource is "Brutal_PlayerBase")
+		{
+			//console.printf(e.damagetype);
+			//console.printf(e.damagesource.getclassname());
+			 brutal_playerbase BDPPlayer = brutal_playerbase(e.damagesource);
+			If(BDPPLAYER)
+			{
+				If(BDPPlayer.killstreak > 1)
+				{
+					double potentialscore = e.thing.getspawnhealth();
+					double scoremodifier = (BDPPlayer.killstreak - 1);
+					scoremodifier *= 0.1;
+					scoremodifier += 1;
+					potentialscore *= scoremodifier;
+					//Console.printf("%d",potentialscore);
+					BDPPlayer.score += potentialscore;
+				}
+				else
+				{
+					BDPPlayer.score += (e.thing.getspawnhealth());
+				}
+			}
+			 
+			
+		}
+		
+	}
 
 
 }
