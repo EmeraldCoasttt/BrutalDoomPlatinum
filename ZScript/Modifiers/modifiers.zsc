@@ -101,13 +101,13 @@ class Modifier_Triathlon : BDPModifier
 
 }
 
-class Modifier_Mjolnir : BDPModifier
+class Modifier_Reversal : BDPModifier
 {
 	Default
 	{
-		BDPModifier.Icon "HLMST00";
-		BDPModifier.DisplayName "Mjolnir";
-		BDPModifier.Description "Permanent Energy Armor powerup";
+		BDPModifier.Icon "MODPRY1";
+		BDPModifier.DisplayName "Return To Sender";
+		BDPModifier.Description "Berserked Melee attacks can parry projectiles, dealing increased damage";
 	}
 	
 	override void WorldTick()
@@ -121,149 +121,11 @@ class Modifier_Mjolnir : BDPModifier
 			let dplr = Brutal_PlayerBase(plr.mo);
 			if(!dplr) continue;
 			
-			dplr.spawnwitharmor = true;
-		}
-	}
-	
-	Override void worldthingspawned(Worldevent e)
-	{
-		If(e.thing && e.thing is "EnergyArmor")
-		{
-			Actor.spawn("SkullTagArmor",e.thing.pos);
-			E.thing.destroy();
-		}
-		
-	}
-
-}
-
-class Modifier_ShockFactor : BDPModifier
-{
-	Default
-	{
-		BDPModifier.Icon "STMST12";
-		BDPModifier.DisplayName "Shock Factor";
-		BDPModifier.Description "Demons are hyper-aware of you";
-	}
-	
-	override void WorldTick()
-	{
-		for(int i = 0; i < MAXPLAYERS; i++)
-		{
-			if(!PlayerInGame[i]) continue;
-			PlayerInfo plr = players[i];
-			if(!plr) continue;
-			
-			let dplr = Brutal_PlayerBase(plr.mo);
-			if(!dplr) continue;
-			
-			dplr.shockfactor = true;
-		}
-	}
-	
-	Override void worldthingspawned(Worldevent e)
-	{
-		If(e.thing && e.thing.bismonster)
-		{
-			e.thing.bambush = false;
-		}
-	}
-	
-}
-
-
-class Modifier_PerfectHatred : BDPModifier
-{
-	Default
-	{
-		BDPModifier.Icon "FC0OUCH4";
-		BDPModifier.DisplayName "Perfect Hatred";
-		BDPModifier.Description "Demons are permanently enraged";
-	}
-	
-	Override void worldthingspawned(Worldevent e)
-	{
-		If(e.thing && e.thing.bismonster)
-		{
-			e.thing.bmissilemore = true;
-			//e.thing.bmissileevenmore = true;
-			e.thing.speed = (e.thing.speed * 1.5);
-			e.thing.bnopain = true;
-			e.thing.bnoinfighting = TRUE;
-			e.thing.giveinventory("pissedarmor",1);
-			//e.thing.A_giveinventory("thisreallypissesmeoff",(e.thing.health / 70));
-		}
-	}
-	
-}
-
-class Modifier_ManAndAHalf : BDPModifier
-{
-	Default
-	{
-		BDPModifier.Icon "FC0EVL1";
-		BDPModifier.DisplayName "Man And A Half";
-		BDPModifier.Description "Start every level berserked";
-	}
-	
-	override void WorldTick()
-	{
-		for(int i = 0; i < MAXPLAYERS; i++)
-		{
-			if(!PlayerInGame[i]) continue;
-			PlayerInfo plr = players[i];
-			if(!plr) continue;
-			
-			let dplr = Brutal_PlayerBase(plr.mo);
-			if(!dplr) continue;
-			
-			dplr.spawnberserked = true;
-		}
-	}
-	
-	Override void worldthingspawned(Worldevent e)
-	{
-		If(e.thing && e.thing is "BerserkPack")
-		{
-			Actor.spawn("DemonRuneSpawner",e.thing.pos);
-			E.thing.destroy();
-		}
-		
-	}
-	
-}
-
-class Modifier_Gunslinger : BDPModifier
-{
-	Default
-	{
-		BDPModifier.Icon "CIGST10";
-		BDPModifier.DisplayName "Gunslinger";
-		BDPModifier.Description "Weapons deselected for 5 or more seconds instantly reload";
-	}
-	
-	override void WorldTick()
-	{
-		for(int i = 0; i < MAXPLAYERS; i++)
-		{
-			if(!PlayerInGame[i]) continue;
-			PlayerInfo plr = players[i];
-			if(!plr) continue;
-			
-			let dplr = Brutal_PlayerBase(plr.mo);
-			if(!dplr) continue;
-			
-			for(let item = dplr.Inv; item.Inv; item = item.Inv)
-			{
-				let dweap = BrutalWeapon(item);
-				if(!dweap) continue;
-				dweap.gunslinger = true;
-			}
+			dplr.reversalmodifier = true;
 		}
 	}
 
 }
-
 
 class Modifier_OneUpmanship : BDPModifier
 {
@@ -330,82 +192,6 @@ class Modifier_UltraNightmare : BDPModifier
 
 }
 
-class Modifier_SequenceBreak : BDPModifier
-{
-	Default
-	{
-		BDPModifier.Icon "CYBST00";
-		BDPModifier.DisplayName "Sequence Break";
-		BDPModifier.Description "Doors can be kicked down whether you have the key or not.";
-	}
-	override void WorldTick()
-	{
-		for(int i = 0; i < MAXPLAYERS; i++)
-		{
-			if(!PlayerInGame[i]) continue;
-			PlayerInfo plr = players[i];
-			if(!plr) continue;
-			
-			let dplr = Brutal_PlayerBase(plr.mo);
-			if(!dplr) continue;
-			
-			dplr.sequencebreak = true;
-		}
-	}
-
-}
-
-class Modifier_MaximumOverdrive : BDPModifier
-{
-	Default
-	{
-		BDPModifier.Icon "AUGHST0";
-		BDPModifier.DisplayName "MaximumOverdrive";
-		BDPModifier.Description "A Booster Frame is equipped at all times!";
-	}
-	override void WorldTick()
-	{
-		for(int i = 0; i < MAXPLAYERS; i++)
-		{
-			if(!PlayerInGame[i]) continue;
-			PlayerInfo plr = players[i];
-			if(!plr) continue;
-			
-			let dplr = Brutal_PlayerBase(plr.mo);
-			if(!dplr) continue;
-			
-			dplr.maximumoverdrive = true;
-		}
-	}
-
-}
-
-class Modifier_Reversal : BDPModifier
-{
-	Default
-	{
-		BDPModifier.Icon "MODPRY1";
-		BDPModifier.DisplayName "Return To Sender";
-		BDPModifier.Description "Berserked Melee attacks can parry projectiles, dealing increased damage";
-	}
-	
-	override void WorldTick()
-	{
-		for(int i = 0; i < MAXPLAYERS; i++)
-		{
-			if(!PlayerInGame[i]) continue;
-			PlayerInfo plr = players[i];
-			if(!plr) continue;
-			
-			let dplr = Brutal_PlayerBase(plr.mo);
-			if(!dplr) continue;
-			
-			dplr.reversalmodifier = true;
-		}
-	}
-
-}
-
 class Modifier_SkullCrusher : BDPModifier
 {
 	Default
@@ -436,6 +222,7 @@ class Modifier_SkullCrusher : BDPModifier
 
 
 }
+
 
 class Modifier_ScoreMaster : BDPModifier
 {
@@ -495,4 +282,227 @@ class Modifier_ScoreMaster : BDPModifier
 
 }
 
+
+
+class Modifier_ShockFactor : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "STMST12";
+		BDPModifier.DisplayName "Shock Factor";
+		BDPModifier.Description "Demons are hyper-aware of you";
+	}
+	
+	override void WorldTick()
+	{
+		for(int i = 0; i < MAXPLAYERS; i++)
+		{
+			if(!PlayerInGame[i]) continue;
+			PlayerInfo plr = players[i];
+			if(!plr) continue;
+			
+			let dplr = Brutal_PlayerBase(plr.mo);
+			if(!dplr) continue;
+			
+			dplr.shockfactor = true;
+		}
+	}
+	
+	Override void worldthingspawned(Worldevent e)
+	{
+		If(e.thing && e.thing.bismonster)
+		{
+			e.thing.bambush = false;
+		}
+	}
+	
+}
+
+
+class Modifier_PerfectHatred : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "FC0OUCH4";
+		BDPModifier.DisplayName "Perfect Hatred";
+		BDPModifier.Description "Demons are permanently enraged";
+	}
+	
+	Override void worldthingspawned(Worldevent e)
+	{
+		If(e.thing && e.thing.bismonster)
+		{
+			e.thing.bmissilemore = true;
+			//e.thing.bmissileevenmore = true;
+			e.thing.speed = (e.thing.speed * 1.5);
+			e.thing.bnopain = true;
+			e.thing.bnoinfighting = TRUE;
+			e.thing.giveinventory("pissedarmor",1);
+			//e.thing.A_giveinventory("thisreallypissesmeoff",(e.thing.health / 70));
+		}
+	}
+	
+}
+
+
+
+class Modifier_Gunslinger : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "CIGST10";
+		BDPModifier.DisplayName "Gunslinger";
+		BDPModifier.Description "Weapons deselected for 5 or more seconds instantly reload";
+	}
+	
+	override void WorldTick()
+	{
+		for(int i = 0; i < MAXPLAYERS; i++)
+		{
+			if(!PlayerInGame[i]) continue;
+			PlayerInfo plr = players[i];
+			if(!plr) continue;
+			
+			let dplr = Brutal_PlayerBase(plr.mo);
+			if(!dplr) continue;
+			
+			for(let item = dplr.Inv; item.Inv; item = item.Inv)
+			{
+				let dweap = BrutalWeapon(item);
+				if(!dweap) continue;
+				dweap.gunslinger = true;
+			}
+		}
+	}
+
+}
+
+
+
+
+
+
+class Modifier_SequenceBreak : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "CYBST00";
+		BDPModifier.DisplayName "Sequence Break";
+		BDPModifier.Description "Doors can be kicked down whether you have the key or not.";
+	}
+	override void WorldTick()
+	{
+		for(int i = 0; i < MAXPLAYERS; i++)
+		{
+			if(!PlayerInGame[i]) continue;
+			PlayerInfo plr = players[i];
+			if(!plr) continue;
+			
+			let dplr = Brutal_PlayerBase(plr.mo);
+			if(!dplr) continue;
+			
+			dplr.sequencebreak = true;
+		}
+	}
+
+}
+
+class Modifier_MaximumOverdrive : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "AUGHST0";
+		BDPModifier.DisplayName "Maximum Overdrive";
+		BDPModifier.Description "A Booster Frame is equipped at all times!";
+	}
+	override void WorldTick()
+	{
+		for(int i = 0; i < MAXPLAYERS; i++)
+		{
+			if(!PlayerInGame[i]) continue;
+			PlayerInfo plr = players[i];
+			if(!plr) continue;
+			
+			let dplr = Brutal_PlayerBase(plr.mo);
+			if(!dplr) continue;
+			
+			dplr.maximumoverdrive = true;
+		}
+	}
+
+}
+
+class Modifier_Mjolnir : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "HLMST00";
+		BDPModifier.DisplayName "Mjolnir";
+		BDPModifier.Description "Permanent Energy Armor powerup";
+	}
+	
+	override void WorldTick()
+	{
+		for(int i = 0; i < MAXPLAYERS; i++)
+		{
+			if(!PlayerInGame[i]) continue;
+			PlayerInfo plr = players[i];
+			if(!plr) continue;
+			
+			let dplr = Brutal_PlayerBase(plr.mo);
+			if(!dplr) continue;
+			
+			dplr.spawnwitharmor = true;
+		}
+	}
+	
+	Override void worldthingspawned(Worldevent e)
+	{
+		If(e.thing && e.thing is "EnergyArmor")
+		{
+			Actor.spawn("SkullTagArmor",e.thing.pos);
+			E.thing.destroy();
+		}
+		
+	}
+
+}
+
+
+
+class Modifier_ManAndAHalf : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "FC0EVL1";
+		BDPModifier.DisplayName "Man And A Half";
+		BDPModifier.Description "Start every level berserked";
+	}
+	
+	override void WorldTick()
+	{
+		for(int i = 0; i < MAXPLAYERS; i++)
+		{
+			if(!PlayerInGame[i]) continue;
+			PlayerInfo plr = players[i];
+			if(!plr) continue;
+			
+			let dplr = Brutal_PlayerBase(plr.mo);
+			if(!dplr) continue;
+			
+			dplr.spawnberserked = true;
+		}
+	}
+	
+	Override void worldthingspawned(Worldevent e)
+	{
+		If(e.thing && e.thing is "BerserkPack")
+		{
+			Actor.spawn("DemonRuneSpawner",e.thing.pos);
+			E.thing.destroy();
+		}
+		
+	}
+	
+}
 
