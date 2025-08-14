@@ -3,9 +3,9 @@ class Modifier_StayFrosty : BDPModifier
 {
 	Default
 	{
-		BDPModifier.Icon "STMST01";
+		BDPModifier.Icon "STFROST";
 		BDPModifier.DisplayName "Stay Frosty";
-		BDPModifier.Description "Tactical mode! Stamina, recoil, and more!";
+		BDPModifier.Description "Sprinting requires Stamina";
 	}
 	
 	override void WorldTick()
@@ -288,7 +288,7 @@ class Modifier_ShockFactor : BDPModifier
 {
 	Default
 	{
-		BDPModifier.Icon "STMST12";
+		BDPModifier.Icon "STSHOCK";
 		BDPModifier.DisplayName "Shock Factor";
 		BDPModifier.Description "Demons are hyper-aware of you";
 	}
@@ -474,7 +474,7 @@ class Modifier_ManAndAHalf : BDPModifier
 {
 	Default
 	{
-		BDPModifier.Icon "FC0EVL1";
+		BDPModifier.Icon "STMAN";
 		BDPModifier.DisplayName "Man And A Half";
 		BDPModifier.Description "Start every level berserked";
 	}
