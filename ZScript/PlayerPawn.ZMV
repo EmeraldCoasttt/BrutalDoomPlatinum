@@ -188,6 +188,7 @@ class Brutal_PlayerBase : PlayerPawn
 	bool extralifegranted;
 	bool reversalmodifier;
 	bool triathlon;
+	bool scoremaster;
 	
 	int killstreak;
 	int killstreaktimer;

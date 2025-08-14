@@ -13,6 +13,7 @@ class modifierspawner : randomspawner
 		DropItem "MaximumOverdrivePickUp";
 		DropItem "ReversalPickUp";
 		DropItem "SkullcrusherPickUp";
+		DropItem "ScoreMaster";
 	}
 }
 class BDPModifierpickup : Inventory
@@ -205,6 +206,17 @@ class SkullcrusherPickup : BDPModifierpickup
         
 		BDPModifierpickup.modifierclass "Modifier_Skullcrusher";
 		BDPModifierpickup.modifiermessage "Skullcrusher Unlocked!";
+		+floatbob;
+    }
+}
+
+class ScoremasterPickup : BDPModifierpickup
+{
+ Default
+    {
+        
+		BDPModifierpickup.modifierclass "Modifier_Scoremaster";
+		BDPModifierpickup.modifiermessage "Scoremaster Unlocked!";
 		+floatbob;
     }
 }

@@ -437,4 +437,32 @@ class Modifier_SkullCrusher : BDPModifier
 
 }
 
+class Modifier_ScoreMaster : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "STNERD";
+		BDPModifier.DisplayName "Scoremaster";
+		BDPModifier.Description "Gain points by killing monsters and collecting items";
+	}
+	
+
+	override void WorldTick()
+	{
+		for(int i = 0; i < MAXPLAYERS; i++)
+		{
+			if(!PlayerInGame[i]) continue;
+			PlayerInfo plr = players[i];
+			if(!plr) continue;
+			
+			let dplr = Brutal_PlayerBase(plr.mo);
+			if(!dplr) continue;
+			
+			dplr.scoremaster = true;
+		}
+	}
+
+
+}
+
 

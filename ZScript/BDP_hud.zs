@@ -802,6 +802,18 @@ class BDP_HUD : DoomStatusBar
 		int flags = DI_SCREEN_RIGHT_TOP|DI_TEXT_ALIGN_RIGHT;
 		vector2 pos = basePos;
 		double Ystep = fnt.mFont.GetHeight();
+		brutal_playerbase BDPplr = brutal_playerbase(Cplayer.mo);
+		If(BDPplr && BDPplr.scoremaster)
+		{
+			DrawString(
+			fnt, 
+			String.Format("Score: %d", Cplayer.mo.score), 
+			pos,
+			flags,
+			Font.CR_White
+			);
+			pos.y += Ystep;
+		}
 		if (deathmatch)
 		{
 			DrawString(
