@@ -61,6 +61,7 @@ class BDP_HUD : DoomStatusBar
 			If(!automapactive)
 			{
 				drawcrosshairs();
+				drawkillstreak();
 			}
 		}
 		
@@ -75,7 +76,7 @@ class BDP_HUD : DoomStatusBar
 			If(!automapactive)
 			{
 				drawcrosshairs();
-				
+				drawkillstreak();
 			}
 		}
 	}
@@ -880,6 +881,31 @@ class BDP_HUD : DoomStatusBar
 			
 			
 		}
+	}
+	
+	void Drawkillstreak()
+	{		
+		// Get player
+		brutal_playerbase BDPplr = brutal_playerbase(Cplayer.mo);
+		
+		If(BDPplr && BDPplr.killstreak > 1)
+		{
+			int killstreakcount = BDPplr.killstreak;
+			double killalpha;
+			If(BDPplr.killstreaktimer <= 30)
+			{
+				killalpha = ( BDPplr.killstreaktimer * 0.03);
+			}
+			Else
+			{
+				killalpha = 1.0;
+			}
+			
+			DrawString(weapPromptFnt, string.format("X %i", killstreakcount), (-5, 24), DI_SCREEN_CENTER|DI_TEXT_ALIGN_LEFT, Font.CR_UNTRANSLATED, killalpha, scale: (0.5, 0.5));
+			DrawImage("KILLSKLL", (-13,32), DI_SCREEN_CENTER, killalpha, scale: (0.5, 0.5));
+		}
+		
+			
 	}
 }
 

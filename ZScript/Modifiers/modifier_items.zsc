@@ -12,6 +12,7 @@ class modifierspawner : randomspawner
 		DropItem "SequenceBreakPickup";
 		DropItem "MaximumOverdrivePickUp";
 		DropItem "ReversalPickUp";
+		DropItem "SkullcrusherPickUp";
 	}
 }
 class BDPModifierpickup : Inventory
@@ -193,6 +194,17 @@ class TRIATHLONPickup : BDPModifierpickup
         
 		BDPModifierpickup.modifierclass "Modifier_Triathlon";
 		BDPModifierpickup.modifiermessage "Triathlon Unlocked!";
+		+floatbob;
+    }
+}
+
+class SkullcrusherPickup : BDPModifierpickup
+{
+ Default
+    {
+        
+		BDPModifierpickup.modifierclass "Modifier_Skullcrusher";
+		BDPModifierpickup.modifiermessage "Skullcrusher Unlocked!";
 		+floatbob;
     }
 }

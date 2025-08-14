@@ -189,6 +189,9 @@ class Brutal_PlayerBase : PlayerPawn
 	bool reversalmodifier;
 	bool triathlon;
 	
+	int killstreak;
+	int killstreaktimer;
+	
 	bool scanneractive;
 	int scannertimer;
 	
@@ -932,6 +935,17 @@ class Brutal_PlayerBase : PlayerPawn
 				geigertimer--;
 			}
 		
+		
+		If(killstreak)
+		{
+			killstreaktimer--;
+		}
+		
+		If(killstreaktimer <= 0)
+		{
+			killstreak = 0;
+		}
+		
 		currentkills = Level.Killed_monsters;
 		If(currentkills > previouskills)
 		{
@@ -939,6 +953,8 @@ class Brutal_PlayerBase : PlayerPawn
 			//console.printf("Soul Extracted");
 		}
 		previouskills = Level.Killed_monsters;
+		
+		
 		
 		If(currentkills == 0)
 		{

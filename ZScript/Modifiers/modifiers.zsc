@@ -406,3 +406,35 @@ class Modifier_Reversal : BDPModifier
 
 }
 
+class Modifier_SkullCrusher : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "D4RST01";
+		BDPModifier.DisplayName "Skullcrusher";
+		BDPModifier.Description "HUD shows killstreaks";
+	}
+	
+
+	Override void worldthingdamaged(Worldevent e)
+	{
+		If(e.thing && e.thing.bisMonster && e.thing.health <= 0 && e.damagesource && e.damagesource is "Brutal_PlayerBase")
+		{
+			//console.printf(e.damagetype);
+			//console.printf(e.damagesource.getclassname());
+			 brutal_playerbase BDPPlayer = brutal_playerbase(e.damagesource);
+			If(BDPPLAYER)
+			{
+				BDPPlayer.killstreak ++;
+				BDPPlayer.killstreaktimer = 140;
+			}
+			 
+			
+		}
+		
+	}
+
+
+}
+
+
