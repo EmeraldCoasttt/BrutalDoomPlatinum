@@ -974,6 +974,7 @@ class Brutal_PlayerBase : PlayerPawn
 			{
 				A_startsound("YIPPEE",228,CHANF_LOCAL,1.0,ATTN_NONE);
 			}
+			Score += (currentkills * 250);
 			
 		}
 		
