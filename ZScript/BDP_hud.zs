@@ -900,7 +900,7 @@ class BDP_HUD : DoomStatusBar
 		// Get player
 		brutal_playerbase BDPplr = brutal_playerbase(Cplayer.mo);
 		
-		If(BDPplr && BDPplr.killstreak > 1)
+		If(BDPplr && BDPplr.killstreak > 2)
 		{
 			int killstreakcount = BDPplr.killstreak;
 			double killalpha;
