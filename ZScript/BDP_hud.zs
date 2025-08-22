@@ -849,7 +849,7 @@ class BDP_HUD : DoomStatusBar
 	{		
 		// Get player
 		brutal_playerbase BDPplr = brutal_playerbase(Cplayer.mo);
-		If(BDPplr)
+		If(BDPplr && BDPplr.health > 0)
 		{
 			let curvehicle = Veh_Manager(BDPplr.FindInventory("Veh_Manager"));
 			if(curvehicle && curvehicle.disableweaps)
