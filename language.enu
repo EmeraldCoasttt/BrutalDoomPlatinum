@@ -20,7 +20,7 @@ BDPFREEZER = "Freezer Beam";
 BDPRAILGUN = "Railgun";
 BDPBFG = "BFG 9000";
 BDPCALAMITY = "Calamity Blade";
-BDPUNMAKER = "Unmaker"
+BDPUNMAKER = "Unmaker";
 
 
 
@@ -69,7 +69,7 @@ EXITMSG39 = "DANCE! DANCE BONEDADDY!";
 EXITMSG40 = "The genre peaked with Island Peril";
 EXITMSG41 = "Die, Monster! You don't belong in this world!";
 EXITMSG42 = "(PRESS Y TO QUIT)";
-EXITMSG43 = "Are you sure you want to leave LEGO Island? If you select the green brick, you go. If you select the red brick, you stay. Green go, red stay.";
+EXITMSG43 = "Are you sure you want to leave DOOM? If you select the green brick, you go. If you select the red brick, you stay. Green go, red stay.";
 EXITMSG44 = "Thanks for the visit! And, you're welcome to come back any time! We'll miss you!";
 EXITMSG45 = "Ya missed one";
 EXITMSG46 = "Medium fungal";
@@ -148,4 +148,5 @@ EXITMSG118 = "I rebuke and bind your demons in the Holy Name of Jesus Christ. De
 EXITMSG119 = "AND YOU COULD HAVE IT ALL\nMY EMPIRE OF DIRT";
 EXITMSG120 = "Unplug your computer. Do it. It'd be funny.";
 EXITMSG121 = "DOOM\nWhere the sanest place\n...Is behind a trigger";
+EXITMSG122 = "To Hell with You.\n\nBut then you're there, aren't you.";
 
