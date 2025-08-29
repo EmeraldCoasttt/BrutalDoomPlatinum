@@ -188,6 +188,12 @@ OptionMenu "DoxGameplayOptions"
 	BDPOption "Blood Trail Splash", "Enables blood splashing when enemies are bleeding out. If screen effects are disabled, this will also be disabled.", "bd_BloodTrail", "NoYes"
 	BDPOption "3D Nails", "Enables 3D models for nailgun and glass slug projectiles.", "Dox_3DNail", "YesNo"
 	BDPOption "Magazine clicks on low ammo", "Adds an audio indicator when your mag's ammo is low.", "BD_MagGoClicky", "YesNo" 
+	StaticText ""
+	StaticText "-------------------------------------------------------", "black"
+	StaticText "CHEATS", "fire"
+	StaticText "-------------------------------------------------------", "black"
+	StaticText ""
+	BDPOption "All Modifiers Unlocked", "Modifiers are unlocked without needing to find them in levels", "BDP_MODIFIERS_ALLUNLOCKED", "YesNo"
 }
 
 
