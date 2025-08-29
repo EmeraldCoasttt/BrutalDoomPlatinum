@@ -735,7 +735,7 @@ CLASS SuperBFGBall : BFGBall replaces BFGBall
 											beam.scale.y = distance3d(tracer);
 										}
 									tracer.A_spawnitemex("bfgextra");
-								A_damagetracer(700,"disintegrate");
+								tracer.damagemobj(self,target,700,"disintegrate");
 								
 								
 								
@@ -900,7 +900,7 @@ CLASS BFGBallWithTracers : SuperBFGBall
 											beam.pitch = (-BFGCOORDS.Y -90);
 											beam.scale.y = distance3d(tracer);
 										}
-								A_damagetracer(8,"disintegrate");
+								tracer.damagemobj(self,target,8,"disintegrate");
 								//If(tracer && tracer.health < 1)
 								//{
 								//tracer.A_spawnitemex("bfgextra");
