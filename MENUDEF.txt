@@ -144,7 +144,7 @@ OptionMenu "BDPSetup"
 	BDPOption "Disable Clean Menu Scaling (Should be OFF)", "Disable Clean Menu Scaling Should be OFF if you can't see the full menu logo", "m_cleanscale", "OffOn"
 	BDPOption "Texture Filtering Mode (Should be NONE)", "Texture filtering should be NONE if you want crisp pixels",		gl_texture_filter,				"FilterModes"
 	Slider "Max Decals (May impact performance)", "cl_maxdecals", 0, 10000, 100, 0
-	
+	BDPoption "$GMPLYMNU_PISTOLSTART","Shortcut for pistol starting",				"sv_pistolstart", "YesNo"
 }
 
 OptionMenu "DoxGameplayOptions"
