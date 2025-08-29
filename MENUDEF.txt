@@ -38,12 +38,12 @@ IfGame(Doom, Chex)
 			TextItem "Load Game", "l", "LoadGameMenu"
 			TextItem "Save Game", "s", "SaveGameMenu"
 			TextItem "Options", "o", "OptionsMenu"/////////////
-			TextItem "Brutal Doom", "b", "BrutalMenu"
+			TextItem "Brutal Options", "b", "BrutalMenu"
 		}
 		else
 		{
 			TextItem "Options", "o", "OptionsMenu"/////////////////////
-			TextItem "Brutal Doom", "b", "BrutalMenu"
+			TextItem "Brutal Options", "b", "BrutalMenu"
 			TextItem "Load Game", "l", "LoadGameMenu"
 			TextItem "Save Game", "s", "SaveGameMenu"
 		}
@@ -54,7 +54,7 @@ IfGame(Doom, Chex)
 	{
 		TextItem "$MNU_NEWGAME", "n", "PlayerclassMenu"
 		TextItem "$MNU_OPTIONS", "o", "OptionsMenu"/////////////////////
-		TextItem "Brutal Doom", "b", "BrutalMenu"
+		TextItem "Brutal Options", "b", "BrutalMenu"
 		TextItem "Credits", "c", "BrutalCreditsMenu"
 		TextItem "$MNU_GAMEFILES", "g", "GameFilesMenu"
 		TextItem "$MNU_INFO", "i", "ReadThisMenu"
