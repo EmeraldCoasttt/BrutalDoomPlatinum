@@ -119,6 +119,9 @@ ACTOR ExplosiveBarrel1 : explosivebarrelbase//Replaces ExplosiveBarrel
 		
 	Death:	
         BARI A 0
+		{
+		bismonster = false;
+		}
         BEXP AB 4 BRIGHT
 		BEXP CD 4 BRIGHT
 		TNT1 A 0 A_RadiusGive("BarrelExpMeasure", 300, RGF_GIVESELF | RGF_MONSTERS | RGF_CORPSES, 1)
@@ -133,7 +136,7 @@ ACTOR ExplosiveBarrel1 : explosivebarrelbase//Replaces ExplosiveBarrel
 		BEXP D 1
 		TNT1 A 0 A_JumpIfInventory("BarrelExpMeasure", 6, "ExplodeLessEffects")
 		
-		TNT1 A 0 A_SpawnItemEx ("BarrelExplosionDamage",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_Explode(200,200)
 		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
@@ -174,7 +177,7 @@ ACTOR ExplosiveBarrel1 : explosivebarrelbase//Replaces ExplosiveBarrel
 	 ExplodeLessEffects:
 		BEXP D 0
 		TNT1 A 0 A_Stop
-		TNT1 A 0 A_SpawnItemEx ("BarrelExplosionDamage",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_Explode(200,200)
 		TNT1 A 10
 		TNT1 A 0 A_SpawnItemEx ("BarrelKaboom",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 0 A_CustomMissile ("FireworkSFXType2", 64, 0, random (0, 360), 2, random (30, 60))
@@ -195,7 +198,7 @@ ACTOR ExplosiveBarrel1 : explosivebarrelbase//Replaces ExplosiveBarrel
 	 ExplodeMedium:
 		TNT1 A 0
 		TNT1 A 0 A_Stop
-		TNT1 A 0 A_SpawnItemEx ("BarrelExplosionDamage",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+	TNT1 A 0 A_Explode(200,200)
 		TNT1 A 15
 		TNT1 A 0 A_SpawnItemEx ("BarrelKaboom",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 0 A_CustomMissile ("HighExplosiveFlamesBig", random (30, 50), 0, random (0, 360), 2, random (10, 90))
@@ -389,7 +392,7 @@ ACTOR RustyExplosiveBarrel : ExplosiveBarrel1
 		BEXP D 1
 		TNT1 A 0 A_JumpIfInventory("BarrelExpMeasure", 6, "ExplodeLessEffects")
 		
-		TNT1 A 0 A_SpawnItemEx ("BarrelExplosionDamage",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_Explode(200,200)
 		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 	    TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
