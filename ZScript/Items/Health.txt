@@ -42,11 +42,17 @@ Class HealthPlus : Health Replaces HealthBonus
 		BON1 ABCDCB 2;
 		Loop;
 	}
-	override bool TryPickup (in out Actor toucher)
+	 override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 10;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 10;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -113,9 +119,15 @@ Class LightArmor : BasicArmorPickup Replaces GreenArmor
 	}
 	override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 100;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 100;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -156,11 +168,17 @@ Class EnergyArmor : CustomInventory
 		//TNT1 A 20 ACS_NamedExecuteAlways("BerserkMessage")
 		Stop;
 		}
-		override bool TryPickup (in out Actor toucher)
+	override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 500;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 500;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -225,9 +243,15 @@ Class HeavyArmor : BasicArmorPickup //Replaces BlueArmor
 	}
 	override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 200;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 200;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -263,9 +287,15 @@ CLASS SkulltagArmor : BasicArmorPickup
 }
 override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 300;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 300;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -289,11 +319,17 @@ Class GiveArmor : BasicArmorBonus
 		BON2 AAABBBCCCDDDCCCBBB 2;
 		loop;
 	}
-	override bool TryPickup (in out Actor toucher)
+	 override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 10;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 10;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -360,11 +396,17 @@ Class ArmorShard : BasicArmorBonus Replaces ArmorBonus
 		BON2 MMMNOPPPON 2;
 		Loop;
 	}
-	override bool TryPickup (in out Actor toucher)
+	 override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 10;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 10;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -394,11 +436,17 @@ Class ArmorShardDroped : BasicArmorBonus
 		BON2 A 9;
 		Goto Spawn;
 	}
-	override bool TryPickup (in out Actor toucher)
+	 override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 10;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 10;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -431,11 +479,17 @@ Class Stimpack2 : Health Replaces Stimpack
 	Stop;
 	
 	}
-	override bool TryPickup (in out Actor toucher)
+	 override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 50;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 50;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -469,10 +523,16 @@ Class Medikit2 : Health Replaces Medikit
 	MEDK A -1;
 	Stop;
 	}
-	override bool TryPickup (in out Actor toucher)
+ override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 100;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 100;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }

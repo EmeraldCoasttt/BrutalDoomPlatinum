@@ -113,30 +113,6 @@ actor DeadBaronArtifact
 	}
 }
 
-ACTOR RageSphere : PowerupGiver
-{
-	Game Doom
-	+COUNTITEM
-	//these 3 make it float. If you want to remove the floating effects, remove those 3 properties.
-	+NOGRAVITY
-	+FLOATBOB
-	FloatSpeed 1
-	+INVENTORY.AUTOACTIVATE
-	+INVENTORY.ALWAYSPICKUP
-	+INVENTORY.BIGPOWERUP
-	Inventory.MaxAmount 0
-	Powerup.Type "Rage"
-	//Powerup.Colormap 0.0, 0.0, 0.0, 1.0,1.0,1.0
-	Inventory.PickupMessage "Rage sphere! Liquify them."
-	Tag "Rage Sphere"
-	Inventory.PickupSound "RAGEPUP"
-	States
-	{
-	Spawn:
-	    TNT1 A 0 A_PlaySound("POWERHUM", 0, 0.4, 1)
-		DDMG AAABBBCCCDDD 2 Bright A_SpawnItem("RedFlareMedium",0,20)
-		Loop
-	}
-}
+
 
 

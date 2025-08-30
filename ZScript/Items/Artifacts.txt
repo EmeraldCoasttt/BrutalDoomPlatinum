@@ -30,9 +30,12 @@ Default
 	{
 	toucher.giveinventory("allthemap",1);
 	}
-	toucher.score += 500;
-	GoAwayAndDie ();
-		return true;
+	
+			toucher.Score += 500;
+			goawayanddie();
+			return true;
+	
+	
 		
 	
 	}
@@ -499,11 +502,17 @@ class BoosterFrame : CustomInventory
 		Stop;
 	}
 	
-	override bool TryPickup (in out Actor toucher)
+	 override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 500;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 500;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -759,9 +768,15 @@ CLASS InvulnerabilitySphere_  : PowerupGiver Replaces InvulnerabilitySphere
 	}
 	override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 500;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 500;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -954,9 +969,15 @@ CLASS NightVision : CustomInventory  Replaces InfraRed
 	}
 	override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 500;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 500;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -1040,9 +1061,15 @@ CLASS BerserkPack : CustomInventory Replaces Berserk
 	}
 	override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 500;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 500;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -1085,9 +1112,15 @@ Class SuperBlurSphere : Blursphere REPLACES Blursphere
   }
   override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 500;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 500;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -1122,9 +1155,15 @@ Class QuadSigil : PowerUpGiver
 	}
 	override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 500;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 500;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -1158,9 +1197,15 @@ CLASS HasteSphere : PowerUpGiver
 	}
 	override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 500;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 500;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -1315,9 +1360,15 @@ Default
   }
   override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 500;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 500;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -1366,5 +1417,44 @@ CLASS RadSuit3 : PowerupGiver
 }
 		
 
-
+Class RageSphere : PowerupGiver
+{
+	Default
+	{
+	+COUNTITEM;
+	//these 3 make it float. If you want to remove the floating effects, remove those 3 properties.
+	+NOGRAVITY;
+	+FLOATBOB;
+	FloatSpeed 1;
+	+INVENTORY.AUTOACTIVATE;
+	+INVENTORY.ALWAYSPICKUP;
+	+INVENTORY.BIGPOWERUP;
+	Inventory.MaxAmount 0;
+	Powerup.Type "PowerRage";
+	//Powerup.Colormap 0.0, 0.0, 0.0, 1.0,1.0,1.0
+	Inventory.PickupMessage "Rage sphere! Liquify them.";
+	Tag "Rage Sphere";
+	Inventory.PickupSound "RAGEPUP";
+	}
+	States
+	{
+	Spawn:
+	    TNT1 A 0 A_PlaySound("POWERHUM", 0, 0.4, 1);
+		DDMG AAABBBCCCDDD 2 Bright A_SpawnItem("RedFlareMedium",0,20);
+		Loop;
+	}
+	
+	 override bool TryPickup (in out Actor toucher)
+	{
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 500;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
+	}
+}
 
