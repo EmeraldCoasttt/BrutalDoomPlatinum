@@ -192,6 +192,7 @@ class Brutal_PlayerBase : PlayerPawn
 	bool triathlon;
 	bool scoremaster;
 	int previousscore;
+	bool realism;
 	
 	int killstreak;
 	int killstreaktimer;
@@ -732,6 +733,10 @@ class Brutal_PlayerBase : PlayerPawn
 			If(grappled)
 				{
 					Damage = (damage * 0.25);
+				}
+			If(realism)
+				{
+					Damage = (damage * 4);
 				}
 				
 			return super.TakeSpecialDamage(inflictor, source, damage, damagetype);

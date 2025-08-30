@@ -13,7 +13,8 @@ class modifierspawner : randomspawner
 		DropItem "MaximumOverdrivePickUp";
 		DropItem "ReversalPickUp";
 		DropItem "SkullcrusherPickUp";
-		DropItem "ScoreMaster";
+		DropItem "ScoreMasterPickUp";
+		DropItem "RealismPickUp";
 	}
 }
 class BDPModifierpickup : Inventory
@@ -217,6 +218,17 @@ class ScoremasterPickup : BDPModifierpickup
         
 		BDPModifierpickup.modifierclass "Modifier_Scoremaster";
 		BDPModifierpickup.modifiermessage "Scoremaster Unlocked!";
+		+floatbob;
+    }
+}
+
+class RealismPickup : BDPModifierpickup
+{
+ Default
+    {
+        
+		BDPModifierpickup.modifierclass "Modifier_Realism";
+		BDPModifierpickup.modifiermessage "Realism Unlocked!";
 		+floatbob;
     }
 }
