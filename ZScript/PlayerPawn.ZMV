@@ -751,6 +751,7 @@ class Brutal_PlayerBase : PlayerPawn
 				Until(previousscore == (score / 50000))
 				{
 					extralives++;
+					a_startsound("1up",2174);
 					previousscore++;
 				}
 				

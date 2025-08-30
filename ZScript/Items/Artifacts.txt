@@ -826,6 +826,10 @@ Class LifeSphere : CustomInventory Replaces SoulSphere
 
 CLASS LifeSphereOneUp : LifeSphere
 {
+	Default
+	{
+		Inventory.PickupSound "1UP";
+	}
 	States
 	{
 	Pickup:
@@ -902,6 +906,10 @@ CLASS EnergySphere : CustomInventory Replaces Megasphere
 
 CLASS EnergySphereOneUp : EnergySphere
 {
+	Default
+	{
+		Inventory.PickupSound "1UP";
+	}
 	States
 	{
 	
