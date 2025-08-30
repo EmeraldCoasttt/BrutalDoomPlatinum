@@ -278,6 +278,12 @@ class Brutal_PlayerBase : PlayerPawn
 		return VecToUnit;
 	}
 	
+	override bool ongivesecret(bool printmsg, bool playsound)
+	{
+		score += 1000;
+		return true;
+	}
+	
 	
 	// Counts all owned weapons:
 	int CountOwnedWeapons()
