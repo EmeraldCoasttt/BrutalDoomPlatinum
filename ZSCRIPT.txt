@@ -17,7 +17,10 @@ version "4.14.0"
 
 #include "Zscript/Items/Artifacts.txt"
 #include "Zscript/Items/DemonRunes.txt"
+#include "Zscript/Items/Health.txt"
 #include "Zscript/Items/Keyes.txt"
+
+#include "Zscript/Items/Ammo.txt"
 
 #include "Zscript/Weapons/WeaponBase.txt"
 #include "Zscript/Weapons/WeaponSpawners.txt"
