@@ -186,9 +186,12 @@ class Brutal_PlayerBase : PlayerPawn
 	int ultraseed;
 	bool alreadyblacklisted;
 	bool extralifegranted;
+	bool ultrabonus;
+	int extralives;
 	bool reversalmodifier;
 	bool triathlon;
 	bool scoremaster;
+	int previousscore;
 	
 	int killstreak;
 	int killstreaktimer;
@@ -741,7 +744,19 @@ class Brutal_PlayerBase : PlayerPawn
 		{
 		Super.playerthink();
 		
+		If(scoremaster)
+		{
+			If(score > (previousscore * 50000))
+			{
+				Until(previousscore == (score / 50000))
+				{
+					extralives++;
+					previousscore++;
+				}
+				
+			}
 		
+		}
 		
 		if (findinventory("BDPInvuln"))
             {
@@ -1057,10 +1072,10 @@ class Brutal_PlayerBase : PlayerPawn
 			
 		}	
 		
-		if(ultranightmare && oneupmanship && !findinventory("UltraBonus"))
+		if(ultranightmare && oneupmanship && !ultrabonus)
 		{
-			A_giveinventory("extralife",3);
-			A_giveinventory("ultrabonus",1);
+			Extralives += 3;
+			ultrabonus = true;
 		}
 		
 		If(spawnwitharmor && !findinventory("powershield",TRUE) && health > 0)
@@ -1103,13 +1118,13 @@ class Brutal_PlayerBase : PlayerPawn
 			GiveInventory("canparry",1);
 		}
 		
-		If(countinv("extralife") > 0)
+		If(extralives > 0)
 		{
 			bbuddha = true;
 			If((health) <= 1)
 			{
 				a_sethealth(100);
-				A_takeinventory("extralife",1);
+				extralives--;
 				A_giveinventory("miniinvul",1);
 				A_startsound("items/soulsphere",212);
 			}

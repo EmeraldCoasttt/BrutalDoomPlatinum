@@ -475,11 +475,12 @@ class BDP_HUD : DoomStatusBar
 			{
 				DrawImage("HASARMR", iconPos + smallIconOfs,DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
 			}
-		If (CPlayer.mo.countinv("extralife") > 0)
+		brutal_playerbase BDPplr = brutal_playerbase(Cplayer.mo);
+		If(BDPplr && BDPplr.extralives > 0)
 		{
 			DrawString(
 				mconFont, 
-				String.Format("%d", CPlayer.mo.countinv("extralife")), 
+				String.Format("%d", BDPplr.extralives), 
 				iconPos + (13, -5),
 				iconflags|DI_TEXT_ALIGN_RIGHT,
 				translation: Font.CR_White,

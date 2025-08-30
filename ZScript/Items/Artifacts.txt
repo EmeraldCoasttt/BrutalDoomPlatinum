@@ -797,9 +797,15 @@ Class LifeSphere : CustomInventory Replaces SoulSphere
 	}
 	override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 500;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 500;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }
 
@@ -810,8 +816,19 @@ CLASS LifeSphereOneUp : LifeSphere
 	Pickup:
 		TNT1 A 0 A_stopsound(4);
         TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360));
-		TNT1 A 0 A_GiveInventory("ExtraLife", 1);
+
 		Stop;
+	}
+		override bool TryPickup (in out Actor toucher)
+	{
+		toucher.Score += 500;
+		brutal_playerbase BDPplr = brutal_playerbase(toucher);
+		If(BDPplr)
+		{
+			BDPplr.extralives ++;
+		}
+		GoAwayAndDie();
+		return true;
 	}
 }
 
@@ -823,6 +840,8 @@ CLASS SoulSphereHealth : Health
 		Inventory.MaxAmount 200;
 		+INVENTORY.ALWAYSPICKUP;
 	}
+	
+
 }
 
 CLASS EnergySphere : CustomInventory Replaces Megasphere
@@ -854,9 +873,15 @@ CLASS EnergySphere : CustomInventory Replaces Megasphere
 	}
 	override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 500;
-		GoAwayAndDie();
-		return true;
+	If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 300;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
 	}
 }	
 
@@ -868,9 +893,19 @@ CLASS EnergySphereOneUp : EnergySphere
 	Pickup:
 		TNT1 A 0 A_stopsound(4);
         TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360));
-		//TNT1 A 0 A_GiveInventory("HeavyArmor", 1)
-		TNT1 A 0 A_GiveInventory("ExtraLife", 3);
+
 		Stop;
+	}
+	override bool TryPickup (in out Actor toucher)
+	{
+		toucher.Score += 500;
+		brutal_playerbase BDPplr = brutal_playerbase(toucher);
+		If(BDPplr)
+		{
+			BDPplr.extralives += 3;
+		}
+		GoAwayAndDie();
+		return true;
 	}
 }	
 

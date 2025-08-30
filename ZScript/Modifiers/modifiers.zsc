@@ -230,7 +230,7 @@ class Modifier_ScoreMaster : BDPModifier
 	{
 		BDPModifier.Icon "STNERD";
 		BDPModifier.DisplayName "Scoremaster";
-		BDPModifier.Description "Gain points by killing monsters and collecting items";
+		BDPModifier.Description "Gain points by killing monsters and collecting items\n\n 50k points grants an extra life";
 	}
 	
 
