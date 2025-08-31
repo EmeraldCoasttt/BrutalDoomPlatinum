@@ -435,6 +435,7 @@ ACTOR Rifle : BrutalWeapon
 	    RIFG A 0 A_Takeinventory("Reloading",1)
 	    RIFG A 0 A_JumpIfInventory("RifleAmmo",30,"Ready")
 	//	RIFG A 1 A_WeaponReady
+		
 		RIFG A 0 {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RifleCrosshair"));}else{A_SetCrosshair(0);}}
 		RIFG A 0 A_TakeInventory("RifleSpread", 10)
 		RIFG A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
@@ -442,7 +443,6 @@ ACTOR Rifle : BrutalWeapon
 		RIFG A 0 A_Takeinventory("Reloading",1)
 		RIFG A 0 A_Takeinventory("ADSmode",1)
 		RIFG A 0 A_Takeinventory("Zoomed",1)
-		RIFG A 0 A_JumpIfInventory("RifleAmmo",31,76)
 		//RIFG A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
         RIFG A 0 A_JumpIfInventory("Clip2",1,3)
         Goto FinishReloading
@@ -451,10 +451,10 @@ ACTOR Rifle : BrutalWeapon
         RIFG A 0 A_PlaySound("Relo1", 6)
 		RIFG A 0 A_GiveInventory ("Pumping", 1)
 		RIFG A 0 A_Takeinventory("Reloading",1)
-		RIFG A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
 		//XXXX X 0 A_PlaySound("RIFFOL3",10)
        RIFR ABCDEFGG 1
 		RIFR G 0 A_FireCustomMissile("EmptyClipSpawn",-5,0,8,-4)
+		TNT1 A 0 A_DiscardMag("rifleammo",1)
 		RIFR H 3
 		RIFR IJKLMNNO 1
 		RIFR A 0 A_PlaySound("Relo2", 5)

@@ -422,6 +422,7 @@ ACTOR AssaultShotgun : BrutalWeapon
 		"####" H 1 offset(0,32)
 		A1R1 IJ 1
 		TNT1 A 0 A_FireCustomMissile("EmptyASGDrumSpawn",180,0,-4,-10)
+		"####" A 0 A_DiscardMag("AssaultShotgunammo",1)
 		A12R G 3
 		XXXX X 0 A_PlaySound("foley/ShotgunReloadRaise", 10)
 	ContinueReload:

@@ -443,6 +443,7 @@ Class Freezer : BrutalWeapon
 		FRRL G 1 offset(0,32);	
 		"####" A 0 A_StartSound("RAILMAG2",1);
 		FRRL HIJKLLLMNOPP 1;
+		"####" A 0 A_DiscardMag("Freezerammo",0);
 		TNT1 A 0 A_FireCustomMissile("EmptyFreezerMagSpawn",160,0,10,-8);
 		FRRL Q 4;
 		FRRL RRSTUV 1;

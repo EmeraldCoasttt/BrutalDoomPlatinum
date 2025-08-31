@@ -193,6 +193,7 @@ class Brutal_PlayerBase : PlayerPawn
 	bool scoremaster;
 	int previousscore;
 	bool realism;
+	bool gluttony;
 	
 	int killstreak;
 	int killstreaktimer;

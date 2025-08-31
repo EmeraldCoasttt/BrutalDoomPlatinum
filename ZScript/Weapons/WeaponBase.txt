@@ -126,6 +126,21 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	}
 	
+	Action void a_discardmag(string magname, int plusone)
+	{
+		
+			let dplr = Brutal_PlayerBase(invoker.owner);
+			if(dplr && dplr.gluttony)
+			{
+				Until(dplr.countinv(magname) <= plusone)
+				{
+					dplr.takeinventory(magname,1);
+				}
+			}
+		
+	
+	}
+	
 	Action void A_SetCrosshairDX(string crosshairname, int crosshairrange = 5000, double crosshairscale = 1.0)
 	{
 		let dplr = Brutal_PlayerBase(invoker.owner);

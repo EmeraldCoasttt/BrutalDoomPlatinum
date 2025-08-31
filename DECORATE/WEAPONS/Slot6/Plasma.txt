@@ -755,6 +755,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 		PLSR A 0
 		"####" A 0
         "####" AAB 1
+		"####" A 0 A_DiscardMag("PlasmaAmmo",0)
 		PLSN A 0 A_FireCustomMissile("PlasmaCaseSpawn",-225,0,25,-15,-14)
 		PLSR CDEFF 1
 		PLSR G 5

@@ -743,6 +743,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		"####" F 0 A_PlaySound("prel")
 		"####" F 0 A_JumpIfInventory("HasUnloaded", 1, 3)
 		"####" C 0 A_FireCustomMissile("EmptyPistolClipSpawn",-18,0,18,-15)
+		"####" A 0 A_DiscardMag("BDPistolammo",1)
 		"####" AA 0
 		"####" IJKLMNOPQRSTUVWXYZ 1
 		2ILR A 0 A_JumpIfInventory("IsSilenced",1,2)

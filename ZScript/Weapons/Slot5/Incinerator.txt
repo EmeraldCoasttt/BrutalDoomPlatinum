@@ -163,6 +163,7 @@ CLASS Incinerator : BrutalWeapon
 		TNT1 AA 0;
 		TNT1 A 0 A_Startsound("FLMRUNLD");
 		FLMT KOPQRSS 1;
+		"####" A 0 A_DiscardMag("FlamerAmmo",0);
 		TNT1 A 0 A_fireprojectile("emptyflamercan",3,false,30,-10,0,-30);
 		FLMT TZZTSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 1;
 		TNT1 A 0 A_Reload("FlamerAmmo",60,"AmmoRocket",0,10,"null",TRUE);

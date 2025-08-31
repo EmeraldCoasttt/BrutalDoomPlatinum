@@ -626,6 +626,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 		
         RLNG A 0 A_PlaySound("ROCKREL1", 3);
         MISR ABCCDDE 1;
+		"####" A 0 A_DiscardMag("RocketRounds",0);
 		MISG A 0 A_FireCustomMissile("RocketCaseSpawn",-20,0,2,-10);
 		MISR FGH 1;
 	ReloadUnloaded:

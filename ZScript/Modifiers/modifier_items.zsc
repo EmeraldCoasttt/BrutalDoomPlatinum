@@ -15,6 +15,7 @@ class modifierspawner : randomspawner
 		DropItem "SkullcrusherPickUp";
 		DropItem "ScoreMasterPickUp";
 		DropItem "RealismPickUp";
+		DropItem "GluttonyPickUp";
 	}
 }
 class BDPModifierpickup : Inventory
@@ -229,6 +230,17 @@ class RealismPickup : BDPModifierpickup
         
 		BDPModifierpickup.modifierclass "Modifier_Realism";
 		BDPModifierpickup.modifiermessage "Realism Unlocked!";
+		+floatbob;
+    }
+}
+
+class GluttonyPickup : BDPModifierpickup
+{
+ Default
+    {
+        
+		BDPModifierpickup.modifierclass "Modifier_Gluttony";
+		BDPModifierpickup.modifiermessage "Gluttony Unlocked!";
 		+floatbob;
     }
 }
