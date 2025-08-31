@@ -18,6 +18,7 @@ CLASS Unmaker : BrutalWeapon
 	Inventory.PickupMessage "What the !@#%* is this!? (Slot 7)";
 	Inventory.AltHUDIcon "UNHWA0";
 	BrutalWeapon.weight 3;
+	brutalweapon.showicon 1;
 	Tag "UNMAKER";
 	}
 		Actor TeleportPending;

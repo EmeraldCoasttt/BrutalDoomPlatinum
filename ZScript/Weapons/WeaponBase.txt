@@ -37,6 +37,9 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	bool newweapon;
 	
+	bool showicon;
+	Property showicon : showicon;
+	
 	
 	Default
 	{

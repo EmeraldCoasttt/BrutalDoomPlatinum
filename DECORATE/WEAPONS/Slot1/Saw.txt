@@ -23,6 +23,7 @@ Actor Chain_saw : BrutalWeapon
 	Inventory.AltHUDIcon "CSAWA0"
 	scale 0.8
 	+weapon.noautofire
+	brutalweapon.showicon 1
 	//brutalweapon.handedness 2
 states
 	{

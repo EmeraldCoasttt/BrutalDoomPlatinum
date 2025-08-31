@@ -624,7 +624,9 @@ class BDP_HUD : DoomStatusBar
 		if (ammo1)
 		{
 			iconPos.x += iconSpacing;
+			
 			DrawInventoryIcon(ammo1, iconPos, iconFlags);
+			
 			DrawString(
 				mHudfont, 
 				String.Format("%d", ammo1amt), 
@@ -645,7 +647,14 @@ class BDP_HUD : DoomStatusBar
 				Font.CR_White
 			);
 		}
-		
+		/*
+		if (weap && weap.showicon)
+		{
+			iconPos.x += iconSpacing;
+			DrawInventoryIcon(weap, iconPos - numOfs, iconFlags);
+			
+		}
+		*/
 		iconPos += (iconSpacing * 1, 17);
 		DrawGrenadeIndicator(mIndexfnt, iconPos, iconFlags, (22,22));
 		DrawWeaponSpecificStuff(basepos);
