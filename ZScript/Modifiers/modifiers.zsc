@@ -5,7 +5,7 @@ class Modifier_StayFrosty : BDPModifier
 	{
 		BDPModifier.Icon "STFROST";
 		BDPModifier.DisplayName "Stay Frosty";
-		BDPModifier.Description "Sprinting requires Stamina";
+		BDPModifier.Description "Athletic actions require Stamina";
 	}
 	
 	override void WorldTick()

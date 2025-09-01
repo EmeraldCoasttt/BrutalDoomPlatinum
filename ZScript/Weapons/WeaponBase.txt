@@ -617,6 +617,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	
 	Action state A_WeaponReadyDX(int dxflags = 0, bool kickflashes = true, bool cansprint = true)
 		{
+			brutal_playerbase BDPplr = brutal_playerbase(invoker.owner);
 			//clean up Aim token
 			takeinventory("Zoomies",1);
 			//A_WeaponReadyDX acts as a wrapper for A_weaponready and accepts the same flags
@@ -661,7 +662,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			}
 			
 			//Slidekick
-			if (CountInv("IsCrouching") == 1 && CountInv("Kicking") == 1 && kickflashes) {
+			if (CountInv("IsCrouching") == 1 && CountInv("Kicking") == 1 && kickflashes && bdpplr && !bdpplr.exhausted) {
 				return resolvestate('SlideKickingStart');
 			}
 			//Airkick
@@ -825,8 +826,9 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	override void DoEffect() 
 	{
 		super.DoEffect();
-  
+		
 		let player = owner.player;
+		brutal_playerbase BDPplr = brutal_playerbase(owner);
 		If(player && player.readyweapon is self.getclass())
 		{
 			If(semiautofired && !(player.cmd.buttons & BT_ATTACK))
@@ -950,18 +952,21 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			If(A_checksprint())
 			{
 				
-				If(owner.findinventory("istacticalclass"))
+				If(owner.findinventory("istacticalclass") && BDPplr)
 				{
 					If(owner.findinventory("powerstrength") || owner.findinventory("powerboost"))
 					{
-						if (level.time % 3 == 0)
+						if (level.time % 2 == 0)
 						{
-							owner.A_GiveInventory("UsedStamina", weight);
+							BDPplr.stamina += 2;
 						}
 					}
 					Else
 					{
-						owner.A_GiveInventory("UsedStamina", weight);
+						if (level.time % 2 == 0)
+						{
+							BDPplr.stamina += 3;
+						}
 					}
 					
 				}
@@ -1120,10 +1125,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			"####" A 0 SetPlayerProperty(0,1,PROP_TOTALLYFROZEN);
 			"####" A 0 
 			{
-			If(invoker.owner.findinventory("istacticalclass"))
-			{
-			invoker.owner.giveinventory("usedstamina",invoker.weight * 30);
-			}
+
 			A_StartSound("ledgeclimb",5);
 			}
 			"####" ABC 1 {
@@ -2144,7 +2146,18 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		// 1st person legs shit
 		TNT1 A 0;
 		
-		TNT1 A 0 A_JumpIfInventory("IsCrouching", 1, "SlideAttack");
+		TNT1 A 0
+		{
+			brutal_playerbase BDPplr = brutal_playerbase(invoker.owner);
+			If(BDPplr && BDPplr.player.crouchfactor != 1 && !BDPplr.exhausted)
+			{
+				return resolvestate("SlideAttack");
+			}
+			Else
+			{
+				return resolvestate(null);
+			}
+		}
 	    TNT1 A 0 A_JumpIf (vel.Z != 0, "AirKick");
 		
 		//Melee Kicks
@@ -2396,13 +2409,20 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		TNT1 A 0 A_StartSound("KICK",69);
 		TNT1 A 0 A_Recoil (-6);
 		TNT1 A 0 A_StartSound("SlideKickStart", 71);
-		NULL A 0
-		{ if(CountInv("IsPlayingDoxMod")==0)
-		  {
-		  A_GunFlash("SlideKickingStart");
-		  }
-		 Return resolveState(null);
+		TNT1 A 0
+		{
+			brutal_playerbase BDPplr = brutal_playerbase(invoker.owner);
+			If(BDPplr && BDPplr.istactical)
+			{
+				BDPplr.stamina += 60;
+				If(BDPplr.stamina > 100)
+				{
+					A_startSound("Tired", 21,CHANF_NOSTOP);
+					BDPplr.stamina = 100;
+				}
+			}
 		}
+
 		NULL A 0 A_Overlay(-610,"SlideKickRightLegOverlay");
 		TNT1 A 0 
 		{

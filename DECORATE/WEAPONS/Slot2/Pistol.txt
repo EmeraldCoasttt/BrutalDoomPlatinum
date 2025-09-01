@@ -188,7 +188,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		TNT1 A 0 A_SetCrosshairDX("SMGRet", 1000,0.5)
 		
 	    PIST F 0 A_JumpIfInventory("Zoomed",1,"Ready2")
-        PIST F 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
+       
         PIST F 0 A_JumpIfInventory("Taunting",1,"Taunt")
 		PIST F 0 A_JumpIfInventory("Salute1", 1, "Salute")
 		PIST F 0 A_JumpIfInventory("Salute2", 1, "Salute")
@@ -208,7 +208,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		Loop
 		
 	Ready2:
-        PIST F 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
+       
         PIST F 0 A_JumpIfInventory("Taunting",1,"Taunt")
 		PIST F 0 A_JumpIfInventory("Salute1", 1, "Salute")
 		PIST F 0 A_JumpIfInventory("Salute2", 1, "Salute")

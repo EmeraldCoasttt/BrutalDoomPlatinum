@@ -19,6 +19,7 @@ class Brutal_PlayerBase : PlayerPawn
 	vector3	Acceleration;
 	bool	Bsprinting;
 	bool exhausted;
+	int stamina;
 	
 	//////////////////
 	
@@ -1204,16 +1205,9 @@ class Brutal_PlayerBase : PlayerPawn
 		{
 			If(LedgeCheck)
 			{
-				if(countinv("usedstamina") < 60)
-				{	
-					LedgeReach();
 				
+				LedgeReach();
 				
-				}
-				Else
-				{
-					A_startSound("Tired", 21,CHANF_NOSTOP);
-				}
 			}
 			if(LedgeGrabbed)
 			{
@@ -1254,17 +1248,17 @@ class Brutal_PlayerBase : PlayerPawn
 		}
 		
 		
-		If(countinv("usedstamina") >= 99)
+		If(stamina >= 99 && istactical)
 		{
 			exhausted = true;
 		}
-		Else if (countinv("usedstamina") < 60)
+		Else if (stamina < 40)
 		{
 			exhausted = false;
 		}
-		if (level.time % 2 == 0)
+		if (level.time % 2 == 0 && stamina)
 		{
-			takeinventory("usedstamina",1);
+			stamina--;
 	
 		}
 				
@@ -1564,7 +1558,7 @@ class Brutal_PlayerBase : PlayerPawn
 			alreadyjumped = false;
 		}
 		
-		if (!invehicle && player.cmd.buttons & BT_JUMP)
+		if (!invehicle && !exhausted && player.cmd.buttons & BT_JUMP)
 		{
 			
 			/*
@@ -1604,13 +1598,22 @@ class Brutal_PlayerBase : PlayerPawn
 				//console.printf("%i",vel.z);
 				bOnMobj = false;
 				player.jumpTics = -1;
+				If(istactical)
+				Stamina += 20;
 				if (!(player.cheats & CF_PREDICTING)) A_StartSound("BDPJUMP", CHAN_BODY);
 				If(doublejumpready)
 				{
 					alreadyjumped = true;
+					If(istactical)
+					Stamina += 25;
 					if (!(player.cheats & CF_PREDICTING)) A_StartSound("JMPBOOT", CHAN_BODY);
 				}
 				oldjump = true;
+				If(stamina > 100)
+				{
+					Stamina = 100;
+					A_startSound("Tired", 21,CHANF_NOSTOP);
+				}
 			}
 			
 			jumpcooler++;

@@ -84,7 +84,8 @@ class BDP_HUD : DoomStatusBar
 	override void Tick()
 	{
 		super.Tick();
-		int stamina = CPlayer.mo.CountInv("UsedStamina");
+		brutal_playerbase BDPplr = brutal_playerbase(cplayer.mo);
+		int stamina = BDPplr.stamina;
 		if (stamina > 0)
 		{
 			stambarFadeTime = Clamp(stambarFadeTime + 1, 0, STAMFADEWAIT);
@@ -529,25 +530,31 @@ class BDP_HUD : DoomStatusBar
 	
 	void DrawStaminaBar(vector2 pos, int flags = 0)
 	{		
-		let staminaItem = CPlayer.mo.FindInventory("UsedStamina");
-		if (!staminaItem)
+		brutal_playerbase BDPplr = brutal_playerbase(Cplayer.mo);
+		if (!BDPplr || !BDPplr.istactical)
 			return;
 		
-		int amt = staminaItem.amount;
+		int amt = BDPplr.stamina;
 		if (amt <= 0 && stambarFadeTime < STAMFADEHALF)
 		{
 			return;
 		}
 			
-		int maxAmt = staminaItem.MaxAmount;
+		int maxAmt = 100;
 		int realAmt = maxAmt - amt;
 		
 		int alpha = LinearMap(stambarFadeTime, STAMFADEHALF, STAMFADEWAIT, 0, 255);
 		alpha = Clamp(alpha, 0, 255);
 		int red = Linearmap(realAmt, maxAmt, 0, 0, 255);
 		int green = Linearmap(realAmt, maxAmt / 2, maxAmt, 100, 255);
-		
-		Fill(Color(alpha, red, green, 0), pos.x, pos.y, realAmt, 2, flags);
+		If(!bdpplr.exhausted)
+		{
+			Fill(Color(alpha, red, green, 0), pos.x, pos.y, realAmt, 2, flags);
+		}
+		else
+		{
+			Fill(Color(alpha, 255, 0, 0), pos.x, pos.y, realAmt, 2, flags);
+		}
 		DrawString(mConfont, "Stamina", pos + (0,-5), flags|DI_TEXT_ALIGN_LEFT, alpha: LinearMap(alpha, 0, 255, 0., 1.), scale: (0.5, 0.5));
 	}
 	
