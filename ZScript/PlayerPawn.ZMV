@@ -1604,8 +1604,6 @@ class Brutal_PlayerBase : PlayerPawn
 				If(doublejumpready)
 				{
 					alreadyjumped = true;
-					If(istactical)
-					Stamina += 25;
 					if (!(player.cheats & CF_PREDICTING)) A_StartSound("JMPBOOT", CHAN_BODY);
 				}
 				oldjump = true;
