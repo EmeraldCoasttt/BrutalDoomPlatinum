@@ -915,7 +915,7 @@ class Brutal_PlayerBase : PlayerPawn
 			If(flashon && !flashburnout)
 				{
 					flashon = false;
-					A_startsound("FLASHOFF",5);
+					A_startsound("FLASHOF2",5);
 					A_takeinventory("BDP_flashlight",1);
 					flashtimer = 20;
 					Takeinventory("switchflashlight",1);
