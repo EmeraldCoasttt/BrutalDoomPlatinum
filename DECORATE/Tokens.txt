@@ -35,6 +35,11 @@ Actor DualWieldedPistol : Inventory
 inventory.maxamount 1
 }
 
+Actor ReloadFromPump : Inventory
+{
+inventory.maxamount 1
+}
+
 Actor DualWieldedSMG : Inventory
 {
 inventory.maxamount 1
