@@ -490,10 +490,9 @@ Pump2:
 		SHTN A 0 A_SetPitch(-10.0 + pitch, SPF_INTERPOLATE)
 		SHTN A 0 A_TakeAmmo("ShotgunAmmo",1)
 		TNT1 A 0 A_GunLight
-        SHT8 D 2 A_SetPitch(+2.0 + pitch, SPF_INTERPOLATE)
+        SHT8 D 1 A_SetPitch(+2.0 + pitch, SPF_INTERPOLATE)
 		TNT1 A 0 A_GunLight
-		SHT8 E 1
-		SHT8 EFGC 1 A_SetPitch(+2.0 + pitch, SPF_INTERPOLATE)
+		SHT8 DEFGC 1 A_SetPitch(+2.0 + pitch, SPF_INTERPOLATE)
 		SHT8 C 1
 		//TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"InstaPump2")
 		TNT1 A 0 A_JumpIf(GetCvar("ManualShotgunPump")==1,1) 
