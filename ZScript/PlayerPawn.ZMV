@@ -887,6 +887,7 @@ class Brutal_PlayerBase : PlayerPawn
 					else
 					{
 						A_startsound("INFRAOFF",5);
+						A_startsound("INFRAOF2",6);
 					}
 					A_takeinventory("BDP_flashlight",1);
 					
@@ -905,6 +906,7 @@ class Brutal_PlayerBase : PlayerPawn
 					else
 					{
 						A_startsound("INFRAON",5);
+						A_startsound("INFRAON2",6);
 					}
 					A_giveinventory("BDP_flashlight",1);
 					//PPShader.SetEnabled("NiteVis",true);
