@@ -29,12 +29,11 @@ ACTOR BaseMagActor
 		Death:
 			"####" "#" 0
 			"####" "#" 0 A_SetRoll(0)
-			"####" "#" 0 ACS_NamedExecuteAlways("BDCheckJanitor")//Check Effects
-			"####" "#" 0 ACS_NamedExecuteAlways("BDCheckJanitor2")//Check Effects
 			"####" "#" 350
-			"####" "#" 0 A_JumpIf(CountInv("LowGraphicsMode")==0,"Death")
-			"####" "#####" 1 A_FadeOut(0.2)
-			stop
+			
+		Fadeout:
+		"####" "#" 1 A_fadeout(0.02)
+		LOOP
 	}
 }
 
@@ -53,12 +52,8 @@ ACTOR EmptypPistolClip: BaseMagActor
       Stop
    Death:
 		"####" "#" 0
-		"####" "#" 0 ACS_NamedExecuteAlways("BDCheckJanitor")//Check Effects
-		"####" "#" 0 ACS_NamedExecuteAlways("BDCheckJanitor2")//Check Effects
 		"####" "#" 350 A_SetRoll(90)
-		"####" "#" 0 A_JumpIf(CountInv("LowGraphicsMode")==0,"Death")
-		"####" "#####" 1 A_FadeOut(0.2)
-		stop
+		Goto Fadeout
    }
 }
 
@@ -83,9 +78,7 @@ ACTOR RailCasing: BaseMagActor
 	  "####" "#" 0
 	  StayDead:
 		"####" "#" 350 
-		"####" "#" 0 A_JumpIf(CountInv("LowGraphicsMode")==0,"StayDead")
-		"####" "#####" 1 A_FadeOut(0.2)
-		stop
+		Goto Fadeout
 	Die2:
 		"####" "#" 0 A_SetRoll(90)
 		"####" "#" 0 A_ChangeFlag("XFLIP",1)
@@ -115,14 +108,10 @@ ACTOR EmptyClip: BaseMagActor
 	  NULL A 0 A_Jump(255, "stay1","stay2")
 	  stay1:
 	  ECLI E 350
-	  "####" "#" 0 A_JumpIf(CountInv("LowGraphicsMode")==0,"stay1")
-	  "####" "#####" 1 A_FadeOut(0.2)
-	  stop
+	  Goto Fadeout
 	  stay2:
 	  ECLI F 350
-	  "####" "#" 0 A_JumpIf(CountInv("LowGraphicsMode")==0,"stay2")
-	  "####" "#####" 1 A_FadeOut(0.2)
-	  stop
+	  Goto Fadeout
    }
 }
 
@@ -161,7 +150,8 @@ ACTOR EmptyRifleClip: BaseMagActor
 	  }
 	  
 	  stay1:
-	  ECLI J -1
+	  ECLI J 400
+	  Goto Fadeout
 
    }
 }
@@ -196,12 +186,8 @@ ACTOR EmptyRocketChamber: BaseMagActor
 	  RCSE AAAAAAAAAAAAAAAAAAAAAAAAAAA 4 A_SetRoll(roll-45)
       Stop
 	Death:
-	  TNT1 A 0
-	  stay1:
 	  RCSE I 350 A_SetRoll(0)
-	  "####" "#" 0 A_JumpIf(CountInv("LowGraphicsMode")==0,"stay1")
-	  "####" "#####" 1 A_FadeOut(0.2)
-	  stop
+	Goto fadeout
 	 
    }
 }
@@ -223,12 +209,13 @@ ACTOR EmptyFlamerCan: BaseMagActor
 	  FLRS FFFFFFFFFFFFFFFFFFFFFFF 4 A_SetRoll(roll-45)
       Stop
 	Death:
-	  TNT1 A 0
+	  TNT1 A 0 A_jump(256,"Stay1","Stay2")
 	  stay1:
 	  FLRS F 350 A_SetRoll(0)
-	  "####" "#" 0 A_JumpIf(CountInv("LowGraphicsMode")==0,"stay1")
-	  "####" "#####" 1 A_FadeOut(0.2)
-	  stop
+	  Goto Fadeout
+	  stay2:
+	  FLRS F 350 A_SetRoll(180)
+	  Goto Fadeout
 	 
    }
 }
@@ -626,36 +613,40 @@ ACTOR EmptyBrass
       Goto Rest1
     Rest1:
 
-	  C4S3 I -1
-      Loop
+	  C4S3 I 400
+     Goto Fadeout
     Rest2:
 
-	  C4S3 J -1
-      Loop
+	  C4S3 J 400
+     Goto Fadeout
     Rest3:
 
-	  C4S3 K -1
-      Loop
+	  C4S3 K 400
+     Goto Fadeout
     Rest4:
 
-	  C4S3 L -1
-      Loop
+	  C4S3 L 400
+     Goto Fadeout
     Rest5:
 
-	  C4S3 M -1
-      Loop
+	  C4S3 M 400
+     Goto Fadeout
     Rest6:
 
-	  C4S3 I -1
-      Loop
+	  C4S3 I 400
+     Goto Fadeout
     Rest7:
 
-	  C4S3 J -1
-      Loop
+	  C4S3 J 400
+       Goto Fadeout
     Rest8:
 
-	  C4S3 K -1
-      Loop
+	  C4S3 K 400
+      Goto Fadeout
+	
+	Fadeout:
+		"####" "#" 1 A_fadeout(0.02)
+		LOOP
 	 
 	Splash:
 	TNT1 A 0
@@ -696,8 +687,11 @@ ACTOR PistolCasing: EMptyBrass
 			bnointeraction = true;
 			A_changelinkflags(true);
 		}
-      "####" "#" -1
-	  wait
+      "####" "#" 400
+	  
+	  Fadeout:
+		"####" "#" 1 A_fadeout(0.02)
+		LOOP
 	  
 	Splash:
 	TNT1 A 0
@@ -730,28 +724,9 @@ ACTOR MGLinks: EMptyBrass
 			bnointeraction = true;
 			A_changelinkflags(true);
 		}
-     CLIN A -1
-	 Wait
-    Rest1:
-      CLIN F 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-      Loop
-    Rest2:
-      CLIN B 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-      Loop
-    Rest3:
-      CLIN F 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-      Loop
-    Rest4:
-      CLIN B 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-      Loop
-    Rest5:
-      CLIN F 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-      Loop
+     CLIN A 400
+	 Goto Fadeout
+   
 	 
 	Splash:
 	TNT1 A 0
@@ -760,6 +735,8 @@ ACTOR MGLinks: EMptyBrass
 	Stoping:
 	TNT1 A 0
 	Stop
+	
+	
    }
 }
 
@@ -839,47 +816,36 @@ ACTOR ShotgunCasing
       loop
    Death:
 	  TNT1 A 0
-	  TNT1 A 0 ACS_NamedExecuteAlways("BDCheckJanitor")//Check Effects
-	  TNT1 A 0 ACS_NamedExecuteAlways("BDCheckJanitor2")//Check Effects
 	  TNT1 A 0 A_SpawnItem("MicroSmokeColumn")
       LCPJ A 0 A_Jump(256,"Rest1","Rest2","Rest3","Rest4","Rest5","Rest6","Rest7","Rest8")
       Goto Rest1
     Rest1:
-      C4S2 I 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-      Loop
+      C4S2 I 400
+	  Goto Fadeout
     Rest2:
-      C4S2 J 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-      Loop
+      C4S2 J 400
+	  Goto Fadeout
     Rest3:
-      C4S2 K 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-      Loop
+      C4S2 K 400
+	  Goto Fadeout
     Rest4:
-      C4S2 L 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-      Loop
+      C4S2 L 400
+	  Goto Fadeout
     Rest5:
-      C4S2 M 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-      Loop
+      C4S2 M 400
+	  Goto Fadeout
     Rest6:
-      C4S2 I 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-      Loop
+      C4S2 I 400
+	  Goto Fadeout
     Rest7:
-      C4S2 J 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-      Loop
+      C4S2 J 400
+	 Goto Fadeout
     Rest8:
-      C4S2 K 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-   Loop
-   
-	Stoping:
-		TNT1 A 0
-		Stop
+      C4S2 K 400
+	  Goto Fadeout
+	Fadeout:
+		"####" "#" 1 A_fadeout(0.02)
+		LOOP
    }
 }
 
@@ -923,8 +889,6 @@ ACTOR GrenadeCasing
       Loop
    Death:
 	  TNT1 A 0
-	  TNT1 A 0 ACS_NamedExecuteAlways("BDCheckJanitor")//Check Effects
-	  TNT1 A 0 ACS_NamedExecuteAlways("BDCheckJanitor2")//Check Effects
 	  TNT1 A 0 A_SpawnItem("MicroSmokeColumn")
       LCPJ A 0 A_Jump(256,"Rest1","Rest2","Rest3","Rest4")
       Goto Rest1
@@ -941,9 +905,10 @@ ACTOR GrenadeCasing
     NULL A 0 A_SetRoll(270)
     goto RestLoop
   RestLoop:
-      ROCK D 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-      Loop
+      ROCK D 400
+	 Fadeout:
+		"####" "#" 1 A_fadeout(0.02)
+		LOOP
    
 	Stoping:
 		TNT1 A 0
@@ -961,8 +926,6 @@ States
       Loop
    Death:
 	  TNT1 A 0
-	  TNT1 A 0 ACS_NamedExecuteAlways("BDCheckJanitor")//Check Effects
-	  TNT1 A 0 ACS_NamedExecuteAlways("BDCheckJanitor2")//Check Effects
 	  TNT1 A 0 A_SpawnItem("MicroSmokeColumn")
       LCPJ A 0 A_Jump(256,"Rest1","Rest2","Rest3","Rest4")
       Goto Rest1
@@ -979,9 +942,10 @@ States
     NULL A 0 A_SetRoll(270)
     goto RestLoop
   RestLoop:
-      ROCK F 200
-	  TNT1 A 0 A_JumpIfInventory("LowGraphicsMode", 1, "Stoping")
-      Loop
+      ROCK F 400
+	  Fadeout:
+		"####" "#" 1 A_fadeout(0.02)
+		LOOP
 }
 
 }
