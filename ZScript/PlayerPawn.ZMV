@@ -467,6 +467,10 @@ class Brutal_PlayerBase : PlayerPawn
 					if (i == 1)
 					{
 						weap.ammoGive1 -= amtToGive;
+						If(weap is "shot_gun")
+						{
+							weap.giveinventory("AmmoTaken",1);
+						}
 					}
 					else
 					{

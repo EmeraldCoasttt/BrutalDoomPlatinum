@@ -66,8 +66,11 @@ ACTOR Shot_Gun : BrutalWeapon
 	stop	
 		
     Spawn:
-		SHTC A -1
-		Stop
+		SHTC A 1 A_jumpifinventory("AmmoTaken",1,"Spawn2")
+		LOOP
+	Spawn2:
+		SHTC D -1
+		LOOP
 
 	Fidget:
 	   XXXX X 0 A_PlaySound("foley/ShotgunPumpMisc", 10)

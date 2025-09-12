@@ -24,6 +24,10 @@ Actor PistolFireAnimation1 : Inventory
 {
 inventory.maxamount 1
 }
+Actor AmmoTaken : Inventory
+{
+inventory.maxamount 1
+}
 
 Actor HeadshotPopFlag : Inventory
 {
