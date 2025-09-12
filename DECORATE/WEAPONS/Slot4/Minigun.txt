@@ -10,7 +10,7 @@ ACTOR MiniGun : BrutalWeapon
 	SpawnID 28
 	Weapon.SelectionOrder 700
 	Weapon.AmmoType1 "Clip2"
-	Weapon.AmmoGive 0
+	Weapon.AmmoGive 20
 	Weapon.AmmoUse1 0
 	+WEAPON.NOAUTOAIM
 	+WEAPON.NOAUTOFIRE
