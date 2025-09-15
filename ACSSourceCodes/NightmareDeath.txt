@@ -4,7 +4,9 @@
 script "BDNightmareDeath" (VOID)
 {
 SetMusic("D_NMLOS", 0);
-FadeTo (0, 0, 0, 0.75, 10.0);
+
+Delay(70);
+FadeTo (0, 0, 0, 0.75, 17.0);
 SetFont("BIGFONT");
 	HudMessage(s:"THE NIGHTMARE HAS ENDED\n\nFOR YOU.\n\nTHE DEMONS RUN RAMPANT\n\nHUMANITY IS DOOMED";
 		HUDMSG_TYPEON | HUDMSG_LOG, 0, CR_RED, 1.5, 0.5, 666666.0,
