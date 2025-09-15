@@ -19,6 +19,7 @@ CLASS CyberFireUp2 : Actor
 		Obituary "$OB_CYBORG";
 		+noblockmap;
 		}
+	Vector3 MasterSpawn2;
 	States
 		{
 		Spawn:
@@ -34,16 +35,23 @@ CLASS CyberFireUp2 : Actor
 				{
 				If(master && master.target)
 					{
-						vector3 masterspawn2 = master.target.pos;
-						masterspawn2.z = (masterspawn2.z + 10);
+						masterspawn2 = master.target.pos;
+						masterspawn2.z = (masterspawn2.z += 600);
 						master.spawn("cyberpentagram",master.target.pos);
-						let ballspawn = master.spawn("cyberballsupspawn",masterspawn2);
-						If(ballspawn)
-							{
-								Ballspawn.vel.z = 50;
-							}
 						//master.target.a_spawnitemex("cyberpentagram",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION);
 						//master.target.A_spawnitemex("cyberballsupspawn",0,0,10,0,0,50,0,SXF_NOCHECKPOSITION);
+					}
+				}
+			TNT1 A 35;
+			TNT1 A 0
+				{
+					If(master)
+					{
+						let ballsdown = spawn("cyberballsdown",masterspawn2);
+						If(ballsdown)
+						{
+							ballsdown.target = master;
+						}
 					}
 				}
 			Stop;
