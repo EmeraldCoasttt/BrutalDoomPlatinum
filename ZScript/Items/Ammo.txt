@@ -32,9 +32,16 @@ Class AmmoSuply : BackpackItem Replaces Backpack
 	}
 	override bool TryPickup (in out Actor toucher)
 	{
-		toucher.Score += 500;
-		GoAwayAndDie();
-		return true;
+		If( Super.trypickup(Toucher))
+		{
+			toucher.Score += 500;
+			return true;
+		}
+		Else
+		{
+		return false;
+		}
+	
 	}
 }
 
