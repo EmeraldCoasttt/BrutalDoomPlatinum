@@ -290,6 +290,100 @@ class Brutal_PlayerBase : PlayerPawn
 		return true;
 	}
 	
+	Override void DeathThink ()
+	{
+		let player = self.player;
+		int dir;
+		double delta;
+
+		player.Uncrouch();
+		TickPSprites();
+
+		player.onground = (pos.Z <= floorz);
+		if (self is "PlayerChunk")
+		{ // Flying bloody skull or flying ice chunk
+			player.viewheight = 6;
+			player.deltaviewheight = 0;
+			if (player.onground)
+			{
+				if (Pitch > -19.)
+				{
+					double lookDelta = (-19. - Pitch) / 8;
+					Pitch += lookDelta;
+				}
+			}
+		}
+		else if (!bIceCorpse)
+		{ // Fall to ground (if not frozen)
+			player.deltaviewheight = 0;
+			if (player.viewheight > 6)
+			{
+				player.viewheight -= 1;
+			}
+			if (player.viewheight < 6)
+			{
+				player.viewheight = 6;
+			}
+			if (Pitch < 0)
+			{
+				Pitch += 3;
+			}
+			else if (Pitch > 0)
+			{
+				Pitch -= 3;
+			}
+			if (abs(Pitch) < 3)
+			{
+				Pitch = 0.;
+			}
+		}
+		player.mo.CalcHeight ();
+
+		if (player.attacker && player.attacker != self)
+		{ // Watch killer
+			double diff = deltaangle(angle, AngleTo(player.attacker));
+			double delta = abs(diff);
+
+			if (delta < 10)
+			{ // Looking at killer, so fade damage and poison counters
+				if (player.damagecount)
+				{
+					player.damagecount--;
+				}
+				if (player.poisoncount)
+				{
+					player.poisoncount--;
+				}
+			}
+			delta /= 8;
+			Angle += clamp(diff, -5., 5.);
+		}
+		else
+		{
+			if (player.damagecount)
+			{
+				player.damagecount--;
+			}
+			if (player.poisoncount)
+			{
+				player.poisoncount--;
+			}
+		}
+
+		if ((player.cmd.buttons & BT_USE ||
+			((deathmatch || alwaysapplydmflags) && sv_forcerespawn)) && !sv_norespawn && !ultranightmare)
+		{
+			if (Level.maptime >= player.respawn_time || ((player.cmd.buttons & BT_USE) && player.Bot == NULL))
+			{
+				player.cls = NULL;		// Force a new class if the player is using a random class
+				player.playerstate = (multiplayer || level.AllowRespawn || sv_singleplayerrespawn || G_SkillPropertyInt(SKILLP_PlayerRespawn)) ? PST_REBORN : PST_ENTER;
+				if (special1 > 2)
+				{
+					special1 = 0;
+				}
+			}
+		}
+	}
 	
 	// Counts all owned weapons:
 	int CountOwnedWeapons()
