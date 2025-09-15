@@ -1046,7 +1046,7 @@ class Brutal_PlayerBase : PlayerPawn
 			
 			If((health < 1) && !alreadyblacklisted)
 			{
-				A_Print("\cgThe nightmare has ended.",999);
+				//A_Print("\cgThe nightmare has ended.",999);
 				ACS_NamedExecuteAlways("BDNightmareDeath", 0, 0, 0, 0);
 				string ultraseedstring = (string.format("%i", ultraseed));
 				//Console.printf(ultraseedstring);
@@ -1074,7 +1074,7 @@ class Brutal_PlayerBase : PlayerPawn
 					{
 						//candidatetaken = true;
 						damagemobj(null,null,9999999,"explosiveimpact");
-						A_Print("\cgThe nightmare has ended.",999);
+						//A_Print("\cgThe nightmare has ended.",999);
 						ACS_NamedExecuteAlways("BDNightmareLoad", 0, 0, 0, 0);
 						//S_ChangeMusic("ORB");
 						Alreadyblacklisted = true;
