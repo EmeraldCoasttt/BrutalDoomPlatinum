@@ -479,6 +479,17 @@ ACTOR EnergyShotCaseSpawn : RifleCaseSpawn
 	}
 } 
 
+ACTOR DragonShotCaseSpawn : RifleCaseSpawn
+{
+	States
+	{
+	Spawn:
+        TNT1 A 0
+		TNT1 A 1 A_CustomMissile("DBShotgunCasing",0,0,random(-80,-100),2,random(40,60))
+		Stop
+	}
+} 
+
 Actor SSGCaseSpawner : ShotcaseSpawn
 {
 		States

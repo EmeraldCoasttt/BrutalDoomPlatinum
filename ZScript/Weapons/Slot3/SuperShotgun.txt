@@ -988,7 +988,8 @@ class DragonsBreathSparkle : Actor
 		TNT1 A 0 A_jump(200,"Spawn2");
 		TNT1 B 0;
 		Spawn2:
-		MODL "#" Random(1,5) Bright;
+		TNT1 "#" 1;
+		MODL "#" Random(0,4) Bright;
 		TNT1 "#" 0
 		{
 			vel *= 0.1;
