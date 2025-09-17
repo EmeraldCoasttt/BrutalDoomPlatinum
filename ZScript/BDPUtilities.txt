@@ -161,6 +161,7 @@
 	{
 	
 	bool mercilessgranted;
+	actor IconOfSin;
 	
 	override void NetworkProcess(ConsoleEvent e)
 	{
@@ -545,6 +546,15 @@
 	
 	}
 	
+	override void worldlinedamaged(Worldevent e)
+	{
+		console.printf("LineDamagedBabyyyyy");
+		If(IconOfSin && iconofsin.health > 0)
+		{
+			IconOfSin.damagemobj(e.Damagesource,e.damagesource,e.damage,e.damagetype);
+		}
+	}
+	
 	override void worldthingspawned(Worldevent e)
 	{
 		If(e.thing && e.thing.bismonster && !e.thing.findinventory("monsterinventory"))
@@ -555,6 +565,10 @@
 		if(e.thing && level.mapname != 'TITLEMAP' && !e.thing.findinventory("nottitlemap") && e.thing is "playerpawn")
 			{
 			e.thing.giveinventory("nottitlemap",1);
+			}
+		if(e.thing && e.thing is "bossbrain2")
+			{
+				IconOfSin = e.thing;
 			}
 	}
 	

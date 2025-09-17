@@ -2117,35 +2117,13 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				{
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYHELF",TexMan.Type_Any),TexMan.CheckForTexture("SKYHELF",TexMan.Type_Any));
 					levellocals.ReplaceTextures("BIGDOOR6", "SPCDOOR3",0);
-					levellocals.ReplaceTextures("ZZZFACE1", "SKSNAKE2",0);
-					levellocals.ReplaceTextures("ZZZFACE2", "SKSNAKE2",0);
-					levellocals.ReplaceTextures("ZZZFACE3", "SKSNAKE2",0);
-					levellocals.ReplaceTextures("ZZZFACE4", "SKSNAKE2",0);
-					levellocals.ReplaceTextures("ZZZFACE5", "SKSNAKE2",0);
-					levellocals.ReplaceTextures("ZZZFACE6", "SKSNAKE2",0);
-					levellocals.ReplaceTextures("ZZZFACE7", "SKSNAKE2",0);
-					levellocals.ReplaceTextures("ZZZFACE8", "SKSNAKE2",0);
-					levellocals.ReplaceTextures("ZZZFACE9", "SKSNAKE2",0);
-					levellocals.ReplaceTextures("PIPE6", "SKSNAKE2",0);
-					levellocals.ReplaceTextures("PIPE4", "SKSNAKE2",0);
-					levellocals.ReplaceTextures("PIPE2", "SKSNAKE2",0);
 					levellocals.ReplaceTextures("BLOOD3", "SFLR6_4",0);
 					levellocals.ReplaceTextures("RROCK08", "F_SKY1",0);
 					levellocals.ReplaceTextures("BDSLIME1", "BDBLOOD1",0);
 					levellocals.ReplaceTextures("BDSFALL1", "BDBFALL1",0);
 					//OffsetSectorPlane(9, Sector.ceiling, -32); //this breaks the map
 					
-					AddThing(26008, (2880,1048,366),0);
-					AddThing(26009, (2880,1068,346),0);
-					AddThing(26010, (2895,1108,316),0);
-					AddThing(26011, (2855,1148,296),0);
-					AddThing(26009, (2855,1188,316),0);
-					AddThing(26010, (2865,1228,80),0); //
-					AddThing(26011, (2880,1248,100),0); //
-					AddThing(26010, (2900,1288,140),0); //
-					AddThing(26009, (2885,1328,160),0); //
-					AddThing(26011, (2880,1368,170),0); //
-					AddThing(2550, (2880,1048,416),0);
+					SetThingEdNum(0,26014);
 				}
 				Break;
 
@@ -2679,7 +2657,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
 				{
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any),TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any));
-					AddThing(26014,(3072,-864,-999),0);
+					SetThingEdNum(95,26014);
 				}
 				Break;
 
@@ -3032,7 +3010,8 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
 				{
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any),TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any));
-					AddThing(26014,(-3648,5760,-999),0);
+					//AddThing(26014,(-3648,5760,-999),0);
+					SetThingEdNum(81,26014);
 				}
 				Break;
 

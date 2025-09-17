@@ -69,6 +69,7 @@ version "4.14.0"
 #include "Zscript/Monsters/HellNobles.txt"
 #include "Zscript/Monsters/GoreNest.txt"
 #include "Zscript/Monsters/Banshee.txt"
+#include "Zscript/Monsters/bossbrain.txt"
 
 #include "ZScript/Vehicles/Kinematics/kine_parts.zsc" 
 #include "ZScript/Vehicles/veh_parts.zsc"

@@ -1,4 +1,4 @@
-ACTOR BossBrainReplacer Replaces BossBrain
+ACTOR BossBrainReplacer
 {
   Health 250
   Mass 10000000

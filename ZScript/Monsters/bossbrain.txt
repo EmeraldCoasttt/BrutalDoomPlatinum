@@ -1,0 +1,84 @@
+Class bossbrain2 : bossbrain
+{
+	bool activatedhealthbar;
+Default
+	{
+		Health 20000;
+		Mass 10000000;
+		PainChance 20;
+		Radius 16;
+		height 6666;
+		+SOLID +SHOOTABLE
+		+NOICEDEATH
+		+OLDRADIUSDMG
+		PainSound "brain/pain";
+		DeathSound "brain/death";
+		+lookallaround;
+		Damagefactor 2.0;
+	}
+	States
+	{
+	Spawn:
+		BBRN A 1 A_look();
+		LOOP;
+	See:
+		TNT1 A 0
+		{
+			If(!activatedhealthbar)
+			{
+				ACS_ExecuteAlways(621);
+			}
+		}
+	Seen:
+		BBRN A -1;
+		WAIT;
+	Pain:
+		TNT1 A 0
+		{
+			If(!activatedhealthbar)
+			{
+				ACS_ExecuteAlways(621);
+			}
+		}
+		BBRN B 36 A_BrainPain();
+		Goto Seen;
+	Death:
+		BBRN A 100 A_BrainScreamdx();
+		TNT1 A 0 A_BrainSpawnExpl();
+		BBRN A 200;
+		BBRN A -1 A_BrainDie();
+		Stop;
+	}
+}
+
+extend class bossbrain2
+{
+	private static void BrainishExplosiondx(vector3 pos)
+	{
+		Actor boom = Actor.Spawn("IconExplosion", pos, NO_REPLACE);
+	}
+
+   void A_BrainScreamdx()
+	{	
+	A_StartSound("brain/death", CHAN_VOICE, CHANF_DEFAULT, 1., ATTN_NONE);
+	}
+	
+	void a_brainspawnexpl()
+	{
+		for (double x = -196; x < +320; x += 8)
+		{
+			// (1 / 512.) is actually what the original value of 128 did, even though it probably meant 128 map units.
+			BrainishExplosiondx(Vec2OffsetZ(x, -320, (1 / 512.) + random[BrainExplode](0, 255) * 2));
+		}
+		
+	}
+	void A_BrainExplodedx()
+	{
+		double x = random2[BrainExplode]() / 32.;
+		Vector3 pos = Vec2OffsetZ(x, 0, 1 / 512. + random[BrainExplode]() * 2);
+		BrainishExplosiondx(pos);
+	}
+
+}
+
+
