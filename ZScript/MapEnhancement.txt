@@ -2121,6 +2121,13 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					levellocals.ReplaceTextures("RROCK08", "F_SKY1",0);
 					levellocals.ReplaceTextures("BDSLIME1", "BDBLOOD1",0);
 					levellocals.ReplaceTextures("BDSFALL1", "BDBFALL1",0);
+					level.lines[16].sethealth(999999);
+					level.lines[22].sethealth(999999);
+					level.lines[21].sethealth(999999);
+					level.lines[20].sethealth(999999);
+					level.lines[13].sethealth(999999);
+					level.lines[3].sethealth(999999);
+					level.lines[6].sethealth(999999);
 					//OffsetSectorPlane(9, Sector.ceiling, -32); //this breaks the map
 					
 					SetThingEdNum(0,26014);
@@ -2657,6 +2664,12 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
 				{
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any),TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any));
+					level.lines[593].sethealth(999999);
+					level.lines[399].sethealth(999999);
+					level.lines[400].sethealth(999999);
+					level.lines[483].sethealth(999999);
+					level.lines[638].sethealth(999999);
+					level.lines[619].sethealth(999999);
 					SetThingEdNum(95,26014);
 				}
 				Break;
@@ -3011,6 +3024,13 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				{
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any),TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any));
 					//AddThing(26014,(-3648,5760,-999),0);
+					level.lines[925].sethealth(999999);
+					level.lines[922].sethealth(999999);
+					level.lines[920].sethealth(999999);
+					level.lines[909].sethealth(999999);
+					level.lines[918].sethealth(999999);
+					level.lines[916].sethealth(999999);
+					level.lines[915].sethealth(999999);
 					SetThingEdNum(81,26014);
 				}
 				Break;

@@ -476,13 +476,15 @@ Actor IconExplosion
 		TNT1 A 0
 		TNT1 A random(0,200)
 		TNT1 A 0 A_scream
-		TNT1 A 0 A_SpawnItemEx ("BarrelKaboom",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		
 		TNT1 AAAA 0 A_CustomMissile ("FireworkSFXType2", 64, 0, random (0, 360), 2, random (30, 60))
 		TNT1 AAA 0 A_CustomMissile ("HighExplosiveFlames", random (10, 20), 0, random (0, 360), 2, random (10, 90))
 		//EXPL AA 0 A_CustomMissile ("BigBlackSmokeLarger", 20, 0, random (0, 360), 2, random (10, 90))
         TNT1 AAA 0 A_CustomMissile ("BDExplosionparticles3", 64, 0, random (0, 360), 2, random (40, 90))
 		TNT1 AAA 0 A_CustomMissile ("BDExplosionparticles4", 64, 0, random (0, 360), 2, random (40, 90))
 		EXPL A 0 Radius_Quake (2, 35, 0, 700, 0)
+		TNT1 AA 2 A_SpawnItem("SpawnedExplosion")
+		TNT1 AA 2 A_SpawnItem("SpawnedExplosion")
 		TNT1 A 100
 		STOP
 	}

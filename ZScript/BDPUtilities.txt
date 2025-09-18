@@ -548,10 +548,9 @@
 	
 	override void worldlinedamaged(Worldevent e)
 	{
-		console.printf("LineDamagedBabyyyyy");
 		If(IconOfSin && iconofsin.health > 0)
 		{
-			IconOfSin.damagemobj(e.Damagesource,e.damagesource,e.damage,e.damagetype);
+			IconOfSin.damagemobj(e.Damagesource,e.damagesource,(e.damage * 0.25),"Face");
 		}
 	}
 	
