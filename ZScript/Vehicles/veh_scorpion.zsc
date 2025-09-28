@@ -67,7 +67,14 @@ class Scorpion_TurretCannon : VehPart
 			aimpitch = base.driver ? base.driver.pitch - 6 : 0;
 		}
 		aimpitch = clamp(aimpitch, -40, 5);
-		A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+		If(base.driver)
+		{
+			A_SetPitch(BDPMath.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
+		}
+		else
+		{
+			A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+		}
 		
 	}
 		
@@ -87,7 +94,7 @@ class Scorpion_TurretCannon : VehPart
 		if(CheckButtons(BT_ATTACK, VehButtons.BTS_PRESSED) && !cooldown)
 		{
 			//let misl = TankRocket.Fire(self, (350, 0, 30));
-			let misl = BDPMath.FireProjectile("TankRocket", pos, angle, pitch, 0, 0, -10, 1, 0);
+			let misl = BDPMath.FireProjectile("TankRocket", pos, angle, pitch, 0, 20, -10, 1, 0);
 			if(misl) misl.target = base.driver;
 			
 			A_StartSound("TANKF", CHAN_WEAPON, CHANF_OVERLAP);
@@ -145,7 +152,14 @@ class Scorpion_TurretGun : VehPart
 			aimpitch = base.driver ? base.driver.pitch - 6 : 0;
 		}
 		aimpitch = clamp(aimpitch, -40, 10);
-		A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+		If(base.driver)
+		{
+			A_SetPitch(BDPMath.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
+		}
+		else
+		{
+			A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+		}
 		
 	}
 		

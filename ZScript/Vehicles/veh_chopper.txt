@@ -108,7 +108,14 @@ class Chopper_TurretCannon : VehPart
 			aimpitch = base.driver ? base.driver.pitch - 5 : 0;
 		}
 		aimpitch = clamp(aimpitch, -50, 50);
-		A_SetPitch(BDPMath.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
+		If(base.driver)
+		{
+			A_SetPitch(BDPMath.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
+		}
+		else
+		{
+			A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+		}
 		
 	}
 		
@@ -121,7 +128,7 @@ class Chopper_TurretCannon : VehPart
 		if(cooldown_chaingun) cooldown_chaingun--;
 		if(cooldown) 
 		{
-			cam.SetZoom(1.0, 0.1);
+			//cam.SetZoom(1.0, 0.1);
 			cooldown--;
 		}
 		if(CheckButtons(BT_ATTACK, VehButtons.BTS_DOWN) && !cooldown)
@@ -150,7 +157,7 @@ class Chopper_TurretCannon : VehPart
 					A_StartSound("CHGNSHOT", CHAN_WEAPON,CHANF_OVERLAP,0.5);
 				}
 				guncycle2 = false;
-				cam.SetZoom(0.97, 0.5);
+				//cam.SetZoom(0.97, 0.5);
 				chopper.driver.A_AlertMonsters(0, AMF_TARGETEMITTER);
 			}
 			

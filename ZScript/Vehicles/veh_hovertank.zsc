@@ -130,7 +130,14 @@ class HoverTank_TurretCannon : VehPart
 			aimpitch = base.driver ? base.driver.pitch - 5 : 0;
 		}
 		aimpitch = clamp(aimpitch, -50, 5);
-		A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+		If(base.driver)
+		{
+			A_SetPitch(BDPMath.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
+		}
+		else
+		{
+			A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+		}
 		
 	}
 		

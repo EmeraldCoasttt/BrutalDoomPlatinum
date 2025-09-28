@@ -148,12 +148,25 @@ class VehPart : Actor
 		
 		FLineTraceData lt;
 		base.viewcam.LineTrace(self.angle, 8000, base.driver.pitch, 0, 0, data:lt);
+		/*
 		If(lt.hitactor && lt.hitactor != base)
 		{
 			//console.printf("HIT!!!");
 			returnpitch = pitchto(lt.hitactor,0,(lt.hitactor.height * 0.5));
 			
 		}
+		*/
+		//else if(!lt.hitactor)
+		//{
+			Vector3 origin = (pos.xy, pos.z);
+
+			Vector3 diff;
+			
+			diff = level.Vec3Diff(origin, lt.hitlocation);
+			
+
+			returnpitch = -atan2(diff.z, diff.xy.Length());
+		//}
 
 		return returnpitch;
 	}
