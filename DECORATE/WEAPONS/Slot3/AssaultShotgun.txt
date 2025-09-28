@@ -92,6 +92,7 @@ ACTOR AssaultShotgun : BrutalWeapon
 	Ready:
 	Ready3:
 		A12G A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD)
+		TNT1 A 0 A_jumpif(countinv("ammoshell") > 0 && countinv("AssaultShotgunAmmo") < 1, "Reload")
 		//A12G A 0 A_checksprint
 		Loop
 		
@@ -100,16 +101,8 @@ ACTOR AssaultShotgun : BrutalWeapon
 		Goto ReadyNoFuckingAmmo
 		
 	Ready2:
-        A12G A 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
-        A12G A 0 A_JumpIfInventory("Taunting",1,"Taunt")
-		A12G A 0 A_JumpIfInventory("Salute1", 1, "Salute")
-		A12G A 0 A_JumpIfInventory("Salute2", 1, "Salute")
-        A12G A 0 A_JumpIfInventory("Reloading",1,"Reload")
-		A12G A 0 A_JumpIfInventory("Unloading",1,"Unload")
-		A12G A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		A12G A 0 A_JumpIfInventory("IsRunning",1,"CheckSprint")
-		A12G A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
 		A12A D 1 A_WeaponReady(WRF_ALLOWRELOAD)
+		TNT1 A 0 A_jumpif(countinv("ammoshell") > 0 && countinv("AssaultShotgunAmmo") < 1, "Reload")
 		Loop	
 		
 	
@@ -249,7 +242,7 @@ ACTOR AssaultShotgun : BrutalWeapon
         A12F D 1 A_SetPitch(Pitch+0.4, SPF_INTERPOLATE)
 		A12F EFG 1 A_SetPitch(pitch+0.1, SPF_INTERPOLATE)
 		NULL A 0 A_WeaponOffset(0,32)
-		A12G A 1
+		//A12G A 1
 		
 		A12G A 0 A_CheckIfAmmo("AssaultShotgunAmmo",1)
 		A12G A 0 A_PlaySound("A12FIR", 1, 0.6)
@@ -284,7 +277,7 @@ ACTOR AssaultShotgun : BrutalWeapon
         A12F D 1 A_SetPitch(Pitch+0.4, SPF_INTERPOLATE)
 		A12F EFG 1 A_SetPitch(pitch+0.1, SPF_INTERPOLATE)
 		NULL A 0 A_WeaponOffset(0,32)
-		A12G A 1
+		//A12G A 1
 		A12G A 0 A_PlaySound("A12FIR", 1, 0.6)
 		RIFF A 0 A_FireCustomMissile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1))
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("AssaultShotgunAmmo")<=6) { A_PlaySound("MagClick", 7); }}}
@@ -317,7 +310,7 @@ ACTOR AssaultShotgun : BrutalWeapon
         A12F D 1 A_SetPitch(Pitch+0.4, SPF_INTERPOLATE)
 		A12F EFG 1 A_SetPitch(pitch+0.1, SPF_INTERPOLATE)
 		NULL A 0 A_WeaponOffset(0,32)
-		A12G A 1
+	//	A12G A 1
 		TNT1 A 0 A_refire("SemiAuto")
 		Goto Ready
 		
