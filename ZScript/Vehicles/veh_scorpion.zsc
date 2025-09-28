@@ -24,8 +24,8 @@ class Scorpion_TurretBase : VehPart
 		if(!base || !base.driver) return;
 		
 		A_SetAngle(BDPMath.LerpAngle(angle % 360.0, base.driver.angle % 360.0, 0.15), SPF_INTERPOLATE);
-		A_SetRoll(base.roll, SPF_INTERPOLATE);
-		A_SetPitch(base.pitch, SPF_INTERPOLATE);
+		//A_SetRoll(base.roll, SPF_INTERPOLATE);
+		//A_SetPitch(base.pitch, SPF_INTERPOLATE);
 	}
 	
 	States
@@ -399,6 +399,7 @@ class BDPTank : BDPVehicle
 		MaxSlopeSteepness 0.4;
 		damagetype "stomp";
 		+vehbase.ALIGNTOPLANE;
+		-vehbase.fallingpitch;
 	}
 	
 	override void BeginPlay()

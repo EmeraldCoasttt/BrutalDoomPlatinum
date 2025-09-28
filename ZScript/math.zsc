@@ -71,19 +71,20 @@ class BDPMath Abstract
 		return offsetPos;
 	}
 	
-	play static void AlignToPlane(Actor a, double pitchAdjust = 0, double rollAdjust = 0, bool ceiling = false, double adjustSpeed = 2, bool ignorepitch = false, bool ignoreroll = false)
+	play static void AlignToPlane(Actor a, Actor b, double pitchAdjust = 0, double rollAdjust = 0, bool ceiling = false, double adjustSpeed = 2, bool ignorepitch = false, bool ignoreroll = false)
 	{
 		//Original code by ZZYZX & Nash Muhandes
 		if (!a) return;
+		if(!b) return;
 		double ceilingAdjust = 0;
 		Vector3 fnormal;
 		if (!ceiling)
 		{
-			fnormal = a.CurSector.FloorPlane.Normal;
+			fnormal = b.CurSector.FloorPlane.Normal;
 		}
 		else
 		{
-			fnormal = a.CurSector.CeilingPlane.Normal;
+			fnormal = b.CurSector.CeilingPlane.Normal;
 			ceilingAdjust = 180.0;
 		}
 		Vector2 fnormalp1 = (fnormal.x != 0 || fnormal.y != 0) ? (fnormal.x, fnormal.y).Unit() : (0, 0);
