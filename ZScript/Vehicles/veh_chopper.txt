@@ -151,7 +151,7 @@ class Chopper_TurretCannon : VehPart
 					}
 					
 					guncycle = false;
-					A_StartSound("CHGNSHOT", CHAN_WEAPON,CHANF_OVERLAP,0.5);
+					A_StartSound("VHCLCHGN", CHAN_WEAPON,CHANF_OVERLAP);
 				}
 				Else
 				{
@@ -166,7 +166,7 @@ class Chopper_TurretCannon : VehPart
 					
 					guncycle = true;
 					
-					A_StartSound("CHGNSHOT", CHAN_WEAPON,CHANF_OVERLAP,0.5);
+					A_StartSound("VHCLCHGN", CHAN_WEAPON,CHANF_OVERLAP);
 				}
 				guncycle2 = false;
 				//cam.SetZoom(0.97, 0.5);
