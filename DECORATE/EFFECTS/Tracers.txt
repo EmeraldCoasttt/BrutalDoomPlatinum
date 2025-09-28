@@ -529,6 +529,8 @@ Actor MastermindTracerTank : MastermindTracer
 {
 	damage (random(65,65))
 	speed 80
+	+thruspecies
+		+mthruspecies
 }
 
 

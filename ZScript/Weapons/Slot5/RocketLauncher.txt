@@ -868,6 +868,8 @@ CLASS ChopperRocket : Rocket2
 		+seekermissile;
 		MAXTARGETRANGE 1012;
 		+friendly;
+		+thruspecies;
+		+mthruspecies;
 	}
 	States
 	{
@@ -875,13 +877,11 @@ CLASS ChopperRocket : Rocket2
 		
 			MISL A 0;
 			TNT1 A 0 A_StartSound("DSRLAUN");
-			TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
-			TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast2", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
-			TNT1 A 0 BRIGHT A_CustomMissile("RocketBackblast3", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
 			TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames1", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
 			TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames2", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
 			TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames3", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
 			TNT1 A 0 BRIGHT A_CustomMissile("BackblastFlames4", 0, 0, angle-180, CMF_ABSOLUTEANGLE);
+			
 		
 		Live:
 			MISL AAAAAAAAA 1 Bright

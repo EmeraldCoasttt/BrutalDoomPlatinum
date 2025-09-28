@@ -6,6 +6,8 @@ Actor TankRocket : Rocket2
 {
 	Speed 100
 	Damage (random (600, 600))
+	+thruspecies
+	+mthruspecies
 	States
 	{
 	Spawn:

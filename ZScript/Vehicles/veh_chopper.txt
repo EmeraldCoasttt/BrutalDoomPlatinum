@@ -45,8 +45,12 @@ CLASS ChopperLauncher : Vehpart
 					
 				A_StartSound("DSRFIRE", CHAN_WEAPON,CHANF_OVERLAP,1.0);
 				let misl = BDPMath.FireProjectile("ChopperRocket", pos, angle + frandom(-2,2), pitch + frandom(-2,2));
-				if(misl) misl.target = base;
-				if(misl) misl.tracer = null;
+				if(misl) 
+					{
+						misl.target = base.driver;
+						misl.species = base.species;
+						misl.tracer = null;
+					}
 				cam.SetZoom(0.97, 0.5);
 				chopper.driver.A_AlertMonsters(0, AMF_TARGETEMITTER);
 			
@@ -140,7 +144,11 @@ class Chopper_TurretCannon : VehPart
 				{
 					
 					let misl = BDPMath.FireProjectile("MastermindTracertank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
-					if(misl) misl.target = base;
+					if(misl) 
+					{
+						misl.target = base.driver;
+						misl.species = base.species;
+					}
 					
 					guncycle = false;
 					A_StartSound("CHGNSHOT", CHAN_WEAPON,CHANF_OVERLAP,0.5);
@@ -149,7 +157,11 @@ class Chopper_TurretCannon : VehPart
 				{
 					
 					let misl = BDPMath.FireProjectile("MastermindTracertank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
-					if(misl) misl.target = base;
+					if(misl) 
+					{
+						misl.target = base.driver;
+						misl.species = base.species;
+					}
 					
 					
 					guncycle = true;

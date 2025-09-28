@@ -94,8 +94,12 @@ class Scorpion_TurretCannon : VehPart
 		if(CheckButtons(BT_ATTACK, VehButtons.BTS_PRESSED) && !cooldown)
 		{
 			//let misl = TankRocket.Fire(self, (350, 0, 30));
-			let misl = BDPMath.FireProjectile("TankRocket", pos, angle, pitch, 0, 20, -10, 1, 0);
-			if(misl) misl.target = base.driver;
+			let misl = BDPMath.FireProjectile("TankRocket", pos, angle, pitch, 0, 0, -10, 1, 0);
+			if(misl) 
+					{
+						misl.target = base.driver;
+						misl.species = base.species;
+					}
 			
 			A_StartSound("TANKF", CHAN_WEAPON, CHANF_OVERLAP);
 			A_StartSound("TANKRE", 2, CHANF_OVERLAP);
@@ -188,6 +192,7 @@ class Scorpion_TurretGun : VehPart
 				// We need to set the target of this projectile if we want hitmarkers to show up
 				// for the person who shoots it.
 				proj.target = base.driver;
+				proj.species = base.species;
 			}
 			Else
 			{
@@ -196,6 +201,7 @@ class Scorpion_TurretGun : VehPart
 				// We need to set the target of this projectile if we want hitmarkers to show up
 				// for the person who shoots it.
 				proj.target = base.driver;
+				proj.species = base.species;
 			}
 			
 			
