@@ -84,14 +84,15 @@ CLASS BattleRifle : Brutalweapon
 		double anglediff = BDPMath.AngleDiff(invoker.owner.angle % 360.0,nextshotangle % 360.0);
 		double pitchdiff = BDPMath.AngleDiff(invoker.owner.pitch % 360.0,nextshotpitch % 360.0);
 		//Console.printf("%f",anglediff);
-		If(pitchdiff > 45 || anglediff > 45 || pitchdiff < -45 || anglediff < -45)
-		{
-			return;
-		}
+		
 		
 		Vector3 NextShotPosition = level.Vec3Offset(ricochetData.hitlocation, hitnormal * 2.0);
 		
 		A_FireBullets (0, 0, -1, 25, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
+		If(pitchdiff > 45 || anglediff > 45 || pitchdiff < -45 || anglediff < -45)
+		{
+			return;
+		}
 		If(ricochetdata.HitType == TRACE_HitWall || ricochetdata.HitType == TRACE_HitFloor || ricochetdata.HitType == TRACE_HitCeiling)
 		{
 			Invoker.Owner.LineAttack(NextShotAngle,8192,NextShotPitch,35,"Pistol","BR45BulletPuff",LAF_ABSPOSITION | LAF_ABSOFFSET,null,NextShotPosition.Z,NextShotPosition.x,NextShotPosition.y);
@@ -328,7 +329,7 @@ CLASS BattleRifle : Brutalweapon
 			A_ZoomFactor(3.0);
 			A_SetCrosshairDX("Null");
 			invoker.altzoom = false;
-			a_takeinventory("swapriflespecial",1);
+			a_takeinventory("StartDualWield",1);
 		}
 		BR4Z ABCD 1;
 		SMGG A 0 A_StartSound("ADSIN");
@@ -343,9 +344,9 @@ CLASS BattleRifle : Brutalweapon
 			SMGG A 0 
 			{
 				A_ZoomFactor(3.0);
-				If(countinv("swapriflespecial") > 0)
+				If(countinv("startdualwield") > 0)
 				{
-					Takeinventory("swapriflespecial",1);
+					Takeinventory("startdualwield",1);
 					
 					If(invoker.scopezoom2)
 					{
@@ -551,6 +552,9 @@ CLASS BattleRifle : Brutalweapon
 		SMGG A 0 A_StartSound("ADSOUT");
 		//NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
 		BR4Z CBA 1;	
+		NoAimSemiAuto:
+		BR45 B 1;
+		TNT1 A 0 A_jumpifinventory("firedsecondary",1,"NoAimSemiAuto");
         Goto Ready;
 		
 		
