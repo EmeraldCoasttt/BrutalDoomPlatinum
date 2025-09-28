@@ -6,23 +6,29 @@
 				If(random(1,256) <= chance)
 					{
 					
-						a_friendtether();
+						BlockThingsIterator CheckForplayers = BlockThingsIterator.create(invoker,5000); //256 can be whatever range around the actor.
+						Actor CurrentActor;
+						bool foundplayer;
+						While (CheckForplayers.Next())
+							{
+								CurrentActor = CheckForplayers.Thing;
+								If(currentactor && currentactor is 'playerpawn' && !invoker.CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && !foundplayer && currentactor.player && currentactor.player.mo && currentactor.player.mo == currentactor)
+								{
+									invoker.A_spawnitemex(fogtype);
+									
+									vector3 savedpos = currentactor.pos;
+									savedpos.z = (savedpos.z + heightoffset);
+									invoker.setorigin(savedpos,false);
+									invoker.A_spawnitemex(fogtype);
+									foundplayer = true;
+								}
+							}
 					
 					}
 				
 				A_chase();
 			
 			
-			}
-			
-			Action Void A_friendtether()
-			{
-				If(invoker.master && distance3d(invoker.master) >= 800)
-				{
-					vector3 savedpos = invoker.master.pos;
-					savedpos.z = (savedpos.z + 78);
-					invoker.setorigin(savedpos,true);
-				}
 			}
 			
 

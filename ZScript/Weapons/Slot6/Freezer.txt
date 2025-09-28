@@ -599,7 +599,6 @@ Class Freezer : BrutalWeapon
 			If(invoker.freezebuddy)
 			{
 				invoker.freezebuddy.angle = invoker.owner.angle + 180;
-				invoker.freezebuddy.master = invoker.owner;
 			}
 		}
 		FR2R KLMNOPQRST 1;
