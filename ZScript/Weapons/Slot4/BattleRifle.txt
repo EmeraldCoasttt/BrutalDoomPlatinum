@@ -77,9 +77,64 @@ CLASS BattleRifle : Brutalweapon
 		Double NextShotAngle;
 		Double NextShotPitch;
 		
-		[NextShotAngle, NextShotPitch] = BDPMATH.Vector3toangles(BounceAngle);
 		
-		//Console.printf("%f",BouncedAngle);
+		
+		[NextShotAngle, NextShotPitch] = BDPMATH.Vector3toangles(BounceAngle);
+		double currentplayerangle = (invoker.owner.angle % 360.0);
+		double nextshotanglemod = (nextshotangle % 360.0);
+		double anglediff;
+		if (currentplayerangle > nextshotanglemod)
+        {
+            if ((currentplayerangle - nextshotanglemod) > 180)
+            {
+                anglediff = (360 - currentplayerangle) + nextshotanglemod;
+            }
+            else
+            {
+                anglediff = currentplayerangle - nextshotanglemod;
+            }
+        }
+        else
+        {
+            if ((nextshotanglemod - currentplayerangle) > 180)
+            {
+                anglediff = (360 - nextshotanglemod) + currentplayerangle;
+            }
+            else
+            {
+                anglediff = nextshotanglemod - currentplayerangle;
+            }
+        }
+		double currentplayerpitch = (invoker.owner.pitch % 360.0);
+		double nextshotpitchmod = (nextshotpitch % 360.0);
+		double pitchdiff;
+		if (currentplayerpitch > nextshotpitchmod)
+        {
+            if ((currentplayerpitch - nextshotpitchmod) > 180)
+            {
+                pitchdiff = (360 - currentplayerpitch) + nextshotpitchmod;
+            }
+            else
+            {
+                pitchdiff = currentplayerpitch - nextshotpitchmod;
+            }
+        }
+        else
+        {
+            if ((nextshotpitchmod - currentplayerpitch) > 180)
+            {
+                pitchdiff = (360 - nextshotpitchmod) + currentplayerpitch;
+            }
+            else
+            {
+                pitchdiff = nextshotpitchmod - currentplayerpitch;
+            }
+        }
+		If(pitchdiff > 45 || anglediff > 45)
+		{
+			return;
+		}
+		//Console.printf("%f",pitchdiff);
 		Vector3 NextShotPosition = level.Vec3Offset(ricochetData.hitlocation, hitnormal * 2.0);
 		
 		A_FireBullets (0, 0, -1, 25, "BR45BulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
