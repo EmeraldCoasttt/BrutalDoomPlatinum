@@ -109,6 +109,7 @@ ACTOR DoxsRevolver : BrutalWeapon
 		//REVO A 0 A_checksprint
 		REVO A 0 A_JumpIfInventory("StartDualWield",1,"DualWield")
 		TNT1 A 0 A_JumpIf(countinv("DoxsRevolver") > 1 && !findinventory("Dualwieldedrevolver"),"DualWield")
+		TNT1 A 0 A_AutoReload("BDRevolverAmmo","Clip1")
 		Loop
 		
 	ReadyNoAmmo:

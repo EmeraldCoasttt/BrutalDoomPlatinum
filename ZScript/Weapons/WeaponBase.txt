@@ -615,6 +615,19 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	A_takeinventory("hasimpfatality",666);
 	}
 	
+	Action state A_AutoReload(Name Magtype, Name Ammotype, statelabel label = "Reload")
+	{
+		If(countinv(Magtype) == 0 && countinv(Ammotype) > 0)
+		{
+			Return Resolvestate(Label);
+		}
+		Else
+		{
+			Return Resolvestate(Null);
+		}
+	
+	}
+	
 	Action state A_WeaponReadyDX(int dxflags = 0, bool kickflashes = true, bool cansprint = true)
 		{
 			brutal_playerbase BDPplr = brutal_playerbase(invoker.owner);
