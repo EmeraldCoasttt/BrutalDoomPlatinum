@@ -14,6 +14,7 @@ class ExplosiveBarrelWeapon: BrutalWeapon  Replaces ExplosiveBarrel
 		+INVENTORY.UNDROPPABLE;
 		 Inventory.PickupSound "skeleton/swing";
 		 brutalweapon.voiceacted 0;
+		brutalweapon.forceselect TRUE;
 	}
 	bool spawnedtracer;
 	bool hasbeen;

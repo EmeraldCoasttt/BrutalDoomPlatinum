@@ -40,6 +40,8 @@ Class Brutalweapon : DoomWeapon //Weapon
 	bool showicon;
 	Property showicon : showicon;
 	
+	bool ForceSelect;
+	Property ForceSelect : ForceSelect;
 	
 	Default
 	{
@@ -842,6 +844,13 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		
 		let player = owner.player;
 		brutal_playerbase BDPplr = brutal_playerbase(owner);
+		//Flag that forces this weapon to be selected
+		//Used for things that can't be switched off from
+		//Like explosive barrels
+		If(owner && forceselect)
+		{
+			owner.A_selectweapon(self.getclass());
+		}
 		If(player && player.readyweapon is self.getclass())
 		{
 			If(semiautofired && !(player.cmd.buttons & BT_ATTACK))
