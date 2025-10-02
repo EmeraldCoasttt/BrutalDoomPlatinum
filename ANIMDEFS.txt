@@ -800,3 +800,6 @@ Texture NKLGH0
     pic NKLGE0 tics 2
 	pic NKLGF0 tics 2
 	pic NKLGG0 tics 2
+Texture ARM2G0
+	pic ARM2E0 tics 3
+	pic ARM2F0 tics 3

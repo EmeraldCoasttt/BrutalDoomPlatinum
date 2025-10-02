@@ -495,7 +495,15 @@ class BDP_HUD : DoomStatusBar
 		if (armor && armor.amount > 0)
 		{
 			// armor icon
-			DrawInventoryIcon(armor, iconPos, iconflags); 
+			//Should always show as energy armor if equipped
+			If(CPlayer.mo.FindInventory("PowerShield"))
+			{
+				DrawImage("ARM2G0",iconpos,iconflags);
+			}
+			else
+			{
+				DrawInventoryIcon(armor, iconPos, iconflags); 
+			}
 			// power shield icon
 			
 			// armor amount
