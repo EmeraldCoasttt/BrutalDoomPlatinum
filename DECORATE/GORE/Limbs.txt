@@ -4219,10 +4219,50 @@ ACTOR XDeathCyberdemonGun: XDeathBullArm1
    	Death:
         TNT1 A 0 A_SpawnItem ("Brutal_BloodSpot", 0, 1)
 	    CYBF W 1
-        CYBF W 1 A_SpawnItem("CyberdemonGunSpawner",0,0,0,1)
+        CYBF W 1 A_SpawnItem("CyberdemonGunDead")
         Stop
 }
 }
+
+actor CyberdemonGunDead: LimbBase
+{
+-CLIENTSIDEONLY
+    Radius 20
+	Mass 220
+	Health 100
+    Scale 1.2
+    States
+    {
+    Spawn:
+		TNT1 A 0
+		CYBF W 1
+		TNT1 A 0 A_QueueCorpse
+		CYBF W -1
+		Stop
+		
+	Death:
+	Death.Trample:
+		TNT1 A 0 A_GiveToTarget("BootsSmearedWithRedBlood", 6)
+	Crush:
+		TNT1 A 0 A_PlaySound("misc/xdeath5")
+		
+	    TNT1 AAAAAAAAA 0 A_CustomMissile ("BloodMistBig", 0, 0, random (0, 360), 2, random (30, 90))
+		TNT1 AAAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 0, 0, random (0, 360), 2, random (30, 90))
+		TNT1 AAA 0 A_CustomMissile ("XDeath1", 10, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AAAAA 0 A_CustomMissile ("XDeath3b", 10, 0, random (0, 360), 2, random (50, 90))
+		TNT1 AAAAA 0 A_CustomMissile ("XDeath2b", 10, 0, random (0, 360), 2, random (50, 90))
+		TNT1 A 0 A_Stop
+		TNT1 I 10
+		TNT1 I -1
+        Stop
+	
+	Death.ExplosiveImpact:
+	TNT1 A 0 A_NoBlocking
+	TNT1 A 0 ThrustThingZ(0,30,0,1)
+	CYBF WWWWW 3 A_SetRoll(roll+45)
+	CYGA B 0 A_SpawnItem("CyberdemonGunDead")
+	Stop
+}}
 actor MastermindChaingunDrop
 {
 Radius 0
