@@ -383,6 +383,7 @@ class Brutal_PlayerBase : PlayerPawn
 				}
 			}
 		}
+		PPShader.SetEnabled("NiteVis",false);
 	}
 	
 	// Counts all owned weapons:
@@ -1000,12 +1001,14 @@ class Brutal_PlayerBase : PlayerPawn
 					If(!findinventory("powernightvisneo"))
 					{
 						A_startsound("FLASHON",5);
+						A_giveinventory("BDP_flashlight",1);
 					}
 					else
 					{
 						A_startsound("INFRAON",5);
 						A_startsound("INFRAON2",6);
 					}
+					
 					//PPShader.SetEnabled("NiteVis",true);
 				}
 				Takeinventory("switchflashlight",1);
