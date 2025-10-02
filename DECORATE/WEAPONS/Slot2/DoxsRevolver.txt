@@ -99,15 +99,7 @@ ACTOR DoxsRevolver : BrutalWeapon
 		
 	Ready3:
 	Ready:
-		//NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RevolverCrosshair"));}else{A_SetCrosshair(0);}}
-	    TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "ReadyNoAmmo")
-		REVO A 1 
-		{
-		if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RevolverCrosshair"));}else{A_SetCrosshair(0);}
-		return A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		}
-		//REVO A 0 A_checksprint
-		REVO A 0 A_JumpIfInventory("StartDualWield",1,"DualWield")
+		REVO A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD)
 		TNT1 A 0 A_JumpIf(countinv("DoxsRevolver") > 1 && !findinventory("Dualwieldedrevolver"),"DualWield")
 		TNT1 A 0 A_AutoReload("BDRevolverAmmo","Clip1")
 		Loop
