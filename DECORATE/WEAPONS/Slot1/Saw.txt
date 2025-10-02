@@ -21,7 +21,6 @@ Actor Chain_saw : BrutalWeapon
 	Tag "$BDPSAW"
 	Inventory.PickupSound "weapons/chainsaw/draw"
 	Inventory.AltHUDIcon "CSAWA0"
-	scale 0.8
 	+weapon.noautofire
 	brutalweapon.showicon 1
 	//brutalweapon.handedness 2
@@ -218,6 +217,13 @@ states
 		CSAW A 1
 		CSAW A -1
 		Stop	
+		
+	//This state is set when spawned after being thrown
+	Spawnthrown:
+		TNT1 A 0 A_playsoundex("weapons/chainsaw/idle", 6)
+		TNT1 A 0 A_custommissile("SmokeSpawner",0)
+		CSAW B 8
+		LOOP
 	
 	PuristGun:
 		TNT1 A 1

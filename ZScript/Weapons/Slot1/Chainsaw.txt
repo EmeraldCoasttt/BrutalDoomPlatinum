@@ -145,7 +145,31 @@ CLASS ThrowedChainsaw : actor
 		AXEG A 0 A_startSound("AXECLN", 6);
 		TNT1 A 0 A_StopSound(4);
 	    TNT1 A 0 A_ALertMonsters(200);
-		TNT1 A 0 A_SpawnItemEx ("ChainsawStuckInWall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION);
+		TNT1 A 0 
+		{	
+			//We need to make this the physical chainsaw actor because of the new pickup system
+			//Through the magic of zscript we can give it the same properties as the original actor
+			//A_SpawnItemEx ("ChainsawStuckInWall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION);
+			let thrownchainsaw = spawn("Chain_saw",pos);
+			If(thrownchainsaw)
+			{
+				//Thrown chainsaws are 3d and get stuck in walls, 
+				//so we need to set their state label and disable their gravity
+				thrownchainsaw.setstatelabel("SpawnThrown");
+				thrownchainsaw.bnogravity = true;
+				thrownchainsaw.angle = angle;
+				
+				//We don't want doomguy to comment on a chainsaw he's already collected,
+				//So we need to set that flag.
+				//I think we can't cast to DECORATE actors so I'm just casting Brutalweapon
+				let csaw = Brutalweapon(thrownchainsaw);
+				If(csaw)
+				{
+					csaw.newweapon = true;
+				}
+			}
+			
+		}
 		stop;
 		
 	Fall:
@@ -153,7 +177,27 @@ CLASS ThrowedChainsaw : actor
 		//AXEG A 0 A_startSound("AXECLN", 6);
 		TNT1 A 0 A_StopSound(4);
 	    TNT1 A 0 A_ALertMonsters(200);
-		TNT1 A 0 A_SpawnItemEx ("Chainsawfalls",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION);
+		TNT1 A 0 
+		{	
+			//We need to make this the physical chainsaw actor because of the new pickup system
+			//Through the magic of zscript we can give it the same properties as the original actor
+			//A_SpawnItemEx ("ChainsawStuckInWall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION);
+			let thrownchainsaw = spawn("Chain_saw",pos);
+			If(thrownchainsaw)
+			{
+				thrownchainsaw.setstatelabel("SpawnThrown");
+				thrownchainsaw.angle = angle;
+			}
+			
+			//We don't want doomguy to comment on a chainsaw he's already collected,
+			//So we need to set that flag.
+			let csaw = Brutalweapon(thrownchainsaw);
+			If(csaw)
+			{
+				csaw.newweapon = true;
+			}
+			
+		}
 		stop;
 	
 	}
