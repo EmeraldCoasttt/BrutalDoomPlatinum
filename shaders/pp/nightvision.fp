@@ -35,7 +35,7 @@ vec3 posfilter = normalize(vec3(0.00, 1.0, 0.75)); // primary NVG color (positiv
 vec3 negfilter = normalize(vec3(1.0, 0.0, 0.0)); // secondary NVG color (negative exposure)
 float whiteclip = 1.0;
 
-int exposure = 7;
+int exposure = 6;
 
 // ----------------------------------- //
 // USER CONFIGURABLE VALUES STOP HERE  //

@@ -1006,7 +1006,6 @@ class Brutal_PlayerBase : PlayerPawn
 						A_startsound("INFRAON",5);
 						A_startsound("INFRAON2",6);
 					}
-					A_giveinventory("BDP_flashlight",1);
 					//PPShader.SetEnabled("NiteVis",true);
 				}
 				Takeinventory("switchflashlight",1);
@@ -1024,13 +1023,15 @@ class Brutal_PlayerBase : PlayerPawn
 			If(findinventory("powernightvisneo") && flashon)
 				{
 					PPShader.SetEnabled("NiteVis",true);
-					
+					giveinventory("VisorAmp",1);
+					//No need to have flashlight with infrared
+					A_takeinventory("BDP_flashlight",1);
 					
 				}
 			Else
 				{
 					PPShader.SetEnabled("NiteVis",false);
-					
+					Takeinventory("VisorAmp",1);
 				}
 			
 		
@@ -2718,7 +2719,8 @@ class BDP_Flashlight : CustomInventory {
 	Super.detachfromowner();
 	}
 
-	override void DoEffect() {
+	override void DoEffect() 
+	{
 		super.DoEffect();
 		
 				
@@ -2995,5 +2997,16 @@ class VisorLight: DynamicLight {
 			angle = target.angle;
 			
 		}
+	}
+}
+
+
+class VisorAmp: PowerLightAmp
+{
+	Default
+	{
+		Powerup.duration 0x7FFFFFFD;
+		//Hack to disable the shader without effecting the visuals
+		powerup.colormap 1.0, 1.0, 1.0;
 	}
 }
