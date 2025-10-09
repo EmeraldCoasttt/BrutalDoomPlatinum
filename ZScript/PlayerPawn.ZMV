@@ -145,6 +145,7 @@ class Brutal_PlayerBase : PlayerPawn
 	int		DualTimer;
 	Int		SpecialTimer;
 	Int		GrenadeTimer;
+	Int		groundedtics;
 	
 	//Jumping
 	int		BuildJumpDelay;
@@ -1378,6 +1379,26 @@ class Brutal_PlayerBase : PlayerPawn
 		}
 
 		player.onground = (pos.z <= floorz) || bOnMobj || bMBFBouncer || (player.cheats & CF_NOCLIP2);
+		
+		
+		//Don't apply friction when player first hits the ground to enable bunny hopping
+		If(player.onground)
+		{
+			If(GroundedTics < 1)
+			{
+				Groundedtics++;
+				
+			}
+			Else
+			{
+				bNOfriction = false;
+			}
+		}
+		Else
+		{
+			bnofriction = true;
+			groundedtics = 0;
+		}
 
 		// killough 10/98:
 		//
