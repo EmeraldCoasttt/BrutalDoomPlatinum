@@ -2472,7 +2472,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		NULL FFFFFFFFFFFFFFFF 1 
 		{
 			double spd = Vel.XY dot Angle.ToVector();
-			console.printf("%i",spd);
+			//console.printf("%i",spd);
 			If(spd < 40)
 			{
 				A_Recoil (-3);
