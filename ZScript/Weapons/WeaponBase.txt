@@ -53,7 +53,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 	Weapon.BobStyle "InverseAlpha";
 	brutalweapon.clearoverlays TRUE;
 	brutalweapon.VoiceActed TRUE;
-	Radius 32;
+	//Radius 32;
 	+forcexybillboard;
 	
 	}
