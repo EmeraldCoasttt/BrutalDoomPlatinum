@@ -312,7 +312,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 			LineTrace(angle, range, pitch, 0, player.viewheight, data:lt);
 			If(lt.hitactor && lt.hitactor.bsolid)
 			{
-				A_face(lt.hitactor);
+				A_face(lt.hitactor,0,0,0,0,FAF_MIDDLE);
 				A_Recoil3D(-20);
 				
 			}
