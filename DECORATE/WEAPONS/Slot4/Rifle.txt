@@ -602,10 +602,22 @@ ACTOR Rifle : BrutalWeapon
 		
 		
 		
- 	Spawn:
-		RIFL C 1 A_jumpifinventory("AmmoTaken",1,"Spawn2")
+ 	
+		
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_jump(256,"spawn1","spawn2","spawn3")
+		LOOP
+	Spawn1:
+		RIFL C 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo")
 		LOOP
 	Spawn2:
+		RIFL D 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo")
+		LOOP
+	Spawn3:
+		RIFL E 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo")
+		LOOP
+	SpawnNoAmmo:
 		RIFL A -1
 		LOOP
 		

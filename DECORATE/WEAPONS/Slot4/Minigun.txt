@@ -197,10 +197,22 @@ ACTOR MiniGun : BrutalWeapon
 	   Goto Ready
 			
 		
+	
+		
 	Spawn:
-		MGUN B 1 A_jumpifinventory("AmmoTaken",1,"Spawn2")
+		TNT1 A 0
+		TNT1 A 0 A_jump(256,"spawn1","spawn2","spawn3")
+		LOOP
+	Spawn1:
+		MGUN B 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo")
 		LOOP
 	Spawn2:
+		MGUN C 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo")
+		LOOP
+	Spawn3:
+		MGUN D 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo")
+		LOOP
+	SpawnNoAmmo:
 		MGUN A -1
 		LOOP
 		
