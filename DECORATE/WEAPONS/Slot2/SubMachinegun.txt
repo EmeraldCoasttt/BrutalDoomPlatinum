@@ -488,8 +488,11 @@ ACTOR BrutalSMG : BrutalWeapon
 		
 		
  	Spawn:
+		SMGZ J 1 A_jumpifinventory("AmmoTaken",1,"Spawn2")
+		LOOP
+	Spawn2:
 		SMGZ A -1
-		Stop
+		LOOP
 		
 		
 	Steady:

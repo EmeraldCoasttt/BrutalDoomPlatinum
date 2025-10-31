@@ -603,8 +603,11 @@ ACTOR Rifle : BrutalWeapon
 		
 		
  	Spawn:
+		RIFL C 1 A_jumpifinventory("AmmoTaken",1,"Spawn2")
+		LOOP
+	Spawn2:
 		RIFL A -1
-		Stop
+		LOOP
 		
 	//DualWield:
 		RIFG A 1

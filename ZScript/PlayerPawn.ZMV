@@ -480,7 +480,9 @@ class Brutal_PlayerBase : PlayerPawn
 		// weapons directly:
 		if (distance3d(weap) > 128 && !(weap is "ExplosiveBarrelWeapon"))
 		{
+			weap.giveinventory("AmmoTaken",1);
 			AddToPickupList(weap);
+			
 			return true;
 		}
 		
@@ -502,6 +504,7 @@ class Brutal_PlayerBase : PlayerPawn
 			// and flush the pointer:
 			focusWeapon = null;
 			manualPickup = false;
+			weap.giveinventory("AmmoTaken",1);
 			AddToPickupList(weap);
 			return true;
 		}
@@ -563,10 +566,9 @@ class Brutal_PlayerBase : PlayerPawn
 					if (i == 1)
 					{
 						weap.ammoGive1 -= amtToGive;
-						If(weap is "shot_gun")
-						{
-							weap.giveinventory("AmmoTaken",1);
-						}
+						
+						weap.giveinventory("AmmoTaken",1);
+						
 					}
 					else
 					{

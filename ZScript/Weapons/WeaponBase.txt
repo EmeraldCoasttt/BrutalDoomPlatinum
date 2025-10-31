@@ -60,6 +60,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	override void ondrop(Actor dropper)
 	{
+		giveinventory("AmmoTaken",1);
 		
 		If(self is "BrutalSMG")
 		{
