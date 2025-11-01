@@ -28,6 +28,7 @@ ACTOR BrutalPistol : BrutalWeapon
 	Tag "$BDPPISTOL"
 	brutalweapon.handedness 1
 	brutalweapon.voiceacted 0
+	Inventory.AltHUDIcon "PISTG0"
 	States
 	{
 	
