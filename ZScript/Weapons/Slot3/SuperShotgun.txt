@@ -3,6 +3,8 @@ CLASS SSG : BrutalWeapon
 	Default
 	{
 		Weapon.Kickback 50;
+		Weapon.SlotNumber 3;
+		Weapon.SlotPriority 2;
 		Weapon.SelectionOrder 400;
 		Weapon.AmmoGive1 8;
 		Weapon.AmmoGive2 0;

@@ -1,7 +1,7 @@
 //Projectiles on TRACER and MELEE lump
 //Meatshield blocking effect on Head_Sys lump
 
-ACTOR ZMANShield : Rifle
+/*ACTOR ZMANShield : Rifle
 {
 	Weapon.AmmoUse1 0
 	Weapon.AmmoGive1 0
@@ -107,7 +107,7 @@ ACTOR ZMANShield : Rifle
 		Goto Ready
 		
 	}
-}
+}*/
 
 
 

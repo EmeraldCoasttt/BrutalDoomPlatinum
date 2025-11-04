@@ -8,6 +8,8 @@ ACTOR DoxsRevolver : BrutalWeapon
 	Weapon.AmmoGive2 0
 	Weapon.AmmoType1 "Clip1"
 	Weapon.AmmoType2 "BDRevolverAmmo"
+	Weapon.SlotNumber 2
+	Weapon.SlotPriority 3
 	weapon.selectionorder 3800
 	Obituary "%o was shot down by %k's revolver."
     AttackSound "None"

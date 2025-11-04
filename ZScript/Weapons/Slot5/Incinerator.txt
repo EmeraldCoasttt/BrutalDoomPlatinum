@@ -4,6 +4,8 @@ CLASS Incinerator : BrutalWeapon
 	Default
 	{
 		Height 20;
+		Weapon.SlotNumber 5;
+		Weapon.SlotPriority 3;
 		Weapon.SelectionOrder 3100;
 		Weapon.AmmoUse 0;
 		Weapon.AmmoGive 12;

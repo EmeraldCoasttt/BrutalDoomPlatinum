@@ -4,6 +4,8 @@ CLASS Rocket_Launcher : BrutalWeapon
 	{
 		Speed 20;
 		Damage 20;
+		Weapon.SlotNumber 5;
+		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 2500;
 		Weapon.AmmoUse1 0;
 		Weapon.AmmoUse2 0;

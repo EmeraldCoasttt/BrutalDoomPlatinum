@@ -8,6 +8,8 @@ ACTOR MiniGun : BrutalWeapon
 {
 	Game Doom
 	SpawnID 28
+	Weapon.SlotNumber 4
+	Weapon.SlotPriority 3
 	Weapon.SelectionOrder 700
 	Weapon.AmmoType1 "Clip2"
 	Weapon.AmmoGive 20

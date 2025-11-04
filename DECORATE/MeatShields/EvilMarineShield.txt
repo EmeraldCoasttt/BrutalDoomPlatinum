@@ -1,4 +1,4 @@
-ACTOR EvilMarineShield : Rifle
+/*ACTOR EvilMarineShield : Rifle
 {
 	Weapon.AmmoUse1 1
 	Weapon.AmmoGive1 30
@@ -79,7 +79,7 @@ ACTOR EvilMarineShield : Rifle
 		TNT1 A 0 A_TakeInventory("EvilMarineShield",1)
 		Goto Ready
 	}
-}
+}*/
 ACTOR ThrowedEvilMarine: ThrowedZman
 {
 Translation "112:127=[64,64,64]:[0,0,0]"

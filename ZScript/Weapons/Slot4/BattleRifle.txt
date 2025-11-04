@@ -30,6 +30,8 @@ CLASS BattleRifle : Brutalweapon
 	+FORCEXYBILLBOARD;
 	scale 0.8;
 	damagetype "Revolver";
+	Weapon.SlotNumber 4;
+	Weapon.SlotPriority 2;
 	Weapon.SelectionOrder 1550;
 	Inventory.AltHUDIcon "BR45A0";
 	BrutalWeapon.weight 2;

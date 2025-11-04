@@ -12,6 +12,8 @@ ACTOR BrutalPistol : BrutalWeapon
 	Weapon.AmmoGive2 0
 	Weapon.AmmoType1 "Clip1"
 	Weapon.AmmoType2 "BDPistolAmmo"
+	Weapon.SlotNumber 2
+	Weapon.SlotPriority 1
 	weapon.selectionorder 3800
 	Obituary "%o was shot down by %k's pistol."
     AttackSound "None"

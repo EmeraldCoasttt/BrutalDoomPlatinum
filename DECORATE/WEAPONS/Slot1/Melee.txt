@@ -8,6 +8,8 @@ ACTOR IsDoingUpper: Inventory {Inventory.MaxAmount 1}
 ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 {
 	Game Doom
+	Weapon.SlotNumber 1
+	Weapon.SlotPriority 1
 	Weapon.SelectionOrder 1
 	Weapon.Kickback 100
 	

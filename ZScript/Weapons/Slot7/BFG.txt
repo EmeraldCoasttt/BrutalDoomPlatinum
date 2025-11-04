@@ -5,6 +5,8 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 	Default
 	{
 		Scale 0.8;
+		Weapon.SlotNumber 7;
+		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 2900;
 		Weapon.AmmoUse 0;
 		Weapon.AmmoGive 100;

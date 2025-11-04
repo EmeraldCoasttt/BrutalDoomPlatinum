@@ -19,6 +19,8 @@ CLASS Railgun : Brutalweapon
 	+FORCEXYBILLBOARD;
 	scale 0.8;
 	damagetype "Railgun";
+	Weapon.SlotNumber 6;
+	Weapon.SlotPriority 2;
 	Weapon.SelectionOrder 1550;
 	Inventory.AltHUDIcon "SRCGA0";
 	BrutalWeapon.weight 2;

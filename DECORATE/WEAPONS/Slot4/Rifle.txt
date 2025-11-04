@@ -7,6 +7,8 @@ ACTOR Rifle : BrutalWeapon
 	Weapon.AmmoGive2 0
 	YScale 0.6
 	XScale 0.8
+	Weapon.SlotNumber 4
+	Weapon.SlotPriority 1
 	Weapon.SelectionOrder 2500
 	Weapon.AmmoType1 "Clip2"
 	Weapon.AmmoType2 "RifleAmmo"

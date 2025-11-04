@@ -4,6 +4,8 @@ CLASS Unmaker : BrutalWeapon
 	Default
 	{
 	Height 20;
+	Weapon.SlotNumber 7;
+	Weapon.SlotPriority 3;
 	Weapon.SelectionOrder 2800;
 	Weapon.AmmoUse1 0;
 	Weapon.AmmoGive 100;

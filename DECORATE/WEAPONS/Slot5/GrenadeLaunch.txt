@@ -14,6 +14,8 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 	+WEAPON.EXPLOSIVE
 	+FORCEXYBILLBOARD
 	//+WEAPON.NO_AUTO_SWITCH
+	Weapon.SlotNumber 5
+	Weapon.SlotPriority 2
 	Weapon.SelectionOrder 2700
 	Inventory.PickupMessage "You got the Grenade Launcher! (Slot 5)"
 	Tag "$BDPGRENADE"

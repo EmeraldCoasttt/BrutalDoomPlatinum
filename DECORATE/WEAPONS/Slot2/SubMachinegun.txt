@@ -10,6 +10,8 @@ ACTOR BrutalSMG : BrutalWeapon
 	Weapon.AmmoType2 "BDSMGAmmo"
 	Obituary "%o was shot down by %k's SMG."
     AttackSound "None"
+	Weapon.SlotNumber 2
+	Weapon.SlotPriority 2
 	Weapon.SelectionOrder 1800
     Inventory.PickupSound "CLIPIN"
 	Inventory.Pickupmessage "You got the Submachine Gun! (Slot 2)"

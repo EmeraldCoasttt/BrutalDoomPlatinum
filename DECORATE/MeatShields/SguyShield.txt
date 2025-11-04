@@ -1,4 +1,4 @@
-ACTOR SguyShield : Rifle
+/*ACTOR SguyShield : Rifle
 {
 	Weapon.AmmoUse1 1
 	Weapon.AmmoGive1 30
@@ -75,7 +75,7 @@ ACTOR SguyShield : Rifle
 		TNT1 A 0 A_TakeInventory("SguyShield",1)
 		Goto Ready
 	}
-}
+}*/
 ACTOR ThrowedShotgunguy: ThrowedZman
 {
 	States
