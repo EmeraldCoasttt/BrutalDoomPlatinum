@@ -166,6 +166,8 @@ ACTOR SoulAmmo : Ammo
    Ammo.BackpackAmount 0
    Ammo.BackpackMaxAmount 666
    Inventory.Icon "BON1E0"
+   Inventory.PickupMessage "Souls of the damned."
+   Inventory.PickupSound "ZombieFodder/Soul"
 }
 
 
