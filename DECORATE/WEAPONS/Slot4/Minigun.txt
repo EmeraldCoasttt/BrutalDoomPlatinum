@@ -124,31 +124,31 @@ ACTOR MiniGun : BrutalWeapon
 		CHAG A 0 A_JumpIfInventory("clip2",1,2)
 		CHAE A 0
 		"####" A 0 A_JumpIfInventory("Spin",1,"SpinSprintOverlay")
-		"####" HIJK 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
+		"####" HIJK 1 A_weaponreadyDX(0,FALSE,FALSE)
 	KeepSprinting:
 	CHAG A 0 A_JumpIfInventory("clip2",1,2)
 		CHAE A 0
 		"####" A 0 A_JumpIfInventory("Spin",1,"SpinKeepSprinting")
-		"####" L 1
+		"####" L 1 A_WeaponReadyDX(0,FALSE,FALSE)
 		"####" A 0 A_keepsprinting
 		
 	ReturnFromSprint:
 		CHAG A 0 A_JumpIfInventory("clip2",1,2)
 		CHAE A 0
 		"####" A 0 A_JumpIfInventory("Spin",1,"SpinRetunrFromSprint")
-		"####" KJIH 1
+		"####" KJIH 1 A_WeaponReadyDX(0,FALSE,FALSE)
 		Goto Ready
 		
 	SpinSprintOverlay:
 		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5)
-		"####" MNOP 1
+		"####" MNOP 1 A_WeaponReadyDX(0,FALSE,FALSE)
 	SpinKeepSprinting:
 		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5)
-		"####" QRST 1
+		"####" QRST 1 A_WeaponReadyDX(0,FALSE,FALSE)
 		"####" A 0 A_keepsprinting
 		
 	SpinReturnFromSprint:
-		"####" PONM 1
+		"####" PONM 1 A_WeaponReadyDX(0,FALSE,FALSE)
 		Goto Ready2
 		
 		
@@ -517,26 +517,18 @@ ACTOR MiniGun : BrutalWeapon
 			TNT1 A 0 A_giveinventory("falsespin",1)
 			 CHAG A 0 A_JumpIfInventory("clip2",1,2)
 		Goto FireEnd
-		"####" ACDE 1 A_refire("RefireState3")
-		"####" A 0 A_WeaponReadyDX
-		"####" ACDE 1 A_refire("RefireState3")
-		"####" A 0 A_WeaponReadyDX
-		"####" ACDE 1 A_refire("RefireState3")
-		"####" A 0 A_WeaponReadyDX
-		"####" ACDE 1 A_refire("RefireState3")
-		"####" A 0 A_WeaponReadyDX
-		"####" ACDE 1 A_refire("RefireState3")
-		"####" A 0 A_WeaponReadyDX
+		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
+		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
+		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
+		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
+		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
 		FireEnd:
 		CHAG A 0 A_StartSound("CHAINSPI", 5,CHANF_LOOPING,0.5)
 		CHAG A 0 A_JumpIfInventory("clip2",1,2)
 		CHAE A 0
-		"####" ACDE 1 A_refire("RefireState3")
-		"####" A 0 A_WeaponReadyDX
-		"####" ACDE 1 A_refire("RefireState3")
-		"####" A 0 A_WeaponReadyDX
-		"####" ACDE 1 A_refire("RefireState3")
-		"####" A 0 A_WeaponReadyDX
+		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
+		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
+		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
 		TNT1 A 0 A_takeinventory("Spin",1)
 		TNT1 A 0 A_takeinventory("falseSpin",1)
 		"####" A 0 A_startsound("CHAINSTO",5,0,0.5)
@@ -545,42 +537,36 @@ ACTOR MiniGun : BrutalWeapon
 		 "####" ABCDEF 1 
 		 {
 			A_ReFire("ReFireState3");
-			//Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			A_WeaponReadyDX(WRF_NOFIRE);
 		}
-		"####" A 0 A_WEaponReadyDX
 		 "####" ABCDEF 1 
 		 {
 			A_ReFire("ReFireState3");
-			//Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			A_WeaponReadyDX(WRF_NOFIRE);
 		}
-		 "####" A 0 A_WEaponReadyDX
 		 "####" ABCDEF 1 
 		 {
 			A_ReFire("ReFireState3");
-			//Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			A_WeaponReadyDX(WRF_NOFIRE);
 		}
-		 "####" A 0 A_WEaponReadyDX
 		EndFire2:
 		 "####" AABBCCDDEEFF 1 
 		{
 			A_ReFire("RefireState2");
-			//Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			A_WeaponReadyDX(WRF_NOFIRE);
 		}
-		"####" A 0 A_WEaponReadyDX
 		 "####" AABBCCDDEEFF 1 
 		{
 			A_ReFire("RefireState2");
-			//Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			A_WeaponReadyDX(WRF_NOFIRE);
 		}
-		"####" A 0 A_WEaponReadyDX
 		EndFire3:
 		 "####" AAABBBCCCDDDEEEFFF 1 
 		{
 			A_ReFire("ReFireState");
-			//Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			A_WeaponReadyDX(WRF_NOFIRE);
 			
 		}
-		"####" A 0 A_WEaponReadyDX
 		Goto Ready
 		
 		Refirestate:
