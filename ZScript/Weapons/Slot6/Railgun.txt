@@ -14,6 +14,7 @@ CLASS Railgun : Brutalweapon
     Inventory.PickupSound "RAILINSR";
 	Inventory.Pickupmessage "You got the Railgun! (Slot 6)";
 	+WEAPON.NOAUTOAIM;
+	+WEAPON.NOAUTOFIRE;
 	+WEAPON.NOALERT;
 	+WEAPON.EXPLOSIVE;
 	+FORCEXYBILLBOARD;
@@ -28,6 +29,26 @@ CLASS Railgun : Brutalweapon
 
 	}
 	int reloadchannel;
+	
+	action void a_buffercancelaim()
+	{
+		if((invoker.aimMode == 2 && !(player.cmd.buttons & BT_ALTATTACK)) || (invoker.aimMode == 1 && JustPressed(BT_ALTATTACK)))
+		{
+			invoker.aimDest = 'Ready';
+		}
+	}
+	
+	action state a_cancelaim()
+	{
+		if(invoker.aimDest)
+		{
+			return resolvestate('AimEnd');
+		}
+		else
+		{
+			return resolvestate(null);
+		}
+	}
 	
 	Action void a_spawnhologram()
 	{
@@ -280,6 +301,7 @@ CLASS Railgun : Brutalweapon
 			RAIL OOOOONMLKJ 1;
 			TNT1 A 0 A_overlay(-5,"pumpinghandlolreverse");
 			RAIL IHGF 1;
+			TNT1 A 0 A_ReFire;
 			Goto ready;
 		ReloadFromPump:
 			TNT1 A 0 
@@ -313,6 +335,10 @@ CLASS Railgun : Brutalweapon
 		
 		
 		Reload:
+			TNT1 A 0 A_JumpIf(invoker.aimMode == 0, 3);
+			TNT1 A 0 A_CheckIfAmmo("ammocell",10,"NoAmmoAlt");
+			TMT1 A 0 A_JumpIfInventory("nurailgunammo",5,"Aim");
+			Goto AimEnd;
 			TNT1 A 0
 			{
 				Takeinventory("reloading",1);
@@ -323,6 +349,10 @@ CLASS Railgun : Brutalweapon
 				Else if (countinv("nurailgunammo") < 5 && Countinv("AmmoCell") > 9)
 					{
 						Return resolvestate(null);
+					}
+				Else if (countinv("nurailgunammo") < 1 || Countinv("AmmoCell") < 10)
+					{
+						Return resolvestate("NoAmmoAlt");
 					}
 				Else
 					{
@@ -356,158 +386,54 @@ CLASS Railgun : Brutalweapon
 			RAIL IHGF 1;
 			Goto ready;
 			
-		NoAmmo:
-			TNT1 A 0
-			{
-				If(countinv("nurailgunammo") < 1 && Countinv("AmmoCell") > 9)
-					{
-						Return resolvestate("Pumping");
-					}
-				Else
-					{
-						Return resolvestate(null);
-					}
-			}
-			TNT1 A 0
-			{
-				A_startsound("RAILDRY",1);
-				A_startsound("weapons/empty",4);
-			}
-			RAIL BCDEBCDEBCDEBCDE 1;
-			Goto ready;
-			
-		AltFire:
-	//	RLNG A 0 ACS_NamedExecuteAlways("HoldAim");
-		//RLNG A 0 A_JumpIfInventory("Zoomed",1,"NoAim");
-		//RLNG A 0 A_Giveinventory("Zoomed",1)
-        RLNG A 0 
-		{
+	NoAmmo:
+		TNT1 A 0 A_StartSound("RAILDRY", 1);
+	NoAmmoAlt:
+		TNT1 A 0 A_StartSound("weapons/empty", 3);
+	NoAmmo2:
+		TNT1 A 0 A_JumpIf(CountInv("ammocell") >= 10 && CountInv("nurailgunammo") < 5,"Reload");
+		TNT1 A 0 A_JumpIf(invoker.aimMode > 0, "NoAmmo3");
+		RAIL A 1 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD || player.cmd.buttons & BT_ATTACK, "NoAmmo2");
+		Goto Ready;
+	NoAmmo3:
+		SNIP C 1 Bright A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD || player.cmd.buttons & BT_ATTACK, "NoAmmo2");
+		Goto Aim;
+	AltFire:
+		TNT1 A 0 {
 			A_overlay(-5,"DoNothing");
 			A_ZoomFactor(3.0);
 		}
 		RAIZ ABCD 1;
-		TNT1 A 0 A_SetCrosshairDX("NULL", 10000,1.0);
-		SMGG A 0 A_StartSound("ADSIN");
+		TNT1 A 0 {A_SetCrosshairDX("Null"); A_StartSound("ADSIN");}
 		RAIZ EF 1;
-	AltFireContinue:
-		
-		StillAiming:
-		//TNT1 A 0 A_jumpifinventory("firedsecondary",1,"Aim1");
-		TNT1 A 0 A_WeaponZoom();
-		Goto Aim2;
-		Aim1:
-			TNT1 A 0 
-			{
-				If(countinv("startdualwield") > 0)
-				{
-					Takeinventory("startdualwield",1);
-					
-					If(countinv("raillightscope") > 0)
-					{
-						A_takeinventory("raillightscope",1);
-						a_startsound("bepbep",2);
-					}
-					Else
-					{
-						A_giveinventory("raillightscope",1);
-						a_startsound("bep",2);
-					}
-				}
-				If(countinv("raillightscope") > 0)
-				{
-					A_giveinventory("powerlightampc",1);
-				}
-				Else
-				{
-					A_takeinventory("powerlightampc",1);
-				}
-			}
-			SMGG A 0 A_ZoomFactor(3.0);
-			SNIP C 1 BRIGHT A_weaponready(WRF_NOSECONDARY | WRF_NOPRIMARY);
-			TNT1 A 0 A_jumpifinventory("reloading",1,"zoomedreload");
-			TNT1 A 0 A_jumpifinventory("firedprimary",1,"ZoomedFire");
-			TNT1 A 0 A_jumpifinventory("firedsecondary",1,"Aim1");
-			Goto noaim;
-		Aim2:
-			TNT1 A 0 
-			{
-				If(countinv("startdualwield") > 0)
-				{
-					Takeinventory("startdualwield",1);
-					
-					If(countinv("raillightscope") > 0)
-					{
-						A_takeinventory("raillightscope",1);
-						a_startsound("bepbep",2);
-					}
-					Else
-					{
-						A_giveinventory("raillightscope",1);
-						a_startsound("bep",2);
-					}
-				}
-				If(countinv("raillightscope") > 0)
-				{
-					A_giveinventory("powerlightampc",1);
-				}
-				Else
-				{
-					A_takeinventory("powerlightampc",1);
-				}
-			}
-			//SMGG A 0 A_ZoomFactor(3.0);
-			SNIP C 1 BRIGHT A_weaponready(WRF_NOSECONDARY | WRF_NOPRIMARY);
-			TNT1 A 0 A_jumpifinventory("reloading",1,"zoomedreload");
-			TNT1 A 0 A_jumpifinventory("firedprimary",1,"ZoomedFire");
-			TNT1 A 0 A_jumpifinventory("firedsecondary",1,"GoingToAim3");
-			LOOP;
-	GoingToAim3:
-	TNT1 A 0 A_ZoomFactor(9.0);
-	SNIP C 5 BRIGHT;
-	Aim3:
-			TNT1 A 0 
-			{
-				If(countinv("startdualwield") > 0)
-				{
-					Takeinventory("startdualwield",1);
-					
-					If(countinv("raillightscope") > 0)
-					{
-						A_takeinventory("raillightscope",1);
-						a_startsound("bepbep",2);
-					}
-					Else
-					{
-						A_giveinventory("raillightscope",1);
-						a_startsound("bep",2);
-					}
-				}
-				If(countinv("raillightscope") > 0)
-				{
-					A_giveinventory("powerlightampc",1);
-				}
-				Else
-				{
-					A_takeinventory("powerlightampc",1);
-				}
-				//a_startsound("bepbep",2);
-			}
-			SMGG A 0 A_ZoomFactor(9.0);
-			SNIP C 1 BRIGHT A_weaponready(WRF_NOSECONDARY | WRF_NOPRIMARY);
-			TNT1 A 0 A_jumpifinventory("reloading",1,"zoomedreload");
-			TNT1 A 0 A_jumpifinventory("firedprimary",1,"ZoomedFire");
-			TNT1 A 0 A_jumpifinventory("firedsecondary",1,"NoAim");
-			LOOP;
-	ZoomedFire:
-		TNT1 A 0 A_CheckIfAmmo("nurailgunammo",1,"NoAmmoZoomed");
+		TNT1 A 0 A_StartAim;
+		Goto Ready;
+	Aim:
+		SNIP C 1 Bright A_ReadyAim(true,true,3.0,9.0,"bep","bepbep");
+		Loop;
+	AimEnd:
+		BR4Z C 1
+		{
+			A_StartSound("ADSOUT");
+			if(invoker.scopeZoom == true) A_ZoomFactor(3.0,ZOOM_INSTANT);
+			A_ZoomFactor(1.0);
+		}
+		RAIZ FE 1;
+		TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000,1.0);
+		RAIZ DCBA 1;
+		TNT1 A 0 A_EndAim;
+		Goto Ready;
+	FireAim:
+		TNT1 A 0 A_CheckIfAmmo("nurailgunammo");
 		TNT1 A 0 A_firenurailgun();
 		TNT1 A 0 A_GunLight();
 		SNIP C 2 BRIGHT;
 		SNIP CCCCCC 1 BRIGHT A_setpitch(pitch + 1);
-		SNIP C 18 BRIGHT;
-		//TNT1 A 0 A_jumpifinventory("PowerSPeed2",1,"StillAiming");
-			SNIP CCCC 1 BRIGHT A_weaponZoom3();
-			
+		SNIP CCCCCCCCCCCCCCCCCCCCCC 1 BRIGHT A_BufferCancelAim;
+		TNT1 A 0 A_CancelAim;
+		FireAimCont:
 			TNT1 A 0 A_StartSound("RAILMAG2", 5);
 			SNIP CC 1 BRIGHT;
 			TNT1 A 0 
@@ -526,11 +452,10 @@ CLASS Railgun : Brutalweapon
 				{
 					A_fireprojectile("Smallgunbarrelsmoke",frandom(-35,-45),0,0,0,0,frandom(-20,-30));
 				}
-				A_weaponZoom3();
 			}
 			TNT1 A 0 a_takeinventory("railsteam",1);
 			//TNT1 A 0 A_WeaponZoom2();
-			SNIP CCCC 1 BRIGHT A_WeaponZoom3();
+			SNIP CCCC 1 BRIGHT;
 
 		TNT1 A 0 A_StartSound("RAILINSR", 5);
 			SNIP CCCCCCCCCC 1 BRIGHT;
@@ -545,8 +470,8 @@ CLASS Railgun : Brutalweapon
 						Return resolvestate(null);
 					}
 			}
-		TNT1 A 0 A_WeaponZoom2();
-		Goto StillAiming;
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_ATTACK,"FireAim");
+		Goto Aim;
 		
 		/*
 	    RLNG A 0 A_Light0();
@@ -560,63 +485,6 @@ CLASS Railgun : Brutalweapon
 		RAIZ DCBA 1;
 		Goto Pumping;
 		*/
-	NoAmmoZoomed:
-			TNT1 A 0
-			{
-				If(countinv("nurailgunammo") < 1 && Countinv("AmmoCell") > 9)
-					{
-						Return resolvestate("NoAmmoZoomed2");
-					}
-				Else
-					{
-						Return resolvestate(null);
-					}
-			}
-			TNT1 A 0
-			{
-				A_startsound("RAILDRY",1);
-				A_startsound("weapons/empty",4);
-			}
-			SNIP CCCCCCCCCCCCCCCC 1 BRIGHT;
-			TNT1 A 0 A_WeaponZoom2();
-		Goto StillAiming;
-	Noammozoomed2:	
-	    RLNG A 0 A_Light0();
-		RLNG A 0 A_Takeinventory("PowerLightAmp", 1);
-		RLNG A 0 A_Takeinventory("PowerLightAmpc", 1);
-        RLNG A 0 A_ZoomFactor(1.0);
-	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
-		SMGG A 0 A_StartSound("ADSOUT");
-        RAIZ FE 1;
-		TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000,1.0);
-		RAIZ DCBA 1;	
-        Goto Pumping;
-		
-	ZoomedReload:	
-	    RLNG A 0 A_Light0();
-		RLNG A 0 A_Takeinventory("PowerLightAmp", 1);
-		RLNG A 0 A_Takeinventory("PowerLightAmpc", 1);
-        RLNG A 0 A_ZoomFactor(1.0);
-	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
-		SMGG A 0 A_StartSound("ADSOUT");
-        RAIZ FE 1;
-		TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000,1.0);
-		RAIZ DCBA 1;	
-        Goto Reload;
-		
-	NoAim:	
-	    RLNG A 0 A_Light0();
-		RLNG A 0 A_Takeinventory("PowerLightAmp", 1);
-		RLNG A 0 A_Takeinventory("PowerLightAmpc", 1);
-        RLNG A 0 A_ZoomFactor(1.0);
-	   // NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
-		SMGG A 0 A_StartSound("ADSOUT");
-        RAIZ FE 1;
-		TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000,1.0);
-		RAIZ DCBA 1;	
-        Goto Ready;
-		
-		
 		Pumpinghandlol:
 		TNT1 A 0 A_StartSound("foley/ShotgunReloadRaise", 6);
 			RAIH ABCD 1;

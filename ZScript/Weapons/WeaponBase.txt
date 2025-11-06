@@ -2,6 +2,16 @@ Class Brutalweapon : DoomWeapon //Weapon
 {
 
 
+	int aimMode;
+	statelabel aimDest;
+	bool scopeZoom;
+	
+	bool dualWield;
+	bool initDual;
+	bool switchingDual;
+	bool sideFired;
+	name dualWeapon;
+	property DualWeapon : dualWeapon;
 
 	int sprinttimer;
 	int Weight; 
@@ -251,7 +261,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 		return victim;
 	}
 	
-	Action void A_reload(name mag, int magsize, name ammopool, int chamberbonus = 0, int conversion = 1, name secondarymag = "null", bool multiplicative = false)
+	action void A_Reload(name mag, int magsize, name ammopool, int chamberbonus = 0, int conversion = 1, name secondarymag = "", int secondarymagsize = 0, int secondarychamberbonus = 0, bool multiplicative = false)
 	{
 		Int MagGoal;
 		If(countinv(mag) > 0)
@@ -262,6 +272,15 @@ Class Brutalweapon : DoomWeapon //Weapon
 		{
 			MagGoal = magsize;
 		}
+		Int SecondaryMagGoal;
+		If(countinv(secondarymag) > 0)
+		{
+			SecondaryMagGoal = (secondarymagsize + secondarychamberbonus);
+		}
+		Else
+		{
+			SecondaryMagGoal = secondarymagsize;
+		}
 		
 		Bool Reloaded;
 		
@@ -271,7 +290,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 			{
 				takeinventory(ammopool,conversion);
 				giveinventory(mag,1);
-				If(secondarymag)
+				If(secondarymag && countinv(secondarymag) < SecondaryMagGoal)
 				{
 					giveinventory(secondarymag,1);
 				}
@@ -280,7 +299,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 			{
 				takeinventory(ammopool,1);
 				giveinventory(mag,conversion);
-				If(secondarymag)
+				If(secondarymag && countinv(secondarymag) < SecondaryMagGoal)
 				{
 					giveinventory(secondarymag,conversion);
 				}
@@ -390,55 +409,141 @@ Class Brutalweapon : DoomWeapon //Weapon
 		}
 	}
 	
-	action state A_WeaponZoom(statelabel label = "Aim1", statelabel label2 = "Aim2")
+	action state A_StartAim(statelabel aim = 'Aim')
 	{
-		If(getcvar("BD_Aim") == 1)
+		if((player.cmd.buttons & BT_ALTATTACK && getcvar("bd_Aim") == 0) || getcvar("bd_Aim") == 2)
 		{
-		giveinventory("Zoomies",1);
-		Return resolvestate(label2);
+			invoker.aimMode = 2;
 		}
-		Else If(player.cmd.buttons & BT_ALTATTACK || getcvar("BD_Aim") == 2)
+		else
 		{
-		
-		Return ResolveState(label);
+			invoker.aimMode = 1;
 		}
-		Else
+		TakeInventory("StartDualWield",1);
+		return resolvestate(aim);
+	}
+	
+	action state A_ReadyAim(bool allowreload = false, bool scoped = false, double lowfactor = 3.0, double highfactor = 9.0, string insound = "ADSIN", string outsound = "ADSOUT", statelabel end = 'AimEnd', statelabel fire = 'FireAim')
+	{
+		DoReadyWeaponToBob(player);
+		if(player.PendingWeapon != WP_NOCHANGE)
 		{
-		giveinventory("Zoomies",1);
-		Return resolvestate(label2);
+			invoker.aimDest = 'Deselect';
+		}
+		else if(player.cmd.buttons & BT_ATTACK)
+		{
+			return resolvestate(fire);
+		}
+		else if((invoker.aimMode == 2 && !(player.cmd.buttons & BT_ALTATTACK)) || (invoker.aimMode == 1 && JustPressed(BT_ALTATTACK) && (scoped == false || (scoped == true && invoker.scopeZoom == true))))
+		{
+			invoker.aimDest = 'Ready';
+		}
+		else if(allowreload && player.cmd.buttons & BT_RELOAD && invoker.aimDest != 'Reload')
+		{
+			invoker.aimDest = 'Reload';
+			return resolvestate('Reload');
+		}
+		else if(player.cmd.buttons & BT_USER2)
+		{
+			invoker.aimDest = 'TossGrenade';
+		}
+		else if(CountInv("Taunting") > 0)
+		{
+			invoker.aimDest = 'Taunt';
+		}
+		else
+		{
+			invoker.aimDest = null;
+		}
+		if(scoped == true)
+		{
+			if(((JustPressed(BT_ALTATTACK) && invoker.aimMode == 1) || (CountInv("StartDualWield") == 1 && invoker.aimMode == 2)) && invoker.scopeZoom == false)
+			{
+				A_StartSound(insound);
+				invoker.scopeZoom = true;
+				A_ZoomFactor(highfactor);
+			}
+			else if(CountInv("StartDualWield") == 1 && invoker.aimMode == 2 && invoker.scopeZoom == true)
+			{
+				A_StartSound(outsound);
+				invoker.scopeZoom = false;
+				A_ZoomFactor(lowfactor);
+			}
+			TakeInventory("StartDualWield",1);
+		}
+		if(invoker.aimDest)
+		{
+			return resolvestate(end);
+		}
+		else
+		{
+			return resolvestate(null);
 		}
 	}
 	
-	action state A_WeaponZoom2(statelabel label = "Aim1", statelabel label2 = "Aim2")
+	action state A_EndAim()
 	{
-		If(FindInventory("Zoomies"))
-		{
-		Return resolvestate(label2);
-		}
-		Else 
-		{
-		Return resolvestate(label);
-		}
+		invoker.aimMode = 0;
+		invoker.scopeZoom = false;
+		return resolvestate(invoker.aimDest);
 	}
 	
-	action state A_WeaponZoom3(statelabel label = "NoAim")
+	action void SetFired(bool number) //todo: remove when we stop using decorate for weapons
 	{
-		If(FindInventory("Zoomies") && player.cmd.buttons & BT_ALTATTACK)
+		invoker.sideFired = number;
+	}
+	
+	action bool GetFired() //ditto
+	{
+		return invoker.sideFired;
+	}
+	
+	action int GetAim() //ditto
+	{
+		return invoker.aimMode;
+	}
+	
+	action bool GetPressed(int which) //ditto
+	{
+		return player.cmd.buttons & which;
+	}
+	
+	action void SetAimDest(statelabel dest) //ditto
+	{
+		invoker.aimDest = dest;
+	}
+	
+	action state A_DualWield()
+	{
+		TakeInventory("StartDualWield",1);
+		if(CountInv(invoker.GetClassName()) > 1)
 		{
-			Return resolvestate(label);
+			GiveInventory(invoker.DualWeapon,1);
+			invoker.dualWield = true;
+			invoker.initDual = true;
+			A_SelectWeapon(invoker.DualWeapon);
+			BrutalWeapon nextWeapon = BrutalWeapon(player.PendingWeapon);
+			if(nextWeapon)
+			{
+				nextWeapon.switchingDual = true;
+			}
+			return resolvestate("InstaDeselect");
 		}
-		Else If(FindInventory("Zoomies"))
+		A_Print("You must have two "..invoker.GetTag().."s to Dual wield!",3);
+		return resolvestate("Ready");
+	}
+	
+	action state A_EndDual()
+	{
+		TakeInventory("StartDualWield",1);
+		A_SelectWeapon(invoker.DualWeapon);
+		BrutalWeapon nextWeapon = BrutalWeapon(player.PendingWeapon);
+		if(nextWeapon)
 		{
-		Return resolvestate(null);
+			nextWeapon.dualWield = false;
+			nextWeapon.switchingDual = true;
 		}
-		Else if(player.cmd.buttons & BT_ALTATTACK)
-		{
-			Return resolvestate(null);
-		}
-		Else 
-		{
-			Return resolvestate(label);
-		}
+		return resolvestate("InstaDeselect");
 	}
 	
 	action state A_CheckIfAmmo(class<Inventory> ammotype, int ammoamount = 1, statelabel label = "NoAmmo")
@@ -637,7 +742,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			//clean up Aim token
 			takeinventory("Zoomies",1);
 			//A_WeaponReadyDX acts as a wrapper for A_weaponready and accepts the same flags
-			A_weaponready(dxflags);
+			A_weaponready(dxflags|WRF_ALLOWUSER2);
 			//Flag for if holding throwable object
 			If(findinventory("hasagib"))
 			{
@@ -692,7 +797,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 				
 			//Middle finger
 			if (CountInv("Taunting") == 1) {return resolvestate('Taunt'); }
-			if (CountInv("TossGrenade") == 1) {return resolvestate('TossGrenade'); }
+			if(CountInv(invoker.GetClassName()) > 1 && invoker.initDual == 0) {return resolvestate("DualWield");}
 			
 			return resolvestate(null);
 			
@@ -709,12 +814,11 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	
     action bool JustPressed(int which) // "which" being any BT_* value, mentioned above or not
     {
-        //return (player.cmd.buttons & which) && !(player.oldbuttons & which);
-        return player.cmd.buttons & which;
+        return player.cmd.buttons & which && !(player.oldbuttons & which);
     }
     action bool JustReleased(int which)
     {
-        return !(player.cmd.buttons & which) && (player.oldbuttons & which);
+        return !(player.cmd.buttons & which) && player.oldbuttons & which;
     }
 	
 	action void MoveSpeed(float pspeed, float psidemove)
@@ -1604,8 +1708,24 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		Takeinventory("HasFreezerWeapon",1);
 		Takeinventory("yesimrevlauncher",1);
 		
+		invoker.aimMode = 0;
+		invoker.scopeZoom = false;
+		invoker.refireq = false;
+		invoker.semiautofired = false;
+		invoker.semiclear = false;
 		
 		a_weaponvoiceline();
+		if(invoker.dualWeapon && countinv(invoker.GetClassName()) > 1 && invoker.dualWield == 1 && GetCVar("bd_smartdualwield") == 0)
+		{
+			A_SelectWeapon(invoker.dualWeapon);
+			return resolvestate("InstaDeselect");
+		}
+		if(invoker.dualWeapon && invoker.switchingDual == true)
+		{
+			invoker.switchingDual = false;
+			return resolvestate("SelectFromDual");
+		}
+		return resolvestate(null);
 		}
 		TNT1 A 0 A_jumpifinventory("hasagib",1,"gibfromnothing");
 		TNT1 A 0 A_Jump(256, "SelectContinue");
@@ -2162,7 +2282,6 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		TNT1 A 0 A_Takeinventory("Zoomed",1);
 		TNT1 A 0 A_Takeinventory("PowerLightAmp",1);
 		TNT1 A 0 A_giveinventory("kicking",1);
-        TNT1 A 0 A_ZoomFactor(1.0);
 		TNT1 A 0 A_Takeinventory("ADSmode",1);
 		
 		TNT1 A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "KickCheckButTakeKickAndIdk");
@@ -2707,7 +2826,7 @@ PI2F K 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { re
 		TNT1 A 7;
 		NULL A 0 A_TakeInventory("TossGrenade",1);
 	    Goto GoingToReady;
-		
+	User2:
 	TossGrenade:	
 		"----" "#" 0;
 		"----" "#" 0 A_TakeInventory("TossGrenade", 1);

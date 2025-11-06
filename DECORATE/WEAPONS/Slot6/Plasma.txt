@@ -17,6 +17,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 	inventory.althudicon "PLASA0"
 	inventory.maxamount 2
 	BrutalWeapon.weight 1
+	BrutalWeapon.DualWeapon "DualPlasmaRifles"
 	States
 	{
 	
@@ -219,7 +220,6 @@ ACTOR Plasma_Gun : BrutalWeapon
 		PLSN A 0
 		PLSN "#" 0
         PLSN "#" 1 A_WeaponReadyDX(WRF_ALLOWRELOAD)
-		TNT1 A 0 A_JumpIf(countinv("Plasma_gun") > 1 && !findinventory("Dualwieldedplasma"),"DualWield")
 		TNT1 A 0 A_JumpIfInventory("swapRifleSpecial",1,"SwapWeaponSpecials")
 		PLSN A 0 A_Giveinventory("HasPlasmaWeapon",1)
         PLSN A 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash2");}	}return state("");}
@@ -235,7 +235,6 @@ ACTOR Plasma_Gun : BrutalWeapon
 	ReadyLowAmmo:
 		PLSN A 0 A_PlaySound("BEP",4,0.3)
 		PLSN CCCCCCDDDDDD 1 A_WeaponReadyDX(WRF_ALLOWRELOAD)
-		TNT1 A 0 A_JumpIf(countinv("Plasma_gun") > 1 && !findinventory("Dualwieldedplasma"),"DualWield")
 		Loop
 		
 	SprintOverlay:
@@ -289,9 +288,6 @@ ACTOR Plasma_Gun : BrutalWeapon
 		TNT1 A 1 A_Lower
 		Wait
 		
-	DeselectToDual:
-	TNT1 AAAAAAAAAAA 0 A_Lower
-	wait
 	
 	DeselectSecondGun:
 	3UPL C 0 A_JumpIf(countInv("PlasmaAmmo")<=10,3)
@@ -301,18 +297,10 @@ ACTOR Plasma_Gun : BrutalWeapon
         "####" BCDEF 1
 		stop
 		
-	RememberingDual:
-		TNT1 A 0 A_GiveInventory("DualPlasmaRifles")
-		TNT1 A 0 A_giveinventory("RememberDualPlasma")
-	HasRememberedDual:
-	    TNT1 A 0
-		TNT1 A 0 A_SelectWeapon("DualPlasmaRifles")
-		Goto Ready
 		
 		
 	Select:
 		TNT1 A 0
-		TNT1 A 0 A_JumpIf(countinv("Plasma_gun") > 1 && !findinventory("Dualwieldedplasma"),"RememberingDual")
 		TNT1 A 0 A_SetCrosshairDX("PLASRet", 1000,0.5)
 		Goto SelectFirstPersonLegs
 		SelectContinue: 
@@ -320,9 +308,6 @@ ACTOR Plasma_Gun : BrutalWeapon
 		"####" A 0 A_GiveInventory("IsPlayingDoxMod",1) "####" A 0 
 		
 	    PLSN A 0 A_Giveinventory("HasPlasmaWeapon",1)
-		TNT1 A 0 A_JumpIfInventory("NoSmartDualWield",1,2)//Checks if the Smart Dual Wielding option is disabled.
-		TNT1 A 0 A_JumpIfInventory("RememberDualPlasma",1,"HasRememberedDual")
-		TNT1 A 0 A_JumpIfInventory("SwitchingDualModes", 1, "SelectFromDual")
 		TNT1 A 1 A_Raise
 		PLSN A 0 A_Giveinventory("PlasmaGunSelected",1)
 		TNT1 AAAAAAAAAAAAAA 0 A_Raise
@@ -337,8 +322,6 @@ ACTOR Plasma_Gun : BrutalWeapon
 		PLSN A 0
 		"####" A 0
         "####" TSRQP 1 A_WeaponReady(WRF_NOFIRE)
-		PLSN A 0 A_Takeinventory("StartDualWield",1)
-		TNT1 A 0 A_TakeInventory ("RememberDualPlasma", 1)
 		Goto Ready
 		
 	SelectFromDual:
@@ -350,9 +333,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 	2UPL B 0 A_JumpIf(countInv("PlasmaAmmo")<=30,2)
 	DUPL A 0
 	"####" A 0
-        "####" TTTTTSRQp 1 
-		TNT1 A 0 A_TakeInventory("SwitchingDualModes", 1)
-		PLSN A 0 A_Takeinventory("StartDualWield",1)
+        "####" TTTTTSRQp 1  A_WeaponReady(WRF_NOFIRE)
 		Goto Ready
 		
 	Fire:
@@ -708,27 +689,25 @@ ACTOR Plasma_Gun : BrutalWeapon
 		LOOP
 		
 	NoAmmo:
-		RIFG A 0
-		RIFG A 0 A_ZoomFactor(1.0)
-		RIFG A 0 A_Takeinventory("Zoomed",1)
-		RIFG A 0 A_Takeinventory("ADSmode",1)
-		RIFG A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
-		TNT1 A 0 A_PlaySound("weapons/empty", 4)
-		NoAmmo2:
-		RIFG A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-	    RIFG A 0 A_JumpIfInventory("Taunting",1,"Taunt")
-		RIFG A 0 A_JumpIfInventory("Salute1", 1, "Salute")
-		RIFG A 0 A_JumpIfInventory("Salute2", 1, "Salute")
-		RIFG A 0 A_JumpIfInventory("IsRunning",1,"CheckSprint")
-		RIFG A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
-		RIFG A 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
-		PLSN D 4 A_WeaponReady(WRF_ALLOWRELOAD | WRF_NOFIRE | WRF_NOSECONDARY)
-		RIFG A 0 A_JumpIfInventory("Reloading",1,"Reload")
-		RIFG A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
-		TNT1 A 0 A_JumpIf(GetCvar("bd_NoAutoReload")==1, "Ready3")
-		RIFG A 0 A_JumpIfInventory("AmmoCell",1,"Reload")
-		RIFG A 0 A_JumpIfInventory("FiredPrimary",1,"NoAmmo2")
-		Goto Ready3	
+		PLSN D 0 A_JumpIf(countInv("PlasmaAmmo")==0,4)
+		PLSN C 0 A_JumpIf(countInv("PlasmaAmmo")<=10,3)
+		PLSN B 0 A_JumpIf(countInv("PlasmaAmmo")<=30,2)
+		PLSN A 0
+		PLSN "#" 0 A_PlaySound("BEP")
+		PLSN "#" 4 A_WeaponReady(WRF_NOFIRE)
+		PLSN "#" 0 A_PlaySound("BEP")
+		PLSN "#" 4 A_WeaponReady(WRF_NOFIRE)
+	NoAmmo2:
+		PLSN "#" 0 A_JumpIf(CountInv("AmmoCell") > 0 && CountInv("PlasmaAmmo") < 50,"Reload")
+		PLSN "#" 0 A_JumpIf(CountInv("PlasmaAmmo") > 0 && CountInv("PlasmaAmmo") <= 10, "NoAmmo3")
+		PLSN "#" 1 A_WeaponReady(WRF_NOFIRE)
+		PLSN "#" 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK) || GetPressed(BT_ALTATTACK), "NoAmmo2")
+		Goto Ready
+	NoAmmo3:
+		TNT1 A 0 A_PlaySound("BEP",4,0.3)
+		PLSN CCCCCCDDDDDD 1 A_WeaponReady(WRF_NOFIRE)
+		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK) || GetPressed(BT_ALTATTACK), "NoAmmo2")
+		Goto Ready
 
     Reload:
 
@@ -736,20 +715,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 		//NULL A 0 A_JumpIfInventory("Fire2Activate",1,"Cancel")
 		PLSN A 0 A_ClearReFire
 		PLSN A 0 A_JumpIfInventory("PlasmaAmmo",50,"Inspect")
-		PLSN A 0 A_JumpIfInventory("AmmoCell",1,"reloadpart2")
-		PLSN D 0 A_JumpIf(countInv("PlasmaAmmo")==0,4)
-		PLSN C 0 A_JumpIf(countInv("PlasmaAmmo")<=10,3)
-		PLSN B 0 A_JumpIf(countInv("PlasmaAmmo")<=30,2)
-		PLSN A 0
-		PLSN "#" 0
-		PLSN "#" 0 A_PlaySound("BEP")
-		PLSN "#" 4 A_WeaponReady(WRF_NOFIRE)
-		PLSN "#" 0 A_PlaySound("BEP")
-		PLSN "#" 4 A_WeaponReady(WRF_NOFIRE)
-		PLSN "#" 0 A_CheckReload
-        Goto Ready
-		Reloadpart2:
-        TNT1 AAAA 0
+		PLSN A 0 A_CheckIfAmmo("AmmoCell")
 		PLSN A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
 		PLSN A 0 A_PlaySound("PLREADY")
 		3LSR C 0 A_JumpIf(countInv("PlasmaAmmo")<=10,3)
@@ -827,11 +793,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 		
 		
 	DualWield:
-		PLSN A 0
-		PLSN A 0 A_Takeinventory("StartDualWield",1)
-	//	PLSN A 0 A_JumpIfInventory("IsTacticalClass", 1, "NoDual")//Tactical mode cant dual
-		PLSN A 0 A_JumpIfInventory("Plasma_gun", 2, "GetDual")
-		PLSN A 0 A_Print("You must have two plasma guns to dual wield!",2)
+		TNT1 A 0 A_DualWield
 		Goto Ready
 		
 	 GetDual:	
