@@ -31,12 +31,12 @@ ACTOR DualSMG : BrutalWeapon
 	
 	
 	Sprintoverlay:
-	SM2F HIJK 1
+	SM2F HIJK 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
 	KeepSprinting:
-	SM2F L 1 A_WeaponReadyDX(0,FALSE,FALSE)
+	SM2F L 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
 	TNT1 A 0 A_KeepSprinting
 	Returnfromsprint:
-	SM2F KJIH 1
+	SM2F KJIH 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
 	Goto ready
 	
 	KickingFlash:

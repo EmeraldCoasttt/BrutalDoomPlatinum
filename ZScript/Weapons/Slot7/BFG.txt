@@ -142,7 +142,7 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 
 		
 	SprintOverlay:
-		BFGN A 1;
+		BFGN A 1 A_WeaponReadyDX(0,FALSE,FALSE);
 		LOOP;
 		
 		

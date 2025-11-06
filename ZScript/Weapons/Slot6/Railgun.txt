@@ -167,7 +167,7 @@ CLASS Railgun : Brutalweapon
 			Goto Ready;
 			
 		SprintOverlay:
-			RAIK ABCD 1;
+			RAIK ABCD 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 			KeepSprinting:
 			RAIK E 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 			"####" A 0 A_keepsprinting();

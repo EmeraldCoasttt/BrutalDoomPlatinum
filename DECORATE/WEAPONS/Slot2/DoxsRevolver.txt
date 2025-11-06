@@ -92,12 +92,12 @@ ACTOR DoxsRevolver : BrutalWeapon
 		REVR KJIC 1
 		stop
 	SprintOverlay:
-		REVR CIJK 1
+		REVR CIJK 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
 	KeepSprinting:
-		REVR L 1 A_WeaponReadyDX(0,FAlSE,FALSE)
+		REVR L 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
 		TNT1 A 0 A_KeepSprinting
 	ReturnFromSprint:
-		REVR KJIC 1 A_WeaponReadyDX(0,False,False)
+		REVR KJIC 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
 		Goto ready
 		
 	Ready3:

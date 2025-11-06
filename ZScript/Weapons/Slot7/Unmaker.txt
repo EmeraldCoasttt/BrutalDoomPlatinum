@@ -64,9 +64,9 @@ CLASS Unmaker : BrutalWeapon
 		
 		
 	SprintOverlay:
-	UNHG ABCDD 2;
+	UNHG ABCDD 2 A_WeaponReadyDX(0,FALSE,FALSE);
 		UNHG A 0 A_StartSound("UNMIDLE", 2);
-		UNHG DCBAAAAA 2;
+		UNHG DCBAAAAA 2 A_WeaponReadyDX(0,FALSE,FALSE);
 		LOOP;
 	
 	Steady:

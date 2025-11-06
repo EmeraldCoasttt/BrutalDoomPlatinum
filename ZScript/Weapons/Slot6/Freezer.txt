@@ -227,7 +227,7 @@ Class Freezer : BrutalWeapon
 		
 		SprintOverlay:
 	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"sprintNoAmmo");
-	FR1K ABCD 1;
+	FR1K ABCD 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 	KeepSprinting:
 	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"KeepSprintingNoAmmo");
 	RAIL A 0 A_Startsound("PLSIDLE");
@@ -236,28 +236,28 @@ Class Freezer : BrutalWeapon
 	Goto ReturnFromSprint;
 	SprintNoAmmo:
 	TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"SprintUnloaded");
-	FR1K MNOP 1;
+	FR1K MNOP 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 	KeepSprintingNoAmmo:
-	FR1K Q 1 A_weaponreadyDX(0,FALSE,FALSE);
+	FR1K Q 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 	TNT1 A 0 A_KeepSprinting();
 	Goto ReturnFromSprint;
 	
 	SprintUnloaded:
-	FR1K HIJKL 1;
+	FR1K HIJKL 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 	WAIT;
 	
 	ReturnFromSprint:
 	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"ReturnFromsprintNoAmmo");
-	FR1K DCBA 1 A_WeaponReadyDX();//16
+	FR1K DCBA 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 	Goto Ready;
 	
 	ReturnFromSprintNoAmmo:
 	TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"ReturnFromSprintUnloaded");
-	FR1K PONM 1;
+	FR1K PONM 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 	Goto ready;
 	
 	ReturnFromSprintUnloaded:
-	FR1K KJIH 1;
+	FR1K KJIH 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 	Goto ready;
 		
 		

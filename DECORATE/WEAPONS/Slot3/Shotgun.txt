@@ -598,13 +598,13 @@ Pump2:
 		
 		
 	SprintOverlay:
-		SHTA RSTU 1
+		SHTA RSTU 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
 		KeepSprinting:
-		SHTA V 1 A_WeaponReadyDX(0,FALSE,FALSE)
+		SHTA V 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
 		TNT1 A 0 A_KeepSprinting
 		
 	ReturnFromSprint:
-		SHTA UTSR 1 A_WeaponReadyDX
+		SHTA UTSR 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE)
 		Goto ready
 		
 	

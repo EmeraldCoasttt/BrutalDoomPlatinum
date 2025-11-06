@@ -103,16 +103,16 @@ class CalamityBlade : BrutalWeapon
 		}
 		loop;
 	SprintOverlay:
-			HETK ABCD 1;
+			HETK ABCD 1 A_WeaponReadyDX(0,FALSE,FALSE);
 			KeepSprinting:
-			HETK E 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+			HETK E 1 A_weaponreadyDX(0,FALSE,FALSE);
 			"####" A 0 A_keepsprinting();
 			Goto ReturnFromSprint;
 			
 
 	
 		ReturnfromSprint:
-			HETK DCBA 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+			HETK DCBA 1 A_weaponreadyDX(0,FALSE,FALSE);
 			Goto ready;
 		
 	Deselect: "####" A 0 A_TakeInventory("IsPlayingDoxMod",1);
