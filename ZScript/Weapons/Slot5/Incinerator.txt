@@ -48,7 +48,7 @@ CLASS Incinerator : BrutalWeapon
 		
 	Ready:
 	Ready3:
-		FLMT ABC 1 A_WeaponReadyDX();
+		FLMT ABC 1 A_weaponreadyDX(WRF_ALLOWRELOAD);
 		TNT1 A 0 A_AutoReload("FlamerAmmo","AmmoRocket");
 		Goto Ready3;
 		
@@ -156,7 +156,7 @@ CLASS Incinerator : BrutalWeapon
 		TNT1 A 0 A_TakeInventory("Reloading", 1);
 		TNT1 A 0 A_CheckIfAmmo("AmmoRocket");
 		TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,4);
-		TNT1 A 0 A_JumpIfInventory("FlamerAmmo", 1, "Ready");
+		TNT1 A 0 A_JumpIfInventory("FlamerAmmo", 60, "Ready");
 		TNT1 A 0 A_JumpIfInventory("AmmoRocket", 1, 2);
 		Goto Ready;
 		TNT1 AA 0;
