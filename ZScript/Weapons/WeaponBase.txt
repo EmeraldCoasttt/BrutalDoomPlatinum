@@ -371,6 +371,25 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	}
 	
+	
+	//Is BT_Reload cursed? Why doesn't it register the input?
+	//I feel like I'm going insane
+	//Emerald 11/7/2025
+	action state A_PressingReload(statelabel reloadstate = "reload")
+	{
+		If(player.cmd.buttons & BT_RELOAD)
+		{
+			console.printf("YeeHaw");
+			return resolvestate(reloadstate);
+		}
+		Else 
+		{
+			return resolvestate(null);
+		}
+	
+	
+	}
+	
 	Action void a_SpawnLaser(class<Actor> Spawntype)
 	{
 		FLineTraceData lasersight;

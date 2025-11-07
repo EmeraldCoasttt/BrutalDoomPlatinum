@@ -470,7 +470,7 @@ ACTOR DualRevolver : BrutalWeapon
 		RSDF ABCD 1 A_WeaponReady
 		REVO A 0 A_StartSound("REVFLIP2",13)
 		RSDF EFGH 1 A_WeaponReady
-		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD),"InspectContinue")
+		TNT1 A 0 A_PressingReload("inspectContinue")
 		RFDF GHIJK 1 A_WeaponReady
 		Goto ready
 		
