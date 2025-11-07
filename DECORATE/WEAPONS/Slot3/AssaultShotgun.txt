@@ -440,12 +440,15 @@ ACTOR AssaultShotgun : BrutalWeapon
 	212G A 0 A_JumpIf(Countinv("PlasmaShellSelected")==1, 2)
 	A12G A 0
 	"####" A 0
-	"####" TGGGGHIJK 1 A_WeaponReady
+	"####" T 1 A_WeaponReady
+	InspectLoop:
+	"####" GGGGHIJK 1 A_WeaponReady
 	"####" X 0 A_PlaySound("ASGINSP",1)
 	"####" L 6 A_WeaponReady
 	"####" MNOONNOONNNOOO 1 A_WeaponReady
 	"####" A 0 A_StopSound(1)
-	"####" PQRSGGG 1
+	"####" PQRSGGG 1 A_WeaponReady
+	"####" A 0 A_JumpIf(GetPressed(BT_RELOAD),"InspectLoop")
 	"####" X 0 A_PlaySound("foley/ASGPump", 10)
 	"####" T 1 A_WeaponReady
 	A12R DCBA 1 A_WeaponReady

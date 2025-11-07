@@ -200,29 +200,20 @@ Class Freezer : BrutalWeapon
 	Ready3:
 		TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"ReadyNoAmmo");
 		RAIL A 0 A_startsound("PLSIDLE",6);
-		FR1D ABC 2 {
-		if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("FreezethrowerCrosshair"));}else{A_SetCrosshair(0);}
-			Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		
-		}
-		FR1D ABC 2 {
-			//if (CountInv("StartDualWield") == 1) { return resolvestate("DualWield"); }
-			Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		}
+		FR1D ABC 2 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		TNT1 A 0 A_AutoReload("FreezerAmmo","AmmoCell");
+		FR1D ABC 2 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		TNT1 A 0 A_AutoReload("FreezerAmmo","AmmoCell");
 		Goto Ready3;
 		
 	ReadyNoAmmo:
 		FR1D T 0 A_JumpIf(CountInv("FreezerIsUnloaded")==1,"ReadyUnloaded");
-		FR1D Q 1
-		{
-		Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		}
+		FR1D Q 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		TNT1 A 0 A_AutoReload("FreezerAmmo","AmmoCell");
 		loop;
 	ReadyUnloaded:
-		FR1D T 1
-		{
-		Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		}
+		FR1D T 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		TNT1 A 0 A_AutoReload("FreezerAmmo","AmmoCell");
 		Loop;
 		
 		SprintOverlay:

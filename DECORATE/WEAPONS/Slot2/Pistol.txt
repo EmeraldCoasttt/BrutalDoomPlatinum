@@ -190,7 +190,6 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 	Ready:
 		TNT1 A 0 A_SetCrosshairDX("SMGRet", 1000,0.5)
 		
-	    PIST F 0 A_JumpIfInventory("Zoomed",1,"Ready2")
        
         PIST F 0 A_JumpIfInventory("Taunting",1,"Taunt")
 		PIST F 0 A_JumpIfInventory("Salute1", 1, "Salute")
@@ -202,6 +201,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		2ILE A 0 A_JumpIfInventory("IsSilenced",1,2)
 		PIS2 A 0
 		"####" F 1 A_WeaponReadyDX(WRF_ALLOWRELOAD)
+		TNT1 A 0 A_AutoReload("BDPistolAmmo","Clip1")
 		PIST F 0 A_Takeinventory("PistolFireAnimation1",1)
 		//PIST F 0 A_checksprint
 		//PIST F 0 A_JumpIfInventory("StartDualWield",1,"DualWield")
@@ -210,21 +210,6 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		//TNT1 A 0 A_JumpIf(countinv("brutalpistol") > 1 && !findinventory("Dualwieldedpistol"),"DualWield")
 		Loop
 		
-	Ready2:
-       
-        PIST F 0 A_JumpIfInventory("Taunting",1,"Taunt")
-		PIST F 0 A_JumpIfInventory("Salute1", 1, "Salute")
-		PIST F 0 A_JumpIfInventory("Salute2", 1, "Salute")
-        PIST F 0 A_JumpIfInventory("Reloading",1,"Reload")
-		PIST F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
-		PIST F 0 A_JumpIfInventory("Unloading",1,"Unload")
-		RIFG A 0 A_JumpIfInventory("FiredPrimary",1,"Fire")
-		PISZ A 1 A_WeaponReady(WRF_ALLOWRELOAD)
-		PIST F 0 A_Takeinventory("PistolFireAnimation1",1)
-		//PIST F 0 A_checksprint
-		//PIST F 0 A_JumpIfInventory("StartDualWield",1,"DualWield")
-		//TNT1 A 0 A_JumpIfInventory("NewDualWield",1,"DualWield")
-		Loop
 		
 		
 
@@ -266,19 +251,28 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PI2R A 0
 		"####" MLKJ 1 A_WeaponReady
 		"####" HI 1 A_WeaponReady
+	SpamFidget:
 		SILI A 0 A_JumpIFInventory("IsSilenced", 1, 2)
 		PTFP A 0
 		"####" ABCDDDE 1 A_WeaponReady
 		"####" A 0 A_PLAYSOUND ("foley/PistolSlideBack", 1) 
-	FinishInspect:
 		"####" FF 1 A_WeaponReady
-		"####" A 0 A_JumpIFInventory("Reloading", 1, "SpamFidget")
-		"####" GGGGGGH 1 A_WeaponReady
+		"####" GGGGG 1 A_WeaponReady
+	FinishInspect:
+		"####" G 1 A_WeaponReady
+		"####" A 0 A_JumpIf(GetPressed(BT_RELOAD),"FinishInspect")
+		"####" H 1 A_WeaponReady
 		2ILR A 0 A_JumpIFInventory("IsSilenced", 1,2)
 		PI2R A 0
 		"####" E 2 A_WeaponReady
 		"####" A 0 A_PLAYSOUND ("foley/PistolSlideForward", 1)
-		"####" FGHI 1 A_WeaponReady
+		"####" F 1 A_WeaponReady
+		"####" A 0 A_JumpIf(GetPressed(BT_RELOAD),"SpamFidget")
+		"####" G 1 A_WeaponReady
+		"####" A 0 A_JumpIf(GetPressed(BT_RELOAD),"SpamFidget")
+		"####" H 1 A_WeaponReady
+		"####" A 0 A_JumpIf(GetPressed(BT_RELOAD),"SpamFidget")
+		"####" I 1 A_WeaponReady
 		"####" X 0 A_PLAYSOUND("PISTFOL5", 30)
 		"####" JKLM 1 A_WeaponReady
 		PISD A 0 A_JumpIFInventory("BurstANDsilencer", 1,4)
@@ -289,17 +283,6 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		"####" F 0 A_Takeinventory("Reloading",1)
 		Goto Ready
 		
-	SpamFidget:
-	    "####" F 0 A_Takeinventory("Reloading",1)
-		"####" GGF 1 A_WeaponReady
-		"####" A 0 A_PLAYSOUND ("foley/PistolSlideForward", 1)
-		"####" EDDDD 1 A_WeaponReady
-		"####" A 0 A_JumpIFInventory("Reloading", 1, 2)
-		Goto FinishInspect
-		"####" A 0
-		"####" E 1 A_PLAYSOUND ("foley/PistolSlideBack", 1)
-		"####" FG 1 A_WeaponReady
-		Goto SpamFidget
 		
 	Deselect: "####" A 0 A_TakeInventory("IsPlayingDoxMod",1)
 	    PIST F 0 A_Takeinventory("PistolSelected",1)
@@ -829,6 +812,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		Goto Ready
 	Aim:
 		PISZ A 1 A_ReadyAim(true)
+		TNT1 A 0 A_AutoReload("BDPistolAmmo","Clip1")
 		Loop
 	AimEnd:
 		PISZ F 1 {A_PlaySound("ADSOUT"); A_ZoomFactor(1.0);}

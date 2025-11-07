@@ -63,7 +63,6 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		
 		GLR3 FEDCBAGHIJKLLLKJIHGABCDDDCBAGHIJJJIHG 1 {
 			Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
-						
 
 			
 		}
@@ -73,6 +72,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 	Ready:
 	Ready3: 
 		GLAN A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD)
+		TNT1 A 0 A_AutoReload("GLAmmo","AmmoRocket")
         Goto Ready
 		
 	DeselectInstant:
@@ -296,7 +296,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		SSGS MNOPQR 1
 		stop
 	Reload:	
-		TNT1 A 0
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE)
 		TNT1 A 0 A_TakeInventory("Reloading", 1)
 		TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,4)
 		TNT1 A 0 A_JumpIfInventory("GLAmmo", 1, "Fidget")
@@ -438,7 +438,10 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		GLAN A 0 A_PlaySound("Weapons/GrenadeOpen")
 		GLR2 MN 1 A_WeaponReady
 		GLR2 O 1 A_WeaponReady
-		GLR2 P 12 A_WeaponReady
+		GLR2 P 11 A_WeaponReady
+	FidgetLoop:
+		GLR2 P 1 A_WeaponReady
+		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD),"FidgetLoop")
 		GLR2 QR 1 A_WeaponReady
 		GLR2 S 1 A_WeaponReady
 		TNT1 A 2 A_WeaponReady
@@ -480,7 +483,7 @@ ACTOR GrenadeLauncher : BrutalWeapon 2551
 		TNT1 A 0 A_StartSound("weapons/empty", 3)
 	NoAmmo2:
 		TNT1 A 0 A_JumpIf(CountInv("AmmoRocket") > 0 && CountInv("GLAmmo") < 1,"Reload")
-		GLAN A 1 A_WeaponReady(WRF_NOFIRE)
+		GLAN A 1 A_WeaponReadyDX(WRF_NOFIRE)
 		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK), "NoAmmo2")
 		Goto Ready
 

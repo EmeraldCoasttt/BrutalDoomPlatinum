@@ -29,10 +29,6 @@ Actor AmmoTaken : Inventory
 inventory.maxamount 1
 }
 
-Actor UBGLNeedsReload : Inventory
-{
-inventory.maxamount 1
-}
 
 
 Actor HeadshotPopFlag : Inventory

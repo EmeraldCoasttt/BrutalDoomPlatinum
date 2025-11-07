@@ -289,6 +289,7 @@ ACTOR DualPlasmaRifles : BrutalWeapon
 		DUPL A 0
 		"####" A 0
         "####" A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD)
+		TNT1 A 0 A_AutoReload("DoublePlasmaAmmo","AmmoCell")
 		DUPL A 0 A_JumpIfInventory("Unloading",1,"Unload")
         DUPL A 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return state("SlideKickingStart");	} if (momZ != 0) {	return state("AirKickingFlash");}else {	return state("KickingFlash");}	}return state("");}
         DUPL A 0 A_JumpIfInventory("Taunting",1,"Taunt")

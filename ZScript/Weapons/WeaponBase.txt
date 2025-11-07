@@ -725,7 +725,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	
 	Action state A_AutoReload(Name Magtype, Name Ammotype, statelabel label = "Reload")
 	{
-		If(countinv(Magtype) == 0 && countinv(Ammotype) > 0)
+		If(countinv(Magtype) == 0 && countinv(Ammotype) > 0 && invoker.owner.getcvar("bdp_autoreload") == true)
 		{
 			Return Resolvestate(Label);
 		}
@@ -861,7 +861,10 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	{
 		(findInventory(invoker.ammo2.GetClassName())).icon = texman.CheckForTexture(AmmoIcon, TexMan.Type_Any);
 	}
-	
+	action void ChangeAmmoIcon3(String AmmoIcon)
+	{
+		(findInventory(invoker.AmmoType3)).icon = texman.CheckForTexture(AmmoIcon, TexMan.Type_Any);
+	}
 	
 	action void LedgeReach(float HeightDecrease)
 	{

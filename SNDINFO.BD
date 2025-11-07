@@ -542,6 +542,8 @@ $rolloff SSGFIRE1 100 2200
 
 weapons/shotgun2                    STGNSHOT
 weapons/shotgun/pump	            STGNPUMP
+weapons/shotgun/pump1	            SGNPUMP1
+weapons/shotgun/pump2	            SGNPUMP2
 weapons/assaultrifle                G2FIRE
 
 $rolloff weapons/shotgun2 100 2200
