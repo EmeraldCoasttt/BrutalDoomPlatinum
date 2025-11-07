@@ -279,16 +279,16 @@ CLASS BattleRifle : Brutalweapon
 		
 		Reload:
 			TNT1 A 0 A_JumpIf(invoker.aimMode == 0, 3);
-			TNT1 A 0 A_CheckIfAmmo("clip2",1,"NoAmmo");
 			TMT1 A 0 A_JumpIfInventory("battlerifleammo",15,"Aim");
+			TNT1 A 0 A_CheckIfAmmo("clip2",1,"NoAmmo");
 			Goto AimEnd;
 			TNT1 A 0
 			{
 				invoker.semiautofired = false;
 			}
 			TNT1 A 0 A_takeinventory("reloading",1);
-			TNT1 A 0 A_CheckIfAmmo("clip2",1,"noammo");
 			TNT1 A 0 A_jumpifinventory("battlerifleammo",15,"ready");
+			TNT1 A 0 A_CheckIfAmmo("clip2",1,"noammo");
 			TNT1 A 0 A_startsound("BR45OPEN",3);
 			BR4R ABCDE 1;
 			TNT1 A 0

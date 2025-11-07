@@ -265,8 +265,8 @@ ACTOR BrutalSMG : BrutalWeapon
 		
     Reload: 
 		TNT1 A 0 A_JumpIf(GetAim == 0, 4)
-		TNT1 A 0 A_CheckIfAmmo("Clip1")
 		TMT1 A 0 A_JumpIfInventory("BDSMGAmmo",40,"Aim")
+		TNT1 A 0 A_CheckIfAmmo("Clip1")
 		TNT1 A 0 SetAimDest("Reload")
 		Goto AimEnd
 		TNT1 A 0 A_zoomfactor(1.0)
@@ -275,8 +275,8 @@ ACTOR BrutalSMG : BrutalWeapon
 		SHTN A 0 A_TakeInventory("Fire2Activate",1)
 		SHTN A 0 A_Takeinventory("PressedTwice",1)
 		SHTN A 0 A_TakeInventory("PressedOnce",1)
-		TNT1 A 0 A_CheckifAmmo("Clip1")
 		SMGG A 0 A_JumpIfInventory("BDSMGAmmo", 40 ,"Ready")
+		TNT1 A 0 A_CheckifAmmo("Clip1")
 		SMGR A 1 {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("SMGCrosshair"));}else{A_SetCrosshair(0);}}
         TNT1 AAA 0
 		SMGG A 0 A_Takeinventory("Zoomed",1)

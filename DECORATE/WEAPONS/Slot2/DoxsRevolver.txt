@@ -16,7 +16,7 @@ ACTOR DoxsRevolver : BrutalWeapon
     Inventory.PickupSound "REVDRY"
 	Inventory.Pickupmessage "You got the Revolver! Yee-haw! (slot 2)"
     +WEAPON.NOAUTOAIM
-	//+WEAPON.NOAUTOFIRE
+	+WEAPON.NOAUTOFIRE
 	+WEAPON.NOALERT
 	//+WEAPON.NO_AUTO_SWITCH
     +FORCEXYBILLBOARD
@@ -207,7 +207,7 @@ ACTOR DoxsRevolver : BrutalWeapon
 		Goto ReadyNoAmmo
 	
     Fire:
-	    TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "NoAmmoFire")
+	    TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "NoAmmo")
 		REVO A 0 A_CHeckIfAmmo("BDRevolverAmmo",1)
         TNT1 AAAA 0
 	    REVO A 0 A_PlaySound("REVFIRE1")
@@ -248,7 +248,7 @@ ACTOR DoxsRevolver : BrutalWeapon
 		Goto Ready
 		
 	AltFire:
-	    TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "NoAmmoFire")
+	    TNT1 A 0 A_JumpIfinventory("RevolverIsUnloaded",1, "NoAmmo")
 		REVO A 0 A_CHeckIfAmmo("BDRevolverAmmo",1)
         TNT1 AAAA 0
 	    TNT1 A 0 A_JumpIfInventory("RevolverContinueAlt",1, "AltActualFire")
@@ -327,17 +327,6 @@ ACTOR DoxsRevolver : BrutalWeapon
 		REVO PON 1 A_SetPitch(Pitch+2, SPF_INTERPOLATE) 
 		Goto Ready
 		*/
-	NoAmmoFire:
-	    REVO A 0 A_PlaySound("REVFIRE1")
-	    REUF BC 1
-		TNT1 A 0 A_PlaySound("REVDRY", 4)
-		TNT1 A 0 offset(0,34)
-		REUF A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_NOFIRE)
-		TNT1 A 0 offset(0,33)
-		REUF A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_NOFIRE)
-		TNT1 A 0 offset(0,32)
-		REUF A 1 A_WeaponReady(WRF_ALLOWRELOAD | WRF_NOFIRE)
-		Goto ReadyNoAmmo
 		
 		
 		
@@ -352,7 +341,7 @@ ACTOR DoxsRevolver : BrutalWeapon
 		TNT1 A 0 offset(0,32)
 		REVO A 1 A_WeaponReady(WRF_NOFIRE)
 	NoAmmo2:
-		TNT1 A 0 A_JumpIf(CountInv("Clip1") > 1 && CountInv("BDRevolverAmmo") < 6,"Reload")
+		TNT1 A 0 A_JumpIf(CountInv("Clip1") > 0 && CountInv("BDRevolverAmmo") < 6,"Reload")
 		REVO A 1 A_WeaponReady(WRF_NOFIRE)
 		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK) || GetPressed(BT_ALTATTACK), "NoAmmo2")
 		Goto Ready

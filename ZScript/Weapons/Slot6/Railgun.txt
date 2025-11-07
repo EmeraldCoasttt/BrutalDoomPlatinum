@@ -336,8 +336,8 @@ CLASS Railgun : Brutalweapon
 		
 		Reload:
 			TNT1 A 0 A_JumpIf(invoker.aimMode == 0, 3);
-			TNT1 A 0 A_CheckIfAmmo("ammocell",10,"NoAmmoAlt");
 			TMT1 A 0 A_JumpIfInventory("nurailgunammo",5,"Aim");
+			TNT1 A 0 A_CheckIfAmmo("ammocell",10,"NoAmmoAlt");
 			Goto AimEnd;
 			TNT1 A 0
 			{
@@ -350,13 +350,13 @@ CLASS Railgun : Brutalweapon
 					{
 						Return resolvestate(null);
 					}
-				Else if (countinv("nurailgunammo") < 1 || Countinv("AmmoCell") < 10)
+				Else if (countinv("nurailgunammo") == 5)
 					{
-						Return resolvestate("NoAmmoAlt");
+						Return resolvestate("Fidget");
 					}
 				Else
 					{
-						Return resolvestate("Fidget");
+						Return resolvestate("NoAmmoAlt");
 					}
 			}
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol");
