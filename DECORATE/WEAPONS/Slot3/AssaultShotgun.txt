@@ -436,6 +436,7 @@ ACTOR AssaultShotgun : BrutalWeapon
 	
 	
 	Inspect:
+	A12G A 0 A_Takeinventory("Reloading",1)
 	A12R ABCD 1 A_WeaponReady
 	212G A 0 A_JumpIf(Countinv("PlasmaShellSelected")==1, 2)
 	A12G A 0
@@ -452,6 +453,7 @@ ACTOR AssaultShotgun : BrutalWeapon
 	"####" X 0 A_PlaySound("foley/ASGPump", 10)
 	"####" T 1 A_WeaponReady
 	A12R DCBA 1 A_WeaponReady
+	A12G A 0 A_Takeinventory("Reloading",1)
 	Goto Ready
 	
     Reload:
