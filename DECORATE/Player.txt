@@ -5491,12 +5491,12 @@ ACTOR BDoomer : Doomer
 	Player.StartItem "BDRevolverAmmo", 64	
 	Player.StartItem "BDDualRevolverAmmo", 64	
 	//slot 3
-	Player.StartItem "ShotgunAmmo", 8
+	Player.StartItem "ShotgunAmmo", 9
 	Player.StartItem "AssaultShotgunAmmo", 16	
 	Player.StartItem "SSGAmmo", 2
 	//slot 4
 	Player.StartItem "RifleAmmo", 31
-	Player.StartItem "DoubleRifleAmmo", 62
+	Player.StartItem "BattleRifleAmmo", 15
 	Player.StartItem "Clip2", 60
 	Player.StartItem "NailgunAmmo", 75
 	Player.StartItem "MachineGunAmmo", 1
