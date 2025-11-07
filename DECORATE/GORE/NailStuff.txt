@@ -109,74 +109,7 @@ States
 }
 
 
-ACTOR FlyingNail//: FlyingNail//: FastProjectile
-{
-Projectile
-Damage(Random(23,23))
-Speed 100
-Radius 4
-Height 4
-Decal "BulletDecalNew1"
-DamageType Nail
-scale 0.6
-+BLOODSPLATTER
-+movewithsector
--NOGRAVITY
-Gravity 0.9
-Species "Marines"
-+THRUSPECIES
-+MTHRUSPECIES
-States
-    {
-    Spawn:
-    NAIL A 0 NODELAY
-    NAIL A 0 A_FaceMovementDirection(0,360,0)//,FMDF_INTERPOLATE)
-	NAIL X 0 A_JumpIf(GetCVAR("Dox_3DNail")==1,"FLY")
-	NAIL A 0
-    FLY:
-    NAIL "#" -1
-    stop
-    
-    XDeath: //hits a bleeding actor
-    Crash:
-    TNT1 A 0
-    TNT1 A 0
-    stop
-    
-    Death: //hits a wall
-    TNT1 "#" 0
-    TNT1 "#" 0 A_JumpIfInventory("MakeTheNailDissapear",1,"XDeath")
-//	NAIL "#" 0 A_FaceMovementDirection(0,360,0)//,FMDF_INTERPOLATE)
-    TNT1 "#" 0 A_SpawnItem("HitPuffTracer")
-	NAIL X 0 A_JumpIf(GetCVAR("Dox_3DNail")==1,2)
-	NAIL A 0
-	"####" "#" 0
-    TNT1 "#" 0 A_Jump(128, "Stays")
-	Dies2:
-    TNT1 A 0 A_CustomMissile("NailgunGib1", random(-1,1), random(1,-1), random(135,225), 2, random (-50, 50))
-    TNT1 A 0 A_CustomMissile("NailgunGib2", random(-1,1), random(1,-1), random(135,225), 2, random (-50, 50))
-    TNT1 A 0 A_CustomMissile("NailgunGib3", random(-1,1), random(1,-1), random(135,225), 2, random (-50, 50))
-    stop
-    
-    Stays:
-    TNT1 "#" 0 A_JumpIfInventory("MakeTheNailDissapear",1,"XDeath")
-    NAIL "#" 1 A_ChangeFlag("NOGRAVITY",1)
-	NAIL X 0 A_JumpIf(GetCVAR("Dox_3DNail")==1,"Stays3D")
-    NAIL A 175
-	Goto Dies
-	NAIL AAAAAAAAAAAAAAAAAAAA 1 A_FadeOut(0.05)
-    stop
-	
-	Stays3D:
-	 NAIL X 175
-	 Goto Dies
-	NAIL XXXXXXXXXXXXXXXXXXXX 1 A_FadeOut(0.05)
-    stop
-	Dies:
-	  TNT1 "#" 0 A_startsound("ricochet")
-	  Goto dies2
-    }
-}
+
 
 //////////////////////////////////////////////////////////////////////////////////////
 //MOSTERS
