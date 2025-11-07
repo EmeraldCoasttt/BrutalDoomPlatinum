@@ -5504,6 +5504,7 @@ ACTOR BDoomer : Doomer
 	Player.StartItem "GLAmmo", 1
 	Player.StartItem "RocketRounds", 6
 	Player.StartItem "AmmoRocket", 3
+	Player.StartItem "RifleGrenade", 1
 	Player.StartItem "FlamerAmmo", 60
 	//slot 6
 	Player.StartItem "NuRailgunAmmo", 5

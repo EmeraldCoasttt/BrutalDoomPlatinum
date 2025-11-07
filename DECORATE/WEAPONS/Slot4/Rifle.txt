@@ -148,7 +148,7 @@ ACTOR Rifle : BrutalWeapon
 	//	RIFG A 0 A_JumpIfInventory("Zoomed",1,"Ready2")
 		RIFG A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,TRUE)
 		TNT1 A 0 A_AutoReload("RifleAmmo","Clip2")
-		TNT1 A 0 A_AutoReload("RifleGrenade","AmmoRocket","ReloadGrenade")
+		TNT1 A 0 A_AutoReload("RifleGrenade","AmmoRocket","ReloadGrenade",TRUE)
 		Loop	
 		
     Ready2:
@@ -335,13 +335,13 @@ ACTOR Rifle : BrutalWeapon
 		
 	AltFire:
 		TNT1 A 0
-		TNT1 A 0 A_CheckIfAmmo("RifleGrenade",1,"ReloadGrenade")
+		TNT1 A 0 A_CheckIfAmmo("RifleGrenade",1,"NoAmmo")
 		TNT1 A 0
 		TNT1 A 0 A_AlertMonstersDX
 		RIFG A 0 A_ZoomFactor(0.98)
 		GLAN A 0 A_StartSound("Weapons/Firegrenade", 1)
 		RIFG A 0 A_TakeAmmo("RifleGrenade")
-		TNT1 A 0 ChangeAmmoIcon3("NoGren")
+		//TNT1 A 0 ChangeAmmoIcon3("NoGren")
 		RIFG A 0 BRIGHT A_FireBullets (0, 0, -1, 200, "GrenadePuff", FBF_NORANDOM,10000,"RifleGrenadeTracer",-12)
 		TNT1 A 0 A_GunLight
 		RIFF E 1 BRIGHT A_SetPitch(pitch-8, SPF_INTERPOLATE)
@@ -349,11 +349,9 @@ ACTOR Rifle : BrutalWeapon
 		RIFG A 0 A_ZoomFactor(1.0)
 		RIFF FGHI 1 A_SetPitch(pitch+2, SPF_INTERPOLATE)
 		RIFG A 15
-	
-
-		Goto Ready
+	//Auto reload, as it's a single shot weapon
 	ReloadGrenade:
-		TNT1 A 0 A_CheckIfAmmo("AmmoRocket")
+		TNT1 A 0 A_CheckIfAmmo("AmmoRocket",1,"GrenadeNoAmmo")
 		TNT1 AA 0
 		//TNT1 A 0 A_TakeInventory("FiredMGGrenade",1)
 		
@@ -367,7 +365,7 @@ ACTOR Rifle : BrutalWeapon
 		RIGL QRSTUUVVV 1
 		HBUS A 0 A_StartSound("Weapons/GrenadeLoad", 5)
 		TNT1 A 0 A_Reload("RifleGrenade",1,"AmmoRocket")
-		TNT1 A 0 ChangeAmmoIcon3("ROCKA0")
+		//TNT1 A 0 ChangeAmmoIcon3("ROCKA0")
 		RIGL WXYYYYZZ 1
 		RIG2 ABCDEE 1
 		HBUS A 0 A_PlaySound("Rifle/Grenade2", 5)
@@ -430,6 +428,7 @@ ACTOR Rifle : BrutalWeapon
 		
 	NoAmmo:
 		TNT1 A 0 A_StartSound("weapons/empty", 3)
+	GrenadeNoAmmo:
 	NoAmmo2:
 		TNT1 A 0 A_JumpIf(CountInv("Clip2") > 0 && CountInv("RifleAmmo") < 30,"Reload")
 		RIFG A 1 A_WeaponReady(WRF_NOFIRE)

@@ -7,10 +7,7 @@ addplayerclass BDoomer
    alias kickem "pukename PressKick"
    defaultbind Q kickem
 
-   addmenukey "Reload" reload
-   alias reload "pukename PressReload"
-   defaultbind R reload
-   
+
    addMenuKey "Dual Wield/Special Action" "+user3"
    
    addmenukey "Flashlight" flashlightswitch

@@ -375,11 +375,13 @@ Class Brutalweapon : DoomWeapon //Weapon
 	//Is BT_Reload cursed? Why doesn't it register the input?
 	//I feel like I'm going insane
 	//Emerald 11/7/2025
+	
+	//Oh my god it was just brutal doom jank FUCK
 	action state A_PressingReload(statelabel reloadstate = "reload")
 	{
-		If(player.cmd.buttons & BT_RELOAD)
+		if ((player.cmd.buttons & BT_RELOAD) || (player.oldbuttons & BT_RELOAD))
 		{
-			console.printf("YeeHaw");
+			//console.printf("YeeHaw");
 			return resolvestate(reloadstate);
 		}
 		Else 
@@ -742,9 +744,10 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	A_takeinventory("hasimpfatality",666);
 	}
 	
-	Action state A_AutoReload(Name Magtype, Name Ammotype, statelabel label = "Reload")
+	Action state A_AutoReload(Name Magtype, Name Ammotype, statelabel label = "Reload", bool force = false)
 	{
-		If(countinv(Magtype) == 0 && countinv(Ammotype) > 0 && invoker.owner.getcvar("bdp_autoreload") == true)
+		//FORCE flag is intended for single shot weapons
+		If(countinv(Magtype) == 0 && countinv(Ammotype) > 0 && (invoker.owner.getcvar("bdp_autoreload") == true || force == true))
 		{
 			Return Resolvestate(Label);
 		}
