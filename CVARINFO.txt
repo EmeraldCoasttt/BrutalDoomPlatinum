@@ -251,4 +251,4 @@ server bool bdp_modifiers_allunlocked = false;
 
 nosave string bdp_seed_blacklist = "1,2,3,4";
 
-user bool bdp_autoreload = false;
+user bool bdp_autoreload = true;
