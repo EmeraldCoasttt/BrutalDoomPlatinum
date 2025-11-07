@@ -214,6 +214,7 @@ CLASS Railgun : Brutalweapon
 			TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000,1.0);
 			TNT1 A 0 A_jumpifinventory("railchambered",1,"Pumping");
 			RAIL A 1 A_weaponreadyDX(WRF_ALLOWRELOAD);
+			TNT1 A 0 A_AutoReload("NuRailgunAmmo","AmmoCell");
 			LOOP;
 
 		Fidget:
@@ -223,11 +224,20 @@ CLASS Railgun : Brutalweapon
 			RAIL JKLMNYYOO 1 A_WeaponReadyDX();
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol2");
 			RAIL OOOO 1 A_WeaponReadyDX();
+		FidgetSpam:
 			TNT1 A 0 A_StartSound("RAILMAG2", 5);
 			RAIL PR 1 A_WeaponReadyDX();
-			RAIL TWWVUUUUUUUUU/*UUUUUUUUUU*/ 1 A_WeaponReadyDX();
+			RAIL TWWVUUUUUUUU 1 A_WeaponReadyDX();
+		FidgetLoop:
+			RAIL U 1 A_WeaponReadyDX();
+			TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD,"FidgetLoop");
 			TNT1 A 0 A_StartSound("RAILINSR", 5);
-			RAIL UUUUUTTSRQP 1 A_WeaponReadyDX();
+			RAIL UUUUUTTSR 1 A_WeaponReadyDX();
+			TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD,"FidgetSpam");
+			RAIL Q 1 A_WeaponReadyDX();
+			TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD,"FidgetSpam");
+			RAIL P 1 A_WeaponReadyDX();
+			TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD,"FidgetSpam");
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol2reverse");
 			RAIL OOOOONMLKJ 1 A_WeaponReadyDX();
 			TNT1 A 0 A_overlay(-5,"pumpinghandlolreverse");
@@ -335,9 +345,10 @@ CLASS Railgun : Brutalweapon
 		
 		
 		Reload:
-			TNT1 A 0 A_JumpIf(invoker.aimMode == 0, 3);
+			TNT1 A 0 A_JumpIf(invoker.aimMode == 0, 4);
 			TMT1 A 0 A_JumpIfInventory("nurailgunammo",5,"Aim");
 			TNT1 A 0 A_CheckIfAmmo("ammocell",10,"NoAmmoAlt");
+			TNT1 A 0 {invoker.aimDest = "Reload";}
 			Goto AimEnd;
 			TNT1 A 0
 			{
@@ -391,7 +402,7 @@ CLASS Railgun : Brutalweapon
 	NoAmmoAlt:
 		TNT1 A 0 A_StartSound("weapons/empty", 3);
 	NoAmmo2:
-		TNT1 A 0 A_JumpIf(CountInv("ammocell") >= 10 && CountInv("nurailgunammo") < 5,"Reload");
+		TNT1 A 0 A_JumpIf(CountInv("ammocell") > 9 && CountInv("nurailgunammo") < 5,"Reload");
 		TNT1 A 0 A_JumpIf(invoker.aimMode > 0, "NoAmmo3");
 		RAIL A 1 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD || player.cmd.buttons & BT_ATTACK, "NoAmmo2");

@@ -157,7 +157,10 @@ CLASS SSG : BrutalWeapon
 		SHO3 FGHI 1 A_WeaponReadyDX();
 		TNT1 A 0 A_startsound("weapons/sshoto");
 		SHO3 JKL 1 A_WeaponReadyDX();
-		SHO3 M 16 A_WeaponReadyDX();
+		SHO3 M 15 A_WeaponReadyDX();
+	FidgetLoop:
+		SHO3 M 1 A_WeaponReadyDX();
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD, "FidgetLoop");
 		SHTZ A 0 A_startsound("foley/SSGraiseAfterClose",10);
 		SHO3 NOP 1 A_WeaponReadyDX();
 		SHTZ A 0 A_startsound("weapons/sshotc");
