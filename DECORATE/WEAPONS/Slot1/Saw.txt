@@ -7,6 +7,8 @@ decal "SawHorizontalSmaller"
 }
 Actor Chain_saw : BrutalWeapon
 {
+	Weapon.SlotNumber 1
+	Weapon.SlotPriority 2
 	weapon.selectionorder 2200
 	Weapon.UpSound "none"
 	weapon.readysound "weapons/chainsaw/idle"

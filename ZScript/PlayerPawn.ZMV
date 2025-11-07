@@ -144,7 +144,6 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	int		DualTimer;
 	Int		SpecialTimer;
-	Int		GrenadeTimer;
 	Int		groundedtics;
 	
 	//Jumping
@@ -1270,10 +1269,6 @@ class Brutal_PlayerBase : PlayerPawn
 		Specialtimer = specialtimer - 1;
 		}
 		
-		If(Grenadetimer >= 1)
-		{
-		Grenadetimer = Grenadetimer - 1;
-		}
 		
 		If(health < 1)
 		{
@@ -1287,11 +1282,6 @@ class Brutal_PlayerBase : PlayerPawn
 			giveinventory("startdualwield",1);
 			}
 
-		If(player.cmd.buttons & BT_USER2 && grenadetimer <= 0)
-			{
-			grenadetimer = 8;
-			giveinventory("TossGrenade",1);
-			}
 		If(player.cmd.buttons & BT_ATTACK)
 			{
 			giveinventory("firedprimary",1);

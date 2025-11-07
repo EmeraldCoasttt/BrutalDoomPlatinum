@@ -18,7 +18,6 @@ ACTOR HandGrenades : BrutalWeapon
 	+WEAPON.NOAUTOFIRE
 	+INVENTORY.UNDROPPABLE
 	+Inventory.untossable
-	Weapon.SlotNumber 9
 	brutalweapon.handedness 1
     Scale 0.3
 	States

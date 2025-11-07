@@ -4,6 +4,8 @@ CLASS Unmaker : BrutalWeapon
 	Default
 	{
 	Height 20;
+	Weapon.SlotNumber 7;
+	Weapon.SlotPriority 3;
 	Weapon.SelectionOrder 2800;
 	Weapon.AmmoUse1 0;
 	Weapon.AmmoGive 100;
@@ -62,9 +64,9 @@ CLASS Unmaker : BrutalWeapon
 		
 		
 	SprintOverlay:
-	UNHG ABCDD 2;
+	UNHG ABCDD 2 A_WeaponReadyDX(0,FALSE,FALSE);
 		UNHG A 0 A_StartSound("UNMIDLE", 2);
-		UNHG DCBAAAAA 2;
+		UNHG DCBAAAAA 2 A_WeaponReadyDX(0,FALSE,FALSE);
 		LOOP;
 	
 	Steady:

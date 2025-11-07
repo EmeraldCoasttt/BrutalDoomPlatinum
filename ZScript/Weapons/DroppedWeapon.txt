@@ -1,0 +1,37 @@
+class DroppedWeapon : Actor
+{
+	Default
+	{
+		speed 6;
+		health 1;
+		radius 16;
+		height 4;
+		Gravity 0.9;
+		damage 0;
+		XScale 0.7;
+		YScale 0.8;
+		+ROLLSPRITE
+		+ROLLCENTER
+		+THRUACTORS
+		+MISSILE
+		+NOTELEPORT
+		+NOBLOCKMAP
+		+BLOODLESSIMPACT 
+		+FORCEXYBILLBOARD
+		+NODAMAGETHRUST
+		+MOVEWITHSECTOR
+		+CORPSE
+		-DONTSPLASH
+		Mass 1;
+		Bouncefactor 0.4;
+		WallBounceFactor 0.2;
+	}
+	action void A_SpawnDroppedWeapon(name weapontype, int ammonum)
+	{
+		Weapon weap2drop = Weapon(Spawn(weapontype,pos));
+		if (weap2drop)
+		{
+			weap2drop.ammoGive1 = ammonum;
+		}
+	}
+}

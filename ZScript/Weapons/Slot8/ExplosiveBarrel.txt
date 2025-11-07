@@ -7,7 +7,6 @@ class ExplosiveBarrelWeapon: BrutalWeapon  Replaces ExplosiveBarrel
 	{
 		Tag "Explosive Barrel";
 		Inventory.PickupMessage "Picked up an Explosive Barrel";
-		Weapon.SlotNumber 8;
 		BrutalWeapon.weight 3;
 		Weapon.SelectionOrder 2850;
 		Inventory.althudicon "BAR1E0";
