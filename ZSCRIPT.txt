@@ -24,6 +24,7 @@ version "4.14.0"
 
 #include "Zscript/Weapons/WeaponBase.txt"
 #include "Zscript/Weapons/WeaponSpawners.txt"
+#include "Zscript/Weapons/DroppedWeapon.txt"
 
 //Slot 1
 #include "Zscript/Weapons/Slot1/Chainsaw.txt"
