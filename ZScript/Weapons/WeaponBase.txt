@@ -372,6 +372,8 @@ Class Brutalweapon : DoomWeapon //Weapon
 		}
 	}
 	
+	
+	
 	Action void A_gunslingerreload(name mag, int magsize, name ammopool, int conversion = 1, name secondarymag = "null")
 	{	
 		//Functionality dummied out for refactoring
@@ -662,6 +664,19 @@ Class Brutalweapon : DoomWeapon //Weapon
 		Else
 		{
 		Return resolvestate(label);
+		}
+	}
+	
+	
+	Action state A_JumpIfMagFull(statelabel label)
+	{
+		If(invoker.mag >= invoker.MagCapacity)
+		{
+		Return ResolveState(label);
+		}
+		Else
+		{
+		Return resolvestate(null);
 		}
 	}
 	

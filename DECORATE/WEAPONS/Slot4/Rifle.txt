@@ -11,7 +11,7 @@ ACTOR Rifle : BrutalWeapon
 	Weapon.SlotPriority 1
 	Weapon.SelectionOrder 2500
 	Weapon.AmmoType1 "Clip2"
-	Weapon.AmmoType2 "RifleAmmo"
+	BrutalWeapon.magcapacity 30
 	BrutalWeapon.AmmoType3 "AmmoRocket"
 	//BrutalWeapon.Weight 6
 	Obituary "%o was shot down by %k's assault rifle."
@@ -147,7 +147,7 @@ ACTOR Rifle : BrutalWeapon
 	Ready3:
 	//	RIFG A 0 A_JumpIfInventory("Zoomed",1,"Ready2")
 		RIFG A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,TRUE)
-		TNT1 A 0 A_AutoReload("RifleAmmo","Clip2")
+		TNT1 A 0 A_AutoReloadMag
 		TNT1 A 0 A_AutoReload("RifleGrenade","AmmoRocket","ReloadGrenade",TRUE)
 		Loop	
 		
@@ -234,7 +234,7 @@ ACTOR Rifle : BrutalWeapon
 		RIFG A 0 A_Giveinventory("RifleSelected",1)
 		TNT1 AAAAAAAAAAAAAA 0 A_Raise
 		RIFG A 0 A_JumpIfInventory("NeverSelectedShotgun",1,"WarmUp")
-		RIFG A 0 A_GunSlingerReload("RifleAmmo",31,"Clip2",1,"DoubleRifleAmmo")
+		RIFG A 0 A_GunSlingerMag(1)
 		Goto SelectAnimation
 		
 	SelectFromDual:
@@ -252,12 +252,12 @@ ACTOR Rifle : BrutalWeapon
 		
 	
     Fire:
-        RIFG A 0 A_CheckIfAmmo("RifleAmmo")
+        RIFG A 0 A_CheckIfMag
         TNT1 AA 0
 		RIFG A 0 A_AlertMonstersDX
 		RIFF A 0 A_FireCustomMissile("DistantFireSoundRifle", random(-1,1), 0, 0, -12, 0, random(-1,1))
 		RIFG A 0 A_TakeAmmo("DoubleRifleAmmo",1)
-		RIFG A 0 A_TakeAmmo("RifleAmmo",1)
+		RIFG A 0 A_TakeMag
         RIFG A 0 A_PlaySound("weapons/rifle", 1)
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("RifleAmmo")<=8) { A_PlaySound("MagClick", 7); }}}
 		//RIFG A 0 A_JumpIfInventory("Zoomed",1,"Fire2")
@@ -428,16 +428,17 @@ ACTOR Rifle : BrutalWeapon
 		
 	NoAmmo:
 		TNT1 A 0 A_StartSound("weapons/empty", 3)
-	GrenadeNoAmmo:
+	
 	NoAmmo2:
-		TNT1 A 0 A_JumpIf(CountInv("Clip2") > 0 && CountInv("RifleAmmo") < 30,"Reload")
+		TNT1 A 0 A_AutoReloadMag
+	GrenadeNoAmmo:
 		RIFG A 1 A_WeaponReady(WRF_NOFIRE)
 		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK) || GetPressed(BT_ALTATTACK), "NoAmmo2")
 		Goto Ready
 	
     Reload:
 	    RIFG A 0 A_Takeinventory("Reloading",1)
-	    RIFG A 0 A_JumpIfInventory("RifleAmmo",30,"Fidget")
+	    RIFG A 0 A_JumpIfMagFull("fidget")
 	//	RIFG A 1 A_WeaponReady
 		
 		RIFG A 0 {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RifleCrosshair"));}else{A_SetCrosshair(0);}}
@@ -448,7 +449,7 @@ ACTOR Rifle : BrutalWeapon
 		RIFG A 0 A_Takeinventory("ADSmode",1)
 		RIFG A 0 A_Takeinventory("Zoomed",1)
 		//RIFG A 0 A_JumpIfInventory("TurboReload",1,"TurboReload")
-        RIFG A 0 A_CheckIfAmmo("Clip2")
+        RIFG A 0 A_CheckIfAmmo("clip2",1)
 		RIFG A 0 A_Takeinventory("Zoomed",1)
         RIFG A 0 A_PlaySound("Relo1", 6)
 		RIFG A 0 A_GiveInventory ("Pumping", 1)
@@ -456,18 +457,18 @@ ACTOR Rifle : BrutalWeapon
 		//XXXX X 0 A_PlaySound("RIFFOL3",10)
        RIFR ABCDEFGG 1
 		RIFR G 0 A_FireCustomMissile("EmptyClipSpawn",-5,0,8,-4)
-		TNT1 A 0 A_DiscardMag("rifleammo",1)
+		TNT1 A 0 A_DiscardMagazine(1)
 		RIFR H 3
 		RIFR IJKLMNNO 1
 		RIFR A 0 A_PlaySound("Relo2", 5)
 		RIFR OONPQR 1
-		NULL A 0 A_JumpIf(CountInv("RifleAmmo")==0,"ReloadEmpty")
+		NULL A 0 A_CheckIfMag(1,"ReloadEmpty")
 		
 		//RIFR MMMMM 1
 		//XXXX X 0 A_PlaySound("RIFFOL3",10)
 		//RIFR NOPQRST 1  
 		RIFG A 0 A_Takeinventory("HasUnloaded",1)
-		RIFG A 0 A_reload("RifleAmmo",30,"Clip2",1,1,"DoubleRifleAmmo")
+		RIFG A 0 A_reloadmag(1)
 		RIFR STUU 1 
 		RIFG A 0 A_Takeinventory("HasUnloadedRifle",1)
 		RIFG A 0 A_Takeinventory("HasUnloadedDualRifles",1)
@@ -482,7 +483,7 @@ ACTOR Rifle : BrutalWeapon
 	ReloadEmpty:
 		
 		RIFG A 0 A_Takeinventory("HasUnloaded",1)
-		RIFG A 0 A_reload("RifleAmmo",30,"Clip2",1,1,"DoubleRifleAmmo")
+		RIFG A 0 A_reloadmag(1)
 		RIFR STUU 1 
 		RIFR VVVWXYZ 1
 		RIFR "[" 1 
