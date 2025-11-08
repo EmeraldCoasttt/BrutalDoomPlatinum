@@ -72,6 +72,12 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	}
 	
+	override void beginplay()
+	{
+		mag = magcapacity;
+		Super.beginplay();
+	}
+	
 	override void ondrop(Actor dropper)
 	{
 		giveinventory("AmmoTaken",1);
