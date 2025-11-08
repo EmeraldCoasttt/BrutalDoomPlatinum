@@ -54,12 +54,12 @@ CLASS Incinerator : BrutalWeapon
 		
 	SprintOverlay:
 		
-		FLMT GHI 1 A_WeaponReadyDX(0,FALSE,FALSE);
+		FLMT GHI 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 		KeepSprinting:
-		FLMT J 1 A_weaponreadyDX(0,FALSE,FALSE);
+		FLMT J 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 	TNT1 A 0 A_keepsprinting();
 	ReturnFromSprint:
-		FLMT IHG 1 A_WeaponReadyDX(0,FALSE,FALSE);
+		FLMT IHG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 		Goto ready;
 		
 	NoAmmo:

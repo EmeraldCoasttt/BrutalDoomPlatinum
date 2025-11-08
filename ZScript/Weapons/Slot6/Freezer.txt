@@ -222,7 +222,7 @@ Class Freezer : BrutalWeapon
 	KeepSprinting:
 	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"KeepSprintingNoAmmo");
 	RAIL A 0 A_Startsound("PLSIDLE");
-	FR1K EFG 2 A_weaponreadyDX(0,FALSE,FALSE);
+	FR1K EFG 2 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 	TNT1 A 0 A_KeepSprinting();
 	Goto ReturnFromSprint;
 	SprintNoAmmo:
