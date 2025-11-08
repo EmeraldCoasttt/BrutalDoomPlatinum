@@ -606,6 +606,7 @@ class BDP_HUD : DoomStatusBar
 			DrawTeleBar(iconPos + (-32, -29), iconflags);
 		}
 		
+		int MagAmt;
 		int ammo3Amt;
 		Class<Inventory> Ammo3;
 		let weap = BrutalWeapon(CPlayer.mo.player.ReadyWeapon);
@@ -616,7 +617,12 @@ class BDP_HUD : DoomStatusBar
 			{
 				ammo3amt = CPlayer.mo.countinv(ammo3);
 			}
+			MagAmt = Weap.mag;
 		}
+		
+		
+		
+		
 		
 		
 		Ammo ammo1, ammo2;
@@ -662,14 +668,20 @@ class BDP_HUD : DoomStatusBar
 				Font.CR_White
 			);
 		}
-		/*
-		if (weap && weap.showicon)
+		
+		if (weap && weap.magcapacity)
 		{
 			iconPos.x += iconSpacing;
-			DrawInventoryIcon(weap, iconPos - numOfs, iconFlags);
-			
+			DrawInventoryIcon(weap, iconPos, iconFlags);
+			DrawString(
+				mHudfont, 
+				String.Format("%d", MagAmt), 
+				iconPos + numOfs,
+				numFlags,
+				Font.CR_White
+			);
 		}
-		*/
+		
 		iconPos += (iconSpacing * 1, 17);
 		DrawGrenadeIndicator(mIndexfnt, iconPos, iconFlags, (22,22));
 		DrawWeaponSpecificStuff(basepos);

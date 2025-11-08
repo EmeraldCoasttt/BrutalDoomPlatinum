@@ -45,6 +45,10 @@ Class Brutalweapon : DoomWeapon //Weapon
 	name AmmoType3;
 	Property AmmoType3 : AmmoType3;
 	
+	int mag;
+	int MagCapacity;
+	Property MagCapacity : MagCapacity;
+	
 	bool newweapon;
 	
 	bool showicon;
@@ -151,6 +155,21 @@ Class Brutalweapon : DoomWeapon //Weapon
 				Until(dplr.countinv(magname) <= plusone)
 				{
 					dplr.takeinventory(magname,1);
+				}
+			}
+		
+	
+	}
+	
+	Action void a_discardmagazine(int plusone = 0)
+	{
+		
+			let dplr = Brutal_PlayerBase(invoker.owner);
+			if(dplr && dplr.gluttony)
+			{
+				Until(invoker.mag <= plusone)
+				{
+					invoker.mag--;
 				}
 			}
 		
@@ -311,8 +330,52 @@ Class Brutalweapon : DoomWeapon //Weapon
 		}
 	}
 	
-	Action void A_gunslingerreload(name mag, int magsize, name ammopool, int conversion = 1, name secondarymag = "null")
+	action void A_ReloadMag(int chamberbonus = 0, int conversion = 1, bool multiplicative = false)
 	{
+		Int MagGoal;
+		If(invoker.mag > 0)
+		{
+			MagGoal = (invoker.magcapacity + chamberbonus);
+		}
+		Else
+		{
+			MagGoal = invoker.magcapacity;
+		}
+		Int SecondaryMagGoal;
+		
+		Bool Reloaded;
+		
+		While(!reloaded)
+		{
+			If(invoker.mag < MagGoal && countinv(invoker.AmmoType1) >= conversion && !multiplicative)
+			{
+				takeinventory(invoker.AmmoType1,conversion);
+				invoker.mag++;
+				//If(secondarymag && countinv(secondarymag) < SecondaryMagGoal)
+				//{
+				//	giveinventory(secondarymag,1);
+				//}
+			}
+			Else If(invoker.mag < MagGoal && multiplicative && countinv(invoker.AmmoType1) >= 1)
+			{
+				takeinventory(invoker.AmmoType1,1);
+				invoker.mag += conversion;
+				//If(secondarymag && countinv(secondarymag) < SecondaryMagGoal)
+				//{
+				//	giveinventory(secondarymag,conversion);
+				//}
+			}
+			else
+			{
+				reloaded = TRUE;
+			}
+		}
+	}
+	
+	Action void A_gunslingerreload(name mag, int magsize, name ammopool, int conversion = 1, name secondarymag = "null")
+	{	
+		//Functionality dummied out for refactoring
+		/*
 		If(invoker.gunslinger && invoker.gunslingereligible)
 		{
 			A_reload(mag, magsize, ammopool, 0, conversion, secondarymag);
@@ -321,6 +384,17 @@ Class Brutalweapon : DoomWeapon //Weapon
 		//Invoker.gunslingerammoname = ammopool;
 		Invoker.gunslingermagname = mag;
 		Invoker.gunslingermagsize = magsize;
+		*/
+	}
+	
+	Action void A_gunslingermag(int chamberbonus = 0, int conversion = 1, bool multiplicative = false)
+	{
+		If(invoker.gunslinger && invoker.gunslingereligible)
+		{
+			A_reloadMag(chamberbonus,conversion,multiplicative);
+		}
+		invoker.gunslingereligible = false;
+		//Invoker.gunslingerammoname = ammopool;
 	}
 	
 	
@@ -427,6 +501,18 @@ Class Brutalweapon : DoomWeapon //Weapon
 		Else if(!findinventory("powerspeed2"))
 		{
 			A_giveinventory(ammotype,ammoamount);
+		}
+	}
+	
+	Action void a_TakeMag(int ammoamount = 1, bool take = true)
+	{
+		If(!findinventory("PowerSpeed2") && take)
+		{
+			invoker.mag -= ammoamount;
+		}
+		Else if(!findinventory("powerspeed2"))
+		{
+			invoker.mag += ammoamount;
 		}
 	}
 	
@@ -570,6 +656,18 @@ Class Brutalweapon : DoomWeapon //Weapon
 	action state A_CheckIfAmmo(class<Inventory> ammotype, int ammoamount = 1, statelabel label = "NoAmmo")
 	{
 		If(countinv(ammotype) >= ammoamount || findinventory("PowerSpeed2"))
+		{
+		Return ResolveState(null);
+		}
+		Else
+		{
+		Return resolvestate(label);
+		}
+	}
+	
+	action state A_CheckIfMag(int ammoamount = 1, statelabel label = "NoAmmo")
+	{
+		If(invoker.mag >= ammoamount || findinventory("PowerSpeed2"))
 		{
 		Return ResolveState(null);
 		}
@@ -748,6 +846,20 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	{
 		//FORCE flag is intended for single shot weapons
 		If(countinv(Magtype) == 0 && countinv(Ammotype) > 0 && (invoker.owner.getcvar("bdp_autoreload") == true || force == true))
+		{
+			Return Resolvestate(Label);
+		}
+		Else
+		{
+			Return Resolvestate(Null);
+		}
+	
+	}
+	
+	Action state A_AutoReloadMag(int minammo = 1, statelabel label = "Reload", bool force = false)
+	{
+		//FORCE flag is intended for single shot weapons
+		If(invoker.mag <= 0 && countinv(invoker.Ammotype1) >= minammo && (invoker.owner.getcvar("bdp_autoreload") == true || force == true))
 		{
 			Return Resolvestate(Label);
 		}
@@ -1185,7 +1297,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			{
 				Gunslingertics--;
 			}
-			If(gunslingertics == 0 && !gunslingereligible && gunslinger && countinv(gunslingermagname) < gunslingermagsize)
+			If(gunslingertics == 0 && !gunslingereligible && gunslinger && mag <= magcapacity)
 			{
 				Gunslingereligible = true;
 				owner.A_startsound("GUNSLNG",424,0,1);

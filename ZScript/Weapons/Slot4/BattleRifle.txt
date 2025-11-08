@@ -20,7 +20,8 @@ CLASS BattleRifle : Brutalweapon
 	Weapon.AmmoGive1 50;
 	Weapon.AmmoGive2 0;
 	Weapon.AmmoType1 "Clip2";
-	Weapon.AmmoType2 "BattleRifleAmmo";
+	//Weapon.AmmoType2 "BattleRifleAmmo";
+	brutalweapon.magcapacity 15;
 	Obituary "%o was pierced by %k's Battle Rifle.";
     Inventory.PickupSound "BR45PICK";
 	Inventory.Pickupmessage "You got the Battle Rifle! (Slot 4)";
@@ -37,7 +38,7 @@ CLASS BattleRifle : Brutalweapon
 	Inventory.AltHUDIcon "BR45A0";
 	BrutalWeapon.weight 2;
 	Tag "$BDPBR";
-
+	
 
 	}
 	bool burstselected;
@@ -164,7 +165,7 @@ CLASS BattleRifle : Brutalweapon
 			TNT1 AAAAAAAAAAAAAA 0 A_Raise();
 			TNT1 A 1 A_Raise();
 			//TNT1 A 0 A_Giveinventory("RailgunSelected",1);
-			RIFL C 0 A_GunSlingerReload("battlerifleammo",15,"clip2",1);
+			RIFL C 0 A_GunSlingerMag();
 			RIFL C 0 A_SetCrosshairDX("BR45Ret",2000,0.2);
 		ReturnFromNothing:
 			TNT1 A 0 A_startSound("BR45PICK",1);
@@ -194,7 +195,7 @@ CLASS BattleRifle : Brutalweapon
 			}
 			
 			BR45 B 1 A_weaponreadyDX(WRF_ALLOWRELOAD);
-			TNT1 A 0 A_AutoReload("BattleRifleAmmo","Clip2");
+			TNT1 A 0 A_AutoReloadMag();
 			RIFL C 0 A_SetCrosshairDX("BR45Ret",2000,0.2);
 			LOOP;
 
@@ -217,7 +218,7 @@ CLASS BattleRifle : Brutalweapon
 			Goto ready;
 
 		Fire:
-			TNT1 A 0 A_CheckIfAmmo("battlerifleammo");
+			TNT1 A 0 A_CheckIfMag();
 			RAIL A 0 
 			{
 				A_overlay(-5,"DoNothing");
@@ -232,7 +233,7 @@ CLASS BattleRifle : Brutalweapon
 				
 				A_QuadSound();
 				A_ALertMonstersDX();
-				A_takeammo("battlerifleammo",1);
+				A_takeMag();
 				invoker.burstcount++;
 			}
 			TNT1 A 0 A_GunLight();
@@ -245,7 +246,7 @@ CLASS BattleRifle : Brutalweapon
 			{
 				A_zoomfactor(1.0);
 				A_fireprojectile("riflecasespawnversion2",5,false,0,-14,0);
-				If(countinv("battlerifleammo") < 1)
+				If(invoker.mag < 1)
 				{
 					A_fireprojectile("RifleClipSpawn",5,false,0,-14,0);
 				}
@@ -278,7 +279,7 @@ CLASS BattleRifle : Brutalweapon
 		
 		Reload:
 			TNT1 A 0 A_JumpIf(invoker.aimMode == 0, 4);
-			TMT1 A 0 A_JumpIfInventory("battlerifleammo",15,"Aim");
+			TMT1 A 0 A_JumpIf(invoker.mag >= 15,"aim");
 			TNT1 A 0 A_CheckIfAmmo("clip2");
 			TNT1 A 0 {invoker.aimDest = "Reload";}
 			Goto AimEnd;
@@ -287,30 +288,30 @@ CLASS BattleRifle : Brutalweapon
 				invoker.semiautofired = false;
 			}
 			TNT1 A 0 A_takeinventory("reloading",1);
-			TNT1 A 0 A_jumpifinventory("battlerifleammo",15,"ready");
+			TMT1 A 0 A_JumpIf(invoker.mag >= 15,"Ready");
 			TNT1 A 0 A_CheckIfAmmo("clip2");
 			TNT1 A 0 A_startsound("BR45OPEN",3,CHANF_OVERLAP);
 			BR4R ABCDE 1;
 			TNT1 A 0
 			{
-			If(countinv("battlerifleammo") > 0)
+			If(invoker.mag > 0)
 				{
 					A_fireprojectile("RifleClipSpawn",5,false,0,-14,0);
-					A_DiscardMag("BattleRifleAmmo",0);
+					A_DiscardMagazine();
 				}
 			}
 			BR4R FGGGGGGHIJKLMNOP 1;
 			TNT1 A 0 
 			{
 				A_startsound("BR45LOAD",3);
-				A_reload("battlerifleammo", 15, "clip2");
+				A_reloadMag();
 			}
 			BR4R QRSTUVWX 1;
 			Goto Ready;
 	NoAmmo:
 		TNT1 A 0 A_StartSound("weapons/empty", 3);
 	NoAmmo2:
-		TNT1 A 0 A_JumpIf(CountInv("Clip2") > 0 && CountInv("BattleRifleAmmo") < 15,"Reload");
+		TNT1 A 0 A_AutoReloadMag();
 		TNT1 A 0 A_JumpIf(invoker.aimMode > 0, "NoAmmo3");
 		BR45 B 1 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD || player.cmd.buttons & BT_ATTACK, "NoAmmo2");
@@ -344,7 +345,7 @@ CLASS BattleRifle : Brutalweapon
 		TNT1 A 0 A_EndAim;
 		Goto Ready;
 	FireAim:
-		TNT1 A 0 A_CheckIfAmmo("BattleRifleAmmo");
+		TNT1 A 0 A_CheckIfMag();
 			RAIL A 0 
 			{
 				A_overlay(-5,"DoNothing");
@@ -361,7 +362,7 @@ CLASS BattleRifle : Brutalweapon
 				//A_setpitch(pitch - 1.5);
 				A_QuadSound();
 				A_ALertMonstersDX();
-				A_takeammo("battlerifleammo",1);
+				A_takeMag();
 				invoker.burstcount++;
 			}
 			TNT1 A 0 A_GunLight();
@@ -370,7 +371,7 @@ CLASS BattleRifle : Brutalweapon
 			{
 				invoker.owner.player.fov = invoker.savedzoom;
 				A_fireprojectile("riflecasespawnversion2",5,false,15,-7,0);
-				If(countinv("battlerifleammo") < 1)
+				If(invoker.mag < 1)
 				{
 					A_fireprojectile("RifleClipSpawn",5,false,15,-7,0);
 				}
