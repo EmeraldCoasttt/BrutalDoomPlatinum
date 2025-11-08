@@ -44,28 +44,27 @@ ACTOR Rifle : BrutalWeapon
 	stop
 	
 	Fidget:
-		2IFR POB 1 A_WeaponReadyDX
+		2IFR POB 1 A_WeaponReadyDX(0,false,false)
 	FidgetSpam:
-		2IFR CDEFG 1 A_WeaponReadyDX
-		2IFR H 5 A_WeaponReadyDX
+		2IFR CDEFG 1 A_WeaponReadyDX(0,false,false)
+		2IFR H 5 A_WeaponReadyDX(0,false,false)
 		2IFR A 0 A_PlaySound("Rifle/Bolt1", 5)
-		2IFR IIJJJ 1 A_WeaponReadyDX
+		2IFR IIJJJ 1 A_WeaponReadyDX(0,false,false)
 	FidgetLoop:
-		2IFR J 1 A_WeaponReadyDX
+		2IFR J 1 A_WeaponReadyDX(0,false,false)
 		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD),"FidgetLoop")
 		2IFR A 0 A_PlaySound("Rifle/Bolt2", 5)
-		2IFR KKLM 1 A_WeaponReadyDX
+		2IFR KKLM 1 A_WeaponReadyDX(0,false,false)
 		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD),"FidgetSpam")
-		2IFR N 1 A_WeaponReadyDX
+		2IFR N 1 A_WeaponReadyDX(0,false,false)
 		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD),"FidgetSpam")
-		2IFR N 1 A_WeaponReadyDX
+		2IFR N 1 A_WeaponReadyDX(0,false,false)
 		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD),"FidgetSpam")
-		2IFR N 1 A_WeaponReadyDX
+		2IFR N 1 A_WeaponReadyDX(0,false,false)
 		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD),"FidgetSpam")
-		2IFR N 1 A_WeaponReadyDX
+		2IFR N 1 A_WeaponReadyDX(0,false,false)
 		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD),"FidgetSpam")
-		2IFR N 1 A_WeaponReadyDX
-		2IFR OP 1 A_WeaponReadyDX
+		2IFR NOP 1 A_WeaponReadyDX(0,false,false)
 		Goto Ready
 	
 	

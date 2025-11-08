@@ -221,27 +221,27 @@ CLASS Railgun : Brutalweapon
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol");
 			RAIL FGHI 1;
 			
-			RAIL JKLMNYYOO 1 A_WeaponReadyDX();
+			RAIL JKLMNYYOO 1 A_WeaponReadyDX(0,false,false);
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol2");
-			RAIL OOOO 1 A_WeaponReadyDX();
+			RAIL OOOO 1 A_WeaponReadyDX(0,false,false);
 		FidgetSpam:
 			TNT1 A 0 A_StartSound("RAILMAG2", 5);
-			RAIL PR 1 A_WeaponReadyDX();
-			RAIL TWWVUUUUUUUU 1 A_WeaponReadyDX();
+			RAIL PR 1 A_WeaponReadyDX(0,false,false);
+			RAIL TWWVUUUUUUUU 1 A_WeaponReadyDX(0,false,false);
 		FidgetLoop:
-			RAIL U 1 A_WeaponReadyDX();
+			RAIL U 1 A_WeaponReadyDX(0,false,false);
 			TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD,"FidgetLoop");
 			TNT1 A 0 A_StartSound("RAILINSR", 5);
-			RAIL UUUUUTTSR 1 A_WeaponReadyDX();
+			RAIL UUUUUTTSR 1 A_WeaponReadyDX(0,false,false);
 			TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD,"FidgetSpam");
-			RAIL Q 1 A_WeaponReadyDX();
+			RAIL Q 1 A_WeaponReadyDX(0,false,false);
 			TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD,"FidgetSpam");
-			RAIL P 1 A_WeaponReadyDX();
+			RAIL P 1 A_WeaponReadyDX(0,false,false);
 			TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD,"FidgetSpam");
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol2reverse");
-			RAIL OOOOONMLKJ 1 A_WeaponReadyDX();
+			RAIL OOOOONMLKJ 1 A_WeaponReadyDX(0,false,false);
 			TNT1 A 0 A_overlay(-5,"pumpinghandlolreverse");
-			RAIL IHGF 1 A_WeaponReadyDX();
+			RAIL IHGF 1 A_WeaponReadyDX(0,false,false);
 			Goto ready;
 
 		Fire:
