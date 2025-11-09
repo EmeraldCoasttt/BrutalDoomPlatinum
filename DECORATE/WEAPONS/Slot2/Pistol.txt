@@ -391,7 +391,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PIST G 0 A_Jump(128,2)
 		PIST A 0
 		RIFF "#" 0
-		PIS2 "#" 1 BRIGHT A_FireBullets (0.5, 0.5, -1, 33, "Pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
+		PIS2 "#" 1 BRIGHT A_FireBullets (0.5, 0.5, -1, 20, "Pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
 		"####" A 0 A_QuadSound
 		NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 		PIST F 0 A_ZoomFactor(1.0)
@@ -431,7 +431,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PIST G 0 A_Jump(128,2)
 		PIST A 0
 		RIFF "#" 0
-		PIS2 "#" 1 BRIGHT A_FireBullets (0.5, 0.5, -1, 33, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
+		PIS2 "#" 1 BRIGHT A_FireBullets (0.5, 0.5, -1, 20, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
 		"####" A 0 A_QuadSound
 		NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 		PIST F 0 A_ZoomFactor(1.0)
@@ -452,7 +452,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PIST G 0 A_Jump(128,2)
 		PIST A 0
 		RIFF "#" 0
-		PIS2 "#" 1 BRIGHT A_FireBullets (0.5, 0.5, -1, 33, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
+		PIS2 "#" 1 BRIGHT A_FireBullets (0.5, 0.5, -1, 20, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
 		NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )		
 		PIST F 0 A_ZoomFactor(1.0)
      //   RIFF A 0 A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, 0)
@@ -474,7 +474,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PIST G 0 A_Jump(128,2)
 		PIST A 0
 		RIFF "#" 0
-		PIS2 "#" 1 BRIGHT A_FireBullets (0.5, 0.5, -1, 33, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
+		PIS2 "#" 1 BRIGHT A_FireBullets (0.5, 0.5, -1, 20, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
 		NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1)	)		
 		PIST F 0 A_ZoomFactor(1.0)
         //RIFF A 0 A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, 0)
@@ -502,7 +502,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		//RIFF A 0 A_FireCustomMissile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1))
 		PIST F 0 A_PlaySound("PISTSLNT",1)
 		PIST F 0 A_ZoomFactor(0.99)
-		2ILE A 1 BRIGHT A_FireBullets (0.6, 0.6, -1, 33, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
+		2ILE A 1 BRIGHT A_FireBullets (0.6, 0.6, -1, 20, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
 		"####" A 0 A_QuadSound
 		NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
 		PIST F 0 A_ZoomFactor(1.0)
@@ -611,7 +611,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 		PIST F 0 A_PlaySound("FARSHT", 6)
         PIST F 0 A_PlaySound("DSPISTOL", 1)
 		PIST F 0 A_ZoomFactor(1.49)
-		PISZ B 1 BRIGHT A_FireBullets (0.2, 0.1, -1, 33, "pistolpuff", FBF_NORANDOM)
+		PISZ B 1 BRIGHT A_FireBullets (0.2, 0.1, -1, 20, "pistolpuff", FBF_NORANDOM)
 		"####" A 0 A_QuadSound
 		PIST F 0 A_ZoomFactor(1.5)
         RIFF A 0 A_FireCustomMissile("DecorativeTracer", random(-1,1), 0, 0, 3)
@@ -633,7 +633,7 @@ S1LK EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
 	FireAimSilenced:
         PIST F 0 A_PlaySound("PISTSLNT", 1)
 		PIST F 0 A_ZoomFactor(1.49)
-		SILE H 1 BRIGHT A_FireBullets (0.1, 0.1, -1, 33, "pistolpuff", FBF_NORANDOM)
+		SILE H 1 BRIGHT A_FireBullets (0.1, 0.1, -1, 20, "pistolpuff", FBF_NORANDOM)
 		"####" A 0 A_QuadSound
 		PIST F 0 A_ZoomFactor(1.5)
 		"####" F 0 A_TakeAmmo("BDPistolAmmo",1)
