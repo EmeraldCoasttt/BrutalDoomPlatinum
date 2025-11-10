@@ -150,3 +150,33 @@ EXITMSG120 = "Unplug your computer. Do it. It'd be funny.";
 EXITMSG121 = "DOOM\nWhere the sanest place\n...Is behind a trigger";
 EXITMSG122 = "To Hell with You.\n\nBut then you're there, aren't you.";
 
+//Death hints
+
+DHINT0 = "The Grenade Launcher's rounds don't detonate until you release the trigger.";
+DHINT1 = "Most weapons do extra headshot damage. Precision weapons excell at this.";
+DHINT2 = "Melee attacks do much higher damage from behind. Try taking out unsuspecting demons!";
+DHINT3 = "The crosshair turns red if a demon is in your weapon's effective range.";
+DHINT4 = "Your health regenerates up to 20 percent.";
+DHINT5 = "Demons can see the beam of your flashlight.";
+DHINT6 = "Light amp goggles replace your flashlight key.";
+DHINT7 = "Most weapons have altfires and even special actions!";
+DHINT8 = "Aiming down sights increases your weapon's accuracy.";
+DHINT9 = "Battle rifle rounds bounce at shallow angles.";
+DHINT10 = "You can slide kick and jump for a burst of speed!";
+DHINT11 = "The faster you're moving, the higher you jump.";
+DHINT12 = "Frozen explosive barrels are highly volatile, be careful!";
+DHINT13 = "You can kick down doors while berserked.";
+DHINT14 = "Look out for secrets, they could be hiding extra rewards.";
+DHINT15 = "Jummping right when you hit the ground preserves your momentum.";
+DHINT16 = "Thrown chainsaws act as improvised stun grenades.";
+DHINT17 = "The longer you fire the Incinerator, the longer demons Burn.";
+DHINT18 = "Demons struggle to aim through the Incinerator's smoke grenades.";
+DHINT19 = "You can walk through the Archvile's firewall to get in a shotgun blast.";
+DHINT20 = "Killing demons pauses powerup timers.";
+DHINT21 = "You can pick up and throw explosive barrels if you have a berserk pack!";
+DHINT22 = "The Assault Rifle's special action can parry projectiles.";
+DHINT23 = "Burning Mancubi become fiery explosions, watch out!";
+DHINT24 = "You take less damage while using the Super Shotgun's Meathook.";
+DHINT25 = "You are dead. Dead. Dead.";
+DHINT26 = "Collect new modifiers by killing every demon in a level!";
+DHINT27 = "Each slot has 3 weapons.";

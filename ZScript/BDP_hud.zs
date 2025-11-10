@@ -11,6 +11,9 @@ class BDP_HUD : DoomStatusBar
 	HUDFont weapPromptFnt;
 	Int ArrowTimer;
 	int lasttickgrenade;
+	int hinttimer;
+	double hintfade;
+	int randomhint;
 
 	static clearscope double LinearMap(double val, double source_min, double source_max, double out_min, double out_max) 
 	{
@@ -77,6 +80,7 @@ class BDP_HUD : DoomStatusBar
 			{
 				drawcrosshairs();
 				drawkillstreak();
+				drawdeathhints(mSmallFontNS);
 			}
 		}
 	}
@@ -104,6 +108,7 @@ class BDP_HUD : DoomStatusBar
 		{
 			TeleFadeTime = Clamp(TeleFadeTime - 1, 0, TELEFADEWAIT);
 		}
+		
 	}
 	
 	// This is more or less directly converted from SBARINFO,
@@ -956,6 +961,60 @@ class BDP_HUD : DoomStatusBar
 		
 			
 	}
+	void DrawDeathHints(HUDFont fnt)
+	{
+		If(cplayer.mo.health > 0)
+		{
+			hinttimer = 0;
+			hintfade = 0;
+		}
+		Else if(hinttimer < 150)
+		{
+			hinttimer++;
+			randomhint = random(0,26);
+		}
+		Else if(hintfade < 1.0)
+		{
+			hintfade += 0.02;
+		}
+		brutal_playerbase BDPplr = brutal_playerbase(cplayer.mo);
+		bool nightmare = BDPplr.ultranightmare;
+		If(hinttimer >= 150 && !nightmare)
+		{
+			DrawString(Fnt, string.format(stringtable.localize(deathstring[randomhint])), (0, -80), DI_SCREEN_CENTER_BOTTOM|DI_TEXT_ALIGN_CENTER, Font.CR_White, hintfade, scale: (0.75, 0.75));
+		}
+	}
+	static const String DeathString[] =
+	{
+		"$DHINT0",
+		"$DHINT1",
+		"$DHINT2",
+		"$DHINT3",
+		"$DHINT4",
+		"$DHINT5",
+		"$DHINT6",
+		"$DHINT7",
+		"$DHINT8",
+		"$DHINT9",
+		"$DHINT10",
+		"$DHINT11",
+		"$DHINT12",
+		"$DHINT13",
+		"$DHINT14",
+		"$DHINT15",
+		"$DHINT16",
+		"$DHINT17",
+		"$DHINT18",
+		"$DHINT19",
+		"$DHINT20",
+		"$DHINT21",
+		"$DHINT22",
+		"$DHINT23",
+		"$DHINT24",
+		"$DHINT25",
+		"$DHINT26",
+		"$DHINT27"
+	};
 }
 
 class BDP_OverlayUI : EventHandler
@@ -1152,6 +1211,9 @@ class BDP_OverlayUI : EventHandler
 			}
 		}
 	}
+	
+	
+	
 }
 
 // Copyright 2017-2019 Nash Muhandes
