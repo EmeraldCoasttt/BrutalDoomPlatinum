@@ -970,7 +970,7 @@ class BDP_HUD : DoomStatusBar
 		Else if(hinttimer < 150)
 		{
 			hinttimer++;
-			randomhint = random(0,30);
+			randomhint = random(0,33);
 		}
 		Else if(hintfade < 1.0)
 		{
@@ -1015,7 +1015,12 @@ class BDP_HUD : DoomStatusBar
 		"$DHINT27",
 		"$DHINT28",
 		"$DHINT29",
-		"$DHINT30"
+		"$DHINT29",
+		"$DHINT30",
+		"$DHINT31",
+		"$DHINT32",
+		"$DHINT33"
+		
 	};
 }
 
