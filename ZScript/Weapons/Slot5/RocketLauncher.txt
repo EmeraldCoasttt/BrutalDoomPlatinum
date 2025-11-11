@@ -7,24 +7,15 @@ CLASS Rocket_Launcher : BrutalWeapon
 		Weapon.SlotNumber 5;
 		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 2500;
-		Weapon.AmmoUse1 0;
-		Weapon.AmmoUse2 0;
-		Weapon.AmmoGive2 0;
-		Weapon.AmmoGive1 2;
-		Weapon.AmmoType1 "AmmoRocket";
-		Weapon.AmmoType2 "RocketRounds";
+		Weapon.AmmoGive 2;
+		Weapon.AmmoType "AmmoRocket";
+		BrutalWeapon.MagCapacity 6;
 		Inventory.PickupSound "RLANDRAW";
-		+FORCEXYBILLBOARD;
-		+WEAPON.NOAUTOAIM;
-		+WEAPON.NOAUTOFIRE;
 		+WEAPON.EXPLOSIVE;
-		+WEAPON.NOALERT;
-		//+WEAPON.NO_AUTO_SWITCH
 		Inventory.PickupMessage "You got the Rocket Launcher! (Slot 5)";
 		Tag "$BDPROCKET";
 		scale 0.8;
-		//Inventory.AltHUDIcon "LAUNA0";
-		BrutalWeapon.weight 2;
+		Inventory.AltHUDIcon "RLAUA0";
 	}
 	
 	bool lastticklaser;
@@ -88,8 +79,8 @@ CLASS Rocket_Launcher : BrutalWeapon
 	{
 	
 	GrenadeThrowFlash:
-	MISS X 0 A_JumpIfInventory("RocketRounds", 3, "GrenadeFlash2"); //standard
-	MISS X 0 A_JumpIfInventory("RocketRounds", 2, "GrenadeFlash3"); //only 2 left
+	TNT1 A 0 A_JumpIf(invoker.mag >= 3, "GrenadeFlash2"); //standard
+	TNT1 A 0 A_JumpIf(invoker.mag >= 2, "GrenadeFlash3"); //only 2 left
 		//fall-off to 1/empty
 	MISS KLCD 1;
 	TNT1 A 24;
@@ -139,22 +130,6 @@ CLASS Rocket_Launcher : BrutalWeapon
 			stop;
 
 	
-	Fidget:
-	    RLNG A 0 A_Takeinventory("Reloading",1);
-		RLNG A 0 A_JumpIfInventory("Zoomed",1,"NoAim");
-	    MISF FGHIJ 1 A_WeaponReadyDX();
-		TNT1 A 0 A_StopSound(3);
-		MISF J 5 A_WeaponReadyDX();
-		MISF IKL 1 A_WeaponReadyDX();
-		TNT1 A 0 A_PlaySound("ROCKSPIN",3);
-		MISF M 1 A_WeaponReady();
-		RLNG CBA 1 A_WeaponReady(WRF_ALLOWRELOAD);
-		RLNG A 0 A_JumpIfInventory("Reloading",1,"Fidget");
-		RLNG DCBA 1 A_WeaponReady(WRF_ALLOWRELOAD);
-		RLNG A 0 A_JumpIfInventory("Reloading",1,"Fidget");
-		RLNG DCB 2 A_WeaponReadyDX();
-		//RIFG A 0 A_JumpIfInventory("FiredSecondary",1,"AltFire");
-		Goto Ready;
 
 		
 	FunniSpeenxDDDD:
@@ -171,8 +146,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 		
 	DualWield: 
 	TNT1 A 0 A_takeinventory("Startdualwield",1);
-		TNT1 A 0 A_jumpifinventory("rocketrounds",1,1);
-		Goto noammo;
+		TNT1 A 0 A_CheckIfMag();
 		TNT1 A 0 A_overlay(15,"TripMineOverlay");
 		MISK ABCDEEEEEEEEEEEEEEEEEEEEEEEEEEEEEDCBA 1;
 		TNT1 A 0 
@@ -188,8 +162,8 @@ CLASS Rocket_Launcher : BrutalWeapon
 	
 	Ready3:
 	Ready:
-	    MISG A 0 A_JumpIfInventory("RocketRounds", 3, 3);
-		MISG F 0 A_JumpIfInventory("RocketRounds", 2, 2);
+	    MISG A 0 A_JumpIf(invoker.mag >= 3, 3);
+		MISG F 0 A_JumpIf(invoker.mag >= 2, 2);
 		MISG I 0;
 		"####" "#" 0 A_Takeinventory("ZoomHold",1);
 		"####" "###" 0;
@@ -229,27 +203,14 @@ CLASS Rocket_Launcher : BrutalWeapon
 		RLNG A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade");
 		TNT1 A 0 A_SetCrosshair(41);
 		Loop;
-		
-	ReadyNoAmmo:
-	    MISR J 1 A_WeaponReady(WRF_ALLOWRELOAD);
-		RLNG A 0 A_JumpIfInventory("Unloading",1,"Unload");
-        RLNG A 0 A_JumpIfInventory("Reloading",1,"Reload");
-        RLNG A 0 {if (CountInv("Kicking") == 1) { if (CountInv("IsCrouching") == 1) { return resolvestate("SlideKickingStart");	} if (momZ != 0) {	return resolvestate("AirKickingFlash");}else {	return resolvestate("KickingFlash");}	}return resolvestate(null);}
-		RLNG A 0 A_JumpIfInventory("Salute1", 1, "Salute");
-		RLNG A 0 A_JumpIfInventory("Salute2", 1, "Salute");
-        RLNG A 0 A_JumpIfInventory("Taunting",1,"Taunt");
-		RLNG A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade");
-	//	RLNG A 0 A_checksprint
-		Loop;
-	
 	NoAmmo:
 		TNT1 A 0 A_StartSound("weapons/empty", 3);
 	NoAmmo2:
-		TNT1 A 0 A_JumpIf(CountInv("AmmoRocket") > 1 && CountInv("RocketRounds") < 5,"Reload");
-		MISG A 0 A_JumpIfInventory("RocketRounds", 3, 3);
-		MISG F 0 A_JumpIfInventory("RocketRounds", 2, 2);
+		TNT1 A 0 A_AutoReloadMag();
+		MISG A 0 A_JumpIf(invoker.mag >= 3, 3);
+		MISG F 0 A_JumpIf(invoker.mag >= 2, 2);
 		MISG I 0;
-		"####" "#" 1 A_WeaponReadyDX(WRF_NOFIRE,false,false);
+		"####" "#" 1 A_WeaponReadyDX(WRF_NOFIRE);
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD || player.cmd.buttons & BT_ATTACK, "NoAmmo2");
 		Goto Ready;
 	
@@ -267,70 +228,36 @@ CLASS Rocket_Launcher : BrutalWeapon
 	Goto ready;
 		
 		
-	Deselect: "####" A 0 A_TakeInventory("IsPlayingDoxMod",1);
-        RLNG A 0 {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
-		RLNG A 0 A_Takeinventory("Zoomed",1);
-		RLNG A 0 A_Takeinventory("PowerLightAmp", 1);
-		RLNG A 0 A_Takeinventory("PowerLightAmpR", 1);
-        RLNG A 0 A_ZoomFactor(1.0);
-		RLNG A 0 A_TakeInventory("TossGrenade", 1);
-		RLNG A 0 A_TakeInventory("Fire2Activate",1);
-		RLNG A 0 A_Takeinventory("PressedTwice",1);
-		RLNG A 0 A_TakeInventory("PressedOnce",1);
-		"####" A 0 A_ClearOverlays(-2,-2);
-		MISS X 0 A_JumpIfInventory("RocketRounds", 3, "DeSelect2"); //standard
-		MISS X 0 A_JumpIfInventory("RocketRounds", 2, "DeSelect3"); //only 2 left
-		//fall-off to 1/empty
+	Deselect:
+		TNT1 A 0 A_JumpIf(invoker.mag >= 3, "DeSelect2"); //standard
+		TNT1 A 0 A_JumpIf(invoker.mag >= 2, "DeSelect3"); //only 2 left
 		MISS KLCD 1;
-		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower();
-		TNT1 A 1 A_Lower();
+		TNT1 A 1;
+		TNT1 A 0 A_Lower();
 		Wait;
 
 	DeSelect2:
 		MISS ABCD 1;
-		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower();
-		TNT1 A 1 A_Lower();
+		TNT1 A 1;
+		TNT1 A 0 A_Lower();
 		Wait;
 
 	DeSelect3:
 		MISS IJCD 1;
-		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower();
-		TNT1 A 1 A_Lower();
+		TNT1 A 1;
+		TNT1 A 0 A_Lower();
 		Wait;
-
-		
 	Select:
-		TNT1 A 0;
-		RIFL C 0 A_SetCrosshairDX("ROCKRet",2000,1.0);
-		Goto SelectFirstPersonLegs;
-		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1) ;
-		RIFL C 0 A_GunSlingerReload("RocketRounds",6,"AmmoRocket",1);
-		TNT1 A 0 {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RLCrosshair"));}else{A_SetCrosshair(0);}}
-		TNT1 AAAAAAAAAAAAAA 0 A_Raise();
-		TNT1 A 1 A_Raise();
+		TNT1 A 1 {A_SetCrosshairDX("ROCKRet",2000,1.0); A_GunSlingerMag();}
 		RLNG A 0 A_Giveinventory("RocketLauncherSelected",1);
-		ReturnFromNothing:
         TNT1 A 0 A_PlaySound("RLANDRAW");
-		SelectAnimation:
-		TNT1 A 0 
-			{
-			If(Countinv("LaserRocketSelected")==1)
-			{
-			A_PlaySound("RAILR1", 2);
-			A_Overlay(15,"LaserMode");
-			}
-		}
-		SelectAnimation:
-		MISS X 0 A_JumpIfInventory("RocketRounds", 3, "Select2"); //standard
-		MISS X 0 A_JumpIfInventory("RocketRounds", 2, "Select3"); //only 2 left
-		//fall-off to 1/empty
+		TNT1 A 0 A_JumpIf(invoker.mag >= 3, "Select2"); //standard
+		TNT1 A 0 A_JumpIf(invoker.mag >= 2, "Select3"); //only 2 left
 		MISS DCLK 1;
 		Goto Ready;
-
 	Select2:
 		MISS DCBA 1;
 		Goto Ready;
-
 	Select3:
 		MISS DCJI 1;
 		Goto Ready;
@@ -352,7 +279,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 		
 	Fire:
 		RLNG A 0;
-        RLNG A 0 A_checkIfAmmo("RocketRounds");
+        RLNG A 0 A_CheckIfMag();
         TNT1 AAAA 0;
 		RLNG A 0 A_ALertMonstersDX();
 		//RLNG A 0 A_JumpIfInventory("Zoomed",1,"ZoomedFire")
@@ -398,10 +325,10 @@ CLASS Rocket_Launcher : BrutalWeapon
 		RLNG A 0 A_FireCustomMissile("RocketGlassBreaker", 0, 1, 0, -6);
 		
 	RecoilAnimation:	
-		MISF A 0 A_TakeAmmo("RocketRounds",1);
-		"####" A 0 A_JumpIfInventory("RocketRounds", 3, "RecoilAnimation1");
-		"####" A 0 A_JumpIfInventory("RocketRounds", 2, "RecoilAnimation2");
-		"####" A 0 A_JumpIfInventory("RocketRounds", 1, "RecoilAnimation3");
+		MISF A 0 A_TakeMag();
+		"####" A 0 A_JumpIf(invoker.mag >= 3, "RecoilAnimation1");
+		"####" A 0 A_JumpIf(invoker.mag >= 2, "RecoilAnimation2");
+		"####" A 0 A_JumpIf(invoker.mag >= 1, "RecoilAnimation3");
 		Goto RecoilANimation4;
 		
 	RecoilAnimation1: //standard
@@ -467,7 +394,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 	ZoomedFire:
 	//RLNG A 0 A_Recoil(1*cos(pitch))
 		RLNG A 0;
-       RLNG A 0 A_checkIfAmmo("RocketRounds");
+       RLNG A 0 A_CheckIfAmmo(invoker.ammotype1);
         TNT1 AAAA 0;
 		RLNG A 0 A_ALertMonstersDX();
 		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("RocketRounds")<=2) { A_PlaySound("MagClick", 7); }}}
@@ -599,24 +526,18 @@ CLASS Rocket_Launcher : BrutalWeapon
 		RLNG A 0 A_TakeInventory("Zoomed", 1);
 		RLNG A 0 A_Takeinventory("PowerLightAmp", 1);
 		RLNG A 0 A_Takeinventory("PowerLightAmpR", 1);
-		TNT1 A 0 A_JumpIfInventory("RocketRounds",6,"Ready");
 		RLNG A 0 A_CheckIfAmmo("AmmoRocket");
         TNT1 AAAA 0;
-		
-		RLNG A 0 A_JumpIfInventory("TurboReload",1,"TurboReload");
-	
-		
         RLNG A 0 A_PlaySound("ROCKREL1", 3);
         MISR ABCCDDE 1;
-		"####" A 0 A_DiscardMag("RocketRounds",0);
+		"####" A 0 A_DiscardMagazine();
 		MISG A 0 A_FireCustomMissile("RocketCaseSpawn",-20,0,2,-10);
 		MISR FGH 1;
-	ReloadUnloaded:
 		MISR IJKLMM 1;
 		MISR N 3;
 		MISR OPQRSSTTTT 1;
 		TNT1 A 0 A_PlaySound("ROCKREL2");
-		TNT1 A 0 A_Reload("RocketRounds",6,"AmmoRocket");
+		TNT1 A 0 A_ReloadMag();
 		TNT1 A 0;
 		MISR UVVVWX 1;
 		MISR Y 4;
@@ -627,14 +548,6 @@ CLASS Rocket_Launcher : BrutalWeapon
 		NoNeedToReload:
         RLNG A 1 A_Refire();
         Goto Ready;
-		
-		
-	TurboReload:
-		RLNG A 0 A_Takeinventory("HasUnloaded",1);
-        PISS BA 0;
-        Goto FinishReload;
-
-
 	Spawn:
 		RLAU A -1;
 		Stop;

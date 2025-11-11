@@ -642,6 +642,18 @@ class BDP_HUD : DoomStatusBar
 				Font.CR_White
 			);
 		}
+		if (ammo2)
+		{
+			iconPos.x += iconSpacing;
+			DrawInventoryIcon(ammo2, iconPos, iconFlags);
+			DrawString(
+				mHudfont, 
+				String.Format("%d", ammo2amt), 
+				iconPos + numOfs,
+				numFlags,
+				Font.CR_White
+			);
+		}
 		if (ammo1)
 		{
 			iconPos.x += iconSpacing;
@@ -656,19 +668,6 @@ class BDP_HUD : DoomStatusBar
 				Font.CR_White
 			);
 		}
-		if (ammo2)
-		{
-			iconPos.x += iconSpacing;
-			DrawInventoryIcon(ammo2, iconPos, iconFlags);
-			DrawString(
-				mHudfont, 
-				String.Format("%d", ammo2amt), 
-				iconPos + numOfs,
-				numFlags,
-				Font.CR_White
-			);
-		}
-		
 		if (weap && weap.magcapacity)
 		{
 			iconPos.x += iconSpacing;

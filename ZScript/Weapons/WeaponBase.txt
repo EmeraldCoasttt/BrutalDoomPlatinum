@@ -30,6 +30,8 @@ Class Brutalweapon : DoomWeapon //Weapon
 	bool semiclear;
 	bool refireq;
 	
+	bool dryFired;
+	
 	Actor GuidedLaser;
 	
 	//Modifiers:
@@ -48,6 +50,8 @@ Class Brutalweapon : DoomWeapon //Weapon
 	int mag;
 	int MagCapacity;
 	Property MagCapacity : MagCapacity;
+	vector2 magConversion;
+	Property MagConversion : magConversion;
 	
 	bool newweapon;
 	
@@ -61,6 +65,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 	{
 	BrutalWeapon.Weight 1;
 	BrutalWeapon.Handedness 0;
+	Weapon.AmmoUse 0;
 	Weapon.BobRangeX 0.4;
 	Weapon.BobRangeY 0.4;
 	Weapon.BobSpeed 2.9;
@@ -68,13 +73,20 @@ Class Brutalweapon : DoomWeapon //Weapon
 	brutalweapon.clearoverlays TRUE;
 	brutalweapon.VoiceActed TRUE;
 	//Radius 32;
-	+forcexybillboard;
+	+FORCEXYBILLBOARD
+	+WEAPON.NOAUTOAIM
+	+WEAPON.NOAUTOFIRE
+	+WEAPON.NOALERT
 	
 	}
 	
 	override void beginplay()
 	{
 		mag = magcapacity;
+		if(magConversion == (0,0))
+		{
+			magConversion = (1,1);
+		}
 		Super.beginplay();
 	}
 	
@@ -92,22 +104,6 @@ Class Brutalweapon : DoomWeapon //Weapon
 			}
 			
 			Dropper.takeinventory("Dualsmg",1);
-			Dropper.takeinventory("DualWieldedSMG",1);
-			Dropper.takeinventory("Rememberdualsmg",1);
-		}
-		
-		If(self is "BrutalPistol")
-		{
-			If(dropper.findinventory("DualPistols"))
-			{
-				giveinventory("BrutalPistol",1);
-				Inventory drop = FindInventory("BrutalPistol");
-				Self.DropInventory(Drop,1);
-			}
-			
-			Dropper.takeinventory("DualPistols",1);
-			Dropper.takeinventory("DualWieldedPistol",1);
-			Dropper.takeinventory("Rememberdualpistol",1);
 		}
 		If(self is "DoxsRevolver")
 		{
@@ -119,8 +115,6 @@ Class Brutalweapon : DoomWeapon //Weapon
 			}
 			
 			Dropper.takeinventory("DualRevolver",1);
-			Dropper.takeinventory("DualWieldedRevolver",1);
-			Dropper.takeinventory("DualRevolverSelected",1);
 		}
 		If(self is "Plasma_Gun")
 		{
@@ -132,10 +126,13 @@ Class Brutalweapon : DoomWeapon //Weapon
 			}
 			
 			Dropper.takeinventory("DualPlasmaRifles",1);
-			Dropper.takeinventory("DualWieldedPlasma",1);
-			Dropper.takeinventory("RememberDualPlasma",1);
 		}
 		
+	}
+	
+	override state GetUpState()
+	{
+		return resolvestate("SelectFirstPersonLegs");
 	}
 	
 	Action void a_weaponvoiceline()
@@ -204,14 +201,14 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	Action void A_FirePitchDown(sound soundname = "PLSM9", int soundchannel = 1, double ammocount = 8, name ammotype = "PlasmaAmmo")
 	{
-		If(invoker.owner.countinv(ammotype) > ammocount)
+		If(invoker.mag > ammocount)
 		{
 			invoker.owner.a_startsound(soundname,soundchannel);
 		}
 		Else
 		{
 			float soundpitch;
-			soundpitch = (invoker.owner.countinv(ammotype) / (ammocount * 5));
+			soundpitch = (invoker.mag / (ammocount * 5));
 			soundpitch = (0.8 + soundpitch);
 			
 			invoker.owner.a_startsound(soundname,soundchannel, PITCH: soundpitch);
@@ -336,45 +333,27 @@ Class Brutalweapon : DoomWeapon //Weapon
 		}
 	}
 	
-	action void A_ReloadMag(int chamberbonus = 0, int conversion = 1, bool multiplicative = false)
+	action void A_ReloadMag(int chamberbonus = 0, bool additive = false)
 	{
-		Int MagGoal;
-		If(invoker.mag > 0)
+		int MagGoal = invoker.MagCapacity;
+		if(additive)
 		{
-			MagGoal = (invoker.magcapacity + chamberbonus);
+			MagGoal = invoker.mag + invoker.magConversion.x;
 		}
-		Else
+		int SecondaryMagGoal;
+		if(invoker.mag > 0)
 		{
-			MagGoal = invoker.magcapacity;
+			MagGoal += chamberbonus;
 		}
-		Int SecondaryMagGoal;
-		
-		Bool Reloaded;
-		
-		While(!reloaded)
+		while(invoker.mag < MagGoal && countinv(invoker.AmmoType1) >= invoker.magConversion.y)
 		{
-			If(invoker.mag < MagGoal && countinv(invoker.AmmoType1) >= conversion && !multiplicative)
-			{
-				takeinventory(invoker.AmmoType1,conversion);
-				invoker.mag++;
-				//If(secondarymag && countinv(secondarymag) < SecondaryMagGoal)
-				//{
-				//	giveinventory(secondarymag,1);
-				//}
-			}
-			Else If(invoker.mag < MagGoal && multiplicative && countinv(invoker.AmmoType1) >= 1)
-			{
-				takeinventory(invoker.AmmoType1,1);
-				invoker.mag += conversion;
-				//If(secondarymag && countinv(secondarymag) < SecondaryMagGoal)
-				//{
-				//	giveinventory(secondarymag,conversion);
-				//}
-			}
-			else
-			{
-				reloaded = TRUE;
-			}
+			takeinventory(invoker.AmmoType1,invoker.magConversion.y);
+			invoker.mag += invoker.magConversion.x;
+			invoker.mag = clamp(invoker.mag,0,MagGoal);
+			//If(secondarymag && countinv(secondarymag) < SecondaryMagGoal)
+			//{
+			//	giveinventory(secondarymag,1);
+			//}
 		}
 	}
 	
@@ -395,11 +374,11 @@ Class Brutalweapon : DoomWeapon //Weapon
 		*/
 	}
 	
-	Action void A_gunslingermag(int chamberbonus = 0, int conversion = 1, bool multiplicative = false)
+	Action void A_gunslingermag(int chamberbonus = 0)
 	{
 		If(invoker.gunslinger && invoker.gunslingereligible)
 		{
-			A_reloadMag(chamberbonus,conversion,multiplicative);
+			A_reloadMag(chamberbonus);
 		}
 		invoker.gunslingereligible = false;
 		//Invoker.gunslingerammoname = ammopool;
@@ -545,7 +524,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 		{
 			invoker.aimDest = 'Deselect';
 		}
-		else if(player.cmd.buttons & BT_ATTACK)
+		else if(player.cmd.buttons & BT_ATTACK && (!invoker.semiautofired || invoker.semiclear))
 		{
 			return resolvestate(fire);
 		}
@@ -553,10 +532,16 @@ Class Brutalweapon : DoomWeapon //Weapon
 		{
 			invoker.aimDest = 'Ready';
 		}
-		else if(allowreload && player.cmd.buttons & BT_RELOAD && invoker.aimDest != 'Reload')
+		else if(player.cmd.buttons & BT_RELOAD && invoker.mag < invoker.magCapacity)
 		{
-			invoker.aimDest = 'Reload';
-			return resolvestate('Reload');
+			if(CountInv(invoker.ammotype1) >= invoker.magConversion.y)
+			{
+				invoker.aimDest = 'Reload';
+			}
+			else
+			{
+				return resolvestate("NoAmmo");
+			}
 		}
 		else if(player.cmd.buttons & BT_USER2)
 		{
@@ -626,6 +611,27 @@ Class Brutalweapon : DoomWeapon //Weapon
 	action void SetAimDest(statelabel dest) //ditto
 	{
 		invoker.aimDest = dest;
+	}
+	
+	action void A_FireParticles(int num1 = 0, int num2 = 0, int offsetx = 0, int offsety = 0)
+	{
+		for(int i = num1; i > 0; i--)
+		{
+			A_FireProjectile("ShotgunParticles", random(-12,12), 0, offsetx, offsety, 0, random(-9,9));
+		}
+		for(int i = num2; i > 0; i--)
+		{
+			A_FireProjectile("ShotgunParticles2", random(-12,12), 0, offsetx, offsety, 0, random(-9,9));
+		}
+	}
+	
+	action state A_CheckSlide(statelabel end = "SlideKickingEnd")
+	{
+		if (CountInv("Kicking") == 0)
+		{
+			return resolvestate(end);
+		}
+		return resolvestate(null);
 	}
 	
 	action state A_DualWield()
@@ -880,9 +886,17 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	Action state A_AutoReloadMag(int minammo = 1, statelabel label = "Reload", bool force = false)
 	{
 		//FORCE flag is intended for single shot weapons
-		If(invoker.mag <= 0 && countinv(invoker.Ammotype1) >= minammo && (invoker.owner.getcvar("bdp_autoreload") == true || force == true))
+		If(invoker.mag < 1 && countinv(invoker.ammotype1) >= invoker.magConversion.y && (invoker.owner.getcvar("bdp_autoreload") == true || force == true))
 		{
-			Return Resolvestate(Label);
+			if(invoker.aimMode == 0)
+			{
+				Return Resolvestate(Label);
+			}
+			else
+			{
+				invoker.aimDest = Label;
+				return resolvestate("AimEnd");
+			}
 		}
 		Else
 		{
@@ -894,10 +908,30 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	Action state A_WeaponReadyDX(int dxflags = 0, bool kickflashes = true, bool cansprint = true)
 		{
 			brutal_playerbase BDPplr = brutal_playerbase(invoker.owner);
-			//clean up Aim token
-			takeinventory("Zoomies",1);
+			bool canreload = false;
+			if(dxflags & WRF_ALLOWRELOAD)
+			{
+				canreload = true;
+			}
+			dxflags &= ~WRF_ALLOWRELOAD;
+			dxflags |= WRF_ALLOWUSER2;
 			//A_WeaponReadyDX acts as a wrapper for A_weaponready and accepts the same flags
-			A_weaponready(dxflags|WRF_ALLOWUSER2);
+			A_weaponready(dxflags);
+			if(player.cmd.buttons & BT_RELOAD && canreload)
+			{
+				if(invoker.mag >= invoker.magCapacity)
+				{
+					if(resolvestate("Fidget")) return resolvestate("Fidget");
+				}
+				else if(CountInv(invoker.ammotype1) < invoker.magConversion.y)
+				{
+					return resolvestate("NoAmmo");
+				}
+				else
+				{
+					return resolvestate("Reload");
+				}
+			}
 			//Flag for if holding throwable object
 			If(findinventory("hasagib"))
 			{
@@ -1008,6 +1042,10 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	
 	//Credit Mikk0451
 	//Changes ammo icon only
+	action void ChangeWeaponIcon(String Icon)
+	{
+		invoker.althudicon = texman.CheckForTexture(Icon, TexMan.Type_Any);
+	}
 	action void ChangeAmmoIcon1(String AmmoIcon)
 	{
 		(findInventory(invoker.ammo1.GetClassName())).icon = texman.CheckForTexture(AmmoIcon, TexMan.Type_Any);
@@ -1073,6 +1111,8 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	
 	action void a_semiflag()
 	{
+		invoker.refireq = false;
+		invoker.semiclear = false;
 		invoker.semiautofired = true;
 	}
 	
@@ -1087,9 +1127,6 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		}
 		Else if(invoker.owner.player.cmd.buttons & BT_ATTACK)
 		{
-			//invoker.refireq = false;
-			//invoker.semiautofired = false;
-			//invoker.semiclear = false;
 			Return resolvestate(FailLabel);
 		}
 		Else
@@ -1356,7 +1393,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 				if (wallinmyway.HitType == TRACE_HitWall)
 				{
 					A_fireprojectile("TripMineProjectile",0,true,0,-4);
-					invoker.owner.takeinventory("rocketrounds",1);
+					A_TakeMag();
 					return ResolveState("Placedsuccesfully");
 				}
 				Return resolvestate(null);
@@ -1834,7 +1871,6 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		Takeinventory("HasCutingWeapon",1); 
 		Takeinventory("SawSelected",1);
 		//Slot 2
-		Takeinventory("PistolSelected",1); 
 		Takeinventory("SubMachineGunSelected",1);
 		//Slot 3
 		Takeinventory("ShotgunSelected",1); 
@@ -1872,7 +1908,9 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		invoker.semiautofired = false;
 		invoker.semiclear = false;
 		
+		A_SetCrosshair(-1);
 		a_weaponvoiceline();
+		A_WeaponReady(WRF_NOFIRE);
 		if(invoker.dualWeapon && countinv(invoker.GetClassName()) > 1 && invoker.dualWield == 1 && GetCVar("bd_smartdualwield") == 0)
 		{
 			A_SelectWeapon(invoker.dualWeapon);
@@ -1886,7 +1924,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		return resolvestate(null);
 		}
 		TNT1 A 0 A_jumpifinventory("hasagib",1,"gibfromnothing");
-		TNT1 A 0 A_Jump(256, "SelectContinue");
+		TNT1 A 0 A_Jump(256, "Select");
 		Loop;
 		
 		
