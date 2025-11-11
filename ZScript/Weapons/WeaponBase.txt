@@ -905,7 +905,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	
 	}
 	
-	Action state A_WeaponReadyDX(int dxflags = 0, bool kickflashes = true, bool cansprint = true)
+	Action state A_WeaponReadyDX(int dxflags = 0, bool kickflashes = true, bool cansprint = true, bool forcereload = false)
 		{
 			brutal_playerbase BDPplr = brutal_playerbase(invoker.owner);
 			bool canreload = false;
@@ -919,6 +919,10 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			A_weaponready(dxflags);
 			if(player.cmd.buttons & BT_RELOAD && canreload)
 			{
+				if(forcereload)
+				{
+					return resolvestate("Reload");
+				}
 				if(invoker.mag >= invoker.magCapacity)
 				{
 					if(resolvestate("Fidget")) return resolvestate("Fidget");

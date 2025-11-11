@@ -313,7 +313,7 @@ states
 	    SAW2 A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
 		SAWG A 0 
 		
-		"####" ABAB 2 A_WeaponReadyDX
+		"####" ABAB 2 A_WeaponReadyDX(WRF_ALLOWRELOAD,true,true,true)
 		"####" "#" 0 A_Jump(96,"Ready")
 		SSW3 A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,"Ready.BloodDrip")
 	    SSW4 A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,"Ready.BloodDrip")
@@ -323,9 +323,9 @@ states
 	Ready.BloodDrip:
 		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
 		"####" A 0 A_FireCustomMissile("SmokeSpawner",0,0,0,5)
-		"####" CDEF 2 A_WeaponReadyDX
+		"####" CDEF 2 A_WeaponReadyDX(WRF_ALLOWRELOAD,true,true,true)
 		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
-		"####" GHIJ 2 A_WeaponReadyDX
+		"####" GHIJ 2 A_WeaponReadyDX(WRF_ALLOWRELOAD,true,true,true)
 		"####" A 0 {
 			
 		}
@@ -919,7 +919,7 @@ states
 		SAWG A 0 
 		KeepSprinting:
 		"####" A 0 A_playsoundex("weapons/chainsaw/idle", 6)
-		"####" ABAB 2 A_weaponreadyDX(0,FALSE,FALSE)
+		"####" ABAB 2 A_weaponreadyDX(0,FALSE,FALSE,TRUE)
 		
 		"####" A 0 A_FireCustomMissile("SmokeSpawner",0,0,0,5)
 		"####" A 0 A_keepsprinting
