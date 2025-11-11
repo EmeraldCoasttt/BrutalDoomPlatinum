@@ -185,7 +185,6 @@ CLASS Railgun : Brutalweapon
 			Wait;
 		Ready:
 			TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000,1.0);
-			TNT1 A 0 A_jumpifinventory("railchambered",1,"Pumping");
 			RAIL A 1 A_weaponreadyDX(WRF_ALLOWRELOAD);
 			TNT1 A 0 A_AutoReloadMag();
 			LOOP;
@@ -194,7 +193,7 @@ CLASS Railgun : Brutalweapon
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol");
 			RAIL FGHI 1;
 			
-			RAIL JKLMNYYOO 1 A_WeaponReadyDX(0,false,false);
+			RAIL JKLMNNOOO 1 A_WeaponReadyDX(0,false,false);
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol2");
 			RAIL OOOO 1 A_WeaponReadyDX(0,false,false);
 		FidgetSpam:
@@ -234,12 +233,12 @@ CLASS Railgun : Brutalweapon
 			RAIF BCDEFG 1 A_setpitch(pitch + 1);
 			
 			RAIL BCDEBCDEBCDEBCDE 1 A_WeaponReady(WRF_NOFIRE| WRF_NOBOB);
-			//TNT1 A 0 A_jumpifinventory("PowerSPeed2",1,"Ready");
+			TNT1 A 0 A_CheckIfMag(1,"Ready");
 		Pumping:
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol");
 			RAIL FGHI 1;
 			
-			RAIL JKLMNYYOO 1;
+			RAIL JKLMNNOOO 1;
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol2");
 			RAIL OOOO 1;
 			TNT1 A 0 A_StartSound("RAILMAG2", 5);
@@ -249,9 +248,12 @@ CLASS Railgun : Brutalweapon
 				If(countinv("railchambered") > 0)
 				{
 					a_giveinventory("railsteam",1);
-					a_takeinventory("railchambered",1);
 					A_startsound("Railgun/Eject",2);
 					A_FireProjectile("RailCaseSpawn",0,0,0,0,0,0);
+					if(invoker.mag < 1)
+					{
+						takeinventory("railchambered",1);
+					}
 				}
 			}
 			RAIL TWWVUUUUUUUUUUUUUUU 1
@@ -261,24 +263,17 @@ CLASS Railgun : Brutalweapon
 					A_fireprojectile("Smallgunbarrelsmoke",frandom(-35,-45),0,0,0,0,frandom(-20,-30));
 				}
 			}
-			TNT1 A 0 
-			{
-				takeinventory("railsteam",1);
-				If(invoker.mag < 1 && countinv("AmmoCell") > 9)
-				{
-						Return resolvestate("ReloadFromPump");
-				}
-				Else If(invoker.mag < 5 && countinv("AmmoCell") > 9 && A_pressedreload())
-				{
-						takeinventory("reloading",1);
-						Return resolvestate("ReloadFromPump");
-				}
-				Else Return resolvestate("finishpump2");
-			}
+			TNT1 A 0 takeinventory("railsteam",1);
+			TNT1 A 0 A_JumpIfInventory("RailChambered",1,1);
+			Goto ReloadFromPump;
+			TNT1 A 0 takeinventory("railchambered",1);
+			TNT1 A 0 A_AutoReloadMag(1,"ReloadFromPump");
+			TNT1 A 0 {if(invoker.mag < 5 && countinv("AmmoCell") > 9) {A_PressingReload("ReloadFromPump");}}
+			Goto FinishPump2;
 		FinishPump:
 			RAIL WWVV 1;
 		FinishPump2:
-		TNT1 A 0 A_StartSound("RAILINSR", 5);
+			TNT1 A 0 A_StartSound("RAILINSR", 5);
 			RAIL UUUUUTTSRQP 1;
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol2reverse");
 			RAIL OOOOONMLKJ 1;
@@ -318,15 +313,7 @@ CLASS Railgun : Brutalweapon
 		
 		
 		Reload:
-			TNT1 A 0
-			{
-				Takeinventory("reloading",1);
-				If(invoker.mag < 1 && Countinv("AmmoCell") > 9)
-					{
-						Return resolvestate("Pumping");
-					}
-					Return resolvestate(null);
-			}
+			TNT1 A 0 A_AutoReloadMag(1,"Pumping",true);
 			TNT1 A 0 A_overlay(-5,"pumpinghandlol");
 			RAIL FGHIJKLMNYYOO 1;
 		ReloadInsertShells:
