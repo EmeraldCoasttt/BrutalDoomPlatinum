@@ -5,26 +5,26 @@
 //value 3 is rarity, possible values are 1, 2, and 3
 //lower values are less rare
 
-shot_gun,shotgun,1
+chain_saw,chainsaw,1
 doxsrevolver,shotgun,1
+shot_gun,shotgun,1
+battlerifle,shotgun,1
 ssg,supershotgun,1
 assaultshotgun,supershotgun,2
-chaingunspawner,chaingun,1
+minigun,chaingun,1
 rocket_launcher,rocketlauncher,1
 grenadelauncher,rocketlauncher,1
 incinerator,rocketlauncher,1
-chain_saw,chainsaw,1
-plasmagunspawner,plasmarifle,1
-freezer,plasmarifle,1
+plasma_gun,plasmarifle,1
 railgun,plasmarifle,1
+freezer,plasmarifle,1
 big_fucking_gun,bfg,1
-unmaker,bfg,1
 calamityblade,bfg,1
+unmaker,bfg,1
 doxsrevolver,secret,1
+battlerifle,secret,1
 EnergyArmor,secret,2
 quadsigil,secret,2
 hastesphere,secret,2
-ragesphere,secret,3
 boosterframe,secret,2
-battlerifle,shotgun,1
-battlerifle,secret,1
+ragesphere,secret,3
