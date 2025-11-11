@@ -176,6 +176,18 @@ CLASS ZOMBIEHEADSHOT : BASEHEADSHOT
 
 }
 
+CLASS IMPHEADSHOT : BASEHEADSHOT
+{
+
+	Default
+	{
+		baseheadshot.offsetz 36;
+		baseheadshot.offsetx 16;
+		radius 8;
+		height 16;
+	}
+}
+
 CLASS REVHEADSHOT : BASEHEADSHOT
 {
 
@@ -196,6 +208,7 @@ CLASS VILEHEADSHOT : BASEHEADSHOT
 	{
 		Damagefactor "Railgun", 0.6;
 		baseheadshot.offsetz 56;
+		baseheadshot.offsetx 16;
 		radius 8;
 		height 16;
 	}
@@ -207,7 +220,8 @@ CLASS FATSOHEADSHOT : BASEHEADSHOT
 
 	Default
 	{
-		baseheadshot.offsetz 56;
+		baseheadshot.offsetz 52;
+		baseheadshot.offsetx 16;
 		radius 12;
 		height 16;
 	}
@@ -233,6 +247,7 @@ CLASS KNIGHTHEADSHOT : BASEHEADSHOT
 	Default
 	{
 		baseheadshot.offsetz 55;
+		baseheadshot.offsetx 8;
 		radius 10;
 		height 16;
 		BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood";
@@ -248,6 +263,7 @@ CLASS BARONHEADSHOT : BASEHEADSHOT
 	Default
 	{
 		baseheadshot.offsetz 60;
+		baseheadshot.offsetx 8;
 		radius 12;
 		height 18;
 		BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood";
@@ -276,7 +292,7 @@ CLASS CACOHEADSHOT : BASEHEADSHOT
 
 
 
-CLASS RIotShieldGuyShield : BASEHEADSHOT
+/*CLASS RIotShieldGuyShield : BASEHEADSHOT
 {
 	Default
 	{
@@ -319,4 +335,4 @@ CLASS RIotShieldGuyShield : BASEHEADSHOT
 	
 	return -1;
 	}
-}
+}*/
