@@ -222,7 +222,6 @@ ACTOR Plasma_Gun : BrutalWeapon
 			A_FirePitchDown("PLSM9", 1, 15);
 			A_FireProjectile ("PlasmaFlareSpawn", 0, 0, 0, 2);
 			A_SetPitch(pitch-0.3, SPF_INTERPOLATE);
-			A_FireParticles(0,1,0,-4);
 			A_AlertMonstersDX;
 			A_ZoomFactor(0.99);
 			A_QuadSound;
