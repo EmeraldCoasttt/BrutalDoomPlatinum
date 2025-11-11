@@ -23,6 +23,7 @@ class DroppedWeapon : Actor
 		+CORPSE
 		-DONTSPLASH
 		Mass 1;
+		BounceType "Doom";
 		Bouncefactor 0.4;
 		WallBounceFactor 0.2;
 	}
