@@ -203,7 +203,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 		"####" TSRQP 1 A_WeaponReady(WRF_NOFIRE)
 		Goto Ready
 	SelectFromDual:
-		XXXX X 0 A_StartSound("foley/PlasmaInspectMisc",10)
+		TNT1 A 0 {A_SetCrosshairDX("PLASRet", 1000,0.5); A_StartSound("foley/PlasmaInspectMisc",10);}
 		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True)
 		TNT1 A 0 A_Overlay(6,"DeselectSecondGun")
 		3UPL C 0 A_CheckIfMag(11,3)
@@ -286,11 +286,14 @@ ACTOR Plasma_Gun : BrutalWeapon
 		TNT1 A 0 A_StartSound("PLSCOOL", 1)
 	AltFireUnloadLoop:
 		TNT1 A 0 A_WeaponOffset(0,32)	
-		TNT1 A 0 A_JumpIf(CountInv("PlasmaCooldowncounter")==0,"Ready")
+		TNT1 A 0 A_JumpIf(CountInv("PlasmaCooldowncounter")==0,"EndAlt")
 		PLSF IJKL 1 Bright A_GunLight(200,2,0,128,255)
 		TNT1 A 0 A_TakeMag
 		TNT1 A 0 A_takeInventory("PlasmaCooldowncounter",1)
 		loop
+	EndAlt:
+		TNT1 A 0 A_SetCrosshairDX("PLASRet", 1000,0.5)
+		Goto Ready
 
 // Holding Charge ------------------------------------------------------------
 
@@ -303,7 +306,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 			if (CountInv("Reloading") == 1) { return state("Reload"); }
 			A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH|WRF_DISABLESWITCH);
 			A_WeaponOffset( random(-2,2),32+random(-2,2) );
-			A_StartSound("PLSFULL", 6, 0.8, 1);
+			A_StartSound("PLSFULL", 6, CHANF_LOOPING, 1, 0.8);
 			return state("");
 		}
 		PLSN A 0 A_ReFire("ContinueAlt")
@@ -346,6 +349,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 		"####" A 0
 		"####" "[" 1
 		"####" ZYXW 1
+		TNT1 A 0 A_SetCrosshairDX("PLASRet", 1000,0.5)
 		Goto Ready
 	ContinueAltNoAmmo:
 		TNT1 A 0 A_StopSound(1)
@@ -353,60 +357,6 @@ ACTOR Plasma_Gun : BrutalWeapon
 		3LSF "[" 1
 		3LSF ZYXW 1
 		Goto Ready
-
-// Cancel Charge --------------------------------------------------------------------------------------------
-
-	Cancel:
-		PLSN A 0 A_TakeInventory("Reloading",1)
-		PLSN A 0 A_StopSound(6)
-		PLSN A 0 A_StartSound("decharg", 5)
-		PLSC A 1 BRIGHT 
-		PLSC B 1 BRIGHT A_Giveinventory("PlasmaAmmo",1)
-		PLSC C 1 BRIGHT 
-		PLSC D 1 BRIGHT 
-		PLSC A 1 BRIGHT 
-		PLSC B 1 BRIGHT A_Giveinventory("PlasmaAmmo",1)
-		PLSC C 1 BRIGHT 
-		PLSC D 1 BRIGHT 
-		PLSC A 1 BRIGHT 
-		PLSC B 1 BRIGHT A_Giveinventory("PlasmaAmmo",1)
-		PLSC C 1 BRIGHT 
-		PLSC D 1 BRIGHT 
-		PLSC A 1 BRIGHT 
-		PLSC B 1 BRIGHT A_Giveinventory("PlasmaAmmo",1)
-		PLSC C 1 BRIGHT 
-		PLSC D 1 BRIGHT 
-		PLSC A 1 BRIGHT 
-		PLSC B 1 BRIGHT A_Giveinventory("PlasmaAmmo",1)
-		PLSC C 1 BRIGHT 
-		PLSC D 1 BRIGHT 
-		PLSC A 1 BRIGHT 
-		PLSC B 1 BRIGHT A_Giveinventory("PlasmaAmmo",1)
-		PLSC C 1 BRIGHT 
-		PLSC D 1 BRIGHT A_StartSound("plscool", 7)
-		PLSC A 1 BRIGHT 
-		PLSC B 1 BRIGHT A_Giveinventory("PlasmaAmmo",1)
-		PLSC C 1 BRIGHT 
-		PLSC D 1 BRIGHT
-		PLSC A 1 BRIGHT 
-		PLSC B 1 BRIGHT A_Giveinventory("PlasmaAmmo",1)
-		PLSC C 1 BRIGHT 
-		PLSC D 1 BRIGHT
-		PLSC A 1 BRIGHT 
-		PLSC B 1 BRIGHT A_Giveinventory("PlasmaAmmo",1)
-		PLSC C 1 BRIGHT 
-		PLSC D 1 BRIGHT
-		PLSC A 1 BRIGHT 
-		PLSC B 1 BRIGHT A_Giveinventory("PlasmaAmmo",1)
-		PLSC C 1 BRIGHT 
-		PLSC D 1 BRIGHT
-		PLSN A 0 A_TakeInventory("Reloading",1)
-		PLSN A 0 A_Giveinventory("DoublePlasmaAmmo",10)
-		PLSN A 0 A_StartSound("BEPBEP", 5, 1.2)
-		PLSN A 0 A_ClearReFire
-		Goto Ready
-
-//	------------------------------------------------------------------------------
 
 	Spawn:
 		PLAS A 20
