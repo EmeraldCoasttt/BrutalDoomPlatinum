@@ -7,7 +7,6 @@ ACTOR IsDoingUpper: Inventory {Inventory.MaxAmount 1}
 
 ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 {
-	Game Doom
 	Weapon.SlotNumber 1
 	Weapon.SlotPriority 1
 	Weapon.SelectionOrder 1
@@ -15,11 +14,7 @@ ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 	
 	Obituary "%o was Ripped and Teared by 	%k"
 	+WEAPON.MELEEWEAPON
-    +WEAPON.NOALERT
-    +WEAPON.NOAUTOAIM
-	+WEAPON.CHEATNOTWEAPON
 	+INVENTORY.UNDROPPABLE
-	+WEAPON.NOAUTOFIRE
 	Tag "Fists"
 	
 	Inventory.AltHUDIcon "MEDKC0"
@@ -393,52 +388,24 @@ ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 		TNT1 A 0
 		TNT1 A 0 A_TakeInventory("Reloading", 1)
 		Goto Ready3
-	
-	TakeTheAxeByTheWay:
-	TNT1 A 0 A_TakeInventory("SwitchingDualModes",1)
-	TNT1 A 0 A_JumpIfInventory("iJustThrowedMySaw",1,"NoooTakeMySawInstead")
-	TNT1 A 0 A_TakeInventory("BrutalAxe",1)
-	Goto SelectAnimation
-	
-	NoooTakeMySawInstead:
-	TNT1 A 0 A_TakeInventory("iJustThrowedMySaw",1)
-	TNT1 A 0 A_TakeInventory("Chain_saw",1)
-	Goto SelectAnimation
-	
 	Select:
-		TNT1 A 0 
-		Goto SelectFirstPersonLegs
-		SelectContinue:
-		"####" A 0 A_GiveInventory("IsPlayingDoxMod",1)
-		TNT1 A 0 A_Giveinventory("GoSpecial",1)
-		TNT1 A 0 A_Giveinventory("SwitchtoFist",1)
-		TNT1 A 0 A_SetCrosshairDX("Null")
-        ////////////////// Check if player is performing a fatality\\\\
-	
-        ////////////////////
-		PUNS A 1 A_Raise
-		TNT1 AAAAAAAAAAAAAA 0 A_Raise
-		TNT1 A 0 A_Giveinventory("FistsSelected",1)
-		TNT1 A 0 A_jumpifinventory("LostSoulFatality",1,"ReadySoul")
-		TNT1 A 0 A_JumpIfInventory("SwitchingDualModes", 1, "TakeTheAxeByTheWay")
-	SelectAnimation: 
-	ReturnFromNothing:
+		TNT1 A 1
+		{
+			if(CountInv("iJustThrowedMySaw") > 0)
+			{
+				A_TakeInventory("Chain_saw",1);
+				A_TakeInventory("iJustThrowedMySaw",1);
+			}
+			A_SetCrosshairDX("Null");
+		}
+		PUNS A 1
 	    FIGA A 0 A_JumpIfInventory("NeverSelectedShotgun",1,"LetsGetStarted")
 	    FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
 	    FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
 	    FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
 		FISA N 0
-		"####" A 0
-//        "####" C 0 A_PlaySound("FISTSLCT")
         "####" DCBA 1 A_WeaponReady(WRF_NOFIRE)
-//		"####" D 1 A_SetPitch (-0.6 + Pitch, SPF_INTERPOLATE)
-//		"####" E 1 A_SetPitch (+0.6 + Pitch, SPF_INTERPOLATE)
-//		"####" EFG 1 A_WeaponReady(WRF_NOFIRE)
-	//Ready:
-	   //PRNG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
-		//PONG N 0
-		//"####" A 0
-		//"####" A 1 A_WEAPONREADY
+		Goto Ready
     Ready:
 	TNT1 A 0 A_WEAPONREADYDX(0,FALSE)
 	//	TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 3)
@@ -475,7 +442,7 @@ ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 			
 			//if (CountInv("Kicking") == 1) {	return state("KickingFlash");}
 
-			return A_WeaponReadyDX(WRF_ALLOWRELOAD, FALSE);
+			return A_WeaponReadyDX(WRF_ALLOWRELOAD, FALSE, TRUE, TRUE);
 		}
 		Goto Ready
 	
@@ -489,40 +456,25 @@ ACTOR Melee_Attacks : BrutalWeapon Replaces Fist
 		PKUP N 0
 		
 	KeepSprinting:
-		"####" A 1 A_WeaponReadyDX(0,FAlSE,FALSE)
+		"####" A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD, FALSE, FALSE, TRUE)
 		"####" A 0 A_KeepSprinting
 		Goto Ready
 	
 		
 
-    Deselect: "####" A 0 A_TakeInventory("IsPlayingDoxMod",1)
-		TNT1 A 0 A_TakeInventory("TossGrenade", 1)
-		TNT1 A 0 A_Takeinventory("FistsSelected",1)
-		TNT1 A 0 A_Takeinventory("PSeq2",3)
+    Deselect:
 		TNT1 A 0 A_Takeinventory("PSeq1",3)
-		//TNT1 A 0 A_jumpifinventory("LostSoulFatality",1,"KillLS")
-		TNT1 A 0 A_JumpIfInventory("HasBarrel",1,"FireBarrel")
-		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieman",1,"ThrowZombieman")
-		TNT1 A 0 A_JumpIfInventory("GrabbedAShotgunguy",1,"ThrowShotgunguy")
-		TNT1 A 0 A_JumpIfInventory("GrabbedAChaingunguy",1,"ThrowChaingunguy")
-		TNT1 A 0 A_JumpIfInventory("GrabbedAZombieCivilian",1,"ThrowZombieCivilian")
-		TNT1 A 0 A_JumpIfInventory("GrabbedAEvilMarine",1,"ThrowEvilMarine")
-		TNT1 A 0 A_JumpIfInventory("GrabbedANazi",1,"ThrowNazi")
-		TNT1 A 0 A_JumpIfInventory("GrabbedAImp",1,"ThrowImp")
-		//TNT1 A 0 A_SetCrosshair(0)
 		FIGA A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4)
 		FIBA A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3)
 		FIRA A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2)
 		FISA N 0
-		"####" A 0
 		"####" A 0 A_ClearOverlays(-2,-2)
 		"####" ABCD 1
 		TNT1 A 0 A_Takeinventory("PowerBloodOnVisor",1)
 		TNT1 A 0 A_Takeinventory("PowerBlueBloodOnVisor",1)
 		TNT1 A 0 A_Takeinventory("PowerGreenBloodOnVisor",1)
-		TNT1 A 1 A_Lower
-		TNT1 AAAAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
-		TNT1 A 0 A_SetCrosshair(0)
+		TNT1 A 1
+		TNT1 A 0 A_Lower
 		Wait
 
 

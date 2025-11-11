@@ -100,7 +100,7 @@ Class Clip1 : Ammo
 	Default
 	{
 	Inventory.PickupMessage "Picked up a Pistol Magazine.";
-	Inventory.Amount 30;
+	Inventory.Amount 15;
 	Inventory.MaxAmount 200;
 	Ammo.BackpackAmount 100;
 	Ammo.BackpackMaxAmount 400;

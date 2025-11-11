@@ -155,7 +155,7 @@ ACTOR DropedShotgun : DroppedWeapon
     {
 
 	 Spawn:
-		 SHTC C 4 A_setroll(roll + 45)
+		 SHTC D 4 A_setroll(roll + 45)
 		 TNT1 A 0 A_ChangeFlag("THRUACTORS", 0)
 		 Loop
 	 
@@ -207,7 +207,7 @@ ACTOR DropedPistol : DroppedWeapon
 	 
 	Death:
 		 TNT1 A 0
-		 TNT1 A 0 A_SpawnDroppedWeapon("BrutalPistol",15)
+		 TNT1 A 0 A_SpawnDroppedWeapon("BrutalPistol",7)
 		 Stop
     }
 }
@@ -259,7 +259,7 @@ ACTOR DropedSMG : DroppedWeapon
 	 
 	 Death:
 		 TNT1 A 0
-		 TNT1 A 0 A_SpawnDroppedWeapon("BrutalSMG",15)
+		 TNT1 A 0 A_SpawnDroppedWeapon("BrutalSMG",7)
 		 Stop
     }
 }

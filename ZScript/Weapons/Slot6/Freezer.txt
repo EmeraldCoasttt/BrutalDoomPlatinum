@@ -3,25 +3,17 @@ Class Freezer : BrutalWeapon
 {
 	Default
 	{
-		Weapon.AmmoUse1 0;
-		Weapon.AmmoUse2 0;
-		Weapon.AmmoGive1 100;
-		Weapon.AmmoGive2 0;
-		Weapon.AmmoType1 "AmmoCell";
-		Weapon.AmmoType2 "FreezerAmmo";
+		Weapon.AmmoGive 40;
+		Weapon.AmmoType "AmmoCell";
+		BrutalWeapon.MagCapacity 50;
 		Obituary "%o was put on ice by %k's Freezer Beam.";
 		Inventory.PickupSound "PLSDRAW";
 		Inventory.Pickupmessage "You got the Freezer Beam! (Slot 6)";
-		+WEAPON.NOAUTOAIM;
-		+WEAPON.NOALERT;
-		+WEAPON.NOAUTOFIRE;
-		+WEAPON.EXPLOSIVE;
 		damagetype "Ice";
 		Weapon.SlotNumber 6;
 		Weapon.SlotPriority 3;
 		Weapon.SelectionOrder 1550;
 		Inventory.AltHUDIcon "FRZRA0";
-		BrutalWeapon.weight 2;
 		Tag "$BDPFREEZER";
 	}
 	Actor freezebuddy;
@@ -56,7 +48,7 @@ Class Freezer : BrutalWeapon
 		Stop;
 		
 	GrenadeThrowFlash:
-	    RAIL A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"GrenadeThrowFlashNoAmmo");
+	    RAIL A 0 A_CheckIfMag(1,"GrenadeThrowFlashNoAmmo");
         FR1S ABCDE 1; //A_WeaponReady(WRF_NOFIRE)
 		TNT1 A 22;
 		FR1S EDCBA 1; //32 in total
@@ -66,21 +58,21 @@ Class Freezer : BrutalWeapon
 	
 	
 	KickingFlash:
-	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"KickingFlashNoAmmo");
+	TNT1 A 0 A_CheckIfMag(1,"KickingFlashNoAmmo");
 	FR1K ABCD 1;
 	FR1K EFGE 2;
 	FR1K DCBA 1; //16
 	Goto Ready;
 
 	AirKickingFlash:
-	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"AirKickingFlashNoAmmo");
+	TNT1 A 0 A_CheckIfMag(1,"AirKickingFlashNoAmmo");
 	FR1K ABCD 1;
 	FR1K EFGEF 2;
 	FR1K DCBA 1; //18
 	Goto Ready;
 	
 	 SlideKickingStart:
-		TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"SlideKickingStartNoAmmo");
+		TNT1 A 0 A_CheckIfMag(1,"SlideKickingStartNoAmmo");
 	    FR1K ABCD 1;
 	    FR1K EEFFGGEEFFGGEEFFGGEEFFGGEEFFGGEEFFGG 1 { //39 total
 			if (CountInv("Kicking") == 0) {
@@ -91,7 +83,7 @@ Class Freezer : BrutalWeapon
 		Goto Ready;
 
 	 SlideKickingEnd:
-		TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"SlideKickingEndNoAmmo");
+		TNT1 A 0 A_CheckIfMag(1,"SlideKickingEndNoAmmo");
 		FR1K EEFFGG 1;
 		FR1K DCBA 1;
 	    Goto Ready;
@@ -156,7 +148,7 @@ Class Freezer : BrutalWeapon
 		
 		
 		Fuckyouflash:
-	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"FuckyouNoAmmo");
+	TNT1 A 0 A_CheckIfMag(1,"FuckyouNoAmmo");
 	FR1K ABCD 1;
 	FR1K EFGEFGEFGFG 2;
 	FR1K DCBA 1; //30
@@ -181,48 +173,35 @@ Class Freezer : BrutalWeapon
 	//stop
 	
 		
-	SelectAnimationNoAmmo:
-		TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"SelectAnimationUnloaded");
-	    FR1S EMLKJ 1 A_WeaponReady(WRF_NOFIRE);
-		Goto Ready3;
-	SelectAnimationUnloaded:
-	    FR1S EIHGF 1 A_WeaponReady(WRF_NOFIRE);
-		Goto Ready3;
-		
-	SelectAnimation:
-	ReturnFromNothing:
-	    RAIL A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"SelectAnimationNoAmmo");
-        FR1S EDCBA 1 A_WeaponReady(WRF_NOFIRE);
-		TNT1 A 0 A_StartSound("RAILR1", 2);
         
 		
 	Ready:
 	Ready3:
-		TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"ReadyNoAmmo");
+		TNT1 A 0 A_CheckIfMag(1,"ReadyNoAmmo");
 		RAIL A 0 A_startsound("PLSIDLE",6);
 		FR1D ABC 2 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		TNT1 A 0 A_AutoReload("FreezerAmmo","AmmoCell");
+		TNT1 A 0 A_AutoReloadMag();
 		FR1D ABC 2 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		TNT1 A 0 A_AutoReload("FreezerAmmo","AmmoCell");
+		TNT1 A 0 A_AutoReloadMag();
 		Goto Ready3;
 		
 	ReadyNoAmmo:
 		FR1D T 0 A_JumpIf(CountInv("FreezerIsUnloaded")==1,"ReadyUnloaded");
 		FR1D Q 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		TNT1 A 0 A_AutoReload("FreezerAmmo","AmmoCell");
+		TNT1 A 0 A_AutoReloadMag();
 		loop;
 	ReadyUnloaded:
 		FR1D T 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		TNT1 A 0 A_AutoReload("FreezerAmmo","AmmoCell");
+		TNT1 A 0 A_AutoReloadMag();
 		Loop;
 		
 		SprintOverlay:
-	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"sprintNoAmmo");
-	FR1K ABCD 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+	TNT1 A 0 A_CheckIfMag(1,"sprintNoAmmo");
+	FR1K ABCD 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
 	KeepSprinting:
-	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"KeepSprintingNoAmmo");
+	TNT1 A 0 A_CheckIfMag(1,"KeepSprintingNoAmmo");
 	RAIL A 0 A_Startsound("PLSIDLE");
-	FR1K EFG 2 A_weaponreadyDX(0,FALSE,FALSE);
+	FR1K EFG 2 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 	TNT1 A 0 A_KeepSprinting();
 	Goto ReturnFromSprint;
 	SprintNoAmmo:
@@ -238,8 +217,8 @@ Class Freezer : BrutalWeapon
 	WAIT;
 	
 	ReturnFromSprint:
-	TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"ReturnFromsprintNoAmmo");
-	FR1K DCBA 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+	TNT1 A 0 A_CheckIfMag(1,"ReturnFromsprintNoAmmo");
+	FR1K DCBA 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
 	Goto Ready;
 	
 	ReturnFromSprintNoAmmo:
@@ -256,33 +235,24 @@ Class Freezer : BrutalWeapon
 		RAIL A 0 A_JumpIfInventory("Zoomed",1,"Ready2");
 	Goto Ready;
 	
-	Deselect: "####" A 0 A_TakeInventory("IsPlayingDoxMod",1);
-		RAIL A 0 A_Takeinventory("PowerLightAmp", 1);
-		RAIL A 0 A_Takeinventory("Zoomed",1);
-		RAIL A 0 A_TakeInventory("Fire2Activate",1);
-		RAIL A 0 A_Takeinventory("PressedTwice",1);
-		RAIL A 0 A_TakeInventory("PressedOnce",1);
-        RAIL A 0 A_ZoomFactor(1.0);
-		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
-		//NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
-		"####" A 0 A_ClearOverlays(-2,-2);
-	    RAIL A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"DeselectNoAmmo");
+	Deselect:
+	    RAIL A 0 A_CheckIfMag(1,"DeselectNoAmmo");
         FR1S ABCDE 1;
-		TNT1 AAAAAAAAAAAAAAAAAAAAA 0 A_Lower();
-		TNT1 A 1 A_Lower();
+		TNT1 A 1;
+		TNT1 A 0 A_Lower();
 		Wait;
 		
 	DeselectNoAmmo:
 		TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"DeselectUnloaded");
 	    FR1S JKLME 1;
-		TNT1 AAAAAAAAAAAAAAAAAAAAA 0 A_Lower();
-		TNT1 A 1 A_Lower();
+		TNT1 A 1;
+		TNT1 A 0 A_Lower();
 		Wait;
 		
 	DeselectUnloaded:
 	    FR1S FGHIE 1;
-		TNT1 AAAAAAAAAAAAAAAAAAAAA 0 A_Lower();
-		TNT1 A 1 A_Lower();
+		TNT1 A 1;
+		TNT1 A 0 A_Lower();
 		Wait;
 	
 		
@@ -291,27 +261,28 @@ Class Freezer : BrutalWeapon
 		
 		
 	Select:
-		TNT1 A 0;
-		TNT1 A 0 A_SetCrosshairDX("PLASRet2", 1000,0.5);
-		Goto SelectFirstPersonLegs;
-		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1) ;
-		RIFL C 0 A_GunSlingerReload("FreezerAmmo",50,"AmmoCell");
-		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("FreezethrowerCrosshair"));}else{A_SetCrosshair(0);}}
-		RAIL A 0 A_Giveinventory("RailGunSelected",1);
-	    TNT1 A 1 A_Raise();
-		TNT1 AAAAAAAAAAAAAA 0 A_Raise();
-		Goto SelectAnimation;
-		
+		TNT1 A 1 {A_SetCrosshairDX("PLASRet2", 1000,0.5); A_GunSlingerMag();}
+	    TNT1 A 0 A_CheckIfMag(1,"SelectAnimationNoAmmo");
+        FR1S EDCBA 1 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_StartSound("RAILR1", 2);
+		Goto Ready;
 	NoAmmo:
+	SelectAnimationNoAmmo:
+		TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"SelectAnimationUnloaded");
+	    FR1S EMLKJ 1 A_WeaponReady(WRF_NOFIRE);
+		Goto Ready3;
+	SelectAnimationUnloaded:
+	    FR1S EIHGF 1 A_WeaponReady(WRF_NOFIRE);
+		Goto Ready3;
 		TNT1 A 0 A_StartSound("weapons/empty", 3);
 	NoAmmo2:
-		TNT1 A 0 A_JumpIf(CountInv("AmmoCell") > 1 && CountInv("FreezerAmmo") < 50,"Reload");
-		R4FL T 0 A_CheckIfAmmo("FreezerAmmo",1,"NoAmmo3");
-		FR1D ABC 2 A_WeaponReadyDX(WRF_NOFIRE,false,false);
+		TNT1 A 0 A_AutoReloadMag();
+		R4FL T 0 A_CheckIfMag(1,"NoAmmo3");
+		FR1D ABC 2 A_WeaponReadyDX(WRF_NOFIRE);
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD || player.cmd.buttons & BT_ATTACK || player.cmd.buttons & BT_ALTATTACK, "NoAmmo2");
 		Goto Ready;
 	NoAmmo3:
-		FR1D Q 1 A_WeaponReadyDX(WRF_NOFIRE,false,false);
+		FR1D Q 1 A_WeaponReadyDX(WRF_NOFIRE);
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD || player.cmd.buttons & BT_ATTACK || player.cmd.buttons & BT_ALTATTACK, "NoAmmo2");
 		Goto Ready;
 	
@@ -348,10 +319,10 @@ Class Freezer : BrutalWeapon
 	*/	
 	Fire:
 	    RAIL A 0;
-		RAIL A 0 A_CheckIfAmmo("FreezerAmmo",1);
+		RAIL A 0 A_CheckIfMag();
 		TNT1 AA 0;
 		RAIL A 0 A_Giveinventory("HasFreezerWeapon",1);
-		RAIL A 0 A_TakeAmmo("FreezerAmmo",1);
+		RAIL A 0 A_TakeMag();
 		"####" A 0 A_QuadSound();
 		FLMT A 0 A_startsound("IceLoop", 1, CHANF_LOOPING, 1);
 		TNT1 A 0 a_alertmonstersDX();
@@ -366,7 +337,7 @@ Class Freezer : BrutalWeapon
 		"####" A 0 A_QuadSound();
 		TNT1 A 0 A_GunLight(250,2,145,248,255);
 		FR1D S 1 BRIGHT A_RailAttack((random(10,15)), 0, 0, 0, "blue", RGF_SILENT | RGF_CENTERZ | RGF_FULLBRIGHT, 0, "CryoPuff", 0, 0, 9804, 1, 32.0, 0, "CryoTracer");
-		RAIL A 0 A_JumpIf(CountInv("FreezerAmmo")<1,"AltGoToNoAmmo");
+		RAIL A 0 A_CheckIfMag(1,"AltGoToNoAmmo");
 	//	RAIL A 0 A_JumpIfInventory("FreezerAmmo",2,2)
 	//	Goto NoAmmo
 		TNT1 AA 0;
@@ -396,21 +367,16 @@ Class Freezer : BrutalWeapon
 		Goto NoAmmo2;
 		
 	AltFire:
-	    RAIL A 0;
-		RAIL A 0 A_CheckIfAmmo("FreezerAmmo",5);
+		RAIL A 0 A_CheckIfMag(5);
 		TNT1 A 0 A_SetCrosshairDX("PLASRet2", 600,0.80);
-		TNT1 AA 0;
 		FR1D D 3;
 		FR1D E 1;
-		Part2:
-		RAIL A 0 A_CheckIfAmmo("FreezerAmmo",5);
-		TNT1 A 0 A_SetCrosshairDX("PLASRet2", 600,0.80);
 		FR1D EFF 1;
 		FR1D G 1;
 		TNT1 A 0 A_GunLight(500,3,0,128,255);
-		RAIL A 0 A_TakeAmmo("FreezerAmmo",5);
+		RAIL A 0 A_TakeMag(5);
 		//RAIL A 0 A_PlaySound("FRZFIRE", 1);
-		RAIL A 0 A_FirePitchDown("FRZFIRE", 1, 15, "FreezerAmmo");
+		RAIL A 0 A_FirePitchDown("FRZFIRE", 1, 15);
 		TNT1 AA 0 A_FireCustomMissile ("BluePlasmaParticleWeapon", random(-11,11), 0, -1, -3, 0, random(-7,14));
 		TNT1 AAAAAAAAA 0 A_firecustommissile("IceShotprojectile",frandom(-4,4),FALSE,0,-4,0,FRANDOM(-2,2));
 		FR1D H 1 BRIGHT;
@@ -420,7 +386,7 @@ Class Freezer : BrutalWeapon
 		FR1D JKM 1 A_SetPitch(0.5 + pitch, SPF_INTERPOLATE);
 		"####" A 0 A_WeaponOffset(0,32);
 		TNT1 A 0 A_SetCrosshairDX("PLASRet2", 1000,0.5);
-		TNT1 A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"GoToNoAmmo");
+		TNT1 A 0 A_CheckIfMag(1,"GoToNoAmmo");
 		RAIL A 0 A_Refire();
 
 		Goto Ready3;
@@ -430,12 +396,9 @@ Class Freezer : BrutalWeapon
 		RAIL A 0 A_ZoomFactor(1.0);
 		RAIL A 0 A_Takeinventory("PowerLightAmp", 1);
 		RAIL A 0 A_Takeinventory("Zoomed",1);
-		RAIL A 0 A_JumpIfInventory("FreezerAmmo",50,"NoAmmo2");
-		RAIL A 0 A_CheckIfAmmo("AmmoCell");
-        TNT1 AAAA 0;
 		RAIL A 0 A_JumpIfInventory("TurboReload", 1, "InsertBullets");
 		RAIL A 0 A_JumpIfinventory("FreezerIsUnloaded",1,"ReloadUnloaded");
-		RAIL A 0 A_JumpIf(CountInv("FreezerAmmo")==0,"ReloadContinue");
+		RAIL A 0 A_CheckIfMag(1,"ReloadContinue");
 		TNT1 A 0 A_StartSound("RAILRIP", 1);
 		FR1D NOP 1;
 	ReloadContinue:
@@ -447,11 +410,12 @@ Class Freezer : BrutalWeapon
 		FRRL G 1 offset(0,32);	
 		"####" A 0 A_StartSound("RAILMAG2",1);
 		FRRL HIJKLLLMNOPP 1;
-		"####" A 0 A_DiscardMag("Freezerammo",0);
+		"####" A 0 A_DiscardMagazine();
 		TNT1 A 0 A_FireCustomMissile("EmptyFreezerMagSpawn",160,0,10,-8);
 		FRRL Q 4;
 		FRRL RRSTUV 1;
 		"####" A 0 A_StartSound("RAILINSR");
+		TNT1 A 0 A_ReloadMag();
 		FRRL WWXYYYYZZ 1;
 		FRRL [ 1;
 		FRRL \ 1;
@@ -461,19 +425,6 @@ Class Freezer : BrutalWeapon
 		FR1D PONPO 1;
 		FR1D Z 0 A_StartSound("RAILON", 2);
 		SHTZ A 0 A_TakeInventory("Reloading",1);
-		Goto InsertBullets;
-		
-	InsertBullets:	
-		"####" AAAA 0;
-		"####" A 0 A_JumpIfInventory("FreezerAmmo",50,"FinishReload");
-		"####" A 0 A_JumpIfInventory("AmmoCell",1,3);
-		Goto FinishReload;
-        "####" AAAAAA 0;
-		"####" A 0 A_Giveinventory("FreezerAmmo",1);
-		"####" A 0 A_Takeinventory("AmmoCell",1);
-		Loop;
-		
-	FinishReload:
 	    FR1D D 1;
 		Goto Ready;
 		
@@ -492,7 +443,9 @@ Class Freezer : BrutalWeapon
 		SHTZ A 0 A_TakeInventory("Reloading",1);
 		SHTZ A 0 A_TakeInventory("FreezerIsUnloaded",1);
 		RAIL A 0 A_Takeinventory("Unloading",1);
-		Goto InsertBullets;
+		TNT1 A 0 A_ReloadMag();
+	    FR1D D 1;
+		Goto Ready;
 		
 	Unload:
 	    RAIL A 0  {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
