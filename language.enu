@@ -180,3 +180,6 @@ DHINT24 = "You take less damage while using the Super Shotgun's Meathook.";
 DHINT25 = "You are dead. Dead. Dead.";
 DHINT26 = "Collect new modifiers by killing every demon in a level!";
 DHINT27 = "Each slot has 3 weapons.";
+DHINT28 = "Crouch and kick for a powerful slide attack!";
+DHINT29 = "When the unmaker runs out of cells, it will drain your health instead.";
+DHINT30 = "Railgun headshots are explosive.";
