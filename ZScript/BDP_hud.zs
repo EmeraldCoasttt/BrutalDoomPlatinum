@@ -89,7 +89,11 @@ class BDP_HUD : DoomStatusBar
 	{
 		super.Tick();
 		brutal_playerbase BDPplr = brutal_playerbase(cplayer.mo);
-		int stamina = BDPplr.stamina;
+		int stamina;
+		If(BDPplr)
+		{
+			stamina = BDPplr.stamina;
+		}
 		if (stamina > 0)
 		{
 			stambarFadeTime = Clamp(stambarFadeTime + 1, 0, STAMFADEWAIT);
