@@ -424,7 +424,7 @@ class VehBase : Actor
 	virtual bool OnDriveAttempt(PlayerPawn user)
 	{
 		// Used primarily for setting up passengers.
-		If(user is "doomer")
+		If(user is "BDPPlayer")
 		{
 		return true;
 		}

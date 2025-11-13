@@ -88,38 +88,31 @@ CLASS BattleRifle : Brutalweapon
 	
 	States
 	{
-	
-		GrenadeThrowFlash:
-			BR4S ABCDE 1;
-			TNT1 A 22;
-			BR4S EDCBA 1;//32 in total
-			stop;
-			
-		FuckYouFlash:
-			BR4K ABCDEEEEEEEEEEEEEEEEEEEEEEDCBA 1; //18
-			stop;
-			
-		KickingFlash:
-			BR4K ABCDEEEEEEEEEEDCBA 1;
-			Goto Ready;
-		AirKickingFlash:
-			BR4K ABCDEEEEEEEEEEDCBA 1; //18
-			Goto Ready;
-	
-		SlideKickingStart:
-			BR4K ABCDE 1;
-			BR4K EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
-				if (CountInv("Kicking") == 0) {
-					return resolvestate("SlideKickingEnd");
-				}
-				return resolvestate(null);
-			}
-			Goto Ready;
-
-		SlideKickingEnd:
-			BR4K EEEEEEDCBA 1; //10
-			Goto Ready;
-			
+	GrenadeThrowFlash: //32
+		BR4S ABCDE 1;
+		TNT1 A 22;
+		BR4S EDCBA 1;
+		Stop;
+	KickingFlash: //16
+		BR4K ABCD 1;
+		BR4K E 8;
+		BR4K DCBA 1;
+		Goto Ready;
+	AirKickingFlash: //18
+		BR4K ABCD 1;
+		BR4K E 10;
+		BR4K DCBA 1;
+		Goto Ready;
+	SlideKickingStart: //26
+		BR4K ABCD 1;
+		BR4K E 18;
+		BR4K DCBA 1;
+		Goto Ready;
+	FuckYouFlash: //30
+		BR4K ABCD 1;
+		BR4K E 22;
+		BR4K DCBA 1;
+		Stop;
 		SprintOverlay:
 			BR4K ABCD 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 			KeepSprinting:

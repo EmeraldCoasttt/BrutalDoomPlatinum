@@ -1,0 +1,490 @@
+class PlasmaCooldowncounter2 : Inventory {Default {Inventory.MaxAmount 15;}} //Check which gun will fire next
+class DualPlasmaRifles : BrutalWeapon
+{
+	Default
+	{
+		Weapon.AmmoType "AmmoCell";
+		BrutalWeapon.MagCapacity 100;
+		Weapon.SisterWeapon "Plasma_Gun";
+		+WEAPON.NOAUTOAIM
+		+WEAPON.NO_AUTO_SWITCH
+		+FORCEXYBILLBOARD
+		+WEAPON.POWERED_UP
+		Tag "$BDPPLASMA";
+		Inventory.AltHUDIcon "PLASB0";
+		BrutalWeapon.handedness 2;
+		brutalweapon.voiceacted 0;
+		BrutalWeapon.DualWeapon "Plasma_Gun";
+	}
+	States
+	{
+	SprintOverlay:
+		TNT1 A 0 { A_Overlay(6,"SprintOverlay2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		3UPL C 0 A_CheckIfMag(1,4);
+		3UPL C 0 A_CheckIfMag(21,"SprintOverlaylowAmmo");
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### KLMN 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+	KeepSprinting:
+		TNT1 A 0 { A_Overlay(6,"SprintOverlay2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		3UPL C 0 A_CheckIfMag(1,4);
+		3UPL C 0 A_CheckIfMag(21,"KeepSprintinglowAmmo");
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### A 0	{ A_Overlay(6,"KeepSprinting2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		#### O 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		#### A 0 A_keepsprinting();
+		Goto ReturnFromSprint;
+	SprintOverlay2:
+		3UPL C 0 A_CheckIfMag(1,4);
+		3UPL C 0 A_CheckIfMag(21,"SprintOverlayLowAmmo2");
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### KLMN 1;
+		STOP;
+	KeepSprinting2:
+		3UPL C 0 A_CheckIfMag(1,4);
+		3UPL C 0 A_CheckIfMag(21,"KeepSprintingOverlayLowAmmo2");
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### O 1;
+		STOP;
+	SprintOverlayLowAmmo:
+		TNT1 A 0 { A_Overlay(6,"SprintOverlayLowAmmo2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		3UPL KLMNOO 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		KeepSprintingLowAmmo:
+		TNT1 A 0 { A_Overlay(6,"KeepSprinting2LowAmmo"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		PLSN A 0 A_StartSound("BEPBEP",4,0,0.3);
+		4UPL OOOOOO 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		3UPL OOOOOO 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		TNT1 A 0 A_KeepSprinting();
+		Goto ReturnFromSprint;
+	SprintOverlayLowAmmo2:
+		3UPL KLMNOO 1;
+	KeepSprinting2LowAmmo:
+		4UPL OOOOOO 1;
+		3UPL OOOOOO 1;
+		STOP;
+	ReturnFromSprint:
+		TNT1 A 0 { A_Overlay(6,"ReturnFromSprint2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		3UPL C 0 A_CheckIfMag(1,4);
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### NMLK 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		Goto Ready;
+	ReturnFromSprint2:
+		3UPL C 0 A_CheckIfMag(1,4);
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### NMLK 1;
+		STOP;
+	KickingFlash:
+		TNT1 A 0 { A_Overlay(6,"KickingFlash2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		3UPL C 0 A_CheckIfMag(1,4);
+		3UPL C 0 A_CheckIfMag(21,"KickingFlashLowAmmo");
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### KLMNOOOOOOOONMLK 1;
+		Goto Ready;
+	AirKickingFlash:
+		TNT1 A 0 { A_Overlay(6,"AirKickingFlash2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		3UPL C 0 A_CheckIfMag(1,4);
+		3UPL C 0 A_CheckIfMag(21,"AirKickingFlashLowAmmo");
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### KLMNOOOOOOOOOONMLK 1; //18
+		Goto Ready;
+	SlideKickingStart:
+		TNT1 A 0 { A_Overlay(6,"SlideKickingStart2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		3UPL C 0 A_CheckIfMag(1,4);
+		3UPL C 0 A_CheckIfMag(21,"SlideKickingStartLowAmmo");
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### KLMN 1;
+	SlideKickingLoop:
+		#### O 1 A_CheckSlide();
+		Loop;
+	SlideKickingEnd:
+		TNT1 A 0 { A_Overlay(6,"SlideKickingEnd2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		3UPL C 0 A_CheckIfMag(1,4);
+		3UPL C 0 A_CheckIfMag(21,"SlideKickingEndLowAmmo");
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### OOOOOONMLK 1; //10
+		Goto Ready;
+	KickingFlashLowAmmo:
+		3UPL KLMNOO 1;
+		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
+		4UPL OOOOOO 1;
+		3UPL NMLK 1;
+		Goto Ready;
+	AirKickingFlashLowAmmo:
+		3UPL KLMNOO 1;
+		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
+		4UPL OOOOOO 1;
+		3UPL OONMLK 1;
+		Goto Ready;
+	SlideKickingStartLowAmmo:
+		3UPL KLMN 1;
+		3UPL OO 1;
+	SlideKickingLoopNoAmmo:
+		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
+		4UPL OOOOOO 1 A_CheckSlide("SlideKickingEndLowAmmo");
+		3UPL OOOOOO 1 A_CheckSlide("SlideKickingEndLowAmmo");
+		Loop;
+	SlideKickingEndLowAmmo:
+		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
+		4UPL OOOO 1;
+		3UPL OONMLK 1;
+		Goto Ready;
+	KickingFlash2:
+		3UPL C 0 A_CheckIfMag(1,4);
+		3UPL C 0 A_CheckIfMag(21,"KickingFlash2LowAmmo");
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### KLMNOOOOOOOONMLK 1;
+		stop;
+	KickingFlash2LowAmmo:
+		3UPL KLMNOO 1;
+		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
+		4UPL OOOOOO 1;
+		3UPL NMLK 1;
+		stop;
+	AirKickingFlash2:
+		3UPL C 0 A_CheckIfMag(1,4);
+		3UPL C 0 A_CheckIfMag(21,"AirKickingFlash2LowAmmo");
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### KLMNOOOOOOOOOONMLK 1; //18
+		stop;
+	AirKickingFlash2LowAmmo:
+		3UPL KLMNOO 1;
+		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
+		4UPL OOOOOO 1;
+		3UPL OONMLK 1;
+		stop	;
+	SlideKickingStart2:
+		3UPL C 0 A_CheckIfMag(1,4);
+		3UPL C 0 A_CheckIfMag(21,"SlideKickingStart2LowAmmo");
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### KLMN 1;
+	SlideKickingLoop2:
+		#### O 1;
+		Loop;
+	SlideKickingEnd2:
+		3UPL C 0 A_CheckIfMag(1,4);
+		3UPL C 0 A_CheckIfMag(21,"SlideKickingEnd2LowAmmo");
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### OOOOOONMLK 1; //10
+		Stop;
+	SlideKickingStart2LowAmmo:
+		3UPL KLMN 1;
+		3UPL OO 1;
+	SlideKickingLoop2LowAmmo:
+		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
+		4UPL OOOOOO 1 A_CheckSlide("SlideKickingEnd2LowAmmo");
+		3UPL OOOOOO 1 A_CheckSlide("SlideKickingEnd2LowAmmo");
+		Loop;
+	SlideKickingEnd2LowAmmo:
+		4UPL OOOO 1;
+		3UPL OONMLK 1;
+		Stop;
+	Ready:
+		TNT1 A 0 
+		{
+			A_overlay(6,"secondready");
+			A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True);
+		}
+		3UPL A 0 A_CheckIfMag(1,4);
+		3UPL A 0 A_CheckIfMag(21,"ReadyLowAmmo");
+		2UPL A 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		TNT1 A 0 A_AutoReloadMag();
+		Loop;
+	ReadyLowAmmo:
+		TNT1 A 0
+		{
+			A_overlay(6,"secondreadyLowAmmo");
+			A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True);
+		}
+		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
+		4UPL AAAAAA 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		3UPL AAAAAA 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		loop;
+	Secondready:
+		3UPL A 0 A_CheckIfMag(1,4);
+		3UPL A 0 A_CheckIfMag(21,"SecondReadyLowAmmo");
+		2UPL A 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### A 1;
+		STOP;
+	SecondReadyLowAmmo:
+		4UPL AAAAAA 1 ;
+		3UPL AAAAAA 1 ;
+		STOP;
+	DualWield:
+		TNT1 A 0 A_EndDual();
+		Goto Ready	;
+	Grenadethrowflash:
+		TNT1 A 0 { A_Overlay(6,"GrenadethrowflashOverlay"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### CDEF 1;
+		TNT1 A 24;
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### FEDC 1;
+		stop;
+	GrenadethrowflashOverlay:
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### CDEF 1;
+		TNT1 A 24;
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### FEDC 1;
+		stop;
+	Deselect:
+		TNT1 A 0 A_Overlay(6,"DeselectOverlay");
+		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True);
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### BCDEF 1;
+		TNT1 A 1;
+		TNT1 A 0 A_Lower;
+		Wait;
+	DeselectOverlay:
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### BCDEF 1;
+		stop;
+	Select:
+		TNT1 A 1 {A_SetCrosshairDX("PLASRet", 500,1.0); A_GunslingerMag;}
+		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True);
+		DUPL A 0 A_StartSound("PLSDRAW");
+		TNT1 A 0 A_Overlay(6,"SelectAnimOverlay");
+		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True);
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### FEDCB 1 A_WeaponReady(WRF_NOFIRE);
+		MP42 A 0 A_Takeinventory("StartDualWield",1);
+		Goto Ready;
+	SelectAnimOverlay:
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### FEDCB 1;
+		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True);
+		stop;
+	SelectFromDual:
+		TNT1 A 0 {A_SetCrosshairDX("PLASRet", 500,1.0); A_StartSound("foley/PlasmaInspectMisc",10);}
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### PQRST 1 A_WeaponReady(WRF_NOFIRE);
+		#### A 0 A_StartSound("PLSDRAW");
+		#### A 0 A_Overlay(6,"SelectAnimOverlay");
+		#### TTTTT 1 A_WeaponReady(WRF_NOFIRE);
+		DUPL A 0 A_Takeinventory("StartDualWield",1);
+		Goto Ready;
+	Fire:
+		DUPL A 0 A_CheckIfMag();
+		TNT1 A 0 { A_Overlay(6,"Fire2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		TNT1 A 0 A_JumpIf(GetFired, "FireLoop");
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### A 2;
+	FireLoop:
+		DUPL A 0 A_CheckIfMag();
+		PLSN A 0 A_FirePitchDown("PLSM9", 1, 30);
+		TNT1 A 0 a_alertmonstersDX();
+		#### A 0 A_QuadSound();
+		TNT1 A 0 A_GunLight(500,2,0,128,255);
+		DUPL A 0 A_ZoomFactor(0.98);
+		DUPL A 0 A_SetPitch(Pitch-0.7, SPF_INTERPOLATE);
+		DUPL A 0 A_SetAngle(angle+random(-1,1), SPF_INTERPOLATE);
+		DUPL A 0 A_TakeMag();
+		TNT1 A 0 A_GiveInventory("PlasmaCooldowncounter",1);
+		DUPL G 1 BRIGHT A_FireProjectile("Plasma_Ball", random(-8, 4), 1, -8, -3, 0, random(-3, 3));
+		TNT1 A 0 SetFired(false);
+		DUPL H 1 BRIGHT;
+		DUPL A 0 A_ZoomFactor(1.0);
+		DUPL A 0 A_SetPitch(Pitch+0.4, SPF_INTERPOLATE);
+		DUPL IJ 1;
+		TNT1 A 0 A_ReFire("Fireloop");
+		TNT1 A 0 A_JumpIfInventory("PlasmaCooldowncounter",5,"Cooldown");
+		TNT1 A 0 A_TakeInventory("PlasmaCooldowncounter",15);
+		TNT1 A 0 A_ClearOverlays(6,6);
+		Goto Ready;
+	Cooldown:
+		TNT1 A 0 { A_Overlay(6,"CooldownOverlay"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		DUPL Z 1 ;
+		DUPL [\] 1;
+		CHAG A 0 A_FireProjectile("SmokeSpawner11",0,0,-18,10);
+		DUPL VVVWWWWWXXYY 1;
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### NMLK 1;
+		TNT1 A 0 A_TakeInventory("PlasmaCooldowncounter",15);
+		Goto Ready;
+	CooldownOverlay:
+		DUPL Z 1;
+		DUPL [\] 1;
+		CHAG A 0 A_FireProjectile("SmokeSpawner11",0,0,14,10);
+		DUPL VVVWWWWWXXYY 1;
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### NMLK 1;
+		TNT1 A 0 A_TakeInventory("PlasmaCooldowncounter2",15);
+		stop;
+	Fire2:
+		TNT1 A 0 A_JumpIf(GetFired() == false, "Fire2Loop");
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### A 2;
+	Fire2Loop:
+		DUPL A 0 A_CheckIfMag(1,"Overlaynoammo");
+		DUPL A 0 A_TakeMag();
+		#### A 0 A_QuadSound();
+		PLSN A 0 A_FirePitchDown("PLSM9", 1, 30);
+		TNT1 a 0 A_ZoomFactor(0.98);
+		TNT1 A 0 A_GunLight(500,2,0,128,255);
+		DUPL G 1 BRIGHT A_FireProjectile("Plasma_Ball", random(-4, 8), 1, 8, -3, 0, random(-3, 3));
+		TNT1 A 0 SetFired(true);
+		DUPL H 1 BRIGHT;
+		TNT1 A 0 A_ZoomFactor(1.0);
+		DUPL IJ 1;
+		TNT1 A 0 A_jumpifinventory("firedprimary",1,"fire2loop");
+		//TNT1 A 0 A_JumpIfInventory("PlasmaCooldowncounter",5,"CooldownOverlay")
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### A 6;
+		stop;
+	ReloadOverlay:
+		TNT1 A 2;
+		2LSR \ 1;
+		2LSR CDEFF 1;
+		PLSR G 5;
+		PLSR HHIJKLL 1;
+		PLSR M 4;
+		PLSR NNO 1;
+		PLSR PPPQRSSTTTUUVWX 1;
+		2LSR YZ 1;
+		2LSR [ 1;
+		2LSR \ 1;
+		2LSR ] 1;
+		stop;
+	Reload:
+		TNT1 A 0 SetFired(false);
+		TNT1 A 0 A_Overlay(6,"DeselectOverlay");
+		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True);
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### BCDEF 1;
+		TNT1 A 1;
+		TNT1 A 0 A_Overlay(6,"ReloadOverlay");
+		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB,True);
+		PLSN A 0 A_StartSound("PLREADY");
+		 TNT1 AAB 1;
+		 #### A 0 A_DiscardMagazine();
+		PLSN A 0 A_FireProjectile("PlasmaCaseSpawn",-225,0,25,-15,-14);
+		TNT1 CDEFF 1;
+		TNT1 G 5;
+		TNT1 HHIJKLL 1;
+		TNT1 M 4;
+		TNT1 NNO 1;
+		TNT1 PPPQRSSTTTUUVWX 1;
+		TNT1 A 0 A_StartSound("foley/PlasmaInspectMisc",10);
+		TNT1 YZ 1;
+		TNT1 [ 1;
+		TNT1 \ 1;
+		TNT1 ] 1;
+		
+		TNT1 A 4;
+		
+		TNT1 A 0 A_Overlay(6,"ReloadOverlay");
+		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True);
+		PLSN A 0 A_StartSound("PLREADY");
+		 TNT1 AAB 1;
+		PLSN A 0 A_FireProjectile("PlasmaCaseSpawn",-225,0,25,-15,-14);
+		TNT1 CDEFF 1;
+		TNT1 G 5;
+		TNT1 HHIJKLL 1;
+		TNT1 M 4;
+		TNT1 NNO 1;
+		TNT1 PPPQRSSTTTUUVWX 1;
+		TNT1 A 0 A_StartSound("foley/PlasmaInspectMisc",10);
+		TNT1 A 0 A_ReloadMag();
+		TNT1 YZ 1;
+		TNT1 [ 1;
+		TNT1 \ 1;
+		TNT1 ] 1;
+		
+		TNT1 A 5;
+		
+		TNT1 A 0 A_Overlay(6,"SelectAnimOverlay");
+		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True);
+		3UPL C 0 A_CheckIfMag(21,3);
+		2UPL B 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### FEDCB 1;
+		Goto Ready;
+	NoAmmo:
+		TNT1 A 0 A_Overlay(6,"OverlayNoAmmo");
+		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True);
+		3UPL A 0 A_CheckIfMag(1,4);
+		4UPL A 0 A_CheckIfMag(21,3);
+		2UPL A 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### A 0 A_StartSound("BEP");
+		#### A 4 A_WeaponReady(WRF_NOFIRE);
+		#### A 0 A_StartSound("BEP");
+		#### A 4 A_WeaponReady(WRF_NOFIRE);
+	NoAmmo2:
+		#### A 0 A_JumpIf(CountInv("AmmoCell") > 1 && CountInv("doubleplasmaammo") < 50,"Reload");
+		#### A 0 A_JumpIf(CountInv("doubleplasmaammo") > 0 && CountInv("doubleplasmaammo") <= 20, "NoAmmo3");
+		#### A 1 A_WeaponReady(WRF_NOFIRE);
+		#### A 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK), "NoAmmo2");
+		Goto Ready;
+	NoAmmo3:
+		PLSN A 0 A_StartSound("BEP",4,0,0.3);
+		3UPL AAAAAA 1 A_WeaponReady(WRF_NOFIRE);
+		4UPL AAAAAA 1 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK), "NoAmmo2");
+		Goto Ready;
+	OverlayNoAmmo:
+		3UPL A 0 A_CheckIfMag(1,4);
+		4UPL A 0 A_CheckIfMag(21,3);
+		2UPL A 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### A 8;
+	OverlayNoAmmo2:
+		#### A 0 A_JumpIf(CountInv("doubleplasmaammo") > 0 && CountInv("doubleplasmaammo") <= 20, "OverlayNoAmmo3");
+		#### A 1;
+		#### A 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK), "OverlayNoAmmo2");
+		Stop;
+	OverlayNoAmmo3:
+		3UPL AAAAAA 1;
+		4UPL AAAAAA 1;
+		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK), "OverlayNoAmmo2");
+		Stop;
+	}
+}

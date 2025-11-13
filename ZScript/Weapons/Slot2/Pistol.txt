@@ -1,0 +1,554 @@
+class IsSilenced : Inventory {Default {inventory.maxamount 1;}}
+class BrutalPistol : BrutalWeapon
+{
+	Default
+	{
+		Weapon.AmmoGive 15;
+		Weapon.AmmoType "Clip1";
+		BrutalWeapon.MagCapacity 15;
+		Weapon.SlotNumber 2;
+		Weapon.SlotPriority 1;
+		weapon.selectionorder 3800;
+		Obituary "%o was shot down by %k's pistol.";
+		Inventory.PickupSound "CLIPIN";
+		Inventory.Pickupmessage "You got the Pistol! (Slot 2)";
+		Scale 0.9;
+		Tag "$BDPPISTOL";
+		BrutalWeapon.Handedness 1;
+		BrutalWeapon.VoiceActed 0;
+		Inventory.AltHUDIcon "PISTG0";
+	}
+	States
+	{
+	GrenadeThrowFlash:
+		PISC A 0 A_JumpIfInventory("IsSilenced", 1,2);
+		PISS A 0;
+		"####" ABC 1;
+		TNT1 A 26;
+		PISC A 0 A_JumpIfInventory("IsSilenced", 1,2);
+		PISS A 0;
+		"####" CBA 1;//32 in total
+		Stop;
+	KickingFlash:
+		PISC A 0 A_JumpIfInventory("IsSilenced", 1,"SilencedKick"); //frames +1
+		PIST RSIJKKKKKKKKJISR 1;
+		Goto Ready;
+	SilencedKick:
+		S1LK ABCDEEEEEEEEDCBA 1;
+		Goto Ready;
+	AirKickingFlash:
+		PISC A 0 A_JumpIfInventory("IsSilenced", 1,"SilencedAirKick"); //frames +1
+		PIST RSIJKKKKKKKKKKJISR 1;
+		Goto Ready;
+	SilencedAirKick:
+		S1LK ABCDEEEEEEEEEEDCBA 1;
+		Goto Ready;
+	SlideKickingStart:
+		PISC A 0 A_JumpIfInventory("IsSilenced", 1,"SilencedSlideKick"); //frames +1
+		PIST RSIJ 1;
+	SlideKickingLoop:
+		PIST K 1 A_CheckSlide;
+		Loop;
+	SlideKickingEnd:
+		PIST KKKKKKJISR 1;
+		Goto Ready;
+	SilencedSlideKick:
+		S1LK ABCD 1;
+	SilencedSlideLoop:
+		S1LK E 1 A_CheckSlide("SilencedSlideEnd");
+		Loop;
+	SilencedSlideEnd:
+		S1LK EEEEEEDCBA 1;
+		Goto Ready;
+	LetsGetStarted:
+		TNT1 A 0 A_TakeInventory("NeverSelectedShotgun",1);
+		TNT1 A 0 A_SetCrosshairDX("null");
+		PONG A 20 A_WeaponReadyDX();
+		PUNS BDEFF 1 A_WeaponReadyDX();
+		TNT1 A 0 A_StartSound("Knuckled");
+		PUNS GG 1 A_WeaponReadyDX();
+		PUNS G 1 offset(0,31) A_WeaponReadyDX();
+		PUNS G 1 offset(0,32) A_WeaponReadyDX();
+		PUNS G 1 offset(0,31) A_WeaponReadyDX();
+		PUNS GG 1 offset(0,32) A_WeaponReadyDX();
+		PUNS FFE 3 A_WeaponReadyDX();
+		PUNS KLL 1 A_WeaponReadyDX();
+		TNT1 A 0 A_StartSound("Knuckled");
+		PUNS MM 1 A_WeaponReadyDX();
+		PUNS M 1 offset(0,31) A_WeaponReadyDX();
+		PUNS M 1 offset(0,32) A_WeaponReadyDX();
+		PUNS M 1 offset(0,31) A_WeaponReadyDX();
+		PUNS MM 1 offset(0,32) A_WeaponReadyDX();
+		PUNS LLK 3 A_WeaponReadyDX();
+		PUNS DB 1 A_WeaponReadyDX();
+		PONG A 1 A_WeaponReadyDX();
+		FISA C 1 A_WeaponReadyDX();
+		TNT1 A 3 A_WeaponReadyDX();
+		PISR ABCDEFGH 1 A_WeaponReadyDX();
+		TNT1 A 0 A_StartSound("prel");
+		PISR OOOOOPQRSTUVWXYZ 1 A_WeaponReadyDX();
+		PI2R ABCDEFGHIJKLM 1 A_WeaponReadyDX();
+		TNT1 A 0 A_Jump(250,2);
+		TNT1 A 0 A_StartSound("letsago");
+		PISS CBA 1 A_WeaponReadyDX();
+		TNT1 A 0 A_SetCrosshairDX("SMGRet", 1000,0.5);
+		Goto Ready;
+	FuckYouFlash:
+		TNT1 A 0 A_JumpIFInventory("IsSilenced", 1,"FuckYouSilent"); //frames +1
+		PIST RSIJK 1; //30
+		PIST K 20;
+		PIST KJISR 1;
+		stop;
+	FuckYouSilent:
+		S1LK ABCDE 1;
+		S1LK E 20;
+		S1LK EDCBA 1;
+		stop;
+	Ready:
+		2ILE A 0 A_JumpIfInventory("IsSilenced",1,2);
+		PIS2 A 0;
+		"####" F 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		TNT1 A 0 A_AutoReloadMag();
+		Loop;
+	SprintOverlay:
+		S1LK C 0 A_JumpIfInventory("IsSilenced",1,"sprintoverlay2");
+		PIST RSIJ 1;
+		KeepSprinting:
+		TNT1 A 0 A_JumpIfInventory("IsSIlenced",1,"KeepSprinting2");
+		PIST K 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
+		TNT1 A 0 A_KeepSprinting();
+		Goto ReturnFromSprint;
+	SprintOverlay2:
+		S1LK ABCD 1;
+	KeepSprinting2:
+		S1LK E 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
+		TNT1 A 0 A_KeepSprinting();
+		GOto ReturnFromSprint2;
+	ReturnFromSprint:
+		S1LK C 0 A_JumpIfInventory("IsSilenced",1,"returnfromsprint2");
+		PIST JISR 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
+		Goto ready;
+	ReturnFromSprint2:
+		S1LK DCBA 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
+		Goto ready;
+	Fidget: //Yay, it's back!
+		PISC A 0 A_JumpIFInventory("IsSilenced", 1,2);
+		PISS A 0;
+		"####" A 0 A_StartSound("PISTFOL4");
+		"####" AB 1 A_WeaponReadyDX(0,false,false);
+		2ILR A 0 A_JumpIFInventory("IsSilenced", 1,2);
+		PI2R A 0;
+		"####" MLKJ 1 A_WeaponReadyDX(0,false,false);
+		"####" HI 1 A_WeaponReadyDX(0,false,false);
+	SpamFidget:
+		SILI A 0 A_JumpIFInventory("IsSilenced", 1, 2);
+		PTFP A 0;
+		"####" ABCDDDE 1 A_WeaponReadyDX(0,false,false);
+		"####" A 0 A_StartSound ("foley/PistolSlideBack", 1);
+		"####" FF 1 A_WeaponReadyDX(0,false,false);
+		"####" GGGGG 1 A_WeaponReadyDX(0,false,false);
+	FinishFidget:
+		"####" G 1 A_WeaponReadyDX(0,false,false);
+		"####" A 0 A_PressingReload("FinishFidget");
+		"####" H 1 A_WeaponReadyDX(0,false,false);
+		2ILR A 0 A_JumpIFInventory("IsSilenced", 1,2);
+		PI2R A 0;
+		"####" E 2 A_WeaponReadyDX(0,false,false);
+		"####" A 0 A_StartSound("foley/PistolSlideForward", 1);
+		"####" F 1 A_WeaponReadyDX(0,false,false);
+		"####" A 0 A_PressingReload("SpamFidget");
+		"####" G 1 A_WeaponReadyDX(0,false,false);
+		"####" A 0 A_PressingReload("SpamFidget");
+		"####" H 1 A_WeaponReadyDX(0,false,false);
+		"####" A 0 A_PressingReload("SpamFidget");
+		"####" I 1 A_WeaponReadyDX(0,false,false);
+		"####" X 0 A_StartSound("PISTFOL5", 3);
+		"####" JKLM 1 A_WeaponReadyDX(0,false,false);
+		PISC A 0 A_JumpIFInventory("IsSilenced",1,2);
+		PISS A 0;
+		"####" BA 1 A_WeaponReadyDX(0,false,false);
+		Goto Ready;
+	Deselect:
+		PISC A 0 A_JumpIFInventory("IsSilenced", 1,2);
+		PISS A 0;
+		"####" ABC 1;
+		TNT1 A 1;
+		TNT1 A 0 A_Lower();
+		Wait;
+	Select:
+		TNT1 A 0 A_JumpIfInventory("NeverSelectedShotgun",1,"LetsGetStarted");
+		TNT1 A 1 {A_SetCrosshairDX("SMGRet", 1000,0.5); A_GunslingerMag(1);}
+		TNT1 A 0 A_StartSound("PSRLIN");
+		PISC A 0 A_JumpIFInventory("IsSilenced", 1,2);
+		PISS A 0;
+		"####" CBA 1 A_WeaponReady(WRF_NOFIRE);
+		Goto Ready;
+	Fire:
+		TNT1 A 0 A_SetCrosshairDX("SMGRet", 1000,0.5);
+		TNT1 A 0 A_CheckIfMag();
+		TNT1 A 0 A_SemiFlag();
+		TNT1 A 0 A_JumpIfInventory("IsSilenced",1,"FireSilenced");
+		PIST H 0 A_Jump(128,3);
+		PIST G 0 A_Jump(128,2);
+		PIST A 0;
+		PIS2 "#" 1 Bright
+		{
+			A_FireBullets (0.5, 0.5, -1, 20, "Pistolpuff", FBF_NORANDOM,0,"decorativetracer",-4);
+			A_StartSound("DSPISTOL", 1);
+			A_StartSound("FARSHT", 6);
+			A_AlertMonstersDX();
+			A_QuadSound();
+			A_GunLight();
+			A_TakeMag();
+		}
+		TNT1 A 0 A_WeaponOffset(random(-1,1),32+random(0,1));
+		TNT1 A 0 A_ZoomFactor(1.0);
+		PIS2 B 1;
+		PIST F 0 A_FireProjectile("PistolCaseSpawn",5,0,0,-9);
+		PIS2 C 1 A_SetPitch(pitch-0.4, SPF_INTERPOLATE);
+		PIS2 D 1 A_SetPitch(pitch+0.4, SPF_INTERPOLATE);
+		TNT1 A 0 A_WeaponOffset(0,32);
+		TNT1 A 0 A_SemiRefire("Fire","Ready");
+		Goto Ready;
+	FireSilenced:	
+		2ILE A 1 Bright
+		{
+			A_FireBullets (0.6, 0.6, -1, 20, "pistolpuff", FBF_NORANDOM,0,"decorativetracer",-4);
+			A_StartSound("PISTSLNT",1);
+			A_ZoomFactor(0.99);
+			A_QuadSound();
+			A_TakeMag();
+		}
+		TNT1 A 0 A_WeaponOffset(random(-1,1),32+random(0,1));
+		PIST F 0 A_ZoomFactor(1.0);
+		2ILE B 1;
+		PIST F 0 A_FireProjectile("PistolCaseSpawn",5,0,0,-9);
+		2ILE C 1 A_SetPitch(pitch-0.4, SPF_INTERPOLATE);
+		2ILE D 1 A_SetPitch(pitch+0.4, SPF_INTERPOLATE);
+		TNT1 A 0 A_WeaponOffset(0,32);
+		TNT1 A 0 A_SemiRefire("Fire","Ready");
+		Goto Ready;
+	FireAim:
+		TNT1 A 0 A_CheckIfMag();
+		TNT1 A 0 A_SemiFlag();
+		TNT1 A 0 A_JumpIFInventory("IsSilenced", 1,"FireAimSilenced");
+		PISZ B 1 Bright
+		{
+			A_FireBullets (0.2, 0.2, -1, 20, "pistolpuff", FBF_NORANDOM,0,"decorativetracer",-4);
+			A_StartSound("DSPISTOL", 1);
+			A_StartSound("FARSHT", 6);
+			A_AlertMonstersDX();
+			A_ZoomFactor(1.49);
+			A_QuadSound();
+			A_GunLight();
+			A_TakeMag();
+		}
+		TNT1 A 0 A_ZoomFactor(1.5);
+		PISZ C 1 A_SetPitch(pitch-0.2, SPF_INTERPOLATE);
+		TNT1 A 0 A_FireProjectile("PistolCaseSpawn",5,0,2,1);
+		PISZ D 1 A_SetPitch(pitch+0.2, SPF_INTERPOLATE);
+		PISZ A 1;
+		TNT1 A 0 A_SemiRefire("FireAim","Aim");
+		Goto Aim;
+	FireAimSilenced:
+		SILE H 1 Bright
+		{
+			A_FireBullets(0.1, 0.1, -1, 20, "pistolpuff", FBF_NORANDOM,0,"decorativetracer",-4);
+			A_StartSound("PISTSLNT", 1);
+			A_ZoomFactor(1.49);
+			A_QuadSound();
+			A_TakeMag();
+		}
+		PIST F 0 A_ZoomFactor(1.5);
+		PISZ C 1 A_SetPitch(pitch-0.2, SPF_INTERPOLATE);
+		PIST F 0 A_FireProjectile("PistolCaseSpawn",5,0,2,1);
+		PISZ D 1 A_SetPitch(pitch+0.2, SPF_INTERPOLATE);
+		PISZ A 1;
+		TNT1 A 0 A_SemiRefire("FireAim","Aim");
+		Goto Aim;
+	NoAmmo:
+		TNT1 A 0 A_StartSound("weapons/empty", 3);
+	NoAmmo2:
+		TNT1 A 0 A_AutoReloadMag();
+		TNT1 A 0 A_JumpIf(GetAim() > 0, "NoAmmo3");
+		2ILE A 0 A_JumpIfInventory("IsSilenced", 1, 2);
+		PIS2 A 0;
+		"####" F 2 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK), "NoAmmo2");
+		Goto Ready;
+	NoAmmo3:
+		PISZ A 1 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK), "NoAmmo2");
+		Goto Aim;
+	 Reload:
+		TNT1 A 0 A_StartSound("reload");
+		PISC A 0 A_JumpIfInventory("IsSilenced", 1,2);
+		PISS A 0;
+		"####" A 0 A_StartSound("PISTFOL4",10);
+		"####" ABC 1;
+		SILR A 0 A_JumpIfInventory("IsSilenced",1,2);
+		PISR F 0 ;
+		"####" ABCDEFGH 1;
+		"####" A 0 A_StartSound("prel");
+		"####" A 0 A_FireProjectile("EmptyPistolClipSpawn",-18,0,18,-15);
+		"####" A 0 A_DiscardMagazine;
+		"####" IJKLMNOPQRSTUVWXYZ 1;
+		2ILR A 0 A_JumpIfInventory("IsSilenced",1,2);
+		PI2R F 0;
+		"####" ABCDEFGHI 1;
+		"####" A 0 A_StartSound("PISTFOL5",10);
+		"####" A 0 A_ReloadMag(1);
+		"####" JKLM 1;
+		PISC A 0 A_JumpIFInventory("IsSilenced", 1,2);
+		PISS A 0;
+		"####" BA 1;
+		Goto Ready;
+	Spawn:
+		TNT1 A 0 NoDelay A_jump(256,"spawn1","spawn2","spawn3");
+		LOOP;
+	Spawn1:
+		PIST V 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
+		LOOP;
+	Spawn2:
+		PIST W 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
+		LOOP;
+	Spawn3:
+		PIST X 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
+		LOOP;
+	SpawnNoAmmo:
+		PIST G -1;
+		Stop;
+	AltFire:
+		PISZ E 1 {A_StartSound("ADSIN"); A_ZoomFactor(1.5);}
+		PISZ F 1;
+		TNT1 A 0 A_StartAim();
+		Goto Ready;
+	Aim:
+		PISZ A 1 A_ReadyAim(true);
+		TNT1 A 0 A_AutoReloadMag();
+		Loop;
+	AimEnd:
+		PISZ F 1 {A_StartSound("ADSOUT"); A_ZoomFactor(1.0);}
+		PISZ E 1;
+		TNT1 A 0 A_EndAim();
+		Goto Ready;
+	DualWield:
+		TNT1 A 0 A_takeinventory("StartDualWield",1);
+		TNT1 A 0 A_JumpIfInventory("IsSilenced",1,"Unsilence");
+		TNT1 A 0 A_GiveInventory("IsSilenced",1);
+		S1LE ABCDEFGHIJJJK 1;
+		TNT1 A 0 A_StartSound("SILEIN");
+		TNT1 A 0 ChangeWeaponIcon("SILEG0");
+		S1LE LMMNOOOPQRSTUV 1;
+		Goto Ready;
+	Unsilence:
+		TNT1 A 0 A_takeinventory("issilenced",1);
+		S1LE VUTSRQPOOONM 1;
+		TNT1 A 0 A_StartSound("SILEOUT");
+		TNT1 A 0 ChangeWeaponIcon("PISTG0");
+		S1LE MLKJJJIHGFEDCBA 1;
+		Goto Ready;
+	/*AltFire:
+		TNT1 A 0 A_JumpIf(GetCvar("bd_UsePistolADS")==1, "AltFireADS")
+		TNT1 A 0 A_JumpIfInventory("IsSilenced",1,"AltFireADS")
+		TNT1 A 0 A_StartSound("DryFire")
+		PIST F 0 A_Takeinventory("Zoomed",1)
+		PIST F 0 A_ZoomFactor(1.0)
+		TNT1 A 0 A_JumpIFInventory("PistolBurstFire", 1, "StopAlt")
+		TNT1 A 0 A_GiveInventory("PistolBurstFire", 1)
+		TNT1 A 0 A_Print("Burst fire", 1)
+		PISC A 0 A_JumpIFInventory("IsSilenced", 1,5)
+		PIST L 1 Offset(0,33)
+		PIST M 1 Offset(0,34)
+		PIS2 F 1 Offset(0,33)
+		Goto Ready3
+		2ILE G 1 Offset(0,33)
+		2ILE H 1 Offset(0,34)
+		2ILE F 1 Offset(0,33)
+		SILE F 0 Offset(0,32)
+		TNT1 A 0 A_GiveInventory("BurstANDsilencer", 1)
+		Goto Ready3
+		PISZ E 1 {A_StartSound("ADSIN"); A_ZoomFactor(1.5);}
+		PISZ F 1
+		TNT1 A 0 A_StartAim
+		Goto Ready
+	StopAlt:
+		TNT1 A 0 A_StartSound("DryFire")
+		TNT1 A 0 A_TakeInventory("PistolBurstFire", 1)
+		TNT1 A 0 A_TakeInventory("BurstANDsilencer",1)
+		TNT1 A 0 A_Print("Semi-auto", 1)
+		PISC A 0 A_JumpIFInventory("IsSilenced", 1,5)
+		PIS2 F 1 Offset(0,33)
+		PIST M 1 Offset(0,34)
+		PIST L 1 Offset(0,33)
+		Goto Ready3
+		2ILE F 1 Offset(0,33)
+		2ILE H 1 Offset(0,34)
+		2ILE G 1 Offset(0,33)
+		SILE F 0 Offset(0,32)
+		TNT1 A 0 A_TakeInventory("BurstANDsilencer", 1)
+		Goto Ready3
+	DualWield:
+		TNT1 A 0
+		PIST F 0 A_Takeinventory("StartDualWield",1)
+		//TNT1 A 0 A_JumpIfinventory("issilenced",1,"nodualsilencer")
+		PIST F 0 A_JumpIfInventory("BrutalPistol", 2, "GetDual")
+		PIST F 0 A_Print("You must have two pistols to dual wield!",2)
+		Goto Ready
+		
+	 GetDual:	
+		PIST F 0
+		PIST F 0 A_Takeinventory("Zoomed",1)
+		PIST F 0 A_Takeinventory("ADSmode",1)
+		PIST F 0 A_TakeInventory("TossGrenade", 1)
+		PIST F 0 A_TakeInventory("Kicking",1)
+		PIST F 0 A_TakeInventory("Taunting",1)
+		PIST F 0 A_TakeInventory("Reloading",1)
+		PIST F 0 A_TakeInventory("Unloading",1)
+		PIST F 0 A_TakeInventory("Salute1", 1)
+		PIST F 0 A_TakeInventory("Salute2", 1)
+		TNT1 A 0 A_GiveInventory("SwitchingDualModes", 1)
+		TNT1 A 0 A_GiveInventory("RememberDualPistol", 1)
+		TNT1 A 0 A_GiveInventory("DualPistols", 1)
+		PIST F 0 A_ZoomFactor(1.0)
+		PIST F 0 A_SelectWEapon("DualPistols")
+		Goto Ready
+	Fire2:
+		TNT1 A 0
+		PIST F 0 A_StartSound("FARSHT", 6)
+		PIST F 0 A_StartSound("DSPISTOL", 1)
+		PIST F 0 A_ZoomFactor(0.98)
+		TNT1 A 0 A_GunLight
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("BDPistolAmmo")<=6) { A_StartSound("MagClick", 7); }}}			
+		PIST H 0 A_Jump(128,3)
+		PIST G 0 A_Jump(128,2)
+		PIST A 0
+		RIFF "#" 0
+		PIS2 "#" 1 BRIGHT A_FireBullets (0.5, 0.5, -1, 20, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
+		"####" A 0 A_QuadSound
+		NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
+		PIST F 0 A_ZoomFactor(1.0)
+	   // RIFF A 0 A_FireProjectile("DecorativeTracer", random(-1,1), 0, 0, 0)
+		PIST F 0 A_TakeAmmo("BDPistolAmmo",1)
+		PIST F 0 A_TakeAmmo("BDDualPistolAmmo",1)
+		PIS2 B 1
+		PIST F 0 A_CheckIfAmmo("BDPistolAmmo",1,"NoAmmo")
+		PIST B 0
+		PIS2 C 1		
+		PIST F 0 A_FireProjectile("PistolCaseSpawn",5,0,0,-9)
+		PIST F 0 A_StartSound("FARSHT", 6)
+		PIST F 0 A_StartSound("DSPISTOL", 1)
+		PIST F 0 A_ZoomFactor(0.98)
+		TNT1 A 0 A_GunLight
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("BDPistolAmmo")<=6) { A_StartSound("MagClick", 7); }}}
+		PIST H 0 A_Jump(128,3)
+		PIST G 0 A_Jump(128,2)
+		PIST A 0
+		RIFF "#" 0
+		PIS2 "#" 1 BRIGHT A_FireBullets (0.5, 0.5, -1, 20, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
+		NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )		
+		PIST F 0 A_ZoomFactor(1.0)
+	 //   RIFF A 0 A_FireProjectile("DecorativeTracer", random(-1,1), 0, 0, 0)
+		PIST F 0 A_TakeAmmo("BDPistolAmmo",1)
+		PIST F 0 A_TakeAmmo("BDDualPistolAmmo",1)
+		PIS2 B 1
+		PIST F 0 A_CheckIfAmmo("BDPistolAmmo",1,"NoAmmo")
+		PIST B 0
+		PIS2 C 1
+		//TNT1 A 0 A_SetPitch(pitch+1, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(angle-frandom(-0.8,0.8), SPF_INTERPOLATE)
+		PIST F 0 A_FireProjectile("PistolCaseSpawn",5,0,0,-9)
+		PIST F 0 A_StartSound("FARSHT", 6)
+		PIST F 0 A_StartSound("DSPISTOL", 1)
+		PIST F 0 A_ZoomFactor(0.98)
+		TNT1 A 0 A_GunLight
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("BDPistolAmmo")<=6) { A_StartSound("MagClick", 7); }}}
+		PIST H 0 A_Jump(128,3)
+		PIST G 0 A_Jump(128,2)
+		PIST A 0
+		RIFF "#" 0
+		PIS2 "#" 1 BRIGHT A_FireBullets (0.5, 0.5, -1, 20, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
+		NULL A 0 A_WeaponOffset(random(-1,1),32+random(0,1)	)		
+		PIST F 0 A_ZoomFactor(1.0)
+		//RIFF A 0 A_FireProjectile("DecorativeTracer", random(-1,1), 0, 0, 0)
+		PIST F 0 A_TakeAmmo("BDPistolAmmo",1)
+		PIST F 0 A_TakeAmmo("BDDualPistolAmmo",1)
+		//TNT1 A 0 A_SetPitch(pitch+1, SPF_INTERPOLATE)
+		TNT1 A 0 A_SetAngle(angle-frandom(-0.8,0.8), SPF_INTERPOLATE)
+		PIST F 0 A_CheckIfAmmo("BDPistolAmmo",1,"NoAmmo")
+		PIST B 0
+		PIS2 B 1
+		PIST F 0 A_FireProjectile("PistolCaseSpawn",5,0,0,-9)
+		PIS2 C 1 
+		PIS2 DE 1
+		NULL A 0 A_WeaponOffset(0,32)
+		PIST F 0 A_JumpIfInventory("Reloading",1,"Reload")
+		PIST F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+		PIST F 0 A_JumpIfInventory("Reloading",1,"Reload")
+		PIST F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+		PIS2 F 2
+		TNT1 A 0 A_Semirefire("Fire","SemiAutoLul")
+		Goto Ready
+	Fire2Silenced:
+		TNT1 A 0
+		PIST F 0 A_StartSound("PISTSLNT",1)
+		PIST F 0 A_ZoomFactor(0.98)
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("BDPistolAmmo")<=6) { A_StartSound("MagClick", 7); }}}		
+		2ILE A 0 A_JumpIFInventory("BurstANDsilencer", 1, 2)
+		SILE A 0
+		"####" A 1 BRIGHT A_FireBullets (0.6, 0.6, -1, 20, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
+		"####" A 0 A_QuadSound
+		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
+		"####" F 0 A_ZoomFactor(1.0)
+		"####" F 0 A_TakeAmmo("BDPistolAmmo",1)
+		"####" F 0 A_TakeAmmo("BDDualPistolAmmo",1)
+		"####" B 1
+		"####" F 0 A_CheckIfAmmo("BDPistolAmmo",1,"NoAmmo")
+		"####" B 0
+		"####" C 1		
+		"####" F 0 A_FireProjectile("PistolCaseSpawn",5,0,0,-9)
+		"####" F 0 A_StartSound("PISTSLNT",1)
+		"####" F 0 A_ZoomFactor(0.98)
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("BDPistolAmmo")<=6) { A_StartSound("MagClick", 7); }}}
+		"####" A 1 BRIGHT A_FireBullets (0.6, 0.6, -1, 20, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
+		//"####" A 0 A_SetPitch(pitch-1, SPF_INTERPOLATE)
+		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )	
+		"####" F 0 A_ZoomFactor(1.0)
+	   // "####" A 0 A_FireProjectile("DecorativeTracer", random(-1,1), 0, 0, 0)
+		"####" F 0 A_TakeAmmo("BDPistolAmmo",1)
+		"####" F 0 A_TakeAmmo("BDDualPistolAmmo",1)
+		"####" B 1
+		"####" F 0 A_CheckIfAmmo("BDPistolAmmo",1,"NoAmmo")
+		"####" B 0
+		"####" C 1
+		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
+		//"####" A 0 A_SetPitch(pitch-1, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle-frandom(-0.8,0.8), SPF_INTERPOLATE)
+		"####" F 0 A_FireProjectile("PistolCaseSpawn",5,0,0,-9)
+		"####" F 0 A_StartSound("PISTSLNT",1)
+		"####" F 0 A_ZoomFactor(0.98)
+		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("BDPistolAmmo")<=6) { A_StartSound("MagClick", 7); }}}
+		"####" A 1 BRIGHT A_FireBullets (0.6, 0.6, -1, 20, "pistolpuff", FBF_NORANDOM,8192,"decorativetracer",-4)
+		//"####" A 0 A_SetPitch(pitch-1, SPF_INTERPOLATE)
+		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )		
+		"####" F 0 A_ZoomFactor(1.0)
+		//"####" A 0 A_FireProjectile("DecorativeTracer", random(-1,1), 0, 0, 0)
+		"####" F 0 A_TakeAmmo("BDPistolAmmo",1)
+		"####" F 0 A_TakeAmmo("BDDualPistolAmmo",1)
+		//"####" A 0 A_SetPitch(pitch-1, SPF_INTERPOLATE)
+		"####" A 0 A_SetAngle(angle-frandom(-0.8,0.8), SPF_INTERPOLATE)
+		"####" F 0 A_CheckIfAmmo("BDPistolAmmo",1,"NoAmmo")
+		"####" B 0
+		"####" B 1
+		"####" F 0 A_FireProjectile("PistolCaseSpawn",5,0,0,-9)
+		"####" C 1 
+		"####" DE 1
+		"####" A 0 A_WeaponOffset(0,32)
+		"####" F 0 A_JumpIfInventory("Reloading",1,"Reload")
+		"####" F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+		"####" F 0 A_JumpIfInventory("Reloading",1,"Reload")
+		"####" F 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+		"####" F 2 A_WeaponReady(WRF_NOBOB | WRF_ALLOWRELOAD)
+		Goto Ready	*/
+	}
+}

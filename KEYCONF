@@ -1,6 +1,3 @@
-clearplayerclasses
-addplayerclass BDoomer
-
    addkeysection "BrutalDoom - Advanced Actions" BrutalDoomPlatinumActions    
    
    addmenukey "Kick" kickem
@@ -22,75 +19,16 @@ addplayerclass BDoomer
    addmenukey "Swap Grenades" swapgrenade
    defaultbind I swapgrenade
    alias swapgrenade "pukename swapgrenades"
-   
-  // addmenukey "Swap Berserk Modes" swapberserk
-  // defaultbind B swapberserk
-  // alias swapberserk "pukename swapberserkmode"
-   
-   
-   //addmenukey "Open Ammo Drop Menu" selectammodroper
-  // alias selectammodroper "puke 309"
-  
+
    addmenukey "Scan Area" scanner
    alias scanner "netevent togglescanner" 
-   
-  // addmenukey "Quick Pull Pistol" quickpistol
- //  alias quickpistol "puke 310"
-    addmenukey "Roll" rodirection
-  alias rodirection "pukename pressroll"
-   defaultbind C rodirection
-   
-   
-   //addmenukey "Use boss weapon" UseBossWeapon
-   //alias UseBossWeapon "pukename UseBossWeapon"
-   //defaultbind M UseBossWeapon
 
-  
    addmenukey "Offend" brutaltaunt
    alias brutaltaunt "pukename PressTaunt"
    defaultbind H brutaltaunt
-   
-  // addmenukey "Wave(1)" wave1
-  // alias wave1 "puke 431"
- //  defaultbind V wave1
 
- //  addmenukey "Wave(2)" wave2
- //  alias wave2 "puke 432"
-  // defaultbind N wave2
-   
-  // addmenukey "Advanced Taunt" advtaunt
-  // alias advtaunt "puke 304"
-  // defaultbind J advtaunt
-   
-   
-  // addmenukey "Dual Wield/Special Action" dual
-  // alias dual "puke 308"
- //  defaultbind X dual
-   
- //  addmenukey "Special Action 2" swapSpecial
- //  alias swapSpecial "give swapRifleSpecial"
- 
-
-   
-   
- //  addmenukey "Select Ammo Drop" selectammodrop
-  // alias selectammodrop "puke 309"
- //  defaultbind O selectammodrop
-   
-
-   
    addkeysection "Brutal Doom - Cheats" BrutalDoomAdvMoves              // here too
 
-  // addmenukey "Roll Left" roleft
-  // alias roleft "puke 306"
- //  defaultbind Z roleft
-   
-   
-//   addmenukey "Roll Right" roright
-//   alias roright "puke 307"
- //  defaultbind C roright
-	
-   
       addmenukey "Slow motion toggle" SlowMoBind
    alias SlowMoBind "i_timescale 0.3; rebind SlowMoBind2"
    alias SlowMoBind2 "i_timescale 1; rebind SlowMoBind"

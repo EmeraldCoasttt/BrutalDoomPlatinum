@@ -1,7 +1,7 @@
 // Brutal Guy
 
 
-BDoomer, Doomer2, TacticalDoomer
+BDPPlayer
 {
 	validate "IsPlayer";; //There it is again!
 	//These weapons do not have weapon tags set up, but we can fix that.

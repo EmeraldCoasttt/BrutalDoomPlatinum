@@ -2118,7 +2118,7 @@ class Brutal_PlayerBase : PlayerPawn
 			LedgeGrabbed = True;
 			return;
 		}
-		if((player.readyweapon is "Melee_Attacks") || (player.readyweapon is "Chain_saw") || (player.readyweapon is "BrutalAxe"))
+		if((player.readyweapon is "Melee_Attacks") || (player.readyweapon is "Chain_saw"))
 		{
 			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("StainedLedgeClimb"));
 		}

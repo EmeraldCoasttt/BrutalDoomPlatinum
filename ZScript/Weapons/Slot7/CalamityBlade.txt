@@ -6,7 +6,7 @@ class CalamityBlade : BrutalWeapon
 	Default
 	{
 		Tag "$BDPCALAMITY";
-		Inventory.PickupMessage "You got the calamity blade!  Hot damn!";
+		Inventory.PickupMessage "You got the calamity blade!  Hot damn! (Slot 7)";
 		Weapon.SlotNumber 7;
 		Weapon.AmmoType "AmmoCell";
 		Weapon.AmmoGive 40;
@@ -82,7 +82,6 @@ class CalamityBlade : BrutalWeapon
 	 SlideKickingEnd:
 	    HETK FFFFFFEDCB 1; //10
 	    Goto Ready;
-	
 	FuckYouFlash:
 	    HETK BCDEFFFFFFFFFFFFFFFFFFFFFFEDCB 1; //18
 	    stop;

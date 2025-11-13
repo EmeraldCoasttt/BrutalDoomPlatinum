@@ -1,8 +1,7 @@
 const int acsFatality = 312;
 ACTOR IsNOTAMenuDummy: Inventory {Inventory.MaxAmount 1}
 
-
-ACTOR Doomer : Brutal_PlayerBase Replaces DoomPlayer //PlayerPawn Replaces DoomPlayer
+ACTOR BDPPlayer : Brutal_PlayerBase Replaces DoomPlayer //PlayerPawn Replaces DoomPlayer
 {
 	var int user_sghorizontalspread;
 	var int user_sgverticalspread;
@@ -54,37 +53,21 @@ ACTOR Doomer : Brutal_PlayerBase Replaces DoomPlayer //PlayerPawn Replaces DoomP
 	DamageFactor "KillMeBot", 0.0	DamageFactor "Avoid", 0.0
 	
 	Player.ColorRange 112, 127
-	//starting guns and ammo
-	Player.StartItem "Rifle"
+	//Speed 1.0
+	Player.RunHealth 999
+	Player.DisplayName "DOOM Marine"
+	Player.StartItem "BrutalPistol"
 	Player.StartItem "Melee_Attacks"
-	//slot 2
-	Player.StartItem "BDDualPistolAmmo", 32
-	Player.StartItem "BDDualSMGAmmo", 82
-	Player.StartItem "MP40Ammo", 32
-	Player.StartItem "DualMP40Ammo", 64	
-	//slot 3
-	Player.StartItem "ShotgunAmmo", 8
-	Player.StartItem "AssaultShotgunAmmo", 16	
-	Player.StartItem "SSGAmmo", 2
-	//slot 4
-	Player.StartItem "RifleAmmo", 31
-	Player.StartItem "DoubleRifleAmmo", 62
+	Player.startitem "AmmoFragGrenade", 2
+	Player.StartItem "Clip1", 60
 	Player.StartItem "Clip2", 60
-	Player.StartItem "NailgunAmmo", 75
-	Player.StartItem "MachineGunAmmo", 1
-	//slot 5
-	Player.StartItem "GLAmmo", 1
-	Player.StartItem "RocketRounds", 6
-	//slot 6
-	Player.StartItem "NuRailgunAmmo", 5
-	Player.StartItem "PlasmaAmmo", 50
-	Player.StartItem "FreezerAmmo", 50
-	Player.StartItem "DoublePlasmaAmmo", 100
+	Player.StartItem "AmmoRocket", 3
+	Player.StartItem "RifleGrenade", 1
 	Player.StartItem "IsPlayer", 1
-	Player.StartItem "HandGrenades", 1
 	Player.StartItem "JustStartedGame", 1
 	Player.StartItem "NeverSelectedShotgun", 1
 	player.StartItem "SoulAmmo", 666
+	Player.StartItem "IsNOTTacticalClass", 1
 	//Player.JumpZ 7.4
 	Player.GruntSpeed 9999 //This thing will make the grunt sound effect play only after falling for some time.
 	Player.CrouchSprite "PLYC"
@@ -5468,59 +5451,6 @@ SFNZ C 8
         NULL A 0 A_TakeInventory("GoSpecial", 1)
         Goto StandStill 
 	}
-}
-
-ACTOR BDoomer : Doomer
-{
-	//Speed 1.0
-	Player.RunHealth 999
-	Player.DisplayName "DOOM Marine"
-	//Player.StartItem "Rifle"
-	Player.StartItem "BrutalPistol"
-	Player.StartItem "Melee_Attacks"
-	//Player.StartItem "BIG_FUCKING_GUN"
-	Player.startitem "AmmoFragGrenade", 2
-	//slot 2
-	Player.StartItem "Clip1", 60
-	Player.StartItem "BDPistolAmmo", 16
-	Player.StartItem "BDDualPistolAmmo", 32
-	Player.StartItem "BDSMGAmmo", 41
-	Player.StartItem "BDDualSMGAmmo", 82
-	Player.StartItem "MP40Ammo", 32
-	Player.StartItem "DualMP40Ammo", 64	
-	Player.StartItem "BDRevolverAmmo", 64	
-	Player.StartItem "BDDualRevolverAmmo", 64	
-	//slot 3
-	Player.StartItem "ShotgunAmmo", 9
-	Player.StartItem "AssaultShotgunAmmo", 16	
-	Player.StartItem "SSGAmmo", 2
-	//slot 4
-	Player.StartItem "RifleAmmo", 31
-	Player.StartItem "BattleRifleAmmo", 15
-	Player.StartItem "Clip2", 60
-	Player.StartItem "NailgunAmmo", 75
-	Player.StartItem "MachineGunAmmo", 1
-	//slot 5
-	Player.StartItem "GLAmmo", 1
-	Player.StartItem "RocketRounds", 6
-	Player.StartItem "AmmoRocket", 3
-	Player.StartItem "RifleGrenade", 1
-	Player.StartItem "FlamerAmmo", 60
-	//slot 6
-	Player.StartItem "NuRailgunAmmo", 5
-	Player.StartItem "PlasmaAmmo", 50
-	Player.StartItem "FreezerAmmo", 50
-	Player.StartItem "DoublePlasmaAmmo", 100
-	//player.StartItem "Nuke", 1
-	Player.StartItem "IsPlayer", 1
-	Player.StartItem "GrenadeAmmo", 2
-	Player.StartItem "JustStartedGame", 1
-	Player.StartItem "NeverSelectedShotgun", 1
-	player.StartItem "SoulAmmo", 666
-	Player.StartItem "IsNOTTacticalClass", 1
-	DamageFactor "KillMeBot", 0.0
-	Player.StartItem "AmmoDroper"
-	Species "Marines"
 }
 
 ACTOR PowerNearDeath : PowerUp

@@ -891,3 +891,29 @@ ACTOR SmallGunBarrelSmoke: ExplosionSmoke
 		Stop
     }
 }
+
+ACTOR FrozenSmoke: ExplosionSmoke
+{
+ 
+	Alpha 0.01
+	RenderStyle Add
+	XScale 0.12
+	YScale 0.15
+	Speed 1
+    States
+    {
+    Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Stap")
+		smk2 CCCCC 1 A_FadeIn(0.1)
+		smk2 C 2
+		smk2 CCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.04)
+		Goto Death
+	Death:
+		TNT1 A 0
+		Stop
+	Stap:		
+		TNT1 A 0
+		Stop
+    }
+}

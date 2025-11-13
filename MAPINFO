@@ -1,5 +1,6 @@
 Gameinfo
 {
+	PlayerClasses = "BDPPlayer"
 	StatusBarClass = "BDP_HUD"
 	AddEventHandlers = "WeaponSpawnHandler"
 	AddEventHandlers = "BDPHandler"

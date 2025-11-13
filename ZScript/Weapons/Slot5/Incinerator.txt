@@ -19,29 +19,31 @@ CLASS Incinerator : BrutalWeapon
 	}
 	States
 	{
-	
-	GrenadeThrowFlash:
-	FLRS BCDE 1;
-	TNT1 A 24;
-	FLRS EDCB 1;//32 in total
-	stop;
-	
-	KickingFlash:
-	FLMT GHIJJJJJJJJJJIHG 1;
-	Goto Ready;
-	AirKickingFlash:
-	    FLMT GHIJJJJJJJJJJJJIHG 1; //18
-	    Goto Ready;
-	SlideKickingStart:
-	    FLMT KLMN 1;
-		FLMT NNNNNNNNNNNNNNNNNN 1; //18
-		FLMT NMLK 1;
+	GrenadeThrowFlash: //32
+		FLRS BCDE 1;
+		TNT1 A 24;
+		FLRS EDCB 1;
+		Stop;
+	KickingFlash: //16
+		FLMT GHI 1;
+		FLMT J 10;
+		FLMT IHG 1;
 		Goto Ready;
-		
-	FuckYouFlash:
-		FLMT GHIJJJJJJJJJJJJJJJJJJJJJJJJIHG 1;
-	    stop;
-		
+	AirKickingFlash: //18
+		FLMT GHI 1;
+		FLMT J 12;
+		FLMT IHG 1;
+		Goto Ready;
+	SlideKickingStart: //26
+		FLMT KLM 1;
+		FLMT N 20;
+		FLMT MLK 1;
+		Goto Ready;
+	FuckYouFlash: //30
+		FLMT GHI 1;
+		FLMT J 24;
+		FLMT IHG 1;
+		Stop;
 	Ready:
 	Ready3:
 		FLMT ABC 1 A_weaponreadyDX(WRF_ALLOWRELOAD);
