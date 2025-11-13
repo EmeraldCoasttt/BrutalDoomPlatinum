@@ -1,17 +1,17 @@
-class DualRevolver : BrutalWeapon 
+class BDPDualRevolver : BrutalWeapon 
 {
 	Default
 	{
-		Weapon.AmmoType "Clip1";
+		Weapon.AmmoType "BDPClip1";
 		BrutalWeapon.MagCapacity 12;
 		Obituary "%o was shot down by %k's revolver.";
-		Weapon.SisterWeapon "DoxsRevolver";
+		Weapon.SisterWeapon "BDPRevolver";
 		+WEAPON.POWERED_UP
 		Scale 0.9;
 		Tag "$BDPREVOLVER";
 		brutalweapon.handedness 2;
 		brutalweapon.voiceacted 0;
-		BrutalWeapon.DualWeapon "DoxsRevolver";
+		BrutalWeapon.DualWeapon "BDPRevolver";
 		Inventory.AltHUDIcon "REVOT0";
 	}
 	States

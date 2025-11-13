@@ -1,9 +1,9 @@
-class BrutalSMG : BrutalWeapon
+class BDPSubmachineGun : BrutalWeapon
 {
 	Default
 	{
 		Weapon.AmmoGive 15;
-		Weapon.AmmoType "Clip1";
+		Weapon.AmmoType "BDPClip1";
 		BrutalWeapon.MagCapacity 40;
 		Obituary "%o was shot down by %k's SMG.";
 		Weapon.SlotNumber 2;
@@ -16,7 +16,7 @@ class BrutalSMG : BrutalWeapon
 		Tag "$BDPSMG";
 		Inventory.AltHUDIcon "SMGZA0";
 		brutalweapon.handedness 1;
-		BrutalWeapon.DualWeapon "DualSMG";
+		BrutalWeapon.DualWeapon "BDPDualSMG";
 	}
 	States
 	{

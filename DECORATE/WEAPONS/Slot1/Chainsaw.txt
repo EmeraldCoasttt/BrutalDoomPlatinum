@@ -5,7 +5,7 @@ ACTOR SSawPuff2Smaller: SSawPuff2
 {
 decal "SawHorizontalSmaller"
 }
-Actor Chain_saw : BrutalWeapon
+Actor BDPChainsaw : BrutalWeapon
 {
 	Weapon.SlotNumber 1
 	Weapon.SlotPriority 2

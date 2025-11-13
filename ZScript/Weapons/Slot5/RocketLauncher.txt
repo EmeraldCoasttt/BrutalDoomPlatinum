@@ -1,4 +1,4 @@
-CLASS Rocket_Launcher : BrutalWeapon
+CLASS BDPRocketLauncher : BrutalWeapon
 {
 	Default
 	{
@@ -8,7 +8,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 2500;
 		Weapon.AmmoGive 2;
-		Weapon.AmmoType "AmmoRocket";
+		Weapon.AmmoType "BDPRocketAmmo";
 		BrutalWeapon.MagCapacity 6;
 		Inventory.PickupSound "RLANDRAW";
 		+WEAPON.EXPLOSIVE;
@@ -24,7 +24,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 	override void DoEffect() 
 	{
 		super.DoEffect();
-		If(owner.player && owner.player.readyweapon is "Rocket_Launcher" && owner.player.cmd.buttons & BT_ALTATTACK)
+		If(owner.player && owner.player.readyweapon is "BDPRocketLauncher" && owner.player.cmd.buttons & BT_ALTATTACK)
 		{
 			A_SpawnLaser("guidedlaserNEO");
 			If(!lastticklaser)
@@ -41,7 +41,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 			A_SetCrosshairDX("ROCKRet",2000,1.0);
 		}
 		/*
-		If(owner.player && owner.player.readyweapon is "Rocket_Launcher" && owner.player.cmd.buttons & BT_USER3)
+		If(owner.player && owner.player.readyweapon is "BDPRocketLauncher" && owner.player.cmd.buttons & BT_USER3)
 		{
 			If(!lasttickdetonate)
 			{
@@ -541,7 +541,7 @@ CLASS Rocket_Launcher : BrutalWeapon
 		RLNG A 0 A_TakeInventory("Zoomed", 1);
 		RLNG A 0 A_Takeinventory("PowerLightAmp", 1);
 		//RLNG A 0 A_Takeinventory("PowerLightAmpR", 1);
-		RLNG A 0 A_CheckIfAmmo("AmmoRocket");
+		RLNG A 0 A_CheckIfAmmo("BDPRocketAmmo");
         TNT1 AAAA 0;
         RLNG A 0 A_PlaySound("ROCKREL1", 3);
         MISR ABCCDDE 1;

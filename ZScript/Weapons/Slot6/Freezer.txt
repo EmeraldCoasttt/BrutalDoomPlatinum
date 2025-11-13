@@ -1,10 +1,9 @@
-
-Class Freezer : BrutalWeapon
+Class BDPFreezerBeam : BrutalWeapon
 {
 	Default
 	{
 		Weapon.AmmoGive 40;
-		Weapon.AmmoType "AmmoCell";
+		Weapon.AmmoType "BDPCell";
 		BrutalWeapon.MagCapacity 50;
 		Obituary "%o was put on ice by %k's Freezer Beam.";
 		Inventory.PickupSound "PLSDRAW";
@@ -507,7 +506,7 @@ class Freezebot : BrutalFriend
 		damagefactor "Blood", 0.0; damagefactor "BlueBlood", 0.0; damagefactor "GreenBlood", 0.0;
 		damagefactor "Shrapnel", 0.0;
 		damagefactor "SpawnMarine", 0.0;
-		//DropItem "AmmoCell"
+		//DropItem "BDPCell"
 		//damagefactor "HelperMarineFatallity", 0.0
 		SeeSound "Freezebot/Talk";
 		Obituary "%o has been frozen down by a FreezeBot.";

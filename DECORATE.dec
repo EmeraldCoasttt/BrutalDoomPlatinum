@@ -67,8 +67,8 @@ damage 0
 //#include DECORATE/WEAPONS/AmmoDroper.txt
 #include DECORATE/WEAPONS/EXPLOSIVES.txt
 //1
-#include DECORATE/WEAPONS/Slot1/MELEE.txt
-#include DECORATE/WEAPONS/Slot1/SAW.txt
+#include DECORATE/WEAPONS/Slot1/FIST.txt
+#include DECORATE/WEAPONS/Slot1/CHAINSAW.txt
 //8
 #include DECORATE/WEAPONS/Slot8/FlameCannon.txt
 #Include DECORATE/WEAPONS/Slot8/DualFlameCannon.txt

@@ -1,4 +1,4 @@
-class Plasma_Gun : BrutalWeapon
+class BDPPlasmaRifle : BrutalWeapon
 {
 	Default
 	{
@@ -7,7 +7,7 @@ class Plasma_Gun : BrutalWeapon
 		Weapon.SelectionOrder 100;
 		Weapon.AmmoGive1 40;
 		Inventory.PickupSound "PLSDRAW";
-		Weapon.AmmoType "AmmoCell";
+		Weapon.AmmoType "BDPCell";
 		BrutalWeapon.MagCapacity 50;
 		+WEAPON.NOAUTOAIM
 		+FORCEXYBILLBOARD
@@ -15,7 +15,7 @@ class Plasma_Gun : BrutalWeapon
 		Inventory.PickupMessage "You got the Plasma Rifle! (Slot 6)";
 		inventory.althudicon "PLASA0";
 		inventory.maxamount 2;
-		BrutalWeapon.DualWeapon "DualPlasmaRifles";
+		BrutalWeapon.DualWeapon "BDPDualPlasmaRifle";
 	}
 	States
 	{

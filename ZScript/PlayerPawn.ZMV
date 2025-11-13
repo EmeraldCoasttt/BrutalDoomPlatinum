@@ -463,7 +463,7 @@ class Brutal_PlayerBase : PlayerPawn
 		bool canDualWield = IsDualWieldable(weap);
 		
 		bool isfists;
-		If(player.readyweapon && player.readyweapon is "Melee_attacks" && overcap && !isdualwieldable)
+		If(player.readyweapon && player.readyweapon is "BDPFist" && overcap && !isdualwieldable)
 		{
 			isfists = true;
 		}
@@ -736,51 +736,51 @@ class Brutal_PlayerBase : PlayerPawn
 			tauntcooldown = 105;
 			If(player.readyweapon)
 			{
-				If(player.readyweapon is "Chain_Saw")
+				If(player.readyweapon is "BDPChainsaw")
 				{
 					A_startsound("DGCSAW",455);
 				}
-				else if(player.readyweapon is "BIG_FUCKING_GUN")
+				else if(player.readyweapon is "BDPBFG9000")
 				{
 					A_startsound("DGBFG",455);
 				}
-				else if(player.readyweapon is "PLASMA_GUN")
+				else if(player.readyweapon is "BDPPlasmaRifle")
 				{
 					A_startsound("DGPLAS",455);
 				}
-				else if(player.readyweapon is "MiniGun")
+				else if(player.readyweapon is "BDPMinigun")
 				{
 					A_startsound("DGCGUN",455);
 				}
-				else if(player.readyweapon is "BrutalSMG")
+				else if(player.readyweapon is "BDPSubmachineGun")
 				{
 					A_startsound("DGSMG",455);
 				}
-				else if(player.readyweapon is "DoxsRevolver")
+				else if(player.readyweapon is "BDPRevolver")
 				{
 					A_startsound("DGREV",455);
 				}
-				else if(player.readyweapon is "Unmaker")
+				else if(player.readyweapon is "BDPUnmaker")
 				{
 					A_startsound("DGUNM",455);
 				}
-				else if(player.readyweapon is "Rocket_Launcher")
+				else if(player.readyweapon is "BDPRocketLauncher")
 				{
 					A_startsound("DGROCK",455);
 				}
-				else if(player.readyweapon is "AssaultShotgun")
+				else if(player.readyweapon is "BDPAssaultShotgun")
 				{
 					A_startsound("DGAUTO",455);
 				}
-				else if(player.readyweapon is "rifle")
+				else if(player.readyweapon is "BDPRifle")
 				{
 					A_startsound("DGASS",455);
 				}
-				else if(player.readyweapon is "incinerator")
+				else if(player.readyweapon is "BDPIncinerator")
 				{
 					A_startsound("DGFLAM",455);
 				}
-				else if(player.readyweapon is "Shot_gun" || player.readyweapon is "SSG")
+				else if(player.readyweapon is "BDPShotgun" || player.readyweapon is "BDPSuperShotgun")
 				{
 					A_startsound("DGSGUN",455);
 				}
@@ -2118,7 +2118,7 @@ class Brutal_PlayerBase : PlayerPawn
 			LedgeGrabbed = True;
 			return;
 		}
-		if((player.readyweapon is "Melee_Attacks") || (player.readyweapon is "Chain_saw"))
+		if((player.readyweapon is "BDPFist") || (player.readyweapon is "BDPChainsaw"))
 		{
 			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("StainedLedgeClimb"));
 		}

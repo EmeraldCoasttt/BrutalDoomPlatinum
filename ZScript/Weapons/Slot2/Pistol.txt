@@ -1,10 +1,10 @@
 class IsSilenced : Inventory {Default {inventory.maxamount 1;}}
-class BrutalPistol : BrutalWeapon
+class BDPPistol : BrutalWeapon
 {
 	Default
 	{
 		Weapon.AmmoGive 15;
-		Weapon.AmmoType "Clip1";
+		Weapon.AmmoType "BDPClip1";
 		BrutalWeapon.MagCapacity 15;
 		Weapon.SlotNumber 2;
 		Weapon.SlotPriority 1;

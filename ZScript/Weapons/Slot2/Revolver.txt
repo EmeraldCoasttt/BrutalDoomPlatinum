@@ -1,9 +1,9 @@
-class DoxsRevolver : BrutalWeapon
+class BDPRevolver : BrutalWeapon
 {
 	Default
 	{
 		Weapon.AmmoGive1 15;
-		Weapon.AmmoType "Clip1";
+		Weapon.AmmoType "BDPClip1";
 		BrutalWeapon.MagCapacity 6;
 		Weapon.SlotNumber 2;
 		Weapon.SlotPriority 3;
@@ -16,7 +16,7 @@ class DoxsRevolver : BrutalWeapon
 		Inventory.AltHUDIcon "REVOQ0";
 		Inventory.MaxAmount 2;
 		BrutalWeapon.Handedness 1;
-		BrutalWeapon.DualWeapon "DualRevolver";
+		BrutalWeapon.DualWeapon "BDPDualRevolver";
 	}
 	States
 	{

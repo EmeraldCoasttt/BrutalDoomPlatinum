@@ -94,38 +94,38 @@ Class Brutalweapon : DoomWeapon //Weapon
 	{
 		giveinventory("AmmoTaken",1);
 		
-		If(self is "BrutalSMG")
+		If(self is "BDPSubmachineGun")
 		{
-			If(dropper.findinventory("Dualsmg"))
+			If(dropper.findinventory("BDPDualSMG"))
 			{
-				giveinventory("BrutalSMG",1);
-				Inventory drop = FindInventory("BrutalSMG");
+				giveinventory("BDPSubmachineGun",1);
+				Inventory drop = FindInventory("BDPSubmachineGun");
 				Self.DropInventory(Drop,1);
 			}
 			
-			Dropper.takeinventory("Dualsmg",1);
+			Dropper.takeinventory("BDPDualSMG",1);
 		}
-		If(self is "DoxsRevolver")
+		If(self is "BDPRevolver")
 		{
-			If(dropper.findinventory("DualRevolver"))
+			If(dropper.findinventory("BDPDualRevolver"))
 			{
-				giveinventory("DoxsRevolver",1);
-				Inventory drop = FindInventory("DoxsRevolver");
+				giveinventory("BDPRevolver",1);
+				Inventory drop = FindInventory("BDPRevolver");
 				Self.DropInventory(Drop,1);
 			}
 			
-			Dropper.takeinventory("DualRevolver",1);
+			Dropper.takeinventory("BDPDualRevolver",1);
 		}
-		If(self is "Plasma_Gun")
+		If(self is "BDPPlasmaRifle")
 		{
-			If(dropper.findinventory("DualPlasmaRifles"))
+			If(dropper.findinventory("BDPDualPlasmaRifle"))
 			{
-				giveinventory("Plasma_gun",1);
-				Inventory drop = FindInventory("Plasma_gun");
+				giveinventory("BDPPlasmaRifle",1);
+				Inventory drop = FindInventory("BDPPlasmaRifle");
 				Self.DropInventory(Drop,1);
 			}
 			
-			Dropper.takeinventory("DualPlasmaRifles",1);
+			Dropper.takeinventory("BDPDualPlasmaRifle",1);
 		}
 		
 	}

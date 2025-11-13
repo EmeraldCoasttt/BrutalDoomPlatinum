@@ -56,13 +56,10 @@ ACTOR BDPPlayer : Brutal_PlayerBase Replaces DoomPlayer //PlayerPawn Replaces Do
 	//Speed 1.0
 	Player.RunHealth 999
 	Player.DisplayName "DOOM Marine"
-	Player.StartItem "BrutalPistol"
-	Player.StartItem "Melee_Attacks"
+	Player.StartItem "BDPPistol"
+	Player.StartItem "BDPFist"
 	Player.startitem "AmmoFragGrenade", 2
-	Player.StartItem "Clip1", 60
-	Player.StartItem "Clip2", 60
-	Player.StartItem "AmmoRocket", 3
-	Player.StartItem "RifleGrenade", 1
+	Player.StartItem "BDPClip1", 60
 	Player.StartItem "IsPlayer", 1
 	Player.StartItem "JustStartedGame", 1
 	Player.StartItem "NeverSelectedShotgun", 1

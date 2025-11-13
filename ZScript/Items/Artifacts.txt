@@ -556,7 +556,7 @@ Default
 	{
 		If(owner)
 		{
-			owner.A_selectweapon("melee_attacks");
+			owner.A_selectweapon("BDPFist");
 		}
 		Super.doeffect();
 	}
@@ -1063,7 +1063,7 @@ CLASS BerserkPack : CustomInventory Replaces Berserk
 		TNT1 A 0 A_GiveInventory("PowerStrength");
 		TNT1 A 0 HealThing(100, 0);
 		//TNT1 A 20 ACS_NamedExecuteAlways("BerserkMessage")
-		TNT1 A 0 A_SelectWeapon("Melee_Attacks");
+		TNT1 A 0 A_SelectWeapon("BDPFist");
 		//TNT1 A 0 A_Print ("Press Reload to alternate execution modes.")
 		Stop;
 	}

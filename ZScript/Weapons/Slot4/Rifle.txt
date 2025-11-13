@@ -1,4 +1,4 @@
-class Rifle : BrutalWeapon
+class BDPRifle : BrutalWeapon
 {
 	Default
 	{
@@ -6,8 +6,8 @@ class Rifle : BrutalWeapon
 		Weapon.SlotNumber 4;
 		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 2500;
-		Weapon.AmmoType1 "Clip2";
-		Weapon.AmmoType2 "AmmoRocket";
+		Weapon.AmmoType1 "BDPClip2";
+		Weapon.AmmoType2 "BDPRocketAmmo";
 		BrutalWeapon.MagCapacity 30;
 		Obituary "%o was shot down by %k's assault rifle.";
 		Inventory.PickupSound "CLIPIN";
@@ -71,7 +71,7 @@ class Rifle : BrutalWeapon
 	Ready:
 		RIFG A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		TNT1 A 0 A_AutoReloadMag();
-		TNT1 A 0 A_AutoReload("RifleGrenade","AmmoRocket","ReloadGrenade",TRUE);
+		TNT1 A 0 A_AutoReload("RifleGrenade","BDPRocketAmmo","ReloadGrenade",TRUE);
 		Loop;
 	Deselect:
 		RIFG FGHI 1;
@@ -127,13 +127,13 @@ class Rifle : BrutalWeapon
 		RIFG A 15;
 	//Auto reload, as it's a single shot weapon
 	ReloadGrenade:
-		TNT1 A 0 A_CheckIfAmmo("AmmoRocket",1,"GrenadeNoAmmo");
+		TNT1 A 0 A_CheckIfAmmo("BDPRocketAmmo",1,"GrenadeNoAmmo");
 		RIGL ABCDEFGGHH 1;
 		HBUS A 0 A_StartSound("Rifle/Grenade1", 5);
 		TNT1 A 0 A_SpawnItemEX("GrenadeCasing",2,0,40,0,0,-4,0);
 		RIGL IJJJJKLMNOPPPPQRSTUUVVV 1;
 		HBUS A 0 A_StartSound("Weapons/GrenadeLoad", 5);
-		TNT1 A 0 A_Reload("RifleGrenade",1,"AmmoRocket");
+		TNT1 A 0 A_Reload("RifleGrenade",1,"BDPRocketAmmo");
 		RIGL WXYYYYZZ 1;
 		RIG2 ABCDEE 1;
 		HBUS A 0 A_StartSound("Rifle/Grenade2", 5);

@@ -1,10 +1,10 @@
-CLASS BattleRifle : Brutalweapon
+CLASS BDPBattleRifle : Brutalweapon
 {
 	Default
 	
 	{
 	Weapon.AmmoGive 30;
-	Weapon.AmmoType "Clip2";
+	Weapon.AmmoType "BDPClip2";
 	brutalweapon.magcapacity 15;
 	Obituary "%o was pierced by %k's Battle Rifle.";
     Inventory.PickupSound "BR45PICK";

@@ -1,9 +1,9 @@
-class GrenadeLauncher : BrutalWeapon
+class BDPGrenadeLauncher : BrutalWeapon
 {
 	Default
 	{
 		Weapon.AmmoGive 2;
-		Weapon.AmmoType "AmmoRocket";
+		Weapon.AmmoType "BDPRocketAmmo";
 		BrutalWeapon.MagCapacity 1;
 		Inventory.PickupSound "ROCKPKUP";
 		Weapon.SlotNumber 5;
@@ -42,9 +42,9 @@ class GrenadeLauncher : BrutalWeapon
 		SHTN A 0 A_JumpIfInventory("NoShotgunStrap",1,"Ready");
 		GLR3 FEDCBAGHIJKLLLKJIHGABCDDDCBAGHIJJJIHG 1
 		{
-			if(countinv("GLAmmo") < 1)
+			if(invoker.mag < 1)
 			{
-				return A_AutoReload("GLAmmo","AmmoRocket","Reload",true);
+				return A_AutoReloadMag();
 			}
 			else
 			{

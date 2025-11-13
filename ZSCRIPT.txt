@@ -34,7 +34,7 @@ version "4.14.0"
 #include "Zscript/Weapons/Slot2/Pistol.txt"
 #include "Zscript/Weapons/Slot2/Revolver.txt"
 #include "Zscript/Weapons/Slot2/DualRevolver.txt"
-#include "Zscript/Weapons/Slot2/DualSubmachineGun.txt"
+#include "Zscript/Weapons/Slot2/DualSMG.txt"
 #include "Zscript/Weapons/Slot2/SubmachineGun.txt"
 //Slot 3
 #include "Zscript/Weapons/Slot3/Shotgun.txt"
@@ -58,7 +58,7 @@ version "4.14.0"
 #include "Zscript/Weapons/Slot6/Needler.txt"
 #include "Zscript/Weapons/Slot6/Railgun.txt"
 //Slot 7
-#include "Zscript/Weapons/Slot7/BFG.txt"
+#include "Zscript/Weapons/Slot7/BFG9000.txt"
 #include "Zscript/Weapons/Slot7/CalamityBlade.txt"
 #include "Zscript/Weapons/Slot7/Unmaker.txt"
 //Slot 8

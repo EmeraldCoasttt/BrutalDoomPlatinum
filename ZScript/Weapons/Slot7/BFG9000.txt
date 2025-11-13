@@ -1,6 +1,4 @@
-
-
-CLASS BIG_FUCKING_GUN : BrutalWeapon
+CLASS BDPBFG9000 : BrutalWeapon
 {
 	Default
 	{
@@ -9,7 +7,7 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 2900;
 		Weapon.AmmoGive 40;
-		Weapon.AmmoType "AmmoCell";
+		Weapon.AmmoType "BDPCell";
 		Inventory.PickupSound "BFGREADY";
 		+WEAPON.BFG;
 		Tag "$BDPBFG";
@@ -148,41 +146,41 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		
 	Fire:
 		BFGN A 0;
-		TNT1 A 0 A_checkifammo("AmmoCell",100);
+		TNT1 A 0 A_checkifammo("BDPCell",100);
 		BFGN A 0;
-		//BFGN A 0 A_TakeInventory("AmmoCell", 50)
+		//BFGN A 0 A_TakeInventory("BDPCell", 50)
         BFGN A 0 A_startSound("BFGCHARGE");
 		TNT1 A 0 a_alertmonstersDX();
 		BFGC ABCD 1 
 		{
 			A_GunLight(250,2,0,255,0); //8
-			A_TakeAmmo("AmmoCell",2);
+			A_TakeAmmo("BDPCell",2);
 		}
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeAmmo("AmmoCell",2); //8
+			A_TakeAmmo("BDPCell",2); //8
 		} //8
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeAmmo("AmmoCell",2); //8
+			A_TakeAmmo("BDPCell",2); //8
 		} //12
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeAmmo("AmmoCell",2); //8
+			A_TakeAmmo("BDPCell",2); //8
 		} //20
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeAmmo("AmmoCell",6); //4
+			A_TakeAmmo("BDPCell",6); //4
 		} //28
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeAmmo("AmmoCell",6); //4
+			A_TakeAmmo("BDPCell",6); //4
 		} //40
 		BFGC ABC 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeAmmo("AmmoCell",6); //4
+			A_TakeAmmo("BDPCell",6); //4
 		} //49
-		TNT1 A 0 A_TakeAmmo("AmmoCell",2);
+		TNT1 A 0 A_TakeAmmo("BDPCell",2);
 		
 		BFGA A 1 BRIGHT 
 		{
@@ -238,11 +236,11 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 	//Alpha Doom Attack, discontinued.	
 // 	AltFire:
 // 		BFGN A 1
-// 		BFGN A 0 A_JumpIfInventory("AmmoCell", 50, 5)
+// 		BFGN A 0 A_JumpIfInventory("BDPCell", 50, 5)
 // 		BFGN A 10
 // 		Goto Ready
 // 		TNT1 AAAAAA 0
-// 		BFGN A 0 A_TakeInventory("AmmoCell", 50)
+// 		BFGN A 0 A_TakeInventory("BDPCell", 50)
 //         BFGN A 0 A_startSound("BFGCHARGE")
 // 		BFGC ABCDABCDABCDABCD 1 BRIGHT
 // 		BFGC ABCDABCDABCDABCD 1 BRIGHT
@@ -263,41 +261,41 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 
     // AltFire:
       BFGN A 0;
-		TNT1 A 0 A_checkifammo("AmmoCell",100);
+		TNT1 A 0 A_checkifammo("BDPCell",100);
 		BFGN A 0;
-		//BFGN A 0 A_TakeInventory("AmmoCell", 50)
+		//BFGN A 0 A_TakeInventory("BDPCell", 50)
         BFGN A 0 A_startSound("10KSTALT");
 		TNT1 A 0 a_alertmonstersDX();
 		BFGC ABCD 1 
 		{
 			A_GunLight(250,2,0,255,0); //4
-			A_TakeAmmo("AmmoCell",2);
+			A_TakeAmmo("BDPCell",2);
 		}
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeAmmo("AmmoCell",2); //4
+			A_TakeAmmo("BDPCell",2); //4
 		} //8
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeAmmo("AmmoCell",2); //4
+			A_TakeAmmo("BDPCell",2); //4
 		} //12
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeAmmo("AmmoCell",4); //4
+			A_TakeAmmo("BDPCell",4); //4
 		} //20
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeAmmo("AmmoCell",4); //4
+			A_TakeAmmo("BDPCell",4); //4
 		} //28
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeAmmo("AmmoCell",6); //4
+			A_TakeAmmo("BDPCell",6); //4
 		} //40
 		BFGC ABC 1 {
 			A_GunLight(250,2,0,255,0);
-			A_TakeAmmo("AmmoCell",6); //4
+			A_TakeAmmo("BDPCell",6); //4
 		} //49
-		TNT1 A 0 A_TakeAmmo("AmmoCell",2);
+		TNT1 A 0 A_TakeAmmo("BDPCell",2);
 		
 		BFGA A 1 BRIGHT 
 		{
@@ -408,7 +406,7 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		/*
 	 SpecialAction:
 		 TNT1 A 0 A_takeinventory("swapriflespecial",1)
-		 TNT1 A 0 A_jumpifinventory("AmmoCell",1,1)
+		 TNT1 A 0 A_jumpifinventory("BDPCell",1,1)
 		 Goto ready
 		  BFGS ABCDE 1
 		  TNT1 A 0
@@ -427,7 +425,7 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 		/*
    DualWield:
 		TNT1 A 0 A_takeinventory("startdualwield",1);
-		//TNT1 A 0 A_jumpifinventory("ammocell",1,1);
+		//TNT1 A 0 A_jumpifinventory("BDPCell",1,1);
 		//Goto noammo;
 		TNT1 A 0
 		{
@@ -605,7 +603,7 @@ CLASS BIG_FUCKING_GUN : BrutalWeapon
 				}
 			return resolvestate(null);
 		}
-		//TNT1 A 0 A_takeinventory("ammocell",1);
+		//TNT1 A 0 A_takeinventory("BDPCell",1);
 		LOOP;
 	*/
 	Spawn:

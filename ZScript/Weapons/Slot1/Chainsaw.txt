@@ -150,7 +150,7 @@ CLASS ThrowedChainsaw : actor
 			//We need to make this the physical chainsaw actor because of the new pickup system
 			//Through the magic of zscript we can give it the same properties as the original actor
 			//A_SpawnItemEx ("ChainsawStuckInWall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION);
-			let thrownchainsaw = spawn("Chain_saw",pos);
+			let thrownchainsaw = spawn("BDPChainsaw",pos);
 			If(thrownchainsaw)
 			{
 				//Thrown chainsaws are 3d and get stuck in walls, 
@@ -182,7 +182,7 @@ CLASS ThrowedChainsaw : actor
 			//We need to make this the physical chainsaw actor because of the new pickup system
 			//Through the magic of zscript we can give it the same properties as the original actor
 			//A_SpawnItemEx ("ChainsawStuckInWall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION);
-			let thrownchainsaw = spawn("Chain_saw",pos);
+			let thrownchainsaw = spawn("BDPChainsaw",pos);
 			If(thrownchainsaw)
 			{
 				thrownchainsaw.setstatelabel("SpawnThrown");

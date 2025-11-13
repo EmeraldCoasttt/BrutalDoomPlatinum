@@ -1,5 +1,4 @@
-
-CLASS Incinerator : BrutalWeapon
+CLASS BDPIncinerator : BrutalWeapon
 {
 	Default
 	{
@@ -8,7 +7,7 @@ CLASS Incinerator : BrutalWeapon
 		Weapon.SlotPriority 3;
 		Weapon.SelectionOrder 3100;
 		Weapon.AmmoGive 2;
-		Weapon.AmmoType "AmmoRocket";
+		Weapon.AmmoType "BDPRocketAmmo";
 		BrutalWeapon.MagCapacity 60;
 		BrutalWeapon.MagConversion (10,1);
 		Inventory.PickupSound "FLMRPUP";

@@ -1,4 +1,4 @@
-CLASS SSG : BrutalWeapon
+CLASS BDPSuperShotgun : BrutalWeapon
 {
 	Default
 	{
@@ -7,7 +7,7 @@ CLASS SSG : BrutalWeapon
 		Weapon.SlotPriority 2;
 		Weapon.SelectionOrder 400;
 		Weapon.AmmoGive 8;
-		Weapon.AmmoType "AmmoShell";
+		Weapon.AmmoType "BDPShell";
 		BrutalWeapon.MagCapacity 2;
 		Inventory.PickupMessage "You got the Super Shotgun! (Slot 3)";
 		Obituary "$OB_MPSSHOTGUN";
@@ -358,7 +358,7 @@ CLASS SSG : BrutalWeapon
 		TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"ReloadTime");
 		SHTZ A 0 A_JumpIfInventory("SSGAlt", 1, "Reload2");//Check if still has a shell on left barrel
 		
-		SHTZ A 0 A_JumpIfInventory("AmmoShell",2,1);//Check if has ammo to reload 2 shells
+		SHTZ A 0 A_JumpIfInventory("BDPShell",2,1);//Check if has ammo to reload 2 shells
 		Goto Reload2;
 		Reloadtime:
 		TNT1 A 0 A_HookOverlay("hookreload");
@@ -436,11 +436,11 @@ CLASS SSG : BrutalWeapon
 		SHTZ S 2;
 		SSGD ABCDEEFGH 1;
 		SHTZ A 0 A_startsound("weapons/sshotl");
-		SHTZ A 0 A_TakeInventory("AmmoShell", 1);
+		SHTZ A 0 A_TakeInventory("BDPShell", 1);
 		SHTZ A 0 A_GiveInventory("SSGAmmo", 1);
 		SSGD IJKLMNOOPQRS 1;
 		SHTZ A 0 A_startsound("weapons/sshotl");
-		SHTZ A 0 A_TakeInventory("AmmoShell", 1);
+		SHTZ A 0 A_TakeInventory("BDPShell", 1);
 		SHTZ A 0 A_GiveInventory("SSGAmmo", 1);
 		SHTZ A 0 A_TakeInventory("SSGAlt",1);
 		SHTZ A 0 A_TakeInventory("HasUnloaded",1);
@@ -703,7 +703,7 @@ CLASS SSG : BrutalWeapon
 		Goto FinishUnload;
 		TNT1 AAAAAA 0;
 		SHTZ A 0 A_Takeinventory("SSGAmmo",1);
-		SHTZ A 0 A_Giveinventory("AmmoShell",1);
+		SHTZ A 0 A_Giveinventory("BDPShell",1);
 		Goto RemoveBullets;
 	
 	FInishUnload:
@@ -738,9 +738,9 @@ CLASS SSG : BrutalWeapon
 		
 		SHTZ A 0 A_JumpIfInventory("SSGAmmo", 2, "ContinueSwitchToDB");//Checks if the gun is already loaded
 		
-		TNT1 A 0 A_JumpIf(CountInv("AmmoShell")==0,"ContinueSwitchToDB");//No ammo to reload? Continue the non-reloading anim.
+		TNT1 A 0 A_JumpIf(CountInv("BDPShell")==0,"ContinueSwitchToDB");//No ammo to reload? Continue the non-reloading anim.
 		
-		TNT1 A 0 A_JumpIf(CountInv("AmmoShell")==1,"Reload2");//Got only one shell? Reload just one barrel.
+		TNT1 A 0 A_JumpIf(CountInv("BDPShell")==1,"Reload2");//Got only one shell? Reload just one barrel.
 		
 		Goto Reload;
 	ContinueSwitchToDB:
@@ -802,9 +802,9 @@ CLASS SSG : BrutalWeapon
 		
 		SHTZ A 0 A_JumpIfInventory("SSGAmmo", 2, "ContinueSwitchToBuck");//Checks if the gun is already loaded.
 		
-		TNT1 A 0 A_JumpIf(CountInv("AmmoShell")==0,"ContinueSwitchToBuck");//No ammo to reload? Continue the non-reloading anim.
+		TNT1 A 0 A_JumpIf(CountInv("BDPShell")==0,"ContinueSwitchToBuck");//No ammo to reload? Continue the non-reloading anim.
 		
-		TNT1 A 0 A_JumpIf(CountInv("AmmoShell")==1,"Reload2");//Got only one shell? Reload just one barrel.
+		TNT1 A 0 A_JumpIf(CountInv("BDPShell")==1,"Reload2");//Got only one shell? Reload just one barrel.
 		
 		Goto Reload;
 	ContinueSwitchToBuck:

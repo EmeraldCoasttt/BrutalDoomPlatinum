@@ -1,7 +1,7 @@
 class ShowSlugShellsInHud : Inventory { Default {Inventory.MaxAmount 1;}}
 class HeyIneedToPump: Inventory { Default {inventory.maxamount 1;}}
 
-class Shot_Gun : BrutalWeapon
+class BDPShotgun : BrutalWeapon
 {
 	Default
 	{
@@ -9,14 +9,14 @@ class Shot_Gun : BrutalWeapon
 		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 1300;
 		Weapon.AmmoGive 8;
-		Weapon.AmmoType "AmmoShell";
+		Weapon.AmmoType "BDPShell";
 		BrutalWeapon.MagCapacity 9;
 		Inventory.PickupMessage "You got the Shotgun! (Slot 3)";
 		Inventory.PickupSound "weapons/sgpump";
 		Obituary "$OB_MPSHOTGUN";
 		scale 0.8;
 		Tag "$BDPSHOTGUN";
-		Inventory.AltHUDIcon "SHTCD0";
+		Inventory.AltHUDIcon "SHTCA0";
 	}
 	States
 	{
@@ -50,16 +50,16 @@ class Shot_Gun : BrutalWeapon
 		TNT1 A 0 A_jump(256,"spawn1","spawn2","spawn3");
 		LOOP;
 	Spawn1:
-		SHTC A 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
+		SHTC B 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
 		LOOP;
 	Spawn2:
 		SHTC C 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
 		LOOP;
 	Spawn3:
-		SHTC E 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
+		SHTC D 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
 		LOOP;
 	SpawnNoAmmo:
-		SHTC D -1;
+		SHTC A -1;
 		LOOP;
 	Fidget:
 		TNT1 A 0 A_StartSound("foley/ShotgunPumpMisc", 10);
@@ -259,7 +259,7 @@ class Shot_Gun : BrutalWeapon
 		SHT0 A 0 A_JumpIfInventory("GlassSlugSelected",1,2);
 		SHTN A 0;
 		"####" PQ 1;
-		SHTN A 0 A_JumpIfInventory("AmmoShell",1,1);
+		SHTN A 0 A_JumpIfInventory("BDPShell",1,1);
 		Goto FinishPump;
 		SHTN A 0 A_CheckIfMag(9,"ReloadNormally2");
 		SHTN FEDCB 1;
@@ -430,7 +430,7 @@ class Shot_Gun : BrutalWeapon
 		SHTN A 0 A_Takeinventory("Reloading",1);
 		SHTN A 0 A_CheckIfMag(9,"RFP2");
 	RFP2:
-		SHTN A 0 A_JumpIfInventory("AmmoShell", 1, 1);
+		SHTN A 0 A_JumpIfInventory("BDPShell", 1, 1);
 		Goto Pump2+38;
 		SHTN ST 1;
 		Goto InsertShellAnimation;
@@ -445,7 +445,7 @@ class Shot_Gun : BrutalWeapon
 	ReloadNormally2:
 		SHTN FST 1 A_WEAPONReady(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM);
 	InsertShellAnimation:
-		TNT1 A 0 A_CheckIfAmmo("AmmoShell",1,"Pump2");
+		TNT1 A 0 A_CheckIfAmmo("BDPShell",1,"Pump2");
 		SHTN UUUV 1 A_WEAPONReady(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM);
 		TNT1 A 0 A_JumpIfInventory("StartDualWield",1,"DualWieldFromReload");
 		SHT5 A 0 A_jumpifinventory("GlassSlugSelected",1,2);
@@ -482,7 +482,7 @@ class Shot_Gun : BrutalWeapon
 		TNT1 A 0 A_Print("\cgBuckshot",1);
 		Goto DWRSlugs;
 	DualWield:
-		TNT1 A 0 A_JumpIfInventory("AmmoShell",1,2);
+		TNT1 A 0 A_JumpIfInventory("BDPShell",1,2);
 		TNT1 A 0 A_CheckIfMag();
 		TNT1 A 0 A_StartSound("foley/ShotgunReloadRaise", 10);
 		SHTN A 0 A_CheckIfMag(1,"AAAAAA");
