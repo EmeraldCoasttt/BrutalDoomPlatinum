@@ -266,9 +266,6 @@ ACTOR DualPlasmaRifles : BrutalWeapon
 		DUPL A 0
 		"####" BCDEF 1
 		stop
-	DeselectToSingle:
-		TNT1 AAAAAAA 0 A_Lower
-		Wait
 	Select:
 		TNT1 A 1 {A_SetCrosshairDX("PLASRet", 500,1.0); A_GunslingerMag;}
 		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True)
@@ -290,7 +287,7 @@ ACTOR DualPlasmaRifles : BrutalWeapon
 		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True)
 		stop
 	SelectFromDual:
-		TNT1 A 0 A_StartSound("foley/PlasmaInspectMisc",10)
+		TNT1 A 0 {A_SetCrosshairDX("PLASRet", 500,1.0); A_StartSound("foley/PlasmaInspectMisc",10);}
 		3UPL C 0 A_CheckIfMag(21,3)
 		2UPL B 0 A_CheckIfMag(61,2)
 		DUPL A 0
@@ -394,6 +391,7 @@ ACTOR DualPlasmaRifles : BrutalWeapon
 		2LSR "]" 1
 		stop
 	Reload:
+		TNT1 A 0 SetFired(false)
 		TNT1 A 0 A_Overlay(6,"DeselectOverlay")
 		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True)
 		3UPL C 0 A_CheckIfMag(21,3)

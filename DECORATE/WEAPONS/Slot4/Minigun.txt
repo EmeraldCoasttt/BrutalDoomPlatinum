@@ -395,5 +395,32 @@ ACTOR MiniGun : BrutalWeapon
 		"####" AAABBBCCCDDDEEEFFF 1 A_WeaponReadyDX
 		CHAG A 0
 		Goto Ready
+		 DualWield:
+		 TNT1 A 0 A_takeinventory("StartDualWield",1)
+		 TNT1 A 0 A_jumpifinventory("clip2",1,1)
+		 Goto ready
+		 TNT1 A 0 
+		 CHAG A 0 A_JumpIfInventory("clip2",1,2)
+			CHAE A 0
+		"####" "][" 1
+		"####" ZY 1
+		  TNT1 A 0
+		  {
+		  A_takeinventory("spin",1);
+		  A_playsound("CBOXPKUP",6);
+		  A_spawnitemex("minigunturret",60,0,0,2,0,5,0,SXF_NOCHECKPOSITION | SXF_SETTRACER);
+		 // A_takeinventory("clip2",100);
+		  A_takeinventory("miniguncount",1);
+		  
+		  
+		  }
+		  TNT1 A 10
+		  
+		  Andbackagain:
+			CHAG A 0 A_JumpIfInventory("clip2",1,2)
+			CHAE A 0
+			"####" UVWX 1
+			RIFG A 0 A_Takeinventory("StartDualWield",1)
+			Goto Ready
 	}
 }

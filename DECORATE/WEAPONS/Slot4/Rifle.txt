@@ -191,7 +191,30 @@ ACTOR Rifle : BrutalWeapon
 	SpawnNoAmmo:
 		RIFL A -1
 		Loop
-
+	DualWield:
+		TNT1 A 0 A_TakeInventory("StartDualWield",1)
+		TNT1 A 0 A_PlaySound("fstatk", 1)
+		RIBB N 0 A_BDPMeleeStart(200)
+		"####" A 0
+		"####" BCD 1 A_SetAngle(angle+3, SPF_INTERPOLATE)
+		"####" A 0 A_bdpmelee(150,"MeleeAttackRiflebash",1)
+		"####" TTUUU 1
+		"####" VWXYZ 1 A_SetAngle(angle-1.5, SPF_INTERPOLATE)
+		RIB2 B 1
+		RIB2 A 1
+		TNT1 A 0 A_Takeinventory("StartDualWield",1)
+		RIFG A 0 A_TakeInventory("Taunting",1)
+		Goto Ready
+		PowerBash:
+		"####" A 0 A_PlaySound("weapons/gswing")
+		"####" BCD 1
+		"####" A 0 A_FireCustomMissile("StrongRifleBash", 0, 0, 0, -2)
+		"####" TUUVWXYZ 1
+		RIB2 B 1
+		RIB2 A 1
+		TNT1 A 0 A_Takeinventory("StartDualWield",1)
+		RIFG A 0 A_TakeInventory("Taunting",1)
+		Goto Ready
 	/*//AltFire:
 		RIFG A 0
 		//RIFG A 0 ACS_NamedExecuteAlways("HoldAim")

@@ -18,7 +18,7 @@ ACTOR BrutalSMG : BrutalWeapon
 	States
 	{
 	FuckYouFlash:
-		2SMS ONMLKKKKKKKKKKKKKKKKKKKKKKLMNO 1
+		SM2S JKLMXXXXXXXXXXXXXXXXXXXXXXMLKJ 1
 		stop
 	GrenadeThrowFlash:
 		SMGS EFGH 1
@@ -58,6 +58,7 @@ ACTOR BrutalSMG : BrutalWeapon
 		SMGS HGFE 1 A_WeaponReady(WRF_NOFIRE)
 		Goto Ready
 	SelectFromDual:
+		TNT1 A 0 A_SetCrosshairDX("SMGRet", 700,0.75)
 		SM2S Q 1 A_WeaponReady(WRF_NOFIRE)
 		SM2G A 0 A_StartSound("foley/SMGDualWieldDeselect")
 		SM2S PONMLKJ 1 A_WeaponReady(WRF_NOFIRE)

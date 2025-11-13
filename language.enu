@@ -183,3 +183,6 @@ DHINT27 = "Each slot has 3 weapons.";
 DHINT28 = "Crouch and kick for a powerful slide attack!";
 DHINT29 = "When the unmaker runs out of cells, it will drain your health instead.";
 DHINT30 = "Railgun headshots are explosive.";
+DHINT31 = "Remember to drink plenty of water.";
+DHINT32 = "Crosshairs act as a guide for your weapon's spread.";
+DHINT33 = "If you reload certain weapons early, a round will be left in the chamber.";

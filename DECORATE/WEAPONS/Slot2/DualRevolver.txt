@@ -55,7 +55,7 @@ ACTOR DualRevolver : BrutalWeapon
 		REVS GFED 1 A_WeaponReady(WRF_NOFIRE)
 		Goto Ready
 	SelectFromDual:
-		TNT1 A 0 {A_SetCrosshairDX("SMGRet",2000,0.3); A_StartSound("REVCOCK");}
+		TNT1 A 0 A_StartSound("REVCOCK")
 		REVS LMNO 1 A_WeaponReady(WRF_NOFIRE)
 		Goto Ready
 	 Fire:
@@ -123,9 +123,9 @@ ACTOR DualRevolver : BrutalWeapon
 	Altfire:
 		TNT1 A 0 A_CheckIfMag
 		TNT1 A 0 {A_Overlay(6,"AltFire2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True);}
-		TNT1 A 0 A_JumpIf(GetFired == false, 2)
+		TNT1 A 0 A_JumpIf(GetFired == false, "AltFireActive")
 		RFDF C 8
-		AltFireActive:
+	AltFireActive:
 		TNT1 A 0 A_CheckIfMag(1,"NoAmmoAltfire")
 		RFDF B 1 Bright
 		{
@@ -138,15 +138,14 @@ ACTOR DualRevolver : BrutalWeapon
 			A_QuadSound;
 			A_GunLight;
 			A_TakeMag;
-			SetFired(true);
 		}
+		TNT1 A 0 SetFired(true)
 		RFDF A 1 BRIGHT A_SetPitch(Pitch-3.6, SPF_INTERPOLATE)
 		TNT1 A 0 A_SetAngle(Angle-3, SPF_INTERPOLATE)
 		REDF A 0 A_ZoomFactor(1.0)
 		RSDF HGFE 1
 		TNT1 A 0 A_StartSound("REVFIRE1",13)
 		RSDF DCBA 1
-		
 		RFDF G 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
 		TNT1 A 0 A_SetAngle(Angle+0.75, SPF_INTERPOLATE)
 		RFDF G 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
@@ -157,14 +156,14 @@ ACTOR DualRevolver : BrutalWeapon
 		TNT1 A 0 A_SetAngle(Angle+0.75, SPF_INTERPOLATE)
 		RFDF JK 1
 		TNT1 A 0 A_Refire("AltFireActive")
-		RFDF C 9
-		TNT1 A 0 A_JumpIf(GetFired,"Ready")
-		RFDF C 8
-		Goto Ready
-	AltFire2:
 		TNT1 A 0 A_JumpIf(GetFired, 2)
 		RFDF C 8
-		AltFireActive2:
+		TNT1 A 0
+		Goto Ready
+	AltFire2:
+		TNT1 A 0 A_JumpIf(GetFired, "AltFireActive2")
+		RFDF C 8
+	AltFireActive2:
 		TNT1 A 0 A_CheckIfMag(1,"NoAmmoAltfire2")
 		RFDF B 1 BRIGHT
 		{
@@ -177,8 +176,8 @@ ACTOR DualRevolver : BrutalWeapon
 			A_QuadSound;
 			A_GunLight;
 			A_TakeMag;
-			SetFired(false);
 		}
+		TNT1 A 0 SetFired(false)
 		RFDF A 1 BRIGHT A_SetPitch(Pitch-3.6, SPF_INTERPOLATE)
 		TNT1 A 0 A_SetAngle(Angle+3, SPF_INTERPOLATE)
 		REDF A 0 A_ZoomFactor(1.0)
@@ -194,10 +193,10 @@ ACTOR DualRevolver : BrutalWeapon
 		RFDF H 1 A_SetPitch(Pitch+0.9, SPF_INTERPOLATE)
 		TNT1 A 0 A_SetAngle(Angle-0.75, SPF_INTERPOLATE)
 		RFDF JK 1
-		TNT1 A 0 A_Checkfire("AltFireActive2","altfireactive2")
-		RFDF C 9
-		TNT1 A 0 A_JumpIf(GetFired == false,"Ready")
+		TNT1 A 0 A_JumpIf(GetPressed(BT_ALTATTACK),"AltFireActive2")
+		TNT1 A 0 A_JumpIf(GetFired == false, 2)
 		RFDF C 8
+		TNT1 A 0
 		Stop
 	NoAmmoAltfire:
 		RFDF C 1
@@ -245,6 +244,7 @@ ACTOR DualRevolver : BrutalWeapon
 		RFDF GHIJK 1
 		STOP
 	 Reload:
+		TNT1 A 0 SetFired(false)
 		TNT1 A 0 A_ClearOverlays(6,6)
 		REVS DEFG 1
 		TNT1 A 2
@@ -279,7 +279,6 @@ ACTOR DualRevolver : BrutalWeapon
 		REV6 GHIIJKLMN 1
 		TNT1 A 2
 		REVS GFED 1
-		TNT1 A 0 SetFired(false)
 		Goto Ready
 	DualWield:
 		TNT1 A 0 A_EndDual
