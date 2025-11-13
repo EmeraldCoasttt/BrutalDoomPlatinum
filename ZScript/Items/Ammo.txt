@@ -144,7 +144,7 @@ class BDPClipBox1 : BDPClip1
 	States
 	{
 	Spawn:
-		AMM2 A -1;
+		AMM1 A -1;
 		Stop;
 	}
 }
@@ -193,28 +193,28 @@ class BDPClipBox2 : BDPClip2
 	Spawn:
 		TNT1 A 0 NoDelay A_Jump(255, "Spawn1","Spawn2","Spawn3", "Spawn4", "Spawn5");
 	Spawn1:
-		AMMO A 0 A_Jump(240,2);
-		AMMO N 0;
-		AMMO "#" -1;
+ 		AMM2 A 0 A_Jump(240,2);
+ 		AMM2 N 0;
+ 		AMM2 "#" -1;
 		Stop;
 	Spawn2:
-		AMMO B 0 A_Jump(240,2);
-		AMMO O 0;
-		AMMO "#" -1;
+ 		AMM2 B 0 A_Jump(240,2);
+ 		AMM2 O 0;
+ 		AMM2 "#" -1;
 		Stop;
 	Spawn3:
-		AMMO C 0 A_Jump(240,2);
-		AMMO P 0;
-		AMMO "#" -1;
+ 		AMM2 C 0 A_Jump(240,2);
+ 		AMM2 P 0;
+ 		AMM2 "#" -1;
 		Stop;
 	Spawn4:
-		AMMO D -1;
+ 		AMM2 D -1;
 		Stop;
 	Spawn5:
-		AMMO E -1;
+ 		AMM2 E -1;
 		Stop;
 	Spawn6:
-		AMMO F -1;
+ 		AMM2 F -1;
 		Stop;
 	}
 }
