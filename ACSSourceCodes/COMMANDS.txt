@@ -52,118 +52,17 @@ Script 312 (void) NET
 	SetActorProperty(0, APROP_INVULNERABLE, OFF);
 }
 
-Script "PressKick" (VOID) NET
-{
- GiveInventory("BDWeaponAction", 1);
- GiveInventory("Kicking", 1);
- GiveInventory("GoSpecial", 1);
-}
-
-Script "PressTaunt" (VOID) NET
-{
- GiveInventory("BDWeaponAction", 1);
- GiveInventory("Taunting", 1);
- GiveInventory("GoSpecial", 1);
-}
-
-Script "PressReload" (VOID) NET
-{
- GiveInventory("Reloading", 1);
- GiveInventory("BDWeaponAction", 1);
- GiveInventory("GoSpecial", 1);
-}
-
-/*
-Script 309 (VOID) NET
-{
- GiveInventory("AmmoDroper", 1);
- SetWeapon("AmmoDroper");
-}
-
-Script 310 (VOID) NET
-{
-	SetPlayerproperty(0, 1, PROP_INSTANTWEAPONSWITCH );
-	SetWeapon("BrutalPistol");
-	SetWeapon("ClassicPistol");
-	delay(5);
-	SetPlayerproperty(0, 0, PROP_INSTANTWEAPONSWITCH );
-}
-*/
-
-Script "PressUnload" (VOID) NET
-{
- GiveInventory("BDWeaponAction", 1);
- GiveInventory("Unloading", 1);
- GiveInventory("GoSpecial", 1);
-}
-
-
 Script "PressFlashlight" (VOID) NET
 {
  GiveInventory("SwitchFlashlight", 1);
  GiveInventory("GoSpecial", 1);
 }
 
-
-Script "PressGrenade" (VOID) NET
-{
- GiveInventory("BDWeaponAction", 1);
- GiveInventory("TossGrenade", 1);
- GiveInventory("GoSpecial", 1);
-}
-
-
-//TAUNTING
-/*
-Script 431 (VOID) NET
-{
- GiveInventory("BDWeaponAction", 1);
- GiveInventory("Salute1", 1);
- GiveInventory("GoSpecial", 1);
-}
-
-Script 432 (VOID) NET
-{
- GiveInventory("BDWeaponAction", 1);
- GiveInventory("Salute2", 1);
- GiveInventory("GoSpecial", 1);
-}
-
-
-Script 304 (VOID) NET
-{
- GiveInventory("BDWeaponAction", 1);
- GiveInventory("AdvTaunting", 1);
- GiveInventory("GoSpecial", 1);
-}
-*/
 Script "PressOneLiner" (VOID) NET
 {
  GiveInventory("OneLiner", 1);
  GiveInventory("GoSpecial", 1);
 }
-
-//ROLLS
-/*
-Script 306 (VOID) NET
-{
- GiveInventory("RollLeft", 1);
- GiveInventory("GoSpecial", 1);
-}
-
-Script 307 (VOID) NET
-{
- GiveInventory("RollRight", 1);
- GiveInventory("GoSpecial", 1);
-}
-*/
-
-Script "PressDualWield" (VOID) NET
-{
- GiveInventory("StartDualWield", 1);
- GiveInventory("GoSpecial", 1);
-}
-
 
 Script "swapgrenades" (VOID) NET
 {
@@ -195,49 +94,6 @@ Script "swapberserkmode" (VOID) NET
 			print(s:"You aren't berserked!");
 		}
 
-}
-script "pressroll" (VOID) NET
-{
-	int x, y, ang;
-	IF(getactorproperty(0,APROP_HEALTH) > 0)
-		{
-		if (checkinventory("usedstamina") < 41)
-		{
-			PlaySound(0, "JMPBOOT", 71, 1.0, false, 0.4);
-			giveinventory("rollingstamina",1);
-						//thing_stop(0);
-						x = GetPlayerInput(-1, INPUT_FORWARDMOVE);
-						y = -GetPlayerInput(-1, INPUT_SIDEMOVE);
-						ang = getactorangle(0)+vectorangle(x, y);
-						//print(i:y);
-						if(x || y) ThrustThing (ang>>8, 32, 1, 0);
-						else ThrustThing (getactorangle(0)>>8, 32, 1, 0);
-						If(y == 0)
-						{
-							If(x > 1)
-							giveinventory("rollingleft",1);
-							else
-							giveinventory("rollingright",1);
-						}
-						Else
-						{
-							If(y > 1)
-							giveinventory("rollingleft",1);
-							else
-							{
-							giveinventory("rollingright",1);
-							}
-						}
-						//left is positive
-			Delay(35);
-			}
-		Else
-			{
-				PlaySound(0, "tired", 12, 1.0, false, 1.0);
-				Delay(10);
-			}
-		}
-		
 }
 
 //==================================================================================================
@@ -421,39 +277,7 @@ script "slowplayer" (void)
 
 
 //==================================================================================================
-  
-//drop ammO COUNTERS
-Script 396 (VOID) NET
-{
- int ammoclip1 = CheckInventory("Clip1");
- HudMessage(d:ammoclip1; HUDMSG_PLAIN, 0, CR_WHITE, 0.26, 0.72, 0.1, 2.0);
- delay(1);
- 
- int ammoclip2 = CheckInventory("Clip2");
- HudMessage(d:ammoclip2; HUDMSG_PLAIN, 0, CR_WHITE, 0.345, 0.72, 0.1, 2.0);
- delay(1);
- 
- int ammoclip3 = CheckInventory("AmmoShell");
- HudMessage(d:ammoclip3; HUDMSG_PLAIN, 0, CR_WHITE, 0.425, 0.72, 0.1, 2.0);
- 
- int ammoclip4 = CheckInventory("AmmoRocket");
- HudMessage(d:ammoclip4; HUDMSG_PLAIN, 0, CR_WHITE, 0.490, 0.72, 0.1, 2.0);
- 
- int ammoclip5 = CheckInventory("AmmoCell");
- HudMessage(d:ammoclip5; HUDMSG_PLAIN, 0, CR_WHITE, 0.570, 0.72, 0.1, 2.0);
- delay(1);
- 
-  int ammoclip6 = CheckInventory("Gas");
- HudMessage(d:ammoclip6; HUDMSG_PLAIN, 0, CR_WHITE, 0.650, 0.72, 0.1, 2.0);
- delay(1);
- 
-   int ammoclip7 = CheckInventory("GrenadeAmmo");
- HudMessage(d:ammoclip7; HUDMSG_PLAIN, 0, CR_WHITE, 0.720, 0.72, 0.1, 2.0);
- delay(1);
- 
- 
-}  
- 
+
 //INVISIBILITY
 Script 397 (VOID) NET
 {

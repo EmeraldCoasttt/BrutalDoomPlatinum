@@ -1,0 +1,1452 @@
+CLASS BDPBFG9000 : BrutalWeapon
+{
+	Default
+	{
+		Height 20;
+		Weapon.SlotNumber 7;
+		Weapon.SlotPriority 1;
+		Weapon.SelectionOrder 2900;
+		Weapon.AmmoGive 40;
+		Weapon.AmmoType "BDPCell";
+		Inventory.PickupSound "BFGREADY";
+		+WEAPON.BFG;
+		Tag "$BDPBFG";
+		Inventory.PickupMessage "You got the BFG-9000! Oh, yes. (Slot 7)";
+		Inventory.AltHUDIcon "BFUGA0";
+	}
+	Bool previousgravity;
+	Bool previousmissile;
+	Bool previoussolid;
+	bool previousxy;
+	bool previousfriend;
+	
+	Actor Grabbedactor;
+	
+	Int GrabbedTimer;
+	
+		action void A_CheckGrab(double range, double ang)
+			{	
+				Vector3 viewPos = (pos.xy, player.viewz); // player view point
+				Vector3 viewDir = (AngleToVector(angle, cos(pitch)), -sin(pitch)); // player view direction
+				double maxAngle = cos(ang);
+	
+				let it = ThinkerIterator.Create("Actor", STAT_DEFAULT);
+						Actor mo;
+					while (mo = Actor(it.Next()))
+			{
+				// get the object's bounding box
+				Vector3 rel = mo.PosRelative(CurSector); // account for sector portals
+				Vector3 minBox = rel - (mo.radius, mo.radius, 0);
+				Vector3 maxBox = rel + (mo.radius, mo.radius, mo.height);
+		
+				// get the point on the box nearest the view point
+				Vector3 nearest;
+				nearest.x = max(minBox.x, min(viewPos.x, maxBox.x));
+				nearest.y = max(minBox.y, min(viewPos.y, maxBox.y));
+				nearest.z = max(minBox.z, min(viewPos.z, maxBox.z));
+		
+				Vector3 dir = nearest - viewPos;
+				double dist = dir.Length();
+				if (dist > 0)
+				{
+					if (dist > range) // is it in range?
+						continue;
+			
+					if (viewDir dot (dir / dist) < maxAngle) // is it within an acceptable angle?
+						continue;
+						
+				
+				}
+					If(mo.species == "marines")
+						Continue;
+				If(mo.bshootable || mo.bmissile)
+				{
+					If(mo.bspawnceiling || mo.health < 1 || mo is "headkicking" || mo is "BDECGRASS" || mo is "Brutal_Bloodspot")
+					{
+						Continue;
+					}
+					invoker.grabbedactor = mo;
+					
+				}
+				Else
+				{
+					Continue;
+				}
+		// grab it
+		break;
+	}
+}
+	States
+	{
+	Grenade: //32
+		BFGS BCDE 1;
+		TNT1 A 24;
+		BFGS EDCB 1;
+		Goto Ready;
+	Kick: //16
+		BFGN BCDE 1;
+		BFGN F 8;
+		BFGN EDCB 1;
+		Goto Ready;
+	AirKick: //18
+		BFGN BCDE 1;
+		BFGN F 10;
+		BFGN EDCB 1;
+		Goto Ready;
+	SlideKick: //26
+		BFGN BCDE 1;
+		BFGN F 18;
+		BFGN EDCB 1;
+		Goto Ready;
+	Taunt: //30
+		BFGN BCDE 1;
+		BFGN F 22;
+		BFGN EDCB 1;
+		Goto Ready;
+	Ready:
+		BFGN A 1 A_WeaponReadyDX();
+		Loop;
+	Sprint:
+		BFGN BCDE 1 A_WeaponReadyDX(0,FALSE,FALSE);
+	SprintLoop:
+		BFGN F 1 A_KeepSprinting();
+		Loop;
+	SprintEnd:
+		BFGN EDCB 1 A_weaponreadyDX(0,FALSE,FALSE);
+		Goto ready;
+	NoAmmo:
+		TNT1 A 0 A_StartSound("weapons/empty", 3);
+	NoAmmo2:
+		BFGN A 1 A_WeaponReadyDX(WRF_NOFIRE,false,false);
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_ATTACK, "NoAmmo2");
+		Goto Ready;
+
+	Deselect:
+		BFGS ABCDE 1;
+		TNT1 A 1;
+		TNT1 A 0 A_Lower();
+		Wait;
+		
+	Select:
+		TNT1 A 1 A_SetCrosshairDX("PLASRet", 10000,1.0);
+		BFGN A 0 A_startSound("BFGREADY");
+		BFGS EDCBA 1 A_WeaponReady(WRF_NOFIRE);
+		Goto Ready;
+
+		
+	Fire:
+		BFGN A 0;
+		TNT1 A 0 A_checkifammo("BDPCell",100);
+		BFGN A 0;
+		//BFGN A 0 A_TakeInventory("BDPCell", 50)
+		BFGN A 0 A_startSound("BFGCHARGE");
+		TNT1 A 0 a_alertmonstersDX();
+		BFGC ABCD 1 
+		{
+			A_GunLight(250,2,0,255,0); //8
+			A_TakeAmmo("BDPCell",2);
+		}
+		BFGC ABCD 1 {
+			A_GunLight(250,2,0,255,0);
+			A_TakeAmmo("BDPCell",2); //8
+		} //8
+		BFGC ABCD 1 {
+			A_GunLight(250,2,0,255,0);
+			A_TakeAmmo("BDPCell",2); //8
+		} //12
+		BFGC ABCD 1 {
+			A_GunLight(250,2,0,255,0);
+			A_TakeAmmo("BDPCell",2); //8
+		} //20
+		BFGC ABCD 1 {
+			A_GunLight(250,2,0,255,0);
+			A_TakeAmmo("BDPCell",6); //4
+		} //28
+		BFGC ABCD 1 {
+			A_GunLight(250,2,0,255,0);
+			A_TakeAmmo("BDPCell",6); //4
+		} //40
+		BFGC ABC 1 {
+			A_GunLight(250,2,0,255,0);
+			A_TakeAmmo("BDPCell",6); //4
+		} //49
+		TNT1 A 0 A_TakeAmmo("BDPCell",2);
+		
+		BFGA A 1 BRIGHT 
+		{
+		A_GunLight(500,2,0,255,0);
+		A_ZoomFactor(0.96);
+		}
+		BFGA B 1 BRIGHT 
+		{
+		A_GunLight(500,2,0,255,0);
+		A_FireProjectile("GreenFlareSpawn",0,0,0,0);
+		}
+		//TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 10);// For poor PCs
+		TNT1 A 0 a_alertmonstersDX();
+		TNT1 AAAAAAAAA 0 BRIGHT A_FireProjectile("BFGFireParticle", random(-12,12), 0, -1, 0, 0, random(-9,9));
+		BFGN A 0 A_startSound("BFGFIRE");
+		"####" A 0 A_QuadSound();
+		TNT1 A 0;
+		TNT1 AAA 0 A_FireProjectile("GreenFlareSpawn",0,0,0,0);
+	   // BFGN A 0 A_Recoil(8*cos(pitch))
+	   SHTZ A 0 
+		{
+		A_Recoil(8*cos(pitch));
+		  if(vel.Z != 0)
+		  {
+		  ThrustThingZ(0,pitch/1.3,0,1);
+		  }
+		else
+		  {
+		  ThrustThingZ(0,pitch/2,0,1);
+		  }
+		}
+		
+		
+		BFGN A 0 BRIGHT A_FireProjectile("Alerter", 0, 0, -1, 0);
+		BFGN A 0 BRIGHT A_FireProjectile("BFGBallWithTracers");
+		BFGN A 0;
+		Goto RecoilFire;
+		
+	RecoilFire:	
+		//BFGN A 0 A_ZoomFactor(0.87)
+		TNT1 A 0 A_SetPitch(Pitch-8, SPF_INTERPOLATE);
+		BFGA C 1 BRIGHT A_GunLight(500,2,0,255,0);
+		BFGN A 0 A_ZoomFactor(0.98);
+		BFGA DE 1 BRIGHT A_GunLight(500,2,0,255,0);
+		BFGN A 0 A_ZoomFactor(1.0);
+		BFGA F 1;
+		BFGA FFFFGGHIJK 1 A_SetPitch(Pitch+0.8, SPF_INTERPOLATE);
+		//BFGA FFGGHHIJKL 1 A_SetPitch(Pitch+0.8, SPF_INTERPOLATE)
+		BFGN A 0 A_Refire();
+		Goto Ready;
+		
+		
+	//Alpha Doom Attack, discontinued.	
+// 	AltFire:
+// 		BFGN A 1
+// 		BFGN A 0 A_JumpIfInventory("BDPCell", 50, 5)
+// 		BFGN A 10
+// 		Goto Ready
+// 		TNT1 AAAAAA 0
+// 		BFGN A 0 A_TakeInventory("BDPCell", 50)
+//		 BFGN A 0 A_startSound("BFGCHARGE")
+// 		BFGC ABCDABCDABCDABCD 1 BRIGHT
+// 		BFGC ABCDABCDABCDABCD 1 BRIGHT
+//		 BFGA A 2 BRIGHT A_FireProjectile("GreenFlareSpawn",0,0,0,0)
+//		 BFGN A 0 A_startSound("BFGFIRE")
+// 		TNT1 AAA 0 A_FireProjectile("GreenFlareSpawn",0,0,0,0)
+//		 BFGN A 0 A_Recoil(8)
+//		 //BFGN A 0 A_ZoomFactor(1.3)
+//		 BFGN A 0 BRIGHT A_FireProjectile("Alerter", 0, 0, -1, 0)
+// 		BFGN A 0 A_FireProjectile("ShakeYourAssDouble", 0, 0, 0, 0)
+//		 BFGA BCBCBCBCBCB 2 BRIGHT A_FireProjectile("AlphaBFGBall", random(-6, 6), 0, 0, 0, 0, random(-2, 2))
+// 		BFGA DE 2 BRIGHT
+//		 //BFGN A 0 A_ZoomFactor(1.0)
+//		 BFGN A 1 BRIGHT
+// 		BFGN A 4
+//		 BFGN A 0  A_Refire
+// 		Goto Ready
+
+	// AltFire:
+	  BFGN A 0;
+		TNT1 A 0 A_checkifammo("BDPCell",100);
+		BFGN A 0;
+		//BFGN A 0 A_TakeInventory("BDPCell", 50)
+		BFGN A 0 A_startSound("10KSTALT");
+		TNT1 A 0 a_alertmonstersDX();
+		BFGC ABCD 1 
+		{
+			A_GunLight(250,2,0,255,0); //4
+			A_TakeAmmo("BDPCell",2);
+		}
+		BFGC ABCD 1 {
+			A_GunLight(250,2,0,255,0);
+			A_TakeAmmo("BDPCell",2); //4
+		} //8
+		BFGC ABCD 1 {
+			A_GunLight(250,2,0,255,0);
+			A_TakeAmmo("BDPCell",2); //4
+		} //12
+		BFGC ABCD 1 {
+			A_GunLight(250,2,0,255,0);
+			A_TakeAmmo("BDPCell",4); //4
+		} //20
+		BFGC ABCD 1 {
+			A_GunLight(250,2,0,255,0);
+			A_TakeAmmo("BDPCell",4); //4
+		} //28
+		BFGC ABCD 1 {
+			A_GunLight(250,2,0,255,0);
+			A_TakeAmmo("BDPCell",6); //4
+		} //40
+		BFGC ABC 1 {
+			A_GunLight(250,2,0,255,0);
+			A_TakeAmmo("BDPCell",6); //4
+		} //49
+		TNT1 A 0 A_TakeAmmo("BDPCell",2);
+		
+		BFGA A 1 BRIGHT 
+		{
+		A_GunLight(500,2,0,255,0);
+		A_ZoomFactor(0.96);
+		}
+		BFGA B 1 BRIGHT 
+		{
+		A_GunLight(500,2,0,255,0);
+		A_FireProjectile("GreenFlareSpawn",0,0,0,0);
+		}
+		//TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 10);// For poor PCs
+		TNT1 A 0 a_alertmonstersDX();
+		TNT1 AAAAAAAAA 0 BRIGHT A_FireProjectile("BFGFireParticle", random(-12,12), 0, -1, 0, 0, random(-9,9));
+		BFGN A 0 A_startSound("10KALT");
+		"####" A 0 A_QuadSound();
+		TNT1 A 0;
+		TNT1 AAA 0 A_FireProjectile("GreenFlareSpawn",0,0,0,0);
+	   // BFGN A 0 A_Recoil(8*cos(pitch))
+	   SHTZ A 0 
+		{
+		A_Recoil(8*cos(pitch));
+		  if(vel.Z != 0)
+		  {
+		  ThrustThingZ(0,pitch/1.3,0,1);
+		  }
+		else
+		  {
+		  ThrustThingZ(0,pitch/2,0,1);
+		  }
+		}
+		
+		
+		BFGN A 0 BRIGHT A_FireProjectile("Alerter", 0, 0, -1, 0);
+		BFGN A 0 BRIGHT A_FireProjectile("BFGBallWithTracers");
+		BFGN A 0;
+		Goto RecoilFire;
+		/*
+		DualWield:
+		TNT1 A 0 A_takeinventory("startdualwield",1);
+		TNT1 A 0 A_jumpifinventory("nuke",1,"firenuke");
+		TNT1 A 0 A_print("You don't have a nuke cell!");
+		Goto ready;
+	Firenuke:
+		TNT1 A 0 A_StartSound("BFGCHAR2");
+		TNT1 A 0 A_print("Nuke firing sequence Initiated");
+		TNT1 A 0 A_startsound("NUKEWARN",26,1);
+		BFGC ABCDABCDABCDABCD 1 BRIGHT A_jumpifinventory("startdualwield",1,"cancelnuke");
+		TNT1 A 0 A_startsound("NUKEWARN",26,1);
+		BFGC ABCDABCDABCDABCD 1 BRIGHT A_jumpifinventory("startdualwield",1,"cancelnuke");
+		TNT1 A 0 A_startsound("NUKEWARN",26,1);
+		BFGC ABCDABCDABCDABCD 1 BRIGHT A_jumpifinventory("startdualwield",1,"cancelnuke");
+		TNT1 A 0 A_startsound("NUKEWARN",26,1);
+		BFGC ABCDABCDABCDABCD 1 BRIGHT A_jumpifinventory("startdualwield",1,"cancelnuke");
+		
+	
+	
+	
+	
+	BFGA A 1 BRIGHT 
+		{
+		A_GunLight(500,2,0,255,0);
+		A_ZoomFactor(0.96);
+		}
+		BFGA B 1 BRIGHT 
+		{
+		A_GunLight(500,2,0,255,0);
+		A_FireProjectile("GreenFlareSpawn",0,0,0,0);
+		}
+		//TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 10);// For poor PCs
+		TNT1 A 0 a_alertmonstersDX();
+		TNT1 AAAAAAAAA 0 BRIGHT A_FireProjectile("BFGFireParticle", random(-12,12), 0, -1, 0, 0, random(-9,9));
+		BFGN A 0 A_startSound("10KALT");
+		"####" A 0 A_QuadSound();
+		TNT1 A 0;
+		TNT1 AAA 0 A_FireProjectile("GreenFlareSpawn",0,0,0,0);
+	   // BFGN A 0 A_Recoil(8*cos(pitch))
+	   SHTZ A 0 
+		{
+		A_Recoil(8*cos(pitch));
+		  if(vel.Z != 0)
+		  {
+		  ThrustThingZ(0,pitch/1.3,0,1);
+		  }
+		else
+		  {
+		  ThrustThingZ(0,pitch/2,0,1);
+		  }
+		}
+	TNT1 A 0 A_TakeInventory("Nuke",1);
+	//BG2G K 1 BRIGHT A_FireCustomMissile("BFGBallWithTracers",0,0,0,0)
+	//BG2G K 0  A_FireCustomMissile("BFGBallWithTracers",0,0,0,0)
+	//BG2G K 0  A_FireCustomMissile("BFGBallWithTracers",-6,0,0,0)
+	NKLG A 0 A_Fireprojectile("NuclearRocket", 0, false, 0, -6,0,-6);
+	Goto RecoilFire;
+	
+	CancelNuke:
+	TNT1 A 0
+	{
+		A_StartSound("10KSTOP", 12);
+		A_takeinventory("startdualwield",1);
+		A_print("Nuke firing sequence cancelled.");
+	
+	}
+	Goto ready;
+		
+		*/
+		/*
+	 SpecialAction:
+		 TNT1 A 0 A_takeinventory("swapriflespecial",1)
+		 TNT1 A 0 A_jumpifinventory("BDPCell",1,1)
+		 Goto ready
+		  BFGS ABCDE 1
+		  TNT1 A 0
+		  {
+		  A_takeinventory("spin",1);
+		  A_startSound("BFGREADY",6);
+		  A_spawnitemex("bfgturret",60,0,0,2,0,5,0,SXF_NOCHECKPOSITION | SXF_SETTRACER);
+		 // A_takeinventory("clip2",100);
+		  
+		  
+		  }
+		  TNT1 A 10
+		  TNT1 A 0 A_takeinventory("Big_Fucking_Gun",1)
+		  Goto ready
+		*/
+		/*
+   DualWield:
+		TNT1 A 0 A_takeinventory("startdualwield",1);
+		//TNT1 A 0 A_jumpifinventory("BDPCell",1,1);
+		//Goto noammo;
+		TNT1 A 0
+		{
+		 A_checkgrab(200,45);
+		 If(invoker.grabbedactor)
+			{
+			invoker.previousmissile = invoker.grabbedactor.bmissile;
+			invoker.previoussolid = invoker.grabbedactor.bsolid;
+			invoker.previousgravity = invoker.grabbedactor.bnogravity;
+			invoker.previousxy = invoker.grabbedactor.bforcexybillboard;
+			invoker.previousfriend = invoker.grabbedactor.bfriendly;
+			invoker.grabbedactor.giveinventory("grabbedmonsterdamage",1);
+			invoker.grabbedactor.giveinventory("grabbedmonsterdamage",1);
+			invoker.grabbedactor.bsolid = FALSE;
+			invoker.grabbedactor.bmissile = FALSE;
+			invoker.grabbedactor.bnogravity = TRUE;
+			invoker.grabbedactor.bforcexybillboard = TRUE;
+			invoker.grabbedactor.bfriendly = TRUE;
+			invoker.grabbedactor.bmissilemore = TRUE;
+			invoker.grabbedactor.bnopain = TRUE;
+			invoker.grabbedactor.blookallaround = TRUE;
+			invoker.grabbedactor.bdontharmspecies = FALSE;
+			invoker.grabbedactor.bdoharmspecies = TRUE;
+			invoker.grabbedactor.target = null;
+			invoker.grabbedactor.tracer = null;
+			return resolvestate("grabloop");
+			}
+			return resolvestate(null);
+		}
+		Goto GrabDie;
+		GrabShoot:
+		tnt1 A 0
+		{
+			A_startsound("GRBRFIRE",12);
+			If(invoker.grabbedactor)
+			{
+			invoker.grabbedactor.bmissile = invoker.previousmissile;
+			invoker.grabbedactor.bsolid = invoker.previoussolid;
+			invoker.grabbedactor.bnogravity = invoker.previousgravity;
+			invoker.grabbedactor.bforcexybillboard = invoker.previousxy;
+			invoker.grabbedactor.bfriendly = invoker.previousfriend;
+				If(invoker.grabbedactor.bmissile)
+					{
+					invoker.grabbedactor.giveinventory("grabberdamage",1);
+					invoker.grabbedactor.pitch = invoker.owner.pitch;
+					invoker.grabbedactor.angle = invoker.owner.angle;
+					invoker.grabbedactor.species = "marines";
+					invoker.grabbedactor.bthruspecies = true;
+					invoker.grabbedactor.bmthruspecies = true;
+					invoker.grabbedactor.setorigin((invoker.owner.pos.x,invoker.owner.pos.y,(invoker.owner.pos.z + (invoker.owner.height * 0.5))),FALSE);
+					//invoker.grabbedactor.pos = invoker.owner.pos;
+					//invoker.grabbedactor.pos.z = (invoker.grabbedactor.pos.z + (invoker.owner.height * 0.5));
+					Invoker.grabbedactor.target = invoker.owner;
+					invoker.grabbedactor.vel3dfromangle(invoker.grabbedactor.speed,invoker.grabbedactor.angle,invoker.grabbedactor.pitch);
+				//	invoker.grabbedactor.a_recoil(-(invoker.grabbedactor.speed));
+					//Invoker.grabbedactor.
+					}
+				Else
+					{
+					invoker.A_startsound("bonecrack",13);
+					Radius_Quake(12, 24, 0, 60, 0);
+					invoker.grabbedactor.takeinventory("grabbedmonsterdamage",1);
+					invoker.grabbedactor.angle = (invoker.owner.angle - 180);
+					invoker.grabbedactor.a_changevelocity(-20,0,20,CVF_RELATIVE);
+					invoker.grabbedactor.damagemobj(invoker.owner,invoker.owner,frandom(100,170),"extremepunches");
+					}
+			invoker.Grabbedactor = null;
+			}
+			//Return resolvestate(null);
+		}
+		BFGA A 1 BRIGHT A_ZoomFactor(0.96);
+		BFGA B 1 BRIGHT A_FireProjectile("GreenFlareSpawn",0,0,0,0);
+		TNT1 A 0 A_SetPitch(Pitch-8, SPF_INTERPOLATE);
+		BFGA C 1 BRIGHT;
+		BFGN A 0 A_ZoomFactor(0.98);
+		BFGA DE 1 BRIGHT;
+		BFGN A 0 A_ZoomFactor(1.0);
+		BFGA F 1;
+		BFGA FFFFGGHIJK 1 A_SetPitch(Pitch+0.8, SPF_INTERPOLATE);
+		//TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 10);// For poor PCs
+		//BFGN GHIGHI 1
+		//{
+		//	A_overlayoffset(overlayid(),frandom(-1,0),frandom(32,33));
+		//}
+		Goto ready;
+		GrabDie:
+		tnt1 A 0
+		{
+			invoker.grabbedtimer = 0;
+			A_startsound("GRBRFAIL",12);
+			If(invoker.grabbedactor)
+			{
+			invoker.grabbedactor.takeinventory("grabbedmonsterdamage",1);
+			invoker.grabbedactor.bmissile = invoker.previousmissile;
+			invoker.grabbedactor.bsolid = invoker.previoussolid;
+			invoker.grabbedactor.bnogravity = invoker.previousgravity;
+			invoker.grabbedactor.bforcexybillboard = invoker.previousxy;
+			invoker.grabbedactor.bfriendly = invoker.previousfriend;
+			
+				If(invoker.grabbedactor.bmissile)
+					{
+					invoker.grabbedactor.vel.xy = (0,0);
+					invoker.grabbedactor.vel.z = -5;
+					}
+			invoker.Grabbedactor = null;
+			}
+			//Return resolvestate(null);
+		}
+		BFGN GHIGHI 1
+		{
+			A_overlayoffset(overlayid(),frandom(-1,0),frandom(32,33));
+		}
+		Goto ready;
+		
+	
+	
+		
+	Grabloop:
+		BFGN GHIGHIGHI 1
+		{
+			invoker.grabbedtimer = invoker.grabbedtimer + 1;
+			A_startsound("GRBRLOOP",12,CHANF_LOOPING);
+			A_overlayoffset(overlayid(),frandom(-1,0),frandom(32,33));
+			If(player.cmd.buttons & bt_altattack || invoker.owner.findinventory("startdualwield") || invoker.grabbedtimer == 120)
+				{
+					invoker.owner.takeinventory("startdualwield",1);
+					Return resolvestate("grabdie");
+				}
+			If(invoker.grabbedactor && invoker.grabbedactor.health > 0)
+				{
+				
+			//	console.printf(invoker.grabbedactor.getclassname());
+				invoker.grabbedactor.reactiontime = 0;
+					//Vector3 grabdir = (AngleToVector(angle, cos(pitch)), -sin(pitch));
+					// FLineTraceData grabwarp;
+				//	LineTrace(angle, ((invoker.grabbedactor.radius * 0.5) + (invoker.owner.radius * 0.5)), pitch,TRF_THRUHITSCAN | TRF_THRUACTORS, offsetz: player.viewz - pos.z, data: grabwarp);
+					//If (invoker.grabbedactor.checkmove(grabwarp.hitlocation.xy))
+					//	{	
+							If(invoker.grabbedactor.target && invoker.grabbedactor.target == invoker.owner)
+								{
+									Invoker.grabbedactor.target = null;
+								}
+							//Invoker.grabbedactor.reactiontime = 2;
+							int warpoffset = ((invoker.grabbedactor.radius * 0.5) + (invoker.owner.radius * 0.5));
+							//Vector3 warpdir = (AngleToVector(invoker.angle, cos(invoker.pitch)), -sin(invoker.pitch));
+							//warpdir.x = (warpdir.x * warpoffset);
+							//warpdir.y = (warpdir.y * warpoffset);
+							//warpdir.z = (warpdir.z * warpoffset);
+							//Warpdir = (invoker.owner.pos + warpdir);
+						
+							//invoker.grabbedactor.setorigin(warpdir,TRUE);
+							Vector3 ofs = invoker.owner.pos+(0,0,invoker.owner.player.viewz - invoker.owner.pos.z);
+							Vector3 x, y, z;
+							[x, y, z] = BDP_CoordUtil.getaxes(invoker.owner.pitch,invoker.owner.angle,invoker.owner.roll);
+							vector3 newpos = (ofs+x*(32 + (invoker.grabbedactor.radius * 0.7))-z*(invoker.grabbedactor.height * 0.6));
+							If(level.IsPointInLevel(newpos))
+							{
+								//invoker.grabbedactor.angle = (invoker.owner.angle - 180);
+								invoker.grabbedactor.SetOrigin(newpos,true);
+							}
+							If(invoker.grabbedactor.distance3d(invoker.owner) > 300)
+								{
+									Return resolvestate("grabdie");
+								}
+				}
+			Else
+				{
+					Return resolvestate("grabdie");
+				}
+				
+			If(player.cmd.buttons & bt_attack)
+				{
+					invoker.owner.takeinventory("startdualwield",1);
+					Return resolvestate("grabshoot");
+				}
+			return resolvestate(null);
+		}
+		//TNT1 A 0 A_takeinventory("BDPCell",1);
+		LOOP;
+	*/
+	Spawn:
+		BFUG A -1;
+		Stop;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CLASS SuperBFGBall : BFGBall replaces BFGBall
+{
+	Default
+	{
+		+EXTREMEDEATH;
+		Damagefunction 1500;
+		Decal "BFGLightning";
+		DeathSound "BFGEXPLO";
+		DamageType "Desintegrate";
+		Scale 0.7;
+		Radius 10;
+		Species "Marines";
+		Height 1;
+		+THRUSPECIES;
+		+MTHRUSPECIES;
+		+skyexplode;
+		+forcexybillboard;
+	}
+	States
+	{
+	 Spawn:
+		BFS1 A 0 A_SpawnItemEx("BFGFOG", 0, 0);
+		BFS1 AB 1 BRIGHT A_SpawnItemEx("BFGTrailParticle", Random(-13, 13), Random(-13, 13), Random(0, 18), Random(1, 3), 0, (0.1)*Random(-10, 10), Random(-20, 20), 128);
+		Loop;
+	 
+	 Death:
+		BFGN A 0;
+		BFGN A 0 Radius_Quake(4,34,0,12,0);
+		BFGN A 0 Radius_Quake(1,34,0,32,0);
+		BFGN A 0 A_SpawnItemEx ("RicochetExplosion");
+		BFGN A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 AA 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		BFGN A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_startSOund("BFGEXPL2", 1);
+		BFGN A 0 Bright A_SpawnItem("GreenShockWave",0,0,0);
+		//BFE1 A 0 A_SpawnItemEx("BFGDeathParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+		//BFE1 A 0 A_SpawnItemEx("BFGSuperParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+		EXPL A 0 A_SpawnItemEx("BFGBigFlare", 0, 0, 0);
+		EXPL A 0 A_SpawnItemEx("BFGBigFlare", 50, 0, 0);
+		EXPL A 0 A_SpawnItemEx("BFGBigFlare", -50, 0, 0);
+		EXPL A 0 A_SpawnItemEx("BFGBigFlare", 0, 50, 0);
+		EXPL A 0 A_SpawnItemEx("BFGBigFlare", 0, -50, 0);
+		EXPL A 0 A_SpawnItemEx("BFGBigFlare", 50, 50, 0);
+		EXPL A 0 A_SpawnItemEx("BFGBigFlare", 50, -50, 0);
+		EXPL A 0 A_SpawnItemEx("BFGBigFlare", -50, 50, 0);
+		EXPL A 0 A_SpawnItemEx("BFGBigFlare", -50, -50, 0);
+		EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_spawnprojectile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360));
+		EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_spawnprojectile ("BFGDeathParticleSuperFast", 0, 0, random (0, 360), 2, random (0, 360));
+		EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_spawnprojectile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360));
+		EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_spawnprojectile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360));
+		
+		//BFGN A 0 A_Explode(200,400,0);
+		BFGB A 2 BRIGHT;
+		BFGB F 0 Bright A_BFGSprayNEO("SuperBFGExtraScalable", 2500, 7);
+		BFGB BCDEFG 2 Bright;
+		BFGN A 0 A_SPawnItemex("SuperBFGExtraGiant");
+		TNT1 A 12;
+		Stop;
+	}
+	Action void A_BFGSprayNEO(Name SpraySpawn = "SuperBFGExtraScalable", int basedamage = 2500, int quakestrength = 7)
+	{
+	
+			BlockThingsIterator CheckFortracers = BlockThingsIterator.create(Self,1000); //256 can be whatever range around the actor.
+				Actor CurrentActor;
+				While (CheckFortracers.Next())
+					{
+						CurrentActor = CheckFortracers.Thing;
+						
+						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
+						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
+						If (CurrentActor && CurrentActor.bismonster && currentactor.health > 0 && !currentactor.bfriendly && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY))
+							{
+								Tracer = currentactor;
+								
+								
+								   actor beam; 
+								   Beam = Spawn("BFGTendril2", (pos.x,pos.y,pos.z));
+									Vector3 BFGCoords = LevelLocals.SphericalCoords(pos,(tracer.pos.x,tracer.pos.y,tracer.pos.z + (tracer.height * 0.5)));
+									if (beam && tracer)
+										{
+										tracer.giveinventory("bfgdamage",1);
+											beam.angle = angleto(tracer);
+											beam.pitch = (-BFGCOORDS.Y -90);
+											beam.scale.y = distance3d(tracer);
+										}
+									tracer.A_spawnitemex("bfgextra");
+								tracer.damagemobj(self,target,700,"disintegrate");
+								
+								
+								
+			
+							}
+					}
+			
+		
+	}
+}
+
+
+CLASS BFG10K_Ball: SuperBFGBall
+{
+	Default
+	{
+		Radius 10;
+		Height 2;
+		Speed 200;
+		Damagefunction (random(50, 300));
+		DamageType "desintegrate";
+		Decal "SmallerScorch";
+		Projectile;
+		+RANDOMIZE;
+		+SPECTRAL;
+		//+SHOOTABLE;
+		-NOBLOCKMAP;
+		+NOBLOOD;
+		+NORADIUSDMG;
+		+THRUSPECIES;
+		+MTHRUSPECIES;
+		+FORCEXYBILLBOARD;
+		Species "Marines";
+		Scale 1.0;
+		renderstyle "ADD";
+		alpha 0.99;
+		Scale 0.4;
+		DeathSound "None";
+		SeeSound "None";
+		Obituary "$OB_MPPLASMARIFLE";
+	}
+	States
+	{
+
+		Spawn:
+			BFS1 AB 1 BRIGHT A_CustomMissile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360));
+			Loop;
+
+		Death:
+			BFE1 A 0 Bright A_BFGSprayNEO("SuperBFGExtraScalable2", 300,3);
+			BFE1 A 3 Bright;
+			BFGN A 0 A_SpawnItemEx ("RicochetExplosion");
+			//BG2G A 0 A_SpawnItem("RocketExplosion")
+			BG2G A 0 Radius_Quake(3, 2, 0, 12, 0);
+			BG2G A 0 Bright A_SpawnItem("GreenShockWave",0,0,0);
+			EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleSuperFast", 0, 0, random (0, 360), 2, random (0, 360));
+			EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360));
+			EXPL AAAA 0 A_CustomMissile ("BFGBIGFOG", 0, 0, random (0, 360), 2, random (0, 360));
+			TNT1 AAAAAAA 0 A_CustomMissile ("GreenExplosionFire", 2, 0, random (0, 360), 2, random (0, 360));
+			EXPL AA 0 A_CustomMissile ("BigNeoSmoke", 0, 0, random (0, 360), 2, random (0, 360));
+			BFE1 BCDEF 2 Bright;
+			BG2G A 0 A_StartSound("FAREXPL");
+			BG2G A 0 A_StartSound("Explosion");
+			TNT1 AAAA 2 A_CustomMissile ("BigNeoSmoke", 2, 0, random (0, 360), 2, random (0, 360));
+			Stop;
+	}
+}
+
+
+CLASS BFGTendril : tripmineparticle {
+	double fadeoutpercent;
+	property fadeoutpercent : fadeoutpercent;
+	Default
+	{
+		BFGTendril.fadeoutpercent 0.9;
+	}
+	States
+	{
+		Spawn:
+			TNT1 A 0;
+			TNT1 A 0 A_jump(256,"spawn1","spawn2","spawn3","spawn4");
+		Spawn1:
+			L2NR A 1 BRIGHT;
+			TNT1 A 0
+			{
+				A_fadeout(fadeoutpercent);
+			}
+			LOOP;
+		Spawn2:
+			L2NR B 1 BRIGHT;
+			TNT1 A 0 
+			{
+				A_fadeout(fadeoutpercent);
+			}
+			LOOP;
+		Spawn3:
+			L2NR C 1 BRIGHT;
+			TNT1 A 0 
+			{
+				A_fadeout(fadeoutpercent);
+			}
+			LOOP;
+		Spawn4:
+			L2NR D 1 BRIGHT;
+			TNT1 A 0 
+			{
+				A_fadeout(fadeoutpercent);
+			}
+			LOOP;
+		
+		}
+
+
+}
+
+
+
+CLASS BFGTendril2 : BFGTendril
+{
+	Default
+	{
+		BFGTendril.fadeoutpercent 0.1;
+	}
+}
+
+
+CLASS BFGBallWithTracers : SuperBFGBall
+{
+	Default
+	{
+	Speed 12;
+	
+	}
+   States
+  {
+ Spawn:
+	BFS1 A 0 A_SpawnItemEx("BFGFOG", 0, 0);
+	BFS1 AB 1 BRIGHT 
+		{
+			A_SpawnItemEx("BFGTrailParticle", Random(-13, 13), Random(-13, 13), Random(0, 18), Random(1, 3), 0, (0.1)*Random(-10, 10), Random(-20, 20), 128);
+			//bool bfounddest;
+				BlockThingsIterator CheckFortracers = BlockThingsIterator.create(Self,500); //256 can be whatever range around the actor.
+				Actor CurrentActor;
+				While (CheckFortracers.Next())
+					{
+						CurrentActor = CheckFortracers.Thing;
+						
+						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
+						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
+						If (CurrentActor && CurrentActor.bismonster && currentactor.health > 0 && !currentactor.bfriendly && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY))
+							{
+								Tracer = currentactor;
+								
+								
+								   actor beam; 
+								   Beam = Spawn("BFGTendril", (pos.x,pos.y,pos.z));
+									Vector3 BFGCoords = LevelLocals.SphericalCoords(pos,(tracer.pos.x,tracer.pos.y,tracer.pos.z + (tracer.height * 0.5)));
+									if (beam && tracer)
+										{
+										tracer.giveinventory("bfgdamage",1);
+											beam.angle = angleto(tracer);
+											beam.pitch = (-BFGCOORDS.Y -90);
+											beam.scale.y = distance3d(tracer);
+										}
+								tracer.damagemobj(self,target,8,"disintegrate");
+								//If(tracer && tracer.health < 1)
+								//{
+								//tracer.A_spawnitemex("bfgextra");
+								//}
+			
+							}
+					}
+		}
+	Loop;
+	
+	
+	Death:
+	BFGN A 0;
+	//BFE1 A 0 Bright A_BFGSprayNEO("SuperBFGExtraScalable2", 400,7);
+	BFGN A 0 Radius_Quake(4,34,0,12,0);
+	BFGN A 0 Radius_Quake(1,34,0,32,0);
+	BFGN A 0 A_SpawnItemEx ("RicochetExplosion");
+	BFGN A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+	TNT1 AA 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+	BFGN A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+	TNT1 A 0 A_startSOund("BFGEXPL2", 1);
+	BFGN A 0 Bright A_SpawnItem("GreenShockWave",0,0,0);
+	//BFE1 A 0 A_SpawnItemEx("BFGDeathParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+	//BFE1 A 0 A_SpawnItemEx("BFGSuperParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+	EXPL A 0 A_SpawnItemEx("BFGBigFlare", 0, 0, 0);
+	EXPL A 0 A_SpawnItemEx("BFGBigFlare", 50, 0, 0);
+	EXPL A 0 A_SpawnItemEx("BFGBigFlare", -50, 0, 0);
+	EXPL A 0 A_SpawnItemEx("BFGBigFlare", 0, 50, 0);
+	EXPL A 0 A_SpawnItemEx("BFGBigFlare", 0, -50, 0);
+	EXPL A 0 A_SpawnItemEx("BFGBigFlare", 50, 50, 0);
+	EXPL A 0 A_SpawnItemEx("BFGBigFlare", 50, -50, 0);
+	EXPL A 0 A_SpawnItemEx("BFGBigFlare", -50, 50, 0);
+	EXPL A 0 A_SpawnItemEx("BFGBigFlare", -50, -50, 0);
+	EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_spawnprojectile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360));
+	EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_spawnprojectile ("BFGDeathParticleSuperFast", 0, 0, random (0, 360), 2, random (0, 360));
+	EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_spawnprojectile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360));
+	EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_spawnprojectile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360));
+	
+	//BFGN A 0 A_Explode(200,400,0);
+	BFGB A 2 BRIGHT;
+	BFGB BCDEFG 2 Bright;
+	BFE1 A 0 Bright A_BFGSprayNEO("SuperBFGExtraScalable2", 400,7);
+	BFGN A 0 A_SPawnItemex("SuperBFGExtraGiant");
+	TNT1 A 12;
+	Stop;
+	}
+  
+}
+
+
+
+
+Class BFGdamage : Inventory {
+
+	int rad;
+	int hgt;
+	protected int dur; //this will hold the current value of duration
+	int duration; //this will hold max duration
+	property duration : duration; //this turns the variable above into a property
+	Default {
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		inventory.maxamount 1;
+		BFGDAmage.duration 3;
+	}
+	
+
+	Override void postbeginplay()
+		{
+		hgt = owner.height*0.5;
+		rad = owner.radius*0.5; //we'll use the monster's radius as a base value for horizontal offset randomization
+		}
+	//Items that don't spawn in the world don't need their Tick. Emptying it will actually help performace:
+	Override void Tick() {}
+	
+	//This function is executed every tic by items while they're in an actor's inventory:
+	Override void DoEffect() {
+		super.DoEffect();
+		if (owner.isFrozen())
+			return;
+			
+			if (!owner) {		
+			DepleteOrDestroy();
+			return;
+		}
+
+	
+		//If(owner.health > 0)
+		//{
+		//owner.tics = -1;
+		//}
+		
+	iF(OWNER && OWNER.HEALTH <=0)
+	{
+	owner.A_spawnitemex("superBFGEXTRA",0,0,(hgt),0,0,0,0,SXF_ISTRACER);
+	owner.A_SpawnItem("GreenShockWave",0,0,hgt);
+	owner.A_SpawnItemEx("BFGBigFlare", 0, 0, hgt);
+	owner.a_xscream();
+	for(int i = hgt; i > 0; i--)
+	{
+	owner.A_spawnprojectile ("BFGDeathParticleFast", hgt, 0, random (0, 360), 2, random (0, 360));
+	}
+	If(owner.tracer)
+	{
+	owner.tracer.scale.y = (0.04*hgt);
+	owner.tracer.scale.x = (0.07*rad);
+	}
+	depleteordestroy();
+	}
+		
+
+		
+		
+		//If (owner && level.time % random(37,125) == 0) {
+		//Owner.A_pain();
+		//}
+		
+		if (level.time % 20 == 0) {
+		
+			if (dur < duration)
+				dur++;
+			else {
+				DepleteOrDestroy();
+				return;
+			}
+		}
+		
+		
+
+	
+	
+			
+			
+			
+			
+			//);
+
+		}
+	}
+	
+	
+Class NukeDamage : Actor
+	{
+	Int scalevalue;
+		Default
+			{
+				Damagetype "desintegrate";
+				+nogravity;
+				renderradius 2000;
+			}
+			
+/*
+		action void a_nuke()
+			{
+			
+				
+			}
+		*/
+		States
+			{
+				Spawn:
+					NUKF A 1 BRIGHT
+					{
+					scalevalue = (scalevalue + 75);
+					A_setscale(scalevalue,scalevalue);
+					BlockThingsIterator CheckFortracers = BlockThingsIterator.create(self,scalevalue * 0.45); //256 can be whatever range around the actor.
+				Actor CurrentActor;
+				While (CheckFortracers.Next())
+					{
+						CurrentActor = CheckFortracers.Thing;
+						bool isVoodooDoll = (currentactor && currentactor.player && currentactor.player.mo && currentactor.player.mo != currentactor);
+						If (CurrentActor && currentactor.bshootable && distance3d(currentactor) <= (scalevalue * 0.45) && !isvoodoodoll)
+							{
+							Currentactor.damagemobj(self,self,70,"desintegrate");
+							//currentactor.applykickback(self,self,200,0,"desintegrate",0);
+							}
+					}
+					/*
+					for(int k=0;k<(level.sectors.size()-1);k++){
+			
+					sector thissector=level.sectors[k];
+						If(thissector)
+						{
+						Vector3 sectorlocation;
+						Sectorlocation.x = thissector.centerspot.x;
+						Sectorlocation.y = thissector.centerspot.y;
+						sectorlocation.z = thissector.floorplane.ZAtPoint(thissector.centerspot);
+							If(LevelLocals.Vec3Diff(self.pos, sectorlocation).Length() <= (scalevalue * 0.3))
+							{
+								double zatpoint=thissector.floorplane.ZAtPoint(thissector.centerspot);
+								thissector.MoveFloor(random(-3,-1),(zatpoint - random(-20,-1)),0,1,false);
+								
+								zatpoint=thissector.ceilingplane.ZAtPoint(thissector.centerspot);
+								thissector.MoveCeiling(random(3,1),(zatpoint + random(20,1)),0,1,false);
+							}
+							textureid shwal = texman.checkfortexture("ASHWALL2",texman.type_any);
+						for(int i=0;i<thissector.lines.size();i++){
+						line lnn=thissector.lines[i];
+						for(int j=0;j<2;j++){
+						if(!lnn.sidedef[j])continue;
+						if(!lnn.sidedef[j].GetTexture(side.top))lnn.sidedef[j].SetTexture(side.top,shwal);
+						if(!lnn.sidedef[j].GetTexture(side.bottom))lnn.sidedef[j].SetTexture(side.bottom,shwal);
+							}
+							}
+						}
+					
+					
+					}
+					*/
+					
+					//A_explode(100,(scalevalue * 0.5),XF_HURTSOURCE,TRUE,(scalevalue * 0.5));
+					A_fadeout(0.020);
+					}
+					LOOP;
+			
+			}
+	
+	
+	}
+
+class GreenShockWave : Actor
+{ 
+	Default
+	{
+	   Speed 0;
+	   Height 64 ;
+	   Radius 32;
+	   Scale 2.25 ;
+	   RenderStyle 'add';
+	   Alpha 0.9;
+	   +DROPOFF 
+	   +NOBLOCKMAP 
+	   +NOGRAVITY 
+	   +CLIENTSIDEONLY
+	   +forcexybillboard
+   }
+   States 
+   { 
+   Spawn: 
+	  SHOK A 1 BRIGHT;
+	  Goto Death ;
+   Death: 
+	  SHOK BCDEFGHIJKLMNOPQR 1 BRIGHT A_FadeOut(0.05);
+	  Stop ;
+   } 
+} 
+
+
+class WhiteShockWave: GreenShockwave
+{ 
+	Default
+	{
+		Scale 2.0;
+		Alpha 0.12;
+	}
+   States 
+   { 
+   Spawn: 
+	  SHWK A 1;
+	  SHWK CEGIKMOQ 1 A_FadeOut(0.01);
+	  Stop ;
+   } 
+} 
+
+class WhiteShockWaveBig: WhiteShockWave
+{ 
+	Default
+	{
+		Scale 3.0;
+	}
+} 
+
+class WhiteShockWaveSmall: WhiteShockWave
+{ 
+	Default
+	{
+		Scale 1.0;
+	}
+} 
+
+class SuperBFGExtra : BFGExtra Replaces BFGExtra
+{
+	Default
+	{
+  +NoBlockMap
+  +NoGravity
+  RenderStyle 'Add';
+  +FORCERADIUSDMG
+  +THRUGHOST
+  Alpha 0.75;
+  Damage 2;
+  Scale 0.6;
+  Radius 1;
+  Height 1;
+  DamageType "Desintegrate";
+  }
+  States
+  {
+  Spawn:
+	BFGB A 0;
+	TNT1 A 0 A_SpawnItemEx ("RicochetExplosion");
+	TNT1 AAAAA 0 A_SpawnItemEx("BFGExtraParticle", 0, 0, 14, (0.1)*Random(10, 40), 0, (0.1)*Random(-40, 40), Random(0, 360), 128);
+	TNT1 AAAAA 0 A_SpawnItemEx("BFGExtraParticle", 0, 0, 14, (0.1)*Random(10, 40), 0, (0.1)*Random(-40, 40), Random(0, 360), 128);
+	TNT1 AAAAA 0 A_SpawnItemEx("BFGExtraParticle", 0, 0, 14, (0.1)*Random(10, 40), 0, (0.1)*Random(-40, 40), Random(0, 360), 128);
+	BFGB ABCDEFGHIJK 2 Bright A_SpawnItem("GreenFlareMedium",0,0);
+	stop;
+  }
+}
+
+
+class SuperBFGExtraGiant : SuperBFGExtra
+{
+	Default
+	{
+  Scale 2.9;
+  }
+  States
+  {
+  Spawn:
+	BFE2 A 0;
+	BFGB ABCDEFGH 2 Bright;
+	Stop;
+}}
+
+class BFGExtraParticle : Actor
+{
+	Default
+	{
+	  Height 0;
+	  Radius 0;
+	  Mass 0;
+	  +Missile
+	  +NoBlockMap
+	  +DontSplash
+	  +NoInteraction
+	  RenderStyle 'Add';
+	  Scale 0.035;
+  }
+  States
+  {
+  Spawn:
+  Death:
+	SPKG A 2 Bright A_FadeOut(0.1);
+	Loop;
+  }
+}
+
+class BFGDeathParticle : Actor
+{
+	Default
+	{
+	  Height 0;
+	  Radius 0;
+	  Mass 0;
+	  +Missile
+	  +NoBlockMap
+	  -NoGravity
+	  +LowGravity
+	  +DontSplash
+	  +DoomBounce
+	  BounceFactor 0.5;
+	  RenderStyle 'Add';
+	  Scale 0.04;
+  }
+  States
+  {
+  Spawn:
+  Death:
+	SPKG A 2 Bright A_FadeOut(0.02);
+	Loop;
+  }
+}
+
+
+
+class BFGDeathParticleFast: BFGDeathParticle
+{
+	Default
+	{
+	  Speed 10;
+	  Scale 0.1;
+  }
+  States
+  {
+  Spawn:
+  Death:
+	SPKG A 11 BRIGHT;
+	SPKG AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 2 Bright A_FadeOut(0.06);
+	Stop;
+  }
+}
+
+class BFGDeathParticleFastBlue: BFGDeathParticle
+{
+	Default
+	{
+  Speed 10;
+  Scale 0.1;
+  }
+  States
+  {
+  Spawn:
+  Death:
+	SPKB A 11 BRIGHT;
+	SPKB AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 2 Bright A_FadeOut(0.06);
+	Stop;
+  }
+}
+
+class BFGDeathParticleSuperFast: BFGDeathParticleFast
+{
+	Default
+	{
+  Speed 20;
+  }
+}
+
+class BFGFireParticle: BFGDeathParticle
+{
+	Default
+	{
+  -LowGravity
+  Gravity 0.8;
+  BounceFactor 0.3;
+  Scale 0.03;
+  }
+  States
+  {
+  Spawn:
+  Death:
+	SPKG A 2 Bright A_FadeOut(0.04);
+	Loop;
+  }
+}
+
+class BFGTrailParticle : Actor
+{
+	Default
+	{
+  Height 0;
+  Radius 0;
+  Mass 0;
+  Speed 3;
+  +Missile
+  +NoBlockMap
+  +NoGravity
+  +DontSplash
+  RenderStyle 'Add';
+  Scale 0.05;
+  }
+  States
+  {
+  Spawn:
+	SPKG A 2 Bright A_FadeOut(0.02);
+	Loop;
+  }
+}
+
+class BFGFOG : Actor
+{
+	Default
+	{
+		Radius 1;
+		Height 1;
+		Alpha 0.7;
+		RenderStyle 'Add';
+		Scale 0.4;
+		Speed 8;
+		Gravity 0;
+		+NOBLOCKMAP
+		+NOTELEPORT
+		+DONTSPLASH
+		+MISSILE
+		+FORCEXYBILLBOARD
+		+CLIENTSIDEONLY
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 2;
+		BFOG ABCDEF 1 BRIGHT ;
+		Stop;
+	}
+}
+
+class BFGBIGFOG: BFGFOG
+{
+	Default
+	{
+		Scale 0.8;
+	}
+}
+
+class BFGBIGFOGBLUE: BFGFOG
+{
+	Default
+	{
+	Scale 0.8;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 2;
+		BBOG ABCDEF 1 BRIGHT ;
+		Stop;
+	}
+}
+
+class GreenExplosionFire : Actor
+{
+	Default
+	{
+		Radius 1;
+		Height 1;
+		Speed 3;
+		Damage 0 ;
+		+NOBLOCKMAP
+		+NOTELEPORT
+		+DONTSPLASH
+		+MISSILE
+		+FORCEXYBILLBOARD
+		+CLIENTSIDEONLY
+		+NOINTERACTION
+		+NOCLIP
+		RenderStyle 'Add';
+		DamageType 'Flames';
+		Scale 2.0;
+		Alpha 1;
+		Gravity 0;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 1;
+		EXPG ABCDEFG 3 BRIGHT;
+		Stop;
+	}
+}
+
+class BlueExplosionFire : GreenExplosionFire
+{
+	States
+	{
+	Spawn:
+		TNT1 A 1;
+		EXPB ABCDEFG 3 BRIGHT;
+		Stop;
+	}
+}
+
+class FriendlyBFGBAll : SuperBFGBall
+{
+	Default
+	{
+		Damagetype "FriendBullet";
+		+EXTREMEDEATH
+	}
+  States
+  {
+ Death:
+	BFGN A 0;
+	//BFGN A 0 Radius_Quake(4,34,0,12,0)
+	
+	BFGN A 0 Bright A_SpawnItem("GreenShockWave",0,0,0);
+	BFGN A 0 A_SpawnItemEx ("ExplosionSplashSpawner", 0, 0, -20);
+		BFGN A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		BFGN A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+	//BFE1 A 0 A_SpawnItemEx("BFGDeathParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+	//BFE1 A 0 A_SpawnItemEx("BFGSuperParticleSpawner", 0, 0, 0, 0, 0, 0, 0, 128)
+	EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGBIGFOG", 0, 0, random (0, 360), 2, random (0, 360));
+	EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360));
+	EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleSuperFast", 0, 0, random (0, 360), 2, random (0, 360));
+	EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360));
+	EXPL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360));
+	
+	BFGN A 0 A_Explode(120,350,0);
+	BFGB ABCDE 1 Bright A_SpawnItem("GreenFlare",0,0);
+	BFGN A 0 A_SPawnItem("SuperBFGExtraGiant");
+	BFGB GHIJK 1 Bright A_SpawnItem("GreenFlare",0,0);
+	Stop;
+  }
+}

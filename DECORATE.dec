@@ -54,7 +54,6 @@ damage 0
 #include DECORATE/ITEMS/AMMO.txt
 #include DECORATE/ITEMS/ARTIFACT.txt
 #include DECORATE/ITEMS/HEALTH2.txt
-#include DECORATE/ITEMS/DROPABLES.txt
 #include DECORATE/ITEMS/KEYS.txt
 
 //i have to load these first otherwise it spits out errors lol
@@ -65,45 +64,8 @@ damage 0
 #include DECORATE/EFFECTS/TRACERS.txt
 #include DECORATE/WEAPONS/DEFAULTWEAPON.txt
 #include DECORATE/WEAPONS/Grenades.txt
-#include DECORATE/WEAPONS/AmmoDroper.txt
+//#include DECORATE/WEAPONS/AmmoDroper.txt
 #include DECORATE/WEAPONS/EXPLOSIVES.txt
-//1
-#include DECORATE/WEAPONS/Slot1/MELEE.txt
-#include DECORATE/WEAPONS/Slot1/SAW.txt
-#include DECORATE/WEAPONS/Slot1/AXE.txt
-//2
-#include DECORATE/WEAPONS/Slot2/PISTOL.txt
-#include DECORATE/WEAPONS/Slot2/DUALPISTOL.txt
-#include DECORATE/WEAPONS/Slot2/SUBMACHINEGUN.txt
-#include DECORATE/WEAPONS/Slot2/DUALSMG.txt
-#include DECORATE/WEAPONS/Slot2/MP40.txt
-#include DECORATE/WEAPONS/Slot2/DUALMP40.txt
-#include DECORATE/WEAPONS/Slot2/DoxsRevolver.txt
-#include DECORATE/WEAPONS/Slot2/DualRevolver.txt
-//3
-#include DECORATE/WEAPONS/Slot3/SHOTGUN.txt
-#include DECORATE/WEAPONS/Slot3/SSG.txt
-#include DECORATE/WEAPONS/Slot3/ASSAULTSHOTGUN.txt
-
-//4
-#include DECORATE/WEAPONS/Slot4/RIFLE.txt
-#include DECORATE/WEAPONS/Slot4/DUALRIFLE.txt
-#include DECORATE/WEAPONS/Slot4/MINIGUN.txt
-#Include DECORATE/WEAPONS/Slot4/Nailgun.txt
-#include DECORATE/WEAPONS/Slot4/MACHINEGUN.txt
-//5
-#include DECORATE/WEAPONS/Slot5/ROCKETLAUNCHER.txt
-#include DECORATE/WEAPONS/Slot5/GRENADELAUNCH.txt
-#include DECORATE/WEAPONS/Slot5/Flamethrower.txt
-//6
-#include DECORATE/WEAPONS/Slot6/PLASMA.txt
-#include DECORATE/WEAPONS/Slot6/DUALPLASMA.txt
-#include DECORATE/WEAPONS/Slot6/RAILGUN.txt
-#include DECORATE/WEAPONS/Slot6/FREEZER.txt
-//7
-#include DECORATE/WEAPONS/Slot7/BFG.txt
-#include DECORATE/WEAPONS/Slot7/BFG10k.txt
-#include DECORATE/WEAPONS/Slot7/UNMAKER.txt
 //8
 #include DECORATE/WEAPONS/Slot8/FlameCannon.txt
 #Include DECORATE/WEAPONS/Slot8/DualFlameCannon.txt
@@ -112,16 +74,6 @@ damage 0
 //TEMPORARY
 #include DECORATE/WEAPONS/Temporary/CyberdemonsMissileLauncher.txt
 #include DECORATE/WEAPONS/Temporary/MastermindChaingun.txt
-#include DECORATE/WEAPONS/Temporary/MG42.txt
-//Unused
-#include DECORATE/WEAPONS/Unused/DRAGONSLAYER.txt
-#include DECORATE/WEAPONS/Unused/REVOLVER.txt
-#include DECORATE/WEAPONS/Unused/REVOLVER2.txt
-
-#include DECORATE/WEAPONS/Unused/NukeLauncher.txt
-//
-
-#include DECORATE/ITEMS/WeaponSpawners.txt
 
 //Enemies
 #include DECORATE/MONSTERS/ZOMBIEMEN.txt
@@ -211,7 +163,7 @@ damage 0
 //Player Classes
 #include DECORATE/PLAYER.txt
 #include DECORATE/Footsteps.txt
-#include DECORATE/WEAPONS/ClassicWeapons.txt
+//#include DECORATE/WEAPONS/ClassicWeapons.txt
 
 //COOL EFFECTS
 #include DECORATE/EFFECTS/Teleports.txt

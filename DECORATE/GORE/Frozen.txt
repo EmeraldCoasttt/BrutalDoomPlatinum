@@ -52,7 +52,7 @@ ACTOR FrozenZombieman
 	TNT1 A 0 A_stop
 	TNT1 A 0 A_NoBlocking
 	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall")
-	TNT1 A 0 A_SpawnItem("RifleSpawner")
+	TNT1 A 0 A_SpawnItem("RifleDrop")
 	ZFZD C -1
 	ZFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01)
 	Stop
@@ -111,7 +111,7 @@ ACTOR FrozenPistolZombie :FrozenZombieman
 	TNT1 A 0 A_stop
 	TNT1 A 0 A_NoBlocking
 	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall")
-	TNT1 A 0 A_SpawnItem("PistolSpawner")
+	TNT1 A 0 A_SpawnItem("PistolDrop")
 	ZFZD C -1
 	ZFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01)
 	Stop
@@ -171,7 +171,7 @@ ACTOR FrozenLabGuy : FrozenZombieman
 	TNT1 A 0 A_NoBlocking
 	TNT1 A 0 A_PlaySound ("DSBOTTLE")
 	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall")
-	TNT1 A 0 A_SpawnItem("AxeSpawner")
+	//TNT1 A 0 A_SpawnItem("AxeSpawner")
 	LFZD C -1
 	LFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01)
 	Stop
@@ -231,7 +231,7 @@ States
 	TNT1 A 0 A_stop
 	TNT1 A 0 A_NoBlocking
 	TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall")
-	TNT1 A 0 A_SpawnItem("ShotgunSpawnerDroped")
+	TNT1 A 0 A_SpawnItem("ShotgunDrop")
 	SFZD C -1
 	SFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01)
 	Stop

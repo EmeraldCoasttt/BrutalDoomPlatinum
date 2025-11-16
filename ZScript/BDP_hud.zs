@@ -692,7 +692,6 @@ class BDP_HUD : DoomStatusBar
 		
 		iconPos += (iconSpacing * 1, 17);
 		DrawGrenadeIndicator(mIndexfnt, iconPos, iconFlags, (22,22));
-		DrawWeaponSpecificStuff(basepos);
 		
 		let plr = Brutal_Playerbase(CPlayer.mo);
 		if (plr && plr.focusWeapon && !automapactive)
@@ -702,24 +701,6 @@ class BDP_HUD : DoomStatusBar
 			Drawtexture(focusicon,(-22,-51),DI_SCREEN_RIGHT_BOTTOM|DI_ITEM_RIGHT_BOTTOM);
 		}
 		
-		
-	}
-	
-	void DrawWeaponSpecificStuff(vector2 basepos = (18, -19))
-	{
-		Vector2 pos = basepos;
-		int flags = DI_SCREEN_RIGHT_BOTTOM|DI_ITEM_CENTER_BOTTOM;
-		//Machine gun grenade
-		if(CPlayer.mo.countinv("MachineGunAmmo") < 1 && CPlayer.mo.player.readyweapon && Cplayer.mo.player.readyweapon is "machinegun")
-		{
-			pos += (-92,1);
-			DrawImage("NoGren", pos, flags);
-		}
-		if(CPlayer.mo.FindInventory("NEEDLERSELECTED") && CPlayer.mo.player.readyweapon && Cplayer.mo.player.readyweapon is "Plasma_Gun")
-		{
-			pos += (-44,-16);
-			DrawImage("Needlsel", pos, flags);
-		}
 		
 	}
 	

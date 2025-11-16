@@ -24,18 +24,26 @@ version "4.14.0"
 
 #include "Zscript/Weapons/WeaponBase.txt"
 #include "Zscript/Weapons/WeaponSpawners.txt"
-#include "Zscript/Weapons/DroppedWeapon.txt"
+#include "Zscript/Weapons/DroppedWeapons.txt"
 
 //Slot 1
 #include "Zscript/Weapons/Slot1/Chainsaw.txt"
 #include "Zscript/Weapons/Slot1/Melee.txt"
 //Slot 2
 //#include "Zscript/Weapons/Slot2/RiotShield.txt"
+#include "Zscript/Weapons/Slot2/Pistol.txt"
+#include "Zscript/Weapons/Slot2/Revolver.txt"
+#include "Zscript/Weapons/Slot2/DualRevolver.txt"
+#include "Zscript/Weapons/Slot2/DualSMG.txt"
+#include "Zscript/Weapons/Slot2/SubmachineGun.txt"
 //Slot 3
+#include "Zscript/Weapons/Slot3/Shotgun.txt"
 #include "Zscript/Weapons/Slot3/SuperShotgun.txt"
+#include "Zscript/Weapons/Slot3/AssaultShotgun.txt"
 //Slot 4
+#include "Zscript/Weapons/Slot4/AssaultRifle.txt"
 #include "Zscript/Weapons/Slot4/BattleRifle.txt"
-#include "Zscript/Weapons/Slot4/MinigunTurret.txt"
+#include "Zscript/Weapons/Slot4/Minigun.txt"
 //Slot 5
 #include "Zscript/Weapons/Slot5/StickyGrenade.txt"
 #include "Zscript/Weapons/Slot5/TripMine.txt"
@@ -44,11 +52,13 @@ version "4.14.0"
 #include "Zscript/Weapons/Slot5/GrenadeLauncher.txt"
 #include "Zscript/Weapons/Slot5/Incinerator.txt"
 //Slot 6
+#include "Zscript/Weapons/Slot6/PlasmaRifle.txt"
+#include "Zscript/Weapons/Slot6/DualPlasmaRifle.txt"
 #include "Zscript/Weapons/Slot6/Freezer.txt"
 #include "Zscript/Weapons/Slot6/Needler.txt"
 #include "Zscript/Weapons/Slot6/Railgun.txt"
 //Slot 7
-#include "Zscript/Weapons/Slot7/BFG.txt"
+#include "Zscript/Weapons/Slot7/BFG9000.txt"
 #include "Zscript/Weapons/Slot7/CalamityBlade.txt"
 #include "Zscript/Weapons/Slot7/Unmaker.txt"
 //Slot 8

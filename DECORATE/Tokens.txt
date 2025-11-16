@@ -2,7 +2,20 @@
 //Tokens are inventory items used to change monster or weapon behavior, by either acting a "switch" to set
 //properties true or false, or serving as counter for things such as how much ammo a zombieman has, and how
 //much time a grenade fuse has until exploding.
+Actor ShotgunAmmo : Inventory
+{
+	Inventory.MaxAmount 9
+}
 
+Actor RifleAmmo : Inventory
+{
+	Inventory.MaxAmount 31
+}
+
+Actor RocketRounds : Inventory
+{
+	Inventory.MaxAmount 31
+}
 
 Actor JustStartedGame : Inventory
 {

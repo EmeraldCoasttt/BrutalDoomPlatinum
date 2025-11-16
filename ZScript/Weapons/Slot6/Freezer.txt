@@ -1,10 +1,9 @@
-
-Class Freezer : BrutalWeapon
+class BDPFreezerBeam : BrutalWeapon
 {
 	Default
 	{
 		Weapon.AmmoGive 40;
-		Weapon.AmmoType "AmmoCell";
+		Weapon.AmmoType "BDPCell";
 		BrutalWeapon.MagCapacity 50;
 		Obituary "%o was put on ice by %k's Freezer Beam.";
 		Inventory.PickupSound "PLSDRAW";
@@ -33,248 +32,115 @@ Class Freezer : BrutalWeapon
 	TNT1 A 8;
 	TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1,7);
 	stop;
-	
-	
-	GrenadeThrowFlashNoAmmo:
-		TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"GrenadeThrowFlashUnloaded");
-	    FR1S JKLME 1;//A_WeaponReady(WRF_NOFIRE)
-		TNT1 A 22;
-		 FR1S EMLKJ 1;
-		Stop;
-	GrenadeThrowFlashUnloaded:
-	    FR1S FGHIE 1; //A_WeaponReady(WRF_NOFIRE)
-		TNT1 A 22;
-		FR1S EIHGF 1;
-		Stop;
-		
-	GrenadeThrowFlash:
-	    RAIL A 0 A_CheckIfMag(1,"GrenadeThrowFlashNoAmmo");
-        FR1S ABCDE 1; //A_WeaponReady(WRF_NOFIRE)
-		TNT1 A 22;
-		FR1S EDCBA 1; //32 in total
-		Stop;
-	
-	
-	
-	
-	KickingFlash:
-	TNT1 A 0 A_CheckIfMag(1,"KickingFlashNoAmmo");
-	FR1K ABCD 1;
-	FR1K EFGE 2;
-	FR1K DCBA 1; //16
-	Goto Ready;
-
-	AirKickingFlash:
-	TNT1 A 0 A_CheckIfMag(1,"AirKickingFlashNoAmmo");
-	FR1K ABCD 1;
-	FR1K EFGEF 2;
-	FR1K DCBA 1; //18
-	Goto Ready;
-	
-	 SlideKickingStart:
-		TNT1 A 0 A_CheckIfMag(1,"SlideKickingStartNoAmmo");
-	    FR1K ABCD 1;
-	    FR1K EEFFGGEEFFGGEEFFGGEEFFGGEEFFGGEEFFGG 1 { //39 total
-			if (CountInv("Kicking") == 0) {
-				return resolvestate("SlideKickingEnd");
-			}
-			return resolvestate(null);
-		}
+	Grenade: //32
+		TNT1 A 0 A_CheckIfMag(1,"GrenadeNoAmmo");
+		FR1S BCDE 1;
+		TNT1 A 24;
+		FR1S EDCB 1;
 		Goto Ready;
-
-	 SlideKickingEnd:
-		TNT1 A 0 A_CheckIfMag(1,"SlideKickingEndNoAmmo");
-		FR1K EEFFGG 1;
+	GrenadeNoAmmo: //32
+		FR1S KLME 1;
+		TNT1 A 24;
+		FR1S EMLK 1;
+		Goto Ready;
+	Kick: //16
+		TNT1 A 0 A_CheckIfMag(1,"KickNoAmmo");
+		FR1K ABCD 1;
+		FR1K EFGE 2;
 		FR1K DCBA 1;
-	    Goto Ready;
-		
-	KickingFlashNoAmmo:
-	TNT1 A 0 A_JumpIf(CountInv("FreezerIsUnloaded")==1,"KickingFlashUnloaded");
-	FR1K MNOP 1;
-	FR1K Q 8;
-	FR1K PONM 1; //16
-	Goto Ready;
-
-	AirKickingFlashNoAmmo:
-	TNT1 A 0 A_JumpIf(CountInv("FreezerIsUnloaded")==1,"AirKickingFlashUnloaded");
-	FR1K MNOP 1;
-	FR1K Q 10;
-	FR1K PONM 1; //18
-	Goto Ready;
-	
-	 SlideKickingStartNoAmmo:
-		TNT1 A 0 A_JumpIf(CountInv("FreezerIsUnloaded")==1,"SlideKickingStartUnloaded");
-	    FR1K MNOP 1;
-	    FR1K QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ 1 { //39 total
-			if (CountInv("Kicking") == 0) {
-				return resolvestate("SlideKickingEnd");
-			}
-			return resolvestate(null);
-		}
 		Goto Ready;
-
-	 SlideKickingEndNoAmmo:
-		TNT1 A 0 A_JumpIf(CountInv("FreezerIsUnloaded")==1,"SlideKickingEndUnloaded");
-		FR1K Q 6;
+	KickNoAmmo: //16
+		FR1K MNOP 1;
+		FR1K Q 8;
 		FR1K PONM 1;
-	    Goto Ready;
-		
-	KickingFlashUnloaded:
-	FR1K HIJK 1;
-	FR1K L 8;
-	FR1K KJIH 1; //16
-	Goto Ready;
-
-	AirKickingFlashUnloaded:
-	FR1K HIJK 1;
-	FR1K L 10;
-	FR1K KJIH 1; //18
-	Goto Ready;
-	
-	 SlideKickingStartUnloaded:
-	    FR1K HIJK 1;
-	    FR1K LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL 1 { //39 total
-			if (CountInv("Kicking") == 0) {
-				return resolvestate("SlideKickingEnd");
-			}
-			return resolvestate(null);
-		}
 		Goto Ready;
-
-	 SlideKickingEndUnloaded:
-		FR1K L 6;
-		FR1K KJIH 1;
-	    Goto Ready;
-		
-		
-		Fuckyouflash:
-	TNT1 A 0 A_CheckIfMag(1,"FuckyouNoAmmo");
-	FR1K ABCD 1;
-	FR1K EFGEFGEFGFG 2;
-	FR1K DCBA 1; //30
-	Stop;
-	
-	fuckyouNoAmmo:
-	TNT1 A 0 A_JumpIf(CountInv("FreezerIsUnloaded")==1,"fuckyouUnloaded");
-	FR1K MNOP 1;
-	FR1K Q 22;
-	FR1K PONM 1; //30
-	Stop;
-	
-	FuckYouUnloaded:
-	FR1K HIJK 1;
-	FR1K L 20;
-	FR1K KJIH 1; //28
-	Stop;
-		
-		
-	//FuckYouFlash:
-	//FR1K EFGHHIIJJHHIIHHIIJJHHIIJJGFE 1 //18
-	//stop
-	
-		
-        
-		
+	AirKick: //18
+		TNT1 A 0 A_CheckIfMag(1,"AirKickNoAmmo");
+		FR1K ABCD 1;
+		FR1K EFGEF 2;
+		FR1K DCBA 1;
+		Goto Ready;
+	AirKickNoAmmo: //18
+		FR1K MNOP 1;
+		FR1K Q 10;
+		FR1K PONM 1;
+		Goto Ready;
+	SlideKick: //26
+		TNT1 A 0 A_CheckIfMag(1,"SlideKickNoAmmo");
+		FR1K ABCD 1;
+		FR1K EFGEFGEFG 2;
+		FR1K DCBA 1;
+		Goto Ready;
+	SlideKickNoAmmo: //26
+		FR1K MNOP 1;
+		FR1K Q 18;
+		FR1K PONM 1;
+		Goto Ready;
+	Taunt: //30
+		TNT1 A 0 A_CheckIfMag(1,"TauntNoAmmo");
+		FR1K ABCD 1;
+		FR1K EFGEFGEFGEF 2;
+		FR1K DCBA 1;
+		Goto Ready;
+	TauntNoAmmo: //30
+		FR1K MNOP 1;
+		FR1K Q 22;
+		FR1K PONM 1;
+		Goto Ready;
 	Ready:
-	Ready3:
 		TNT1 A 0 A_CheckIfMag(1,"ReadyNoAmmo");
-		RAIL A 0 A_startsound("PLSIDLE",6);
+		RAIL A 0 A_StartSound("PLSIDLE",6,CHANF_LOOPING);
 		FR1D ABC 2 A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		TNT1 A 0 A_AutoReloadMag();
-		FR1D ABC 2 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		TNT1 A 0 A_AutoReloadMag();
-		Goto Ready3;
-		
+		Goto Ready;
 	ReadyNoAmmo:
-		FR1D T 0 A_JumpIf(CountInv("FreezerIsUnloaded")==1,"ReadyUnloaded");
 		FR1D Q 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		TNT1 A 0 A_AutoReloadMag();
 		loop;
-	ReadyUnloaded:
-		FR1D T 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		TNT1 A 0 A_AutoReloadMag();
+	Sprint:
+		TNT1 A 0 A_CheckIfMag(1,"SprintNoAmmo");
+		FR1K ABCD 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
+	SprintLoop:
+		RAIL A 0 A_StartSound("PLSIDLE");
+		FR1K EFG 2 A_KeepSprinting(WRF_ALLOWRELOAD);
 		Loop;
-		
-		SprintOverlay:
-	TNT1 A 0 A_CheckIfMag(1,"sprintNoAmmo");
-	FR1K ABCD 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
-	KeepSprinting:
-	TNT1 A 0 A_CheckIfMag(1,"KeepSprintingNoAmmo");
-	RAIL A 0 A_Startsound("PLSIDLE");
-	FR1K EFG 2 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-	TNT1 A 0 A_KeepSprinting();
-	Goto ReturnFromSprint;
+	SprintEnd:
+		FR1K DCBA 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
+		Goto Ready;
 	SprintNoAmmo:
-	TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"SprintUnloaded");
-	FR1K MNOP 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-	KeepSprintingNoAmmo:
-	FR1K Q 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-	TNT1 A 0 A_KeepSprinting();
-	Goto ReturnFromSprint;
-	
-	SprintUnloaded:
-	FR1K HIJKL 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-	WAIT;
-	
-	ReturnFromSprint:
-	TNT1 A 0 A_CheckIfMag(1,"ReturnFromsprintNoAmmo");
-	FR1K DCBA 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
-	Goto Ready;
-	
-	ReturnFromSprintNoAmmo:
-	TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"ReturnFromSprintUnloaded");
-	FR1K PONM 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-	Goto ready;
-	
-	ReturnFromSprintUnloaded:
-	FR1K KJIH 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-	Goto ready;
-		
-		
+		FR1K MNOP 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+	SprintLoopNoAmmo:
+		FR1K Q 1 A_KeepSprinting(WRF_ALLOWRELOAD,"SprintEndNoAmmo");
+		Loop;
+	SprintEndNoAmmo:
+		FR1K PONM 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		Goto ready;
 	DontNeedToReload:
 		RAIL A 0 A_JumpIfInventory("Zoomed",1,"Ready2");
 	Goto Ready;
-	
 	Deselect:
-	    RAIL A 0 A_CheckIfMag(1,"DeselectNoAmmo");
-        FR1S ABCDE 1;
+		TNT1 A 0 A_StopSound(6);
+		RAIL A 0 A_CheckIfMag(1,"DeselectNoAmmo");
+		FR1S ABCDE 1;
 		TNT1 A 1;
 		TNT1 A 0 A_Lower();
 		Wait;
-		
 	DeselectNoAmmo:
-		TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"DeselectUnloaded");
-	    FR1S JKLME 1;
+		FR1S JKLME 1;
 		TNT1 A 1;
 		TNT1 A 0 A_Lower();
 		Wait;
-		
-	DeselectUnloaded:
-	    FR1S FGHIE 1;
-		TNT1 A 1;
-		TNT1 A 0 A_Lower();
-		Wait;
-	
-		
-		
-		
-		
-		
 	Select:
 		TNT1 A 1 {A_SetCrosshairDX("PLASRet2", 1000,0.5); A_GunSlingerMag();}
-	    TNT1 A 0 A_CheckIfMag(1,"SelectAnimationNoAmmo");
-        FR1S EDCBA 1 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_CheckIfMag(1,"SelectAnimationNoAmmo");
+		FR1S EDCBA 1 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_StartSound("RAILR1", 2);
 		Goto Ready;
-	NoAmmo:
 	SelectAnimationNoAmmo:
-		TNT1 A 0 A_JumpIfInventory("FreezerIsUnloaded",1,"SelectAnimationUnloaded");
-	    FR1S EMLKJ 1 A_WeaponReady(WRF_NOFIRE);
-		Goto Ready3;
-	SelectAnimationUnloaded:
-	    FR1S EIHGF 1 A_WeaponReady(WRF_NOFIRE);
-		Goto Ready3;
-		TNT1 A 0 A_StartSound("weapons/empty", 3);
+		FR1S EMLKJ 1 A_WeaponReady(WRF_NOFIRE);
+		Goto Ready;
+	NoAmmo:
+		TNT1 A 0 A_StartSound("RAILRIP");
 	NoAmmo2:
 		TNT1 A 0 A_AutoReloadMag();
 		R4FL T 0 A_CheckIfMag(1,"NoAmmo3");
@@ -285,94 +151,57 @@ Class Freezer : BrutalWeapon
 		FR1D Q 1 A_WeaponReadyDX(WRF_NOFIRE);
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD || player.cmd.buttons & BT_ATTACK || player.cmd.buttons & BT_ALTATTACK, "NoAmmo2");
 		Goto Ready;
-	
-	/*
 	Fire:
-	    RAIL A 0
-		RAIL A 0 A_CheckIfAmmo("FreezerAmmo")
-		TNT1 AA 0
-		/*
-		FR1D D 3
-		FR1D E 1
-	FireContinue:
-		FR1D EFF 1
-		FR1D G 1
-		*/
-	/*
-		RAIL A 0 A_Giveinventory("HasFreezerWeapon",1)
-		RAIL A 0 A_TakeAmmo("FreezerAmmo",1)
-		TNT1 A 0 a_alertmonstersDX
-		TNT1 A 0 A_GunLight(145,248,255)
-		RAIL A 0 A_startsound("FRZFIRE", 1)
-		"----" A 0 { If(GetCVAR("BD_MagGoClicky")==1) { if(CountInv("FreezerAmmo")<=10) { A_startsound("MagClick", 7); }}}
-		TNT1 AA 0 A_FireCustomMissile ("BluePlasmaParticleWeapon", random(-11,11), 0, -1, -3, 0, random(-7,14))
-		FR1D H 1 BRIGHT A_FireBullets (0, 0, -1,Random(40,75), "Cryopuff", FBF_NORANDOM,8192,"cryotracer",-4)//A_FireCustomMissile("CryoShot", frandom(0.9,-0.9),0, 0, -3, 0)
-	    //TNT1 A 0 A_FireCustomMissile ("PlasmaSmoke", 0, 0, 0, 2)
-		FR1D I 1 BRIGHT A_SetPitch(-1.5 + pitch, SPF_INTERPOLATE)
-		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) )
-		FR1D JKM 1 A_SetPitch(0.5 + pitch, SPF_INTERPOLATE)
-		"####" A 0 A_WeaponOffset(0,32)
-		RAIL A 0 A_CheckIfAmmo("FreezerAmmo",1,"GoToNoAmmo")
-		//RAIL A 0 A_Refire("fire")
-		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1)
-		Goto Ready3
-	*/	
-	Fire:
-	    RAIL A 0;
 		RAIL A 0 A_CheckIfMag();
-		TNT1 AA 0;
-		RAIL A 0 A_Giveinventory("HasFreezerWeapon",1);
-		RAIL A 0 A_TakeMag();
-		"####" A 0 A_QuadSound();
-		FLMT A 0 A_startsound("IceLoop", 1, CHANF_LOOPING, 1);
-		TNT1 A 0 a_alertmonstersDX();
 		TNT1 AA 0 A_FireCustomMissile ("BluePlasmaParticleWeapon", random(-45,45), 0, random(-2,2), random(-3,1), 0, random(-6,22));
-		NULL A 0 A_WeaponOffset(random(1,-1),32+random(-1,1));
-		TNT1 A 0 A_GunLight(500,2,145,248,255);
-		TNT1 A 0 A_SetPitch(pitch - 0.5, SPF_INTERPOLATE);
-		FR1D R 1 BRIGHT A_RailAttack((random(10,15)), 0, 0, 0, "blue", RGF_SILENT | RGF_CENTERZ | RGF_FULLBRIGHT, 0, "CryoPuff", 0, 0, 9804, 1, 32.0, 0, "CryoTracer");// A_FireBullets (0, 0, -1,Random(20,30), "Cryopuff", FBF_NORANDOM,8192,"cryotracer",-4)
-		//RAIL A 0 A_Takeinventory("FreezerAmmo",1)
-		NULL A 0 A_WeaponOffset(random(1,-1),32+random(-1,1));
-		TNT1 A 0 A_SetPitch(pitch - 0.5, SPF_INTERPOLATE);
-		"####" A 0 A_QuadSound();
-		TNT1 A 0 A_GunLight(250,2,145,248,255);
-		FR1D S 1 BRIGHT A_RailAttack((random(10,15)), 0, 0, 0, "blue", RGF_SILENT | RGF_CENTERZ | RGF_FULLBRIGHT, 0, "CryoPuff", 0, 0, 9804, 1, 32.0, 0, "CryoTracer");
-		RAIL A 0 A_CheckIfMag(1,"AltGoToNoAmmo");
-	//	RAIL A 0 A_JumpIfInventory("FreezerAmmo",2,2)
-	//	Goto NoAmmo
-		TNT1 AA 0;
-		RAIL A 0 A_Refire();
-		NULL A 0 A_WeaponOffset(0,32);
-		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
-		TNT1 A 0 A_StopSound(1);
-		FLMT A 0 BRIGHT A_StartSound("IceEnd", 1);
-		//R4FF DCCCCCCCDEEFFG 1 BRIGHT
-		TNT1 A 0 A_GunLight(500,2,145,248,255);
+		FR1D R 1 Bright
+		{
+			A_RailAttack(15, 0, 0, 0, "blue", RGF_SILENT | RGF_CENTERZ | RGF_FULLBRIGHT, 0, "CryoPuff", 0, 0, 9804, 1, 32.0, 0, "CryoTracer");
+			A_WeaponOffset(random(1,-1),32+random(-1,1));
+			A_SetPitch(pitch - 0.5, SPF_INTERPOLATE);
+			A_StopSound(6);
+			A_StartSound("IceLoop", 1, CHANF_LOOPING, 1);
+			A_AlertMonstersDX();
+			A_ZoomFactor(0.98);
+			A_QuadSound();
+			A_GunLight(500,2,145,248,255);
+			A_TakeMag();
+		}
+		FR1D S 1 Bright
+		{
+			A_RailAttack(15, 0, 0, 0, "blue", RGF_SILENT | RGF_CENTERZ | RGF_FULLBRIGHT, 0, "CryoPuff", 0, 0, 9804, 1, 32.0, 0, "CryoTracer");
+			A_WeaponOffset(random(1,-1),32+random(-1,1));
+			A_SetPitch(pitch - 0.5, SPF_INTERPOLATE);
+			A_StopSound(6);
+			A_AlertMonstersDX();
+			A_QuadSound();
+			A_GunLight(250,2,145,248,255);
+			A_TakeMag();
+		}
+		TNT1 A 0 A_CheckIfMag(1,"GoToNoAmmo");
+		TNT1 A 0 A_Refire();
+		TNT1 A 0 
+		{
+			A_WeaponOffset(0,32);
+			A_StopSound(1);
+			A_StartSound("IceEnd", 1);
+			A_GunLight(500,2,145,248,255);
+		}
 		FR1D KJJJKKLMNOPNOPNO 1 BRIGHT;
 		TNT1 A 0 A_Overlay(3, "SpawnSmoke");
-		//TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1.5,7)
-		Goto Ready3;
-		
+		Goto Ready;
 	GoToNoAmmo:
+		FLMT A 0 BRIGHT A_StartSound("IceEnd", 1);
+		FR1D KJJJKKLMNOPNOPNO 1 BRIGHT;
+		TNT1 A 0 A_Overlay(3, "SpawnSmoke");
 		TNT1 A 0 A_StartSound("RAILRIP");
 		FR1D NOP 1;
 		Goto NoAmmo2;
-		
-	AltGoToNoAmmo:
-		FLMT A 0 BRIGHT A_StartSound("IceEnd", 1);
-		FR1D KJJJKKLMNOPNOPNO 1 BRIGHT;
-		TNT1 A 0 A_Overlay(3, "SpawnSmoke");
-		TNT1 A 0 A_Startsound("RAILRIP");
-		FR1D NOP 1;
-		Goto NoAmmo2;
-		
 	AltFire:
 		RAIL A 0 A_CheckIfMag(5);
+		TNT1 A 0 A_StopSound(6);
 		TNT1 A 0 A_SetCrosshairDX("PLASRet2", 600,0.80);
-		FR1D D 3;
-		FR1D E 1;
-		FR1D EFF 1;
-		FR1D G 1;
+		FR1D DDDEEFFG 1;
 		TNT1 A 0 A_GunLight(500,3,0,128,255);
 		RAIL A 0 A_TakeMag(5);
 		//RAIL A 0 A_PlaySound("FRZFIRE", 1);
@@ -380,198 +209,109 @@ Class Freezer : BrutalWeapon
 		TNT1 AA 0 A_FireCustomMissile ("BluePlasmaParticleWeapon", random(-11,11), 0, -1, -3, 0, random(-7,14));
 		TNT1 AAAAAAAAA 0 A_firecustommissile("IceShotprojectile",frandom(-4,4),FALSE,0,-4,0,FRANDOM(-2,2));
 		FR1D H 1 BRIGHT;
-	    //TNT1 A 0 A_FireCustomMissile ("PlasmaSmoke", 0, 0, 0, 2)
+		//TNT1 A 0 A_FireCustomMissile ("PlasmaSmoke", 0, 0, 0, 2)
 		FR1D I 1 BRIGHT A_SetPitch(-1.5 + pitch, SPF_INTERPOLATE);
 		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) );
 		FR1D JKM 1 A_SetPitch(0.5 + pitch, SPF_INTERPOLATE);
 		"####" A 0 A_WeaponOffset(0,32);
 		TNT1 A 0 A_SetCrosshairDX("PLASRet2", 1000,0.5);
-		TNT1 A 0 A_CheckIfMag(1,"GoToNoAmmo");
+		TNT1 A 0 A_CheckIfMag(1,"AltGoToNoAmmo");
 		RAIL A 0 A_Refire();
-
-		Goto Ready3;
-		
-	Reload:	
-        RAIL A 0 A_Takeinventory("Reloading",1);
-		RAIL A 0 A_ZoomFactor(1.0);
-		RAIL A 0 A_Takeinventory("PowerLightAmp", 1);
-		RAIL A 0 A_Takeinventory("Zoomed",1);
-		RAIL A 0 A_JumpIfInventory("TurboReload", 1, "InsertBullets");
-		RAIL A 0 A_JumpIfinventory("FreezerIsUnloaded",1,"ReloadUnloaded");
+		Goto Ready;
+	AltGoToNoAmmo:
+		TNT1 A 0 A_StartSound("RAILRIP");
+		FR1D NOP 1;
+		Goto NoAmmo2;
+	Reload:
 		RAIL A 0 A_CheckIfMag(1,"ReloadContinue");
 		TNT1 A 0 A_StartSound("RAILRIP", 1);
 		FR1D NOP 1;
 	ReloadContinue:
-		FRRL ABCDEFF 1;
-		FRRL G 2;	
+		FRRL ABCDEFFGG 1;
 		FRRL G 1 offset(0,33);
 		FRRL G 1 offset(0,32);
 		FRRL G 1 offset(0,33);
-		FRRL G 1 offset(0,32);	
-		"####" A 0 A_StartSound("RAILMAG2",1);
-		FRRL HIJKLLLMNOPP 1;
-		"####" A 0 A_DiscardMagazine();
-		TNT1 A 0 A_FireCustomMissile("EmptyFreezerMagSpawn",160,0,10,-8);
-		FRRL Q 4;
+		FRRL G 1 offset(0,32);
+		FRRL H 1 A_StartSound("RAILMAG2",1);
+		FRRL IJKLLLMNOPP 1;
+		FRRL Q 4 {A_DiscardMagazine(); A_FireProjectile("EmptyFreezerMagSpawn",160,0,10,-8);}
 		FRRL RRSTUV 1;
-		"####" A 0 A_StartSound("RAILINSR");
-		TNT1 A 0 A_ReloadMag();
-		FRRL WWXYYYYZZ 1;
-		FRRL [ 1;
-		FRRL \ 1;
-		FRRL ] 1;
+		FRRL W 1 {A_StartSound("RAILINSR"); A_ReloadMag();}
+		FRRL WXYYYYZZ 1;
+		FRRL [\] 1;
 		FR1D Q 6;
-		FR1D A 0 A_StartSound("BEP");
-		FR1D PONPO 1;
-		FR1D Z 0 A_StartSound("RAILON", 2);
-		SHTZ A 0 A_TakeInventory("Reloading",1);
-	    FR1D D 1;
+		FR1D P 1 A_StartSound("BEP");
+		FR1D ONPO 1;
+		FR1D D 1 A_StartSound("RAILON", 2);
 		Goto Ready;
-		
-	ReloadUnloaded:
-		FR1D VU 1;
-		FRRL RRSTUV 1;
-		"####" A 0 A_StartSound("RAILINSR");
-		FRRL WWXYYYYZZ 1;
-		FRRL [ 1;
-		FRRL \ 1;
-		FRRL ] 1;
-		FR1D Q 6;
-		FR1D A 0 A_startsound("BEP");
-		FR1D PONPO 1;
-		FR1D Z 0 A_startsound("RAILON", 2);
-		SHTZ A 0 A_TakeInventory("Reloading",1);
-		SHTZ A 0 A_TakeInventory("FreezerIsUnloaded",1);
-		RAIL A 0 A_Takeinventory("Unloading",1);
-		TNT1 A 0 A_ReloadMag();
-	    FR1D D 1;
-		Goto Ready;
-		
-	Unload:
-	    RAIL A 0  {if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("RailgunCrosshair"));}else{A_SetCrosshair(0);}}
-		RAIL A 0 A_Takeinventory("PowerLightAmp", 1);
-        RAIL A 0 A_Takeinventory("Unloading",1);
-		RAIL A 0 A_JumpIfInventory("FreezerAmmo",1,2);
-		Goto ReadyNoAmmo;
-		TNT1 AA 0;
-		RAIL A 0 A_Takeinventory("Zoomed",1);
-		RAIL A 0 A_ZoomFactor(1.0);
-		TNT1 A 0 A_startsound("RAILRIP", 1);
-		FR1D NOP 1;
-		FRRL ABCDEFF 1;
-		FRRL G 2;
-		FRRL G 1 offset(0,33);
-		FRRL G 1 offset(0,32);
-		FRRL G 1 offset(0,33);
-		FRRL G 1 offset(0,32);
-		"####" A 0 A_startsound("RAILMAG2",1);
-		FRRL HIJKLLLMNOPP 1;
-	//	FRRL Q 4
-		FR1D UV 1;
-		RAIL A 0 A_Giveinventory("FreezerIsUnloaded",1);
-		RAIL A 0 A_Takeinventory("Unloading",1);
-	RemoveBullets:	
-		TNT1 AAAA 0;
-		RAIL A 0 A_JumpIfInventory("FreezerAmmo",1,3);
-		Goto ReadyUnloaded;
-        TNT1 AAAAAA 0;
-		RAIL A 0 A_Takeinventory("FreezerAmmo",1);
-		RAIL A 0 A_Giveinventory("AmmoCell",1);
-		Loop;
-		
- 	Spawn:
+	Spawn:
 		FRZR ABC 2;
-		LOOP;
-		
-	
-		
-	GoTaunt:
-		RAIL A 0;
-		RAIL A 0 A_Light0();
-		RAIL A 0 A_Takeinventory("Zoomed",1);
-		RAIL A 0 A_Takeinventory("PowerLightAmp", 1);
-        RAIL A 0 A_ZoomFactor(1.0);
-		Goto Taunt;
-		
-	
-	DualWield:
-	TNT1 A 0 A_takeinventory("startdualwield",1);
-	TNT1 A 0
-	{
-		If(invoker.freezebuddy)
+		Loop;
+	SpecialAction:
+		TNT1 A 0
 		{
-			A_print("Freezebot Deactivated");
-			invoker.freezebuddy.damagemobj(invoker.owner,invoker.owner,6666,"Betrayal");
-			return resolvestate("ready");
-			
+			If(invoker.freezebuddy)
+			{
+				A_Print("\cyFreezebot Deactivated");
+				invoker.freezebuddy.damagemobj(invoker.owner,invoker.owner,6666,"Betrayal");
+				return resolvestate("Ready");
+				
+			}
+			Else
+			{
+				Return resolvestate(null);
+			}
 		}
-		Else
-		{
-			Return resolvestate(null);
-		}
-	}
-	TNT1 A 0;
-		TNT1 A 0 A_overlay(6,"PlaceFreezeBot2");
-		
-	FR1K ABCD 1;
-	FR1K EFGEFGEFGEFGEFG 2;
-	FR1K DCBA 1;
-	Goto ready;
-	PlaceFreezeBot2:
+		FR1K A 1 A_overlay(6,"PlaceFreezeBot");
+		FR1K BCD 1;
+		FR1K EFGEFGEFGEFGEFG 2;
+		FR1K DCBA 1;
+		Goto Ready;
+	PlaceFreezeBot:
 		TNT1 A 4;
-		TNT1 A 0 A_startsound("freezebot/talk",7);
-		TNT1 A 0 A_startsound("foley/ASGDrumOut",8);
-		FR2R ABCDEFGHIJJJJJJJJJ 1;
-		TNT1 A 0 
+		FR2R A 1 {A_StartSound("freezebot/talk",7); A_StartSound("foley/ASGDrumOut",8);}
+		FR2R BCDEFGHIJJJJJJJJJ 1;
+		FR2R K 1
 		{
+			A_Print("\cyFreezebot Deployed");
 			Invoker.Freezebuddy = spawn("Freezebot",(pos.x,pos.y,pos.z + 40));
 			If(invoker.freezebuddy)
 			{
 				invoker.freezebuddy.angle = invoker.owner.angle + 180;
 			}
 		}
-		FR2R KLMNOPQRST 1;
+		FR2R LMNOPQRST 1;
 		Stop;
 	}
 }
 
 
-CLASS IceShotProjectile : Actor
+Class IceShotProjectile : Actor
 {
 	Default
 	{
-    PROJECTILE;
-    Radius 5;
-    Height 5;
-    +bounceonwalls;
-    +BOUNCEONFLOORS;
-    +BOUNCEONCEILINGS;
-	//+ripper
-    speed 50;
-    Scale 0.75;
-    +nogravity;
-   // Gravity 0.3
-   Bouncefactor 1.0;
-    bouncesound "weapons/cryobowhit";
-    bouncecount 666;
-    Damagefunction (random(16, 25));
-	+thruspecies;
-	+mthruspecies;
-    DeathSound "weapons/cryobowhit";
-    Damagetype "Ice";
-    renderstyle "add";
-//    translation "192:207=[153,50,204]:[0,0,0]"
-    //+HITOWNER
-	+forcexybillboard;
+		Projectile;
+		Radius 5;
+		Height 5;
+		+BOUNCEONWALLS
+		+BOUNCEONFLOORS
+		+BOUNCEONCEILINGS
+		+thruspecies
+		+MTHRUSPECIES
+		+FORCEXYBILLBOARD
+		Speed 50;
+		Scale 0.75;
+		Bouncefactor 1.0;
+		BounceSound "weapons/cryobowhit";
+		Damagefunction 25;
+		DeathSound "weapons/cryobowhit";
+		Damagetype "Ice";
+		RenderStyle 'Add';
 	}
-    States
-    {
-    
-        Spawn:
-		TNT1 A 0;
-		
-        
-		FRPJ ABCABCABCABCABC 1 Bright
+	States
+	{
+		Spawn:
+		FRPJ ABCABCABCABCABC 1 Bright NoDelay
 		{
 			A_SpawnItemEx("FreezerTrailSparksSmallFewer", random(3,-3), 0, random(3,-3), 0, 0, 0, 0, 128, 0);
 		}
@@ -580,18 +320,525 @@ CLASS IceShotProjectile : Actor
 			A_SpawnItemEx("FreezerTrailSparksSmallFewer", random(3,-3), 0, random(3,-3), 0, 0, 0, 0, 128, 0);
 			A_fadeout(0.1);
 		}
-		STOP;
-		Death:
-        PLSN A 0 A_setscale(0.3,0.3);
-		BXPL AAA 0 Bright A_SpawnItemEx("MiniCryoSmoke1", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
-		BXPL AA 0 Bright A_SpawnItemEx("FreezerTrailSparksSmall", random(5,-5), 0, random(5,-5), random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64);
-		BXPL A 0 Bright A_SpawnItemEx("MiniCryoSmoke1", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64);
-		BXPL A 0 Bright A_SpawnItemEx ("IceShardsSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		Stop;
+	Death:
+		TNT1 A 0 A_setscale(0.3,0.3);
+		TNT1 AAA 0 Bright A_SpawnItemEx("MiniCryoSmoke1", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 AA 0 Bright A_SpawnItemEx("FreezerTrailSparksSmall", random(5,-5), 0, random(5,-5), random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64);
+		TNT1 A 0 Bright A_SpawnItemEx("MiniCryoSmoke1", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64);
+		TNT1 A 0 Bright A_SpawnItemEx ("IceShardsSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		BXPL ABCDEFGH 1 Bright;
 		BXPL IJKLLM 1 Bright A_FadeOut(0.1);
-        Stop;
-        
-    }
+		Stop;
+		
+	}
 
 }
 
+class EmptyFreezerMagSpawn : Actor
+{
+	Default
+	{
+		Speed 20;
+		PROJECTILE;
+		+NOCLIP
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 1 A_CustomMissile("EmptyFreezerMag",1,-2,random(105,115),2,1);
+		Stop;
+	}
+}
+
+class Freezebot : BrutalFriend
+{
+	Default
+	{
+		Health 75;
+		Radius 16;
+		Height 32;
+		Mass 50;
+		Speed 8;
+		DeathHeight 4;
+		VSpeed 2;
+		FloatSpeed 3;
+		BurnHeight 0;
+		Monster;
+		Species "Marines";
+		+NOBLOOD
+		DamageFactor "Blood", 0.0; DamageFactor "BlueBlood", 0.0; DamageFactor "GreenBlood", 0.0;
+		DamageFactor "Fatality", 5.0; DamageFactor "PussyGrab", 50.0;
+		DamageFactor "TeleportRemover", 0.0;
+		DamageFactor "CauseSplash", 0.0; DamageFactor "CauseObjectsToSplashSlime", 0.0; DamageFactor "CauseObjectsToSplashNukage", 0.0;
+		DamageFactor "CauseObjectsToSplashBlood", 0.0; DamageFactor "CauseObjectsToSplashLava", 0.0;
+		+NOBLOOD
+		+FRIENDLY
+		+FLOAT +NOGRAVITY +DONTFALL +NOICEDEATH +FLOATBOB
+		+FORCEXYBILLBOARD
+		-NORADIUSDMG
+		+QUICKTORETALIATE
+		+DONTHURTSPECIES
+		+FIXMAPTHINGPOS 
+		+LOOKALLAROUND
+		+PUSHABLE
+		+SLIDESONWALLS
+		+CANNOTPUSH
+		-COUNTKILL
+		+DONTSPLASH
+		+FIXMAPTHINGPOS
+		+USESPECIAL
+		+SHOOTABLE
+		-SOLID
+		DamageFunction 200;
+		DamageType "Ice";
+		DeathSound "FreezeBot/die";
+		Tag "Freezebot";
+		Scale 0.8;
+		AttackSound "none";
+		DamageFactor "Cut", 0.1;
+		DamageFactor "Ice", 0.0;
+		DamageFactor "freeze", 0.0;
+		DamageFactor "frost", 0.0;
+		DamageFactor "FriendBullet", 0.0;
+		DamageFactor "Blood", 0.0;	DamageFactor "GreenBlood", 0.0;	DamageFactor "BlueBlood", 0.0;	DamageFactor "Taunt", 0.0;	DamageFactor "KillMe", 0.0;
+		DamageFactor "Blood", 0.0; DamageFactor "BlueBlood", 0.0; DamageFactor "GreenBlood", 0.0;
+		DamageFactor "Shrapnel", 0.0;
+		DamageFactor "SpawnMarine", 0.0;
+		SeeSound "Freezebot/Talk";
+		Obituary "%o has been frozen down by a FreezeBot.";
+		Mass 50;
+		MissileChanceMult 0.05;
+	}
+	States
+	{
+	
+	
+	Spawn:
+		FZB1 A 0;
+		FZB1 A 0 A_PlaySound("Freezebot/loop", 27,0.5,1);
+		TNT1 A 0 A_GiveInventory("TargetIsAMarine");
+		FZB1 A 2 BRIGHT A_Look();
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		//FZB1 A 0 A_ChangeVelocity(0 ,0 ,5)
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		
+		Goto See;
+		
+	ForgetTarget:
+		TNT1 A 0 A_ClearTarget();
+		Goto See;
+	
+	See:
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+			
+		
+		
+		
+		
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 AA 1 A_FriendChase();
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 BB 1 A_FriendChase();
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 BB 1 A_FriendChase();
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 CC 1 A_FriendChase();
+		
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 CC 1 A_FriendChase();
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_Recoil(-1);
+		
+		FZB1 DD 1 A_FriendChase();
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 DD 1 A_FriendChase();
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 AA 1 A_FriendChase();
+	//	TNT1 A 0 A_Recoil(-1)
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.1, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.1, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		
+		FZB1 BB 1 A_FriendChase();
+	//	TNT1 A 0 A_Recoil(-1)
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		
+		FZB1 CC 1 A_FriendChase();
+	//	TNT1 A 0 A_Recoil(-1)
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		
+		FZB1 DD 1 A_FriendChase();
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.1, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		Goto See;
+	
+	
+	
+	Missile:
+		FZB1 A 0 BRIGHT A_SpawnItem ("BlueFlare", 0, 24);
+
+		FZB1 A 4 BRIGHT A_FaceTarget();
+		FZB1 E 4 BRIGHT A_SpawnItem ("BlueFlare", 0, 24);
+		TNT1 A 0 A_Playsound ("FRZFIRE");
+		TNT1 A 0 A_CustomMissile ("CryoShotBot", 17, 0, 0, 0) ;
+		//TNT1 A 0 A_CustomMissile ("IceTracer", 17, 0, 0, 0) 
+		FZB1 FF 2 BRIGHT A_SpawnItem ("BlueFlareMEdium", 0, 24);
+		FZB1 AA 2 BRIGHT A_SpawnItem ("BlueFlareMEdium", 0, 24);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+
+		Goto See;
+	KillYourself:
+		TNT1 A 0 A_CustomMissile ("FreezerBot", 0, 0, 0, 0) ;
+		STOP;
+			
+	
+	Pain:
+		TNT1 AAA 0 A_CustomMissile ("SoulTrails", 12, 0, random (0, 360), 2, random (0, 160));
+		FZB1 A 3 BRIGHT;
+		TNT1 A 0 A_Jump (128, 3);
+		Goto Avoid;
+		TNT1 AAA 0;
+		TNT1 AAA 0 A_CustomMissile ("SoulTrails", 12, 0, random (0, 360), 2, random (0, 160));
+		FZB1 A 1 BRIGHT A_Pain();
+		Goto See;
+
+	Avoid:
+		 NULL A 0 A_FaceTarget();
+		 FZB1 A 6 A_FastChase();
+	   //FZB1 AA 0 A_CustomMissile ("SoulTrails", 24, 0, random (0, 360), 2, random (0, 160))
+		FZB1 A 0 BRIGHT A_SpawnItem ("BlueFlareMedium", 0, 24);
+
+		 NULL A 0 A_FaceTarget();
+		 FZB1 A 6 BRIGHT A_FastChase();
+	   //FZB1 AA 0 A_CustomMissile ("SoulTrails", 24, 0, random (0, 360), 2, random (0, 160))
+		FZB1 A 0 BRIGHT A_SpawnItem ("BlueFlareMedium", 0, 24);
+
+		 NULL A 0 A_FaceTarget();
+		 FZB1 A 6 BRIGHT A_FastChase();
+	   //FZB1 AA 0 A_CustomMissile ("SoulTrails", 24, 0, random (0, 360), 2, random (0, 160))
+		FZB1 A 0 BRIGHT A_SpawnItem ("BlueFlareMedium", 0, 24);
+
+		 NULL A 0 A_FaceTarget();
+		 FZB1 A 6 BRIGHT A_FastChase();
+	   //FZB1 AA 0 A_CustomMissile ("SoulTrails", 24, 0, random (0, 360), 2, random (0, 160))
+		FZB1 A 0 BRIGHT A_SpawnItem ("BlueFlareMedium", 0, 24);
+
+		Goto Missile;
+
+	Death.Betrayal:
+		TNT1 A 0 A_stop();
+	Death:
+	TNT1 A 0 A_PlaySound("FreezeBot/Die",23);//, 3, 3)
+		FZB1 A 4 BRIGHT A_NoBlocking();
+		TNT1 A 0 A_SpawnItemEx ("BluePlasmaParticleSpawner", 0, 0, -20);
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("BlueFlare3",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 AAAAA 0 A_CustomMissile ("BluePlasmaFireXL", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAA 0 A_CustomMissile ("BluePlasmaParticle", 0, 0, random (0, 360), 2, random (0, 90));
+		TNT1 AA 0 A_CustomMissile ("BluePlasmaParticle", 0, 0, random (0, 360), 2, random (0, 90));
+		TNT1 AA 0 A_CustomMissile ("RealisticFireSparks1Blue", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AA 0 A_CustomMissile ("RealisticFireSparks1Blue", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AA 0 A_CustomMissile ("BigPlasmaParticleX", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AA 0 A_CustomMissile ("BigPlasmaParticleX", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_ALertMonsters();
+		TNT1 A 0 A_PlaySound("IceExplo",22);//, 3, 3)
+		
+			TNT1 AAA 0 A_CustomMissile ("MetalShard1", 5, 0, random (0, 360), 2, random (30, 160));
+		TNT1 AAA 0 A_CustomMissile ("MetalShard2", 25, 0, random (0, 360), 2, random (30, 160));
+		TNT1 AAA 0 A_CustomMissile ("MetalShard3", 35, 0, random (0, 360), 2, random (30, 160));
+		TNT1 A 0 A_PlaySound("DSBRK2",24);
+		TNT1 A 0 A_SpawnItem("CryoSmoke");
+		
+		//BXPL A 0 Bright A_ChangeFlag("ICEDAMAGE", 1)
+		//BXPL A 0 Bright A_ChangeFlag("NODAMAGETHRUST", 0)
+		BXPL A 0 Bright A_Explode(200,200,0,true,32, 0,0,"none","ice")  ;
+		
+		//Freezerballs
+		
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -10, 0, -1, random(-20,20), random(-20,20), random(-20,40));
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -8, 0, -1, random(-20,20), random(-20,20), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -6, 0, -1, random(10,90), random(-20,20), random(-20,40));
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -4, 0, -1, random(-50,10), random(-20,10), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -2, 0, -1, random(-20,30), random(-20,40), random(-20,40));
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 0, 0, -1, random(-20,20), random(-20,30), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 1, 0, -1, random(-10,20), random(-20,40), random(-20,40));
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 2, 0, -1, random(-20,10), random(-20,20), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 4, 0, -1, random(-20,30), random(-20,20), random(-20,40));
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 6, 0, -1, random(-10,40), random(-20,40), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 8, 0, -1, random(-30,20), random(-20,40), random(-20,40));
+	   // BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 10, 0, -1, random(-25,25), random(-20,40), random(-20,40))
+		
+		BXPL AAAAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		BXPL AAAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		BXPL AAA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64);
+		BXPL AAA 0 Bright A_SpawnItemEx("FreezerTrailSparksSmall", random(5,-5), random(5,-5), random(5,-5), random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64);
+		BXPL AAAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		BXPL AA 0 Bright A_SpawnItemEx("CryoSmoke2", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64);
+		BXPL AAA 0 Bright A_SpawnItemEx("CryoSmoke2", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64);
+		BXPL AAAA 0 Bright A_SpawnItemEx ("IceShardsSpawner",random(-5,5),random(-5,5),-2,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		
+		BXPL ABCDEFGH 1 Bright;
+		BXPL IJKLLM 1 Bright A_FadeOut(0.1);
+	  
+		Stop;
+	}
+}
+
+class Freezerbot : Actor
+{
+	Default
+	{
+		Projectile;
+		Speed 40;
+		Radius 16;
+		Height 32;
+		DamageFactor 200;
+		seesound "Freezebot/Talk";
+		damagetype "ice";
+		+seekermissile
+	}
+	States
+	{
+		Spawn:
+		FZB1 A 0 A_PlaySound("Freezebot/loop", 27,0.5,1);
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+			
+		
+		
+		
+		
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 AA 1 A_seekermissile(0,25);
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 BB 1 A_seekermissile(0,25);
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 BB 1 A_seekermissile(0,25);
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 CC 1 A_seekermissile(0,25);
+		
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 CC 1 A_seekermissile(0,25);
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_Recoil(-1);
+		
+		FZB1 DD 1 A_seekermissile(0,25);
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 DD 1 A_seekermissile(0,25);
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		FZB1 AA 1 A_seekermissile(0,25);
+	//	TNT1 A 0 A_Recoil(-1)
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.1, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.1, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		
+		FZB1 BB 1 A_seekermissile(0,25);
+	//	TNT1 A 0 A_Recoil(-1)
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.2, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		
+		FZB1 CC 1 A_seekermissile(0,25);
+	//	TNT1 A 0 A_Recoil(-1)
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		
+		FZB1 DD 1 A_seekermissile(0,25);
+	//	TNT1 A 0 A_Recoil(-1)
+		
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareMedium", 0, 0, -5);
+		TNT1 A 0 A_SpawnItemEx("MiniCryoSmoke1", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.1, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_SpawnItemEx("FreezerTrailSparksSmall", 0, 0, -5, random(10, 30)*0.1, 0, random(0, -10)*0.3, random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		LOOP;
+		
+		Death:
+	TNT1 A 0 A_PlaySound("FreezeBot/Die",23);//, 3, 3)
+		FZB1 A 4 BRIGHT A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx ("BluePlasmaParticleSpawner", 0, 0, -20);
+		TNT1 A 0 A_SpawnItemEx ("BlueFlareSpawn",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("BlueFlare3",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 AAAAA 0 A_CustomMissile ("BluePlasmaFireXL", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAA 0 A_CustomMissile ("BluePlasmaParticle", 0, 0, random (0, 360), 2, random (0, 90));
+		TNT1 AA 0 A_CustomMissile ("BluePlasmaParticle", 0, 0, random (0, 360), 2, random (0, 90));
+		TNT1 AA 0 A_CustomMissile ("RealisticFireSparks1Blue", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AA 0 A_CustomMissile ("RealisticFireSparks1Blue", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AA 0 A_CustomMissile ("BigPlasmaParticleX", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AA 0 A_CustomMissile ("BigPlasmaParticleX", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_ALertMonsters();
+		TNT1 A 0 A_PlaySound("IceExplo",22);//, 3, 3)
+		
+			TNT1 AAA 0 A_CustomMissile ("MetalShard1", 5, 0, random (0, 360), 2, random (30, 160));
+		TNT1 AAA 0 A_CustomMissile ("MetalShard2", 25, 0, random (0, 360), 2, random (30, 160));
+		TNT1 AAA 0 A_CustomMissile ("MetalShard3", 35, 0, random (0, 360), 2, random (30, 160));
+		TNT1 A 0 A_PlaySound("DSBRK2",24);
+		TNT1 A 0 A_SpawnItem("CryoSmoke");
+		
+		//BXPL A 0 Bright A_ChangeFlag("ICEDAMAGE", 1)
+		//BXPL A 0 Bright A_ChangeFlag("NODAMAGETHRUST", 0)
+		BXPL A 0 Bright A_Explode(200,200,0,true,32, 0,0,"none","ice")  ;
+		
+		//Freezerballs
+		
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -10, 0, -1, random(-20,20), random(-20,20), random(-20,40));
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -8, 0, -1, random(-20,20), random(-20,20), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -6, 0, -1, random(10,90), random(-20,20), random(-20,40));
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -4, 0, -1, random(-50,10), random(-20,10), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", -2, 0, -1, random(-20,30), random(-20,40), random(-20,40));
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 0, 0, -1, random(-20,20), random(-20,30), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 1, 0, -1, random(-10,20), random(-20,40), random(-20,40));
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 2, 0, -1, random(-20,10), random(-20,20), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 4, 0, -1, random(-20,30), random(-20,20), random(-20,40));
+		//BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 6, 0, -1, random(-10,40), random(-20,40), random(-20,40))
+		BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 8, 0, -1, random(-30,20), random(-20,40), random(-20,40));
+	   // BXPL A 0 A_SpawnItemEx("SmallFreezerBall", 10, 0, -1, random(-25,25), random(-20,40), random(-20,40))
+		
+		BXPL AAAAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		BXPL AAAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		BXPL AAA 0 Bright A_SpawnItemEx("CryoSmoke3", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64);
+		BXPL AAA 0 Bright A_SpawnItemEx("FreezerTrailSparksSmall", random(5,-5), random(5,-5), random(5,-5), random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64);
+		BXPL AAAA 0 Bright A_SpawnItemEx("CryoSmoke", 0, 0, 0, random(10, 30)*0.1, 0, random(0, 10)*0.1, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+		BXPL AA 0 Bright A_SpawnItemEx("CryoSmoke2", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64);
+		BXPL AAA 0 Bright A_SpawnItemEx("CryoSmoke2", 0, 0, 0, random(10, 30)*0.04, 0, random(0, 10)*0.04, random(1,360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION,64);
+		BXPL AAAA 0 Bright A_SpawnItemEx ("IceShardsSpawner",random(-5,5),random(-5,5),-2,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		
+		BXPL ABCDEFGH 1 Bright;
+		BXPL IJKLLM 1 Bright A_FadeOut(0.1);
+	  
+		Stop;
+	}
+}
+
+class FreezebotPathfinder : Actor
+{
+	Default
+	{
+		Radius 32;
+		Height 56;
+		Speed 20;
+		Health 4000;
+		PainChance 255;
+		MaxTargetRange 150;
+		Monster;
+		DamageFactor "SpawnMarine", 8000.0;
+		MaxDropOffHeight 1200;
+		MaxStepHeight 1200;
+		-COUNTKILL;
+		+NOTARGET;
+		+THRUACTORS;
+		+MISSILEMORE;
+		+MISSILEEVENMORE;
+		+FASTER;
+		+DONTSPLASH;
+		-SHOOTABLE;
+		-FRIENDLY;
+		+NOCLIP;
+		+LOOKALLAROUND;
+		+NOINFIGHTING;
+	}
+	States
+	{
+	Spawn:
+	Pain:
+	See:
+		TNT1 A 0 A_ChangeFlag("FRIENDLY", 0);
+		TNT1 A 0 A_ChangeFlag("NOCLIP", 1);
+		//TNT1 A 0 Thing_ChangeTID(0,98)
+		//TNT1 A 0 Thing_Hate(98, 0, 0)
+		TNT1 A 0;
+		TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1);
+		TNT1 AAAAA 1 A_Chase();
+		//TNT1 A 0 Thing_Hate(98, 0, 0)
+		TNT1 A 0;
+		TNT1 A 0 A_GiveInventory("TargetIsAMarine", 1);
+		TNT1 A 1 A_FaceTarget();
+		Loop;
+
+	Missile:
+		TNT1 A 0;
+		TNT1 A 0 A_ChangeFlag("NOCLIP", 0);
+		TNT1 A 0 A_Recoil(-4);
+		TNT1 A 1;
+		TNT1 A 0 A_JumpIf(vel.x == 0, "CheckAgain");
+	SpawnMarine:	
+		TNT1 A 0 A_Scream();
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_SpawnItem("CryoSmoke");
+		TNT1 A 0 A_SpawnItemEx("Freezebot",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		Stop;
+	CheckAgain:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIF(vel.y == 0, "See");
+		Goto SpawnMarine;
+	}
+}
+
+class FrozenSmokeSpawner : Actor
+{
+	Default
+	{
+		Speed 25;
+		+NOCLIP
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		NULL A 0 A_CustomMissile ("FrozenSmoke", -10, 0, random(1,-1), 2, 90);
+		//TNT1 A 8
+		//NULL A 0 A_CustomMissile ("FrozenSmoke", -10, 0, random(1,-1), 2, 90)
+		Stop;
+	}
+}

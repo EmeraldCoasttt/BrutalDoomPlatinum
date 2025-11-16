@@ -1,4 +1,4 @@
-CLASS SSG : BrutalWeapon
+CLASS BDPSuperShotgun : BrutalWeapon
 {
 	Default
 	{
@@ -7,12 +7,11 @@ CLASS SSG : BrutalWeapon
 		Weapon.SlotPriority 2;
 		Weapon.SelectionOrder 400;
 		Weapon.AmmoGive 8;
-		Weapon.AmmoType "AmmoShell";
+		Weapon.AmmoType "BDPShell";
 		BrutalWeapon.MagCapacity 2;
 		Inventory.PickupMessage "You got the Super Shotgun! (Slot 3)";
 		Obituary "$OB_MPSSHOTGUN";
 		Inventory.PickupSound "CLIPINSS";
-		Scale 0.8;
 		Tag "$BDPSSG";
 		Inventory.AltHUDIcon "SGN2A0";
 	}
@@ -22,12 +21,12 @@ CLASS SSG : BrutalWeapon
 	Action void a_hookoverlay(statelabel overlayname)
 	{
 		A_overlay(9,overlayname);
-		A_hookflags(FALSE);
+		A_HookFlags(FALSE);
 	
 	}
 	
 	//Sets the transparency for the meathook layer. Bool determines whether to fade in the meathook when available
-	Action void a_hookflags(bool hookfadein = false)
+	Action void A_HookFlags(bool hookfadein = false)
 	{
 		A_overlayflags(9,PSPF_ALPHA | PSPF_RENDERSTYLE,TRUE);
 	A_OverlayRenderstyle(9,STYLE_Translucent);
@@ -49,93 +48,72 @@ CLASS SSG : BrutalWeapon
 		}
 	
 	}
-	
-	
-	
-	
-	
 	States
 	{
 	//Handles fading in and maintaining hook status
 	HookFlags:
-		TNT1 A 1 A_hookflags(TRUE);
+		TNT1 A 1 A_HookFlags(TRUE);
 		LOOP;
-	GrenadeThrowFlash:
-	TNT1 A 0 A_HookOverlay("GrenadeHook");
-	SHT5 BCDE 1;
-	TNT1 A 24;
-	SHT5 EDCB 1;//32 in total
-	stop;
-	
+	Grenade: //32
+		TNT1 A 0 A_HookOverlay("GrenadeHook");
+		SHT5 BCDE 1;
+		TNT1 A 24;
+		SHT5 EDCB 1;
+		Goto Ready;
 	GrenadeHook:
 		MHT5 BCDE 1;
-	TNT1 A 24;
-	MHT5 EDCB 1;//32 in total
-	stop;
-	
-	KickingFlash:
-	TNT1 A 0 A_HookOverlay("KickingFlashHook");
-	SHTZ CDEFGH 1;
-	SHTZ I 4;
-	SHTZ HGFEDC 1;
-	Goto Ready;
-	
-	KickingFlashHook:
-	MHTZ CDEFGH 1;
-	MHTZ I 4;
-	MHTZ HGFEDC 1;
-	Stop;
-	
-	
-	
-	
-	AirKickingFlash:
-	TNT1 A 0 A_HookOverlay("AirKickingFlashHook");
-	    SH69 PQRSTTTTTTTTTTSRQP 1; //18
-	    Goto Ready;
-	AirKickingFlashHook:
-		MH69 PQRSTTTTTTTTTTSRQP 1;
-		STOP;
-		
-	 SlideKickingStart:
-	 TNT1 A 0 A_HookOverlay("SlideKickingHook");
-	    SH69 PQRST 1;
-	    SH69 TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT 1 { //39 total
-			if (CountInv("Kicking") == 0) {
-				return resolvestate("SlideKickingEnd");
-			}
-			return resolvestate(Null);
-		}
+		TNT1 A 24;
+		MHT5 EDCB 1;
+		Stop;
+	Kick: //16
+		TNT1 A 0 A_HookOverlay("KickHook");
+		SHTZ CDEFGH 1;
+		SHTZ I 4;
+		SHTZ HGFEDC 1;
 		Goto Ready;
-	SlideKickingHook:
-	 MH69 PQRST 1;
-	    MH69 TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT 1;
-		STOP;
-	
-	
-	 SlideKickingEnd:
-	 TNT1 A 0 A_HookOverlay("SlideKickingHook2");
-	    SH69 TTTTTTSRQP 1; //10
-	   Goto Ready;
-	   
-	   SlideKickingHook2:
-	   MH69 TTTTTTSRQP 1;
-	   STOP;
-		
-	FuckYouFlash:
-	 TNT1 A 0 A_HookOverlay("FuckYOuHook");
-	SH69 PQRSTTTTTTTTTTTTTTTTTTTTTTSRQP 1;//28 total
-	stop;
-	
-	FuckYouHook:
-	MH69 PQRSTTTTTTTTTTTTTTTTTTTTTTSRQP 1;//28 total
-	stop;
-	
-    SelectAnimation:    
+	KickHook:
+		MHTZ CDEFGH 1;
+		MHTZ I 4;
+		MHTZ HGFEDC 1;
+		Stop;
+	AirKick: //18
+		TNT1 A 0 A_HookOverlay("AirKickHook");
+		SH69 PQRS 1;
+		SH69 T 10;
+		SH69 SRQP 1;
+		Goto Ready;
+	AirKickHook:
+		MH69 PQRS 1;
+		MH69 T 10;
+		MH69 SRQP 1;
+		Stop;
+	SlideKick: //26
+		TNT1 A 0 A_HookOverlay("SlideKickHook");
+		SH69 PQRS 1;
+		SH69 T 18;
+		SH69 SRQP 1;
+		Goto Ready;
+	SlideKickHook:
+		MH69 PQRS 1;
+		MH69 T 18;
+		MH69 SRQP 1;
+		Stop;
+	Taunt: //30
+		TNT1 A 0 A_HookOverlay("TauntHook");
+		SH69 PQRS 1;
+		SH69 T 22;
+		SH69 SRQP 1;
+		Goto Ready;
+	TauntHook:
+		MH69 PQRS 1;
+		MH69 T 22;
+		MH69 SRQP 1;
+		Stop;
+	SelectAnimation:	
 	Ready:
 	Ready3:
 		TNT1 A 0 A_HookOverlay("ReadyHook");
-	    SHTZ A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		SHTZ A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		TNT1 A 0 A_AutoReloadMag(1,"Reload",true);
 		Loop;
 	
@@ -146,18 +124,18 @@ CLASS SSG : BrutalWeapon
 	
 	Fidget:
 		TNT1 A 0 A_HookOverlay("FidgetHook");
-	    SHO3 ABCD 1 A_WeaponReadyDX(0,false,false);
+		SHO3 ABCD 1 A_WeaponReadyDX(0,false,false);
 		SHO3 E 3 A_WeaponReadyDX(0,false,false);
 		SHO3 FGHI 1 A_WeaponReadyDX(0,false,false);
-		TNT1 A 0 A_startsound("weapons/sshoto");
+		TNT1 A 0 A_StartSound("weapons/sshoto");
 		SHO3 JKL 1 A_WeaponReadyDX(0,false,false);
 		SHO3 M 15 A_WeaponReadyDX(0,false,false);
 	FidgetLoop:
 		SHO3 M 1 A_WeaponReadyDX(0,false,false);
 		TNT1 A 0 A_PressingReload("FidgetLoop");
-		SHTZ A 0 A_startsound("foley/SSGraiseAfterClose",10);
+		SHTZ A 0 A_StartSound("foley/SSGraiseAfterClose",10);
 		SHO3 NOP 1 A_WeaponReadyDX(0,false,false);
-		SHTZ A 0 A_startsound("weapons/sshotc");
+		SHTZ A 0 A_StartSound("weapons/sshotc");
 		SHO3 QRS 1 A_WeaponReadyDX(0,false,false);
 		SHTZ A 0 A_TakeInventory("Reloading",1);
 		Goto Ready;
@@ -166,64 +144,34 @@ CLASS SSG : BrutalWeapon
 		MHO3 E 3;
 		MHO3 FGHI 1; 
 		MHO3 JKL 1; 
-		MHO3 M 16; 
+		MHO3 M 15; 
+	FidgetHookLoop:
+		NHO3 M 1;
+		TNT1 A 0 A_PressingReload("FidgetHookLoop");
 		MHO3 NOP 1; 
 		MHO3 QRS 1;
-		
 		Stop;
 		
-	SprintOverlay:
+	Sprint:
 		TNT1 A 0 A_HookOverlay("SprintHook");
-		 SH69 PQRS 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		KeepSprinting:
-		SH69 T 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		TNT1 A 0 A_KeepSprinting();
-		Goto ReturnFromSprint;
+		SH69 PQRS 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+	SprintLoop:
+		SH69 T 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		Loop;
+	SprintEnd:
+		TNT1 A 0 A_HookOverlay("SprintHook2");
+		SH69 SRQP 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		Goto ready;
 	SprintHook:
 		MH69 PQRS 1;
 		MH69 T 1;
 		Wait;
-	ReturnFromSprint:
-	TNT1 A 0 A_HookOverlay("SprintHook2");
-		SH69 SRQP 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		Goto ready;
-		
 	SprintHook2:
 		MH69 SRQP 1;
 		Stop;
-		
-	PuristGun:
-		TNT1 A 1;
-		SHTZ A 0 A_GiveInventory("ClassicSSG", 1);
-		SHTZ A 0 A_TakeInventory("SSG", 1);
-		TNT1 A 10;
-		Goto Ready;
-		
-	DeselectALmostInstantly:
-	SH69 B 1 offset(4,37);
-	SH69 B 1 offset(9,42);
-	TNT1 A 2 offset(0,32);
-	TNT1 A 2 A_Takeinventory("QuickSwitchSSG",1);
-	TNT1 A 0 ChangeAmmoIcon1("SHELA0");
-	TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_Lower();
-	wait;
-	
-	DeselectInstantly:
-	TNT1 A 5 A_Takeinventory("QuickSwitchSSG2",1);
-	TNT1 A 0 ChangeAmmoIcon1("SHELA0");
-	TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_Lower();
-	wait;
-	Deselect: "####" A 0 A_TakeInventory("IsPlayingDoxMod",1);
-		SHTZ A 0 A_Takeinventory("Zoomed",1);
-        SHTZ A 0 A_ZoomFactor(1.0);
-		SHTZ A 0 A_TakeInventory("TossGrenade", 1);
-		TNT1 A 0 A_JumpIfInventory("QuickSwitchSSG2",1,"DeselectInstantly");
-		TNT1 A 0 A_JumpIfInventory("QuickSwitchSSG",1,"DeselectALmostInstantly");
-		"####" A 0 A_ClearOverlays(-2,-2);
+	Deselect:
 		TNT1 A 0 A_HookOverlay("DeselectHook");
 		SHT5 ABCDE 1;
-		TNT1 A 0 ChangeAmmoIcon1("SHELA0");
-		TNT1 A 0 ChangeWeaponIcon("SGN2A0");
 		TNT1 A 1;
 		TNT1 A 0 A_Lower();
 		Wait;
@@ -231,39 +179,14 @@ CLASS SSG : BrutalWeapon
 		MHT5 ABCDE 1;
 		STOP;
 	Select:
-		TNT1 A 1 {A_SetCrosshairDX("SSGRet", 400); A_GunSlingerMag();}
-		TNT1 A 0 A_TakeInventory("QuickSwitchSSG",1);
-		TNT1 A 0 A_Overlay(8,"hookflags");
-		NULL A 0
-		{
-		if (CountInv("UsingDragonBreath")==1) { ChangeAmmoIcon1("SHEL[0"); }
-		if (CountInv("meathookextended")==1) { ChangeWeaponIcon("MGN2A0"); }
-		}
-		ReturnFromNothing:
-		TNT1 A 0 A_Overlay(8,"hookflags");
+		TNT1 A 1 {A_SetCrosshairDX("SSGRet", 400); A_GunSlingerMag(); A_Overlay(8,"hookflags");}
 		TNT1 A 0 A_HookOverlay("RaiseHook");
-		TNT1 A 0 A_startsound("weapons/sshotc");
+		TNT1 A 0 A_StartSound("weapons/sshotc");
 		SHT5 EDCBA 1 A_WeaponReadyDX(WRF_NOFIRE);
-		SHTZ A 0 A_Giveinventory("SSGSelected",1);
-
 		Goto Ready;
-		
 	RaiseHook:
 		MHT5 EDCBA 1;
 		Stop;
-		
-		
-	RaiseNoAmmo:	
-	TNT1 A 0 A_HookOverlay("RaiseNoAmmoHook");
-	   SHT5 EDCB 1;
-		SHTZ A 0 A_startsound("weapons/sshotc");
-		SHT5 AA 1;
-		Goto Ready;
-		
-	RaiseNoAmmoHook:
-		MHT5 EDCBAA 1;
-		Stop;
-
 	NoAmmo:
 		TNT1 A 0 A_StartSound("weapons/empty", 3);
 	NoAmmo2:
@@ -271,31 +194,24 @@ CLASS SSG : BrutalWeapon
 		SHTZ A 1 {A_HookOverlay("ReadyHook"); A_WeaponReadyDX(WRF_NOFIRE,false,false);}
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD || player.cmd.buttons & BT_ATTACK || player.cmd.buttons & BT_ALTATTACK, "NoAmmo2");
 		Goto Ready;
-		
-		
-		
-	 FireDragonBreath:
-	    FLMT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
+	Fire:
+		TNT1 A 0 A_CheckIfMag();
+		TNT1 A 0 A_CheckIfMag(2,"AltFireEvenIfMeathook");
+		SHOF A 1 Bright
 		{
-			A_FireProjectile("DragonsBreathSparkle",frandom(-6,6),false,0,-4,0,frandom(-3,3));
-		}
-		"####" A 0 A_QuadSound();
-		
-		Goto ContinueRecoil;
-		
-	 Fire:
-	 
-		SHTZ A 0 A_TakeInventory("Reloading",1);
-		SHTZ A 0 A_JumpIfInventory("SSGAlt",1,"AltFireEvenIfMeathook");
-		SHTZ A 0 A_CheckIfMag(2);
-		//SHTZ A 0 A_JumpIfInventory("SSGAmmo", 2, 1)
-		//Goto AltFire
-		TNT1 A 0 A_HookOverlay("RecoilHook");
-		SHTZ A 0 A_TakeMag(2);
-		SHTZ A 0 A_ZoomFactor(1.6);
-		SHTZ A 0 
-		{
-		if(invoker.owner.pos.z <= invoker.owner.floorz)
+				A_FireBullets (0,0,1,40,"shotpuff",FBF_NORANDOM,300);
+				A_FireBullets (10, 1, 9, 13, "ShotgunPuff", FBF_NORANDOM,400,"decorativetracer",-4);
+				A_FireBullets (6, 3, 9, 13, "ShotgunPuff", FBF_NORANDOM,8192,"decorativetracer",-4);
+				A_HookOverlay("RecoilHook");
+				A_FireParticles(20,19);
+				A_StartSound("SSHFIRE", 1); 
+				A_StartSound("FARSSG", 6);
+				A_AlertMonstersDX();
+				A_ZoomFactor(0.4);
+				A_QuadSound();
+				A_Gunlight(500,8);
+				A_TakeMag(2,true,true);
+				if(invoker.owner.pos.z <= invoker.owner.floorz)
 				{
 					A_Recoil3d(3);
 				}
@@ -304,151 +220,283 @@ CLASS SSG : BrutalWeapon
 					A_Recoil3d(15);
 				}
 		}
-		SHTZ A 0;
-		SHTZ A 0 A_fireprojectile("DistantFireSoundSSG", random(-1,1), 0, 0, -12, 0, random(-1,1));
-		"####" A 0 A_QuadSound();
-		TNT1 A 0 a_alertmonstersDX();
-		
-       // SHO9 A 0 BRIGHT A_startsound("SSHFIRE", 1)
-	    NULL A 0
-		{
-		If (CountInv("UsingDragonBreath")==1)
-		    { 
-				A_startsound("weapons/SSGDragonBreath", 1); 
-			
-			}
-			else
-			{ 
-				A_startsound("SSHFIRE", 1); 
-				A_firebullets (0,0,1,40,"shotpuff",FBF_NORANDOM,300);
-			}
-		}
-			
-		TNT1 AAAAAAAAAAAA 0 BRIGHT A_fireprojectile("ShotgunParticles", random(-19,19), 0, -1, 0, 0, random(-9,9));
-		TNT1 AAAAAAAA 0 BRIGHT A_fireprojectile("ShotgunParticles2", random(-19,19), 0, -1, 0, 0, random(-9,9));
-		SHTZ A 0 A_SpawnItemEx("PlayerMuzzle2",30,5,27);
-	    NULL A 0 A_JumpIfInventory("UsingDragonBreath",1,"FireDragonBreath");
-		SHTZ A 0 A_FireBullets (10, 1, 9, 13, "ShotgunPuff", FBF_NORANDOM,400,"decorativetracer",-4);
-	    SHTZ A 0 A_FireBullets (6, 3, 9, 13, "ShotgunPuff", FBF_NORANDOM,8192,"decorativetracer",-4);
-	ContinueRecoil:
-		SHOF A 1 BRIGHT A_Gunlight(500,8);
-		TNT1 AA 0;
-		SHTZ A 0 A_SetPitch(pitch-12, SPF_INTERPOLATE);
-        SHOF B 1 BRIGHT;
-		SHTZ A 0 A_ZoomFactor(1.00);
-		//SHTZ AA 0 A_fireprojectile("GunFireSmokE", 0, 0, 2, 0, 0, 0)
-		//SHTZ AA 0 A_fireprojectile("GunFireSmoke", 0, 0, -2, 0, 0, 0)
-        SHTZ A 0 A_TakeInventory("SSGAlt",1);
-        SHTZ A 0 A_TakeInventory("Reloading",1);
-		TNT1 A 0;
+		SHOF B 1 BRIGHT A_SetPitch(pitch-12, SPF_INTERPOLATE);
+		TNT1 A 0 A_ZoomFactor(1.00);
 		SHOF C 1 A_SetPitch(pitch+1.5, SPF_INTERPOLATE);
-		TNT1 A 0;
 		SHOF DDEFGHI 1 A_SetPitch(pitch+1.5, SPF_INTERPOLATE);
-		
-		//SHTZ A 0 A_JumpIfInventory("IsNOTTacticalClass", 1, 10);//Tactical Mode takes more time
-		//SHTZ AAAAAAAAAA 1 A_SetPitch(pitch+0.5, SPF_INTERPOLATE);
-		SHTZ A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB);
-		SHTZ A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB);
-		//TNT1 A 0 A_JumpIfInventory("NoAutoReload", 1, 2)//Don't go to NoAmmo unless they try to fire again
-		//TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"Ready");
+		TNT1 A 0 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB);
 		Goto NoAmmo2;
-		TNT1 AAA 0;
-		Goto Ready;
 	RecoilHook:
-		MHOF AB 1 BRIGHT A_hookflags();
+		MHOF AB 1 BRIGHT A_HookFlags();
 		MHOF CDDEFGHI 1;
 		MHTZ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1;
-		STOP;
-		
-		
+		Stop;
 	ReloadSmokeRight:
-	TNT1 A 1;
-	SSGS AB 1 A_fireprojectile("SmokeSpawner",0,0,-5,-1);
-	SSGS CDEF 1;
-	stop;
+		TNT1 A 1;
+		SSGS AB 1 A_fireprojectile("SmokeSpawner",0,0,-5,-1);
+		SSGS CDEF 1;
+		Stop;
 	ReloadSmokeLeft:
-	TNT1 A 1;
-	SSGS GH 1 A_fireprojectile("SmokeSpawner",0,0,-8,-2);
-	SSGS IJKL 1;
-	stop;
-	
-	Reload:	
-		SHTZ A 0;
-		
-		SHTZ A 0 A_TakeInventory("Reloading",1);
-		
-		TNT1 A 0 A_jumpifinventory("PowerSpeed2",1,"ReloadTime");
-		SHTZ A 0 A_JumpIfInventory("SSGAlt", 1, "Reload2");//Check if still has a shell on left barrel
-		
-		SHTZ A 0 A_JumpIfInventory("AmmoShell",2,1);//Check if has ammo to reload 2 shells
+		TNT1 A 1;
+		SSGS GH 1 A_fireprojectile("SmokeSpawner",0,0,-8,-2);
+		SSGS IJKL 1;
+		Stop;
+	AltFire:
+		TNT1 A 0 A_JumpIfInventory("meathookextended",1,"AltFireMeatHook");
+	AltfireEvenIfMeathook:
+		TNT1 A 0 A_CheckIfMag();
+		TNT1 A 0 A_CheckIfMag(2,"AltFire2",true);
+		SHTU A 1 Bright
+		{
+				A_FireBullets (5, 5, 5, 13, "ShotgunPuff", FBF_NORANDOM,8192,"decorativetracer",-4);
+				A_FireBullets (2.5, 2.5, 4, 13, "ShotgunPuff2", FBF_NORANDOM,400,"decorativetracer",-4);
+				A_HookOverlay("AltFire1Hook");
+				A_FireParticles(10);
+				A_StartSound("SSGALTFI", 1); 
+				A_StartSound("FARSHT", 6);
+				A_AlertMonstersDX();
+				A_QuadSound();
+				A_Gunlight();
+				A_TakeMag(1,true,true);
+		}
+		SHOF E 1 offset(3,32) A_SetPitch(-4.0 + pitch, SPF_INTERPOLATE);
+		SHOF F 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
+		TNT1 A 0 offset(2,32);
+		SHOF GH 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
+		TNT1 A 0 offset(1,32);
+		SHOF I 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
+		TNT1 A 0 offset(0,32);
+		Goto Ready;
+	AltFire2:
+		SHTU B 1 Bright
+		{
+				A_FireBullets (5, 5, 5, 13, "ShotgunPuff", FBF_NORANDOM,8192,"decorativetracer",-4);
+				A_FireBullets (2.5, 2.5, 4, 13, "ShotgunPuff2", FBF_NORANDOM,400,"decorativetracer",-4);
+				A_HookOverlay("AltFire2Hook");
+				A_FireParticles(10);
+				A_StartSound("SSGALTFI", 1); 
+				A_StartSound("FARSHT", 6);
+				A_AlertMonstersDX();
+				A_QuadSound();
+				A_Gunlight();
+				A_TakeMag(1,true,true);
+		}
+		TNT1 A 0 offset(-3,32);
+		TNT1 A 0 A_SetPitch(-5.0 + pitch, SPF_INTERPOLATE);
+		SHOF EF 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
+		TNT1 A 0 offset(-2,32);
+		SHOF GH 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
+		TNT1 A 0 offset(-1,32);
+		SHOF I 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
+		TNT1 A 0 offset(0,32);
+		Goto Reload;
+	Altfire1hook:
+		MHTU A 1 A_HookFlags();
+		Goto COntinueAltFireHook;
+	Altfire2Hook:
+		MHTU B 1 A_HookFlags();
+	ContinueAltFireHook:
+		MHOF EF 1; 
+		MHOF GH 1; 
+		MHOF I 1 ;
+		Stop;
+	Reload:
+		TNT1 A 0 A_CheckIfMag(1, "ReloadTime",true);//Check if still has a shell on left barrel
+		TNT1 A 0 A_CheckIfAmmo("BDPShell",2,"Reload2");//Check if has ammo to reload 2 shells
 		Goto Reload2;
-		Reloadtime:
+	ReloadTime:
+		TNT1 A 0 A_JumpIfInventory("PowerSpeed2",1,"ReloadHaste");
 		TNT1 A 0 A_HookOverlay("hookreload");
-		SHTZ BCDEFGH 1;
-		SHTZ I 3;
-		XXXX X 0 A_startsound("foley/SSGlowerBeforeOpen",10);
+		SHTZ BCDEFGHIII 1;
+		TNT1 A 0 A_StartSound("foley/SSGlowerBeforeOpen",10);
 		SHTZ JLMNOP 1;
-		SHTZ A 0 A_startsound("weapons/sshoto");
-		//SHTZ A 0 A_startsound("foley/SSGopen")
-	//	GLR1 AA 0 A_fireprojectile("SmokeSpawner",0,0,0,5)
-    //    GLR1 AA 0 A_fireprojectile("SmokeSpawner",0,0,-2,4)
+		SHTZ A 0 A_StartSound("weapons/sshoto");
 		NULL A 0 { A_Overlay(2,"ReloadSmokeLeft"); A_Overlay(3,"ReloadSmokeRight"); }
-		TNT1 A 0 A_JumpIfInventory("UsingDragonBreath",1, "ReloadDragonBreath");	
 		SHTZ Q 1;
-		SHTZ A 0 A_JumpIfInventory("HasUnloaded", 1, 3);
-		SHTZ A 0 A_startsound("foley/SSGshellEject",10,0,0.5);
+		TNT1 A 0 A_StartSound("foley/SSGshellEject",10,0,0.5);
 		TNT1 A 0 A_fireprojectile("SSGCaseSpawner",0,0,-6, -14);
 		TNT1 A 0 A_fireprojectile("SSGCaseSpawner",0,0,-4, -13);
-		SHTZ RR 1;
-		SHTZ S 3;
-		SHTZ TUVWX 1;
-		SHTZ A 0 A_startsound("weapons/sshotl");
-		//SHTZ A 0 A_startsound("foley/SSGinsertShells")
-		SHTZ A 0 A_ReloadMag();
-		SHTZ A 0 A_TakeInventory("SSGAlt",1);
-		SHTZ A 0 A_TakeInventory("HasUnloaded",1);
+		SHTZ RRSSSTUVWX 1;
+		TNT1 A 0 A_StartSound("weapons/sshotl");
+		TNT1 A 0 A_ReloadMag();
 		SHTZ YZ 1;
-		SH69 A 1 A_GiveInventory("QuickSwitchSSG",1);//allows for super fast quick switch
-		SH69 B 1; //A_WeaponReadyDX(WRF_NOFIRE | WRF_NOBOB);	
-		TNT1 A 0 A_TakeInventory("QuickSwitchSSG",1);
-		SH69 CL 1;
-	FinishRegularReload:
-		TNT1 A 0 A_HookOverlay("FinishRegularReloadHook");
-		SHTZ A 0 A_startsound("foley/SSGraiseAfterClose",10);
+		SH69 ABCL 1;
+		SHTZ A 0 A_StartSound("foley/SSGraiseAfterClose",10);
 		SH69 LD 1;
-		SHTZ A 0 A_startsound("weapons/sshotc");
-		SH69 EF 1;
-		SH69 G 1;
-		SH69 H 2;
-		SH69 IJK 1 A_TakeInventory("Reloading",1);
+		SHTZ A 0 A_StartSound("weapons/sshotc");
+		SH69 EFGHHIJK 1;
 		SHTZ A 0 A_ReFire();
 		SHTZ A 1;
-        Goto Ready;
+		Goto Ready;
 	HookReload:
 		MHTZ BCDEFGH 1;
 		MHTZ I 3;
 		MHTZ JLMNOP 1;
 		MHTZ Q 1;
-		MHTZ RR 1;
+		MHTZ R 2;
 		MHTZ S 3;
-		MHTZ TUVWX 1;
-		MHTZ YZ 1;
-		MH69 A 1;
-		MH69 B 1;
-		MH69 CL 1;
-	FinishRegularReloadHook:
-		MH69 LD 1;
-		MH69 EF 1;
-		MH69 G 1;
+		MHTZ TUVWXYZ 1;
+		MH69 ABCL 1;
+		MH69 LDEFG 1;
 		MH69 H 2;
 		MH69 IJK 1;
 		MHTZ A 1;
-		STOP;
+		Stop;
+	 Reload2:
+		TNT1 A 0 A_JumpIfInventory("PowerSpeed2",1,"Reload2Haste");
+		TNT1 A 0 A_HookOverlay("reloadhook2");
+		TNT1 A 0 A_StartSound("foley/SSGlowerBeforeOpen",10);
+		SHO9 HIJKLMN 1;
+		TNT1 A 0 A_StartSound("weapons/sshoto");
+		TNT1 A 0 A_overlay(2,"ReloadSmokeRight");
+		SHTZ [ 1;
+		SHTZ A 0 A_StartSound("foley/SSGshellEject",10,0,0.5);
+		TNT1 A 0 A_fireprojectile("SSGCaseSpawner",0,0,-4, -14)	;
+		SHT7 L 3;
+		SHT7 MNOPPPQQ 1;
+		SHTZ A 0 A_StartSound("weapons/sshotl");
+ 		SHTZ A 0 A_ReloadMag();
+		SHT7 RSTUV 1;
+		TNT1 A 2 A_WeaponReadyDX(WRF_NOFIRE | WRF_NOBOB);
+		SHTZ A 0 A_StartSound("foley/SSGraiseAfterClose",10);
+		SH69 LD 1;
+		SHTZ A 0 A_StartSound("weapons/sshotc");
+		SH69 EFGHIJK 1;
+		SHTZ A 0 A_ReFire();
+		SHTZ A 1;
+		Goto Ready;
+	ReloadHook2:
+		MHO9 HIJKLMN 1 ;
+		MHTZ [ 1;
+		MHT7 L 3;
+		MHT7 MNOPPPQQ 1;
+		MHT7 RSTUV 1;
+		TNT1 A 2;
+		MH69 LD 1;
+		MH69 EF 1;
+		MH69 G 1;
+		MH69 H 1;
+		MH69 IJK 1;
+		MHTZ A 1;
+		Stop;
+	ReloadHaste:
+		TNT1 A 0 A_HookOverlay("hookreloadHaste");
+		SHTZ BDFHI 1;
+		TNT1 A 0 A_StartSound("foley/SSGlowerBeforeOpen",10);
+		SHTZ JMO 1;
+		SHTZ A 0 A_StartSound("weapons/sshoto");
+		NULL A 0 { A_Overlay(2,"ReloadSmokeLeft"); A_Overlay(3,"ReloadSmokeRight"); }
+		SHTZ Q 1;
+		TNT1 A 0 A_StartSound("foley/SSGshellEject",10,0,0.5);
+		TNT1 A 0 A_fireprojectile("SSGCaseSpawner",0,0,-6, -14);
+		TNT1 A 0 A_fireprojectile("SSGCaseSpawner",0,0,-4, -13);
+		SHTZ RSTVX 1;
+		TNT1 A 0 A_StartSound("weapons/sshotl");
+		TNT1 A 0 A_ReloadMag(0,false,true);
+		SHTZ Z 1;
+		SH69 BL 1;
+		SHTZ A 0 A_StartSound("foley/SSGraiseAfterClose",10);
+		SH69 D 1;
+		SHTZ A 0 A_StartSound("weapons/sshotc");
+		SH69 FHIK 1;
+		SHTZ A 0 A_ReFire();
+		SHTZ A 1;
+		Goto Ready;
+	HookReloadHaste:
+		MHTZ BDFH 1;
+		MHTZ I 1;
+		MHTZ JMO 1;
+		MHTZ Q 1;
+		MHTZ R 1;
+		MHTZ S 1;
+		MHTZ TVXZ 1;
+		MH69 BL 1;
+		MH69 DF 1;
+		MH69 H 1;
+		MH69 IK 1;
+		MHTZ A 1;
+		Stop;
+	 Reload2Haste:
+		TNT1 A 0 A_HookOverlay("reloadhook2");
+		TNT1 A 0 A_StartSound("foley/SSGlowerBeforeOpen",10);
+		SHO9 HJLN 1;
+		TNT1 A 0 A_StartSound("weapons/sshoto");
+		TNT1 A 0 A_overlay(2,"ReloadSmokeRight");
+		SHTZ [ 1;
+		SHTZ A 0 A_StartSound("foley/SSGshellEject",10,0,0.5);
+		TNT1 A 0 A_fireprojectile("SSGCaseSpawner",0,0,-4, -14)	;
+		SHT7 L 1;
+		SHT7 MOPQ 1;
+		SHTZ A 0 A_StartSound("weapons/sshotl");
+ 		SHTZ A 0 A_ReloadMag(0,false,true);
+		SHT7 RTV 1;
+		TNT1 A 1 A_WeaponReadyDX(WRF_NOFIRE | WRF_NOBOB);
+		SHTZ A 0 A_StartSound("foley/SSGraiseAfterClose",10);
+		SH69 D 1;
+		SHTZ A 0 A_StartSound("weapons/sshotc");
+		SH69 FHJ 1;
+		SHTZ A 0 A_ReFire();
+		SHTZ A 1;
+		Goto Ready;
+	ReloadHook2:
+		MHO9 HJLN 1 ;
+		MHTZ [ 1;
+		MHT7 L 1;
+		MHT7 MOPQ 1;
+		MHT7 RTV 1;
+		TNT1 A 1;
+		MH69 D 1;
+		MH69 F 1;
+		MH69 H 1;
+		MH69 J 1;
+		MHTZ A 1;
+		Stop;
+	Spawn:
+		TNT1 A 0 NoDelay A_jump(80,"Spawn2");
+		SGN2 A -1;
+		Stop;
+	Spawn2:
+		MGN2 A -1;
+		Stop;
+	Nomeathookoverlay:
+		TNT1 A 1;
+		Loop;
+	AltfireMeatHook:
+		TNT1 A 0 A_trymeathook(1600);
+		Goto Ready;
+	SpecialAction:
+		TNT1 A 0 A_takeinventory("startdualwield",1);
+		TNT1 A 0 A_jumpifinventory("meathook",1,1);
+		Goto noammo;
+		TNT1 A 0 A_HookOverlay("nomeathookoverlay");
+		TNT1 A 0 A_jumpifinventory("MeatHookExtended",1,"RetractMeathook");
+		TNT1 A 0 ChangeWeaponIcon("MGN2A0");
+		TNT1 A 0 
+		{
+			invoker.theoverlayalpha = 1.0;
+			A_giveinventory("meathookextended",1);
+		}
+		TNT1 A 0 A_StartSound("MHKEXT",10);
+		MHKS DCBA 1;
+		Goto ready;
+	RetractMeathook:
+		TNT1 A 0 A_takeinventory("meathookextended",1);
+		TNT1 A 0 ChangeWeaponIcon("SGN2A0");
+		TNT1 A 0 A_StartSound("MHKRTRCT",10);
+		MHKS ABCD 1;
+		Goto Ready;
+	/*FireDragonBreath:
+		FLMT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
+		{
+			A_FireProjectile("DragonsBreathSparkle",frandom(-6,6),false,0,-4,0,frandom(-3,3));
+		}
+		"####" A 0 A_QuadSound();
 		
+		Goto ContinueRecoil;
 	ReloadDragonBreath:		
 		tnt1 a 0 A_HookOverlay("ReloadDragonBreathHook");
 		SHTZ \ 1;
-		SHTZ A 0 A_startsound("foley/SSGshellEject",10,0,0.5);
+		SHTZ A 0 A_StartSound("foley/SSGshellEject",10,0,0.5);
 		SHTZ A 0 A_JumpIfInventory("HasUnloaded",1,"ReloadDragonBreath2");
 		
 		TNT1 A 0 A_fireprojectile("SSGDragonBreathCaseSpawner",0,0,-6, -14);
@@ -456,13 +504,13 @@ CLASS SSG : BrutalWeapon
 		ReloadDragonBreath2:
 		SHTZ RR 1;
 		SHTZ S 2;
-	    SSGD ABCDEEFGH 1;
-		SHTZ A 0 A_startsound("weapons/sshotl");
-		SHTZ A 0 A_TakeInventory("AmmoShell", 1);
+		SSGD ABCDEEFGH 1;
+		SHTZ A 0 A_StartSound("weapons/sshotl");
+		SHTZ A 0 A_TakeInventory("BDPShell", 1);
 		SHTZ A 0 A_GiveInventory("SSGAmmo", 1);
 		SSGD IJKLMNOOPQRS 1;
-		SHTZ A 0 A_startsound("weapons/sshotl");
-		SHTZ A 0 A_TakeInventory("AmmoShell", 1);
+		SHTZ A 0 A_StartSound("weapons/sshotl");
+		SHTZ A 0 A_TakeInventory("BDPShell", 1);
 		SHTZ A 0 A_GiveInventory("SSGAmmo", 1);
 		SHTZ A 0 A_TakeInventory("SSGAlt",1);
 		SHTZ A 0 A_TakeInventory("HasUnloaded",1);
@@ -471,202 +519,34 @@ CLASS SSG : BrutalWeapon
 		SSGD X 1 A_WeaponReadyDX(WRF_NOFIRE | WRF_NOBOB);
 		NULL A 0 A_TakeInventory("QuickSwitchSSG2",1);
 		goto FinishRegularReload;
-		
-		
 	ReloadDragonBreathHook:
 		MHTZ \ 1;
 		MHTZ RR 1;		
 		MHTZ S 2;
-	    MSGD ABCDEEFGH 1;
+		MSGD ABCDEEFGH 1;
 		MSGD TTUVW 1;
 		MSGD X 1;
 		stop;
-		
-		
-		
-		
-	KickReload:
-	    SHTZ L 16;
-		stop;
-
-    AltFireDragonBreath:		
-	    FLMT AAAAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
+	AltFireDragonBreath:		
+		FLMT AAAAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
 		{
 			A_FireProjectile("DragonsBreathSparkle",frandom(-3,3),false,4,-4,0,frandom(-3,3));
 		}
 		"####" A 0 A_QuadSound();
-        Goto ContinueAlt1;
+		Goto ContinueAlt1;
 
 
-    AltFireDragonBreath2:
-         FLMT AAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
+	AltFireDragonBreath2:
+		FLMT AAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
 		{
 			A_FireProjectile("DragonsBreathSparkle",frandom(-3,3),false,-4,-4,0,frandom(-3,3));
 		}
 		"####" A 0 A_QuadSound();
-        Goto ContinueAlt2;
-
-    AltFire:
-		SHTZ A 0 A_TakeInventory("Reloading",1);
-		SHTZ A 0 A_jumpifinventory("meathookextended",1,"AltFireMeatHook");
-	AltfireEvenIfMeathook:
-		SHTZ A 0 A_CheckIfMag();
-        TNT1 AAAAA 0;
-		
-		SHTZ A 0 A_JumpIfInventory("SSGAlt",1,"AltFire2");
-		SHTZ A 0 A_TakeMag();
-		SHTZ A 0 A_GiveInventory("SSGAlt",1);
-        SHTZ A 0 A_ALertMonstersDX();
-		//SHTZ AA 0 A_fireprojectile("GunFireSmoke", 0, 0, 2, 0, 0, 0)
-	//	TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 11);// For poor PCs
-		TNT1 AAAAAAA 0 BRIGHT A_fireprojectile("ShotgunParticles", random(-12,12), 0, 6, -3, 0, random(-9,9));
-		TNT1 AAA 0 BRIGHT A_fireprojectile("ShotgunParticles2", random(-12,12), 0, 6, -3, 0, random(-9,9));	
-		NULL A 0 A_JumpIfInventory("UsingDragonBreath",1,"AltFireDragonBreath");
-		SHTN A 0 A_FireBullets (5, 5, 5, 13, "ShotgunPuff", FBF_NORANDOM,8192,"decorativetracer",-4);
-		SHTN A 0 A_FireBullets (2.5, 2.5, 4, 13, "ShotgunPuff2", FBF_NORANDOM,400,"decorativetracer",-4);
-		"####" A 0 A_QuadSound();
-		
-		SHTZ A 0;
-	ContinueAlt1:
-	TNT1 A 0 A_HookOverlay("AltFire1Hook");
-        SHTU A 1 
-		{
-		A_Gunlight();
-		If (CountInv("UsingDragonBreath")==1)
-		    { A_startsound("weapons/SSGDragonBreathAlt", 1); }
-			else
-			{ A_startsound("SSGALTFI", 1); }
-		}
-		
-		SHTZ A 0 A_SpawnItemEx("PlayerMuzzle1",30,5,30);
-		SHTZ A 0 A_fireprojectile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1));
-		/*
-		NULL A 0 offset(2,32)
-		SHTZ A 0 A_SetPitch(-5.0 + pitch, SPF_INTERPOLATE)
-		SHOF EFG 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE)
-		NULL A 0 offset(1,32)
-		SHOF HI 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE)
-		NULL A 0 offset(0,32)
-		*/
-		NULL A 0 offset(3,32);
-		SHTZ A 0 A_SetPitch(-5.0 + pitch, SPF_INTERPOLATE);
-		SHOF EF 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
-		NULL A 0 offset(2,32);
-		SHOF GH 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
-		NULL A 0 offset(1,32);
-		SHOF I 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
-		NULL A 0 offset(0,32);
-        Goto Ready;
-
-	AltFire2:
-		SHTZ A 0 A_TakeMag();
-        SHTZ A 0 A_ALertMonstersDX();
-		//SHTZ AA 0 A_fireprojectile("GunFireSmoke", 0, 0, -2, 0, 0, 0)
-		//TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 11);// For poor PCs
-		TNT1 AAAAAAA 0 BRIGHT A_fireprojectile("ShotgunParticles", random(-12,12), 0, -1, -3, 0, random(-9,9));
-		TNT1 AAA 0 BRIGHT A_fireprojectile("ShotgunParticles2", random(-12,12), 0, -6, -3, 0, random(-9,9));		
-		NULL A 0 A_JumpIfInventory("UsingDragonBreath",1,"AltFireDragonBreath2");		
-		SHTN A 0 A_FireBullets (5, 5, 5, 13, "ShotgunPuff", FBF_NORANDOM,8192,"decorativetracer",-4);
-		SHTN A 0 A_FireBullets (2.5, 2.5, 4, 13, "ShotgunPuff2", FBF_NORANDOM,400,"decorativetracer",-4);
-		"####" A 0 A_QuadSound();
-		SHTZ A 0;
-	ContinueAlt2:	
-	TNT1 A 0 A_HookOverlay("AltFire2Hook");
-        SHTU B 1
-		{
-		A_Gunlight();
-		If (CountInv("UsingDragonBreath")==1)
-		    { A_startsound("weapons/SSGDragonBreathAlt", 1); }
-			else
-			{ A_startsound("SSGALTFI", 1); }
-		}
-		SHTZ A 0 A_SpawnItemEx("PlayerMuzzle1",30,5,30);
-		SHTZ A 0 A_fireprojectile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1));
-        /*
-		NULL A 0 offset(-2,32)
-		SHTZ A 0 A_SetPitch(-5.0 + pitch, SPF_INTERPOLATE)
-		SHOF EFG 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE)
-		NULL A 0 offset(-1,32)
-		SHOF HI 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE)
-		NULL A 0 offset(0,32)
-		*/
-		NULL A 0 offset(-3,32);
-		SHTZ A 0 A_SetPitch(-5.0 + pitch, SPF_INTERPOLATE);
-		SHOF EF 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
-		NULL A 0 offset(-2,32);
-		SHOF GH 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
-		NULL A 0 offset(-1,32);
-		SHOF I 1 A_SetPitch(+1.0 + pitch, SPF_INTERPOLATE);
-		NULL A 0 offset(0,32);
-		SHTZ A 0 A_TakeInventory("SSGAlt", 1);
-		//TNT1 A 0 A_JumpIf(GetCvar("bd_NoAutoReload")==1, "Ready3");
-		TNT1 A 0 A_JumpIfInventory("PowerSpeed2",1, "Ready3");
-		TNT1 AA 0;
-		Goto Reload;
-	Altfire1hook:
-		MHTU A 1 A_hookflags();
-		Goto COntinueAltFireHook;
-		
-	Altfire2Hook:
-		MHTU B 1 A_hookflags();
-	ContinueAltFireHook:
-	
-		MHOF EF 1; 
-		MHOF GH 1; 
-		MHOF I 1 ;
-		Stop;
-		
-      Reload2:
-        SHTZ A 0 A_TakeInventory("Reloading",1);
-		TNT1 A 0 A_HookOverlay("reloadhook2");
-		SHTZ A 0 A_TakeInventory("SSGAlt",1);
-		XXXX X 0 A_startsound("foley/SSGlowerBeforeOpen",10);
-	    SHO9 HIJKLMN 1 ;
-		TNT1 A 0 A_startsound("weapons/sshoto");
-		NULL A 0 A_overlay(2,"ReloadSmokeRight");
-		TNT1 A 0 A_JumpIfInventory("UsingDragonBreath",1, "AltDragonBreathReload");
-        SHTZ [ 1;
-		SHTZ A 0 A_startsound("foley/SSGshellEject",10,0,0.5);
-		TNT1 A 0 A_fireprojectile("SSGCaseSpawner",0,0,-4, -14)	;
-		SHT7 L 3;
-		//
-		SHT7 MNOPPPQQ 1;
-		SHTZ A 0 A_startsound("weapons/sshotl");
- 		SHTZ A 0 A_ReloadMag();
-		SHT7 RSTUV 1;
-		TNT1 A 0 A_GiveInventory("QuickSwitchSSG2",1);
-		TNT1 A 2 A_WeaponReadyDX(WRF_NOFIRE | WRF_NOBOB)	;
-		TNT1 A 0 A_TakeInventory("QuickSwitchSSG2",1);
-		SHTZ A 0 A_startsound("foley/SSGraiseAfterClose",10);
-		SH69 LD 1;
-		SHTZ A 0 A_startsound("weapons/sshotc");
-		SH69 EF 1	;
-		SH69 G 1;
-		SH69 H 1;
-		SH69 IJK 1;
-		SHTZ A 0 A_ReFire();
-		SHTZ A 1;
-        Goto Ready;
-		
-		ReloadHook2:
-			 MHO9 HIJKLMN 1 ;
-			  MHTZ [ 1;
-			 MHT7 L 3;
-			 MHT7 MNOPPPQQ 1;
-			 MHT7 RSTUV 1;
-			 TNT1 A 2;
-			 MH69 LD 1;
-		MH69 EF 1	;
-		MH69 G 1;
-		MH69 H 1;
-		MH69 IJK 1;
-		MHTZ A 1;
-		STOP;
-
-        AltDragonBreathReload:
+		Goto ContinueAlt2;
+		AltDragonBreathReload:
 		TNT1 A 0 A_HookOverlay("AltDragonBreathReloadHook");
 		SHTZ "]" 1;
-		SHTZ A 0 A_startsound("foley/SSGshellEject",10,0,0.5);
+		SHTZ A 0 A_StartSound("foley/SSGshellEject",10,0,0.5);
 		TNT1 A 0 A_fireprojectile("SSGDragonBreathCaseSpawner",0,0,-4, -14)	;
 		SH69 M 3;
 		
@@ -675,7 +555,7 @@ CLASS SSG : BrutalWeapon
 		SSGD \ 1;
 		SSGD ] 1;
 		SSGD PPQRS 1;
-		SHTZ A 0 A_startsound("weapons/sshotl");
+		SHTZ A 0 A_StartSound("weapons/sshotl");
 		SHTZ A 0 A_ReloadMag();
 		SSGD TTUVW 1;
 		NULL A 0 A_GiveInventory("QuickSwitchSSG2",1);
@@ -694,61 +574,8 @@ CLASS SSG : BrutalWeapon
 		MSGD TTUVW 1;
 		MSGD X 1 A_WeaponReadyDX(WRF_NOFIRE | WRF_NOBOB);
 		Stop;
-		
-		
-		
-		
-	 Spawn:
-		TNT1 A 0 NoDelay A_jump(80,"Spawn2");
-		SGN2 A -1;
-		Stop;
-	Spawn2:
-		MGN2 A -1;
-		Stop;
-	
-	Unload:
-		SHTZ A 1 A_WeaponReady();
-		SHTZ A 0 A_ZoomFactor(1.0);
-		SHTZ A 0 A_Takeinventory("Unloading",1);
-		SHTZ A 0 A_Takeinventory("ADSmode",1);
-		SHTZ A 0 A_Takeinventory("Zoomed",1);
-        SHTZ A 0 A_JumpIfInventory("SSGAmmo",1,3);
-        Goto Ready;
-        TNT1 AAA 0;
-		SHTZ A 0 A_Takeinventory("Zoomed",1);
-		SHTZ A 0 A_GiveInventory ("Pumping", 1);
-		SHTZ A 0 A_Takeinventory("Unloading",1);
-		
-	RemoveBullets:
-		TNT1 AAAA 0;
-		SHTZ A 0 A_JumpIfInventory("SSGAmmo",1,3);
-		Goto FinishUnload;
-        TNT1 AAAAAA 0;
-		SHTZ A 0 A_Takeinventory("SSGAmmo",1);
-		SHTZ A 0 A_Giveinventory("AmmoShell",1);
-		Goto RemoveBullets;
-	
-	FInishUnload:
-		SHTZ BCDEFGH 1;
-		SHTZ I 3;
-		SHTZ JLMNOP 1;
-		//SH69 L 1
-		SHTZ A 0 A_startsound("weapons/sshoto");
-		TNT1 A 16;
-		SHTZ A 0 A_GiveInventory("HasUnloaded", 1);
-		SHTZ A 0 A_Takeinventory("Unloading",1);
-        SHO9 LKJIH 1;
-        SHTZ A 0 A_startsound("weapons/sshotc");
-		SHTZ A 0 A_GiveInventory ("Pumping", 1);
-		Goto Ready;
-		
-		NoDual:
-		A12G A 0 A_TakeInventory("StartDualWield",1);
-		PIST F 0 A_Print("You don't have Energy Shells!",2);
-		Goto Ready;
-		
-	//DualWield:	
-	    RIFG A 0 A_Takeinventory("StartDualWield",1);
+	SpecialAction:	
+		RIFG A 0 A_Takeinventory("StartDualWield",1);
 		NULL A 0 A_JumpIfInventory("UsingDragonBreath",1,"BackToBuckshot");
 		//NULL A 0 A_ChangeFlag("WEAPON.NOAUTOFIRE",1);
 		TNT1 A 0 A_GiveInventory("UsingDragonBreath",1);
@@ -760,30 +587,30 @@ CLASS SSG : BrutalWeapon
 		
 		SHTZ A 0 A_JumpIfInventory("SSGAmmo", 2, "ContinueSwitchToDB");//Checks if the gun is already loaded
 		
-		TNT1 A 0 A_JumpIf(CountInv("AmmoShell")==0,"ContinueSwitchToDB");//No ammo to reload? Continue the non-reloading anim.
+		TNT1 A 0 A_JumpIf(CountInv("BDPShell")==0,"ContinueSwitchToDB");//No ammo to reload? Continue the non-reloading anim.
 		
-		TNT1 A 0 A_JumpIf(CountInv("AmmoShell")==1,"Reload2");//Got only one shell? Reload just one barrel.
+		TNT1 A 0 A_JumpIf(CountInv("BDPShell")==1,"Reload2");//Got only one shell? Reload just one barrel.
 		
 		Goto Reload;
 	ContinueSwitchToDB:
 		TNT1 A 0 A_HookOverlay("SwitchToDBHook");
 		SHTZ BCDEFGH 1;
 		SHTZ I 1;
-		XXXX X 0 A_startsound("foley/SSGlowerBeforeOpen",10);
+		XXXX X 0 A_StartSound("foley/SSGlowerBeforeOpen",10);
 		SHTZ JLMNOP 1;
-		SHTZ A 0 A_startsound("weapons/sshoto");
+		SHTZ A 0 A_StartSound("weapons/sshoto");
 		SHOF J 1;
 		SHTZ RR 1;
 		SHTZ S 1	;
 		
 		SSGD ABCDEFGH 1;
-		SHTZ A 0 A_startsound("weapons/sshotl");
+		SHTZ A 0 A_StartSound("weapons/sshotl");
 		SSGD IJKLMNOOPQRS 1;
-		SHTZ A 0 A_startsound("weapons/sshotl");
+		SHTZ A 0 A_StartSound("weapons/sshotl");
 		SSGD TUVWX 1;
-		SHTZ A 0 A_startsound("foley/SSGraiseAfterClose",10);
+		SHTZ A 0 A_StartSound("foley/SSGraiseAfterClose",10);
 		SH69 LD 1;
-		SHTZ A 0 A_startsound("weapons/sshotc");
+		SHTZ A 0 A_StartSound("weapons/sshotc");
 		SH69 EF 1	;
 		SH69 G 1;
 		SH69 H 2;
@@ -815,37 +642,37 @@ CLASS SSG : BrutalWeapon
 		
 		
 	BackToBuckshot:
-	   // NULL A 0 A_ChangeFlag("WEAPON.NOAUTOFIRE",0);
-	    TNT1 A 0 A_TakeInventory("UsingDragonBreath",1);
-	    TNT1 A 0 A_Print("\cgSwitching to buckshot.",1);
+		// NULL A 0 A_ChangeFlag("WEAPON.NOAUTOFIRE",0);
+		TNT1 A 0 A_TakeInventory("UsingDragonBreath",1);
+		TNT1 A 0 A_Print("\cgSwitching to buckshot.",1);
 		TNT1 A 0 ChangeAmmoIcon1("SHELA0");
 		
 		SHTZ A 0 A_JumpIfInventory("SSGAlt", 1, "Reload2");//Check if still has a shell on left barrel.
 		
 		SHTZ A 0 A_JumpIfInventory("SSGAmmo", 2, "ContinueSwitchToBuck");//Checks if the gun is already loaded.
 		
-		TNT1 A 0 A_JumpIf(CountInv("AmmoShell")==0,"ContinueSwitchToBuck");//No ammo to reload? Continue the non-reloading anim.
+		TNT1 A 0 A_JumpIf(CountInv("BDPShell")==0,"ContinueSwitchToBuck");//No ammo to reload? Continue the non-reloading anim.
 		
-		TNT1 A 0 A_JumpIf(CountInv("AmmoShell")==1,"Reload2");//Got only one shell? Reload just one barrel.
+		TNT1 A 0 A_JumpIf(CountInv("BDPShell")==1,"Reload2");//Got only one shell? Reload just one barrel.
 		
 		Goto Reload;
 	ContinueSwitchToBuck:
 		TNT1 A 0 A_HookOverlay("SwitchToBuckHook");
 		SHTZ BCDEFGH 1;
 		SHTZ I 1;
-		XXXX X 0 A_startsound("foley/SSGlowerBeforeOpen",10);
+		XXXX X 0 A_StartSound("foley/SSGlowerBeforeOpen",10);
 		SHTZ JLMNOP 1;
-		SHTZ A 0 A_startsound("weapons/sshoto");
+		SHTZ A 0 A_StartSound("weapons/sshoto");
 		SHOF J 1;
 		SHTZ RR 1;
 		SHTZ S 1	;
 		SHTZ TUVWX 1;
-		SHTZ A 0 A_startsound("weapons/sshotl");
+		SHTZ A 0 A_StartSound("weapons/sshotl");
 		SHTZ YZ 1;
 		SH69 ABCL 1;
-		SHTZ A 0 A_startsound("foley/SSGraiseAfterClose",10);
+		SHTZ A 0 A_StartSound("foley/SSGraiseAfterClose",10);
 		SH69 LD 1;
-		SHTZ A 0 A_startsound("weapons/sshotc");
+		SHTZ A 0 A_StartSound("weapons/sshotc");
 		SH69 EF 1	;
 		SH69 G 1;
 		SH69 H 1;
@@ -869,44 +696,7 @@ CLASS SSG : BrutalWeapon
 		MH69 G 1;
 		MH69 H 1;
 		MH69 IJK 1;
-		STOP;
-		
-		Nomeathookoverlay:
-		TNT1 A 1;
-		LOOP;
-		
-		
-		AltfireMeatHook:
-    TNT1 A 0 A_trymeathook(1600);
-    Goto Ready;
-	
-	DualWield:
-	TNT1 A 0 A_takeinventory("startdualwield",1);
-	TNT1 A 0 A_jumpifinventory("meathook",1,1);
-	Goto noammo;
-	TNT1 A 0 A_HookOverlay("nomeathookoverlay");
-	TNT1 A 0 A_jumpifinventory("MeatHookExtended",1,"RetractMeathook");
-	TNT1 A 0 ChangeWeaponIcon("MGN2A0");
-	TNT1 A 0 
-	{
-	invoker.theoverlayalpha = 1.0;
-	A_giveinventory("meathookextended",1);
-	}
-	//TNT1 A 0 A_jumpifinventory("meathook",1,1);
-	//Goto ready;
-	TNT1 A 0 A_startsound("MHKEXT",10);
-	MHKS DCBA 1;
-	Goto ready;
-	
-	RetractMeathook:
-	TNT1 A 0 A_takeinventory("meathookextended",1);
-	TNT1 A 0 ChangeWeaponIcon("SGN2A0");
-	//TNT1 A 0 A_jumpifinventory("meathook",1,1);
-	//Goto ready;
-	TNT1 A 0 A_startsound("MHKRTRCT",10);
-	MHKS ABCD 1;
-	Goto ready;
-	
+		STOP;*/
 	}
 }
 
@@ -987,5 +777,181 @@ class DragonsBreathSparkle : Actor
 		
 }
 
+class UsingDragonBreath : Inventory {Default {Inventory.MaxAmount 1;}}
+
+class MeatHookExtended : Inventory {Default {Inventory.MaxAmount 1;}}
 
 
+
+
+
+
+class FlamethrowerMissileFaster : Actor
+{
+	Default
+	{
+		Radius 8;
+		Height 8;
+		Speed 100;
+		DamageFactor 18;
+		+NOBLOCKMAP
+		+NOTELEPORT
+		+DONTSPLASH
+		+MISSILE
+		+FORCEXYBILLBOARD
+		+NOBLOOD
+		+NOBLOODDECALS
+		+BLOODLESSIMPACT
+		-BLOODSPLATTER
+		+NODAMAGETHRUST
+		-NOGRAVITY
+		+BOUNCEONWALLS
+		+BOUNCEONFLOORS
+		+BOUNCEONCEILINGS
+		//+THRUACTORS
+		RenderStyle 'Add';
+		DamageType 'Fire';
+		Decal "FlamethrowerScorch";
+		Scale 0.3;
+		Alpha 1.0;
+		Gravity 0.5;
+		BounceCount 2;
+		WallBounceFactor 0.1;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 1;
+		TNT1 A 0 A_JumpIf(waterlevel > 0, "Death");
+		FIR3 AB 1 BRIGHT A_SpawnItem ("SmallFlameTrails");
+		TNT1 A 0 A_Explode(20, 32, 0, 0, 1);
+		TNT1 A 0 A_JumpIf(waterlevel > 0, "Death");
+		FIR3 AB 1 BRIGHT A_SpawnItem ("SmallFlameTrails");
+		TNT1 A 0 A_Explode(20, 64, 0, 0, 1);
+		TNT1 A 0 A_JumpIf(waterlevel > 0, "Death");
+		TNT1 A 0 A_CustomMissile ("BigBlackSmoke", 0, 0, random (0, 360), 2, random (40, 160));
+		/*
+		FIR3 AB 1 BRIGHT A_SpawnItem ("SmallFlameTrails")
+		TNT1 A 0 A_Explode(36, 32, 0, 0, 1)
+		TNT1 A 0 A_JumpIf(waterlevel > 0, "Death")
+		FIR3 AB 1 BRIGHT A_SpawnItem ("SmallFlameTrails")
+		TNT1 A 0 A_Explode(36, 64, 0, 0, 1)
+		TNT1 A 0 A_JumpIf(waterlevel > 0, "Death")
+		TNT1 A 0 A_CustomMissile ("BigBlackSmoke", 0, 0, random (0, 360), 2, random (40, 160))
+		*/
+		FIR3 BCD 2 BRIGHT A_CustomMissile ("FlamethrowerFireTrail", 1, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_Explode(40, 128, 1, 0, 64);
+		TNT1 A 0 A_JumpIf(waterlevel > 0, "Death");
+		TNT1 A 0 A_CustomMissile ("BigBlackSmoke", 0, 0, random (0, 360), 2, random (40, 160));
+		FIR3 EFG 2 BRIGHT A_CustomMissile ("FlamethrowerFireParticles", 1, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_Explode(44, 128, 1, 0, 64);
+		TNT1 A 0 A_JumpIf(waterlevel > 0, "Death");
+		EXPL A 0 A_CustomMissile ("FlamethrowerFireParticles", 6, 0, random (0, 360), 2, random (10, 90));
+		FIR3 GGG 2 BRIGHT A_CustomMissile ("FlamethrowerFireParticles", 1, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_Explode(40, 128, 1, 0, 64);
+		TNT1 A 0 A_JumpIf(waterlevel > 0, "Death");
+		EXPL A 0 A_CustomMissile ("FlamethrowerFireParticles", 6, 0, random (0, 360), 2, random (10, 90));
+		FIR3 GGG 2 BRIGHT A_CustomMissile ("FlamethrowerFireParticles", 1, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_Explode(44, 128, 1, 0, 64);
+		TNT1 A 0 A_JumpIf(waterlevel > 0, "Death");
+		EXPL A 0 A_CustomMissile ("FlamethrowerFireParticles", 6, 0, random (0, 360), 2, random (10, 90));
+		FIR3 GGG 2 BRIGHT A_CustomMissile ("FlamethrowerFireParticles", 1, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_Explode(40, 128, 1, 0, 64);
+		TNT1 A 0 A_JumpIf(waterlevel > 0, "Death");
+		EXPL A 0 A_CustomMissile ("FlamethrowerFireParticles", 6, 0, random (0, 360), 2, random (10, 90));
+		FIR3 GGG 2 BRIGHT A_CustomMissile ("FlamethrowerFireParticles", 1, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_Explode(44, 128, 1, 0, 64);
+		TNT1 A 0 A_JumpIf(waterlevel > 0, "Death");
+		EXPL A 0 A_CustomMissile ("FlamethrowerFireParticles", 6, 0, random (0, 360), 2, random (10, 90));
+		FIR3 GGGGG 2 BRIGHT A_CustomMissile ("FlamethrowerFireParticles", 1, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_Explode(40, 128, 1, 0, 64);
+		TNT1 A 0 A_JumpIf(waterlevel > 0, "Death");
+		EXPL A 0 A_CustomMissile ("FlamethrowerFireParticles", 6, 0, random (0, 360), 2, random (10, 90));
+		Stop;
+	Death:
+	TNT1 A 0;
+	TNT1 A 0 A_ChangeFlag("FORCERADIUSDMG", 1);
+	TNT1 A 0 A_Explode(70, 160, 1, 0, 80);
+	TNT1 A 0 A_CustomMissile("FlamethrowerBurningStuff", random (-32, 0), random (-32, 32), random (-32, 32), 2, random (-32, 32));
+	EXPL A 0 A_CustomMissile ("FlamethrowerFireParticles", 6, 0, random (0, 360), 2, random (10, 90));
+	Stop;
+	}
+}
+
+
+class FlamethrowerMissileProperFaster: FlamethrowerMissileFaster
+{
+	Default
+	{
+		-BOUNCEONWALLS
+		-BOUNCEONFLOORS
+		-BOUNCEONCEILINGS
+		Speed 110;
+	}
+}
+
+/*class SSGDragonBreathCaseSpawner: SSGCaseSpawner 
+{
+translation 168:191=208:223 ;
+States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Thing_ChangeTID(0,390);
+		TNT1 A 0;//1
+		Goto Death;
+	Death:
+		TNT1 A 0 A_CustomMissile("DBShotgunCasing",0,0,random(80,100),2,random(50,70));
+		Stop;
+	}
+}*/
+
+//class DBShotgunCasing: ShotgunCasing {Default {translation "168:191=208:223"; }}
+class QuickSwitchSSG: Inventory {Default {Inventory.MaxAmount 1;}}
+class QuickSwitchSSG2: Inventory {Default {Inventory.MaxAmount 1;}}
+
+
+/*class SSGreloadSmokeSpawner : Actor
+{
+	Default
+	{
+		Speed 6;
+		+NOCLIP
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		
+		NULL A 0 A_CustomMissile ("SSGreloadSmoke", -10, 0, random(1,-1), 2, 90);
+		Stop;
+	}
+}
+
+class SSGreloadSmoke: ExplosionSmoke
+{
+	Default
+	{
+		Alpha 0.01;
+		RenderStyle 'Add';
+		XScale 0.01;
+		YScale 0.03;
+		Speed 1;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "Stap");
+		smk2 CCCC 1 A_FadeIn(0.12);
+		smk2 C 4;
+		smk2 CCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.04);
+		Goto Death;
+	Death:
+		TNT1 A 0;
+		Stop;
+	Stap:		
+		TNT1 A 0;
+		Stop;
+	}
+}*/

@@ -1,25 +1,19 @@
-
-
-
-Class AmmoSuply : BackpackItem Replaces Backpack
+class BDPBackpack : BackpackItem replaces Backpack
 {
 	Default
 	{
-	Height 26;
-	Inventory.PickupMessage "$GOTBACKPACK";
-	Inventory.PickupSound "BACKPACK";
+		Height 26;
+		Inventory.PickupMessage "$GOTBACKPACK";
+		Inventory.PickupSound "BACKPACK";
 	}
 	States
 	{
 	Spawn:
-		TNT1 A 0;
-	    TNT1 A 0 A_Jump(64, "SpawnOriginal");
-	    TNT1 A 0 A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
+		TNT1 A 0 NoDelay A_Jump(64, "SpawnOriginal");
+		TNT1 A 0 A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
 		Loop;
-		
 	SpawnOriginal:
 		BPAK A -1;
-		
 	Spawn1:
 		BPAK BCDE 4;
 		LOOP;
@@ -32,413 +26,388 @@ Class AmmoSuply : BackpackItem Replaces Backpack
 	}
 	override bool TryPickup (in out Actor toucher)
 	{
-		If( Super.trypickup(Toucher))
+		if(super.trypickup(Toucher))
 		{
 			toucher.Score += 500;
 			return true;
 		}
-		Else
+		else
 		{
-		return false;
+			return false;
 		}
-	
 	}
 }
 
-Class Clip2 : Ammo Replaces Clip
+class BDPAmmo : Ammo
+{
+	int score;
+	property Score : score;
+	
+	override bool TryPickup (in out Actor toucher)
+	{
+	if(super.trypickup(Toucher))
+		{
+			toucher.Score += score;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	override Class<Ammo> GetParentAmmo ()
+	{
+		class<Object> type = GetClass();
+		
+		while (type.GetParentClass() != "BDPAmmo" && type.GetParentClass() != null)
+		{
+			type = type.GetParentClass();
+		}
+		return (class<Ammo>)(type);
+	}
+	
+	Default
+	{
+		BDPAmmo.Score 50;
+	}
+}
+
+class BDPClipSpawner : RandomSpawner replaces Clip
 {
 	Default
 	{
-	Inventory.PickupMessage "Picked up a Rifle Magazine.";
-	Inventory.Amount 30;
-	Inventory.MaxAmount 300;
-	Ammo.BackpackAmount 30;
-	Ammo.BackpackMaxAmount 600;
-	Inventory.Icon "CLIPA0";
-	Inventory.PickupSound "CLIPICK2";
-	}
-//	Scale 0.9
-	States
-	{
-	Spawn:
-	TNT1 A 1;
-	TNT1 A 0 A_jump(64,"becomeclip1");
-	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1");
-	NULL A 0 A_jump(128,2);
-	NULL A 0 A_ChangeFlag("XFLIP",1);
-	TNT1 A 0;
-	TNT1 A 0 A_Jump(256,"spawn1","spawn2");
-	
-	Spawn1:
-		CLIP A -1;
-		Stop;
-		
-		Spawn2:
-		CLIP E -1;
-		Stop;
-		Becomeclip1:
-		TNT1 A 0 A_spawnitemex("clip1");
-		STOP;
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			If(level.time > 0)
-			toucher.Score += 50;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
+		DropItem "BDPClip1", 255, 1;
+		DropItem "BDPClip2", 255, 3;
 	}
 }
 
-Class Clip1 : Ammo
+class BDPClipBoxSpawner : RandomSpawner replaces ClipBox
 {
 	Default
 	{
-	Inventory.PickupMessage "Picked up a Pistol Magazine.";
-	Inventory.Amount 15;
-	Inventory.MaxAmount 200;
-	Ammo.BackpackAmount 100;
-	Ammo.BackpackMaxAmount 400;
-	Inventory.Icon "CLIPB0";
-	Inventory.PickupSound "CLIPICK";
-	}
-//	Scale 0.9
-	States
-	{
-	Spawn:
-	TNT1 A 1;
-	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1");
-	NULL A 0 A_jump(128,2);
-	NULL A 0 A_ChangeFlag("XFLIP",1);
-	TNT1 A 0;
-	TNT1 A 0 A_Jump(256,"Spawn1","Spawn2");
-	
-	Spawn1:
-		CLIP B -1;
-		Stop;
-		
-		Spawn2:
-		CLIP C -1;
-		Stop;
-		
-		Spawn3:
-		CLIP D -1;
-		Stop;
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			If(level.time > 0)
-			toucher.Score += 50;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
+		DropItem "BDPClipBox1", 255, 1;
+		DropItem "BDPClipBox2", 255, 3;
 	}
 }
 
-Class ClipBox2 : Clip2 //Replaces Clipbox
+class BDPClip1 : BDPAmmo
+{
+	Default
+	{
+		Inventory.PickupMessage "Picked up a small box of pistol ammunition.";
+		Inventory.Amount 15;
+		Inventory.MaxAmount 200;
+		Ammo.BackpackAmount 15;
+		Ammo.BackpackMaxAmount 400;
+		Inventory.Icon "CLP1A0";
+		Inventory.PickupSound "CLIPICK";
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5", "Spawn6", "Spawn7");
+	Spawn1:
+		CLP1 A -1;
+		stop;
+	Spawn2:
+		CLP1 B -1;
+		stop;
+	Spawn3:
+		CLP1 C -1;
+		stop;
+	Spawn4:
+		CLP1 D -1;
+		stop;
+	Spawn5:
+		CLP1 E -1;
+		stop;
+	Spawn6:
+		CLP1 F -1;
+		stop;
+	Spawn7:
+		CLP1 G -1;
+		stop;
+	}
+}
+
+class BDPClipBox1 : BDPClip1
+{
+	 Default
+	 {
+		Radius 20;
+		Height 16;
+		Inventory.PickupMessage "Picked up a large box of pistol ammunition.";
+		Inventory.PickupSound "CBOXPICK";
+		Inventory.Amount 60;
+	}
+	States
+	{
+	Spawn:
+		AMM1 A -1;
+		Stop;
+	}
+}
+
+class BDPClip2 : BDPAmmo
+{
+	Default
+	{
+		Inventory.PickupMessage "Picked up a rifle magazine.";
+		Inventory.Amount 30;
+		Inventory.MaxAmount 300;
+		Ammo.BackpackAmount 30;
+		Ammo.BackpackMaxAmount 600;
+		Inventory.Icon "CLP2C0";
+		Inventory.PickupSound "CLIPICK2";
+		+SQUAREPIXELS
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay{if(random(0,1) == 0) bXFlip = true;}
+		TNT1 A 0 A_Jump(256,"Spawn1","Spawn2","Spawn3");
+	Spawn1:
+		CLP2 A -1 {self.Scale.Y =1.2;}
+		Stop;
+	Spawn2:
+		CLP2 B -1	{self.Scale.X = 1.2;}
+		Stop;
+	Spawn3:
+		CLP2 C -1 {self.Scale.Y = 1.2;}
+		Stop;
+	}
+}
+
+class BDPClipBox2 : BDPClip2
 {
 	Default
 	{
 	Inventory.PickupMessage "Picked up a box of rifle ammunition.";
 	Inventory.PickupSound "CBOXPICK";
 	Inventory.Amount 75;
-	Scale 0.9;
+	-SQUAREPIXELS
 	}
 	States
 	{
 	Spawn:
-	    TNT1 A 0;
-		TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1");
-		TNT1 A 0 A_Jump(16, "NINlogo");
-	    TNT1 A 0 A_Jump(255, "Spawn1","Spawn2","Spawn3");
-		Loop;
+		TNT1 A 0 NoDelay A_Jump(255, "Spawn1","Spawn2","Spawn3", "Spawn4", "Spawn5");
 	Spawn1:
-		AMMO A -1;
+ 		AMM2 A 0 A_Jump(240,2);
+ 		AMM2 N 0;
+ 		AMM2 "#" -1;
 		Stop;
 	Spawn2:
-		AMMO B -1;
+ 		AMM2 B 0 A_Jump(240,2);
+ 		AMM2 O 0;
+ 		AMM2 "#" -1;
 		Stop;
 	Spawn3:
-		AMMO C -1;
+ 		AMM2 C 0 A_Jump(240,2);
+ 		AMM2 P 0;
+ 		AMM2 "#" -1;
 		Stop;
-	NINlogo:
-	    AMMO D -1;
-		stop;
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 50;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
+	Spawn4:
+ 		AMM2 D -1;
+		Stop;
+	Spawn5:
+ 		AMM2 E -1;
+		Stop;
+	Spawn6:
+ 		AMM2 F -1;
+		Stop;
 	}
 }
 
-Class PAmmoBox : Clip1
+class BDPShell : BDPAmmo replaces Shell
 {
- Default
- {
- //Scale 0.8
- Scale 0.9;
- Radius 20;
- Height 16;
- Inventory.PickupMessage "Picked up a box of pistol ammunition.";
- Inventory.PickupSound "CBOXPICK";
- Inventory.Amount 75;
- }
- States
- {
-  Spawn:
-  TNT1 A 0;
-  TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1");
-  TNT1 A 0 A_Jump(256, "spawn1", "spawn2", "spawn3", "spawn4", "spawn5", "spawn6", "spawn7");
-  Loop;
-  
-  Spawn1:
-   4M0K A -1;
-   stop;
-   Spawn2:
-   4M0K B -1;
-   stop;
-   Spawn3:
-   4M0K C -1;
-   stop;
-   Spawn4:
-   4M0K D -1;
-   stop;
-   Spawn5:
-   4M0K E -1;
-   stop;
-   Spawn6:
-   4M0K F -1;
-   stop;
-   Spawn7:
-   4M0K G -1;
-   stop;
-   
-
-   
-  }
-  override bool TryPickup (in out Actor toucher)
+	Default
 	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 50;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
+		Inventory.PickupMessage "$GOTSHELLS";
+		Inventory.Amount 4;
+		Inventory.MaxAmount 50;
+		Ammo.BackpackAmount 4;
+		Ammo.BackpackMaxAmount 100;
+		Inventory.Icon "SHELA0";
+		Inventory.Pickupsound "SHELPK1";
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay{if(random(0,1) == 0) bXFlip = true;}
+		TNT1 A 0 A_Jump(256,"Spawn1","Spawn2","Spawn3","Spawn4","Spawn5","Spawn6","Spawn7","Spawn8","Spawn9");
+	Spawn1:
+		SHEL B -1;
+		Stop;
+	Spawn2:
+		SHEL C -1;
+		Stop;
+	Spawn3:
+		SHEL D -1;
+		Stop;
+	Spawn4:
+		SHEL E -1;
+		Stop;
+	Spawn5:
+		SHEL F -1;
+		Stop;
+	Spawn6:
+		SHEL G -1;
+		Stop;
+	Spawn7:
+		SHEL H -1;
+		Stop;
+	Spawn8:
+		SHEL I -1;
+		Stop;
+	Spawn9:
+		SHEL J -1;
+		Stop;
 	}
 }
-CLASS AmmoRocket : Ammo Replaces RocketAmmo
+
+class BDPShellBox : BDPShell replaces ShellBox
+{
+	Default
+	{
+		Inventory.PickupMessage "$GOTSHELLBOX";
+		Inventory.Amount 14;
+		Inventory.Pickupsound "SHELPK2";
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay{if(random(0,1) == 0) bXFlip = true;}
+		TNT1 A 0 A_Jump(256,"Spawn1","Spawn2","Spawn3","Spawn4","Spawn5");
+	Spawn1:
+		SBOX A -1;
+		Stop;
+	Spawn2:
+		SBOX B -1;
+		Stop;
+	Spawn3:
+		SBOX C -1;
+		Stop;
+	Spawn4:
+		SBOX D -1;
+		Stop;
+	Spawn5:
+		SBOX E -1;
+		Stop;
+	}
+}
+
+class BDPRocketAmmo : Ammo replaces RocketAmmo
 {
 	Default
 	{
 	Inventory.PickupMessage "$GOTROCKET";
 	Inventory.Amount 1;
 	Inventory.MaxAmount 50;
-	Ammo.BackpackAmount 6;
+	Ammo.BackpackAmount 1;
 	Ammo.BackpackMaxAmount 100;
 	Inventory.Icon "ROCKA0";
 	Inventory.Pickupsound "RCKCLIP";
-
+	+SQUAREPIXELS
 	}
 	States
 	{
 	Spawn:
-	TNT1 A 1;
-	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1");
-	TNT1 A 0 A_Jump(256, "spawn1", "spawn2", "spawn3");
-	Loop;
-	
-	    Spawn1:
-		ROCK A -1;
+		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
+	Spawn1:
+		ROCK A -1 {self.Scale.Y =1.2;}
 		Stop;
-		
-        Spawn2:
-		ROCK B -1;
+	Spawn2:
+		ROCK B -1 {self.Scale.X =1.2;}
 		Stop;
-		
-		Spawn3:
-		ROCK C -1;
+	Spawn3:
+		ROCK C -1 {self.Scale.X =1.2;}
 		Stop;
-		
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-		
-		If( Super.trypickup(Toucher))
-		{
-			If(level.time > 0)
-			toucher.Score += 50;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-		
 	}
 }
 
-// Rocket box --------------------------------------------------------------
-
-CLASS AmmoRocketBox : AmmoRocket Replaces RocketBox
+class BDPRocketBox : BDPRocketAmmo replaces RocketBox
 {
 	Default
 	{
 	Inventory.PickupMessage "$GOTROCKBOX";
 	Inventory.Amount 3;
 	Inventory.Pickupsound "RCKCLIP2";
-	-SHOOTABLE;
-	+NOTAUTOAIMED;
+	-SQUAREPIXELS
 	}
 	States
 	{
-	
 	Spawn:
-	TNT1 A 1;
-//	TNT1 A 0 A_Jump(32, "SpawnGrenadeBox")
-	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1");
-	TNT1 A 0 A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "spawn4", "spawn5", "spawn6");
-	Loop;
-	
-	    Spawn1:
+		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5", "Spawn6");
+	Spawn1:
 		BROK A -1;
 		Stop;
-		
-        Spawn2:
+	Spawn2:
 		RBOK B -1;
 		Stop;
-		
-		Spawn3:
+	Spawn3:
 		RBOK C -1;
 		Stop;
-		
-		Spawn4:
+	Spawn4:
 		RBOK D -1;
 		Stop;
-		
-		Spawn5:
+	Spawn5:
 		RBOK E -1;
 		Stop;
-		
-		Spawn6:
+	Spawn6:
 		RBOK F -1;
 		Stop;
-		
-
-		
-
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 50;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
 	}
 }
 
-
-// Cell --------------------------------------------------------------------
-
-Class AmmoCell : Ammo Replaces Cell
+class BDPCell : BDPAmmo replaces Cell
 {
 	Default
 	{
-	Inventory.PickupMessage "$GOTCELL";
-	Inventory.Amount 20;
-	Inventory.MaxAmount 300;
-	Ammo.BackpackAmount 20;
-	Ammo.BackpackMaxAmount 600;
-	Inventory.Pickupsound "PLAPICK1";
-	Inventory.Icon "CELLA0";
-	Scale 0.9;
+		Inventory.PickupMessage "$GOTCELL";
+		Inventory.Amount 20;
+		Inventory.MaxAmount 300;
+		Ammo.BackpackAmount 20;
+		Ammo.BackpackMaxAmount 600;
+		Inventory.Pickupsound "PLAPICK1";
+		Inventory.Icon "CELLA0";
+		BDPAmmo.Score 100;
 	}
 	States
 	{
 	Spawn:
-	    TNT1 A 0;
-		TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"SpawnOriginal");
-	    TNT1 A 0 A_Jump(64, "SpawnOriginal");
-	    TNT1 A 1 A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
-		Loop;
-		
+		TNT1 A 0 NoDelay A_Jump(64, "SpawnOriginal");
+		TNT1 A 0 A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
 	Spawn1:
-	    CELL BCDEF 3;
+		CELL BCDEF 3;
 		loop;
-	    
 	Spawn2:
-	    CELL EFBCD 3;
+		CELL EFBCD 3;
 		loop;
-		
 	Spawn3:
-	    CELL DEFBC 3;
+		CELL DEFBC 3;
 		loop;
-		
 	SpawnOriginal:
-	    CELL A -1;
+		CELL A -1;
 		Stop;
 	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 100;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-	}
 }
 
-// Cell pack ---------------------------------------------------------------
-
-Class AmmoCellPack : AmmoCell Replaces CellPack
+class BDPCellPack : BDPCell replaces CellPack
 {
 	Default
 	{
-	Inventory.PickupMessage "$GOTCELLBOX";
-	Inventory.Pickupsound "PLAPICK2";
-	Inventory.Amount 100;
-	Scale 0.9;
+		Inventory.PickupMessage "$GOTCELLBOX";
+		Inventory.Pickupsound "PLAPICK2";
+		Inventory.Amount 100;
+		BDPAmmo.Score 150;
 	}
 	States
 	{
 	Spawn:
-	TNT1 A 0;
-	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1");
-	NULL A 0 A_jump(128,2);
-	NULL A 0 A_ChangeFlag("XFLIP",1);
-	TNT1 A 0;
-	    TNT1 A 1 A_Jump(256, "spawn1", "spawn2", "spawn3");
-		Loop;
-		
+		TNT1 A 0 NoDelay{if(random(0,1) == 0) bXFlip = true;}
+		TNT1 A 0 A_Jump(64, "SpawnOriginal");
+		TNT1 A 0 A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
 	Spawn1:
 		CELP ABCDEFGH 2;
 		Loop;
@@ -448,178 +417,8 @@ Class AmmoCellPack : AmmoCell Replaces CellPack
 	Spawn3:
 		CELP FGHABCDE 2;
 		Loop;
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 150;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
+	SpawnOriginal:
+		CELP A -1;
+		Stop;
 	}
 }
-
-// Shells ------------------------------------------------------------------
-
-Class AmmoShell : Ammo Replaces Shell
-{
-	Default
-	{
-	Inventory.PickupMessage "$GOTSHELLS";
-	Inventory.Amount 4;
-	Inventory.MaxAmount 50;
-	Ammo.BackpackAmount 8;
-	Ammo.BackpackMaxAmount 100;
-	Inventory.Icon "SHELA0";
-	Inventory.Pickupsound "SHELPK1";
-	Scale 0.9;
-	}
-	States
-	{
-	Spawn:
-	TNT1 A 1;
-	TNT1 A 0;
-	//TNT1 A 0 A_jump(7,"spawngrenade")
-	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1");
-	NULL A 0 A_jump(128,2);
-	NULL A 0 A_ChangeFlag("XFLIP",1);
-	TNT1 A 0;
-	
-		TNT1 A 0 A_Jump(256,"Spawn1","Spawn2","Spawn3","Spawn4","Spawn5","Spawn6","Spawn7","Spawn8","Spawn9");
-		Spawn1:
-		SHEL B -1;
-		Stop;
-		Spawn2:
-		SHEL C -1;
-		Stop;
-		Spawn3:
-		SHEL D -1;
-		Stop;
-		Spawn4:
-		SHEL E -1;
-		Stop;
-		Spawn5:
-		SHEL F -1;
-		Stop;
-		Spawn6:
-		SHEL G -1;
-		Stop;
-		Spawn7:
-		SHEL H -1;
-		Stop;
-		Spawn8:
-		SHEL I -1;
-		Stop;
-		Spawn9:
-		SHEL J -1;
-		Stop;
-
-		
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 50;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-	}
-}
-
-Class AmmoShellSingle : AmmoShell
-{
-Default
-{
-+ROLLSPRITE;
-+ROLLCENTER;
-Inventory.Amount 1;
-Inventory.PickupMessage "Picked up a shell.";
-}
-	States
-	{
-	Spawn:
-	TNT1 A 1;
-	TNT1 A 0 A_Jump(255,"SpawnX","SpawnY","SpawnZ","Stay");
-	
-	SpawnX:
-		TNT1 A 0 A_SetRoll(90);
-		Goto Stay;
-	SpawnY:
-		TNT1 A 0 A_SetRoll(-90);
-		Goto Stay;
-	SpawnZ:
-		TNT1 A 0 A_SetRoll(180);
-		Goto Stay;
-	
-	Stay:
-	SHEL K -1;
-	stop;
-	}
-}
-// Shell box ---------------------------------------------------------------
-
-Class AmmoShellBox : AmmoShell Replaces SHellBox
-{
-	Default
-	{
-	Inventory.PickupMessage "$GOTSHELLBOX";
-	Inventory.Amount 14;
-	Inventory.Pickupsound "SHELPK2";
-	Scale 0.9;
-	}
-	States
-	{
-	Spawn:
-	TNT1 A 1;
-	//TNT1 A 0 A_jump(7,"spawngrenade")
-	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1");
-	NULL A 0 A_jump(128,2);
-	NULL A 0 A_ChangeFlag("XFLIP",1);
-	TNT1 A 0;
-	    TNT1 A 0 A_Jump(256,"Spawn1","Spawn2","Spawn3","Spawn4","Spawn5");
-		
-	Spawn1:
-		SBOX A -1;
-		Stop;
-		
-	Spawn2:
-		SBOX B -1;
-		Stop;
-		
-	Spawn3:
-		SBOX C -1;
-		Stop;
-		
-	Spawn4:
-		SBOX D -1;
-		Stop;
-		
-	Spawn5:
-		SBOX E -1;
-		Stop;
-
-		
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 50;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-	}
-}
-
-

@@ -1,5 +1,4 @@
-
-CLASS Incinerator : BrutalWeapon
+CLASS BDPIncinerator : BrutalWeapon
 {
 	Default
 	{
@@ -8,55 +7,54 @@ CLASS Incinerator : BrutalWeapon
 		Weapon.SlotPriority 3;
 		Weapon.SelectionOrder 3100;
 		Weapon.AmmoGive 2;
-		Weapon.AmmoType "AmmoRocket";
+		Weapon.AmmoType "BDPRocketAmmo";
 		BrutalWeapon.MagCapacity 60;
 		BrutalWeapon.MagConversion (10,1);
 		Inventory.PickupSound "FLMRPUP";
-		+WEAPON.EXPLOSIVE;
+		+WEAPON.EXPLOSIVE
 		Inventory.PickupMessage "You got the Incinerator! (Slot 5)";
 		Tag "$BDPFLAMER";
 		Inventory.AltHUDIcon "FLMTF0";
 	}
 	States
 	{
-	
-	GrenadeThrowFlash:
-	FLRS BCDE 1;
-	TNT1 A 24;
-	FLRS EDCB 1;//32 in total
-	stop;
-	
-	KickingFlash:
-	FLMT GHIJJJJJJJJJJIHG 1;
-	Goto Ready;
-	AirKickingFlash:
-	    FLMT GHIJJJJJJJJJJJJIHG 1; //18
-	    Goto Ready;
-	SlideKickingStart:
-	    FLMT KLMN 1;
-		FLMT NNNNNNNNNNNNNNNNNN 1; //18
-		FLMT NMLK 1;
+	Grenade: //32
+		FLRS BCDE 1;
+		TNT1 A 24;
+		FLRS EDCB 1;
 		Goto Ready;
-		
-	FuckYouFlash:
-		FLMT GHIJJJJJJJJJJJJJJJJJJJJJJJJIHG 1;
-	    stop;
-		
+	Kick: //16
+		FLMT GHI 1;
+		FLMT J 10;
+		FLMT IHG 1;
+		Goto Ready;
+	AirKick: //18
+		FLMT GHI 1;
+		FLMT J 12;
+		FLMT IHG 1;
+		Goto Ready;
+	SlideKick: //26
+		FLMT KLM 1;
+		FLMT N 20;
+		FLMT MLK 1;
+		Goto Ready;
+	Taunt: //30
+		FLMT GHI 1;
+		FLMT J 24;
+		FLMT IHG 1;
+		Goto Ready;
+	Sprint:
+		FLMT GHI 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
+	SprintLoop:
+		FLMT J 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		Loop;
+	SprintEnd:
+		FLMT IHG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
+		Goto Ready;
 	Ready:
-	Ready3:
 		FLMT ABC 1 A_weaponreadyDX(WRF_ALLOWRELOAD);
 		TNT1 A 0 A_AutoReloadMag();
-		Goto Ready3;
-		
-	SprintOverlay:
-		
-		FLMT GHI 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		KeepSprinting:
-		FLMT J 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-	TNT1 A 0 A_keepsprinting();
-	ReturnFromSprint:
-		FLMT IHG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		Goto ready;
+		Goto Ready;
 	NoAmmo:
 		TNT1 A 0 A_StartSound("weapons/empty", 3);
 	NoAmmo2:
@@ -64,9 +62,8 @@ CLASS Incinerator : BrutalWeapon
 		FLMT ABC 1 A_WeaponReadyDX(WRF_NOFIRE);
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_ATTACK || player.cmd.buttons & BT_ALTATTACK || player.cmd.buttons & BT_RELOAD, "NoAmmo2");
 		Goto Ready;
-	
 	Deselect:
-	    TNT1 A 0 A_StopSound(CHAN_WEAPON);
+		TNT1 A 0 A_StopSound(CHAN_WEAPON);
 		FLRS ABCDE 1;
 		TNT1 A 1;
 		TNT1 A 0 A_Lower();
@@ -76,62 +73,59 @@ CLASS Incinerator : BrutalWeapon
 		TNT1 A 0 A_StartSound("FLMRDRAW");
 		FLRS EDCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
-    Spawn:
-        FLMT F 1;
-        Loop;
-		
-   Fire:
-        FLMT A 0;
-		FLMT A 0 A_JumpIf(waterlevel > 1, "NoAmmo");
-        FLMT A 0 A_CheckIfMag();
-        FLMT A 0 BRIGHT A_Fireprojectile("NewIncineratorFlame",0,false,0,-12);
-		TNT1 A 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, -1, 0, 0, random(-9,9));
-		TNT1 AA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, -1, 0, 0, random(-9,9));
-		FLMT A 0 A_StartSound("FLAMER", 1, CHANF_LOOPING);
-		FLMT A 0 A_TakeMag();
-		FLMT A 0 A_GunLight(750,2);
-		FLMT D 1; //A_SetAngle(random(1, -1) + angle, SPF_INTERPOLATE)
-		FLMT A 0 A_GunLight(600,2);
-		FLMT E 1;
-		FLMT A 0 BRIGHT; //A_SetPitch(random(1, -1) + pitch, SPF_INTERPOLATE)
-		
-		FLMT A 0 A_JumpIf(invoker.mag > 0, 2);
-		FLMT A 0 A_StartSound("FLAMSTOP", 1);
+	Spawn:
+		FLMT F 1;
+		Loop;
+	Fire:
+		TNT1 A 0 A_JumpIf(waterlevel > 1, "NoAmmo");
+		TNT1 A 0 A_CheckIfMag();
+		FLMT D 1 Bright
+		{
+			A_Fireprojectile("NewIncineratorFlame",0,false,0,-12);
+			A_FireParticles(3);
+			A_StartSound("FLAMER", 1, CHANF_LOOPING);
+			A_QuadSound();
+			A_GunLight(750,2);
+			A_TakeMag();
+		}
+		FLMT E 1 Bright A_GunLight(600,2);
+		TNT1 A 0 A_JumpIf(invoker.mag > 0, 2);
+		TNT1 A 0 A_StartSound("FLAMSTOP", 1);
 		Goto NoAmmo;
-		FLMT A 0 A_Refire();
-		FLMT A 0 A_GunLight(500,3);
-		FLMT A 0 A_StartSound("FLAMSTOP", 1);
+		TNT1 A 0 A_Refire();
+		TNT1 A 0 A_GunLight(500,3);
+		TNT1 A 0 A_StartSound("FLAMSTOP", 1);
 		Goto Ready;
-	
-	
 	Altfire:
 		FLMG A 0 A_JumpIf(waterlevel > 1, "NoAmmo");
-        FLMG A 0 A_CheckIfMag(5);
+		FLMG A 0 A_CheckIfMag(5);
 	SmokeFireball:	
-	    NULL A 0 A_StartSound("weapons/firegrenade");
+		NULL A 0 A_StartSound("weapons/firegrenade");
 		TNT1 A 0 a_alertmonstersDX();
-        FLMT D 1 A_FireCustomMissile("SmokeSpewer", 0, 0, 0, -6);
-		"####" A 0 A_WeaponOffset(random(-1,1),32+random(0,1) );
-		FLMG A 0 A_SetPitch(-4.0 + pitch, SPF_INTERPOLATE);
-		FLMG A 0 A_TakeMag(5);
-		TNT1 AAAAAAAA 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, -1, 0, 0, random(-9,9));
-		TNT1 AAAA 0 BRIGHT A_FireCustomMissile("ShotgunParticles2", random(-12,12), 0, -1, 0, 0, random(-9,9));
-		FLMG A 0 A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
-        FLMT DE 1;
-        FLMT AB 1 A_SetPitch(+2.0 + pitch, SPF_INTERPOLATE);
-		//"####" A 0 A_WeaponOffset(0,32)
+		FLMT D 1 Bright
+		{
+			A_FireCustomMissile("SmokeSpewer", 0, 0, 0, -6);
+			A_FireParticles(12);
+			A_StartSound("weapons/firegrenade");
+			A_alertmonstersDX();
+			A_TakeMag(5);
+		}
+		FLMT D 1 Bright
+		{
+			A_WeaponOffset(random(-1,1),32+random(0,1) );
+			A_SetPitch(-4.0 + pitch, SPF_INTERPOLATE);
+			A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
+		}
+		FLMT E 1 Bright;
+		FLMT AB 1 A_SetPitch(+2.0 + pitch, SPF_INTERPOLATE);
 		FLMT CABC 1;
 		Goto Ready;
-		
 	Reload:	
-		TNT1 A 0 A_TakeInventory("Reloading", 1);
-		TNT1 A 0 A_Startsound("FLMRUNLD");
-		FLMT KOPQRSS 1;
-		"####" A 0 A_DiscardMagazine();
-		TNT1 A 0 A_fireprojectile("emptyflamercan",3,false,30,-10,0,-30);
-		FLMT TZZTSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 1;
-		TNT1 A 0 A_ReloadMag();
-		TNT1 A 0 A_Startsound("FLMRLOAD");
+		FLMT K 1 A_Startsound("FLMRUNLD");
+		FLMT OPQRSS 1;
+		FLMT T 1 {A_DiscardMagazine(); A_FireProjectile("emptyflamercan",3,false,30,-10,0,-30);}
+		FLMT ZZTSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 1;
+		FLMT T 1 {A_ReloadMag(); A_Startsound("FLMRLOAD");}
 		FLMT TZZTSSSSSSSSSTUVWXYK 1;
 		Goto Ready;
 		

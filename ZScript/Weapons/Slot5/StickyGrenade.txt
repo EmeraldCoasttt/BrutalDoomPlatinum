@@ -8,13 +8,13 @@ CLASS FreezeNade : actor
 {
 	Default
 	{
-    Radius 4;
+	Radius 4;
 	Height 4;
 	Speed 30;
 
 
   //  +BLOODSPLATTER
-    Gravity 0.7;
+	Gravity 0.7;
 	Damagefunction 0;
 	+MISSILE;
 	+FORCEXYBILLBOARD;
@@ -42,8 +42,8 @@ bouncecount 5;
 
 		
 	
-    Vector3 stickOfs;
-    double stickAngle;
+	Vector3 stickOfs;
+	double stickAngle;
 	
 	int sawtimer;
 	bool hasexploded;
@@ -92,7 +92,7 @@ bouncecount 5;
 				victim.a_pain();
 				}
 				stickOfs = victim.Vec3To(self);
-                    stickAngle = tracer.angle;
+					stickAngle = tracer.angle;
 					/*
 								If(tracer.health < 200 && !tracer.findinventory("melee_attacks"))
 			{
@@ -147,7 +147,7 @@ bouncecount 5;
 			{
 				tracer.a_pain();
 				stickOfs = tracer.Vec3To(self);
-                    stickAngle = tracer.angle;
+					stickAngle = tracer.angle;
 		busebouncestate = false;
 		}
 		If(!tracer)
@@ -289,25 +289,25 @@ CLASS GrenadeTrail : Actor
 	Height 1;
 	Speed 2;
 	Damage 0;
-    +NOBLOCKMAP;
-    +NOTELEPORT;
-    +DONTSPLASH;
+	+NOBLOCKMAP;
+	+NOTELEPORT;
+	+DONTSPLASH;
 	+MISSILE;
 	+nointeraction;
 	+thruactors;
 	+FORCEXYBILLBOARD;
-    +CLIENTSIDEONLY;
+	+CLIENTSIDEONLY;
 	RenderStyle "Add";
-    Scale 0.3;
+	Scale 0.3;
 	Alpha 0.2;
 	Gravity 0;
 	}
 	States
 	{
-    Spawn:
-        TNT1 A 0;
-        FRPB BCDEFGH 3 BRIGHT;
-        Stop;
+	Spawn:
+		TNT1 A 0;
+		FRPB BCDEFGH 3 BRIGHT;
+		Stop;
 	}
 }
 
@@ -326,10 +326,10 @@ CLASS GrenadeTrail3 : GrenadeTrail
 
 	States
 	{
-    Spawn:
-        TNT1 A 0;
-        FRFX KLMNOP 3 BRIGHT;
-        Stop;
+	Spawn:
+		TNT1 A 0;
+		FRFX KLMNOP 3 BRIGHT;
+		Stop;
 	}
 }
 

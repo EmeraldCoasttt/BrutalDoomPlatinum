@@ -1,15 +1,14 @@
-CLASS BattleRifle : Brutalweapon
+CLASS BDPBattleRifle : Brutalweapon
 {
 	Default
 	
 	{
 	Weapon.AmmoGive 30;
-	Weapon.AmmoType "Clip2";
+	Weapon.AmmoType "BDPClip2";
 	brutalweapon.magcapacity 15;
 	Obituary "%o was pierced by %k's Battle Rifle.";
-    Inventory.PickupSound "BR45PICK";
+	Inventory.PickupSound "BR45PICK";
 	Inventory.Pickupmessage "You got the Battle Rifle! (Slot 4)";
-	scale 0.8;
 	Weapon.SlotNumber 4;
 	Weapon.SlotPriority 2;
 	Weapon.SelectionOrder 1550;
@@ -88,50 +87,39 @@ CLASS BattleRifle : Brutalweapon
 	
 	States
 	{
-	
-		GrenadeThrowFlash:
-			BR4S ABCDE 1;
-			TNT1 A 22;
-			BR4S EDCBA 1;//32 in total
-			stop;
-			
-		FuckYouFlash:
-			BR4K ABCDEEEEEEEEEEEEEEEEEEEEEEDCBA 1; //18
-			stop;
-			
-		KickingFlash:
-			BR4K ABCDEEEEEEEEEEDCBA 1;
-			Goto Ready;
-		AirKickingFlash:
-			BR4K ABCDEEEEEEEEEEDCBA 1; //18
-			Goto Ready;
-	
-		SlideKickingStart:
-			BR4K ABCDE 1;
-			BR4K EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 1 { //39 total
-				if (CountInv("Kicking") == 0) {
-					return resolvestate("SlideKickingEnd");
-				}
-				return resolvestate(null);
-			}
-			Goto Ready;
-
-		SlideKickingEnd:
-			BR4K EEEEEEDCBA 1; //10
-			Goto Ready;
-			
-		SprintOverlay:
-			BR4K ABCD 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-			KeepSprinting:
-			BR4K E 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-			"####" A 0 A_keepsprinting();
-			Goto ReturnFromSprint;
-			
-
-	
-		ReturnfromSprint:
-			BR4K DCBA 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-			Goto ready;
+	Grenade: //32
+		BR4S BCDE 1;
+		TNT1 A 24;
+		BR4S EDCB 1;
+		Goto Ready;
+	Kick: //16
+		BR4K ABCD 1;
+		BR4K E 8;
+		BR4K DCBA 1;
+		Goto Ready;
+	AirKick: //18
+		BR4K ABCD 1;
+		BR4K E 10;
+		BR4K DCBA 1;
+		Goto Ready;
+	SlideKick: //26
+		BR4K ABCD 1;
+		BR4K E 18;
+		BR4K DCBA 1;
+		Goto Ready;
+	Taunt: //30
+		BR4K ABCD 1;
+		BR4K E 22;
+		BR4K DCBA 1;
+		Goto Ready;
+	Sprint:
+		BR4K ABCD 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+	SprintLoop:
+		BR4K E 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		Loop;
+	SprintEnd:
+		BR4K DCBA 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		Goto ready;
 	
 		Select:
 			TNT1 A 1 {A_SetCrosshairDX("BR45Ret",2000,0.2); A_GunSlingerMag();}
@@ -163,7 +151,7 @@ CLASS BattleRifle : Brutalweapon
 			{
 				A_overlay(-5,"DoNothing");
 				A_zoomfactor(0.7);
-				A_fireprojectile("shotgunparticles2",random(12,-12),false,0,0,0,random(9,-9));
+				A_FireParticles(1,8);
 				A_FireBattleRifle();
 					
 					A_startsound("BR45FIRE",1,0,0.85);
@@ -265,7 +253,7 @@ CLASS BattleRifle : Brutalweapon
 			if(invoker.scopeZoom == true) A_ZoomFactor(3.0,ZOOM_INSTANT);
 			A_ZoomFactor(1.0);
 		}
-        BR4Z BA 1;
+		BR4Z BA 1;
 		TNT1 A 0 A_SetCrosshairDX("BR45Ret",2000,0.2);
 		TNT1 A 0 A_EndAim;
 		Goto Ready;
@@ -277,7 +265,7 @@ CLASS BattleRifle : Brutalweapon
 				invoker.savedzoom = invoker.owner.player.fov;
 				//console.printf("%i",invoker.savedzoom);
 				invoker.owner.player.fov = invoker.owner.player.fov * 0.7;
-				A_fireprojectile("shotgunparticles2",random(12,-12),false,0,0,0,random(9,-9));
+				A_FireParticles(1,8);
 				
 					A_FireBattleRifle();
 					A_startsound("BR45FIRE",1,0,0.85);
@@ -317,7 +305,7 @@ CLASS BattleRifle : Brutalweapon
 			TNT1 A 0 A_Semirefire("FireAim","Aim");
 			Goto Aim;
 			/*
-		DualWield:
+		SpecialAction:
 			TNT1 A 0 A_takeinventory("startdualwield",1);
 			TNT1 A 0;
 			BR45 B 1 A_weaponoffset(0,33);

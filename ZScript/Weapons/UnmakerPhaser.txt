@@ -1,0 +1,780 @@
+//this is so long it makes working on the unmaker a pain in the ass if it's in the same file
+		/*
+		Actor TeleportPending;
+		
+		UnmakerUnmorph:
+		TNT1 A 0
+		{
+		A_Startsound("CLAP",9);
+		A_Quake(4,12,0,800);
+		FLineTraceData walluse;
+LineTrace(angle, 64, 0, TRF_BLOCKUSE, offsetz: 7, data: walluse);
+ if (walluse.HitType == TRACE_HitWall)
+            {
+               walluse.HitLine.Activate(self, 0, SPAC_Use);
+            }
+		//TNT1 A 0 HealThing(100); //because it damages itself
+		//A_Explode(200, 280, 0 , 0, 160);//, 0, 0, 0, "stomp")
+	A_recoil(14);
+	invoker.owner.vel.z = 14;
+	invoker.owner.setstatelabel("pain");
+	}
+	UNHG A 0 A_takeinventory("unmakerunmorph",1);
+		UNHG A 0 A_ZoomFactor(1.0);
+		UNHG A 0 A_StopSOund(1);
+		UNHG A 0 A_StopSOund(6);
+		UNHG A 0 A_startSOund("UNMPHST", 1);
+		UNHF DCBA 1;
+		Goto Ready3;
+	SpecialAction:
+		TNT1 A 0 A_takeinventory("swapriflespecial",1);
+		UNHG A 0 A_startSOund("UNMCRAK2");
+		UNHF ABCD 1;
+		TNT1 A 0
+		{
+		A_fireprojectile("friendcube",0,false,0,-20,0,-10);
+		}
+		UNHF DDDD 1
+		{
+		A_weaponoffset(random(-2,2),random(32,28));
+		
+		}
+		UNHF DCBA 1 A_takeinventory("swapriflespecial",1);
+		Goto Ready;
+		
+
+		
+	DualWield:
+		TNT1 A 0 A_takeinventory("startdualwield",1);
+		UNHG A 0 A_startSOund("UNMCRAK2");
+		UNHF ABCD 1;
+		/*
+		TNT1 A 0
+			{
+				bool bfounddest;
+				BlockThingsIterator CheckForTargets = BlockThingsIterator.create(Self,8000); //256 can be whatever range around the actor.
+				Actor CurrentActor;
+				While (CheckForTargets.Next())
+					{
+						CurrentActor = CheckForTargets.Thing;
+						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
+						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
+						If (CurrentActor && CurrentActor is "unmakerteleportdestination" && !bfounddest)
+							{
+								invoker.owner.a_spawnitemex("teleportationfog");
+								bfounddest = true;
+								invoker.owner.A_startsound("Weapons/Unmaker/UseTeleporter",18);
+								invoker.owner.angle = currentactor.angle;
+								invoker.owner.vel.z = (invoker.owner.vel.z * -2);
+								invoker.owner.setorigin(currentactor.pos,false);
+								currentactor.setstatelabel("death");
+								invoker.owner.a_spawnitemex("teleportationfog");
+								
+			
+							}
+					}
+				If (!bfounddest)
+					{
+					
+					invoker.owner.A_startsound("Weapons/Unmaker/PlaceTeleporter",18);
+					invoker.owner.A_spawnitemex("unmakerteleportdestination",64,0,0,0,0,0,0,SXF_SETTARGET);
+					//A_fireprojectile("unmakerteleportspawner");
+						If(invoker.owner.countinv("AmmoCell") < 40)
+							{
+							A_damageself(10,"desintegrate");
+							
+							}
+						invoker.owner.takeinventory("AmmoCell",40);
+						
+						Return resolvestate("aimteleport");
+					}
+					Return resolvestate(null);
+			}
+			
+		UNHF DDDD 1
+		{
+		A_weaponoffset(random(-2,2),random(32,28));
+		
+		}
+		UNHF DCBA 1;
+		Goto Ready;
+		
+		
+		
+	AimTeleport:
+		TNT1 A 0
+			{
+				invoker.teleportpending = spawn("UnmakerTeleportSpawner",invoker.owner.pos);
+			}
+	AimTeleport2:
+		UNHF D 1
+			{
+			//A_zoomfactor(0.1);
+			A_startsound("UNMIDLE",6,CHANF_LOOPING);
+				FLineTraceData unmakerdestination;
+			LineTrace(angle, 4096, pitch, TRF_SOLIDACTORS|TRF_THRUHITSCAN, offsetz: player.viewz - pos.z, data: unmakerdestination);
+			vector3 targetpos = unmakerdestination.HitLocation;
+			if (unmakerdestination.HitLine)
+				{
+					vector2 wallnormal = (-unmakerdestination.HitLine.delta.y,unmakerdestination.HitLine.delta.x).unit();
+					if (!unmakerdestination.LineSide)
+					wallnormal *= -1;
+					targetpos += (wallnormal * 18);
+				}
+				/*
+			if (unmakerdestination.Hittype == TRACE_HitFloor)
+				{
+					targetpos.z = (targetpos.z + 16);
+				}
+				*/
+				/*
+				If(invoker.teleportpending)
+					{
+					invoker.Teleportpending.setorigin(targetpos,TRUE);
+					
+					}
+					A_weaponoffset(random(-1,1),random(32,30));
+			}
+		TNT1 A 0 A_jumpifinventory("holdingdual",1,"AimTeleport2");
+		
+		UNHF D 0
+		{
+		If(invoker.teleportpending)
+		{
+		invoker.owner.a_spawnitemex("teleportationfog");
+		invoker.owner.vel.z = (invoker.owner.vel.z * -2);
+		invoker.owner.setorigin(invoker.teleportpending.pos,true);
+		invoker.owner.a_spawnitemex("teleportationfog");
+		invoker.teleportpending.destroy();
+		invoker.owner.A_startsound("Weapons/Unmaker/UseTeleporter",6);
+		If(invoker.owner.countinv("AmmoCell") < 15)
+							{
+							A_damageself(10,"desintegrate");
+							
+							}
+						invoker.owner.takeinventory("AmmoCell",15);
+		}
+		A_weaponoffset(random(-2,2),random(32,28));
+		A_zoomfactor(1);
+		A_explode(450,240,XF_NOTMISSILE | XF_EXPLICITDAMAGETYPE,TRUE,0,0,0,"bulletpuff","disintegrate");
+		A_radiusthrust(256,276);
+		}
+		UNHF DCBA 1 A_takeinventory("startdualwield",1);
+		Goto Ready;
+		
+
+	SpecialAction:
+		TNT1 A 0 A_takeinventory("swapriflespecial",1);
+		TNT1 A 0 A_jumpifinventory("AmmoCell",1,1);
+		Goto ready;
+		UNHG A 0 A_giveinventory("disabletilting",1);
+		UNHG A 0 A_takeinventory("invulnerabilitysphere",1);
+		UNHG A 0 A_startSOund("UNMCRAK2", 1);
+		UNHF ABCD 1;
+		//UNHG A 0 A_PlaySOund("UNMSTA", 1);
+		//UNHG A 0 A_ZoomFactor(0.90);
+	    //UNHF EFGHEFGHEFGHEFGHEFGHEFGHEFGHEFGHEFGHEFGH 1 BRIGHT
+		//{
+		//invoker.A_unmakelevel(6);
+		//A_playSOund("UNMLOP", 6, 1, 1);
+		TNT1 A 0
+		{
+		//A_startSOund("UNMLOP", 6,CHANF_LOOPING);
+		Invoker.owner.acs_namedexecutealways("unmakermorph",0,0,0,0);
+		//invoker.owner.A_morph("meatballplayer",666, MRF_FULLHEALTH | MRF_LOSEACTUALWEAPON | MRF_UNDOBYDEATH | MRF_UNDOBYDEATHFORCED | MRF_UNDOBYDEATHSAVES | MRF_UNDOALWAYS);
+		}
+		TNT1 A -1;
+		Goto ready;
+		
+		
+	}
+}
+
+
+CLASS UnmakerTeleportDestination : Actor
+	{
+		Default
+		{
+			Health 100;
+			//+solid;
+			+shootable;
+			Height 64;
+			Radius 16;
+			//Damagefactor 0.0;
+			+DONTTHRUST; 
+			+buddha;
+			//Damagefactor "stealth", 256;
+			Painchance 0;
+			Painchance "stealth", 255;
+		
+		}
+	
+		States
+		{
+			Spawn:
+				TNT1 A 0;
+				//UMTP A 10 
+				//{
+				
+				//A_spawnitemex("teleportationfog");
+				//}
+				TNT1 A 0 
+				{
+				A_spawnprojectile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160));
+				A_spawnprojectile ("BloodMistExtraBig", 30, 0, random (0, 360), 2, random (60, 90));
+				
+				A_startsound("misc/gibbed",4);
+				}
+				UMTP ABCDEFGHJK 1
+					{
+						if (!level.IsPointInLevel(pos) || !CheckPosition(pos.xy))
+						return resolvestate("pain.stealth");
+						Else
+						Return resolvestate(null);
+					
+					}
+				WAIT;
+			Pain.stealth:
+				TNT1 A 1 
+				{
+				A_givetotarget("AmmoCell",40);
+				
+					
+					A_noblocking();
+					A_startsound("bloood");
+					A_changelinkflags(TRUE);
+					//bnoblockmap = true;
+					
+				}
+				Stop;
+			Death:
+			        TNT1 A 0 A_spawnprojectile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAAAAAAAAAAAA 0 A_spawnprojectile ("BloodMistExtraBig", 30, 0, random (0, 360), 2, random (60, 90));
+		TNT1 AAAAAA 0 A_spawnprojectile ("SuperGoreSpawner", 30, 0, random (0, 360), 2, random (40, 70));
+		TNT1 AAAA 0 A_spawnprojectile ("XDeath2", 20, 0, random (0, 360), 2, random (10, 90));
+		TNT1 AAAA 0 A_spawnprojectile ("XDeath3", 20, 0, random (0, 360), 2, random (10, 90));
+		TNT1 AAAA 0 A_spawnprojectile ("Guts2", 32, 0, random (0, 360), 2, random (10, 90));
+		 TNT1 A 0 A_spawnprojectile ("XDeathOrgan1", 24, 0, random (0, 360), 2, random (10, 90));
+		 TNT1 A 0 A_spawnprojectile ("XDeathOrgan2", 24, 0, random (0, 360), 2, random (10, 90));
+				UMTP A -1
+					{
+					
+					A_noblocking();
+					A_xscream();
+					A_changelinkflags(TRUE);
+					//bnoblockmap = true;
+					}
+					STOp;
+		
+		}
+	}
+	
+Class UnmakerTeleportSpawner : actor
+	{
+		Default
+		{
+		   Scale 0.5;
+	+NOGRAVITY;
+	RenderStyle "Add";
+	Height 16;
+	Radius 16;
+	//Alpha 0.8;
+	}
+	States
+	{
+	Spawn:
+		 BLHD AB 1 BRIGHT A_spawnprojectile("SmallFlameTrails", 0, 0, random (0, 360), 2, random (0, -160));
+
+		LOOP;
+		
+	}
+}
+
+CLASS FriendCube : Actor
+	{
+		Default
+		{
+		Projectile;
+		Speed 15;
+		Height 8;
+		Radius 8;
+		SeeSound "brain/spit";
+		DeathSound "brain/cubeboom";
+		+seekermissile;
+		+forcexybillboard
+		+hittracer
+		}
+		
+		States
+		{
+			Spawn:
+			BOSF A 0 BRIGHT A_startsound("brain/cube");
+			BOSF AABBBCCCDDD 1 BRIGHT A_seekermissile(90,10,SMF_LOOK,256);
+			Loop;
+			Xdeath:
+			Death:
+			TNT1 A 0
+			{
+				If(tracer )//&& tracer.bismonster && tracer.health > 1 && !tracer.bfriendly && !tracer.findinventory("FriendActor"))
+					{
+					tracer.giveinventory("friendactor",1);
+					}
+			
+			}
+			BOSF AAABBBCCCDDDAAABBBCC 1 BRIGHT A_setscale((scale.x - 0.05),(scale.y - 0.05));
+			Stop;
+		
+		}
+	
+	}
+	
+CLASS FriendActor : Inventory
+	{
+		Actor hitbox;
+		Int ownerhealth;
+		Int soulstaken;
+		protected int dur; //this will hold the current value of duration
+	int duration; //this will hold max duration
+	property duration : duration; //this turns the variable above into a property
+	Name savedspecies;
+	bool savedthruflags;
+	bool savedharmflags;
+		Default
+		{
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+		inventory.maxamount 1;
+		+inventory.autoactivate;
+		friendactor.duration 30;
+		}
+		
+		Override void postbeginplay()
+			{
+			
+			/*
+			let hitbox = friendhitbox(owner.spawn("friendhitbox",owner.pos));
+			If(hitbox)
+				{
+				//hitbox.radius = (owner.radius + 2);
+				//Hitbox.height = (owner.height + 2);
+				hitbox.a_setsize((owner.radius + 2),(owner.height + 2));
+				hitbox.tracer = owner;
+				hitbox.actorhealth = -ownerhealth;
+				}
+				
+				savedspecies = owner.species;
+				savedthruflags = owner.bthruspecies;
+				savedharmflags = owner.bdontharmspecies;
+				owner.species = "marines";
+				owner.bthruspecies = true;
+				owner.bdontharmspecies = true;
+			owner.a_cleartarget();
+		
+			owner.bfriendly = true;
+			
+			
+			}
+			
+			Override void Tick() {}
+	
+	//This function is executed every tic by items while they're in an actor's inventory:
+	Override void DoEffect() {
+	super.DoEffect();
+		if (owner.isFrozen())
+			return;
+		//if they die this makes sure they stop flying
+		if (owner.health <= 0) {		
+			DepleteOrDestroy();
+			return;
+		}
+		
+		
+		//increments duration and destroys the item when duration is at max
+		if (level.time % 35 == 0) {
+			if (dur < duration)
+				dur++;
+			else {
+				DepleteOrDestroy();
+				return;
+			}
+		}
+		
+		If(random(1,256) <= 2 && owner)
+					{
+					
+						BlockThingsIterator CheckForplayers = BlockThingsIterator.create(owner,5000); //256 can be whatever range around the actor.
+						Actor CurrentActor;
+						bool foundplayer;
+						While (CheckForplayers.Next())
+							{
+								CurrentActor = CheckForplayers.Thing;
+								If(currentactor && currentactor is 'playerpawn' && !owner.CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && !foundplayer)
+								{
+									owner.A_spawnitemex("teleportationfog");
+									owner.setorigin(currentactor.pos,false);
+									owner.A_spawnitemex("teleportationfog");
+									vector3 savedpos = owner.pos;
+									savedpos.z = (savedpos.z + 20);
+									owner.setorigin(savedpos,false);
+									foundplayer = true;
+								}
+							}
+					
+					}
+		super.DoEffect();
+		}
+		
+		Override void detachfromowner()
+		{
+		owner.species = savedspecies;
+		owner.bdontharmspecies = savedharmflags;
+		owner.bthruspecies = savedthruflags;
+		owner.bfriendly = false;
+		super.detachfromowner();
+		}
+		
+		
+	
+	}
+	
+	
+class UnMakerPhaser : PlayerPawn
+{
+    Property UpMove : upMove;
+
+
+    Default
+    {
+        Speed 600;
+		player.runhealth 999;
+        UnMakerPhaser.UpMove 1.0;
+		Scale 0.6;
+        +NoGravity;
+		//projectile;
+		Health 666;
+		Player.MorphWeapon "UnMakerPhaserWeapon";
+		+noskin;
+		Renderstyle "add";
+        -RollSprite;
+		+forcexybillboard;
+		Player.Face "STF";
+		player.teleportfreezetime 0;
+		-pickup;
+		+FORCERADIUSDMG;
+		Damagefactor 0.0;
+		+noblood;
+    }
+
+
+    const maxYaw = 65536.0;
+    const maxPitch = 65536.0;
+    const maxRoll = 65536.0;
+    const maxForwardMove = 12800;
+    const maxSideMove = 10240;
+    const maxUpMove = 768;
+    const stopFlying = -32768;
+
+    const trichordingCVar = "G_Trichording";
+
+
+    double upMove;
+    Quaternion targetRotation;
+
+
+    override void PostBeginPlay()
+    {
+        Super.PostBeginPlay();
+
+        bFly = true;
+        targetRotation.FromEulerAngle(angle, pitch, roll);
+    }
+
+
+    override void HandleMovement()
+    {
+        if (reactionTime) --reactionTime;   // Player is frozen
+        else
+        {
+            CheckQuickTurn();
+            RotatePlayer();
+            MovePlayer();
+        }
+    }
+
+
+    override void CheckCrouch(bool totallyFrozen) {}
+    override void CheckPitch() {}
+
+
+    override void MovePlayer()
+    {
+        UserCmd cmd = player.cmd;
+
+       // if (IsPressed(BT_Jump)) cmd.upMove = maxUpMove;
+       // if (IsPressed(BT_Crouch)) cmd.upMove = -maxUpMove;
+       // if (cmd.upMove == stopFlying) cmd.upMove = 0;   // Can't stop flying
+
+      //  if (cmd.forwardMove || cmd.sideMove || cmd.upMove)
+      //  {
+            double scale = 1;
+            double fm = 22;
+            double sm = 0;
+            double um = 0;
+
+            [fm, sm, um] = TweakSpeeds3(fm, sm, um);
+
+            Vector3 forward, right, up;
+            [forward, right, up] = GetAxes();
+
+            Vector3 wishVel = fm * forward + sm * right + um * up;
+
+            Accelerate(wishVel.Unit(), wishVel.Length(), 4.0);
+            BobAccelerate(wishVel.Unit(), wishVel.Length(), 4.0);
+
+            if (!(player.cheats & CF_PREDICTING)) PlayRunning();
+
+			if (player.cheats & CF_REVERTPLEASE)
+			{
+				player.cheats &= ~CF_REVERTPLEASE;
+				player.camera = player.mo;
+		//	}
+        }
+    }
+
+
+    virtual void CheckQuickTurn()
+    {
+        UserCmd cmd = player.cmd;
+
+		if (JustPressed(BT_Turn180)) player.turnticks = turn180_ticks;
+
+        if (player.turnTicks)
+        {
+            --player.turnTicks;
+            cmd.yaw = 0.9 * maxYaw / turn180_ticks; 
+        }
+    }
+
+
+    virtual void RotatePlayer()
+    {
+        // Find target rotation
+        UserCmd cmd = player.cmd;
+        double cmdYaw = cmd.yaw * 360 / maxYaw;
+        double cmdPitch = -cmd.pitch * 360 / maxPitch;
+        double cmdRoll = cmd.roll * 360 / maxRoll;
+
+        Quaternion input;
+        input.FromEulerAngle(cmdYaw, cmdPitch, cmdRoll);
+        Quaternion.Multiply(targetRotation, targetRotation, input);
+
+        // Interpolate to it
+        Quaternion r;
+        r.FromEulerAngle(angle, pitch, roll);
+
+        Quaternion.Slerp(r, r, targetRotation, 0.2);
+
+        double newAngle, newPitch, newRoll;
+        [newAngle, newPitch, newRoll] = r.ToEulerAngle();
+
+        A_SetAngle(newAngle, SPF_Interpolate);
+        A_SetPitch(newPitch, SPF_Interpolate);
+        A_SetRoll(newRoll, SPF_Interpolate);
+    }
+
+
+    virtual double, double, double TweakSpeeds3(double forward, double side, double up)
+    {
+        [forward, side] = TweakSpeeds(forward, side);
+
+        up *= upMove;
+
+        return forward, side, up;
+    }
+
+
+    virtual double CmdScale()
+    {
+        bool canStraferun = CVar.FindCVar(trichordingCVar).GetBool();
+        if (canStraferun) return speed;
+
+		UserCmd cmd = player.cmd;
+        double fm = double(cmd.forwardMove) / maxForwardMove;
+        double sm = double(cmd.sideMove) / maxSideMove;
+        double um = double(cmd.upMove) / maxUpMove;
+
+        double maxCmd = Max(Abs(fm), Abs(sm), Abs(um));
+        double total = (fm, sm, um).Length();
+
+        double scale = total ? speed * maxCmd / total : 0;
+
+        return scale;
+    }
+
+
+    virtual void Accelerate(Vector3 wishDir, double wishSpeed, double accel)
+    {
+        double currentSpeed = vel dot wishDir;
+
+        double addSpeed = wishSpeed - currentSpeed;
+        if (addSpeed <= 0) return;
+
+        double accelSpeed = Min(accel * wishSpeed, addSpeed);
+
+        vel += accelSpeed * wishDir;
+    }
+
+
+    virtual void BobAccelerate(Vector3 wishDir, double wishSpeed, double accel)
+    {
+        double currentSpeed = player.vel dot wishDir.xy;
+
+        double addSpeed = wishSpeed - currentSpeed;
+        if (addSpeed <= 0) return;
+
+        double accelSpeed = Clamp(accel * wishSpeed, 0, addSpeed);
+
+        player.vel += accelSpeed * wishDir.xy;
+    }
+
+
+    Vector3, Vector3, Vector3 GetAxes()
+    {
+        Quaternion r;
+        r.FromEulerAngle(angle, pitch, roll);
+
+        Vector3 forward = (1, 0, 0);
+        forward = r.Rotate(forward);
+
+        Vector3 right = (0, -1, 0);
+        right = r.Rotate(right);
+
+        Vector3 up = (0, 0, 1);
+        up = r.Rotate(up);
+
+        return forward, right, up;
+    }
+
+
+    bool IsPressed(int bt)
+    {
+        return player.cmd.buttons & bt;
+    }
+
+    bool JustPressed(int bt)
+    {
+        return (player.cmd.buttons & bt) && !(player.oldButtons & bt);
+    }
+	Override void tick()
+	{
+		ACS_namedexecutealways("UnmakerFear",0,0,0,0);
+		if (level.time % 3 == 0)
+		{
+			takeinventory("AmmoCell",1);
+		}
+		
+		FLineTraceData collision;
+		LineTrace(angle, 38, pitch, TRF_SOLIDACTORS|TRF_THRUHITSCAN, offsetz: player.viewz - pos.z, data: collision);
+		
+		//If(collision1.HitType == TRACE_HitWall || collision2.HitType == TRACE_HitWall || collision3.HitType == TRACE_HitWall || collision1.HitType == TRACE_HitFloor || collision2.HitType == TRACE_HitFloor || collision3.HitType == TRACE_HitFloor || collision1.HitType == TRACE_Hitceiling || collision2.HitType == TRACE_Hitceiling || collision3.HitType == TRACE_HitCeiling)
+		//	{
+		//	Health = health - 20;
+		//	}
+			
+		If(collision.hittype == TRACE_HITWALL)
+		{
+			health = 0;
+			A_startsound("skeleton/melee",16);
+		}
+		
+		If(health < 1 || countinv("AmmoCell") < 1)
+			{
+				A_explode(450,240,XF_NOTMISSILE | XF_EXPLICITDAMAGETYPE,TRUE,0,0,0,"bulletpuff","disintegrate");
+				A_radiusthrust(256,276);
+				A_takeinventory("disabletilting",1);
+				ACS_namedexecutealways("UnmakerUnmorph",0,0,0,0);
+			}
+			If(health <= 663)
+			{
+			Health = health + 3;
+			}
+			Else if(health < 666)
+			{
+			Health = health + 1;
+			}
+		Super.tick();
+	}
+	
+	
+	States
+	{
+	Spawn:
+	//See:
+	//Missile:
+	//Melee:
+	//Pain:
+	BLHD AB 1 BRIGHT
+	{
+	A_explode(150,70,XF_NOTMISSILE | XF_EXPLICITDAMAGETYPE,true,0,0,0,"bulletpuff","disintegrate");
+	}//A_SpawnItemEX("FireballExplosionFlamesSmall");
+		//TNT1 A 0 A_CustomMissile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360))
+		Loop;
+	
+	}
+	
+}
+
+CLASS UnmakerPhaserWeapon : doomweapon
+{
+Default
+	{
+		Weapon.AmmoType1 "AmmoCell";
+	}
+States
+{
+Deselect:
+		HBRS CBA 1;
+		HBRG AAAAAAAAAAAA 0 A_Lower(24);
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 A_Lower(24);
+		Loop;
+	Select:
+		TNT1 A 1 A_Raise(24);
+		HBRG AAAAAAAAA 0 A_Raise(24);
+		Select2:
+		TNT1 A 0 A_startSound("baron/sight");
+		HBRS ABC 1;
+		Goto Ready;
+		Ready:
+		UNHF E 0 
+		{
+		{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("UnmakerCrosshair"));}else{A_SetCrosshair(0);}}
+		a_overlay(10,"goreverlay");
+		a_overlayflags(10,PSPF_ADDBOB,FALSE);
+		a_overlayflags(10,PSPF_FORCESTYLE | PSPF_RENDERSTYLE,TRUE);
+		a_overlayflags(overlayid(),PSPF_ADDBOB,FALSE);
+		a_overlayflags(overlayid(),PSPF_FORCESTYLE | PSPF_RENDERSTYLE,TRUE);
+		//Invoker.owner.acs_namedexecutealways("BDSTARTCAMERA",0,0,0,0);
+		A_zoomfactor(0.6);
+		}
+		Ready2:
+		Fire:
+		 TNT1 A 1 BRIGHT
+		{
+		giveinventory("ReturnUnmorphStuffPlease",1);
+		//A_saw("null","null",10,null,SF_NORANDOM,80,2.8,2.8);
+		//invoker.A_unmakelevel(6);
+		//A_playSOund("UNMLOP", 6, 1, 1);
+		A_startSOund("UNMPHAS", 6,CHANF_LOOPING);
+		A_spawnitemex("fireballexplosionflamessmall");
+		A_spawnitemex("RocketSmokeTrail52");
+		//A_fireprojectile("FireballExplosionFlamesSmall",frandom(220,140),false,0,-20,0,frandom(220,140));
+		//Radius_Quake(9, 24, 0, 60, 0);
+		}
+		LOOP;
+		
+	Goreverlay:
+		UMTP A 1;
+		LOOP;
+		}
+		
+		}*/

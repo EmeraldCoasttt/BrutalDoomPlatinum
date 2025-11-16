@@ -1,5 +1,6 @@
 Gameinfo
 {
+	PlayerClasses = "BDPPlayer"
 	StatusBarClass = "BDP_HUD"
 	AddEventHandlers = "WeaponSpawnHandler"
 	AddEventHandlers = "BDPHandler"
@@ -26,7 +27,7 @@ Gameinfo
 
 DoomEdNums
 {
-	2552 = Railgun
+	2552 = BDPRailgun
 	7261 = BDPTank
 	7262 = BDPChopper
 	7264 = BDPHoverTank
@@ -45,7 +46,7 @@ DoomEdNums
 	26026 = OneUpmanshipPickup
 	26027 = UltranightmarePickup
 	26028 = HeavyRain
-	3134 = BattleRifle
+	3134 = BDPBattleRifle
 	5462 = BDPTurret
 	25869 = EnergyArmor
 }

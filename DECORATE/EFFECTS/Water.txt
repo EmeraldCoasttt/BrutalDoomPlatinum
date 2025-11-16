@@ -482,37 +482,6 @@ actor WaterSplashBase2
   }
 }
 
-Actor WaterSplashWaves
-{
-	+THRUACTORS
-	+DONTSPLASH
-	+CLIENTSIDEONLY
-	Mass 0
-	Scale 1.6
-	States
-		{
-			Spawn:
-				TNT1 A 0
-				TNT1 A 0 ACS_NamedExecuteAlways("BDCheckWaterRipples", 0, 0, 0, 0)
-				TNT1 A 3
-				TNT1 A 0 A_JumpIfInventory("Clip2", 1, "Vanish")
-				SPSH DE 4 A_SetScale(1.2, 1.8)
-				SPSH FHI 4 
-				TNT1 A 0 A_SetScale(1.6, 1.4)
-				SPSH DEFHI 6 
-				TNT1 A 0 A_SetScale(1.8, 0.8)
-				SPSH DEFHI 8
-				//TNT1 A 1 A_SetScale(2.8, 0.5)
-				//SPSH DEFHI 16
-				Stop
-			
-			Vanish:
-				TNT1 A 0
-				Stop
-			}
-}
-
-
 actor WaterSplashBaseSmall
 {
   Radius 1

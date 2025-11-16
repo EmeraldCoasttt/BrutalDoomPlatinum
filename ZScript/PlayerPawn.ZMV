@@ -234,6 +234,8 @@ class Brutal_PlayerBase : PlayerPawn
 	vector2 crosshairscale;
 	int crosshairrange;
 	
+	int haskicked;
+	
 	Actor Visorlight;
 	
 	// List of weapons to be dropped because they were
@@ -258,11 +260,345 @@ class Brutal_PlayerBase : PlayerPawn
 	const MAXOWNEDWEAPONS = 4;
 	
 	Default
-    {
+	{
 		Player.DisplayName "Brutal Doom Player";
-        PainChance 255;
-    }
+		PainChance 255;
+	}
 	
+	Action void a_kickflags()
+	{
+		BrutalWeapon heldweap = BrutalWeapon(player.readyweapon);
+		If(heldweap.offhandkick)
+			{
+				A_OverlayFlags(-602,PSPF_FLIP | PSPF_MIRROR,true);
+				A_OverlayFlags(-610,PSPF_FLIP | PSPF_MIRROR,true);
+				A_OverlayFlags(-611,PSPF_FLIP | PSPF_MIRROR,true);
+				A_OverlayFlags(-601,PSPF_FLIP | PSPF_MIRROR,true);
+				A_OverlayFlags(-607,PSPF_FLIP | PSPF_MIRROR,true);
+			}
+		Else
+			{
+				A_OverlayFlags(-602,PSPF_FLIP | PSPF_MIRROR,false);
+				A_OverlayFlags(-610,PSPF_FLIP | PSPF_MIRROR,false);
+				A_OverlayFlags(-607,PSPF_FLIP | PSPF_MIRROR,false);
+				A_OverlayFlags(-601,PSPF_FLIP | PSPF_MIRROR,false);
+			}
+	}
+	
+	action Actor A_BDPMelee(double range = 200, name projectile = "MeleeAttack", double spawnheight = -7, bool doHitThrust = true)
+	{
+		Actor Victim;
+		
+			FLineTraceData lt;
+			double aimz = self.player ? self.player.viewheight : (self.height * 0.5);
+			self.LineTrace(self.angle, range, self.pitch, 0, aimz, data:lt);
+			victim = lt.HitActor;
+			int aimCheck = -6;
+			bool backsmack;
+		
+		
+			while (aimCheck++ < 6 && !victim)
+			{
+				self.LineTrace(self.angle + (aimCheck * 8), range, self.pitch, 0, aimz, data:lt);
+			victim = lt.hitActor;
+			}
+			
+			
+		
+			
+		
+		if(victim && victim.bSHOOTABLE) 
+		{
+			
+			vector3 victimAngles = level.sphericalCoords(victim.pos, self.pos, (victim.angle, victim.pitch));
+			
+
+			
+			double inertia = BDPMath.GetInertia(victim.mass);
+			self.A_Quake(2,3,0,20,"");
+			self.A_face(victim);
+			if(doHitThrust && victim.bsolid)
+			{
+				self.vel *= 0;
+				self.vel += BDPMath.VecFromAngles(self.angle, self.pitch, -12);	
+			}
+						
+		}
+		actor proj = SpawnPlayerMissile(projectile,1e37,0,spawnheight);// A_FireProjectile(projectile, 0, 0, 0, spawnheight);
+			If(proj && victim && victim.bSHOOTABLE)
+			{
+				proj.setorigin(victim.pos,false);
+			}
+		
+		return victim;
+	}
+	
+	Action void A_BDPMeleeStart(double range = 200)
+	{
+	//if(A_CheckMeleeRange(skipWalls:true) < range) A_Recoil3D(-20); 
+		FLineTraceData lt;
+			LineTrace(angle, range, pitch, 0, player.viewheight, data:lt);
+			If(lt.hitactor && lt.hitactor.bsolid)
+			{
+				A_face(lt.hitactor,0,0,0,0,FAF_MIDDLE);
+				A_Recoil3D(-20);
+				
+			}
+		
+		
+		
+	}
+	
+	action void A_Recoil3D(double amt)
+	{
+		vel += BDPMath.VecFromAngles(angle, pitch, -amt);	
+	}
+	
+	States
+	{
+	KickCheck:
+		TNT1 A 1 A_JumpIf(player.cmd.buttons & BT_USER1 && CountInv("veh_manager") < 1,"KickAction");
+		Loop;
+	KickAction:
+		TNT1 A 0 {haskicked = 1;}
+		TNT1 A 0 A_kickflags();
+		TNT1 A 0
+		{
+			if(player.crouchfactor != 1 && (player.cmd.buttons & BT_CROUCH || player.oldbuttons & BT_CROUCH) && !exhausted)
+			{
+				return resolvestate("SlideKickAction");
+			}
+			else if(vel.Z != 0)
+			{
+				return resolvestate("AirKickAction");
+			}
+			else
+			{
+				return resolvestate(null);
+			}
+		}
+		TNT1 A 0 A_StartSound("KICK",69);
+		TNT1 A 0 
+		{
+			A_Overlay(-601,"KickTranslatable");
+			A_OverlayFlags(-601, PSPF_PLAYERTRANSLATED | PSPF_ADDWEAPON, true);
+		}
+		3ICK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
+		2ICK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
+		1ICK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
+		KICK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
+		//
+		3ICK A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
+		2ICK A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
+		1ICK A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
+		KICK N 0;
+		"####" A 0;
+		"####" ABC 1 A_BDPMeleeStart();
+		"####" A 0 {
+				haskicked = 2;
+				A_BDPMelee();
+		}
+		
+		
+		"####" DDEEEEFGHIJ 1;
+		"####" A 0 A_Takeinventory("Kicking",1);
+		"####" KLM 1;
+		TNT1 A 0 SetPlayerProperty(0,0,0);
+		TNT1 A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "KickCheckButTakeKickAndIdk");
+//		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
+		RIBA A 0 A_Takeinventory("Kicking",1);
+		NULL A 0;
+	//	TNT1 A 3 A_Takeinventory("Kicking",1)
+		Goto KickCheck;
+	KickTranslatable:
+		TNT1 A 0 A_OverlayFlags(-601, PSPF_PLAYERTRANSLATED | PSPF_ADDWEAPON, true);
+		9ICK ABCDDEEEEFGHIJKLM 1;
+		STOP;
+	
+	
+	AirKickAction:
+	 //   TNT1 A 0 A_JumpIfInventory("PSeq2",1,2)
+	 TNT1 A 0 
+		{
+			A_Overlay(-601,"AirKickTranslatable");
+			A_OverlayFlags(-601, PSPF_PLAYERTRANSLATED | PSPF_ADDWEAPON, true);
+		}
+		3ICK A 0 A_JumpIfInventory("GreenBloodOnBoots", 1, 4);
+		2ICK A 0 A_JumpIfInventory("BlueBloodOnBoots", 1, 3);
+		1ICK A 0 A_JumpIfInventory("RedBloodOnBoots", 1, 2);
+		KICK A 0;
+		"####" A 0;
+		"####" A 0;
+		"####" A 0 A_StartSound("KICK",69);
+		"####" NOPQ 1 A_BDPMeleeStart(400);
+		//
+		"####" A 0;
+		"####" A 0 {
+			A_recoil(-6);
+					//heldweap.A_FireProjectile("MeleeAttackAir", 0, 0, 0, -31);
+					SpawnPlayerMissile("MeleeAttackAir",1e37,0,-31);
+					A_BDPMelee(200,"meleeattackair",-31);
+			
+		}
+	   // "####" O 3
+		3ICK A 0 A_JumpIfInventory("GreenBloodOnBoots", 1, 4);
+		2ICK A 0 A_JumpIfInventory("BlueBloodOnBoots", 1, 3);
+		1ICK A 0 A_JumpIfInventory("RedBloodOnBoots", 1, 2);
+		KICK A 0;
+		"####" A 0;
+		"####" RRS 1;
+		"####" A 0 {haskicked = 2;}
+		"####" SSSTUVWXYZ 1;
+		"####" A 0 A_Takeinventory("Kicking",1);
+		
+		"####" "[]" 1;
+		Goto KickCheck;
+	AirKickTranslatable:
+		9ICK A 0 A_OverlayFlags(-601, PSPF_PLAYERTRANSLATED | PSPF_ADDWEAPON, true);
+		"####" A 0;
+		"####" A 0;
+		"####" A 0;
+		"####" NOPQ 1;
+		"####" A 0;
+		"####" A 0;
+		"####" RRSSSSTUVWXYZ 1;
+		"####" A 0;
+		"####" "[]" 1;
+		STOP;
+	SlideKickRightLegOverlay:
+		3LID A 0 A_JumpIfInventory("GreenBloodOnBoots", 1, 4);
+		2LID A 0 A_JumpIfInventory("BlueBloodOnBoots", 1, 3);
+		1LID A 0 A_JumpIfInventory("RedBloodOnBoots", 1, 2);
+		SLID A 0;
+		"####" A 1
+		{
+			A_kickflags();
+			if(Pitch<=1)
+			{
+				A_OverlayOffset(-610, 0, (-pitch*2));
+			}
+		}
+		"####" BCDEEEEEEEEEEEEEEE 1
+		{
+		A_kickflags();
+			if(Pitch<=1)
+			{
+				A_OverlayOffset(-610, 0, (-pitch*2));
+			}
+		}
+		Goto SlideKickRightLegOverlayFinish;
+	SlideKickTranslatable:
+		9LID A 0;
+		"####" A 1
+		{
+		A_kickflags();
+			if(Pitch<=1)
+			{
+			A_OverlayOffset(-601, 0, (-pitch*2));
+			}
+		}
+		"####" BCDEEEEEEEEEEEEEEE 1
+		{
+		A_kickflags();
+			if(Pitch<=1)
+			{
+				A_OverlayOffset(-601, 0, (-pitch*2));
+			}
+		}
+		Goto SlideKickTranslatableFinish;
+	SlideKickRightLegOverlayFinish:
+		3LID A 0 A_JumpIfInventory("GreenBloodOnBoots", 1, 4);
+		2LID A 0 A_JumpIfInventory("BlueBloodOnBoots", 1, 3);
+		1LID A 0 A_JumpIfInventory("RedBloodOnBoots", 1, 2);
+		SLID A 0;
+		"####" A 0;
+		"####" DDFGHIJ 1
+		{
+		A_kickflags();
+			if(Pitch<=1)
+			{
+				A_OverlayOffset(-610, 0, (-pitch*2));
+			}
+		}
+		Stop;
+	SlideKickTranslatableFinish:
+		9LID A 0;
+		"####" A 0;
+		"####" DDFGHIJ 1
+		{
+		A_kickflags();
+			if(Pitch<=1)
+			{
+				A_OverlayOffset(-601, 0, (-pitch*2));
+			}
+		}
+		Stop;
+	SlideKickAction:
+		TNT1 A 0 A_StartSound("KICK",69);
+		TNT1 A 0 A_Recoil (-6);
+		TNT1 A 0 A_StartSound("SlideKickStart", 71);
+		TNT1 A 0
+		{
+			If(istactical)
+			{
+				stamina += 60;
+				If(stamina > 100)
+				{
+					A_startSound("Tired", 21,CHANF_NOSTOP);
+					stamina = 100;
+				}
+			}
+		}
+		NULL A 0 A_Overlay(-610,"SlideKickRightLegOverlay");
+		TNT1 A 0 
+		{
+			A_Overlay(-601,"SlideKickTranslatable");
+			A_OverlayFlags(-601, PSPF_PLAYERTRANSLATED | PSPF_ADDWEAPON, true);
+		}
+		TNT1 B 1{player.MaxPitch = 0; player.crouching = -1;}
+		NULL CE 1 {player.crouching = -1;}
+		"####" A 0 {haskicked = 2;}
+		NULL FFFFFFFFFFFFFFFF 1
+		{
+			double spd = Vel.XY dot Angle.ToVector();
+			//console.printf("%i",spd);
+			If(spd < 40)
+			{
+				A_Recoil (-3);
+			}
+			player.crouching = -1;
+			//A_FireProjectile("MeleeAttackSlide", 0, 0, 0, -7, FPF_NOAUTOAIM, (-pitch));
+			double curpitch = pitch;
+			pitch = 0;
+			SpawnPlayerMissile("MeleeAttackSlide",1e37,0,-7);
+			pitch = curpitch;
+			A_WeaponOffset(random(1,1),random(32,34));
+		}
+		"####" A 0 A_TakeInventory("KickHasHit", 1);
+		"####" A 0 SetPlayerProperty(0,0,0);
+		Goto FinishSlide;
+		
+	FinishSlideHitwall:
+		"####" A 0 A_Stop();
+	FinishSlide:
+		"####" A 0 A_Overlay(-610,"SlideKickRightLegOverlayFinish");
+		"####" A 0 A_StartSound("SlideKickStop", 71);
+		"####" A 0;
+		
+		TNT1 GHIJ 1 {player.crouching = -1;}
+		//A_SetPitch(Pitch-1, SPF_INTERPOLATE)
+		"####" A 0 A_Takeinventory("Kicking",1); //separated for melee
+		TNT1 A 0 {
+		if(pitch > 0)
+		{
+			A_SetPitch(0);
+		}
+		player.MaxPitch = 90;
+		player.crouching = 0;
+		}
+		TNT1 KLM 1;
+		Goto KickCheck;
+	}
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	////																						////
@@ -463,7 +799,7 @@ class Brutal_PlayerBase : PlayerPawn
 		bool canDualWield = IsDualWieldable(weap);
 		
 		bool isfists;
-		If(player.readyweapon && player.readyweapon is "Melee_attacks" && overcap && !isdualwieldable)
+		If(player.readyweapon && player.readyweapon is "BDPFist" && overcap && !isdualwieldable)
 		{
 			isfists = true;
 		}
@@ -696,7 +1032,7 @@ class Brutal_PlayerBase : PlayerPawn
 				//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
 				If (CurrentActor && CurrentActor.bIsMonster && !currentactor.bfriendly  && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && currentactor != self && !(currentactor is "explosivebarrel1") && currentactor.health > 0 && !currentactor.findinventory("youveseenme"))
 				{
-					vector3 targetpos = LevelLocals.SphericalCoords((pos.x,pos.y,player.viewz),currentactor.pos+(0,0,currentactor.default.height*0.5),(angle,pitch));    
+					vector3 targetpos = LevelLocals.SphericalCoords((pos.x,pos.y,player.viewz),currentactor.pos+(0,0,currentactor.default.height*0.5),(angle,pitch));	
 					if (abs(targetpos.x) <= 20 && abs(targetpos.y) <= 20)
 					{
 						//console.printf(currentactor.getclassname());
@@ -736,51 +1072,51 @@ class Brutal_PlayerBase : PlayerPawn
 			tauntcooldown = 105;
 			If(player.readyweapon)
 			{
-				If(player.readyweapon is "Chain_Saw")
+				If(player.readyweapon is "BDPChainsaw")
 				{
 					A_startsound("DGCSAW",455);
 				}
-				else if(player.readyweapon is "BIG_FUCKING_GUN")
+				else if(player.readyweapon is "BDPBFG9000")
 				{
 					A_startsound("DGBFG",455);
 				}
-				else if(player.readyweapon is "PLASMA_GUN")
+				else if(player.readyweapon is "BDPPlasmaRifle")
 				{
 					A_startsound("DGPLAS",455);
 				}
-				else if(player.readyweapon is "MiniGun")
+				else if(player.readyweapon is "BDPMinigun")
 				{
 					A_startsound("DGCGUN",455);
 				}
-				else if(player.readyweapon is "BrutalSMG")
+				else if(player.readyweapon is "BDPSubmachineGun")
 				{
 					A_startsound("DGSMG",455);
 				}
-				else if(player.readyweapon is "DoxsRevolver")
+				else if(player.readyweapon is "BDPRevolver")
 				{
 					A_startsound("DGREV",455);
 				}
-				else if(player.readyweapon is "Unmaker")
+				else if(player.readyweapon is "BDPUnmaker")
 				{
 					A_startsound("DGUNM",455);
 				}
-				else if(player.readyweapon is "Rocket_Launcher")
+				else if(player.readyweapon is "BDPRocketLauncher")
 				{
 					A_startsound("DGROCK",455);
 				}
-				else if(player.readyweapon is "AssaultShotgun")
+				else if(player.readyweapon is "BDPAssaultShotgun")
 				{
 					A_startsound("DGAUTO",455);
 				}
-				else if(player.readyweapon is "rifle")
+				else if(player.readyweapon is "BDPAssaultRifle")
 				{
 					A_startsound("DGASS",455);
 				}
-				else if(player.readyweapon is "incinerator")
+				else if(player.readyweapon is "BDPIncinerator")
 				{
 					A_startsound("DGFLAM",455);
 				}
-				else if(player.readyweapon is "Shot_gun" || player.readyweapon is "SSG")
+				else if(player.readyweapon is "BDPShotgun" || player.readyweapon is "BDPSuperShotgun")
 				{
 					A_startsound("DGSGUN",455);
 				}
@@ -868,60 +1204,60 @@ class Brutal_PlayerBase : PlayerPawn
 		}
 		
 		if (findinventory("BDPInvuln"))
-            {
-                PPShader.SetEnabled("tempinv", true);
+			{
+				PPShader.SetEnabled("tempinv", true);
 				invtimer = 1.0;
 				PPShader.SetUniform1f("tempinv","intensity",invtimer);
-            }
-            else If(invtimer > 0)
-            {
-                invtimer -= 0.04;
+			}
+			else If(invtimer > 0)
+			{
+				invtimer -= 0.04;
 				PPShader.SetUniform1f("tempinv","intensity",invtimer);
-            }
+			}
 		if (findinventory("PowerIronFeet"))
-            {
-                PPShader.SetEnabled("radsuit", true);
+			{
+				PPShader.SetEnabled("radsuit", true);
 				radsuittimer = 0.15;
 				PPShader.SetUniform1f("radsuit","intensity",radsuittimer);
-            }
-            else If(radsuittimer > 0)
-            {
-                radsuittimer -= 0.01;
+			}
+			else If(radsuittimer > 0)
+			{
+				radsuittimer -= 0.01;
 				PPShader.SetUniform1f("radsuit","intensity",radsuittimer);
-            }
+			}
 		if (findinventory("PowerSpeed2"))
-             {
-                PPShader.SetEnabled("haste", true);
+			 {
+				PPShader.SetEnabled("haste", true);
 				hastetimer = 0.30;
 				PPShader.SetUniform1f("haste","intensity",hastetimer);
-            }
-            else If(hastetimer > 0)
-            {
-                hastetimer -= 0.01;
+			}
+			else If(hastetimer > 0)
+			{
+				hastetimer -= 0.01;
 				PPShader.SetUniform1f("haste","intensity",hastetimer);
-            }
+			}
 		if (findinventory("PowerRage"))
-            {
-                PPShader.SetEnabled("rage", true);
+			{
+				PPShader.SetEnabled("rage", true);
 				ragetimer = 0.30;
 				PPShader.SetUniform1f("rage","intensity",ragetimer);
-            }
-            else If(ragetimer > 0)
-            {
-                ragetimer -= 0.01;
+			}
+			else If(ragetimer > 0)
+			{
+				ragetimer -= 0.01;
 				PPShader.SetUniform1f("rage","intensity",ragetimer);
-            }
+			}
 		if (findinventory("PowerQuakeDamage"))
-            {
-                PPShader.SetEnabled("quad", true);
+			{
+				PPShader.SetEnabled("quad", true);
 				quadtimer = 0.30;
 				PPShader.SetUniform1f("quad","intensity",quadtimer);
-            }
-            else If(quadtimer > 0)
-            {
-                quadtimer -= 0.01;
+			}
+			else If(quadtimer > 0)
+			{
+				quadtimer -= 0.01;
 				PPShader.SetUniform1f("quad","intensity",quadtimer);
-            }
+			}
 		
 		
 		//Health Regen
@@ -1535,7 +1871,7 @@ class Brutal_PlayerBase : PlayerPawn
 			forwardmove = fm * movefactor * (35 / TICRATE);
 			sidemove = sm * movefactor * (35 / TICRATE);
 			
-			//console.printf("Speed      : %010.5f u/s", forwardmove, DTA_HUDRules, true);
+			//console.printf("Speed	  : %010.5f u/s", forwardmove, DTA_HUDRules, true);
 			
 			If(!inair || rope.length())
 			{
@@ -1717,11 +2053,11 @@ class Brutal_PlayerBase : PlayerPawn
 				player.jumpTics = -1;
 				If(istactical)
 				Stamina += 20;
-				if (!(player.cheats & CF_PREDICTING)) A_StartSound("BDPJUMP", CHAN_BODY);
+				if (!(player.cheats & CF_PREDICTING)) A_StartSound("BDPJUMP", 32);
 				If(doublejumpready)
 				{
 					alreadyjumped = true;
-					if (!(player.cheats & CF_PREDICTING)) A_StartSound("JMPBOOT", CHAN_BODY);
+					if (!(player.cheats & CF_PREDICTING)) A_StartSound("JMPBOOT", 32);
 				}
 				oldjump = true;
 				If(stamina > 100)
@@ -1888,7 +2224,7 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	
 	Override void Tick()
-    {
+	{
 	
 		if (focusWeapon && !BDPHandler.IsVoodooDoll(self))
 		{
@@ -1959,14 +2295,14 @@ class Brutal_PlayerBase : PlayerPawn
 		bforcexybillboard = FALSE;
 		}
 		if (CountInv("ExecuteDownedEnemy") == 1)
-        {
-           TakeInventory("ExecuteDownedEnemy", 10);
+		{
+		   TakeInventory("ExecuteDownedEnemy", 10);
 		   TakeInventory("GoSpecial", 10);
-            player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("DoExecution"));
+			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("DoExecution"));
 		//	TakeInventory("ExecuteDownedEnemy", 1);
 		//   TakeInventory("GoSpecial", 1);
 			SetStateLabel("SpecialChecker");
-        }
+		}
 		
 		/*
 		if (CountInv("DoStrengthRuneAnim") == 1) {
@@ -1998,7 +2334,7 @@ class Brutal_PlayerBase : PlayerPawn
 			
 		}
 		super.Tick();
-    }
+	}
 	
 	
 	//////////////////////////////////////
@@ -2118,7 +2454,7 @@ class Brutal_PlayerBase : PlayerPawn
 			LedgeGrabbed = True;
 			return;
 		}
-		if((player.readyweapon is "Melee_Attacks") || (player.readyweapon is "Chain_saw") || (player.readyweapon is "BrutalAxe"))
+		if((player.readyweapon is "BDPFist") || (player.readyweapon is "BDPChainsaw"))
 		{
 			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("StainedLedgeClimb"));
 		}
@@ -2475,7 +2811,7 @@ Class Hook : Actor
 			
 			 if (target && target.target)
 			 {//ensure that the shooter even has a target
-            SetOrigin(target.target.pos+(0,0,target.target.height*0.5),false);
+			SetOrigin(target.target.pos+(0,0,target.target.height*0.5),false);
 			target.a_cleartarget();
 			}
 			SpawnTrail();
