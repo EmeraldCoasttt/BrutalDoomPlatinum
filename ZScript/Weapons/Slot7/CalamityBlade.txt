@@ -5,6 +5,7 @@ class BDPCalamityBlade : BrutalWeapon
 
 	Default
 	{
+		Height 20;
 		Tag "$BDPCALAMITY";
 		Inventory.PickupMessage "You got the calamity blade!  Hot damn! (Slot 7)";
 		Weapon.SlotNumber 7;
@@ -55,54 +56,44 @@ class BDPCalamityBlade : BrutalWeapon
 	Spawn:
 		CBLD A -1;
 		stop;
-		
-	GrenadeThrowFlash:
-	HETS BCDE 1;
-	TNT1 A 24;
-	HETS EDCB 1;//32 in total
-	stop;
-	
-	KickingFlash:
-	HETK BCDEFFFFFFFFEDCB 1;
-	Goto Ready;
-	AirKickingFlash:
-	    HETK BCDEFFFFFFFFFFEDCB 1; //18
-	    Goto Ready;
-	
-	 SlideKickingStart:
-	    HETK BCDEF 1;
-	    HETK FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF 1 { //39 total
-			if (CountInv("Kicking") == 0) {
-				return resolvestate("SlideKickingEnd");
-			}
-			return resolvestate(null);
-		}
+	Grenade: //32
+		HETS BCDE 1;
+		TNT1 A 24;
+		HETS EDCB 1;
 		Goto Ready;
-
-	 SlideKickingEnd:
-	    HETK FFFFFFEDCB 1; //10
-	    Goto Ready;
-	FuckYouFlash:
-	    HETK BCDEFFFFFFFFFFFFFFFFFFFFFFEDCB 1; //18
-	    stop;
+	Kick: //16
+		HETK BCDE 1;
+		HETK F 8;
+		HETK EDCB 1;
+		Goto Ready;
+	AirKick: //18
+		HETK BCDE 1;
+		HETK F 10;
+		HETK EDCB 1;
+		Goto Ready;
+	SlideKick: //26
+		HETK BCDE 1;
+		HETK F 18;
+		HETK EDCB 1;
+		Goto Ready;
+	Taunt: //30
+		HETK BCDE 1;
+		HETK F 22;
+		HETK EDCB 1;
+		Goto Ready;
 	Ready:
-	Ready3:
 		HETG A 1 
 		{
 			invoker.heatwaveCharge = 0;
 			Return A_WeaponReadyDX();
 		}
 		loop;
-	SprintOverlay:
+	Sprint:
 			HETK ABCD 1 A_WeaponReadyDX(0,FALSE,FALSE);
-			KeepSprinting:
-			HETK E 1 A_weaponreadyDX(0,FALSE,FALSE);
-			"####" A 0 A_keepsprinting();
-			Goto ReturnFromSprint;
-			
-
-	
-		ReturnfromSprint:
+			SprintLoop:
+			HETK E 1 A_KeepSprinting();
+			Loop;
+		SprintEnd:
 			HETK DCBA 1 A_weaponreadyDX(0,FALSE,FALSE);
 			Goto ready;
 		
@@ -113,7 +104,7 @@ class BDPCalamityBlade : BrutalWeapon
 		Wait;
 	Select:
 		TNT1 A 1 A_SetCrosshairDX("BLADRet", 1000,1.0);
-        BFGN A 0 A_startSound("DoomRR/heatwave/select");
+		BFGN A 0 A_startSound("DoomRR/heatwave/select");
 		HETS EDCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
 	Fire:

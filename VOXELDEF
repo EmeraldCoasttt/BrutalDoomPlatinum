@@ -5,6 +5,6 @@
 csawb = "csawb"
 {
 	AngleOffset = 270
-	//droppedspin = 92
+	PitchFromMomentum
 }
 

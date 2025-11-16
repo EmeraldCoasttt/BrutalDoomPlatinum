@@ -123,8 +123,6 @@ States {
 		TNT1 A 0;
 		TNT1 A 0 A_Jumpif(invoker.hasbeen,"GoingToinstadeselect");
 		//TNT1 A 0 A_SetCrosshairDX("BLADRet", 1000,1.0);
-		Goto SelectFirstPersonLegs;
-		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1)  ;
 		TNT1 A 0 A_SetCrosshairDX("Null");
 		TNT1 A 1 A_instaRaise();
 		//MARN A 0 ACS_ExecuteAlways(294, 0, 0, 0, 0)//Makes player slower.

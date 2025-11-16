@@ -12,7 +12,6 @@ class BDPSubmachineGun : BrutalWeapon
 		Inventory.PickupSound "CLIPIN";
 		Inventory.Pickupmessage "You got the Submachine Gun! (Slot 2)";
 		Inventory.maxamount 2;
-		Scale 0.9;
 		Tag "$BDPSMG";
 		Inventory.AltHUDIcon "SMGZA0";
 		brutalweapon.handedness 1;
@@ -20,36 +19,39 @@ class BDPSubmachineGun : BrutalWeapon
 	}
 	States
 	{
-	FuckYouFlash:
-		SM2S JKLMXXXXXXXXXXXXXXXXXXXXXXMLKJ 1;
-		stop;
-	GrenadeThrowFlash:
+	Grenade: //32
 		SMGS EFGH 1;
 		TNT1 A 24;
-		SMGS HGFE 1;//32 in total
-		stop;
-	KickingFlash:
-		SMGF DEFGHHHHHHHHGFED 1;
+		SMGS HGFE 1;
 		Goto Ready;
-	AirKickingFlash:
-		SMGF DEFGHHHHHHHHHHGFED 1;
-		Goto Ready;
-	SlideKickingStart:
+	Kick: //16
 		SMGF DEFG 1;
-	SlideKickingLoop:
-		SMGF H 1 A_CheckSlide();
-		Loop;
-	SlideKickingEnd:
-		SMGF HHHHHHGFED 1;
+		SMGF H 8;
+		SMGF GFED 1;
 		Goto Ready;
-	SprintOverlay:
+	AirKick: //18
+		SMGF DEFG 1;
+		SMGF H 10;
+		SMGF GFED 1;
+		Goto Ready;
+	SlideKick: //26
+		SMGF DEFG 1;
+		SMGF H 18;
+		SMGF GFED 1;
+		Goto Ready;
+	Taunt: //30
+		SM2S JKLM 1;
+		SM2S X 22;
+		SM2S MLKJ 1;
+		Goto Ready;
+	Sprint:
 		SMGF DEFG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-	KeepSprinting:
-		SMGF H 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		TNT1 A 0 A_KeepSprinting();
-	ReturnFromSprint:
+	SprintLoop:
+		SMGF H 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		Loop;
+	SprintEnd:
 		SMGF GFED 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		Goto ready;
+		Goto Ready;
 	Deselect:
 		SMGS EFGH 1;
 		TNT1 A 1;
@@ -75,9 +77,9 @@ class BDPSubmachineGun : BrutalWeapon
 		SMGF A 1 Bright
 		{
 			A_FireBullets (3, 3, 1, 12, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-14);
-			A_FireParticles(0,1,-2);
+			A_FireParticles(1,8);
 			A_StartSound("SMGFIRE", 1);
-			A_StartSound("FARSHT", 6);
+			A_StartSound("FARSMG", 6);
 			A_AlertMonstersDX();
 			A_ZoomFactor(0.99);
 			A_QuadSound();
@@ -99,8 +101,9 @@ class BDPSubmachineGun : BrutalWeapon
 		SMGZ G 1 Bright
 		{
 			A_FireBullets (1.5, 1.5, -1, 12, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-4);
+			A_FireParticles();
 			A_StartSound("SMGFIRE", 1);
-			A_StartSound("FARSHT", 6);
+			A_StartSound("FARSMG", 6);
 			A_AlertMonstersDX();
 			A_ZoomFactor(1.29);
 			A_QuadSound();
@@ -167,7 +170,7 @@ class BDPSubmachineGun : BrutalWeapon
 	SpawnNoAmmo:
 		SMGZ A -1;
 		LOOP;
-	DualWield:
+	SpecialAction:
 		TNT1 A 0 A_DualWield();
 		Goto Ready;
 	}

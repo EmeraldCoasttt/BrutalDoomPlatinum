@@ -311,7 +311,6 @@ Class RicoChet : BDPActor
 	TNT1 A 0;
 	TNT1 AAAAA 0 A_CustomMissile ("WaterParticleXFAster", 8, 0, random (0, 360), 2, random (30, 160));
 	TNT1 AAAAA 0 A_CustomMissile ("WaterParticleXSuperFast", 24, 0, random (0, 360), 2, random (30, 160));
-	TNT1 A 0 A_SpawnItemEX("WaterSplashWaves");
 	TNT1 A 0 A_SetScale(0.5, 0.5);
 	TNT1 AAA 0 A_CustomMissile ("WaterRicochet", random (0, 2), 0, random (0, 360), 2, random (30, 90));
 	Stop;
@@ -320,7 +319,6 @@ Class RicoChet : BDPActor
 	TNT1 A 0;
 	TNT1 AAAAA 0 A_CustomMissile ("WaterParticleXFAster", 8, 0, random (0, 360), 2, random (-30, -160));
 	TNT1 AAAAA 0 A_CustomMissile ("WaterParticleXSuperFast", 24, 0, random (0, 360), 2, random (-30, -160));
-	//TNT1 A 0 A_SpawnItemEX("WaterSplashWaves");
 	TNT1 A 0 A_SetScale(0.5, 0.5);
 	TNT1 AAA 0 A_CustomMissile ("WaterRicochet", random (0, 2), 0, random (0, 360), 2, random (-30, -90));
 	Stop;
@@ -330,7 +328,6 @@ Class RicoChet : BDPActor
 	TNT1 A 0 A_startsound("world/watersplash");
 	TNT1 AAAAA 0 A_SpawnProjectile ("WaterParticleXFAster", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	TNT1 AAAAA 0 A_SpawnProjectile ("WaterParticleXSuperFast", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
-	//TNT1 A 0 A_SpawnItemEX("WaterSplashWaves");
 	//TNT1 A 0 A_SetScale(0.5, 0.5);
 	TNT1 AAA 0 A_SpawnProjectile ("WaterRicochet", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	Stop;
@@ -339,7 +336,6 @@ Class RicoChet : BDPActor
 	TNT1 A 0;
 	TNT1 AAAAA 0 A_CustomMissile ("SLimeParticleXFAster", 8, 0, random (0, 360), 2, random (30, 160));
 	TNT1 AAAAA 0 A_CustomMissile ("SlimeParticleXFAster", 24, 0, random (0, 360), 2, random (30, 160));
-	TNT1 A 0 A_SpawnItemEX("SlimeSplashWaves");
 	TNT1 A 0 A_SetScale(0.5, 0.5);
 	SPHB ABCDE 3;
 	Stop;
@@ -348,7 +344,6 @@ Class RicoChet : BDPActor
 	TNT1 A 0;
 	TNT1 AAAAA 0 A_CustomMissile ("SLimeParticleXFAster", 8, 0, random (0, 360), 2, random (-30, -160));
 	TNT1 AAAAA 0 A_CustomMissile ("SlimeParticleXFAster", 24, 0, random (0, 360), 2, random (-30, -160));
-	//TNT1 A 0 A_SpawnItemEX("SlimeSplashWaves");
 	TNT1 A 0 A_SetScale(0.5, 0.5);
 	SPHB ABCDE 3;
 	Stop;
@@ -358,7 +353,6 @@ Class RicoChet : BDPActor
 	TNT1 A 0 A_startsound("world/watersplash");
 	TNT1 AAAAA 0 A_SpawnProjectile ("SlimeParticleXFAster", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	TNT1 AAAAA 0 A_SpawnProjectile ("SlimeParticleXFaster", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
-	//TNT1 A 0 A_SpawnItemEX("WaterSplashWaves");
 	//TNT1 A 0 A_SetScale(0.5, 0.5);
 	//TNT1 AAA 0 A_SpawnProjectile ("WaterRicochet", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	Stop;
@@ -368,7 +362,6 @@ Class RicoChet : BDPActor
 	TNT1 A 0;
 	TNT1 AAAAA 0 A_CustomMissile ("nukageParticleXFAster", 8, 0, random (0, 360), 2, random (30, 160));
 	TNT1 AAAAA 0 A_CustomMissile ("nukageParticleXFAster", 24, 0, random (0, 360), 2, random (30, 160));
-	TNT1 A 0 A_SpawnItemEX("NukageSplashWaves");
 	TNT1 AAA 0 A_CustomMissile ("NukageRicochet", random (0, 2), 0, random (0, 360), 2, random (30, 90));
 	Stop;
 	
@@ -376,7 +369,6 @@ Class RicoChet : BDPActor
 	TNT1 A 0;
 	TNT1 AAAAA 0 A_CustomMissile ("nukageParticleXFAster", 8, 0, random (0, 360), 2, random (-30, -160));
 	TNT1 AAAAA 0 A_CustomMissile ("nukageParticleXFAster", 24, 0, random (0, 360), 2, random (-30, -160));
-	//TNT1 A 0 A_SpawnItemEX("NukageSplashWaves");
 	TNT1 AAA 0 A_CustomMissile ("NukageRicochet", random (0, 2), 0, random (0, 360), 2, random (-30, -90));
 	Stop;
 	
@@ -385,7 +377,6 @@ Class RicoChet : BDPActor
 	TNT1 A 0 A_startsound("world/lavasizzle");
 	TNT1 AAAAA 0 A_SpawnProjectile ("NukageParticleXFAster", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	TNT1 AAAAA 0 A_SpawnProjectile ("NukageParticleXFAster", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
-	//TNT1 A 0 A_SpawnItemEX("WaterSplashWaves");
 	//TNT1 A 0 A_SetScale(0.5, 0.5);
 	TNT1 AAA 0 A_SpawnProjectile ("NukageRicochet", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	Stop;
@@ -394,7 +385,6 @@ Class RicoChet : BDPActor
 	TNT1 A 0;
 	TNT1 AAAAA 0 A_CustomMissile ("BloodParticleXFAster", 8, 0, random (0, 360), 2, random (30, 160));
 	TNT1 AAAAA 0 A_CustomMissile ("BloodParticleXFAster", 24, 0, random (0, 360), 2, random (30, 160));
-	TNT1 A 0 A_SpawnItemEX("BloodSplashWaves");
 	//TNT1 AAA 0 A_CustomMissile ("lavaRicochet", random (0, 2), 0, random (0, 360), 2, random (30, 90))
 	Stop;
 	
@@ -402,7 +392,6 @@ Class RicoChet : BDPActor
 	TNT1 A 0;
 	TNT1 AAAAA 0 A_CustomMissile ("BloodParticleXFAster", 8, 0, random (0, 360), 2, random (-30, -160));
 	TNT1 AAAAA 0 A_CustomMissile ("BloodParticleXFAster", 24, 0, random (0, 360), 2, random (-30, -160));
-	//TNT1 A 0 A_SpawnItemEX("BloodSplashWaves");
 	//TNT1 AAA 0 A_CustomMissile ("lavaRicochet", random (0, 2), 0, random (0, 360), 2, random (30, 90))
 	Stop;
 	
@@ -411,7 +400,6 @@ Class RicoChet : BDPActor
 	TNT1 A 0 A_startsound("world/watersplash");
 	TNT1 AAAAA 0 A_SpawnProjectile ("BloodParticleXFAster", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	TNT1 AAAAA 0 A_SpawnProjectile ("BloodParticleXFaster", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
-	//TNT1 A 0 A_SpawnItemEX("WaterSplashWaves");
 	//TNT1 A 0 A_SetScale(0.5, 0.5);
 	//TNT1 AAA 0 A_SpawnProjectile ("WaterRicochet", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	Stop;

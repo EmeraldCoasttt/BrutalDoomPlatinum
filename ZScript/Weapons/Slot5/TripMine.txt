@@ -20,15 +20,15 @@ CLASS TripMine : actor
 	States
 	{
 		  Spawn:
-        TRPM A 1 NoDelay
-        {           
-            FLineTraceData wallangle;
-            LineTrace(angle, 1284, 0, TRF_THRUACTORS, offsetz: 3, data: wallangle);
-            if (wallangle.HitType == TRACE_HitWall)
-            {
+		TRPM A 1 NoDelay
+		{		   
+			FLineTraceData wallangle;
+			LineTrace(angle, 1284, 0, TRF_THRUACTORS, offsetz: 3, data: wallangle);
+			if (wallangle.HitType == TRACE_HitWall)
+			{
 			//	A_logint(wallangle.lineside);
-               angle = atan2(wallangle.hitline.delta.y, wallangle.hitline.delta.x) - 90;
-            }   
+			   angle = atan2(wallangle.hitline.delta.y, wallangle.hitline.delta.x) - 90;
+			}   
 			
 			If (wallangle.lineside == 1)
 			{
@@ -36,11 +36,11 @@ CLASS TripMine : actor
 			}
 			/*
 			 FLineTraceData walllengthfront;
-            LineTrace(angle, 9999, 0, TRF_THRUACTORS, offsetz: 3, data: walllengthfront);
+			LineTrace(angle, 9999, 0, TRF_THRUACTORS, offsetz: 3, data: walllengthfront);
 			
 			 FLineTraceData walllengthback;
-            LineTrace(-angle, 9999, 0, TRF_THRUACTORS, offsetz: 3, data: walllengthback);
-            
+			LineTrace(-angle, 9999, 0, TRF_THRUACTORS, offsetz: 3, data: walllengthback);
+			
 			If(walllengthback.distance > walllengthfront.distance)
 			{
 			LaserAngle = -angle;
@@ -54,13 +54,13 @@ CLASS TripMine : actor
 			*/
 			
 			A_startsound("bepbep",6);
-        }
-    Spawn2:
-        TRPM A 65;
-        TRPM A 1
-        {
+		}
+	Spawn2:
+		TRPM A 65;
+		TRPM A 1
+		{
 		FLineTraceData stillonwall;
-            LineTrace((angle - 180), 12, 0, TRF_THRUACTORS, offsetz: 3, data: stillonwall);
+			LineTrace((angle - 180), 12, 0, TRF_THRUACTORS, offsetz: 3, data: stillonwall);
 			
 		//	 LineTrace(-angle, 12, 0, TRF_THRUACTORS, offsetz: 3, data: wallangle);
 			 If(stillonwall.HitType != TRACE_HitWall)
@@ -70,25 +70,25 @@ CLASS TripMine : actor
 			
 			}
 			
-            FLineTraceData peopleinmyway;
-            LineTrace(angle, 5000, 0, 0, offsetz: 7, data: peopleinmyway);
-            if (peopleinmyway.HitActor)
-            {
-               return ResolveState("Sight");
-            }
-            
-                beam = Spawn("TripMineparticle", (pos.x,pos.y,pos.z + 3));
-          
-            if (beam)
-            {
+			FLineTraceData peopleinmyway;
+			LineTrace(angle, 5000, 0, 0, offsetz: 7, data: peopleinmyway);
+			if (peopleinmyway.HitActor)
+			{
+			   return ResolveState("Sight");
+			}
+			
+				beam = Spawn("TripMineparticle", (pos.x,pos.y,pos.z + 3));
+		  
+			if (beam)
+			{
 				beam.angle = angle;
-                beam.pitch = 0;
-                beam.scale.y = peopleinmyway.Distance;
-                beam.pitch = -90;
-            }
-            return ResolveState(null);
-        }
-        wait;       
+				beam.pitch = 0;
+				beam.scale.y = peopleinmyway.Distance;
+				beam.pitch = -90;
+			}
+			return ResolveState(null);
+		}
+		wait;	   
 		
 		
 		Onfloornow:
@@ -98,81 +98,81 @@ CLASS TripMine : actor
 		bflatsprite = true;
 		bnogravity = false;
 		 FLineTraceData peopleinmyway;
-            LineTrace(0, 5000, -90, 0, offsetz: 0, data: peopleinmyway);
-            if (peopleinmyway.HitActor)
-            {
-               return ResolveState("Sightonfloor");
-            }
-            
-                beam = Spawn("TripMineparticle", (pos.x,pos.y,pos.z));
-          
-            if (beam)
-            {
+			LineTrace(0, 5000, -90, 0, offsetz: 0, data: peopleinmyway);
+			if (peopleinmyway.HitActor)
+			{
+			   return ResolveState("Sightonfloor");
+			}
+			
+				beam = Spawn("TripMineparticle", (pos.x,pos.y,pos.z));
+		  
+			if (beam)
+			{
 				beam.angle = angle;
-                beam.pitch = 0;
-                beam.scale.y = peopleinmyway.Distance;
-                beam.pitch = 180;
-            }
-            return ResolveState(null);
+				beam.pitch = 0;
+				beam.scale.y = peopleinmyway.Distance;
+				beam.pitch = 180;
+			}
+			return ResolveState(null);
 		}
 		wait;
 		
-    Sight:
+	Sight:
 		TNT1 A 0 A_startsound("BEEEP",8);
 		 TRPM AAAAAAAAAAA 1
-        {
-           
-            FLineTraceData peopleinmyway;
-            LineTrace(angle, 5000, 0, 0, offsetz: 7, data: peopleinmyway);
-                beam = Spawn("TripMineparticle", (pos.x,pos.y,pos.z + 3));
-          
-            if (beam)
-            {
+		{
+		   
+			FLineTraceData peopleinmyway;
+			LineTrace(angle, 5000, 0, 0, offsetz: 7, data: peopleinmyway);
+				beam = Spawn("TripMineparticle", (pos.x,pos.y,pos.z + 3));
+		  
+			if (beam)
+			{
 				beam.angle = angle;
-                beam.pitch = 0;
-                beam.scale.y = peopleinmyway.Distance;
-                beam.pitch = -90;
-            }
-        }
+				beam.pitch = 0;
+				beam.scale.y = peopleinmyway.Distance;
+				beam.pitch = -90;
+			}
+		}
 		Goto Death;
 		 Sightonfloor:
 		TNT1 A 0 A_startsound("BEEEP",8);
 		 TRPM RRRRRRRRRRR 1
-        {
-           
-            FLineTraceData peopleinmyway;
-            LineTrace(0, 5000, -90, 0, offsetz: 0, data: peopleinmyway);
-                beam = Spawn("TripMineparticle", (pos.x,pos.y,pos.z));
-          
-            if (beam)
-            {
+		{
+		   
+			FLineTraceData peopleinmyway;
+			LineTrace(0, 5000, -90, 0, offsetz: 0, data: peopleinmyway);
+				beam = Spawn("TripMineparticle", (pos.x,pos.y,pos.z));
+		  
+			if (beam)
+			{
 				beam.angle = angle;
-                beam.pitch = 0;
-                beam.scale.y = peopleinmyway.Distance;
-                beam.pitch = 180;
-            }
-        }
+				beam.pitch = 0;
+				beam.scale.y = peopleinmyway.Distance;
+				beam.pitch = 180;
+			}
+		}
 		Death:
 		/*
 		 TRPM A 1
-        {
-           
-            FLineTraceData peopleinmyway;
-            LineTrace(angle, 5000, 0, 0, offsetz: 7, data: peopleinmyway);
-              if (peopleinmyway.HitType != TRACE_Hitnone)
-            {
-               spawn("tripmineexplosion",peopleinmyway.hitlocation);
-            }
+		{
+		   
+			FLineTraceData peopleinmyway;
+			LineTrace(angle, 5000, 0, 0, offsetz: 7, data: peopleinmyway);
+			  if (peopleinmyway.HitType != TRACE_Hitnone)
+			{
+			   spawn("tripmineexplosion",peopleinmyway.hitlocation);
+			}
 			Else
 			{
 			 A_spawnitemex("TripMineexplosion",60);
 			}
 			
-        }
+		}
 		*/
 		TNT1 A 0 A_spawnitemex("TripMineexplosion",60);
-        TNT1 A 10;
-        stop;       
+		TNT1 A 10;
+		stop;	   
 		
 	}
 

@@ -5,12 +5,10 @@ class BDPPlasmaRifle : BrutalWeapon
 		Weapon.SlotNumber 6;
 		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 100;
-		Weapon.AmmoGive1 40;
+		Weapon.AmmoGive 40;
 		Inventory.PickupSound "PLSDRAW";
 		Weapon.AmmoType "BDPCell";
 		BrutalWeapon.MagCapacity 50;
-		+WEAPON.NOAUTOAIM
-		+FORCEXYBILLBOARD
 		Tag "$BDPPLASMA";
 		Inventory.PickupMessage "You got the Plasma Rifle! (Slot 6)";
 		inventory.althudicon "PLASA0";
@@ -19,106 +17,108 @@ class BDPPlasmaRifle : BrutalWeapon
 	}
 	States
 	{
-	GrenadeThrowFlash:
+	Grenade: //32
 		3LSN C 0 A_CheckIfMag(11,3);
 		2LSN B 0 A_CheckIfMag(31,2);
 		PLSN A 0;
-		#### A 0;
 		#### QRST 1;
 		TNT1 A 24;
 		3LSN C 0 A_CheckIfMag(11,3);
 		2LSN B 0 A_CheckIfMag(31,2);
 		PLSN A 0;
-		#### A 0;
 		#### TSRQ 1;
-		stop;
-	KickingFlash2:
-		3LSF C 0 A_CheckIfMag(11,3);
-		2LSF B 0 A_CheckIfMag(31,2);
-		PLSF A 0;
-		#### A 0;
-		#### WXYZ 1;
-		#### [ 8;
-		#### ZYXW 1;
 		Goto Ready;
-	KickingFlash:
+	Kick: //16
 		3LSN D 0 A_CheckIfMag(1,4);
-		3LSN C 0 A_CheckIfMag(11,"KickingFlashLowAmmo");
+		3LSN C 0 A_CheckIfMag(11,"KickLowAmmo");
 		2LSN B 0 A_CheckIfMag(31,2);
 		PLSN A 0;
-		#### A 0;
-		#### KLMNOOOOOOOONMLK 1;
-		Goto Ready	;
-	KickingFlashLowAmmo:
+		#### KLMN 1;
+		#### O 8;
+		#### NMLK 1;
+		Goto Ready;
+	KickLowAmmo: //16
 		PLSN A 0 A_StartSound("BEP",4,0,0.3);
 		4LSN KLMNOO 1;
-		3LSN OOOOOO 1;
+		3LSN O 6;
 		PLSN A 0 A_StartSound("BEP",4,0,0.3);
 		4LSN NMLK 1;
-		Goto ReadyLowAmmo+2;
-	AirKickingFlash:
+		Goto ReadyLowAmmo+4;
+	AirKick: //18
 		3LSN D 0 A_CheckIfMag(1,4);
-		3LSN C 0 A_CheckIfMag(11,"AirKickingFlashLowAmmo");
+		3LSN C 0 A_CheckIfMag(11,"AirKickLowAmmo");
 		2LSN B 0 A_CheckIfMag(31,2);
 		PLSN A 0;
-		#### A 0;
-		#### KLMNOOOOOOOOOONMLK 1;
+		#### KLMN 1;
+		#### O 10;
+		#### NMLK 1;
 		Goto Ready;
-	AirKickingFlashLowAmmo:
+	AirKickLowAmmo:
 		PLSN A 0 A_StartSound("BEP",4,0,0.3);
 		4LSN KLMNOO 1;
-		3LSN OOOOOO 1;
+		3LSN O 6;
 		PLSN A 0 A_StartSound("BEP",4,0,0.3);
 		4LSN OONMLK 1;
 		Goto ReadyLowAmmo;
-	SlideKickingStart:
+	SlideKick: //26
 		3LSN D 0 A_CheckIfMag(1,4);
-		3LSN C 0 A_CheckIfMag(11,"SlideKickingStartLowAmmo");
+		3LSN C 0 A_CheckIfMag(11,"SlideKickLowAmmo");
 		2LSN B 0 A_CheckIfMag(31,2);
 		PLSN A 0;
-		#### A 0;
-		#### KLMNO 1;
-	SlideKickingLoop:
-		#### O 1 A_CheckSlide();
-		Loop;
-	SlideKickingStartLowAmmo:
-		4LSN KLMNO 1;
-	SlideKickingLoopLowAmmo:
-		3LSN OOOOOO 1 A_CheckSlide();
+		#### KLMN 1;
+		#### O 18;
+		#### NMLK 1;
+		Goto Ready;
+	SlideKickLowAmmo: //26
+		4LSN KLMNOO 1;
+		3LSN O 6;
 		PLSN A 0 A_StartSound("BEP",4,0,0.3);
-		4LSN OOOOOO 1 A_CheckSlide();
+		4LSN O 6;
+		3LSN OOOONM 1;
+		PLSN A 0 A_StartSound("BEP",4,0,0.3);
+		4LSN LK 1;
+		Goto ReadyLowAmmo+2;
+	Taunt: //30
+		3LSN D 0 A_CheckIfMag(1,4);
+		3LSN C 0 A_CheckIfMag(11,"TauntLowAmmo");
+		2LSN B 0 A_CheckIfMag(31,2);
+		PLSN A 0;
+		#### KLMN 1;
+		#### O 22;
+		#### NMLK 1;
+		Goto Ready;
+	TauntLowAmmo: //30
+		4LSN KLMNOO 1;
+		3LSN O 6;
+		PLSN A 0 A_StartSound("BEP",4,0,0.3) ;
+		4LSN O 6;
+		3LSN O 6;
+		PLSN A 0 A_StartSound("BEP",4,0,0.3) ;
+		4LSN OONMLK 1;
+		Goto ReadyLowAmmo;
+	Sprint:
+		3LSN D 0 A_CheckIfMag(1,4);
+		3LSN C 0 A_CheckIfMag(11,"SprintLowAmmo");
+		2LSN B 0 A_CheckIfMag(31,2);
+		PLSN A 0;
+		#### KLMN 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+	SprintLoop:
+		#### O 1 A_KeepSprinting(WRF_ALLOWRELOAD);
 		Loop;
-	SlideKickingEnd:
+	SprintLowAmmo:
+		4LSN KLMNOO 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+	SprintLoopLowAmmo:
+		3LSN OOOOOO 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		PLSN A 0 A_StartSound("BEP",4,0,0.3) ;
+		4LSN OOOOOO 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		Loop;
+	SprintEnd:
 		3LSN D 0 A_CheckIfMag(1,4);
-		3LSN C 0 A_CheckIfMag(11,"SlideKickingEndLowAmmo");
+		3LSN C 0 A_CheckIfMag(11,3);
 		2LSN B 0 A_CheckIfMag(31,2);
 		PLSN A 0;
-		#### A 0;
-		#### OOOOOONMLK 1; //10
+		#### NMLK 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 		Goto Ready;
-	SlideKickingEndLowAmmo:
-		4LSN OOOO 1;
-		3LSN OONMLK 1;
-		Goto Ready;
-	FuckYouFlash:
-		3LSN D 0 A_CheckIfMag(1,4);
-		3LSN C 0 A_CheckIfMag(11,"Fuckyouflashlowammo");
-		2LSN B 0 A_CheckIfMag(31,2);
-		PLSN A 0;
-		#### A 0;
-		#### KLMNO 1;
-		#### O 20;
-		#### ONMLK 1;
-		stop;
-	Fuckyouflashlowammo:
-		4LSN KLMNO 1;
-		3LSN OOOOOO 1 ;
-		PLSN A 0 A_StartSound("BEP",4,0,0.3) ;
-		4LSN OOOOOO 1 ;
-		3LSN OOOOOO 1 ;
-		PLSN A 0 A_StartSound("BEP",4,0,0.3) ;
-		4LSN OOONMLK 1;
-		STOP;
 	Fidget:
 		3LSI C 0 A_CheckIfMag(11,3);
 		2LSI B 0 A_CheckIfMag(31,2);
@@ -149,37 +149,6 @@ class BDPPlasmaRifle : BrutalWeapon
 		PLSN A 0 A_StartSound("BEP",4,0,0.3);
 		PLSN CCCCCCDDDDDD 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		Loop;
-	SprintOverlay:
-		3LSN D 0 A_CheckIfMag(1,4);
-		3LSN C 0 A_CheckIfMag(11,"SprintOverlayLowAmmo");
-		2LSN B 0 A_CheckIfMag(31,2);
-		PLSN A 0;
-		#### A 0;
-		#### KLMN 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		KeepSprinting:
-		3LSN D 0 A_CheckIfMag(1,4);
-		3LSN A 0 A_CheckIfMag(11,"KeepLowAmmoSprint");
-		2LSN B 0 A_CheckIfMag(31,2);
-		PLSN A 0;
-		#### O 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		#### A 0 A_keepsprinting();
-		Goto ReturnFromSprint;
-	SprintOverlayLowAmmo:
-		4LSN KLMNO 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		KeepLowAmmoSprint:
-		3LSN OOOOOO 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		PLSN A 0 A_StartSound("BEP",4,0,0.3) ;
-		4LSN OOOOOO 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		TNT1 A 0 A_keepsprinting();
-		Goto ReturnFromSprint;
-	ReturnFromSprint:
-		3LSN D 0 A_CheckIfMag(1,4);
-		3LSN C 0 A_CheckIfMag(11,3);
-		2LSN B 0 A_CheckIfMag(31,2);
-		PLSN A 0;
-		#### A 0;
-		#### NMLK 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		Goto ready;
 	Deselect:
 		3LSN C 0 A_CheckIfMag(11,3);
 		2LSN B 0 A_CheckIfMag(31,2);
@@ -409,7 +378,7 @@ class BDPPlasmaRifle : BrutalWeapon
 		PLSR ] 1;
 		PLSN A 0 A_Takeinventory("Reloading",1);
 		Goto Ready;
-	DualWield:
+	SpecialAction:
 		TNT1 A 0 A_DualWield();
 		Goto Ready;
 	/*Swapweaponspecials:

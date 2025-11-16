@@ -1,3 +1,692 @@
+class BDPFist : BrutalWeapon replaces Fist
+{
+	int blood;
+	
+	override void DoEffect()
+	{
+		super.DoEffect();
+		if(owner && owner.player.ReadyWeapon is self.GetClass())
+		{
+			let psp = owner.player.FindPSprite(1);
+			if(psp)
+			{
+				string spr = TexMan.GetName(psp.curstate.GetSpriteTexture(0));
+				if(spr && spr != 'TNT1A0')
+				{
+					name sprname = spr.Mid(1,3);
+					if(blood > 0)
+					{
+						psp.sprite = GetSpriteIndex(blood..sprname);
+					}
+				}
+			}
+			let psp2 = owner.player.FindPSprite(1000);
+			if(psp2)
+			{
+				string spr2 = TexMan.GetName(psp2.curstate.GetSpriteTexture(0));
+				if(spr2 && spr2 != 'TNT1A0')
+				{
+					name spr2name = spr2.Mid(1,3);
+					if(blood > 0)
+					{
+						psp2.sprite = GetSpriteIndex(blood..spr2name);
+					}
+				}
+			}
+			if(owner.CountInv("PowerBloodOnVisor") > 0)
+			{
+				blood = 1;
+				owner.TakeInventory("PowerBloodOnVisor",1);
+			}
+			if(owner.CountInv("PowerBlueBloodOnVisor") > 0)
+			{
+				blood = 2;
+				owner.TakeInventory("PowerBlueBloodOnVisor",1);
+			}
+			if(owner.CountInv("PowerGreenBloodOnVisor") > 0)
+			{
+				blood = 3;
+				owner.TakeInventory("PowerGreenBloodOnVisor",1);
+			}
+		}
+	}
+	
+	Default
+	{
+		Weapon.SlotNumber 1;
+		Weapon.SlotPriority 1;
+		Weapon.SelectionOrder 1;
+		Weapon.Kickback 100;
+		Obituary "%o was Ripped and Teared by 	%k";
+		+WEAPON.MELEEWEAPON
+		+INVENTORY.UNDROPPABLE
+		Tag "Fists";
+		Inventory.AltHUDIcon "MEDKC0";
+		brutalweapon.voiceacted 0;
+		brutalweapon.handedness 2;
+	}
+	States
+	{
+	CacheSprites:
+		1ISA ABCDEFGHIJKL 0;
+		1KUP GHIJKL 0;
+		1ONG ABCDEFGHIJKLMNOPQRSTUVWXY 0;
+		1UNS BDEFG 0;
+		1UN3 BCDEFGHIJKLMNOPQRSTU[ 0;
+		1UN5 ABCDEFGHIJKL 0;
+		1UCK ABCDEF 0;
+		2ISA ABCDEFGHIJKL 0;
+		2KUP GHIJKL 0;
+		2ONG ABCDEFGHIJKLMNOPQRSTUVWXY 0;
+		2UNS BDEFG 0;
+		2UN3 BCDEFGHIJKLMNOPQRSTU[ 0;
+		2UN5 ABCDEFGHIJKL 0;
+		2UCK ABCDEF 0;
+		3ISA ABCDEFGHIJKL 0;
+		3KUP GHIJKL 0;
+		3ONG ABCDEFGHIJKLMNOPQRSTUVWXY 0;
+		3UNS BDEFG 0;
+		3UN3 BCDEFGHIJKLMNOPQRSTU[ 0;
+		3UN5 ABCDEFGHIJKL 0;
+		3UCK ABCDEF 0;
+		Stop;
+	Grenade: //32
+		FISA ABCD 1;
+		TNT1 A 24;
+		FISA DCBA 1;
+		Goto Ready;
+	Sprint:
+		FISA ABCD 1 A_WeaponReadyDX(0,false,false);
+	SprintLoop:
+		TNT1 A 1 A_KeepSprinting();
+		Loop;
+	SprintEnd:
+		FISA DCBA 1 A_WeaponReadyDX(0,false,false);
+		Goto Ready;
+	Reload:
+		PUNS BDEFF 1;
+		PUNS A 0 A_PlaySound("Knuckled");
+		PUNS G 3;
+		PUNS G 1 offset(0,31);
+		PUNS G 1 offset(0,32);
+		PUNS G 1 offset(0,31);
+		PUNS GG 1 offset(0,32);
+		PUNS FFE 3;
+		PUNS DB 1;
+		Goto Ready;
+	LetsGetStarted:
+		TNT1 A 0 A_TakeInventory("NeverSelectedShotgun",1);
+		PONG A 24 A_WeaponReady();
+		PUNS BD 1 A_WeaponReady();
+		PUNS EFF 1 A_WeaponReady();
+		PUNS A 0 A_PlaySound("Knuckled");
+		PUNS GG 1 A_WeaponReady();
+		PUNS G 1 offset(0,31);
+		PUNS G 1 offset(0,32);
+		PUNS G 1 offset(0,31);
+		PUNS GG 1 offset(0,32);
+		PUNS FFE 3 A_WeaponReady();
+		PUNS KLL 1 A_WeaponReady();
+		PUNS A 0 A_PlaySound("Knuckled");
+		PUNS MM 1 A_WeaponReady();
+		PUNS M 1 offset(0,31);
+		PUNS M 1 offset(0,32);
+		PUNS M 1 offset(0,31);
+		PUNS MM 1 offset(0,32);
+		PUNS LLK 3 A_WeaponReady();
+		PUNS DB 1 A_WeaponReady();
+		TNT1 A 0 A_Jump(250,"Ready");
+		TNT1 A 0 A_PlaySound("letsago");
+		Goto Ready;
+	Select:
+		TNT1 A 1
+		{
+			if(CountInv("iJustThrowedMySaw") > 0)
+			{
+				A_TakeInventory("BDPChainsaw",1);
+				A_TakeInventory("iJustThrowedMySaw",1);
+			}
+			A_SetCrosshairDX("Null");
+		}
+		PUNS A 1;
+		FISA DCBA 1 A_WeaponReady(WRF_NOFIRE);
+		Goto Ready;
+	Ready:
+		TNT1 A 0 A_TakeInventory("PSeq1", 2);
+		TNT1 A 0 A_TakeInventory("PSeq2", 2);
+		FISA EFGHIJKL 2 A_WeaponReadyDX(WRF_ALLOWRELOAD, FALSE, TRUE, TRUE);
+		Loop;
+	Deselect:
+		TNT1 A 0 A_Takeinventory("PSeq1",3);
+		FISA ABCD 1;
+		TNT1 A 1;
+		TNT1 A 0 A_Lower;
+		Wait;
+	LeftSuddenSwingBack:
+		PONG XY 1;
+		Stop;
+	LeftIdleCross:
+		PONG "[" 1;
+		Stop;
+	RightIdle:
+		PUN3 "[" 1;
+		Loop;
+	RightIdleAttack:
+		PUN3 LMN 1;
+		PUN3 O 3;
+		PUN3 NML 1;
+		Stop;
+	RightIdleLeftCross:
+		PUN3 "[" 1;
+		PUN3 LN 1;
+		Stop;
+	RightCrossLeftReturnToIdle:
+		PUN3 RQP 1;
+		Stop;
+	LeftCrossRightReturnToIdle:
+		PUN3 UTS 1;
+		Stop;
+	Fire:
+		TNT1 A 0 A_JumpIfInventory("PSeq2", 1, "LeftCrossCombo");
+		TNT1 A 0 A_JumpIfInventory("PSeq1", 2, "BeginLeftCross");
+		TNT1 A 0 A_JumpIfInventory("PSeq1", 1, "ReFireJab");
+		TNT1 A 0 A_TakeInventory("FireHold", 40);
+		PONG QR 1 A_GunFlash("RightIdle");
+		TNT1 A 0 A_ReFire("Hold");
+		Goto Jab;
+	Hold:
+		PONG R 1 offset(0,33) A_GiveInventory("FireHold", 1);
+		PONG R 1 offset(0,32) A_GiveInventory("FireHold", 1);
+		TNT1 A 0 A_Refire();
+		TNT1 A 0 A_JumpIfInventory("FireHold", 10, "LeftCrossHold");
+		TNT1 A 0 A_TakeInventory("FireHold", 40);
+		Goto Jab;
+	AltFire:
+		TNT1 A 0 A_Recoil(-1);
+		Goto DCross;
+	ReFireJab:
+		PONG KQ 1;
+		Goto ContinueJab;
+	Jab:
+		PONG B 1 A_bdpmeleestart();
+	ContinueJab:
+		PONG C 1 
+		{
+			A_bdpmeleestart(200);
+			A_SetAngle(angle-1, SPF_INTERPOLATE);
+			A_GunFlash("RightIdleAttack");
+		}
+		"####" A 0 A_PlaySound("fstatk", 1);
+		"####" A 0 A_Giveinventory("Punching",1);
+		"####" A 0 A_Giveinventory("PSeq1",1);
+		"####" A 0 A_Giveinventory("GoSpecial",1);
+		"####" A 0 A_bdpmelee(150,"MeleeAttackLeft",1);
+		PONG D 1 A_SetAngle(angle+1, SPF_INTERPOLATE);
+		PONG E 2;
+		"####" A 0 A_TakeInventory("PSeq2", 1);
+		PONG FG 1 A_WeaponReady();
+		PONG HIJ 1 A_WeaponReady();
+		PONG A 0 A_TakeInventory("PSeq1", 2);
+		Goto Ready;
+	BeginLeftCross:
+		PONG K 1;
+	LeftCross:
+		"####" A 0 A_GunFlash("RightIdle");
+		PONG QRRQ 1 a_bdpmeleestart();
+	LeftCrossHold:
+		"####" A 0 A_GunFLash("RightIdleLeftCross");
+	LeftCrossCombo:
+		"####" A 0 A_PlaySound("*grunt", 5);
+		PONG CC 1 a_bdpmeleestart();
+		"####" A 0 
+		{
+			A_PlaySound("skeleton/swing");
+			A_PlaySound("fstatk", 1);
+			if(CountInv("PowerStrength")==1)
+			{
+				A_PlaySound("weapons/gswing");
+			}
+			A_bdpmelee(150,"MeleeAttackLeftStrong",1);
+		}
+		PONG LMN 1 A_SetAngle(angle-1, SPF_INTERPOLATE);
+		PONG OP 1 A_SetAngle(angle-2, SPF_INTERPOLATE);
+		"####" A 0 A_Takeinventory("PSeq1",2);
+		"####" A 0 A_TakeInventory("PSeq2", 1);
+		TNT1 AA 1 
+		{
+			A_SetAngle(angle-0.5, SPF_INTERPOLATE);
+		}
+		TNT1 AAA 1 A_WeaponReady(WRF_NOPRIMARY);
+		TNT1 A 1 
+		{
+			A_SetAngle(angle+1, SPF_INTERPOLATE);
+			A_WeaponReady(WRF_NOPRIMARY);
+		}
+		TNT1 A 1 
+		{
+			A_SetAngle(angle+2, SPF_INTERPOLATE);
+			A_WeaponReady(WRF_NOPRIMARY);
+		}
+		TNT1 A 1 A_WeaponReady(WRF_NOPRIMARY);
+		PONG ZZZST 1
+		{
+		A_WeaponReady(WRF_NOPRIMARY);
+		A_SetAngle(angle+1, SPF_INTERPOLATE);
+		}
+		"####" A 0 A_GunFlash("LeftCrossRightReturnToIdle");
+		PONG UVW 1 A_WeaponReady();
+		Goto Ready;
+	DCross:
+		TNT1 A 1 A_bdpmeleestart();
+		"####" A 0
+		{
+			If(CountInv("PSeq1") == 1)
+			{
+				A_GunFlash("LeftSuddenSwingBack");
+			}
+			Return;
+		}
+		"####" A 0 A_PlaySound("*grunt", 6);
+		"####" A 0 A_GunFlash("none");
+		PUN3 B 1 A_bdpmeleestart();
+		TNT1 A 0 
+		{
+			A_SetAngle(angle+3, SPF_INTERPOLATE);
+			A_PlaySound("skeleton/swing",5);
+			A_PlaySound("fstatk", 1);
+			if(CountInv("PowerStrength")==1)
+			{
+				A_PlaySound("weapons/gswing",5);
+			}
+			A_bdpmelee(150,"MeleeAttackRight",1);
+		}
+		TNT1 A 0 A_GiveInventory("PSeq2", 1);
+		PUN3 C 1 { A_SetAngle(angle+3.0, SPF_INTERPOLATE); }
+		PUN3 D 1 { A_SetAngle(angle+2.0, SPF_INTERPOLATE); }
+		PUN3 E 1 { A_SetAngle(angle+1.0, SPF_INTERPOLATE); }
+		PUN3 F 1 { A_SetAngle(angle+1.0, SPF_INTERPOLATE); }
+		TNT1 AAA 1 { A_SetAngle(angle-2.0, SPF_INTERPOLATE); }
+		TNT1 AAA 1 { A_SetAngle(angle-1.0, SPF_INTERPOLATE); A_WeaponReady(WRF_NOSECONDARY); }
+		TNT1 A 0 A_SetAngle(angle-1.0, SPF_INTERPOLATE);
+		TNT1 A 7 A_WeaponReady(WRF_NOSECONDARY);
+		TNT1 A 0 A_ReFire();
+		PUN3 H 1 A_WeaponReady();
+		TNT1 A 0 A_GunFlash("RightCrossLeftReturnToIdle");
+		PUN3 IJK 1 A_WeaponReady();
+		Goto Ready;
+	SpecialAction:
+		"####" A 0 A_PlaySound("UpperUnf", 5);
+		"####" A 0 A_TakeInventory("PSeq1", 2);
+		"####" A 0 A_TakeInventory("PSeq2", 2);
+		"####" A 0 
+		{
+			A_PlaySound("fstatk", 1);
+			if(CountInv("PowerStrength")==1)
+			{
+				A_PlaySound("weapons/gswing");
+			}
+		}
+		"####" A 0 A_GunFlash("none");
+		PUN5 AB 1 a_bdpmeleestart();
+		"####" A 0 
+		{
+		 A_bdpmelee(150,"MeleeAttackUppercut",0);
+		}		
+		"####" A 0 A_SetPitch(pitch-8, SPF_INTERPOLATE);
+		PUN5 CDEE 1;
+		PUN5 FGHI 1 A_SetPitch(pitch+2, SPF_INTERPOLATE);
+		"####" A 0 A_TakeInventory("HeavyStrikeUpward", 1);
+		"####" A 0 
+		{
+			SetPlayerProperty(0,0,0);
+			A_GunFlash("LeftCrossRightReturnToIdle");
+		}
+		PUN5 JKL 1;
+		Goto Ready;
+	Taunt:
+		0UCK CDE 1;
+		0UCK F 12;
+		0UCK EDCBA 1;
+		Goto Ready;
+	}
+}
+
+class ThrowedBarrel : Actor
+{
+	Default
+	{
+		Radius 6;
+		Height 8;
+		Speed 32;
+		Fastspeed 32;
+		Damage 55;
+		+MISSILE
+		Gravity 0.6;
+		Scale 1.0;
+		+FORCEXYBILLBOARD
+		DamageType 'Explosive';
+		Alpha 1;
+		DeathSound "Explosion";
+		+ROLLSPRITE;
+		+ROLLCENTER;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(GetCVAR("bd_ToxicWasteOnExplosion")==0,"SpawnNoToxic");
+	SpawnLoop:
+		TNT1 A 0 A_SPawnItem("Brutal_Bloodnukage",0,30);
+		BARI ABCDCB 1 A_SetRoll(roll+6);
+		Loop;
+	SpawnNoToxic:
+		BARI ABCDCB 1 A_SetRoll(roll+6);
+		Loop;
+	Death:
+		TNT1 A 0 A_AlertMonsters();
+		TNT1 A 0 A_SpawnItemEx ("BarrelExplosionDamage",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItem("WhiteShockwaveBig");
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_Fall();
+		TNT1 A 0 A_SpawnItemEx ("BarrelKaboom",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 AAAA 0 A_CustomMissile ("FireworkSFXType2", 64, 0, random (0, 360), 2, random (30, 60));
+		TNT1 AAA 0 A_CustomMissile ("HighExplosiveFlames", random (10, 20), 0, random (0, 360), 2, random (10, 90));
+		EXPL AA 0 A_CustomMissile ("BigBlackSmokeLarger", 20, 0, random (0, 360), 2, random (10, 90));
+		TNT1 AAA 0 A_CustomMissile ("BDExplosionparticles3", 64, 0, random (0, 360), 2, random (40, 90));
+		TNT1 AAA 0 A_CustomMissile ("BDExplosionparticles4", 64, 0, random (0, 360), 2, random (40, 90));
+		EXPL A 0 Radius_Quake (2, 24, 0, 15, 0);
+		BEXP B 0 BRIGHT A_Scream();
+		TNT1 AA 0 A_CustomMissile ("BarrelShrapnel1", 25, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("BarrelShrapnel2", 15, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("BarrelShrapnel3", 5, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("BarrelShrapnel4", 5, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_PlaySound("FAREXPL", 3);
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15));
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35));
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35));
+		TNT1 A 0 A_JumpIf(GetCVAR("bd_ToxicWasteOnExplosion")==0,29);
+		//Emerald's nukage blood
+		TNT1 AAAAAA 0 A_CustomMissile ("SuperWallRedBloodnukage", 40, 0, random (0, 360), 2, random (-15, 15));
+		TNT1 AAAAAAAAAA 0 A_CustomMissile ("CeilBloodLauncherLongnukage", 0, 0, random (0, 360), 2, random (50, 130));
+		TNT1 AAAA 0 A_SpawnItem ("brutal_BloodSpotnukage");
+		TNT1 AAAAAA 0 A_CustomMissile ("BloodMistExtraBignukage", 30, 0, random (0, 360), 2, random (40, 90));
+		TNT1 AA 2;
+		TNT1 A 0 A_SpawnItemEx ("ExplosionSplashSpawner", 0, 0, 0);
+		TNT1 AAA 8 A_CustomMissile ("ExplosionSmoke", 1, 0, random (0, 360), 2, random (50, 130));
+		Stop;
+	}
+}
+
+class throwedbarrelranged : throwedbarrel
+{
+	Default
+	{
+		Gravity 0.2;
+	}
+}
+
+class ThrowedBarrelRusty: ThrowedBarrel
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(GetCVAR("bd_ToxicWasteOnExplosion")==0,"SpawnNoToxic");
+	SpawnLoop:	
+		TNT1 A 0 A_SPawnItem("Brutal_Bloodnukage",0,30);
+		BARI FGHIHG 1 A_SetRoll(roll+6);
+		Loop;
+	SpawnNoToxic:
+		BARI FGHIHG 1 A_SetRoll(roll+6);
+		Loop;
+	}
+}
+
+class KickAttack: FastProjectile
+{
+	Default
+	{
+		Radius 12;
+		Height 2;
+		DamageType 'Kick';
+		Projectile;
+		+FORCEXYBILLBOARD
+		+NOEXTREMEDEATH
+		DamageFunction 14;
+		Speed 30;
+		Obituary "%o ate %k's boot.";
+		SeeSound "none";
+		DeathSound "none";
+		Decal "none";
+		Species "Marines";
+		+THRUSPECIES
+		+MTHRUSPECIES
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 2;
+		Stop;
+	Crash:	
+	Death:
+		TNT1 A 0 A_AlertMonsters(32);
+		TNT1 A 0 A_CheckFloor("DeathOnGround");
+		PUFF A 0 A_PlaySound("FOOTWALL", 3);
+		TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_GiveToTarget("KickHasHit", 1);
+		TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0);
+		TNT1 A 10;
+		Stop;
+	XDEath:
+		TNT1 A 0 A_AlertMonsters(32);
+		TNT1 A 0 A_CheckFloor("DeathOnGround");
+		PUFF A 0 A_PlaySound("FOOTMEAT", 3);
+		TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_GiveToTarget("KickHasHit", 1);
+		TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0);
+		TNT1 A 10;
+		Stop;
+	DeathOnGround:
+		TNT1 A 0;
+		PUFF A 0 A_PlaySound("FOOTWALL", 3);
+		TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0);
+		TNT1 A 0 A_Explode(10, 40, 0);
+		TNT1 A 10;
+		Stop;
+	}
+}
+
+class SuperKickAttack: KickAttack
+{
+	Default
+	{
+		DamageFunction 55;
+		-NOEXTREMEDEATH
+		+EXTREMEDEATH
+		DamageType 'Extremepunches';
+		Decal "CrackMelee";
+	}
+}
+
+class KickAttackFist: KickAttack
+{
+	Default
+	{
+		+BLOODSPLATTER
+	}
+	States
+	{
+	Death:
+		TNT1 A 0 A_AlertMonsters(32);
+		TNT1 A 0 A_CheckFloor("DeathOnGround");
+		PUFF A 0 A_PlaySound("FistWallKD", 3);
+		TNT1 AAAA 0 A_CustomMissile ("SparkX", 6, 0, random (0, 360), 2, random (-10, 150));
+		TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_GiveToTarget("KickHasHit", 1);
+		TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0);
+		TNT1 A 10;
+		Stop;
+	XDEath:
+		TNT1 A 0 A_AlertMonsters(32);
+		TNT1 A 0 A_CheckFloor("DeathOnGround");
+		PUFF A 0 A_PlaySound("player/cyborg/fist", 3);
+		TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_GiveToTarget("KickHasHit", 1);
+		TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0);
+		TNT1 A 10;
+		Stop;
+	DeathOnGround:
+		TNT1 A 0;
+		PUFF A 0 A_PlaySound("FistWallKD", 3);
+		TNT1 A 0 A_SpawnItemEx ("PLOFT2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 AAAA 0 A_CustomMissile ("SparkX", 6, 0, random (0, 360), 2, random (-10, 150));
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0);
+		TNT1 A 0 A_Explode(10, 40, 0);
+		TNT1 A 10;
+		Stop;
+	}
+}
+
+class MeleeStrike1: KickAttackFist
+{
+	Default
+	{
+		DamageType 'Melee';
+		DamageFunction 5;
+		Speed 30;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 1;
+		Stop;
+	Death:
+		TNT1 A 0;
+		TNT1 A 0 A_AlertMonsters(32);
+		PUFF A 0 A_PlaySound("FistWallKD");
+		TNT1 AAAA 0 A_CustomMissile ("SparkX", 1, 0, random (0, 360), 2, random (-10, 150));
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 10;
+		Stop;
+	}
+}
+
+class MeleeStrike2Berserk: MeleeStrike1
+{
+	Default
+	{
+		DamageFunction 80;
+		Speed 30;
+		DamageType 'Extremepunches';
+		Decal "CrackMelee";
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 1;
+		Stop;
+	Death:
+		TNT1 A 0;
+		TNT1 A 0 A_AlertMonsters(32);
+		PUFF A 0 A_PlaySound("FistWall");
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 10;
+		Stop;
+	}
+}
+
+class StrongRifleBash : SuperKickAttack
+{
+	Default
+	{
+		DamageFunction 74;
+	}
+}
+
+class MeleeStrike2Baron : MeleeStrike2Berserk
+{
+	Default
+		{
+		DamageFunction random(100,550);
+		Speed 70;
+		+solid
+		+REFLECTIVE 
+		+AIMREFLECT
+		+shootable
+		+buddha
+	}
+	States
+	{
+	Death:
+		TNT1 A 0;
+		TNT1 A 0 A_AlertMonsters(32);
+		PUFF A 0 A_PlaySound("player/cyborg/fist");
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 10;
+		Stop;
+	}
+}
+
+class MeleeStrike2Baron2 : MeleeStrike2Baron
+{
+	Default
+	{
+		DamageFunction 50;
+		decal "none";
+		Speed 50;
+		-REFLECTIVE 
+		-AIMREFLECT
+		-shootable
+		-buddha
+		+ripper
+	}
+	States
+	{
+	Death:
+		TNT1 A 0;
+		TNT1 A 0 A_AlertMonsters(32);
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 10;
+		Stop;
+	}
+}
+
+class meleestrike2baron3 : MeleeStrike2Baron2
+{
+	Default
+	{
+		decal "CrackMelee";
+	}
+}
+
+class meleeStrike1Rev : mEleeStrike2Baron
+{
+	Default
+	{
+		DamageFunction random(100,250);
+	}
+	States
+	{
+	Death:
+		TNT1 A 0;
+		TNT1 A 0 A_AlertMonsters(32);
+		PUFF A 0 A_PlaySound("skeleton/melee");
+		EXPL AAAAAA 0 A_CustomMissile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 10;
+		Stop;
+	}
+}
+
 CLASS MeleeAttack : Actor
 {
 	Int basedamage;

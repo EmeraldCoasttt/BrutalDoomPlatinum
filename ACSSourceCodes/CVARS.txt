@@ -648,25 +648,6 @@ if	(GetCvar("zdoombd_shotgunstrap") == 1) { GiveInventory("useshotgunstrap", 1);
 if	(GetCvar("bd_disablenewenemies") == 1) { GiveInventory("nonewenemies", 1);}
 }
 
-
-
-Script "BDCheckWaterRipples" (VOID)
-{
-if	(GetCvar("bd_disablewaterripples2") > 0) { GiveInventory("Clip2", 10); }
-}
-
-Script "BDDisableFriendlyMarines" (VOID)
-{
-if	(GetCvar("bd_disablefriendlymarines") > 0) { GiveInventory("Clip2", 10); }
-}
-
-
-Script "BDShootableAmmo" (VOID)
-{
-if	(GetCvar("bd_shootablerocketammo") < 1) { GiveInventory("Clip1", 10); }
-}
-
-
 Script "BDFootsteps" (VOID)
 {
 if	(GetCvar("bd_footstepsounds") == 0) { GiveInventory("FootStepDisabled", 1); }

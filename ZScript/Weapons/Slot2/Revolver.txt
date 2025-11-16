@@ -2,7 +2,7 @@ class BDPRevolver : BrutalWeapon
 {
 	Default
 	{
-		Weapon.AmmoGive1 15;
+		Weapon.AmmoGive 15;
 		Weapon.AmmoType "BDPClip1";
 		BrutalWeapon.MagCapacity 6;
 		Weapon.SlotNumber 2;
@@ -11,7 +11,6 @@ class BDPRevolver : BrutalWeapon
 		Obituary "%o was shot down by %k's revolver.";
 		Inventory.PickupSound "REVDRY";
 		Inventory.Pickupmessage "You got the Revolver! Yee-haw! (slot 2)";
-		Scale 0.9;
 		Tag "$BDPREVOLVER";
 		Inventory.AltHUDIcon "REVOQ0";
 		Inventory.MaxAmount 2;
@@ -20,36 +19,37 @@ class BDPRevolver : BrutalWeapon
 	}
 	States
 	{
-	Grenadethrowflash:
+	Grenade: //32
 		REVS ABC 1;
 		TNT1 A 26;
 		REVS CBA 1;
-		Stop;
-	KickingFlash:
-		REVR CIJKLLLLLLLLKJIC 1;
 		Goto Ready;
-	AirKickingFlash:
-		REVR CIJKLLLLLLLLLLKJIC 1; //18
+	Kick: //16
+		REVR CIJK 1;
+		REVR L 8;
+		REVR KJIC 1;
 		Goto Ready;
-	SlideKickingStart:
-		REU1 CIJKL 1;
-	SlideKickingLoop:
-		REVR L 1 A_CheckSlide;
-		Loop;
-	 SlideKickingEnd:
-		REVR LLLLLLKJIC 1; //10
+	AirKick: //18
+		REVR CIJK 1;
+		REVR L 10;
+		REVR KJIC 1;
 		Goto Ready;
-	FuckYouFlash:
-		REVR CIJK 1; //30
+	SlideKick: //26
+		REVR CIJK 1;
+		REVR L 18;
+		REVR KJIC 1;
+		Goto Ready;
+	Taunt: //30
+		REVR CIJK 1;
 		REVR L 22;
 		REVR KJIC 1;
-		Stop;
-	SprintOverlay:
+		Goto Ready;
+	Sprint:
 		REVR CIJK 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-	KeepSprinting:
-		REVR L 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		TNT1 A 0 A_KeepSprinting();
-	ReturnFromSprint:
+	SprintLoop:
+		REVR L 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		Loop;
+	SprintEnd:
 		REVR KJIC 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 		Goto Ready;
 	Ready:
@@ -75,10 +75,9 @@ class BDPRevolver : BrutalWeapon
 		REVO M 1 Bright
 		{
 			A_FireBullets (2, 2, 1, 60, "RevolverPuff", FBF_NORANDOM,0,"DecorativeTracer",-4);
-			A_FireParticles(3,2,-1);
+			A_FireParticles(5);
 			A_StartSound("REVFIRE2", 1);
 			A_StartSound("FARSHT", 6);
-			A_ReloadMag();
 			A_ZoomFactor(0.98);
 			A_QuadSound();
 			A_GunLight();
@@ -103,10 +102,9 @@ class BDPRevolver : BrutalWeapon
 		RE2F D 1 Bright
 		{
 			A_FireBullets (4, 3, 1, 40 , "RevolverPuff", FBF_NORANDOM,0,"DecorativeTracer",-4);
-			A_FireParticles(3,2,-1,2);
+			A_FireParticles(5);
 			A_StartSound("REVFIRE2", 1);
 			A_StartSound("FARSHT", 6);
-			A_ReloadMag();
 			A_ZoomFactor(0.98);
 			A_QuadSound();
 			A_GunLight();
@@ -184,7 +182,7 @@ class BDPRevolver : BrutalWeapon
 	Spawn:
 		REVO Q -1;
 		LOOP;
-	DualWield:
+	SpecialAction:
 		TNT1 A 0 A_DualWield();
 		Goto Ready;
 	}

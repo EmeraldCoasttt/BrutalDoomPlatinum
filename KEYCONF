@@ -1,38 +1,30 @@
-   addkeysection "BrutalDoom - Advanced Actions" BrutalDoomPlatinumActions    
-   
-   addmenukey "Kick" kickem
-   alias kickem "pukename PressKick"
-   defaultbind Q kickem
+	addkeysection "BrutalDoom - Advanced Actions" BrutalDoomPlatinumActions	 
+	
+	addmenukey "Kick" "+user1"
 
-
-   addMenuKey "Dual Wield/Special Action" "+user3"
-   
-   addmenukey "Flashlight" flashlightswitch
-   alias flashlightswitch "pukename PressFlashlight"
-   defaultbind F flashlightswitch
-   
-
+	addMenuKey "Dual Wield/Special Action" "+user3"
+	
+	addmenukey "Flashlight" flashlightswitch
+	alias flashlightswitch "pukename PressFlashlight"
+	defaultbind F flashlightswitch
 
 	addmenukey "Toss Grenade" "+user2"
-   defaultbind G grenadetoss
-   
-   addmenukey "Swap Grenades" swapgrenade
-   defaultbind I swapgrenade
-   alias swapgrenade "pukename swapgrenades"
+	
+	addmenukey "Swap Grenades" swapgrenade
+	defaultbind I swapgrenade
+	alias swapgrenade "pukename swapgrenades"
 
-   addmenukey "Scan Area" scanner
-   alias scanner "netevent togglescanner" 
+	addmenukey "Scan Area" scanner
+	alias scanner "netevent togglescanner" 
 
-   addmenukey "Offend" brutaltaunt
-   alias brutaltaunt "pukename PressTaunt"
-   defaultbind H brutaltaunt
+	addmenukey "Taunt" "+user4"
 
-   addkeysection "Brutal Doom - Cheats" BrutalDoomAdvMoves              // here too
+	addkeysection "Brutal Doom - Cheats" BrutalDoomAdvMoves				  // here too
 
-      addmenukey "Slow motion toggle" SlowMoBind
-   alias SlowMoBind "i_timescale 0.3; rebind SlowMoBind2"
-   alias SlowMoBind2 "i_timescale 1; rebind SlowMoBind"
-   defaultbind kp1 SlowMoBind
-   
-    addmenukey "Give Everything" giveit
-   alias giveit "Give All"
+	addmenukey "Slow motion toggle" SlowMoBind
+	alias SlowMoBind "i_timescale 0.3; rebind SlowMoBind2"
+	alias SlowMoBind2 "i_timescale 1; rebind SlowMoBind"
+	defaultbind kp1 SlowMoBind
+	
+	addmenukey "Give Everything" giveit
+	alias giveit "Give All"

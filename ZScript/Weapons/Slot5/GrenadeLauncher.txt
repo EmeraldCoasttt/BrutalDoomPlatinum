@@ -1,5 +1,7 @@
 class BDPGrenadeLauncher : BrutalWeapon
 {
+	bool thermiteGrenades;
+	
 	Default
 	{
 		Weapon.AmmoGive 2;
@@ -10,41 +12,52 @@ class BDPGrenadeLauncher : BrutalWeapon
 		Weapon.SlotPriority 2;
 		Weapon.SelectionOrder 2700;
 		Inventory.PickupMessage "You got the Grenade Launcher! (Slot 5)";
+		+WEAPON.EXPLOSIVE
 		Tag "$BDPGRENADE";
-		scale 0.8;
 		Inventory.AltHUDIcon "GLAPA0";
 	}
 	States
 	{
-	GrenadeThrowFlash:
-		GLSA BCDE 1;
+	Grenade: //32
+		GLSA ABCD 1;
 		TNT1 A 24;
-		GLSA EDCB 1;//32 in total
-		stop;
-	AirKickingFlash:
-		GLAN BCDEFFFFFFFFFFEDCB 1;
+		GLSA EDCB 1;
 		Goto Ready;
-	KickingFlash:
-		GLR1 BCDEFFFFFFFFEDCB 1;
+	Kick: //16
+		GLR1 BCDE 1;
+		GLR1 F 8;
+		GLR1 EDCB 1;
 		Goto Ready;
-	SlideKickingStart:
+	AirKick: //18
 		GLAN BCDE 1;
-	SlideKickingLoop:
-		GLAN F 1 A_CheckSlide();
-		Loop;
-	SlideKickingEnd:
-		GLAN FFFFFFEDCB 1; //13
+		GLAN F 10;
+		GLAN EDCB 1;
 		Goto Ready;
-	FuckYouFlash:
-		GLAN BCDEFFFFFFFFFFFFFFFFFFFFFFEDCB 1;
-		stop;
+	SlideKick: //26
+		GLAN BCDE 1;
+		GLAN F 18;
+		GLAN EDCB 1;
+		Goto Ready;
+	Taunt: //30
+		GLAN BCDE 1;
+		GLAN F 22;
+		GLAN EDCB 1;
+		Goto Ready;
+	Sprint:
+		GLAN BCDE 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+	SprintLoop:
+		GLAN F 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		Loop;
+	SprintEnd:
+		GLAN EDCB 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		Goto Ready;
 	StrapIdle:
 		SHTN A 0 A_JumpIfInventory("NoShotgunStrap",1,"Ready");
 		GLR3 FEDCBAGHIJKLLLKJIHGABCDDDCBAGHIJJJIHG 1
 		{
 			if(invoker.mag < 1)
 			{
-				return A_AutoReloadMag();
+				return A_AutoReloadMag(1,"Reload",true);
 			}
 			else
 			{
@@ -68,7 +81,7 @@ class BDPGrenadeLauncher : BrutalWeapon
 		{
 			A_SetCrosshairDX("NadeRet", 500, 0.7);
 			A_GunslingerMag();
-			if(CountInv("StickyGrenadeSelected")==1)
+			if(invoker.thermiteGrenades)
 			{
 				ChangeAmmoIcon1("ROCKE0");
 			}
@@ -81,7 +94,7 @@ class BDPGrenadeLauncher : BrutalWeapon
 		TNT1 A 0 A_CheckIfMag();
 		GLAF A 1 Bright 
 		{
-			if(Countinv("StickyGrenadeSelected")==1)
+			if(invoker.thermiteGrenades)
 			{
 				A_FireProjectile("FireGrenade", 0, 0, 0, 0);
 			}
@@ -91,13 +104,13 @@ class BDPGrenadeLauncher : BrutalWeapon
 			}
 			A_FireProjectile("RedFlareSpawn",-5,0,0,0);
 			A_FireProjectile("GrenadeMissileBreaksGlass", 0, 0, 0, 0);
-			A_FireParticles(5,2,-1);
+			A_FireParticles(7);
 			A_StartSound("weapons/firegrenade", 1);
 			A_AlertMonstersDX();
 			A_ZoomFactor(0.98);
 			A_QuadSound();
 			A_GunLight();
-			A_TakeMag();
+			A_TakeMag(1,true,true);
 			A_ZoomFactor(1.0);
 			A_Recoil(1*cos(pitch));
 			if(momZ != 0)
@@ -119,12 +132,12 @@ class BDPGrenadeLauncher : BrutalWeapon
 		GLR3 C 1;
 		TNT1 A 0
 		{
-			If(Countinv("StickyGrenadeSelected")==0)
+			If(!invoker.thermiteGrenades)
 			{
 				A_Refire("SemiAutoLol");
 			}
 		}
-		GLAN A 2;
+		GLAN A 2 A_WeaponReady(WRF_NOFIRE|WRF_NOBOB);
 		Goto NoAmmo2;
 	SemiAutoLol:
 		GLAN A 1;
@@ -133,47 +146,32 @@ class BDPGrenadeLauncher : BrutalWeapon
 	ReloadSmoke:
 		SSGS MNOPQR 1;
 		stop;
-	Reload:	
-		NULL A 0 A_jumpif(Countinv("StickyGrenadeSelected")==1, "StickyReload");
+	Reload:
+		TNT1 A 0 A_JumpIfInventory("PowerSpeed2",1,"ReloadHaste");
 		GLR1 ABCDEFGGGG 1;
 		TNT1 A 0 A_StartSound("foley/GLDownwardsToOpen",10);
 		GLR1 FHIJK 1;
 		GLR1 L 1 A_Overlay(2,"ReloadSmoke");
-		TNT1 A 0 A_StartSound("foley/GLEjectShell",11);
-		TNT1 A 0 A_StartSound("Weapons/GrenadeOpen");
-		TNT1 A 0 A_FireProjectile("GrenadeCasingSpawner",0,0,-4, -14)	;
+		TNT1 A 0
+		{
+			if(invoker.thermiteGrenades)
+			{
+				A_FireProjectile("GrenadeCasingSpawner2",0,0,-4, -14);
+			}
+			else
+			{
+				A_FireProjectile("GrenadeCasingSpawner",0,0,-4, -14);
+			}
+			A_StartSound("foley/GLEjectShell",11);
+			A_StartSound("Weapons/GrenadeOpen");
+		}
 		GLR1 MN 1 A_FireProjectile("SmokeSpawner",0,0,0,-1);
 		GLR1 O 1 A_FireProjectile("SmokeSpawner",0,0,0,2);
 		GLR1 PP 1 A_FireProjectile("SmokeSpawner",0,0,0,3);
-		GLR1 QRST 1;
-		GLR1 UU 1;
-		TNT1 A 0 A_ReloadMag();
-		TNT1 A 0 A_StartSound("Weapons/GrenadeLoad");
-		GLR1 WXYZ 1;
-		GLR2 A 1 A_GiveInventory("QuickSwitchSSG",1);
-		TNT1 A 2 A_WeaponReady(WRF_NOFIRE);
-		TNT1 A 0 A_StartSound("foley/GLUpwardsToClose",10);
-		GLSA E 1 A_TakeInventory("QuickSwitchSSG",1);
-		TNT1 A 0 A_StartSound("Weapons/GrenadeClose");
-		GLSA EDCB 1 A_WeaponReady(WRF_NOFIRE);
-		GLR3 M 1 A_WeaponReady(WRF_NOFIRE);
-		TNT1 A 0 A_TakeInventory("Reloading", 1);
-		Goto StrapIdle;
-	StickyReload:
-		GLR1 ABCDEFGGGG 1;
-		TNT1 A 0 A_StartSound("foley/GLDownwardsToOpen",10);
-		GLR1 FHIJK 1;
-		GLR1 L 1 A_Overlay(2,"ReloadSmoke");
-		TNT1 A 0 A_StartSound("foley/GLEjectShell",11);
-		TNT1 A 0 A_StartSound("Weapons/GrenadeOpen");
-		TNT1 A 0 A_FireProjectile("GrenadeCasingSpawner2",0,0,-4, -14)	;
-		GLR1 MN 1 A_FireProjectile("SmokeSpawner",0,0,0,-1);
-		GLR1 O 1 A_FireProjectile("SmokeSpawner",0,0,0,2);
-		GLR1 PP 1 A_FireProjectile("SmokeSpawner",0,0,0,3);
-		GLR4 QRSTUU 1;
-		TNT1 A 0 A_ReloadMag();
-		TNT1 A 0 A_StartSound("Weapons/GrenadeLoad");
-		GLR4 W 1;
+		GLR4 A 0 A_JumpIf(invoker.thermiteGrenades, 2);
+		GLR1 A 0;
+		"####" QRSTUU 1;
+		"####" W 1 {A_ReloadMag(); A_StartSound("Weapons/GrenadeLoad");}
 		GLR1 XYZ 1;
 		GLR2 A 1 A_GiveInventory("QuickSwitchSSG",1);
 		TNT1 A 2 A_WeaponReady(WRF_NOFIRE);
@@ -182,26 +180,67 @@ class BDPGrenadeLauncher : BrutalWeapon
 		TNT1 A 0 A_StartSound("Weapons/GrenadeClose");
 		GLSA EDCB 1 A_WeaponReady(WRF_NOFIRE);
 		GLR3 M 1 A_WeaponReady(WRF_NOFIRE);
-		TNT1 A 0 A_TakeInventory("Reloading", 1);
 		Goto StrapIdle;
-	DualWield:
-		TNT1 A 0 A_takeinventory("startdualwield",1);
+	ReloadHaste:
+		GLR1 ACEGG 1;
+		TNT1 A 0 A_StartSound("foley/GLDownwardsToOpen",10);
+		GLR1 FIK 1;
+		GLR1 L 1 A_Overlay(2,"ReloadSmoke");
+		TNT1 A 0
+		{
+			if(invoker.thermiteGrenades)
+			{
+				A_FireProjectile("GrenadeCasingSpawner2",0,0,-4, -14);
+			}
+			else
+			{
+				A_FireProjectile("GrenadeCasingSpawner",0,0,-4, -14);
+			}
+			A_StartSound("foley/GLEjectShell",11);
+			A_StartSound("Weapons/GrenadeOpen");
+		}
+		GLR1 N 1 A_FireProjectile("SmokeSpawner",0,0,0,-1);
+		GLR1 O 1 A_FireProjectile("SmokeSpawner",0,0,0,2);
+		GLR1 P 1 A_FireProjectile("SmokeSpawner",0,0,0,3);
+		GLR4 A 0 A_JumpIf(invoker.thermiteGrenades, 2);
+		GLR1 A 0;
+		"####" RTU 1;
+		"####" W 1 {A_ReloadMag(0,false,true); A_StartSound("Weapons/GrenadeLoad");}
+		GLR1 Y 1;
+		GLR2 A 1 A_GiveInventory("QuickSwitchSSG",1);
+		TNT1 A 1 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_StartSound("foley/GLUpwardsToClose",10);
+		GLSA E 1 A_TakeInventory("QuickSwitchSSG",1);
+		TNT1 A 0 A_StartSound("Weapons/GrenadeClose");
+		GLSA DB 1 A_WeaponReady(WRF_NOFIRE);
+		GLR3 M 1 A_WeaponReady(WRF_NOFIRE);
+		Goto StrapIdle;
+	SpecialAction:
+		TNT1 A 0 A_JumpIfInventory("PowerSpeed2",1,"SpecialActionHaste");
 		GLR1 ABCDEFGGGG 1;
 		TNT1 A 0 A_StartSound("foley/GLDownwardsToOpen",10);
 		GLR1 FHIJKL 1;
 		TNT1 A 0 A_StartSound("Weapons/GrenadeOpen");
 		GLR1 MNOPP 1;
-		TNT1 A 0 A_jumpif(Countinv("StickyGrenadeSelected")==1, "backtomonke");
-		GLR4 QRSTUU 1;
-		TNT1 A 0
+		GLR1 A 0 A_jumpif(invoker.thermiteGrenades, 2);
+		GLR4 A 0;
+		"####" QRSTUU 1;
+		"####" W 1
 		{
-			ChangeAmmoIcon1("ROCKE0");
-			A_GiveInventory("StickyGrenadeSelected",1);
-			A_Print("\cdThermite Grenades",2);
+			if(invoker.thermiteGrenades)
+			{
+				ChangeAmmoIcon1("ROCKA0");
+				invoker.thermiteGrenades = 0;
+				A_Print("\cgHigh Explosive Grenades",2);
+			}
+			else
+			{
+				ChangeAmmoIcon1("ROCKE0");
+				invoker.thermiteGrenades = 1;
+				A_Print("\cdThermite Grenades",2);
+			}
+			A_StartSound("Weapons/GrenadeLoad");
 		}
-		TNT1 A 0 A_StartSound("Weapons/GrenadeLoad");
-		GLR4 W 1;
-	DualWieldContinue:
 		GLR1 XYZ 1;
 		GLR2 A 1;
 		TNT1 A 2;
@@ -209,20 +248,43 @@ class BDPGrenadeLauncher : BrutalWeapon
 		GLSA E 1;
 		TNT1 A 0 A_StartSound("Weapons/GrenadeClose");
 		GLSA EDCB 1;
-		GLR3 M 1 A_takeinventory("startdualwield",1);
+		GLR3 M 1;
 		Goto StrapIdle;
-	Backtomonke:
-		GLR1 QRSTUU 1;
-		TNT1 A 0
+	SpecialActionHaste:
+		GLR1 ACEGG 1;
+		TNT1 A 0 A_StartSound("foley/GLDownwardsToOpen",10);
+		GLR1 FIK 1;
+		TNT1 A 0 A_StartSound("Weapons/GrenadeOpen");
+		GLR1 NOP 1;
+		GLR1 A 0 A_jumpif(invoker.thermiteGrenades, 2);
+		GLR4 A 0;
+		"####" RTU 1;
+		"####" W 1
 		{
-			ChangeAmmoIcon1("ROCKA0");
-			A_TakeInventory("StickyGrenadeSelected",1);
-			A_Print("\cgHigh Explosive Grenades",2);
+			if(invoker.thermiteGrenades)
+			{
+				ChangeAmmoIcon1("ROCKA0");
+				invoker.thermiteGrenades = 0;
+				A_Print("\cgHigh Explosive Grenades",2);
+			}
+			else
+			{
+				ChangeAmmoIcon1("ROCKE0");
+				invoker.thermiteGrenades = 1;
+				A_Print("\cdThermite Grenades",2);
+			}
+			A_StartSound("Weapons/GrenadeLoad");
 		}
-		TNT1 A 0 A_StartSound("Weapons/GrenadeLoad");
-		GLR1 W 1;
-		Goto DualWieldContinue;
-	Fidget:	
+		GLR1 Y 1;
+		GLR2 A 1;
+		TNT1 A 1;
+		TNT1 A 0 A_StartSound("foley/GLUpwardsToClose",10);
+		GLSA E 1;
+		TNT1 A 0 A_StartSound("Weapons/GrenadeClose");
+		GLSA DB 1;
+		GLR3 M 1;
+		Goto StrapIdle;
+	Fidget:
 		GLR1 ABCDEFGGGG 1 A_WeaponReadyDX(0,false,false);
 		TNT1 A 0 A_StartSound("foley/GLDownwardsToOpen",10);
 		GLR1 FHIJK 1 A_WeaponReadyDX(0,false,false);
@@ -250,14 +312,6 @@ class BDPGrenadeLauncher : BrutalWeapon
 		GLAN A 1 A_WeaponReadyDX(WRF_NOFIRE);
 		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK), "NoAmmo2");
 		Goto Ready;
-	SprintOverlay:
-		GLAN BCDE 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		KeepSprinting:
-		GLAN F 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		TNT1 A 0 A_keepsprinting;
-	ReturnFromSprint:
-		GLAN EDCB 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		Goto ready;
 	Spawn:
 		GLAP A -1;
 		Stop;
@@ -381,9 +435,9 @@ Class GrenadeDetonates : Actor
 	Radius 4;
 	Height 4;
 	Speed 50;
-	Damagefunction (60);
-    +MISSILE;
-    Gravity 0.7;
+	Damagefunction 60;
+	+MISSILE;
+	Gravity 0.7;
 	+SKYEXPLODE;
 	+BOUNCEONFLOORS;
 	+BOUNCEONWALLS;
@@ -395,7 +449,7 @@ Class GrenadeDetonates : Actor
 	+usebouncestate;
 	Species "Marines";
 	DamageType "Kick";
-    BounceFactor 0.5;
+	BounceFactor 0.5;
 	WallBounceFactor 0.35;
 	BounceSound "Weapons/GrenadeBounce";
 	DeathSound "Weapons/GrenadeBounce";
@@ -459,20 +513,20 @@ Class GrenadeDetonates : Actor
 		Loop;
 	
 	Explode:
-	    TNT1 A 0 A_stopsound(7);
+		TNT1 A 0 A_stopsound(7);
 		TNT1 A 0 A_StartSound("Explosion", 1);
 		EXPL A 0 Radius_Quake (8, 8, 0, 128, 0);//(intensity, duration, damrad, tremrad, tid)
 		TNT1 A 0 A_SpawnItemEx ("GrenadeExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 	   TNT1 A 0 A_spawnitemex("ricochetexplosion");
-        TNT1 AAAAAAAAAA 0 A_spawnProjectile ("BDExplosionparticlesBig", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAAAAAAAAA 0 A_spawnProjectile ("BDExplosionparticlesBig", 0, 0, random (0, 360), 2, random (0, 360));
 		TNT1 AAAAAAA 0 A_SpawnProjectile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (0, -90));
 	   	TNT1 AAAA 0 A_spawnProjectile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))  ;
 		TNT1 AAAAAAA 0 A_SpawnProjectile ("ExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360));
-        TNT1 AAAAAAAAAAAAAA 0 A_SpawnProjectile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, -180));
-        TNT1 AAAAAA 0 A_SpawnProjectile ("ExplosionParticleHeavy", 0, 0, random (0, 180), 2, random (0, 180));
+		TNT1 AAAAAAAAAAAAAA 0 A_SpawnProjectile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, -180));
+		TNT1 AAAAAA 0 A_SpawnProjectile ("ExplosionParticleHeavy", 0, 0, random (0, 180), 2, random (0, 180));
 		TNT1 A 0 A_StartSound("FAREXPL", 3);
 	//	TNT1 AAAAAAAAAA 4 A_CustomMissile ("ExplosionSmoke", 1, 0, random (0, 360), 2, random (50, 130))
-	    TNT1 A 0 A_SpawnProjectile ("ExplosionSmoke", 1, 0, random (0, 360), 2, random (-50, -130));
+		TNT1 A 0 A_SpawnProjectile ("ExplosionSmoke", 1, 0, random (0, 360), 2, random (-50, -130));
 		stop;
 	}
 }
@@ -481,13 +535,13 @@ CLASS FireGrenade : actor
 {
 	Default
 	{
-    Radius 4;
+	Radius 4;
 	Height 4;
 	Speed 30;
 
 
   //  +BLOODSPLATTER
-    Gravity 0.7;
+	Gravity 0.7;
 	Damagefunction 0;
 	+MISSILE;
 	+FORCEXYBILLBOARD;
@@ -515,8 +569,8 @@ BounceSound "Weapons/GrenadeBounce";
 
 		
 	
-    Vector3 stickOfs;
-    double stickAngle;
+	Vector3 stickOfs;
+	double stickAngle;
 	
 	int sawtimer;
 	int sawtimer2;
@@ -587,7 +641,7 @@ BounceSound "Weapons/GrenadeBounce";
 			{
 				tracer.a_pain();
 				stickOfs = tracer.Vec3To(self);
-                    stickAngle = tracer.angle;
+					stickAngle = tracer.angle;
 		busebouncestate = false;
 		}
 		If(!tracer)
@@ -710,10 +764,10 @@ Class FireGrenade_Debris : Actor
   states
   {
   Spawn:
-    SPRK A random(1,10) bright;
+	SPRK A random(1,10) bright;
   Death:
-    SPRK A 1 bright A_FadeOut (0.1);
-    loop;
+	SPRK A 1 bright A_FadeOut (0.1);
+	loop;
 
 
   }

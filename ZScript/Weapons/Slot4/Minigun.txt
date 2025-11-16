@@ -15,7 +15,7 @@ class BDPMinigun : BrutalWeapon
 	}
 	States
 	{
-	GrenadeThrowFlash:
+	Grenade:
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
 		"####" XWVU 1;
@@ -23,8 +23,8 @@ class BDPMinigun : BrutalWeapon
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
 		"####" UVWX 1;
-		Stop;
-	KickingFlash: 
+		Goto Ready;
+	Kick: 
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
 		"####" A 0 A_JumpIfInventory("Spin",1,"SpinKickFlash");
@@ -40,7 +40,7 @@ class BDPMinigun : BrutalWeapon
 		"####" PONM 1;
 		TNT1 A 0 A_JumpIfInventory("BDPClip2",1,"Ready2");
 		Goto Ready2;
-	AirKickingFlash: 
+	AirKick: 
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
 		"####" A 0 A_JumpIfInventory("Spin",1,"SpinAirKickFlash");
@@ -56,7 +56,7 @@ class BDPMinigun : BrutalWeapon
 		"####" PONM 1;
 		TNT1 A 0 A_JumpIfInventory("BDPClip2",1,"Ready2");
 		Goto Ready2;
-	SlideKickingStart: 
+	SlideKick: 
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
 		"####" A 0 A_JumpIfInventory("Spin",1,"SpinSlideFlash");
@@ -72,46 +72,44 @@ class BDPMinigun : BrutalWeapon
 		"####" PONM 1;
 		TNT1 A 0 A_JumpIfInventory("BDPClip2",1,"Ready2");
 		Goto Ready2;
-	FuckYouFlash: 
+	Taunt: 
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
 		"####" A 0 A_JumpIfInventory("Spin",1,"SpinFuckFlash");
 		"####" HIJK 1;
 		"####" LLLLLLLLLLLLLLLLLLLLLL 1;
 		"####" KJIH 1;
-		Stop;
+		Goto Ready;
 	SpinFuckFlash: 
 		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
 		"####" MNOP 1;
 		"####" QRSTQRSTQRSTQRSTQRSTQR 1;
 		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
 		"####" PONM 1;
-		Stop;
-	SprintOverlay: 
+		Goto Ready2;
+	Sprint: 
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
-		"####" A 0 A_JumpIfInventory("Spin",1,"SpinSprintOverlay");
+		"####" A 0 A_JumpIfInventory("Spin",1,"SpinSprint");
 		"####" HIJK 1 A_weaponreadyDX(0,FALSE,FALSE);
-	KeepSprinting:
+	SprintLoop:
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
-		"####" A 0 A_JumpIfInventory("Spin",1,"SpinKeepSprinting");
-		"####" L 1 A_WeaponReadyDX(0,FALSE,FALSE);
-		"####" A 0 A_keepsprinting();
-	ReturnFromSprint:
+		"####" L 1 A_KeepSprinting();
+		Loop;
+	SprintEnd:
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
-		"####" A 0 A_JumpIfInventory("Spin",1,"SpinRetunrFromSprint");
 		"####" KJIH 1 A_WeaponReadyDX(0,FALSE,FALSE);
 		Goto Ready;
-	SpinSprintOverlay:
+	SpinSprint:
 		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
 		"####" MNOP 1 A_WeaponReadyDX(0,FALSE,FALSE);
-	SpinKeepSprinting:
+	SpinSprintLoop:
 		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
-		"####" QRST 1 A_WeaponReadyDX(0,FALSE,FALSE);
-		"####" A 0 A_keepsprinting();
-	SpinReturnFromSprint:
+		"####" QRST 1 A_KeepSprinting();
+		Loop;
+	SpinSprintEnd:
 		"####" PONM 1 A_WeaponReadyDX(0,FALSE,FALSE);
 		Goto Ready2;
 	Spawn:
@@ -196,7 +194,7 @@ class BDPMinigun : BrutalWeapon
 		{
 			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
-			A_FireParticles(0,1,0,-6);
+			A_FireParticles();
 			A_StartSound("CHAINSPI", 5,CHANF_LOOPING,0.5);
 			A_StartSound("CHAINSHO", 1,CHANF_LOOPING,0.5);
 			A_AlertMonstersDX();
@@ -212,7 +210,7 @@ class BDPMinigun : BrutalWeapon
 			A_SetPitch(Pitch-0.4, SPF_INTERPOLATE);
 			A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE);
 			A_FireProjectile("50CaseSpawn2",0,0,12,-18);
-			A_FireParticles(1,0,0,-6);
+			A_FireParticles();
 			A_AlertMonstersDX();
 			A_ZoomFactor(0.99);
 			A_QuadSound();
@@ -227,8 +225,7 @@ class BDPMinigun : BrutalWeapon
 			A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE);
 			A_FireProjectile("50CaseSpawn2",0,0,12,-18);
 			A_FireProjectile("SmokeSpawner11",0,0,0,0);
-			A_FireParticles(1,0,0,-6);
-			A_StartSound("CHAINSHO", 1,CHANF_LOOPING,0.5);
+			A_FireParticles();
 			A_AlertMonstersDX();
 			A_ZoomFactor(0.99);
 			A_QuadSound();
@@ -242,8 +239,7 @@ class BDPMinigun : BrutalWeapon
 			A_SetPitch(Pitch-0.4, SPF_INTERPOLATE);
 			A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE);
 			A_FireProjectile("50CaseSpawn2",0,0,12,-18);
-			A_FireParticles(0,1,0,-6);
-			A_StartSound("CHAINSHO", 1,CHANF_LOOPING,0.5);
+			A_FireParticles();
 			A_AlertMonstersDX();
 			A_ZoomFactor(0.99);
 			A_QuadSound();
@@ -254,7 +250,7 @@ class BDPMinigun : BrutalWeapon
 			A_SetPitch(Pitch-0.4, SPF_INTERPOLATE);
 			A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE);
 			A_FireProjectile("50CaseSpawn2",0,0,12,-18);
-			A_FireParticles(1,0,0,-6);
+			A_FireParticles();
 			A_FireProjectile("SmokeSpawner11",0,0,0,0);
 			A_ZoomFactor(1.0);
 			A_WeaponOffset(0,32);
@@ -399,7 +395,7 @@ class BDPMinigun : BrutalWeapon
 		"####" AAABBBCCCDDDEEEFFF 1 A_WeaponReadyDX();
 		CHAG A 0;
 		Goto Ready;
-		 DualWield:
+		 SpecialAction:
 		 TNT1 A 0 A_takeinventory("StartDualWield",1);
 		 TNT1 A 0 A_jumpifinventory("BDPClip2",1,1);
 		 Goto ready;

@@ -6,9 +6,6 @@ class BDPDualPlasmaRifle : BrutalWeapon
 		Weapon.AmmoType "BDPCell";
 		BrutalWeapon.MagCapacity 100;
 		Weapon.SisterWeapon "BDPPlasmaRifle";
-		+WEAPON.NOAUTOAIM
-		+WEAPON.NO_AUTO_SWITCH
-		+FORCEXYBILLBOARD
 		+WEAPON.POWERED_UP
 		Tag "$BDPPLASMA";
 		Inventory.AltHUDIcon "PLASB0";
@@ -18,69 +15,67 @@ class BDPDualPlasmaRifle : BrutalWeapon
 	}
 	States
 	{
-	SprintOverlay:
-		TNT1 A 0 { A_Overlay(6,"SprintOverlay2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+	Sprint:
+		TNT1 A 0 { A_Overlay(6,"Sprint2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
 		3UPL C 0 A_CheckIfMag(1,4);
-		3UPL C 0 A_CheckIfMag(21,"SprintOverlaylowAmmo");
+		3UPL C 0 A_CheckIfMag(21,"SprintLowAmmo");
 		2UPL B 0 A_CheckIfMag(61,2);
 		DUPL A 0;
 		#### KLMN 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-	KeepSprinting:
-		TNT1 A 0 { A_Overlay(6,"SprintOverlay2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+	SprintLoop2:
+		TNT1 A 0 { A_Overlay(6,"Sprint2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
 		3UPL C 0 A_CheckIfMag(1,4);
-		3UPL C 0 A_CheckIfMag(21,"KeepSprintinglowAmmo");
+		3UPL C 0 A_CheckIfMag(21,"SprintLoopLowAmmo");
 		2UPL B 0 A_CheckIfMag(61,2);
 		DUPL A 0;
-		#### A 0	{ A_Overlay(6,"KeepSprinting2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
-		#### O 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		#### A 0 A_keepsprinting();
-		Goto ReturnFromSprint;
-	SprintOverlay2:
+		#### A 0	{ A_Overlay(6,"SprintLoop2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		#### O 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		Loop;
+	Sprint2:
 		3UPL C 0 A_CheckIfMag(1,4);
-		3UPL C 0 A_CheckIfMag(21,"SprintOverlayLowAmmo2");
+		3UPL C 0 A_CheckIfMag(21,"SprintLowAmmo2");
 		2UPL B 0 A_CheckIfMag(61,2);
 		DUPL A 0;
 		#### KLMN 1;
 		STOP;
-	KeepSprinting2:
+	SprintLoop2:
 		3UPL C 0 A_CheckIfMag(1,4);
-		3UPL C 0 A_CheckIfMag(21,"KeepSprintingOverlayLowAmmo2");
+		3UPL C 0 A_CheckIfMag(21,"SprintLoopLowAmmo2");
 		2UPL B 0 A_CheckIfMag(61,2);
 		DUPL A 0;
 		#### O 1;
 		STOP;
-	SprintOverlayLowAmmo:
-		TNT1 A 0 { A_Overlay(6,"SprintOverlayLowAmmo2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+	SprintLowAmmo:
+		TNT1 A 0 { A_Overlay(6,"SprintLowAmmo2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
 		3UPL KLMNOO 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		KeepSprintingLowAmmo:
-		TNT1 A 0 { A_Overlay(6,"KeepSprinting2LowAmmo"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+	SprintLoopLowAmmo:
+		TNT1 A 0 { A_Overlay(6,"SprintLoopLowAmmo2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
 		PLSN A 0 A_StartSound("BEPBEP",4,0,0.3);
-		4UPL OOOOOO 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		3UPL OOOOOO 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		TNT1 A 0 A_KeepSprinting();
-		Goto ReturnFromSprint;
-	SprintOverlayLowAmmo2:
+		4UPL OOOOOO 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		3UPL OOOOOO 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		Loop;
+	SprintLowAmmo2:
 		3UPL KLMNOO 1;
-	KeepSprinting2LowAmmo:
+	SprintLoopLowAmmo2:
 		4UPL OOOOOO 1;
 		3UPL OOOOOO 1;
 		STOP;
-	ReturnFromSprint:
-		TNT1 A 0 { A_Overlay(6,"ReturnFromSprint2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+	SprintEnd:
+		TNT1 A 0 { A_Overlay(6,"SprintEnd2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
 		3UPL C 0 A_CheckIfMag(1,4);
 		3UPL C 0 A_CheckIfMag(21,3);
 		2UPL B 0 A_CheckIfMag(61,2);
 		DUPL A 0;
 		#### NMLK 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
 		Goto Ready;
-	ReturnFromSprint2:
+	SprintEnd2:
 		3UPL C 0 A_CheckIfMag(1,4);
 		3UPL C 0 A_CheckIfMag(21,3);
 		2UPL B 0 A_CheckIfMag(61,2);
 		DUPL A 0;
 		#### NMLK 1;
 		STOP;
-	KickingFlash:
+	Kick:
 		TNT1 A 0 { A_Overlay(6,"KickingFlash2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
 		3UPL C 0 A_CheckIfMag(1,4);
 		3UPL C 0 A_CheckIfMag(21,"KickingFlashLowAmmo");
@@ -88,7 +83,7 @@ class BDPDualPlasmaRifle : BrutalWeapon
 		DUPL A 0;
 		#### KLMNOOOOOOOONMLK 1;
 		Goto Ready;
-	AirKickingFlash:
+	AirKick:
 		TNT1 A 0 { A_Overlay(6,"AirKickingFlash2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
 		3UPL C 0 A_CheckIfMag(1,4);
 		3UPL C 0 A_CheckIfMag(21,"AirKickingFlashLowAmmo");
@@ -96,23 +91,15 @@ class BDPDualPlasmaRifle : BrutalWeapon
 		DUPL A 0;
 		#### KLMNOOOOOOOOOONMLK 1; //18
 		Goto Ready;
-	SlideKickingStart:
+	SlideKick:
 		TNT1 A 0 { A_Overlay(6,"SlideKickingStart2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
 		3UPL C 0 A_CheckIfMag(1,4);
 		3UPL C 0 A_CheckIfMag(21,"SlideKickingStartLowAmmo");
 		2UPL B 0 A_CheckIfMag(61,2);
 		DUPL A 0;
 		#### KLMN 1;
-	SlideKickingLoop:
-		#### O 1 A_CheckSlide();
-		Loop;
-	SlideKickingEnd:
-		TNT1 A 0 { A_Overlay(6,"SlideKickingEnd2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
-		3UPL C 0 A_CheckIfMag(1,4);
-		3UPL C 0 A_CheckIfMag(21,"SlideKickingEndLowAmmo");
-		2UPL B 0 A_CheckIfMag(61,2);
-		DUPL A 0;
-		#### OOOOOONMLK 1; //10
+		#### O 18;
+		#### NMLK 1; //10
 		Goto Ready;
 	KickingFlashLowAmmo:
 		3UPL KLMNOO 1;
@@ -129,15 +116,13 @@ class BDPDualPlasmaRifle : BrutalWeapon
 	SlideKickingStartLowAmmo:
 		3UPL KLMN 1;
 		3UPL OO 1;
-	SlideKickingLoopNoAmmo:
 		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
-		4UPL OOOOOO 1 A_CheckSlide("SlideKickingEndLowAmmo");
-		3UPL OOOOOO 1 A_CheckSlide("SlideKickingEndLowAmmo");
-		Loop;
-	SlideKickingEndLowAmmo:
+		4UPL OOOOOO 1;
+		3UPL OOOOOO 1;
 		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
-		4UPL OOOO 1;
-		3UPL OONMLK 1;
+		4UPL OOOOOO 1;
+		3UPL OOOOOO 1;
+		4UPL NMLK 1;
 		Goto Ready;
 	KickingFlash2:
 		3UPL C 0 A_CheckIfMag(1,4);
@@ -171,28 +156,61 @@ class BDPDualPlasmaRifle : BrutalWeapon
 		2UPL B 0 A_CheckIfMag(61,2);
 		DUPL A 0;
 		#### KLMN 1;
-	SlideKickingLoop2:
-		#### O 1;
-		Loop;
-	SlideKickingEnd2:
-		3UPL C 0 A_CheckIfMag(1,4);
-		3UPL C 0 A_CheckIfMag(21,"SlideKickingEnd2LowAmmo");
-		2UPL B 0 A_CheckIfMag(61,2);
-		DUPL A 0;
-		#### OOOOOONMLK 1; //10
+		#### O 18;
+		#### NMLK 1; //10
 		Stop;
 	SlideKickingStart2LowAmmo:
 		3UPL KLMN 1;
 		3UPL OO 1;
-	SlideKickingLoop2LowAmmo:
 		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
-		4UPL OOOOOO 1 A_CheckSlide("SlideKickingEnd2LowAmmo");
-		3UPL OOOOOO 1 A_CheckSlide("SlideKickingEnd2LowAmmo");
-		Loop;
-	SlideKickingEnd2LowAmmo:
-		4UPL OOOO 1;
-		3UPL OONMLK 1;
+		4UPL OOOOOO 1;
+		3UPL OOOOOO 1;
+		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
+		4UPL OOOOOO 1;
+		3UPL OOOOOO 1;
+		4UPL NMLK 1;
 		Stop;
+	Taunt:
+		TNT1 A 0 
+		{
+			A_overlay(6,"Taunt2");
+			A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True);
+		}
+		3UPL A 0 A_CheckIfMag(1,4);
+		3UPL A 0 A_CheckIfMag(21,"TauntLowAmmo");
+		2UPL A 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### A 30 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+		Goto Ready;
+	TauntLowAmmo:
+		TNT1 A 0
+		{
+			A_overlay(6,"Taunt2LowAmmo");
+			A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True);
+		}
+		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
+		4UPL AAAAAA 1 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+		3UPL AAAAAA 1 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
+		4UPL AAAAAA 1 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+		3UPL AAAAAA 1 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+		TNT1 A 0 A_StartSound("BEPBEP",4,0,0.3);
+		4UPL AAAAAA 1 A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
+		Goto Ready;
+	Taunt2:
+		3UPL A 0 A_CheckIfMag(1,4);
+		3UPL A 0 A_CheckIfMag(21,"Taunt2LowAmmo");
+		2UPL A 0 A_CheckIfMag(61,2);
+		DUPL A 0;
+		#### A 30;
+		STOP;
+	Taunt2LowAmmo:
+		4UPL AAAAAA 1 ;
+		3UPL AAAAAA 1 ;
+		4UPL AAAAAA 1 ;
+		3UPL AAAAAA 1 ;
+		4UPL AAAAAA 1 ;
+		STOP;
 	Ready:
 		TNT1 A 0 
 		{
@@ -227,10 +245,10 @@ class BDPDualPlasmaRifle : BrutalWeapon
 		4UPL AAAAAA 1 ;
 		3UPL AAAAAA 1 ;
 		STOP;
-	DualWield:
+	SpecialAction:
 		TNT1 A 0 A_EndDual();
 		Goto Ready	;
-	Grenadethrowflash:
+	Grenade:
 		TNT1 A 0 { A_Overlay(6,"GrenadethrowflashOverlay"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
 		3UPL C 0 A_CheckIfMag(21,3);
 		2UPL B 0 A_CheckIfMag(61,2);
@@ -241,7 +259,7 @@ class BDPDualPlasmaRifle : BrutalWeapon
 		2UPL B 0 A_CheckIfMag(61,2);
 		DUPL A 0;
 		#### FEDC 1;
-		stop;
+		Goto Ready;
 	GrenadethrowflashOverlay:
 		3UPL C 0 A_CheckIfMag(21,3);
 		2UPL B 0 A_CheckIfMag(61,2);
@@ -299,10 +317,14 @@ class BDPDualPlasmaRifle : BrutalWeapon
 		#### TTTTT 1 A_WeaponReady(WRF_NOFIRE);
 		DUPL A 0 A_Takeinventory("StartDualWield",1);
 		Goto Ready;
+	Refire:
+		DUPL A 0 A_CheckIfMag();
+		TNT1 A 0 { A_Overlay(6,"Fire2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
+		DUPL IJ 1;
+		Goto FireLoop;
 	Fire:
 		DUPL A 0 A_CheckIfMag();
 		TNT1 A 0 { A_Overlay(6,"Fire2"); A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True); }
-		TNT1 A 0 A_JumpIf(GetFired, "FireLoop");
 		3UPL C 0 A_CheckIfMag(21,3);
 		2UPL B 0 A_CheckIfMag(61,2);
 		DUPL A 0;
@@ -319,12 +341,11 @@ class BDPDualPlasmaRifle : BrutalWeapon
 		DUPL A 0 A_TakeMag();
 		TNT1 A 0 A_GiveInventory("PlasmaCooldowncounter",1);
 		DUPL G 1 BRIGHT A_FireProjectile("Plasma_Ball", random(-8, 4), 1, -8, -3, 0, random(-3, 3));
-		TNT1 A 0 SetFired(false);
 		DUPL H 1 BRIGHT;
 		DUPL A 0 A_ZoomFactor(1.0);
 		DUPL A 0 A_SetPitch(Pitch+0.4, SPF_INTERPOLATE);
+		TNT1 A 0 A_Refire("Refire");
 		DUPL IJ 1;
-		TNT1 A 0 A_ReFire("Fireloop");
 		TNT1 A 0 A_JumpIfInventory("PlasmaCooldowncounter",5,"Cooldown");
 		TNT1 A 0 A_TakeInventory("PlasmaCooldowncounter",15);
 		TNT1 A 0 A_ClearOverlays(6,6);
@@ -353,11 +374,9 @@ class BDPDualPlasmaRifle : BrutalWeapon
 		TNT1 A 0 A_TakeInventory("PlasmaCooldowncounter2",15);
 		stop;
 	Fire2:
-		TNT1 A 0 A_JumpIf(GetFired() == false, "Fire2Loop");
 		3UPL C 0 A_CheckIfMag(21,3);
 		2UPL B 0 A_CheckIfMag(61,2);
 		DUPL A 0;
-		#### A 2;
 	Fire2Loop:
 		DUPL A 0 A_CheckIfMag(1,"Overlaynoammo");
 		DUPL A 0 A_TakeMag();
@@ -370,7 +389,7 @@ class BDPDualPlasmaRifle : BrutalWeapon
 		DUPL H 1 BRIGHT;
 		TNT1 A 0 A_ZoomFactor(1.0);
 		DUPL IJ 1;
-		TNT1 A 0 A_jumpifinventory("firedprimary",1,"fire2loop");
+		//TNT1 A 0 A_jumpifinventory("firedprimary",1,"fire2loop");
 		//TNT1 A 0 A_JumpIfInventory("PlasmaCooldowncounter",5,"CooldownOverlay")
 		3UPL C 0 A_CheckIfMag(21,3);
 		2UPL B 0 A_CheckIfMag(61,2);

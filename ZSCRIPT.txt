@@ -41,7 +41,7 @@ version "4.14.0"
 #include "Zscript/Weapons/Slot3/SuperShotgun.txt"
 #include "Zscript/Weapons/Slot3/AssaultShotgun.txt"
 //Slot 4
-#include "Zscript/Weapons/Slot4/Rifle.txt"
+#include "Zscript/Weapons/Slot4/AssaultRifle.txt"
 #include "Zscript/Weapons/Slot4/BattleRifle.txt"
 #include "Zscript/Weapons/Slot4/Minigun.txt"
 //Slot 5
