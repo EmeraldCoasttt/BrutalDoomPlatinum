@@ -574,7 +574,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 		{
 			invoker.aimDest = 'User2';
 		}
-		else if(player.cmd.buttons & BT_USER3)
+		else if(player.cmd.buttons & BT_USER3 && !scoped)
 		{
 			if(!invoker.noSpecial)
 			{
@@ -592,13 +592,13 @@ Class Brutalweapon : DoomWeapon //Weapon
 		}
 		if(scoped == true)
 		{
-			if(((JustPressed(BT_ALTATTACK) && invoker.aimMode == 1) || (CountInv("StartDualWield") == 1 && invoker.aimMode == 2)) && invoker.scopeZoom == false)
+			if(((JustPressed(BT_ALTATTACK) && invoker.aimMode == 1) || (player.cmd.buttons & BT_USER3 && !(player.oldbuttons & BT_USER3) && invoker.aimMode == 2)) && invoker.scopeZoom == false)
 			{
 				A_StartSound(insound);
 				invoker.scopeZoom = true;
 				A_ZoomFactor(highfactor);
 			}
-			else if(CountInv("StartDualWield") == 1 && invoker.aimMode == 2 && invoker.scopeZoom == true)
+			else if(player.cmd.buttons & BT_USER3 && !(player.oldbuttons & BT_USER3) && invoker.aimMode == 2 && invoker.scopeZoom == true)
 			{
 				A_StartSound(outsound);
 				invoker.scopeZoom = false;
