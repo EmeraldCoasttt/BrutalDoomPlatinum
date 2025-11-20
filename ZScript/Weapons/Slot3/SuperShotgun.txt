@@ -726,6 +726,24 @@ class DragonsBreathSparkle : Actor
 		A_setscale(potentialscale,potentialscale);
 		Super.beginplay();
 	}
+	Override void Tick()
+	{
+		if(GetAge() > 1 && GetAge() < 10)
+		{
+			FSpawnParticleParams dbtrail;
+			dbtrail.texture = TexMan.CheckForTexture("SPRKA0");
+			dbtrail.color1 = "";
+			dbtrail.style = STYLE_Add;
+			dbtrail.flags = SPF_FULLBRIGHT;
+			dbtrail.startalpha = alpha;
+			dbtrail.size = frandom(8,12);
+			dbtrail.sizestep = -0.5;
+			dbtrail.lifetime = 24; 
+			dbtrail.pos = pos;
+			Level.SpawnParticle(dbtrail);
+		}
+		Super.Tick();
+	}
 	States
 	{
 	Spawn:
