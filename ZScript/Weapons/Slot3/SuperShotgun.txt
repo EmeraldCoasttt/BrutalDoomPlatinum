@@ -752,7 +752,7 @@ class DragonsBreathSparkle : Actor
 		TNT1 B 0;
 		Spawn2:
 		TNT1 "#" 1;
-		MODL "#" Random(0,4) Bright;
+		SPRK "#" Random(0,4) Bright;
 		TNT1 "#" 0
 		{
 			vel *= 0.1;
