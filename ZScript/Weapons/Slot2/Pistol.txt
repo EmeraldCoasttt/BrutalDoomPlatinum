@@ -247,7 +247,7 @@ class BDPPistol : BrutalWeapon
 		{
 			A_FireBullets (0.2, 0.2, -1, 20, "pistolpuff", FBF_NORANDOM,0,"decorativetracer",-4);
 			A_StartSound("DSPISTOL", 1);
-			A_StartSound("FARSMG", 6);
+			A_StartSound("FARPST", 6);
 			A_AlertMonstersDX();
 			A_ZoomFactor(1.49);
 			A_QuadSound();
