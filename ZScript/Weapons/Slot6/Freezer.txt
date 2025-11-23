@@ -144,11 +144,11 @@ class BDPFreezerBeam : BrutalWeapon
 	NoAmmo2:
 		TNT1 A 0 A_AutoReloadMag();
 		R4FL T 0 A_CheckIfMag(1,"NoAmmo3");
-		FR1D ABC 2 A_WeaponReadyDX(WRF_NOFIRE);
+		FR1D ABC 2 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD || player.cmd.buttons & BT_ATTACK || player.cmd.buttons & BT_ALTATTACK, "NoAmmo2");
 		Goto Ready;
 	NoAmmo3:
-		FR1D Q 1 A_WeaponReadyDX(WRF_NOFIRE);
+		FR1D Q 1 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD || player.cmd.buttons & BT_ATTACK || player.cmd.buttons & BT_ALTATTACK, "NoAmmo2");
 		Goto Ready;
 	Fire:
