@@ -1391,12 +1391,12 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		TNT1 A 30;
 		Goto Ready;
 	Sprint:
-		A12G BCDE 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		TNT1 A 4 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
 	SprintLoop:
-		A12G F 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		TNT1 A 1 A_KeepSprinting(WRF_ALLOWRELOAD);
 		Loop;
 	SprintEnd:
-		A12G EDCB 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		TNT1 A 4 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
 		Goto Ready;
 		
 	
