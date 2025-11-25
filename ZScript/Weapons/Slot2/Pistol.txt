@@ -1,4 +1,4 @@
-class BDPPistol : BrutalWeapon
+class BDPPistol : BrutalWeapon replaces Pistol
 {
 	bool silenced;
 	
