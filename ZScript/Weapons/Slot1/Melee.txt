@@ -1,7 +1,5 @@
 class BDPFist : BrutalWeapon replaces Fist
 {
-	int blood;
-	
 	override void DoEffect()
 	{
 		super.DoEffect();
@@ -11,42 +9,19 @@ class BDPFist : BrutalWeapon replaces Fist
 			if(psp)
 			{
 				string spr = TexMan.GetName(psp.curstate.GetSpriteTexture(0));
-				if(spr && spr != 'TNT1A0')
+				if(spr != "TNT1A0" && bloodStain > 0)
 				{
-					name sprname = spr.Mid(1,3);
-					if(blood > 0)
+					psp.sprite = GetSpriteIndex(bloodStain..spr.Mid(1,3));
+				}
+				psp = owner.player.FindPSprite(1000);
+				if(psp)
+				{
+					spr = TexMan.GetName(psp.curstate.GetSpriteTexture(0));
+					if(spr != "TNT1A0" && bloodStain > 0)
 					{
-						psp.sprite = GetSpriteIndex(blood..sprname);
+						psp.sprite = GetSpriteIndex(bloodStain..spr.Mid(1,3));
 					}
 				}
-			}
-			let psp2 = owner.player.FindPSprite(1000);
-			if(psp2)
-			{
-				string spr2 = TexMan.GetName(psp2.curstate.GetSpriteTexture(0));
-				if(spr2 && spr2 != 'TNT1A0')
-				{
-					name spr2name = spr2.Mid(1,3);
-					if(blood > 0)
-					{
-						psp2.sprite = GetSpriteIndex(blood..spr2name);
-					}
-				}
-			}
-			if(owner.CountInv("PowerBloodOnVisor") > 0)
-			{
-				blood = 1;
-				owner.TakeInventory("PowerBloodOnVisor",1);
-			}
-			if(owner.CountInv("PowerBlueBloodOnVisor") > 0)
-			{
-				blood = 2;
-				owner.TakeInventory("PowerBlueBloodOnVisor",1);
-			}
-			if(owner.CountInv("PowerGreenBloodOnVisor") > 0)
-			{
-				blood = 3;
-				owner.TakeInventory("PowerGreenBloodOnVisor",1);
 			}
 		}
 	}
@@ -68,6 +43,7 @@ class BDPFist : BrutalWeapon replaces Fist
 	States
 	{
 	CacheSprites:
+		1L1M ABCDEFGHIJKLM 0;
 		1ISA ABCDEFGHIJKL 0;
 		1KUP GHIJKL 0;
 		1ONG ABCDEFGHIJKLMNOPQRSTUVWXY 0;
@@ -75,6 +51,7 @@ class BDPFist : BrutalWeapon replaces Fist
 		1UN3 BCDEFGHIJKLMNOPQRSTU[ 0;
 		1UN5 ABCDEFGHIJKL 0;
 		1UCK ABCDEF 0;
+		2L1M ABCDEFGHIJKLM 0;
 		2ISA ABCDEFGHIJKL 0;
 		2KUP GHIJKL 0;
 		2ONG ABCDEFGHIJKLMNOPQRSTUVWXY 0;
@@ -82,6 +59,7 @@ class BDPFist : BrutalWeapon replaces Fist
 		2UN3 BCDEFGHIJKLMNOPQRSTU[ 0;
 		2UN5 ABCDEFGHIJKL 0;
 		2UCK ABCDEF 0;
+		3L1M ABCDEFGHIJKLM 0;
 		3ISA ABCDEFGHIJKL 0;
 		3KUP GHIJKL 0;
 		3ONG ABCDEFGHIJKLMNOPQRSTUVWXY 0;
