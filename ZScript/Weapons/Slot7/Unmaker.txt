@@ -1,5 +1,7 @@
 class BDPUnmaker : BrutalWeapon
 {
+	int LaserCount;
+	
 	Default
 	{
 		Height 20;
@@ -11,96 +13,97 @@ class BDPUnmaker : BrutalWeapon
 		Inventory.PickupSound "BFGREADY";
 		+WEAPON.BFG
 		Inventory.PickupMessage "What the !@#%* is this!? (Slot 7)";
-		Inventory.AltHUDIcon "UNMKA0";
-		Tag "$BDPUNMAKER";
+		Inventory.AltHUDIcon "UNHWA0";
+		Tag "UNMAKER";
 	}
-		int laserCount;
 	States
 	{
 	Grenade: //32
-		NMKS BCDE 1;
+		UNHS BCDE 1;
 		TNT1 A 24;
-		NMKS EDCB 1;
+		UNHS EDCB 1;
 		Goto Ready;
 	Kick: //16
-		NMKK ABCD 1;
-		NMKK E 8;
-		NMKK DCBA 1;
+		UNHG EFGH 1;
+		UNHG I 8;
+		UNHG HGFE 1;
 		Goto Ready;
 	AirKick: //18
-		NMKK ABCD 1;
-		NMKK E 10;
-		NMKK DCBA 1;
+		UNHG EFGH 1;
+		UNHG I 10;
+		UNHG HGFE 1;
 		Goto Ready;
 	SlideKick: //26
-		NMKK ABCD 1;
-		NMKK E 18;
-		NMKK DCBA 1;
+		UNHG EFGH 1;
+		UNHG I 18;
+		UNHG HGFE 1;
 		Goto Ready;
 	Taunt: //30
-		NMKK ABCD 1;
-		NMKK E 22;
-		NMKK DCBA 1;
-		Goto Ready;
-	Sprint:
-		NMKK ABCD 1 A_WeaponReadyDX(0,false,false);
-	SprintLoop:
-		NMKK E 1 A_KeepSprinting();
-		Loop;
-	SprintEnd:
-		NMKK DCBA 1 A_WeaponReadyDX(0,false,false);
+		UNHG EFGH 1;
+		UNHG I 22;
+		UNHG HGFE 1;
 		Goto Ready;
 	Ready:
-		NMKR A 1 A_WeaponReadyDX();
-		TNT1 A 0 A_StartSound("UNMIDLE", 2, CHANF_LOOPING);
+		BFGN A 1 A_WeaponReadyDX();
+		Loop;
+	Sprint:
+		UNHG EFGH 1 A_WeaponReadyDX(0,FALSE,FALSE);
+	SprintLoop:
+		UNHG I 1 A_KeepSprinting();
+		TNT1 A 0 A_StartSound("UNMIDLE",2,CHANF_LOOPING);
+		Loop;
+	SprintEnd:
+		UNHG HGFE 1 A_weaponreadyDX(0,FALSE,FALSE);
+		Goto Ready;
+	Ready:
+		UNHG AABBCCDDDD 1 A_WeaponReadyDX();
+		TNT1 A 0 A_StartSound("UNMIDLE",2,CHANF_LOOPING);
+		UNHG DDCCBBAAAAAAAAAA 1 A_WeaponReadyDX();
 		Loop;
 	Deselect: 
-		NMKS ABCDE 1;
-		TNT1 A 0 A_StopSound(1);
+		UNHS ABCDE 1;
 		TNT1 A 0 A_StopSound(2);
-		TNT1 A 0 A_StopSound(6);
 		TNT1 A 1;
 		TNT1 A 0 A_Lower();
 		Wait;
 	Select:
 		TNT1 A 1 A_SetCrosshairDX("UNMRet", 1000,1.0);
-		TNT1 A 0 A_StartSound("UNMAKSEL",1);
-		NMKS EDCBA 1 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_StartSound("UNMAKSEL");
+		UNHS EDCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
-	Spawn:
-		UNMK A 1;
-		Loop;
+    Spawn:
+        UNHW A 1;
+        Loop;
 	Fire:
-		TNT1 A 0 A_StartSound("UNMCRAK2");
-		NMKF DDDD 1 A_WeaponOffset(random(1,-1));
-	FireLoop:
-		NMKF A 1
+		UNHG A 0 A_StartSound("UNMCRAK2",3);
+		UNHF ABCD 1;
+		UNHF E 1 A_gunlight(500,2,255,0,0);
+	ContinueFire:
+		UNHG A 0 
 		{
 			A_GunLight(500,2,255,0,0);
-			A_AlertMonstersDX();
+			A_AlertmonstersDX();
 			A_StartSound("UNMALT",1);
-			If(countinv("BDPCell") < 1 && !findinventory("powerspeed2"))
+			if(countinv("BDPCell") < 1 && !findinventory("powerspeed2"))
 			{
 				A_damageself(3,"desintegrate");
 			}
 			A_TakeAmmo("BDPCell",3);
 			A_QuadSound();
-			A_SetPitch(pitch-0.3);
-			A_WeaponOffset(random(1,-1));
-			if(invoker.laserCount > 3)
+			if(invoker.lasercount > 3)
 			{
-				Invoker.laserCount = 0;
+				Invoker.Lasercount = 0;
 			}
 			BDPMath.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle,invoker.owner.pitch,0,60);
-			BDPMath.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle + (3 + invoker.laserCount * 3),invoker.owner.pitch,0,60);
-			BDPMath.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle - (3 + invoker.laserCount * 3),invoker.owner.pitch,0,60);
-			invoker.laserCount++;
+			BDPMath.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle + (3 + invoker.lasercount * 3),invoker.owner.pitch,0,60);
+			BDPMath.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle - (3 + invoker.lasercount * 3),invoker.owner.pitch,0,60);
+			invoker.LaserCount++;
 		}
-		NMKF BC 1 {A_SetPitch(pitch+0.1); A_WeaponOffset(random(1,-1));}
-		NMKF DD 1 A_WeaponOffset(random(1,-1));
-		TNT1 A 0 A_Refire("FireLoop");
-		NMKF DDDD 1 A_WeaponOffset(random(1,-1));
-		TNT1 A 0 A_WeaponOffset(0);
+		UNHF IJ 1 A_SetPitch(pitch-0.6);
+		UNHF K 1;
+		UNHF MN 1 A_SetPitch(pitch+0.6);
+		TNT1 A 0 A_Refire("ContinueFire");
+		UNHF DCBA 1;
 		Goto Ready;
 	}
 }
