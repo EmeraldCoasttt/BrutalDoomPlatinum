@@ -14,68 +14,6 @@ CLASS BDPBFG9000 : BrutalWeapon
 		Inventory.PickupMessage "You got the BFG-9000! Oh, yes. (Slot 7)";
 		Inventory.AltHUDIcon "BFUGA0";
 	}
-	Bool previousgravity;
-	Bool previousmissile;
-	Bool previoussolid;
-	bool previousxy;
-	bool previousfriend;
-	
-	Actor Grabbedactor;
-	
-	Int GrabbedTimer;
-	
-		action void A_CheckGrab(double range, double ang)
-			{	
-				Vector3 viewPos = (pos.xy, player.viewz); // player view point
-				Vector3 viewDir = (AngleToVector(angle, cos(pitch)), -sin(pitch)); // player view direction
-				double maxAngle = cos(ang);
-	
-				let it = ThinkerIterator.Create("Actor", STAT_DEFAULT);
-						Actor mo;
-					while (mo = Actor(it.Next()))
-			{
-				// get the object's bounding box
-				Vector3 rel = mo.PosRelative(CurSector); // account for sector portals
-				Vector3 minBox = rel - (mo.radius, mo.radius, 0);
-				Vector3 maxBox = rel + (mo.radius, mo.radius, mo.height);
-		
-				// get the point on the box nearest the view point
-				Vector3 nearest;
-				nearest.x = max(minBox.x, min(viewPos.x, maxBox.x));
-				nearest.y = max(minBox.y, min(viewPos.y, maxBox.y));
-				nearest.z = max(minBox.z, min(viewPos.z, maxBox.z));
-		
-				Vector3 dir = nearest - viewPos;
-				double dist = dir.Length();
-				if (dist > 0)
-				{
-					if (dist > range) // is it in range?
-						continue;
-			
-					if (viewDir dot (dir / dist) < maxAngle) // is it within an acceptable angle?
-						continue;
-						
-				
-				}
-					If(mo.species == "marines")
-						Continue;
-				If(mo.bshootable || mo.bmissile)
-				{
-					If(mo.bspawnceiling || mo.health < 1 || mo is "headkicking" || mo is "BDECGRASS" || mo is "Brutal_Bloodspot")
-					{
-						Continue;
-					}
-					invoker.grabbedactor = mo;
-					
-				}
-				Else
-				{
-					Continue;
-				}
-		// grab it
-		break;
-	}
-}
 	States
 	{
 	Grenade: //32
@@ -249,7 +187,7 @@ CLASS BDPBFG9000 : BrutalWeapon
 //		 BFGN A 0  A_Refire
 // 		Goto Ready
 
-	// AltFire:
+	/*AltFire:
 	  BFGN A 0;
 		TNT1 A 0 A_checkifammo("BDPCell",100);
 		BFGN A 0;
@@ -323,7 +261,6 @@ CLASS BDPBFG9000 : BrutalWeapon
 		BFGN A 0 BRIGHT A_FireProjectile("BFGBallWithTracers");
 		BFGN A 0;
 		Goto RecoilFire;
-		/*
 		DualWield:
 		TNT1 A 0 A_takeinventory("startdualwield",1);
 		TNT1 A 0 A_jumpifinventory("nuke",1,"firenuke");
@@ -412,190 +349,6 @@ CLASS BDPBFG9000 : BrutalWeapon
 		  TNT1 A 0 A_takeinventory("Big_Fucking_Gun",1)
 		  Goto ready
 		*/
-		/*
-   DualWield:
-		TNT1 A 0 A_takeinventory("startdualwield",1);
-		//TNT1 A 0 A_jumpifinventory("BDPCell",1,1);
-		//Goto noammo;
-		TNT1 A 0
-		{
-		 A_checkgrab(200,45);
-		 If(invoker.grabbedactor)
-			{
-			invoker.previousmissile = invoker.grabbedactor.bmissile;
-			invoker.previoussolid = invoker.grabbedactor.bsolid;
-			invoker.previousgravity = invoker.grabbedactor.bnogravity;
-			invoker.previousxy = invoker.grabbedactor.bforcexybillboard;
-			invoker.previousfriend = invoker.grabbedactor.bfriendly;
-			invoker.grabbedactor.giveinventory("grabbedmonsterdamage",1);
-			invoker.grabbedactor.giveinventory("grabbedmonsterdamage",1);
-			invoker.grabbedactor.bsolid = FALSE;
-			invoker.grabbedactor.bmissile = FALSE;
-			invoker.grabbedactor.bnogravity = TRUE;
-			invoker.grabbedactor.bforcexybillboard = TRUE;
-			invoker.grabbedactor.bfriendly = TRUE;
-			invoker.grabbedactor.bmissilemore = TRUE;
-			invoker.grabbedactor.bnopain = TRUE;
-			invoker.grabbedactor.blookallaround = TRUE;
-			invoker.grabbedactor.bdontharmspecies = FALSE;
-			invoker.grabbedactor.bdoharmspecies = TRUE;
-			invoker.grabbedactor.target = null;
-			invoker.grabbedactor.tracer = null;
-			return resolvestate("grabloop");
-			}
-			return resolvestate(null);
-		}
-		Goto GrabDie;
-		GrabShoot:
-		tnt1 A 0
-		{
-			A_startsound("GRBRFIRE",12);
-			If(invoker.grabbedactor)
-			{
-			invoker.grabbedactor.bmissile = invoker.previousmissile;
-			invoker.grabbedactor.bsolid = invoker.previoussolid;
-			invoker.grabbedactor.bnogravity = invoker.previousgravity;
-			invoker.grabbedactor.bforcexybillboard = invoker.previousxy;
-			invoker.grabbedactor.bfriendly = invoker.previousfriend;
-				If(invoker.grabbedactor.bmissile)
-					{
-					invoker.grabbedactor.giveinventory("grabberdamage",1);
-					invoker.grabbedactor.pitch = invoker.owner.pitch;
-					invoker.grabbedactor.angle = invoker.owner.angle;
-					invoker.grabbedactor.species = "marines";
-					invoker.grabbedactor.bthruspecies = true;
-					invoker.grabbedactor.bmthruspecies = true;
-					invoker.grabbedactor.setorigin((invoker.owner.pos.x,invoker.owner.pos.y,(invoker.owner.pos.z + (invoker.owner.height * 0.5))),FALSE);
-					//invoker.grabbedactor.pos = invoker.owner.pos;
-					//invoker.grabbedactor.pos.z = (invoker.grabbedactor.pos.z + (invoker.owner.height * 0.5));
-					Invoker.grabbedactor.target = invoker.owner;
-					invoker.grabbedactor.vel3dfromangle(invoker.grabbedactor.speed,invoker.grabbedactor.angle,invoker.grabbedactor.pitch);
-				//	invoker.grabbedactor.a_recoil(-(invoker.grabbedactor.speed));
-					//Invoker.grabbedactor.
-					}
-				Else
-					{
-					invoker.A_startsound("bonecrack",13);
-					Radius_Quake(12, 24, 0, 60, 0);
-					invoker.grabbedactor.takeinventory("grabbedmonsterdamage",1);
-					invoker.grabbedactor.angle = (invoker.owner.angle - 180);
-					invoker.grabbedactor.a_changevelocity(-20,0,20,CVF_RELATIVE);
-					invoker.grabbedactor.damagemobj(invoker.owner,invoker.owner,frandom(100,170),"extremepunches");
-					}
-			invoker.Grabbedactor = null;
-			}
-			//Return resolvestate(null);
-		}
-		BFGA A 1 BRIGHT A_ZoomFactor(0.96);
-		BFGA B 1 BRIGHT A_FireProjectile("GreenFlareSpawn",0,0,0,0);
-		TNT1 A 0 A_SetPitch(Pitch-8, SPF_INTERPOLATE);
-		BFGA C 1 BRIGHT;
-		BFGN A 0 A_ZoomFactor(0.98);
-		BFGA DE 1 BRIGHT;
-		BFGN A 0 A_ZoomFactor(1.0);
-		BFGA F 1;
-		BFGA FFFFGGHIJK 1 A_SetPitch(Pitch+0.8, SPF_INTERPOLATE);
-		//TNT1 A 0 A_JumpIfInventory("NoFancyShooting", 1, 10);// For poor PCs
-		//BFGN GHIGHI 1
-		//{
-		//	A_overlayoffset(overlayid(),frandom(-1,0),frandom(32,33));
-		//}
-		Goto ready;
-		GrabDie:
-		tnt1 A 0
-		{
-			invoker.grabbedtimer = 0;
-			A_startsound("GRBRFAIL",12);
-			If(invoker.grabbedactor)
-			{
-			invoker.grabbedactor.takeinventory("grabbedmonsterdamage",1);
-			invoker.grabbedactor.bmissile = invoker.previousmissile;
-			invoker.grabbedactor.bsolid = invoker.previoussolid;
-			invoker.grabbedactor.bnogravity = invoker.previousgravity;
-			invoker.grabbedactor.bforcexybillboard = invoker.previousxy;
-			invoker.grabbedactor.bfriendly = invoker.previousfriend;
-			
-				If(invoker.grabbedactor.bmissile)
-					{
-					invoker.grabbedactor.vel.xy = (0,0);
-					invoker.grabbedactor.vel.z = -5;
-					}
-			invoker.Grabbedactor = null;
-			}
-			//Return resolvestate(null);
-		}
-		BFGN GHIGHI 1
-		{
-			A_overlayoffset(overlayid(),frandom(-1,0),frandom(32,33));
-		}
-		Goto ready;
-		
-	
-	
-		
-	Grabloop:
-		BFGN GHIGHIGHI 1
-		{
-			invoker.grabbedtimer = invoker.grabbedtimer + 1;
-			A_startsound("GRBRLOOP",12,CHANF_LOOPING);
-			A_overlayoffset(overlayid(),frandom(-1,0),frandom(32,33));
-			If(player.cmd.buttons & bt_altattack || invoker.owner.findinventory("startdualwield") || invoker.grabbedtimer == 120)
-				{
-					invoker.owner.takeinventory("startdualwield",1);
-					Return resolvestate("grabdie");
-				}
-			If(invoker.grabbedactor && invoker.grabbedactor.health > 0)
-				{
-				
-			//	console.printf(invoker.grabbedactor.getclassname());
-				invoker.grabbedactor.reactiontime = 0;
-					//Vector3 grabdir = (AngleToVector(angle, cos(pitch)), -sin(pitch));
-					// FLineTraceData grabwarp;
-				//	LineTrace(angle, ((invoker.grabbedactor.radius * 0.5) + (invoker.owner.radius * 0.5)), pitch,TRF_THRUHITSCAN | TRF_THRUACTORS, offsetz: player.viewz - pos.z, data: grabwarp);
-					//If (invoker.grabbedactor.checkmove(grabwarp.hitlocation.xy))
-					//	{	
-							If(invoker.grabbedactor.target && invoker.grabbedactor.target == invoker.owner)
-								{
-									Invoker.grabbedactor.target = null;
-								}
-							//Invoker.grabbedactor.reactiontime = 2;
-							int warpoffset = ((invoker.grabbedactor.radius * 0.5) + (invoker.owner.radius * 0.5));
-							//Vector3 warpdir = (AngleToVector(invoker.angle, cos(invoker.pitch)), -sin(invoker.pitch));
-							//warpdir.x = (warpdir.x * warpoffset);
-							//warpdir.y = (warpdir.y * warpoffset);
-							//warpdir.z = (warpdir.z * warpoffset);
-							//Warpdir = (invoker.owner.pos + warpdir);
-						
-							//invoker.grabbedactor.setorigin(warpdir,TRUE);
-							Vector3 ofs = invoker.owner.pos+(0,0,invoker.owner.player.viewz - invoker.owner.pos.z);
-							Vector3 x, y, z;
-							[x, y, z] = BDP_CoordUtil.getaxes(invoker.owner.pitch,invoker.owner.angle,invoker.owner.roll);
-							vector3 newpos = (ofs+x*(32 + (invoker.grabbedactor.radius * 0.7))-z*(invoker.grabbedactor.height * 0.6));
-							If(level.IsPointInLevel(newpos))
-							{
-								//invoker.grabbedactor.angle = (invoker.owner.angle - 180);
-								invoker.grabbedactor.SetOrigin(newpos,true);
-							}
-							If(invoker.grabbedactor.distance3d(invoker.owner) > 300)
-								{
-									Return resolvestate("grabdie");
-								}
-				}
-			Else
-				{
-					Return resolvestate("grabdie");
-				}
-				
-			If(player.cmd.buttons & bt_attack)
-				{
-					invoker.owner.takeinventory("startdualwield",1);
-					Return resolvestate("grabshoot");
-				}
-			return resolvestate(null);
-		}
-		//TNT1 A 0 A_takeinventory("BDPCell",1);
-		LOOP;
-	*/
 	Spawn:
 		BFUG A -1;
 		Stop;

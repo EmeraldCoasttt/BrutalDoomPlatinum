@@ -29,6 +29,7 @@ version "4.14.0"
 //Slot 1
 #include "Zscript/Weapons/Slot1/Chainsaw.txt"
 #include "Zscript/Weapons/Slot1/Melee.txt"
+#include "Zscript/Weapons/Slot1/Grabber.txt"
 //Slot 2
 //#include "Zscript/Weapons/Slot2/RiotShield.txt"
 #include "Zscript/Weapons/Slot2/Pistol.txt"
