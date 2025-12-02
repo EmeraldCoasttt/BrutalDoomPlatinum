@@ -2,7 +2,6 @@ class BDPFist : BrutalWeapon replaces Fist
 {
 	override void DoEffect()
 	{
-		super.DoEffect();
 		if(owner && owner.player.ReadyWeapon is self.GetClass())
 		{
 			let psp = owner.player.FindPSprite(1);
@@ -23,7 +22,20 @@ class BDPFist : BrutalWeapon replaces Fist
 					}
 				}
 			}
+			if(owner.CountInv("PowerBloodOnVisor") > 0)
+			{
+				bloodStain = 1;
+			}
+			if(owner.CountInv("PowerBlueBloodOnVisor") > 0)
+			{
+				bloodStain = 2;
+			}
+			if(owner.CountInv("PowerGreenBloodOnVisor") > 0)
+			{
+				bloodStain = 3;
+			}
 		}
+		super.DoEffect();
 	}
 	
 	Default

@@ -26,10 +26,7 @@ class BDPChainsaw : BrutalWeapon
 				bloodStain = 3;
 			}
 			BrutalWeapon fists = BrutalWeapon(FindInventory("BDPFist"));
-			if(fists)
-			{
-				fists.bloodStain = bloodStain;
-			}
+			fists.bloodStain = bloodStain;
 		}
 		super.DoEffect();
 	}
