@@ -89,10 +89,10 @@ Class Brutalweapon : DoomWeapon //Weapon
 	BrutalWeapon.Weight 1;
 	BrutalWeapon.Handedness 0;
 	Weapon.AmmoUse 0;
-	Weapon.BobRangeX 0.4;
+	Weapon.BobRangeX 0.2;
 	Weapon.BobRangeY 0.4;
-	Weapon.BobSpeed 2.9;
-	Weapon.BobStyle "InverseAlpha";
+	Weapon.BobSpeed 2.1;
+	Weapon.BobStyle "InverseSmooth";
 	brutalweapon.clearoverlays TRUE;
 	brutalweapon.VoiceActed TRUE;
 	//Radius 32;
@@ -1313,9 +1313,9 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 					
 				}
 				
-				BobRangeX = 1.0;
-				BobRangeY = 1.0;
-				BobSpeed = 3.9;
+				BobRangeX = 0.8;
+				BobRangeY = 0.8;
+				BobSpeed = 2.9;
 				//owner.speed = (owner.default.speed * 2);
 	
 				//owner.acs_namedexecute("fastplayer",0,0,0,0);
@@ -1323,9 +1323,9 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			}
 			else
 			{
-				BobRangeX = 0.4;
+				BobRangeX = 0.2;
 				BobRangeY = 0.4;
-				BobSpeed = 2.9;
+				BobSpeed = 2.1;
 				//owner.takeinventory("sprintbob",1);
 				//owner.acs_namedexecute("slowplayer",0,0,0,0);
 				
