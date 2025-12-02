@@ -189,7 +189,7 @@ class BDPRailgun : Brutalweapon
 		RAIK DCBA 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
 		Goto Ready;
 		Select:
-			TNT1 A 1 {A_SetCrosshairDX("RAILRet", 10000,1.0); A_GunSlingerMag();}
+			TNT1 A 1 {A_SetCrosshairDX("RAILRet", 10000); A_GunSlingerMag();}
 			TNT1 A 0 A_startSound("RAILINSR",1);
 			RAIS DCBA 1 A_WeaponReady(WRF_NOFIRE);
 			Goto Ready;
@@ -202,7 +202,7 @@ class BDPRailgun : Brutalweapon
 			TNT1 A 0 A_Lower();
 			Wait;
 		Ready:
-			TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000,1.0);
+			TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000);
 			RAIL A 1 A_weaponreadyDX(WRF_ALLOWRELOAD);
 			TNT1 A 0 A_AutoReloadMag();
 			LOOP;
@@ -401,7 +401,7 @@ class BDPRailgun : Brutalweapon
 			A_ZoomFactor(1.0);
 		}
 		RAIZ FE 1;
-		TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000,1.0);
+		TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000);
 		RAIZ DCBA 1;
 		TNT1 A 0 A_EndAim;
 		Goto Ready;
@@ -479,7 +479,7 @@ class BDPRailgun : Brutalweapon
 		TNT1 A 0 
 		{
 			A_startsound("BEP",4);
-			A_SetCrosshairDX("NULL", 10000,1.0);
+			A_SetCrosshairDX("Null");
 		}
 	HoldHologram:
 		RAIZ D 1
@@ -510,7 +510,7 @@ class BDPRailgun : Brutalweapon
 			A_startsound("bepbep",4);
 			A_SpawnHologram();
 			A_startsound("PISTFOL5",10);
-			A_SetCrosshairDX("RAILRet", 10000,1.0);
+			A_SetCrosshairDX("RAILRet", 10000);
 		}
 		RAIZ DCBA 1;
 		TNT1 A 0 A_takeinventory("startdualwield",1);

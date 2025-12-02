@@ -92,7 +92,7 @@ class BDPAssaultRifle : BrutalWeapon
 		TNT1 A 0 A_Lower();
 		Wait;
 	Select:
-		TNT1 A 1 {A_SetCrosshairDX("CGUNRet", 1000,0.7); A_GunSlingerMag(1);}
+		TNT1 A 1 {A_SetCrosshairDX("RIFLRet", 1000); A_GunSlingerMag(1);}
 		TNT1 A 0 A_StartSound("CLIPIN");
 		RIFG IHGF 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;

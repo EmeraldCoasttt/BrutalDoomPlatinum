@@ -79,7 +79,7 @@ class BDPGrenadeLauncher : BrutalWeapon
 	Select:
 		TNT1 A 1
 		{
-			A_SetCrosshairDX("NadeRet", 500, 0.7);
+			A_SetCrosshairDX("NADERet", 500);
 			A_GunslingerMag();
 			if(invoker.thermiteGrenades)
 			{

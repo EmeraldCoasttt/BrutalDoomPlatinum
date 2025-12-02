@@ -103,7 +103,7 @@ class BDPCalamityBlade : BrutalWeapon
 		TNT1 A 0 A_Lower();
 		Wait;
 	Select:
-		TNT1 A 1 A_SetCrosshairDX("BLADRet", 1000,1.0);
+		TNT1 A 1 A_SetCrosshairDX("BLADRet", 1000);
 		BFGN A 0 A_startSound("DoomRR/heatwave/select");
 		HETS EDCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;

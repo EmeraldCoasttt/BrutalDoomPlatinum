@@ -58,12 +58,12 @@ class BDPSubmachineGun : BrutalWeapon
 		TNT1 A 0 A_Lower;
 		Wait;
 	Select:
-		TNT1 A 1 {A_SetCrosshairDX("SMGRet", 700,0.75); A_GunSlingerMag(1);}
+		TNT1 A 1 {A_SetCrosshairDX("SMGRet", 700); A_GunSlingerMag(1);}
 		TNT1 A 0 A_StartSound("CLIPIN");
 		SMGS HGFE 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
 	SelectFromDual:
-		TNT1 A 0 A_SetCrosshairDX("SMGRet", 700,0.75);
+		TNT1 A 0 A_SetCrosshairDX("SMGRet", 700);
 		SM2S Q 1 A_WeaponReady(WRF_NOFIRE);
 		SM2G A 0 A_StartSound("foley/SMGDualWieldDeselect");
 		SM2S PONMLKJ 1 A_WeaponReady(WRF_NOFIRE);

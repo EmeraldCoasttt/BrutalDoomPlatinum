@@ -871,6 +871,7 @@ class BDP_HUD : DoomStatusBar
 		pos.y += Ystep;
 		DrawKeys((-4, pos.y), DI_SCREEN_RIGHT_TOP|DI_ITEM_RIGHT_TOP, (8,8));
 	}
+	
 	void DrawCrosshairs()
 	{		
 		// Get player
@@ -878,46 +879,43 @@ class BDP_HUD : DoomStatusBar
 		If(BDPplr && BDPplr.health > 0)
 		{
 			let curvehicle = Veh_Manager(BDPplr.FindInventory("Veh_Manager"));
+			
+			string crosshair = bdpplr.crosshair;
+			vector2 retsize = bdpplr.crosshairscale;
+			
+			Color crossTint = 0;
+			Actor aimAct = bdpplr.aimActor; 
+			
 			if(curvehicle && curvehicle.disableweaps)
 			{
-				string crosshair = curvehicle.crosshair;
-				vector2 retsize = curvehicle.crosshair_scale;
-				
-				Color crossTint = 0;
-				if(BDPVehicle(curvehicle.veh))
-				{
-					Actor aimAct = BDPVehicle(curvehicle.veh).aimActor;
-					bool hostileAim = aimAct && aimAct.isHostile(BDPplr) && aimAct.bISMONSTER && !(aimAct is "BDPVehicle");
-					if(hostileAim) crossTint = Color(0xC4, 0xD0,0,0);
-				}
-
-				vector2 midpos = (0,0);
-				//if(lowerxhair) midpos.y = haloplr.xhair_lowpos;
-				HLSBS.DrawImage(crosshair, midpos, HLSBS.SS_SCREEN_CENTER, 0.65, scale:retsize, tint:crossTint);
-				return;
+				crosshair = curvehicle.crosshair;
+				retsize = curvehicle.crosshair_scale;
+				aimAct = BDPVehicle(curvehicle.veh).aimActor;
 			}
-			Else if(!BDPPlr.bsprinting)
+			
+			bool hostileAim = aimAct && aimAct.isHostile(bdpplr) && aimAct.bISMONSTER && !(aimAct is "BDPVehicle");
+			
+			If(aimAct && aimAct is "BASEHEADSHOT")
 			{
-				string crosshair = bdpplr.crosshair;
-				vector2 retsize = bdpplr.crosshairscale;
-				
-				Color crossTint = 0;
-				Actor aimAct = bdpplr.aimActor; 
-				bool hostileAim = aimAct && aimAct.isHostile(bdpplr) && aimAct.bISMONSTER && !(aimAct is "BDPVehicle");
-				If(aimAct && aimAct is "BASEHEADSHOT")
-				{
-					hostileAim = true;
-				}
-				if(hostileAim) crossTint = Color(0xC4, 0xD0,0,0);
-				vector2 midpos = (0,0);
-				//if(lowerxhair) midpos.y = haloplr.xhair_lowpos;
-				HLSBS.DrawImage(crosshair, midpos, HLSBS.SS_SCREEN_CENTER, 0.65, scale:retsize, tint:crossTint);
-				return;
-			
+				hostileAim = true;
 			}
+			if(hostileAim) crossTint = Color(0xC4, 0xD0,0,0);
+			vector2 midpos = (0,0);
 			
-			
-			
+			double trans = CVar.GetCVAR("bdp_crosshair_trans",Cplayer).GetFloat();
+			//if(Screen.GetHeight() >= 1440)
+			//{
+				HLSBS.DrawImage(crosshair..0, midpos, HLSBS.SS_SCREEN_CENTER, trans, scale:retsize / 1.33, tint:crossTint);
+			/*}
+			else if(Screen.GetHeight() <= 720)
+			{
+				HLSBS.DrawImage(crosshair..1, midpos, HLSBS.SS_SCREEN_CENTER, trans, scale:retsize * 1.5 , tint:crossTint);
+			}
+			else
+			{
+				HLSBS.DrawImage(crosshair, midpos, HLSBS.SS_SCREEN_CENTER, trans, scale:retsize, tint:crossTint);
+			}*/
+			return;
 		}
 	}
 	

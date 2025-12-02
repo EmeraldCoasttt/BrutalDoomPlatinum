@@ -98,7 +98,7 @@ class BDPShotgun : BrutalWeapon
 		{ 
 			if (invoker.glassSlugs)
 			{
-				A_SetCrosshairDX("BR45Ret",2000,0.5);
+				A_SetCrosshairDX("SLUGRet",2000);
 				ChangeAmmoIcon1("SHELZ0");
 			}
 			else
@@ -468,7 +468,7 @@ class BDPShotgun : BrutalWeapon
 			{
 				ChangeAmmoIcon1("SHELZ0");
 				invoker.glassSlugs = true;
-				A_SetCrosshairDX("BR45Ret",2000,0.5);
+				A_SetCrosshairDX("SLUGRet",2000);
 			}
 			if(invoker.mag < 9)
 			{
