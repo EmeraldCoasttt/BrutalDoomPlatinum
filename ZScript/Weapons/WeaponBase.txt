@@ -1190,7 +1190,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		if(owner.player && bloodstain > 0)
 		{
 			let psp = owner.player.FindPSprite(layer);
-			if(TexMan.GetName(psp.curstate.GetSpriteTexture(0)).Mid(1,3) == sprite)
+			if(psp && TexMan.GetName(psp.curstate.GetSpriteTexture(0)).Mid(1,3) == sprite)
 			{
 				psp.sprite = GetSpriteIndex(bloodStain..sprite);
 			}
