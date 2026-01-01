@@ -1,4 +1,4 @@
-class BDPMinigun : BrutalWeapon
+class BDPMinigun : BDPWeaponBase
 {
 	Default
 	{
@@ -15,40 +15,24 @@ class BDPMinigun : BrutalWeapon
 	}
 	States
 	{
-	Grenade:
+	Grenade: //30
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
 		"####" XWVU 1;
-		TNT1 A 24;
+		TNT1 A 22;
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
 		"####" UVWX 1;
 		Goto Ready;
-	Kick: 
+	Kick: //18
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
-		"####" A 0 A_JumpIfInventory("Spin",1,"SpinKickFlash");
+		"####" A 0 A_JumpIfInventory("Spin",1,"SpinKick");
 		"####" HIJK 1;
-		"####" LLLLLLLL 1;
+		"####" L 10;
 		"####" KJIH 1;
 		Goto Ready;
-	SpinKickFlash: 
-		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
-		"####" MNOP 1;
-		"####" QRSTQRST 1;
-		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
-		"####" PONM 1;
-		TNT1 A 0 A_JumpIfInventory("BDPClip2",1,"Ready2");
-		Goto Ready2;
-	AirKick: 
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
-		CHAE A 0;
-		"####" A 0 A_JumpIfInventory("Spin",1,"SpinAirKickFlash");
-		"####" HIJK 1;
-		"####" LLLLLLLLLL 1;
-		"####" KJIH 1;
-		Goto Ready;
-	SpinAirKickFlash: 
+	SpinKick: 
 		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
 		"####" MNOP 1;
 		"####" QRSTQRSTQR 1;
@@ -56,31 +40,31 @@ class BDPMinigun : BrutalWeapon
 		"####" PONM 1;
 		TNT1 A 0 A_JumpIfInventory("BDPClip2",1,"Ready2");
 		Goto Ready2;
-	SlideKick: 
+	SlideKick: //25
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
-		"####" A 0 A_JumpIfInventory("Spin",1,"SpinSlideFlash");
+		"####" A 0 A_JumpIfInventory("Spin",1,"SpinSlideKick");
 		"####" HIJK 1;
-		"####" LLLLLLLLLLLLLLLLLL 1;
+		"####" L 17;
 		"####" KJIH 1;
 		Goto Ready;
-	SpinSlideFlash: 
+	SpinSlideKick: 
 		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
 		"####" MNOP 1;
-		"####" QRSTQRSTQRSTQRSTQR 1;
+		"####" QRSTQRSTQRSTQRSTQ 1;
 		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
 		"####" PONM 1;
 		TNT1 A 0 A_JumpIfInventory("BDPClip2",1,"Ready2");
 		Goto Ready2;
-	Taunt: 
+	Taunt: //30
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
-		"####" A 0 A_JumpIfInventory("Spin",1,"SpinFuckFlash");
+		"####" A 0 A_JumpIfInventory("Spin",1,"SpinTaunt");
 		"####" HIJK 1;
-		"####" LLLLLLLLLLLLLLLLLLLLLL 1;
+		"####" L 22;
 		"####" KJIH 1;
 		Goto Ready;
-	SpinFuckFlash: 
+	SpinTaunt: 
 		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
 		"####" MNOP 1;
 		"####" QRSTQRSTQRSTQRSTQRSTQR 1;
@@ -91,27 +75,29 @@ class BDPMinigun : BrutalWeapon
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
 		"####" A 0 A_JumpIfInventory("Spin",1,"SpinSprint");
-		"####" HIJK 1 A_weaponreadyDX(0,FALSE,FALSE);
+		"####" HIJK 1 A_SetSprites("TNT1A0",1);
 	SprintLoop:
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
-		"####" L 1 A_KeepSprinting();
+		"####" L 1 A_SetSprites("TNT1A0",1);
 		Loop;
 	SprintEnd:
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
-		"####" KJIH 1 A_WeaponReadyDX(0,FALSE,FALSE);
-		Goto Ready;
+		"####" A 0 A_JumpIfInventory("Spin",1,"SpinSprintEnd");
+		"####" KJIH 1 A_SetSprites("TNT1A0",1);
+		Stop;
 	SpinSprint:
 		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
-		"####" MNOP 1 A_WeaponReadyDX(0,FALSE,FALSE);
+		"####" MNOP 1 A_SetSprites("TNT1A0",1);
 	SpinSprintLoop:
 		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
-		"####" QRST 1 A_KeepSprinting();
+		"####" QRST 1 A_SetSprites("TNT1A0",1);
 		Loop;
 	SpinSprintEnd:
-		"####" PONM 1 A_WeaponReadyDX(0,FALSE,FALSE);
-		Goto Ready2;
+		"####" A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
+		"####" PONM 1 A_SetSprites("TNT1A0",1);
+		Stop;
 	Spawn:
 		TNT1 A 0;
 		TNT1 A 0 A_jump(256,"spawn1","spawn2","spawn3");
@@ -132,7 +118,7 @@ class BDPMinigun : BrutalWeapon
 		TNT1 A 0 A_JumpIfInventory("Spin",1,"Ready2");
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
-		"####" A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		"####" A 1 A_WeaponReadyDX();
 		Loop;
 	Ready2:
 		TNT1 A 0 A_Jumpifinventory("FalseSpin",1,"fireEnd");
@@ -164,28 +150,25 @@ class BDPMinigun : BrutalWeapon
 		CHAE A 0;
 		"####" UVWX 1;
 		Goto Ready;
-	NoAmmo:
-		CHAE A 10 A_StartSound("weapons/empty");
-		Goto Ready;
 	Fire:
 		CHAG A 0 A_JumpIfInventory("Spin",1,"SpinFire")	;
 		TNT1 A 0 a_alertmonstersDX();
 		CHAG A 0 A_startsound("CHAINSTA",5,0,0.5);
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
-		"####" ABCDEF 3 ;
-		"####" A 0 A_refire("fire2");
+		"####" ABCDEF 3;
+		"####" A 0 A_RefireDX("fire2");
 		"####" A 0 A_startsound("CHAINSTO",5,0,0.5);
 		Goto EndFire3;
 	Fire2:
 		"####" ABCD 2;
-		"####" A 0 A_refire("fire3");
+		"####" A 0 A_RefireDX("fire3");
 		"####" A 0 A_startsound("CHAINSTO",5,0,0.5);
 		Goto EndFire2;
 	Fire3:
 		"####" EF 1;
 		"####" ACDE 1;
-		"####" A 0 A_refire("SpinFire");
+		"####" A 0 A_RefireDX("SpinFire");
 		"####" A 0 A_startsound("CHAINSTO",5,0,0.5);
 		Goto DoneHolding;
 	SpinFire:
@@ -194,6 +177,7 @@ class BDPMinigun : BrutalWeapon
 		{
 			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
+			A_WeaponRecoil(0.6,frandom(-0.6,0.6));
 			A_FireParticles();
 			A_StartSound("CHAINSPI", 5,CHANF_LOOPING,0.5);
 			A_StartSound("CHAINSHO", 1,CHANF_LOOPING,0.5);
@@ -207,8 +191,6 @@ class BDPMinigun : BrutalWeapon
 		{
 			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
-			A_SetPitch(Pitch-0.4, SPF_INTERPOLATE);
-			A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE);
 			A_FireProjectile("50CaseSpawn2",0,0,12,-18);
 			A_FireParticles();
 			A_AlertMonstersDX();
@@ -221,8 +203,7 @@ class BDPMinigun : BrutalWeapon
 		{
 			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
-			A_SetPitch(Pitch-0.4, SPF_INTERPOLATE);
-			A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE);
+			A_WeaponRecoil(0.6,frandom(-0.6,0.6));
 			A_FireProjectile("50CaseSpawn2",0,0,12,-18);
 			A_FireProjectile("SmokeSpawner11",0,0,0,0);
 			A_FireParticles();
@@ -236,8 +217,6 @@ class BDPMinigun : BrutalWeapon
 		{
 			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
-			A_SetPitch(Pitch-0.4, SPF_INTERPOLATE);
-			A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE);
 			A_FireProjectile("50CaseSpawn2",0,0,12,-18);
 			A_FireParticles();
 			A_AlertMonstersDX();
@@ -247,15 +226,13 @@ class BDPMinigun : BrutalWeapon
 		}
 		TNT1 A 0
 		{
-			A_SetPitch(Pitch-0.4, SPF_INTERPOLATE);
-			A_SetAngle(angle+frandom(-0.6,0.6), SPF_INTERPOLATE);
 			A_FireProjectile("50CaseSpawn2",0,0,12,-18);
 			A_FireParticles();
 			A_FireProjectile("SmokeSpawner11",0,0,0,0);
 			A_ZoomFactor(1.0);
 			A_WeaponOffset(0,32);
 		}
-		TNT1 A 0 A_Refire("SpinFire");
+		TNT1 A 0 A_RefireDX("SpinFire");
 		TNT1 A 0 A_StartSound("CHAINSH2",1,0,0.5);
 		Goto DoneHolding;
 	DoneHolding:
@@ -267,18 +244,18 @@ class BDPMinigun : BrutalWeapon
 		TNT1 A 0 A_giveinventory("falsespin",1);
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		Goto FireEnd;
-		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
-		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
-		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
-		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
-		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
+		"####" ACDE 1 {return A_refireDX("RefireState3"); return A_WeaponReadyDX(WRF_NOFIRE); return resolvestate(null);}
+		"####" ACDE 1 {return A_refireDX("RefireState3"); return A_WeaponReadyDX(WRF_NOFIRE); return resolvestate(null);}
+		"####" ACDE 1 {return A_refireDX("RefireState3"); return A_WeaponReadyDX(WRF_NOFIRE); return resolvestate(null);}
+		"####" ACDE 1 {return A_refireDX("RefireState3"); return A_WeaponReadyDX(WRF_NOFIRE); return resolvestate(null);}
+		"####" ACDE 1 {return A_refireDX("RefireState3"); return A_WeaponReadyDX(WRF_NOFIRE); return resolvestate(null);}
 	FireEnd:
 		CHAG A 0 A_StartSound("CHAINSPI", 5,CHANF_LOOPING,0.5);
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
-		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
-		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
-		"####" ACDE 1 {A_refire("RefireState3"); A_WeaponReadyDX(WRF_NOFIRE);}
+		"####" ACDE 1 {return A_refireDX("RefireState3"); return A_WeaponReadyDX(WRF_NOFIRE); return resolvestate(null);}
+		"####" ACDE 1 {return A_refireDX("RefireState3"); return A_WeaponReadyDX(WRF_NOFIRE); return resolvestate(null);}
+		"####" ACDE 1 {return A_refireDX("RefireState3"); return A_WeaponReadyDX(WRF_NOFIRE); return resolvestate(null);}
 		TNT1 A 0 A_takeinventory("Spin",1);
 		TNT1 A 0 A_takeinventory("falseSpin",1);
 		"####" A 0 A_startsound("CHAINSTO",5,0,0.5);
@@ -286,34 +263,34 @@ class BDPMinigun : BrutalWeapon
 		CHAE A 0;
 		"####" ABCDEF 1 
 		{
-			A_ReFire("ReFireState3");
+			A_ReFireDX("ReFireState3");
 			A_WeaponReadyDX(WRF_NOFIRE);
 		}
 		"####" ABCDEF 1 
 		{
-			A_ReFire("ReFireState3");
+			A_ReFireDX("ReFireState3");
 			A_WeaponReadyDX(WRF_NOFIRE);
 		}
 		"####" ABCDEF 1 
 		{
-			A_ReFire("ReFireState3");
+			A_ReFireDX("ReFireState3");
 			A_WeaponReadyDX(WRF_NOFIRE);
 		}
 		EndFire2:
 		"####" AABBCCDDEEFF 1 
 		{
-			A_ReFire("RefireState2");
+			A_ReFireDX("RefireState2");
 			A_WeaponReadyDX(WRF_NOFIRE);
 		}
 		"####" AABBCCDDEEFF 1 
 		{
-			A_ReFire("RefireState2");
+			A_ReFireDX("RefireState2");
 			A_WeaponReadyDX(WRF_NOFIRE);
 		}
 		EndFire3:
 		"####" AAABBBCCCDDDEEEFFF 1 
 		{
-			A_ReFire("ReFireState");
+			A_ReFireDX("ReFireState");
 			A_WeaponReadyDX(WRF_NOFIRE);
 			
 		}
@@ -360,14 +337,14 @@ class BDPMinigun : BrutalWeapon
 		NoAmmoFireEnd2:
 		CHAE ABCDEF 1 
 		{
-			A_ReFire("Fire5");
-			Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			A_ReFireDX("Fire5");
+			Return A_WeaponReadyDX();
 		}
 		NoAmmoFireEnd3:
 		CHAE AABBCCDDEEFF 1 
 		{
-			A_ReFire("Fire");
-			Return A_WeaponReadyDX(WRF_ALLOWRELOAD);
+			A_ReFireDX("Fire");
+			Return A_WeaponReadyDX();
 		}
 		Goto Ready;
 	AltFire:

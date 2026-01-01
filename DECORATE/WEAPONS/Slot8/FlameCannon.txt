@@ -1,6 +1,6 @@
 //Changes made:
 //select, deselect
-ACTOR FlameCannon : BrutalWeapon
+ACTOR FlameCannon : BDPWeaponBase
 {
 	Height 20
 	Weapon.SelectionOrder 3200
@@ -10,7 +10,6 @@ ACTOR FlameCannon : BrutalWeapon
     Inventory.PickupSound "FLMDRAW"
 	+WEAPON.NOAUTOAIM
 	+WEAPON.EXPLOSIVE
-	BrutalWeapon.weight 2
 	//+WEAPON.NO_AUTO_SWITCH
 	Inventory.PickupMessage "You got the Mancubus' FlameCannon! (Slot 8)"
 	Tag "Mancubus FlameCannon"

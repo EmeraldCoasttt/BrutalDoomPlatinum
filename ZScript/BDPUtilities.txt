@@ -167,7 +167,7 @@
 	{
 		PlayerInfo src = players[e.Player];
 		if(!src || !src.mo) return;
-		let bdplr = Brutal_Playerbase(src.mo);
+		let bdplr = BDPPlayerPawn(src.mo);
 		
 		if(e.Name ~== "togglescanner" && bdplr)
 		{
@@ -178,7 +178,7 @@
 	override bool InputProcess(InputEvent e)
     {
 
-		let bdplr = Brutal_Playerbase(src.mo);
+		let bdplr = BDPPlayerPawn(src.mo);
         if (bindings.GetBinding(e.KeyScan) ~== "+use" && bdplr && bdplr.ultranightmare && bdpplr.health <= 0)
         {
             Console.Printf("Pressed Use while dead");
@@ -650,7 +650,7 @@
 	
 		Override void worldthingdied(worldevent e)
 		{
-			If(e.thing && e.thing.target && e.thing.bismonster && (e.thing.target is "Brutal_PlayerBase" || e.thing.target is "demonplayer"))
+			If(e.thing && e.thing.target && e.thing.bismonster && (e.thing.target is "BDPPlayerPawn" || e.thing.target is "demonplayer"))
 			{
 				e.thing.target.giveinventory("PausePowerup",105);
 			}

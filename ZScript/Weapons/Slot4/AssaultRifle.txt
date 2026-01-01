@@ -1,4 +1,4 @@
-class BDPAssaultRifle : BrutalWeapon
+class BDPAssaultRifle : BDPWeaponBase
 {
 	bool grenade;
 	
@@ -16,7 +16,7 @@ class BDPAssaultRifle : BrutalWeapon
 		Weapon.SelectionOrder 2500;
 		Weapon.AmmoType1 "BDPClip2";
 		Weapon.AmmoType2 "BDPRocketAmmo";
-		BrutalWeapon.MagCapacity 30;
+		BDPWeaponBase.MagCapacity 30;
 		Obituary "%o was shot down by %k's assault rifle.";
 		Inventory.PickupSound "CLIPIN";
 		Inventory.Pickupmessage "You got the Assault Rifle! (Slot 4)";
@@ -25,24 +25,19 @@ class BDPAssaultRifle : BrutalWeapon
 	}
 	States
 	{
-	Grenade: //32
+	Grenade: //30
 		RIFG FGHI 1;
-		TNT1 A 24;
+		TNT1 A 22;
 		RIFG IHGF 1;
 		Goto Ready;
-	Kick: //16
-		RIFG JKLM 1;
-		RIFG N 8;
-		RIFG MLKJ 1;
-		Goto Ready;
-	AirKick: //18
+	Kick: //18
 		RIFG JKLM 1;
 		RIFG N 10;
 		RIFG MLKJ 1;
 		Goto Ready;
-	SlideKick: //26
+	SlideKick: //25
 		RIFG JKLM 1;
-		RIFG N 18;
+		RIFG N 17;
 		RIFG MLKJ 1;
 		Goto Ready;
 	Taunt: //30
@@ -51,39 +46,29 @@ class BDPAssaultRifle : BrutalWeapon
 		RIFG MLKJ 1;
 		Goto Ready;
 	Sprint:
-		RIFG JKLM 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		RIFG JKLM 1 A_SetSprites("TNT1A0",1);
 	SprintLoop:
-		RIFG N 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		RIFG N 1 A_SetSprites("TNT1A0",1);
 		Loop;
 	SprintEnd:
-		RIFG MLKJ 1 A_weaponreadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		Goto Ready;
+		RIFG MLKJ 1 A_SetSprites("TNT1A0",1);
+		Stop;
 	Fidget:
-		2IFR POB 1 A_WeaponReadyDX(0,false,false);
+		2IFR POB 1 A_WeaponReadyDX(0,false);
 	FidgetSpam:
-		2IFR CDEFG 1 A_WeaponReadyDX(0,false,false);
-		2IFR H 5 A_WeaponReadyDX(0,false,false);
+		2IFR CDEFG 1 A_WeaponReadyDX(0,false);
+		2IFR H 5 A_WeaponReadyDX(0,false);
 		2IFR A 0 A_StartSound("Rifle/Bolt1", 5);
-		2IFR IIJJJ 1 A_WeaponReadyDX(0,false,false);
+		2IFR IJ 2 A_WeaponReadyDX(0,false);
 	FidgetLoop:
-		2IFR J 1 A_WeaponReadyDX(0,false,false);
-		TNT1 A 0 A_PressingReload("FidgetLoop");
+		2IFR J 2 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,fidgetstate:"FidgetLoop");
 		2IFR A 0 A_StartSound("Rifle/Bolt2", 5);
-		2IFR KKLM 1 A_WeaponReadyDX(0,false,false);
-		TNT1 A 0 A_PressingReload("FidgetSpam");
-		2IFR N 1 A_WeaponReadyDX(0,false,false);
-		TNT1 A 0 A_PressingReload("FidgetSpam");
-		2IFR N 1 A_WeaponReadyDX(0,false,false);
-		TNT1 A 0 A_PressingReload("FidgetSpam");
-		2IFR N 1 A_WeaponReadyDX(0,false,false);
-		TNT1 A 0 A_PressingReload("FidgetSpam");
-		2IFR N 1 A_WeaponReadyDX(0,false,false);
-		TNT1 A 0 A_PressingReload("FidgetSpam");
-		2IFR NOP 1 A_WeaponReadyDX(0,false,false);
+		2IFR KKLM 1 A_WeaponReadyDX(0,false);
+		2IFR N 4 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,fidgetstate:"FidgetSpam");
+		2IFR NOP 1 A_WeaponReadyDX(0,false);
 		Goto Ready;
 	Ready:
 		RIFG A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		TNT1 A 0 A_AutoReloadMag();
 		TNT1 A 0 A_JumpIf(!invoker.grenade && CountInv("BDPROcketAmmo") > 0, "ReloadGrenade");
 		Loop;
 	Deselect:
@@ -108,25 +93,24 @@ class BDPAssaultRifle : BrutalWeapon
 			A_StartSound("FARRIF", 6);
 			A_AlertMonstersDX();
 			A_ZoomFactor(0.98);
+			A_WeaponRecoil(1.5,0,4);
 			A_QuadSound();
 			A_GunLight();
+			A_MagClick();
 			A_TakeMag();
 		}
 		TNT1 A 0 A_WeaponOffset(random(-1,1),32+random(0,1) );
-		TNT1 A 0 A_SetPitch(pitch-0.5, SPF_INTERPOLATE);
 		RIFF B 1 A_FireProjectile("RifleCaseSpawnVersion2",5,0,6,-14);
-		TNT1 A 0 A_SetPitch(pitch-1.0, SPF_INTERPOLATE);
 		RIFF C 1 A_ZoomFactor(1.0);
-		TNT1 A 0 A_SetPitch(pitch+1.0, SPF_INTERPOLATE);
 		RIFG A 1 A_WeaponOffset(0,32);
-		TNT1 A 0 A_Refire();
+		TNT1 A 0 A_RefireDX();
 		Goto Ready;
 	AltFire:
 		TNT1 A 0 A_JumpIf(!invoker.grenade,"NoAmmo");
 		RIFF E 1 BRIGHT
 		{
 			A_FireBullets (0, 0, -1, 200, "GrenadePuff", FBF_NORANDOM,0,"RifleGrenadeTracer",-12);
-			A_SetPitch(pitch-8, SPF_INTERPOLATE);
+			A_WeaponRecoil(8);
 			A_FireParticles(3,8);
 			A_StartSound("Weapons/Firegrenade", 1);
 			A_AlertMonstersDX();
@@ -136,13 +120,13 @@ class BDPAssaultRifle : BrutalWeapon
 			invoker.grenade = false;
 		}
 		TNT1 A 0 A_ZoomFactor(1.0);
-		RIFF FGHI 1 A_SetPitch(pitch+2, SPF_INTERPOLATE);
+		RIFF FGHI 1;
 		RIFG A 5;
 		RIFG A 10 A_JumpIfInventory("PowerSpeed2",1,"ReloadGrenadeHaste");
 	//Auto reload, as it's a single shot weapon
 	ReloadGrenade:
 		TNT1 A 0 A_JumpIfInventory("PowerSpeed2",1,"ReloadGrenadeHaste");
-		TNT1 A 0 A_CheckIfAmmo("BDPRocketAmmo",1,"GrenadeNoAmmo");
+		TNT1 A 0 A_CheckIfAmmo("BDPRocketAmmo",1,"Ready");
 		RIGL ABCDEFGGHH 1;
 		HBUS A 0 A_StartSound("Rifle/Grenade1", 5);
 		TNT1 A 0 A_SpawnItemEX("GrenadeCasing",2,0,40,0,0,-4,0);
@@ -168,18 +152,14 @@ class BDPAssaultRifle : BrutalWeapon
 		Goto Ready;
 	NoAmmo:
 		TNT1 A 0 A_StartSound("weapons/empty", 3);
-	NoAmmo2:
-		TNT1 A 0 A_AutoReloadMag;
+		TNT1 A 0 A_AutoReloadMag();
 		TNT1 A 0 A_JumpIf(!invoker.grenade && CountInv("BDPROcketAmmo") > 0, "ReloadGrenade");
-	GrenadeNoAmmo:
-		RIFG A 1 A_WeaponReady(WRF_NOFIRE);
-		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK) || GetPressed(BT_ALTATTACK), "NoAmmo2");
 		Goto Ready;
-	Reload:
+	DoReload:
 		TNT1 A 0 A_StartSound("Relo1", 6);
 		RIFR ABCDEFGG 1;
 		RIFR G 0 A_FireProjectile("EmptyClipSpawn",-5,0,8,-4);
-		TNT1 A 0 A_DiscardMagazine(1);
+		TNT1 A 0 A_DiscardMag(1);
 		RIFR H 3;
 		RIFR IJKLMNNO 1;
 		RIFR A 0 A_StartSound("Relo2", 5);

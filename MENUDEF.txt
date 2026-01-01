@@ -84,8 +84,9 @@ OptionMenu "BrutalMenu"
 	StaticText "-------------------------------------------------------", "black"
 	StaticText ""
 	Submenu "Keybinds", "BDPKeybinds", 0, 1
-	Submenu "GZDoom Setup", "BDPSetup", 0, 1
+	Submenu "ZDoom Setup", "BDPSetup", 0, 1
 	Submenu "Gameplay Options", "DoxGameplayOptions", 0, 1
+	Command "Open Testmap", "map test", 1
 	//Submenu "Visual Options", "DoxVisualOptions", 0, 1
 	//Submenu "Weapon Spawns", "DoxWeaponSpawns", 0, 1
 	StaticText ""
@@ -122,17 +123,15 @@ OptionMenu "BDPKeybinds"
 	Control "Taunt", "+user4"
 	StaticText ""
 	StaticText "-------------------------------------------------------", "black"
-	StaticText "CHEATS"
+	StaticText "CHEATS", "fire"
 	StaticText "-------------------------------------------------------", "black"
 	StaticText ""
 	Control "Slow Motion", "slowmobind"
-	Control "Give Everything!", "giveit"
-	
 }
 
 OptionMenu "BDPSetup"
 {
-	Title "GZDoom Setup"
+	Title "ZDoom Setup"
 	Class "BDPMenu"
 	Position -32
 	StaticText "-------------------------------------------------------", "black"
@@ -181,6 +180,7 @@ OptionMenu "DoxGameplayOptions"
 	BDPOption "Double Jump", "Allows you to perform a second jump in mid air. Use with care.", "donotdoublejump", "NoYes"
 	BDPOption "Enable smart dual wielding", "Weapons remember if they were dual wielded when selecting them again.", "bd_SmartDualWield", "NoYes"
 	BDPOption "ADS mode", "Change how aiming down sights is controlled.", "bd_Aim", "AimOption"
+	BDPOption "Hold Minigun spin", "Hold altfire instead of tapping it to spin the minigun.", "bdp_hold_spin", "YesNo3"
 	BDPOption "Manual shotgun pump", "The shotgun must be pumped by pressing fire.", "ManualShotgunPump", "YesNo"
 	Option "Computer Area Map reveals actors", "bd_allmapdx", "NoYes"
 	BDPOption "Enable weapon flashes", "[!!! EPILEPSY WARNING !!!] Muzzle flashes light up the room", "bdp_gunlight", "YesNo"

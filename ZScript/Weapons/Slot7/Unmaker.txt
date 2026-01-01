@@ -1,4 +1,4 @@
-class BDPUnmaker : BrutalWeapon
+class BDPUnmaker : BDPWeaponBase
 {
 	int LaserCount;
 	
@@ -18,24 +18,19 @@ class BDPUnmaker : BrutalWeapon
 	}
 	States
 	{
-	Grenade: //32
+	Grenade: //30
 		UNHS BCDE 1;
-		TNT1 A 24;
+		TNT1 A 22;
 		UNHS EDCB 1;
 		Goto Ready;
-	Kick: //16
-		UNHG EFGH 1;
-		UNHG I 8;
-		UNHG HGFE 1;
-		Goto Ready;
-	AirKick: //18
+	Kick: //18
 		UNHG EFGH 1;
 		UNHG I 10;
 		UNHG HGFE 1;
 		Goto Ready;
-	SlideKick: //26
+	SlideKick: //25
 		UNHG EFGH 1;
-		UNHG I 18;
+		UNHG I 17;
 		UNHG HGFE 1;
 		Goto Ready;
 	Taunt: //30
@@ -47,14 +42,14 @@ class BDPUnmaker : BrutalWeapon
 		BFGN A 1 A_WeaponReadyDX();
 		Loop;
 	Sprint:
-		UNHG EFGH 1 A_WeaponReadyDX(0,FALSE,FALSE);
+		UNHG EFGH 1 A_SetSprites("TNT1A0",1);
 	SprintLoop:
-		UNHG I 1 A_KeepSprinting();
+		UNHG I 1 A_SetSprites("TNT1A0",1);
 		TNT1 A 0 A_StartSound("UNMIDLE",2,CHANF_LOOPING);
 		Loop;
 	SprintEnd:
-		UNHG HGFE 1 A_weaponreadyDX(0,FALSE,FALSE);
-		Goto Ready;
+		UNHG HGFE 1 A_SetSprites("TNT1A0",1);
+		Stop;
 	Ready:
 		UNHG AABBCCDDDD 1 A_WeaponReadyDX();
 		TNT1 A 0 A_StartSound("UNMIDLE",2,CHANF_LOOPING);
@@ -102,7 +97,7 @@ class BDPUnmaker : BrutalWeapon
 		UNHF IJ 1 A_SetPitch(pitch-0.6);
 		UNHF K 1;
 		UNHF MN 1 A_SetPitch(pitch+0.6);
-		TNT1 A 0 A_Refire("ContinueFire");
+		TNT1 A 0 A_RefireDX("ContinueFire");
 		UNHF DCBA 1;
 		Goto Ready;
 	}

@@ -1,4 +1,4 @@
-CLASS RiotShield : BrutalWeapon
+CLASS RiotShield : BDPWeaponBase
 {
 	Default
 		{
@@ -19,7 +19,7 @@ CLASS RiotShield : BrutalWeapon
 			Inventory.AltHUDIcon "MP40I0";
 			+Weapon.POWERED_UP;
 			Weapon.sisterweapon "MP40";
-			brutalweapon.handedness 2;
+			BDPWeaponBase.handedness 2;
 			+weapon.no_auto_switch;
 		}
 	States

@@ -1,4 +1,4 @@
-CLASS Tenderizer : Brutalweapon
+CLASS Tenderizer : BDPWeaponBase
 {
 	Default
 	
@@ -14,10 +14,9 @@ CLASS Tenderizer : Brutalweapon
 	+WEAPON.NOAUTOAIM;
 	+WEAPON.NOALERT;
 	+WEAPON.EXPLOSIVE;
-	brutalweapon.handedness 1;
+	BDPWeaponBase.handedness 1;
 	Weapon.SelectionOrder 1550;
 	Inventory.AltHUDIcon "HAMPA0";
-	BrutalWeapon.weight 1;
 	+WEAPON.CHEATNOTWEAPON;
 	}
 	Bool previousgravity;

@@ -1,6 +1,6 @@
 //Changes made:
 //select, deselect
-ACTOR DualFlameCannon : BrutalWeapon
+ACTOR DualFlameCannon : BDPWeaponBase
 {
 	Height 20
 	Weapon.SelectionOrder 3680
@@ -13,13 +13,12 @@ ACTOR DualFlameCannon : BrutalWeapon
 	+WEAPON.EXPLOSIVE
 	+WEAPON.NO_AUTO_SWITCH
 	+POWERED_UP
-	BrutalWeapon.weight 3
 	+INVENTORY.UNDROPPABLE
 	+Inventory.untossable
 	Inventory.PickupMessage "hi, i'm a message you're not supposed to see!"
 	Tag "Mancubus FlameCannon"
 	Inventory.AltHUDIcon "MANAH0"
-	brutalweapon.handedness 2
+	BDPWeaponBase.handedness 2
 	States
 	{
 	

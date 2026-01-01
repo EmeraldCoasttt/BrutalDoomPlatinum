@@ -102,7 +102,7 @@ CLASS BASEHEADSHOT : ACTOR
 		If(tracer && tracer.health < 1 && damagetypetoactor == "head")
 			{
 				a_startsound("HEADSHOT",1,0);
-				If(damagetype == "railgun" || damagetype == "Revolver")
+				If(damagetype == "railgun")
 				{
 					spawn("WhiteShockwave",pos);
 					//A_Explode(90,250,0,FALSE,0,0,10,"BulletPuff","Head");

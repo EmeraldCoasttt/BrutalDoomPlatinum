@@ -21,7 +21,6 @@ ACTOR CyberdemonsMissileLauncher : TemporaryWeapon
 	Scale 0.9
 	Tag "Cyberdemon's Missile Launcher"
 	inventory.althudicon "CYGGE0"
-	BrutalWeapon.weight 3
 	States
 	{
 	GrenadeThrowFlash:
@@ -92,8 +91,7 @@ ACTOR CyberdemonsMissileLauncher : TemporaryWeapon
 		
 	Select:
 	NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("MP40Crosshair"));}else{A_SetCrosshair(0);}}
-		Goto SelectFirstPersonLegs
-		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1) 
+		"####" A 0 A_GiveInventory("IsPlayingDoxMod",1) 
 		TNT1 A 1
 		//NULL A 0 A_GiveInventory("CybieRocketTimer",1)
 		TNT1 AAAAAAAAAAAAAAA 0 A_Raise	

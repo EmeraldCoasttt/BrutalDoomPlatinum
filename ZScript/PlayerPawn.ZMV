@@ -1,5 +1,5 @@
 
-class Brutal_PlayerBase : PlayerPawn
+class BDPPlayerPawn : PlayerPawn
 {
 	//=========================
 	//Common
@@ -195,6 +195,7 @@ class Brutal_PlayerBase : PlayerPawn
 	int previousscore;
 	bool realism;
 	bool gluttony;
+	bool advancedrecoil;
 	
 	int killstreak;
 	int killstreaktimer;
@@ -234,7 +235,23 @@ class Brutal_PlayerBase : PlayerPawn
 	vector2 crosshairscale;
 	int crosshairrange;
 	
-	int haskicked;
+	//input handling
+	bool blockFire;
+	bool blockAltfire;
+	bool blockSpecial;
+	bool blockKick;
+	bool blockTaunt;
+	int oldInputs[35];
+	
+	Vector2 recoil;
+	Vector2 antiRecoil;
+	Vector2 recoilSpeed;
+	int recoilTics;
+	int recoilTicGoal;
+	
+	int bloodStain;
+	
+	bool canLedgeClimb;
 	
 	Actor Visorlight;
 	
@@ -253,36 +270,18 @@ class Brutal_PlayerBase : PlayerPawn
 	// the weapon be picked up:
 	bool manualPickup;
 	
+	array<int> usekeys;
+	
 	// REPLACE WITH LANGUAGE STRINGS:
-	const PICKUPSTR_SWAP = "Press Use to swap for \cg%s\c-";
-	const PICKUPSTR_PICK = "Press Use to pick up \cg%s\c-";
-	const PICKUPSTR_DW = "Press Use to dual wield \cg%s\c-"; 
+	const PICKUPSTR_SWAP = " to swap for \cg%s\c-";
+	const PICKUPSTR_PICK = " to pick up \cg%s\c-";
+	const PICKUPSTR_DW = " to dual wield \cg%s\c-"; 
 	const MAXOWNEDWEAPONS = 4;
 	
 	Default
 	{
 		Player.DisplayName "Brutal Doom Player";
 		PainChance 255;
-	}
-	
-	Action void a_kickflags()
-	{
-		BrutalWeapon heldweap = BrutalWeapon(player.readyweapon);
-		If(heldweap.offhandkick)
-			{
-				A_OverlayFlags(-602,PSPF_FLIP | PSPF_MIRROR,true);
-				A_OverlayFlags(-610,PSPF_FLIP | PSPF_MIRROR,true);
-				A_OverlayFlags(-611,PSPF_FLIP | PSPF_MIRROR,true);
-				A_OverlayFlags(-601,PSPF_FLIP | PSPF_MIRROR,true);
-				A_OverlayFlags(-607,PSPF_FLIP | PSPF_MIRROR,true);
-			}
-		Else
-			{
-				A_OverlayFlags(-602,PSPF_FLIP | PSPF_MIRROR,false);
-				A_OverlayFlags(-610,PSPF_FLIP | PSPF_MIRROR,false);
-				A_OverlayFlags(-607,PSPF_FLIP | PSPF_MIRROR,false);
-				A_OverlayFlags(-601,PSPF_FLIP | PSPF_MIRROR,false);
-			}
 	}
 	
 	action Actor A_BDPMelee(double range = 200, name projectile = "MeleeAttack", double spawnheight = -7, bool doHitThrust = true)
@@ -349,291 +348,167 @@ class Brutal_PlayerBase : PlayerPawn
 		
 	}
 	
+	void StainSprites(string sprite, int layer = 1)
+	{
+		if(bloodStain > 0)
+		{
+			let psp = player.FindPSprite(layer);
+			if(TexMan.GetName(psp.curstate.GetSpriteTexture(0)).Mid(1,3) == sprite)
+			{
+				psp.sprite = GetSpriteIndex(bloodStain..sprite);
+			}
+		}
+	}
+	
 	action void A_Recoil3D(double amt)
 	{
 		vel += BDPMath.VecFromAngles(angle, pitch, -amt);	
 	}
 	
+	action void A_SlidePitch()
+	{
+		if(pitch > 10)
+		{
+			player.MaxPitch = max(10,pitch * 0.5);
+			pitch = max(10,pitch * 0.5);
+		}
+		else
+		{
+			A_OverlayOffset(-602,0,(10 - pitch) * 2,WOF_KEEPX|WOF_INTERPOLATE);
+			A_OverlayOffset(-601,0,(10 - pitch) * 2,WOF_KEEPX|WOF_INTERPOLATE);
+		}
+	}
+	
 	States
 	{
+	CacheSprites:
+		1ICK ABCDEFGHIJKLMNOPQRSTUVWXYZ[] 1;
+		1LID ABCDEFGHIJ 1;
+		2ICK ABCDEFGHIJKLMNOPQRSTUVWXYZ[] 1;
+		2LID ABCDEFGHIJ 1;
+		3ICK ABCDEFGHIJKLMNOPQRSTUVWXYZ[] 1;
+		3LID ABCDEFGHIJ 1;
+		Stop;
 	KickCheck:
 		TNT1 A 1
 		{
-			if(player.cmd.buttons & BT_USER1 && haskicked == 0 && CountInv("veh_manager") < 1)
+			A_OverlayFlags(-602, PSPF_ADDBOB, false);
+			if(player.cmd.buttons & BT_USER1 && !blockKick && CountInv("veh_manager") < 1)
 			{
-				haskicked = 1;
-				return resolvestate("KickAction");
+				BDPWeaponBase weap = BDPWeaponBase(player.ReadyWeapon);
+				bool kickflash = (weap.readyLeft && weap.readyRight || !weap.bDUALWEAPON) && player.WeaponState & WF_USER1OK;
+				blockKick = true;
+				statelabel st = "Kick";
+				statelabel ac = "KickAction";
+				statelabel tr = "KickTranslatable";
+				if(player.crouchfactor != 1 && (player.cmd.buttons & BT_CROUCH || player.oldbuttons & BT_CROUCH) && !exhausted)
+				{
+					st = "SlideKick";
+					ac = "SlideKickAction";
+					tr = "SlideKickTranslatable";
+				}
+				else if(vel.Z != 0 || bsprinting)
+				{
+					ac = "AirKickAction";
+					tr = "AirKickTranslatable";
+				}
+				A_StartSound("KICK",69);
+				if(kickflash && weap.resolvestate(st))
+					player.SetPSprite(1,weap.resolvestate(st));
+				A_Overlay(-601,tr);
+				A_OverlayFlags(-601, PSPF_PLAYERTRANSLATED, true);
+				A_OverlayFlags(-601, PSPF_ADDBOB, false);
+				A_StartSound("KICK",69);
+				return resolvestate(ac);
 			}
 			return resolvestate(null);
 		}
 		Loop;
 	KickAction:
-		TNT1 A 0 A_kickflags();
-		TNT1 A 0
-		{
-			if(player.crouchfactor != 1 && (player.cmd.buttons & BT_CROUCH || player.oldbuttons & BT_CROUCH) && !exhausted)
-			{
-				return resolvestate("SlideKickAction");
-			}
-			else if(vel.Z != 0)
-			{
-				return resolvestate("AirKickAction");
-			}
-			else
-			{
-				return resolvestate(null);
-			}
-		}
-		TNT1 A 0 A_StartSound("KICK",69);
-		TNT1 A 0 
-		{
-			A_Overlay(-601,"KickTranslatable");
-			A_OverlayFlags(-601, PSPF_PLAYERTRANSLATED | PSPF_ADDWEAPON, true);
-		}
-		3ICK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==4,8);//perma gren
-		2ICK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==3,7);//perma blu
-		1ICK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==2,6);//perma red
-		KICK A 0 A_JumpIf(GetCVAR("bd_LegStainingOptions")==1,5);//disabled
-		//
-		3ICK A 0 A_JumpIfInventory("GreenBloodOnBoots",1,4);
-		2ICK A 0 A_JumpIfInventory("BlueBloodOnBoots",1,3);
-		1ICK A 0 A_JumpIfInventory("RedBloodOnBoots",1,2);
-		KICK N 0;
-		"####" A 0;
-		"####" ABC 1 A_BDPMeleeStart();
-		"####" A 0 {
-				haskicked = 2;
-				A_BDPMelee();
-		}
-		
-		
-		"####" DDEEEEFGHIJ 1;
-		"####" A 0 A_Takeinventory("Kicking",1);
-		"####" KLM 1;
-		TNT1 A 0 SetPlayerProperty(0,0,0);
-		TNT1 A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "KickCheckButTakeKickAndIdk");
-//		TNT1 A 0 A_JumpIfInventory("GoFatality", 1, "Steady")
-		RIBA A 0 A_Takeinventory("Kicking",1);
-		NULL A 0;
-	//	TNT1 A 3 A_Takeinventory("Kicking",1)
+		KICK ABC 1 A_BDPMeleeStart();
+		TNT1 A 0 A_BDPMelee();
+		KICK DEEEEFGHIJKLM 1;
+		TNT1 A 4 {blockKick = true;}
 		Goto KickCheck;
 	KickTranslatable:
-		TNT1 A 0 A_OverlayFlags(-601, PSPF_PLAYERTRANSLATED | PSPF_ADDWEAPON, true);
-		9ICK ABCDDEEEEFGHIJKLM 1;
-		STOP;
-	
-	
+		KIC9 ABCDEEEEFGHIJKLM 1;
+		Stop;
 	AirKickAction:
-	 //   TNT1 A 0 A_JumpIfInventory("PSeq2",1,2)
-	 TNT1 A 0 
-		{
-			A_Overlay(-601,"AirKickTranslatable");
-			A_OverlayFlags(-601, PSPF_PLAYERTRANSLATED | PSPF_ADDWEAPON, true);
-		}
-		3ICK A 0 A_JumpIfInventory("GreenBloodOnBoots", 1, 4);
-		2ICK A 0 A_JumpIfInventory("BlueBloodOnBoots", 1, 3);
-		1ICK A 0 A_JumpIfInventory("RedBloodOnBoots", 1, 2);
-		KICK A 0;
-		"####" A 0;
-		"####" A 0;
-		"####" A 0 A_StartSound("KICK",69);
-		"####" NOPQ 1 A_BDPMeleeStart(400);
-		//
-		"####" A 0;
-		"####" A 0 {
-			A_recoil(-6);
-					//heldweap.A_FireProjectile("MeleeAttackAir", 0, 0, 0, -31);
-					SpawnPlayerMissile("MeleeAttackAir",1e37,0,-31);
-					A_BDPMelee(200,"meleeattackair",-31);
-			
-		}
-	   // "####" O 3
-		3ICK A 0 A_JumpIfInventory("GreenBloodOnBoots", 1, 4);
-		2ICK A 0 A_JumpIfInventory("BlueBloodOnBoots", 1, 3);
-		1ICK A 0 A_JumpIfInventory("RedBloodOnBoots", 1, 2);
-		KICK A 0;
-		"####" A 0;
-		"####" RRS 1;
-		"####" A 0 {haskicked = 2;}
-		"####" SSSTUVWXYZ 1;
-		"####" A 0 A_Takeinventory("Kicking",1);
-		
-		"####" "[]" 1;
-		Goto KickCheck;
-	AirKickTranslatable:
-		9ICK A 0 A_OverlayFlags(-601, PSPF_PLAYERTRANSLATED | PSPF_ADDWEAPON, true);
-		"####" A 0;
-		"####" A 0;
-		"####" A 0;
-		"####" NOPQ 1;
-		"####" A 0;
-		"####" A 0;
-		"####" RRSSSSTUVWXYZ 1;
-		"####" A 0;
-		"####" "[]" 1;
-		STOP;
-	SlideKickRightLegOverlay:
-		3LID A 0 A_JumpIfInventory("GreenBloodOnBoots", 1, 4);
-		2LID A 0 A_JumpIfInventory("BlueBloodOnBoots", 1, 3);
-		1LID A 0 A_JumpIfInventory("RedBloodOnBoots", 1, 2);
-		SLID A 0;
-		"####" A 1
-		{
-			A_kickflags();
-			if(Pitch<=1)
-			{
-				A_OverlayOffset(-610, 0, (-pitch*2));
-			}
-		}
-		"####" BCDEEEEEEEEEEEEEEE 1
-		{
-		A_kickflags();
-			if(Pitch<=1)
-			{
-				A_OverlayOffset(-610, 0, (-pitch*2));
-			}
-		}
-		Goto SlideKickRightLegOverlayFinish;
-	SlideKickTranslatable:
-		9LID A 0;
-		"####" A 1
-		{
-		A_kickflags();
-			if(Pitch<=1)
-			{
-			A_OverlayOffset(-601, 0, (-pitch*2));
-			}
-		}
-		"####" BCDEEEEEEEEEEEEEEE 1
-		{
-		A_kickflags();
-			if(Pitch<=1)
-			{
-				A_OverlayOffset(-601, 0, (-pitch*2));
-			}
-		}
-		Goto SlideKickTranslatableFinish;
-	SlideKickRightLegOverlayFinish:
-		3LID A 0 A_JumpIfInventory("GreenBloodOnBoots", 1, 4);
-		2LID A 0 A_JumpIfInventory("BlueBloodOnBoots", 1, 3);
-		1LID A 0 A_JumpIfInventory("RedBloodOnBoots", 1, 2);
-		SLID A 0;
-		"####" A 0;
-		"####" DDFGHIJ 1
-		{
-		A_kickflags();
-			if(Pitch<=1)
-			{
-				A_OverlayOffset(-610, 0, (-pitch*2));
-			}
-		}
-		Stop;
-	SlideKickTranslatableFinish:
-		9LID A 0;
-		"####" A 0;
-		"####" DDFGHIJ 1
-		{
-		A_kickflags();
-			if(Pitch<=1)
-			{
-				A_OverlayOffset(-601, 0, (-pitch*2));
-			}
-		}
-		Stop;
-	SlideKickAction:
-		TNT1 A 0 A_StartSound("KICK",69);
-		TNT1 A 0 A_Recoil (-6);
-		TNT1 A 0 A_StartSound("SlideKickStart", 71);
+		KICK NOPQ 1 A_BDPMeleeStart(400);
 		TNT1 A 0
 		{
-			If(istactical)
-			{
-				stamina += 60;
-				If(stamina > 100)
-				{
-					A_startSound("Tired", 21,CHANF_NOSTOP);
-					stamina = 100;
-				}
-			}
+			double spd = Vel.XY dot Angle.ToVector();
+			If(spd < 40 && vel.Z != 0)
+				A_Recoil(-6);
+			SpawnPlayerMissile("MeleeAttackAir",1e37,0,-31);
+			A_BDPMelee(200,"meleeattackair",-31);
 		}
-		NULL A 0 A_Overlay(-610,"SlideKickRightLegOverlay");
-		TNT1 A 0 
+		KICK RRSTUVWXYZ[] 1;
+		TNT1 A 4 {blockKick = true;}
+		Goto KickCheck;
+	AirKickTranslatable:
+		KIC9 NOPQRRSTUVWXYZ 1;
+		Stop;
+	SlideKickAction:
+		TNT1 A 0 {A_Recoil (-6); A_StartSound("SlideKickStart", 71);}
+		SLID ABC 1
 		{
-			A_Overlay(-601,"SlideKickTranslatable");
-			A_OverlayFlags(-601, PSPF_PLAYERTRANSLATED | PSPF_ADDWEAPON, true);
-		}
-		TNT1 B 1
-		{
-			if(pitch > 0)
-			{
-				player.MaxPitch = pitch*.5;
-				A_SetPitch(pitch*.5,SPF_INTERPOLATE);
-			}
-			else
-			{
-				player.MaxPitch = 0;
-			}
+			viewbob -= 0.1;
+			A_SlidePitch();
 			player.crouching = -1;
 		}
-		NULL CE 1
-		{
-			if(pitch > 0)
-			{
-				player.MaxPitch = pitch*.5;
-				A_SetPitch(pitch*.5,SPF_INTERPOLATE);
-			}
-			player.crouching = -1;
-		}
-		"####" A 0 {haskicked = 2;}
-		NULL FFFFFFFFFFFFFFFF 1
+		SLID DDEEEEEEEEEEE 1
 		{
 			double spd = Vel.XY dot Angle.ToVector();
-			//console.printf("%i",spd);
 			If(spd < 40)
-			{
 				A_Recoil (-3);
-			}
-			if(pitch > 10)
-			{
-				player.MaxPitch = pitch*.5;
-				A_SetPitch(pitch*.5,SPF_INTERPOLATE);
-			}
-			else if(pitch > 0)
-			{
-				A_SetPitch(0,SPF_INTERPOLATE);
-				player.MaxPitch = 0;
-			}
+			A_SlidePitch();
 			player.crouching = -1;
 			double curpitch = pitch;
 			pitch = 0;
 			SpawnPlayerMissile("MeleeAttackSlide",1e37,0,-7);
 			pitch = curpitch;
-			A_WeaponOffset(random(1,1),random(32,34));
+			viewbob = 0.0;
+			A_WeaponOffset(random(-1,1),random(32,34));
 		}
-		"####" A 0 A_TakeInventory("KickHasHit", 1);
-		"####" A 0 SetPlayerProperty(0,0,0);
-		Goto FinishSlide;
-		
-	FinishSlideHitwall:
-		"####" A 0 A_Stop();
-	FinishSlide:
-		"####" A 0 A_Overlay(-610,"SlideKickRightLegOverlayFinish");
-		"####" A 0 A_StartSound("SlideKickStop", 71);
-		"####" A 0;
-		
-		TNT1 GHIJ 1 {player.crouching = -1;}
-		//A_SetPitch(Pitch-1, SPF_INTERPOLATE)
-		"####" A 0 A_Takeinventory("Kicking",1); //separated for melee
-		TNT1 A 0 {
-		if(pitch > 0)
+		TNT1 A 0 A_StartSound("SlideKickStop", 71);
+		SLID DDFG 1
 		{
-			A_SetPitch(0);
+			viewbob += 0.1;
+			if(pitch <= 11)
+			{
+				A_OverlayOffset(-602,0,(10 - pitch) * 2);
+				A_OverlayOffset(-601,0,(10 - pitch) * 2);
+			}
+			player.crouching = -1;
 		}
-		player.MaxPitch = 90;
-		player.crouching = 0;
+		TNT1 A 0
+		{
+			if(pitch > 10)
+			{
+				A_SetPitch(0);
+			}
+			player.MaxPitch = 90;
+			player.crouching = 0;
 		}
-		TNT1 KLM 1;
+		SLID HIJ 1
+		{
+			viewbob += 0.1;
+			if(pitch <= 11)
+			{
+				A_OverlayOffset(-602,0,(10 - pitch) * 2);
+			}
+		}
+		TNT1 A 4
+		{
+			A_OverlayOffset(-602,0,0);
+			viewbob = 1.0;
+			blockKick = true;
+		}
 		Goto KickCheck;
+	SlideKickTranslatable:
+		SLI9 ABCDDEEEEEEEEEEEDDFGHIJ 1;
+		Stop;
 	}
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////
@@ -642,6 +517,22 @@ class Brutal_PlayerBase : PlayerPawn
 	////																						////
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	override void PostBeginPlay()
+	{
+		PPShader.SetEnabled("tempinv", false);
+		PPShader.SetEnabled("radsuit", false);
+		PPShader.SetEnabled("haste", false);
+		PPShader.SetEnabled("rage", false);
+		PPShader.SetEnabled("quad", false);
+		super.PostBeginPlay();
+	}
+	
+	override Vector2 BobWeapon(double ticfrac)
+	{
+		player.WeaponState |= WF_WEAPONBOBBING;
+		return Super.BobWeapon(ticfrac);
+	}
 	
 	//Because GZDoom's Unit() returns NaN if a vector has no value
 	vector3 SafeUnit3(Vector3 VecToUnit)
@@ -955,16 +846,16 @@ class Brutal_PlayerBase : PlayerPawn
 		{
 			return false;
 		}
-		
+		Bindings.GetAllKeysForCommand(usekeys,"+use");
 		// Otherwise update prompt text and weapon pointer:
-		focusWeaponPrompt = PICKUPSTR_PICK; //base prompt
+		focusWeaponPrompt =  "Press "..Bindings.NameAllKeys(usekeys)..PICKUPSTR_PICK; //base prompt
 		if (canDualWield)
 		{
-			focusWeaponPrompt = PICKUPSTR_DW; //dual-wield prompt
+			focusWeaponPrompt = "Press "..Bindings.NameAllKeys(usekeys)..PICKUPSTR_DW; //dual-wield prompt
 		}
 		else if (overCap && !isbarrel) //we're at capacity
 		{
-			focusWeaponPrompt = PICKUPSTR_SWAP; //swap prompt
+			focusWeaponPrompt =  "Press "..Bindings.NameAllKeys(usekeys)..PICKUPSTR_SWAP; //swap prompt
 		}
 		// Construct the prompt (this assumes "%s" is present to pass
 		// the name of the weapon to, and calls StringTable.Localize
@@ -2203,7 +2094,7 @@ class Brutal_PlayerBase : PlayerPawn
 	
 	void GrapplingMove()
 	{
-		/*if(!brutal_playerbase.OnGround) */{ Grappled = True; }
+		/*if(!BDPPlayerPawn.OnGround) */{ Grappled = True; }
 		
 		//Fun is over kids, go home
 		if(bNOGRAVITY || Rope.Length() <= 4.f * Radius || !CheckMove(Pos.XY + Vel.XY) || (lasttickrope && rope.length() > (lasttickrope + 30)))
@@ -2258,12 +2149,94 @@ class Brutal_PlayerBase : PlayerPawn
 		//Sprite animation
 		//Super.handlemovement();
 	
-	
 	Override void Tick()
 	{
-		if(haskicked == 2 && !(player.cmd.buttons & BT_USER1))
+		player.cheats |= CF_INTERPVIEW;
+		if(CountInv("RedBloodOnBoots") > 0)
+			bloodStain = 1;
+		if(CountInv("BlueBloodOnBoots") > 0)
+			bloodStain = 2;
+		if(CountInv("GreenBloodOnBoots") > 0)
+			bloodStain = 3;
+		StainSprites("ICK",-602);
+		StainSprites("LID",-602);
+		TakeInventory("RedBloodOnBoots",1);
+		TakeInventory("BlueBloodOnBoots",1);
+		TakeInventory("GreenBloodOnBoots",1);
+		
+		pitch -= recoil.x;
+		angle -= recoil.y;
+		if(!advancedRecoil)
 		{
-			haskicked = 0;
+			if(recoil.x > 0)
+			{
+				if(pitch + antiRecoil.x > -90)
+					antiRecoil.x += recoil.x;
+				recoilSpeed.x = recoil.x;
+			}
+			if(abs(recoil.y) > 0)
+			{
+				antiRecoil.y += recoil.y;
+				recoilSpeed.y = recoil.y;
+			}
+		}
+		if(antiRecoil.x > 0 && player.cmd.pitch < 0)
+			antiRecoil.x = clamp(antiRecoil.x + player.cmd.pitch * (360. / 65536.),0,90);
+		if(antiRecoil.y > 0 && player.cmd.yaw > 0 || antiRecoil.y < 0 && player.cmd.yaw < 0)
+			antiRecoil.y = clamp(antiRecoil.y - player.cmd.yaw * (360. / 65536.),player.cmd.yaw > 0 ? 0 : -360,player.cmd.yaw > 0 ? 360 : 0);
+		if(recoilTics > 0)
+			recoilTics--;
+		else
+		{
+			if(antiRecoil.x < 15 + recoilSpeed.x)
+			{
+				if(antiRecoil.x > 2)
+				{
+					pitch += 2;
+					antiRecoil.x -= 2;
+				}
+				else
+				{
+					pitch += antiRecoil.x;
+					antiRecoil.x = 0;
+				}
+				if(abs(antiRecoil.y) > 2)
+				{
+					angle += antiRecoil.y > 0 ? 2 : -2;
+					antiRecoil.y -= antiRecoil.y > 0 ? 2 : -2;
+				}
+				else
+				{
+					angle += antiRecoil.y;
+					antiRecoil.y = 0;
+				}
+			}
+			else
+			{
+				pitch += recoilSpeed.x;
+				antiRecoil.x -= recoilSpeed.x;
+				angle += recoilSpeed.y;
+				antiRecoil.y -= recoilSpeed.y;
+				recoilTics = recoilTicGoal;
+			}
+		}
+		recoil = (0,0);
+		pitch = clamp(pitch,-90,90);
+		
+		if(blockFire && !(player.cmd.buttons & BT_ATTACK))
+			blockFire = false;
+		if(blockAltfire && !(player.cmd.buttons & BT_ALTATTACK))
+			blockAltfire = false;
+		if(blockSpecial && !(player.cmd.buttons & BT_USER3))
+			blockSpecial = false;
+		if(blockKick && !(player.cmd.buttons & BT_USER1))
+			blockKick = false;
+		if(blockTaunt && !(player.cmd.buttons & BT_USER4))
+			blockTaunt = false;
+		oldInputs[0] = player.oldbuttons;
+		for(int i = 34; i > 0; i--)
+		{
+			oldInputs[i] = oldinputs[i - 1];
 		}
 		if (focusWeapon && !BDPHandler.IsVoodooDoll(self))
 		{
@@ -2422,7 +2395,7 @@ class Brutal_PlayerBase : PlayerPawn
 		}
 		
 		//Check if the candidate ledge can suffice
-		if(LedgeCandidate > Pos.Z + Height * 0.6f && LedgeCandidate <= Pos.Z + Height * 1.2f)
+		if(LedgeCandidate > Pos.Z + Height * 0.6f && LedgeCandidate <= Pos.Z + Height * 1.2f && canLedgeClimb)
 		{
 			Vector3 OrigPos = Pos;
 			SetXYZ((Pos.XY, LedgeCandidate));
@@ -2493,14 +2466,7 @@ class Brutal_PlayerBase : PlayerPawn
 			LedgeGrabbed = True;
 			return;
 		}
-		if((player.readyweapon is "BDPFist") || (player.readyweapon is "BDPChainsaw"))
-		{
-			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("StainedLedgeClimb"));
-		}
-		else
-		{
-			player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("LedgeClimb"));
-		}
+		player.SetPSprite(PSP_WEAPON,player.ReadyWeapon.FindState("LedgeClimb"));
 	}
 	void LedgeReach()
 	{
@@ -2525,7 +2491,7 @@ class Brutal_PlayerBase : PlayerPawn
 			if(LedgeTime >= 35) { return; }
 			LedgeGrabbed = LedgeTime = LedgeHeight = LedgeHeightMin = LedgeHeightMax = FrameTime = 0;
 			Vel = Vel.Length() ? (5.f * AngleToVector(LedgeAngle), -3) : (0, 0, 0); //push player forward and downward
-			A_StartSound("*land", CHAN_BODY);
+			A_StartSound("*land", 2);
 		}
 		else
 		{
@@ -2651,7 +2617,7 @@ class Brutal_PlayerBase : PlayerPawn
 		{
 			bob = 0;
 		}
-		player.viewz = pos.Z + player.viewheight + (bob * clamp(ViewBob, 0. , 1.5)); // [SP] Allow DECORATE changes to view bobbing speed.
+		player.viewz = pos.Z + player.viewheight + (bob / 2 * clamp(ViewBob, 0. , 1.5)); // [SP] Allow DECORATE changes to view bobbing speed.
 
 		if (Floorclip && player.playerstate != PST_DEAD
 			&& pos.Z <= floorz)
@@ -2725,7 +2691,7 @@ Class Hook : Actor
 	Override void Tick()
 	{
 		//bool isflaming = false;
-		Let HookOwner = brutal_playerbase(Target);
+		Let HookOwner = BDPPlayerPawn(Target);
 		if(HookOwner)
 		{
 			Vector3 WaistPos = (HookOwner.Pos.X, HookOwner.Pos.Y, HookOwner.Pos.Z + HookOwner.Height / 2.f); // player position
@@ -2757,7 +2723,7 @@ Class Hook : Actor
 	
 	void InitiateGrapple(Bool Monster)
 	{
-		Let HookOwner = brutal_playerbase(Target);
+		Let HookOwner = BDPPlayerPawn(Target);
 		
 		Float	PushLength = 4 * 5.5;
 		Vector3 HookPush = SafeUnit3(HookToPlayer) * PushLength;
@@ -2792,7 +2758,7 @@ Class Hook : Actor
 			Monster.spawnblood(pos,angle,1);
 			}
 			monster.a_pain();
-			brutal_playerbase(Target).GrappledMonster = Monster;
+			BDPPlayerPawn(Target).GrappledMonster = Monster;
 			SetMonsterSpeed(False);
 			A_StartSound("HookMeat", 7);
 		}
@@ -2845,7 +2811,7 @@ Class Hook : Actor
 	Spawn:
 		OCLW A 0 NoDelay
 		{
-			Let HookOwner = brutal_playerbase(Target);
+			Let HookOwner = BDPPlayerPawn(Target);
 			A_AlertMonsters();
 			
 			 if (target && target.target)
@@ -2861,7 +2827,7 @@ Class Hook : Actor
 		OCLW A 1
 		{
 			//a_seekermissile(365,365,SMF_LOOK);
-			Let HookOwner = brutal_playerbase(Target);
+			Let HookOwner = BDPPlayerPawn(Target);
 			//target.giveinventory("meathook",1);
 			//Despawn if no geometry was found
 			/*
@@ -2882,7 +2848,7 @@ Class Hook : Actor
 	TillDeathDoesUsApart:
 		OCLW A 1
 		{
-			Let HookOwner = brutal_playerbase(Target);
+			Let HookOwner = BDPPlayerPawn(Target);
 			if(!HookOwner.GrappleVel.Length() || !HookOwner)
 			{
 				SetState(FindState("DespawnHook"));
@@ -2912,7 +2878,7 @@ Class Hook : Actor
 		{
 
 			
-			Let HookOwner = brutal_playerbase(Target);
+			Let HookOwner = BDPPlayerPawn(Target);
 			//SpawnTrail();
 			Let Monster = Actor(Master);
 			
@@ -2925,7 +2891,7 @@ Class Hook : Actor
 	TillXDeathDoesUsApart:
 		OCLW A 1
 		{
-			Let HookOwner = brutal_playerbase(Target);
+			Let HookOwner = BDPPlayerPawn(Target);
 			Let Monster = Actor(Master);
 			If (monster)
 			{
@@ -2976,7 +2942,7 @@ Class Hook : Actor
 	Death:
 	OCLW AAA 0
 		{
-			Let HookOwner = brutal_playerbase(Target);
+			Let HookOwner = BDPPlayerPawn(Target);
 			if(HookOwner)
 			{
 			//	HookOwner.a_giveinventory("canfiremeathook",1);
@@ -2993,7 +2959,7 @@ Class Hook : Actor
 	DespawnHook:
 		OCLW A 0
 		{
-			Let HookOwner = brutal_playerbase(Target);
+			Let HookOwner = BDPPlayerPawn(Target);
 			if(HookOwner)
 			{
 				HookOwner.StopHook();

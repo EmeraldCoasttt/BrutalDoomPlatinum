@@ -128,7 +128,7 @@ server int bd_ArchvileTeleport = 0;
 
 
 user int Dox_3DNail  = 0;
-user int BD_MagGoClicky  = 0;
+user bool BD_MagGoClicky = false;
 
 //MES texturing
 server int Dox_MEStextureReplacements  = 0;
@@ -144,3 +144,5 @@ nosave string bdp_seed_blacklist = "1,2,3,4";
 user bool bdp_autoreload = true;
 
 user float bdp_crosshair_trans = 0.65;
+
+user bool bdp_hold_spin = false;

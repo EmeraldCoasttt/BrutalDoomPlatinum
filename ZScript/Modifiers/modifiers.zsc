@@ -16,7 +16,7 @@ class Modifier_StayFrosty : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.istactical = true;
@@ -42,7 +42,7 @@ class Modifier_Chatterbox : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.ischatterbox = true;
@@ -51,11 +51,11 @@ class Modifier_Chatterbox : BDPModifier
 	
 	Override void worldthingdamaged(Worldevent e)
 	{
-		If(e.thing && e.thing.bisMonster && e.thing.health <= 0 && e.damagesource && e.damagesource is "Brutal_PlayerBase")
+		If(e.thing && e.thing.bisMonster && e.thing.health <= 0 && e.damagesource && e.damagesource is "BDPPlayerPawn")
 		{
 			//console.printf(e.damagetype);
 			//console.printf(e.damagesource.getclassname());
-			 brutal_playerbase BDPPlayer = brutal_playerbase(e.damagesource);
+			 BDPPlayerPawn BDPPlayer = BDPPlayerPawn(e.damagesource);
 			 If(e.damagetype == 'ExtremePunches')
 			 {
 				 If(BDPPlayer && !bdpplayer.tauntcooldown && random(1,3) > 1 )
@@ -92,7 +92,7 @@ class Modifier_Triathlon : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.triathlon = true;
@@ -118,7 +118,7 @@ class Modifier_Reversal : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.reversalmodifier = true;
@@ -158,7 +158,7 @@ class Modifier_OneUpmanship : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.oneupmanship = true;
@@ -183,7 +183,7 @@ class Modifier_UltraNightmare : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.ultranightmare = true;
@@ -204,11 +204,11 @@ class Modifier_SkullCrusher : BDPModifier
 
 	Override void worldthingdamaged(Worldevent e)
 	{
-		If(e.thing && e.thing.bisMonster && e.thing.health <= 0 && e.damagesource && e.damagesource is "Brutal_PlayerBase")
+		If(e.thing && e.thing.bisMonster && e.thing.health <= 0 && e.damagesource && e.damagesource is "BDPPlayerPawn")
 		{
 			//console.printf(e.damagetype);
 			//console.printf(e.damagesource.getclassname());
-			 brutal_playerbase BDPPlayer = brutal_playerbase(e.damagesource);
+			 BDPPlayerPawn BDPPlayer = BDPPlayerPawn(e.damagesource);
 			If(BDPPLAYER)
 			{
 				BDPPlayer.killstreak ++;
@@ -242,7 +242,7 @@ class Modifier_ScoreMaster : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.scoremaster = true;
@@ -251,11 +251,11 @@ class Modifier_ScoreMaster : BDPModifier
 	
 	Override void worldthingdamaged(Worldevent e)
 	{
-		If(e.thing && e.thing.bisMonster && e.thing.health <= 0 && e.damagesource && e.damagesource is "Brutal_PlayerBase")
+		If(e.thing && e.thing.bisMonster && e.thing.health <= 0 && e.damagesource && e.damagesource is "BDPPlayerPawn")
 		{
 			//console.printf(e.damagetype);
 			//console.printf(e.damagesource.getclassname());
-			 brutal_playerbase BDPPlayer = brutal_playerbase(e.damagesource);
+			 BDPPlayerPawn BDPPlayer = BDPPlayerPawn(e.damagesource);
 			If(BDPPLAYER)
 			{
 				If(BDPPlayer.killstreak > 1)
@@ -301,7 +301,7 @@ class Modifier_ShockFactor : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.shockfactor = true;
@@ -361,7 +361,7 @@ class Modifier_Realism : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.realism = true;
@@ -391,12 +391,12 @@ class Modifier_Gunslinger : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			for(let item = dplr.Inv; item.Inv; item = item.Inv)
 			{
-				let dweap = BrutalWeapon(item);
+				let dweap = BDPWeaponBase(item);
 				if(!dweap) continue;
 				dweap.gunslinger = true;
 			}
@@ -426,7 +426,7 @@ class Modifier_SequenceBreak : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.sequencebreak = true;
@@ -451,7 +451,7 @@ class Modifier_MaximumOverdrive : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.maximumoverdrive = true;
@@ -477,7 +477,7 @@ class Modifier_Mjolnir : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.spawnwitharmor = true;
@@ -515,7 +515,7 @@ class Modifier_ManAndAHalf : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.spawnberserked = true;
@@ -551,7 +551,7 @@ class Modifier_Gluttony : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = Brutal_PlayerBase(plr.mo);
+			let dplr = BDPPlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.gluttony = true;
@@ -560,3 +560,28 @@ class Modifier_Gluttony : BDPModifier
 
 }
 
+class Modifier_KickintheHead : BDPModifier
+{
+	Default
+	{
+		BDPModifier.Icon "REVOQ0";
+		BDPModifier.DisplayName "Kick In The Head";
+		BDPModifier.Description "Recoil is affected by movement and will not auto-correct";
+	}
+	
+	override void WorldTick()
+	{
+		for(int i = 0; i < MAXPLAYERS; i++)
+		{
+			if(!PlayerInGame[i]) continue;
+			PlayerInfo plr = players[i];
+			if(!plr) continue;
+			
+			let dplr = BDPPlayerPawn(plr.mo);
+			if(!dplr) continue;
+			
+			dplr.advancedrecoil = true;
+		}
+	}
+
+}

@@ -1,4 +1,9 @@
-class BDPGrenadeLauncher : BrutalWeapon
+class glasmaball : plasmaball replaces plasmaball
+{
+	Default {+FORCEXYBILLBOARD}
+}
+
+class BDPGrenadeLauncher : BDPWeaponBase
 {
 	bool thermiteGrenades;
 	
@@ -6,7 +11,7 @@ class BDPGrenadeLauncher : BrutalWeapon
 	{
 		Weapon.AmmoGive 2;
 		Weapon.AmmoType "BDPRocketAmmo";
-		BrutalWeapon.MagCapacity 1;
+		BDPWeaponBase.MagCapacity 1;
 		Inventory.PickupSound "ROCKPKUP";
 		Weapon.SlotNumber 5;
 		Weapon.SlotPriority 2;
@@ -18,60 +23,48 @@ class BDPGrenadeLauncher : BrutalWeapon
 	}
 	States
 	{
-	Grenade: //32
-		GLSA ABCD 1;
-		TNT1 A 24;
+	Grenade: //30
+		GLSA BCDE 1;
+		TNT1 A 22;
 		GLSA EDCB 1;
-		Goto Ready;
-	Kick: //16
-		GLR1 BCDE 1;
-		GLR1 F 8;
-		GLR1 EDCB 1;
-		Goto Ready;
-	AirKick: //18
+		Goto ReverseStrapIdle;
+	Kick: //18
 		GLAN BCDE 1;
 		GLAN F 10;
 		GLAN EDCB 1;
-		Goto Ready;
-	SlideKick: //26
+		Goto ReverseStrapIdle;
+	SlideKick: //25
 		GLAN BCDE 1;
-		GLAN F 18;
+		GLAN F 17;
 		GLAN EDCB 1;
-		Goto Ready;
+		Goto ReverseStrapIdle;
 	Taunt: //30
 		GLAN BCDE 1;
 		GLAN F 22;
 		GLAN EDCB 1;
-		Goto Ready;
+		Goto ReverseStrapIdle;
 	Sprint:
-		GLAN BCDE 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		GLAN BCDE 1 A_SetSprites("TNT1A0",1);
 	SprintLoop:
-		GLAN F 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		GLAN F 1 A_SetSprites("TNT1A0",1);
 		Loop;
 	SprintEnd:
-		GLAN EDCB 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		Goto Ready;
+		GLAN EDCB 1 A_SetSprites("TNT1A0",1);
+		TNT1 A 0 {player.SetPSprite(1,resolvestate("ReverseStrapIdle"));}
+		Stop;
 	StrapIdle:
 		SHTN A 0 A_JumpIfInventory("NoShotgunStrap",1,"Ready");
-		GLR3 FEDCBAGHIJKLLLKJIHGABCDDDCBAGHIJJJIHG 1
-		{
-			if(invoker.mag < 1)
-			{
-				return A_AutoReloadMag(1,"Reload",true);
-			}
-			else
-			{
-				return A_WeaponReadyDX(WRF_ALLOWRELOAD);
-			}
-		}
+		GLR3 FEDCBAGHIJKLLLKJIHGABCDDDCBAGHIJJJIHG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,forcereload:true);
+		Goto Ready;
+	ReverseStrapIdle:
+		SHTN A 0 A_JumpIfInventory("NoShotgunStrap",1,"Ready");
+		GLR3 LKJIHGABCDDDCBAGHIJJJIHG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,forcereload:true);
 		Goto Ready;
 	Ready:
-		GLAN A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		TNT1 A 0 A_AutoReloadMag(1,"Reload",true);
+		GLAN A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,forcereload:true);
 		Goto Ready;
 	Deselect:
-		GLR3 N 1;
-		GLSA BCDE 1;
+		GLSA ABCDE 1;
 		TNT1 A 1;
 		TNT1 A 0 ChangeAmmoIcon1("ROCKA0");
 		TNT1 A 0 A_Lower();
@@ -82,71 +75,54 @@ class BDPGrenadeLauncher : BrutalWeapon
 			A_SetCrosshairDX("NADERet", 500);
 			A_GunslingerMag();
 			if(invoker.thermiteGrenades)
-			{
 				ChangeAmmoIcon1("ROCKE0");
-			}
 		}
 		TNT1 A 0 A_StartSound("ROCKPKUP");
-		GLSA EDCB 1 A_WeaponReady(WRF_NOFIRE);
-		GLR3 M 1 A_WeaponReady(WRF_NOFIRE);
+		GLSA EDCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto StrapIdle;
 	Fire:
 		TNT1 A 0 A_CheckIfMag();
 		GLAF A 1 Bright 
 		{
-			if(invoker.thermiteGrenades)
-			{
-				A_FireProjectile("FireGrenade", 0, 0, 0, 0);
-			}
-			else
-			{
-				A_FireProjectile("GrenadeDetonates", 0, 0, 0, 0);
-			}
+			A_FireProjectileDX(invoker.thermiteGrenades ? "FireGrenade" : "GrenadeDetonates",rvel:false);
 			A_FireProjectile("RedFlareSpawn",-5,0,0,0);
 			A_FireProjectile("GrenadeMissileBreaksGlass", 0, 0, 0, 0);
+			A_WeaponRecoil(10);
 			A_FireParticles(7);
 			A_StartSound("weapons/firegrenade", 1);
 			A_AlertMonstersDX();
 			A_ZoomFactor(0.98);
 			A_QuadSound();
 			A_GunLight();
-			A_TakeMag(1,true,true);
+			A_TakeMag(1,true);
 			A_ZoomFactor(1.0);
 			A_Recoil(1*cos(pitch));
-			if(momZ != 0)
-			{
-				ThrustThingZ(0,pitch/3,0,1);
-			}
-			else
-			{
-				ThrustThingZ(0,pitch/4,0,1);
-			}
-			A_SetPitch(pitch-10, SPF_INTERPOLATE);
+			ThrustThingZ(0,momZ != 0 ? pitch/3 : pitch/4,0,1);
 		}
-		GLAF F 1 Bright 
-		{
-			A_GunLight();
-			A_SetPitch(2 + pitch, SPF_INTERPOLATE);
-		}
-		GLAF EDCB 1 A_SetPitch(2 + pitch, SPF_INTERPOLATE);
+		GLAF F 1 Bright A_GunLight();
+		GLAF EDCB 1;
 		GLR3 C 1;
 		TNT1 A 0
 		{
-			If(!invoker.thermiteGrenades)
-			{
-				A_Refire("SemiAutoLol");
-			}
+			if(!invoker.thermiteGrenades)
+				return A_RefireDX("SemiAutoLol");
+			return resolvestate(null);
 		}
 		GLAN A 2 A_WeaponReady(WRF_NOFIRE|WRF_NOBOB);
-		Goto NoAmmo2;
+		TNT1 A 0 A_AutoReloadMag(1,"Reload",true);
+		Goto Ready;
 	SemiAutoLol:
 		GLAN A 1;
-		TNT1 A 0 A_Refire("SemiAutoLol");
-		Goto NoAmmo2;
+		TNT1 A 0 A_RefireDX("SemiAutoLol");
+		TNT1 A 0 A_AutoReloadMag(1,"Reload",true);
+		Goto Ready;
+	NoAmmo:
+		TNT1 A 0 A_Dryfire(force:true);
+		Goto Ready;
 	ReloadSmoke:
 		SSGS MNOPQR 1;
 		stop;
-	Reload:
+	DoReload:
 		TNT1 A 0 A_JumpIfInventory("PowerSpeed2",1,"ReloadHaste");
 		GLR1 ABCDEFGGGG 1;
 		TNT1 A 0 A_StartSound("foley/GLDownwardsToOpen",10);
@@ -154,14 +130,7 @@ class BDPGrenadeLauncher : BrutalWeapon
 		GLR1 L 1 A_Overlay(2,"ReloadSmoke");
 		TNT1 A 0
 		{
-			if(invoker.thermiteGrenades)
-			{
-				A_FireProjectile("GrenadeCasingSpawner2",0,0,-4, -14);
-			}
-			else
-			{
-				A_FireProjectile("GrenadeCasingSpawner",0,0,-4, -14);
-			}
+			A_FireProjectile(invoker.thermiteGrenades ? "GrenadeCasingSpawner2" : "GrenadeCasingSpawner",0,0,-4, -14);
 			A_StartSound("foley/GLEjectShell",11);
 			A_StartSound("Weapons/GrenadeOpen");
 		}
@@ -188,14 +157,7 @@ class BDPGrenadeLauncher : BrutalWeapon
 		GLR1 L 1 A_Overlay(2,"ReloadSmoke");
 		TNT1 A 0
 		{
-			if(invoker.thermiteGrenades)
-			{
-				A_FireProjectile("GrenadeCasingSpawner2",0,0,-4, -14);
-			}
-			else
-			{
-				A_FireProjectile("GrenadeCasingSpawner",0,0,-4, -14);
-			}
+			A_FireProjectile(invoker.thermiteGrenades ? "GrenadeCasingSpawner2" : "GrenadeCasingSpawner",0,0,-4, -14);
 			A_StartSound("foley/GLEjectShell",11);
 			A_StartSound("Weapons/GrenadeOpen");
 		}
@@ -285,33 +247,26 @@ class BDPGrenadeLauncher : BrutalWeapon
 		GLR3 M 1;
 		Goto StrapIdle;
 	Fidget:
-		GLR1 ABCDEFGGGG 1 A_WeaponReadyDX(0,false,false);
+		GLR1 ABCDEFGGGG 1 A_WeaponReadyDX(0,false);
 		TNT1 A 0 A_StartSound("foley/GLDownwardsToOpen",10);
-		GLR1 FHIJK 1 A_WeaponReadyDX(0,false,false);
-		GLR2 L 1 A_WeaponReadyDX(0,false,false);
+		GLR1 FHIJK 1 A_WeaponReadyDX(0,false);
+		GLR2 L 1 A_WeaponReadyDX(0,false);
 		TNT1 A 0 A_StartSound("Weapons/GrenadeOpen");
-		GLR2 MN 1 A_WeaponReadyDX(0,false,false);
-		GLR2 O 1 A_WeaponReadyDX(0,false,false);
-		GLR2 P 11 A_WeaponReadyDX(0,false,false);
+		GLR2 MN 1 A_WeaponReadyDX(0,false);
+		GLR2 O 1 A_WeaponReadyDX(0,false);
+		GLR2 P 11 A_WeaponReadyDX(0,false);
 	FidgetLoop:
-		GLR2 P 1 A_WeaponReadyDX(0,false,false);
-		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD),"FidgetLoop");
-		GLR2 QR 1 A_WeaponReadyDX(0,false,false);
-		GLR2 S 1 A_WeaponReadyDX(0,false,false);
-		TNT1 A 2 A_WeaponReadyDX(0,false,false);
+		GLR2 P 1 A_WeaponReadyDX(0,false);
+		TNT1 A 0 A_PressingReload("FidgetLoop");
+		GLR2 QR 1 A_WeaponReadyDX(0,false);
+		GLR2 S 1 A_WeaponReadyDX(0,false);
+		TNT1 A 2 A_WeaponReadyDX(0,false);
 		TNT1 A 0 A_StartSound("foley/GLUpwardsToClose",10);
-		GLSA E 1 A_WeaponReadyDX(0,false,false);
+		GLSA E 1 A_WeaponReadyDX(0,false);
 		TNT1 A 0 A_StartSound("Weapons/GrenadeClose");
-		GLSA EDCB 1 A_WeaponReadyDX(0,false,false);
-		GLR3 M 1 A_WeaponReadyDX(0,false,false);
+		GLSA EDCB 1 A_WeaponReadyDX(0,false);
+		GLR3 M 1 A_WeaponReadyDX(0,false);
 		Goto StrapIdle;
-	NoAmmo:
-		TNT1 A 0 A_StartSound("weapons/empty", 3);
-	NoAmmo2:
-		TNT1 A 0 A_AutoReloadMag(1,"Reload",true);
-		GLAN A 1 A_WeaponReady(WRF_NOFIRE);
-		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK), "NoAmmo2");
-		Goto Ready;
 	Spawn:
 		GLAP A -1;
 		Stop;

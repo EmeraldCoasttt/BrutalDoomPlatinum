@@ -1,4 +1,4 @@
-class BDPAssaultShotgun : BrutalWeapon
+class BDPAssaultShotgun : BDPWeaponBase
 {
 	int burstCount;
 	
@@ -9,7 +9,7 @@ class BDPAssaultShotgun : BrutalWeapon
 		Weapon.SlotPriority 3;
 		Weapon.SelectionOrder 1200;
 		Weapon.AmmoType "BDPShell";
-		BrutalWeapon.MagCapacity 15;
+		BDPWeaponBase.MagCapacity 15;
 		Obituary "%o was shot down by %k's Assault Shotgun.";
 		AttackSound "None";
 		Inventory.PickupSound "ASGSEL";
@@ -19,24 +19,19 @@ class BDPAssaultShotgun : BrutalWeapon
 	}
 	States
 	{
-	Grenade: //32
+	Grenade: //30
 		A12S BCDE 1;
-		TNT1 A 24;
+		TNT1 A 22;
 		A12S EDCB 1;
 		Goto Ready;
-	Kick: //16
-		A12G BCDE 1;
-		A12G F 8;
-		A12G EDCB 1;
-		Goto Ready;
-	AirKick: //18
+	Kick: //18
 		A12G BCDE 1;
 		A12G F 10;
 		A12G EDCB 1;
 		Goto Ready;
-	SlideKick: //26
+	SlideKick: //25
 		A12G BCDE 1;
-		A12G F 18;
+		A12G F 17;
 		A12G EDCB 1;
 		Goto Ready;
 	Taunt: //30
@@ -45,16 +40,15 @@ class BDPAssaultShotgun : BrutalWeapon
 		A12G EDCB 1;
 		Goto Ready;
 	Sprint:
-		A12G BCDE 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
+		A12G BCDE 1 A_SetSprites("TNT1A0",1);
 	SprintLoop:
-		A12G F 1 A_KeepSprinting(WRF_ALLOWRELOAD);
+		A12G F 1 A_SetSprites("TNT1A0",1);
 		Loop;
 	SprintEnd:
-		A12G EDCB 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,FALSE,FALSE);
-		Goto Ready;
+		A12G EDCB 1 A_SetSprites("TNT1A0",1);
+		Stop;
 	Ready:
 		A12G A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		TNT1 A 0 A_AutoReloadMag();
 		Loop;
 	Deselect:
 		A12S ABCDE 1;
@@ -89,24 +83,20 @@ class BDPAssaultShotgun : BrutalWeapon
 		{
 			A_FireBullets (3, 3, 5, 14, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-7);
 			A_FireBullets (1.5, 1.5, 4, 5, "ShotgunPuff", FBF_NORANDOM,400,"decorativetracer",-7);
+			A_WeaponRecoil(2.6);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_FireParticles(8);
 			A_StartSound("A12FIR", 1,0,0.6);
 			A_StartSound("FARSHT", 6);
 			A_AlertMonstersDX();
-			A_ZoomFactor(0.95);
 			A_QuadSound();
 			A_GunLight();
 			A_TakeMag();
 		}
-		A12F C 1 A_SetPitch(Pitch-2.6, SPF_INTERPOLATE);
 		A12F C 1 A_FireProjectile("ShotCaseSpawn",5,0,6,-14);
-		A12G A 0 A_ZoomFactor(1.0);
-		A12F D 1 A_SetPitch(Pitch+0.4, SPF_INTERPOLATE);
-		A12F EFG 1 A_SetPitch(pitch+0.1, SPF_INTERPOLATE);
-		TNT1 A 0 A_WeaponOffset(0,32);
-		A12G A 1;
-		TNT1 A 0 A_ReFire();
+		A12F CDEFG 1;
+		A12G A 1 A_WeaponOffset(0,32);
+		TNT1 A 0 A_RefireDX();
 		Goto Ready;
 	FireEnergy:
 		A12F B 0 A_Jump(128,2);
@@ -117,6 +107,7 @@ class BDPAssaultShotgun : BrutalWeapon
 			{
 				A_FireProjectile("DragonsBreathSparkle",frandom(-3 - invoker.burstCount,3 + invoker.burstCount),false,0,-4,0,frandom(-3 - invoker.burstCount,3 + invoker.burstCount));
 			}
+			A_WeaponRecoil(2.6,0,2);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_FireParticles(8);
 			A_StartSound("A12FIR", 1,0,0.6);
@@ -132,43 +123,31 @@ class BDPAssaultShotgun : BrutalWeapon
 				A_SemiFlag();
 			}
 		}
-		A12F C 1 A_SetPitch(Pitch-2.6, SPF_INTERPOLATE);
-		A12F C 1 A_FireProjectile("DragonShotCaseSpawn",5,0,6,-14);
-		A12G A 0 A_ZoomFactor(1.0);
-		A12F D 1 A_SetPitch(Pitch+0.4, SPF_INTERPOLATE);
-		A12F EFG 1 A_SetPitch(pitch+0.1, SPF_INTERPOLATE);
+		A12F C 1 {A_FireProjectile("DragonShotCaseSpawn",5,0,6,-14); A_ZoomFactor(1.0);}
+		A12F CDEFG 1;
 		TNT1 A 0 A_JumpIf(invoker.burstCount < 3, "Fire");
-		TNT1 A 0 A_WeaponOffset(0,32);
-		A12G A 1 {invoker.burstCount = 0;}
-		TNT1 A 0 A_SemiRefire("Fire","Ready");
-		Goto Ready;
-	NoAmmo:
-		TNT1 A 0 {A_StartSound("weapons/empty", 3); invoker.burstCount = 0;}
-	NoAmmo2:
-		TNT1 A 0 A_AutoReloadMag();
-		A12G A 1 A_WeaponReady(WRF_NOFIRE);
-		TNT1 A 0 A_JumpIf(GetPressed(BT_RELOAD) || GetPressed(BT_ATTACK), "NoAmmo2");
+		A12G A 1 {invoker.burstCount = 0; A_WeaponOffset(0,32);}
+		TNT1 A 0 A_SemiRefire();
 		Goto Ready;
 	Fidget:
-		A12R ABCD 1 A_WeaponReadyDX(0,false,false);
+		A12R ABCD 1 A_WeaponReadyDX(0,false);
 		212G A 0 A_JumpIf(Countinv("PlasmaShellSelected")==1, 2);
 		A12G A 0;
 		"####" A 0;
-		"####" T 1 A_WeaponReadyDX(0,false,false);
+		"####" T 1 A_WeaponReadyDX(0,false);
 	FidgetLoop:
-		"####" GGGGHIJK 1 A_WeaponReadyDX(0,false,false);
+		"####" GGGGHIJK 1 A_WeaponReadyDX(0,false);
 		"####" X 0 A_StartSound("ASGINSP",1);
-		"####" L 6 A_WeaponReadyDX(0,false,false);
-		"####" MNOONNOONNNOOO 1 A_WeaponReadyDX(0,false,false);
+		"####" L 6 A_WeaponReadyDX(0,false);
+		"####" MNOONNOONNNOOO 1 A_WeaponReadyDX(0,false);
 		"####" A 0 A_StopSound(1);
-		"####" PQRSGGG 1 A_WeaponReadyDX(0,false,false);
-		"####" A 0 A_JumpIf(GetPressed(BT_RELOAD),"FidgetLoop");
+		"####" PQRSGGG 1 A_WeaponReadyDX(0,false);
+		"####" A 0 A_PressingReload("FidgetLoop");
 		"####" X 0 A_StartSound("foley/ASGPump", 10);
-		"####" T 1 A_WeaponReadyDX(0,false,false);
-		A12R DCBA 1 A_WeaponReadyDX(0,false,false);
+		"####" T 1 A_WeaponReadyDX(0,false);
+		A12R DCBA 1 A_WeaponReadyDX(0,false);
 		Goto Ready;
-	Reload:
-		TNT1 A 0 A_JumpIfInventory("StartDualWield",1,"DualWield");
+	DoReload:
 		A12G A 1;
 		A12R ABC 1;
 		212R A 0 A_JumpIf(Countinv("PlasmaShellSelected")==1, 2);
@@ -182,7 +161,7 @@ class BDPAssaultShotgun : BrutalWeapon
 		"####" G 1 offset(0,33);
 		"####" A 0 A_StartSound("ASGREL1", 1);
 		"####" A 0 A_StartSound("foley/ASGDrumOut", 10,0,0.7);
-		"####" A 0 A_DiscardMagazine();
+		"####" A 0 A_DiscardMag();
 		"####" H 1 offset(0,32);
 		A1R1 IJ 1;
 		TNT1 A 0 A_FireProjectile("EmptyASGDrumSpawn",180,0,-4,-10);
@@ -313,7 +292,7 @@ class BDPAssaultShotgun : BrutalWeapon
 		"####" G 1 offset(0,33);
 		"####" A 0 A_StartSound("ASGREL1", 1);
 		"####" A 0 A_StartSound("foley/ASGDrumOut", 10,0,0.7);
-		"####" A 0 A_DiscardMagazine();
+		"####" A 0 A_DiscardMag();
 		"####" H 1 offset(0,32);
 		A1R1 IJ 1;
 		TNT1 A 0 A_FireProjectile("EmptyASGDrumSpawn",180,0,-4,-10);

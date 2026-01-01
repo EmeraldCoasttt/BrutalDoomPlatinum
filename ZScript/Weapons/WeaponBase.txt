@@ -8,7 +8,6 @@ class GunfireParticle : VisualThinker
 		alpha = 1;
 		flags = SPF_FULLBRIGHT;
 		SetRenderStyle(STYLE_Add);
-		pos += vel/2;
 	}
 	
 	override void Tick()
@@ -23,23 +22,32 @@ class GunfireParticle : VisualThinker
 	}
 }
 
-Class Brutalweapon : DoomWeapon //Weapon
+Class BDPWeaponBase : DoomWeapon //Weapon
 {
-	bool noSpecial;
+	int BDPWeaponFlags;
+	flagdef BloodStain : BDPWeaponFlags, 0;
+	flagdef DualWeapon : BDPWeaponFlags, 1;
+	
 	int aimMode;
-	statelabel aimDest;
 	bool scopeZoom;
+	int aimTics;
 	
 	bool dualWield;
 	bool initDual;
 	bool switchingDual;
 	bool sideFired;
+	bool readyRight;
+	bool readyLeft;
 	name dualWeapon;
 	property DualWeapon : dualWeapon;
-
+	ui double curbob;
+	
+	bool firing;
+	bool altFiring;
+	
+	statelabel fidgetState;
+	
 	int sprinttimer;
-	int Weight; 
-	property Weight : Weight;
 	int Handedness; 
 	property Handedness : Handedness;
 	bool lasttickfatality;
@@ -50,9 +58,8 @@ Class Brutalweapon : DoomWeapon //Weapon
 	Bool VoiceActed;
 	Property VoiceActed : VoiceActed;
 	
-	bool semiautofired;
+	int semiautofired;
 	bool semiclear;
-	bool refireq;
 	
 	bool dryFired;
 	
@@ -86,17 +93,15 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	Default
 	{
-	BrutalWeapon.Weight 1;
-	BrutalWeapon.Handedness 0;
+	BDPWeaponBase.Handedness 0;
 	Weapon.AmmoUse 0;
 	Weapon.BobRangeX 0.2;
 	Weapon.BobRangeY 0.4;
 	Weapon.BobSpeed 2.1;
 	Weapon.BobStyle "InverseSmooth";
-	brutalweapon.clearoverlays TRUE;
-	brutalweapon.VoiceActed TRUE;
+	BDPWeaponBase.clearoverlays TRUE;
+	BDPWeaponBase.VoiceActed TRUE;
 	//Radius 32;
-	+FORCEXYBILLBOARD
 	+WEAPON.NOAUTOAIM
 	+WEAPON.NOAUTOFIRE
 	+WEAPON.NOALERT
@@ -153,16 +158,105 @@ Class Brutalweapon : DoomWeapon //Weapon
 		
 	}
 	
+	override state GetDownState()
+	{
+		owner.player.SetPSprite(49,null);
+		owner.player.SetPSprite(50,null);
+		return resolvestate("Deselect");
+	}
+	
 	override state GetUpState()
 	{
 		return resolvestate("InitWeaponState");
 	}
+	action void A_KeepSprinting(int flags = 0) {}
+	override state GetAtkState(bool hold)
+	{
+		owner.player.SetPSprite(49,null);
+		owner.player.SetPSprite(50,null);
+		firing = true;
+		if(aimMode > 0)
+			return resolvestate("FireAim");
+		return resolvestate("Fire");
+	}
 	
-	Action void a_weaponvoiceline()
+	override state GetAltAtkState(bool hold) 
+	{
+		let dplr = BDPPlayerPawn(owner);
+		if(aimMode == 1 && !dplr.blockAltfire)
+		{
+			owner.player.SetPSprite(49,null);
+			owner.player.SetPSprite(50,null);
+			dplr.blockAltfire = true;
+			return resolvestate("AimEnd");
+		}
+		if(resolvestate("Altfire"))
+		{
+			owner.player.SetPSprite(49,null);
+			owner.player.SetPSprite(50,null);
+			altFiring = true;
+			return resolvestate("Altfire");
+		}
+		return resolvestate(null);
+	}
+	
+	override Vector2 ModifyBobLayer(Vector2 Bob, int layer, double ticfrac)
+	{
+		if(layer == 2 && owner.player)
+		{
+			if (self.bDontBob || owner.player.GetWBobSpeed() == 0)
+			{
+				return (0, 0);
+			}
+			vector2 p1, p2, r;
+			for (int i = 0; i < 2; i++)
+			{
+				if (curbob != owner.player.bob)
+				{
+					if (abs(owner.player.bob - curbob) <= 1)
+					{
+						curbob = owner.player.bob;
+					}
+					else
+					{
+						double zoom = MAX(1., abs(curbob - owner.player.bob) / 40);
+						if (curbob > owner.player.bob)
+						{
+							curbob -= zoom;
+						}
+						else
+						{
+							curbob += zoom;
+						}
+					}
+				}
+				double BobSpeed = (BobSpeed * 128);
+				double angle = (BobSpeed * owner.player.GetWBobSpeed() * 35 /	TICRATE*(owner.player.BobTimer - 1 + i)) * (360. / 8192.);
+				double BobIntensity = (owner.player.WeaponState & WF_WEAPONBOBBING) ? 1. : owner.player.GetWBobFire();
+				if (curbob != 0)
+				{
+				double bobx = (owner.player.bob * BobIntensity * BobRangeX * owner.player.mo.ViewBob);
+				double boby = (owner.player.bob * BobIntensity * BobRangeY * owner.player.mo.ViewBob);
+				
+				r.X = bobx*sin(angle);
+				r.Y = 0.5f * (boby * (1. - (cos(angle * 2))));
+				}
+				else
+				{
+					r = (0, 0);
+				}
+				if (i == 0) p1 = r; else p2 = r;
+			}
+			return p1 * (1. - ticfrac) + p2 * ticfrac;
+		}
+		return Bob;
+	}
+	
+	action void a_weaponvoiceline()
 	{
 		If(!invoker.newweapon && invoker.voiceacted)
 		{
-			let dplr = Brutal_PlayerBase(invoker.owner);
+			let dplr = BDPPlayerPawn(invoker.owner);
 			if(dplr)
 			{
 				dplr.newweapon = true;
@@ -172,39 +266,21 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	}
 	
-	Action void a_discardmag(string magname, int plusone)
+	action void A_DiscardMag(int chamber = 0)
 	{
-		
-			let dplr = Brutal_PlayerBase(invoker.owner);
-			if(dplr && dplr.gluttony)
+		let dplr = BDPPlayerPawn(invoker.owner);
+		if(dplr && dplr.gluttony)
+		{
+			Until(invoker.mag <= chamber)
 			{
-				Until(dplr.countinv(magname) <= plusone)
-				{
-					dplr.takeinventory(magname,1);
-				}
+				invoker.mag--;
 			}
-		
-	
+		}
 	}
 	
-	Action void a_discardmagazine(int plusone = 0)
+	action void A_SetCrosshairDX(string crosshairname, int crosshairrange = 5000, double crosshairscale = 1.0)
 	{
-		
-			let dplr = Brutal_PlayerBase(invoker.owner);
-			if(dplr && dplr.gluttony)
-			{
-				Until(invoker.mag <= plusone)
-				{
-					invoker.mag--;
-				}
-			}
-		
-	
-	}
-	
-	Action void A_SetCrosshairDX(string crosshairname, int crosshairrange = 5000, double crosshairscale = 1.0)
-	{
-		let dplr = Brutal_PlayerBase(invoker.owner);
+		let dplr = BDPPlayerPawn(invoker.owner);
 			if(dplr)
 			{
 				dplr.crosshair = crosshairname;
@@ -214,7 +290,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	}
 	
-	Action void A_QuadSound()
+	action void A_QuadSound()
 	{	
 		If(invoker.owner.findinventory("PowerQuakeDamage"))
 		{
@@ -222,7 +298,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 		}
 	}
 	
-	Action void A_FirePitchDown(sound soundname = "PLSM9", int soundchannel = 1, double ammocount = 8, name ammotype = "PlasmaAmmo")
+	action void A_FirePitchDown(sound soundname = "PLSM9", int soundchannel = 1, double ammocount = 8, name ammotype = "PlasmaAmmo")
 	{
 		If(invoker.mag > ammocount)
 		{
@@ -239,7 +315,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 	}
 	
 	int guntimertics;
-	Action void A_GunLight(int intensity = 500, int alivetime = 2, int lightr = 255, int lightg = 237, int lightb = 162)
+	action void A_GunLight(int intensity = 500, int alivetime = 2, int lightr = 255, int lightg = 237, int lightb = 162)
 	{
 		if(getcvar("BDP_GunLight") == true)
 		{
@@ -306,57 +382,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 		return victim;
 	}
 	
-	action void A_Reload(name mag, int magsize, name ammopool, int chamberbonus = 0, int conversion = 1, name secondarymag = "", int secondarymagsize = 0, int secondarychamberbonus = 0, bool multiplicative = false)
-	{
-		Int MagGoal;
-		If(countinv(mag) > 0)
-		{
-			MagGoal = (magsize + chamberbonus);
-		}
-		Else
-		{
-			MagGoal = magsize;
-		}
-		Int SecondaryMagGoal;
-		If(countinv(secondarymag) > 0)
-		{
-			SecondaryMagGoal = (secondarymagsize + secondarychamberbonus);
-		}
-		Else
-		{
-			SecondaryMagGoal = secondarymagsize;
-		}
-		
-		Bool Reloaded;
-		
-		While(!reloaded)
-		{
-			If(countinv(mag) < MagGoal && countinv(ammopool) >= conversion && !multiplicative)
-			{
-				takeinventory(ammopool,conversion);
-				giveinventory(mag,1);
-				If(secondarymag && countinv(secondarymag) < SecondaryMagGoal)
-				{
-					giveinventory(secondarymag,1);
-				}
-			}
-			Else If(countinv(mag) < MagGoal && multiplicative && countinv(ammopool) >= 1)
-			{
-				takeinventory(ammopool,1);
-				giveinventory(mag,conversion);
-				If(secondarymag && countinv(secondarymag) < SecondaryMagGoal)
-				{
-					giveinventory(secondarymag,conversion);
-				}
-			}
-			else
-			{
-				reloaded = TRUE;
-			}
-		}
-	}
-	
-	action void A_ReloadMag(int chamberbonus = 0, bool additive = false, bool free = false)
+	action void A_ReloadMag(int chamber = 0, bool additive = false, bool free = false)
 	{
 		int MagGoal = invoker.MagCapacity;
 		if(additive)
@@ -366,7 +392,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 		int SecondaryMagGoal;
 		if(invoker.mag > 0)
 		{
-			MagGoal += chamberbonus;
+			MagGoal += chamber;
 		}
 		while(invoker.mag < MagGoal && countinv(invoker.AmmoType1) >= invoker.magConversion.y)
 		{
@@ -383,36 +409,109 @@ Class Brutalweapon : DoomWeapon //Weapon
 		}
 	}
 	
-	
-	
-	Action void A_gunslingerreload(name mag, int magsize, name ammopool, int conversion = 1, name secondarymag = "null")
-	{	
-		//Functionality dummied out for refactoring
-		/*
-		If(invoker.gunslinger && invoker.gunslingereligible)
+	action void A_HandleDualFiring(statelabel firestate, statelabel altstate = null, bool sprinting = false)
+	{
+		let dplr = BDPPlayerPawn(invoker.owner);
+		if(OverlayID() == 3)
+			invoker.readyRight = false;
+		if(OverlayID() == 2)
+			invoker.readyLeft = false;
+		if(OverlayID() == 3 && !invoker.sideFired || OverlayID() == 2 && invoker.sideFired)
 		{
-			A_reload(mag, magsize, ammopool, 0, conversion, secondarymag);
+			if(firestate && !dplr.blockFire && player.cmd.buttons & BT_ATTACK)
+			{
+				invoker.sideFired = !invoker.sideFired;
+				dplr.blockFire = true;
+				player.SetPSprite(OverlayID(),resolvestate(firestate));
+				return;
+			}
+			if(altstate && !dplr.blockAltfire && player.cmd.buttons & BT_ALTATTACK)
+			{
+				invoker.sideFired = !invoker.sideFired;
+				dplr.blockAltFire = true;
+				Player.SetPSprite(OverlayID(),resolvestate(altstate));
+				return;
+			}
 		}
-		invoker.gunslingereligible = false;
-		//Invoker.gunslingerammoname = ammopool;
-		Invoker.gunslingermagname = mag;
-		Invoker.gunslingermagsize = magsize;
-		*/
+		if(invoker.CheckSprint() && !sprinting)
+		{
+			if(OverlayID() == 3)
+				player.SetPSprite(3,resolvestate("SprintRight"));
+			if(OverlayID() == 2)
+				player.SetPSprite(2,resolvestate("SprintLeft"));
+		}
+		if(OverlayID() == 3)
+			invoker.readyRight = true;
+		if(OverlayID() == 2)
+			invoker.readyLeft = true;
+		return;
 	}
 	
-	Action void A_gunslingermag(int chamberbonus = 0)
+	action void A_DrawDualOverlays(statelabel left, statelabel right, bool flip = false, bool nooverride = false)
+	{
+		if(left)
+		{
+			A_Overlay(2,left,!invoker.readyLeft || nooverride);
+			if(flip)
+				A_OverlayFlags(2,PSPF_FLIP|PSPF_MIRROR,true);
+		}
+		if(right)
+			A_Overlay(3,right,!invoker.readyRight || nooverride);
+	}
+	
+	action int DualMag()
+	{
+		let weap = BDPWeaponBase(FindInventory(invoker.DualWeapon));
+		return weap.mag;
+	}
+	
+	action void A_ReloadDualMag(int chamber = 0, bool additive = false, bool free = false)
+	{
+		let weap = BDPWeaponBase(FindInventory(invoker.DualWeapon));
+		weap.A_ReloadMag(chamber,additive,free);
+	}
+	
+	action void A_DiscardDualMag(int chamber = 0)
+	{
+		let weap = BDPWeaponBase(FindInventory(invoker.DualWeapon));
+		weap.A_DiscardMag(chamber);
+	}
+	
+	action void A_TakeDualMag(int ammoamount = 1, bool take = true, bool force = false)
+	{
+		let weap = BDPWeaponBase(FindInventory(invoker.DualWeapon));
+		weap.A_TakeMag(ammoamount,force);
+	}
+	
+	action state A_CheckIfDualMag(int ammoamount = 1, statelabel label = "NoAmmo", bool force = false)
+	{
+		let weap = BDPWeaponBase(FindInventory(invoker.DualWeapon));
+		if(weap.mag >= ammoamount || (findinventory("PowerSpeed2") && !force))
+			Return ResolveState(null);
+		else
+			Return resolvestate(label);
+	}
+	
+	action void A_DualMagClick(string sound = "weapons/empty")
+	{
+		let weap = BDPWeaponBase(FindInventory(invoker.DualWeapon));
+		double current = weap.mag;
+		double max = weap.magCapacity / 4;
+		if(current <= max && CVar.GetCVar("bd_maggoclicky",player).GetBool() == true)
+			A_StartSound(sound,3);
+	}
+	
+	action void A_gunslingermag(int chamber = 0)
 	{
 		If(invoker.gunslinger && invoker.gunslingereligible)
 		{
-			A_reloadMag(chamberbonus);
+			A_reloadMag(chamber);
 		}
 		invoker.gunslingereligible = false;
 		//Invoker.gunslingerammoname = ammopool;
 	}
 	
-	
-	
-	Action void A_BDPMeleeStart(double range = 200)
+	action void A_BDPMeleeStart(double range = 200)
 	{
 	//if(A_CheckMeleeRange(skipWalls:true) < range) A_Recoil3D(-20); 
 		FLineTraceData lt;
@@ -421,11 +520,7 @@ Class Brutalweapon : DoomWeapon //Weapon
 			{
 				A_face(lt.hitactor,0,0,0,0,FAF_MIDDLE);
 				A_Recoil3D(-20);
-				
 			}
-		
-		
-		
 	}
 	
 	action double A_CheckMeleeRange(double maxrange = 512, bool skipWalls = false)
@@ -437,27 +532,8 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	action void A_Recoil3D(double amt)
 	{
-		vel += BDPMath.VecFromAngles(angle, pitch, -amt);	
+		vel += BDPMath.VecFromAngles(angle, pitch, -amt);
 	}
-	
-	action state A_CheckFire(statelabel Fire = "Fire", statelabel AltFire = "AltFire")
-	{
-		If(player.cmd.buttons & BT_ATTACK)
-		{
-			return resolvestate(fire);
-		}
-		Else if (player.cmd.buttons & BT_ALTATTACK)
-		{
-			return resolvestate(altfire);
-		}
-		Else 
-		{
-			return resolvestate(null);
-		}
-	
-	
-	}
-	
 	
 	//Is BT_Reload cursed? Why doesn't it register the input?
 	//I feel like I'm going insane
@@ -475,11 +551,9 @@ Class Brutalweapon : DoomWeapon //Weapon
 		{
 			return resolvestate(null);
 		}
-	
-	
 	}
 	
-	Action void a_SpawnLaser(class<Actor> Spawntype)
+	action void a_SpawnLaser(class<Actor> Spawntype)
 	{
 		FLineTraceData lasersight;
 		invoker.owner.LineTrace(invoker.owner.angle, 4096, invoker.owner.pitch, TRF_SOLIDACTORS|TRF_THRUHITSCAN, offsetz: invoker.owner.player.viewz - invoker.owner.pos.z, data: lasersight);
@@ -505,198 +579,172 @@ Class Brutalweapon : DoomWeapon //Weapon
 	
 	}
 	
-	Action void a_TakeAmmo(class<Inventory> ammotype, int ammoamount = 1, bool take = true)
+	action void A_TakeAmmo(class<Inventory> ammotype, int ammoamount = 1, bool force = false)
 	{
-		If(!findinventory("PowerSpeed2") && take)
+		If(!findinventory("powerspeed2") || force)
 		{
-			A_takeinventory(ammotype,ammoamount);
-		}
-		Else if(!findinventory("powerspeed2"))
-		{
-			A_giveinventory(ammotype,ammoamount);
+			ammoamount > 0 ? A_TakeInventory(ammotype,ammoamount) : A_GiveInventory(ammotype,ammoamount);
 		}
 	}
 	
-	Action void a_TakeMag(int ammoamount = 1, bool take = true, bool force = false)
+	action void A_TakeMag(int ammoamount = 1, bool force = false)
 	{
-		If((!findinventory("powerspeed2") || force) && take)
+		if(!findinventory("powerspeed2") || force)
 		{
 			invoker.mag -= ammoamount;
 		}
-		Else if(!findinventory("powerspeed2") || force)
-		{
-			invoker.mag += ammoamount;
-		}
 	}
 	
-	action state A_StartAim(statelabel aim = 'Aim')
+	action void A_StartAim(double zoomfactor, string insound = "ADSIN")
 	{
-		if((player.cmd.buttons & BT_ALTATTACK && getcvar("bd_Aim") == 0) || getcvar("bd_Aim") == 2)
+		A_StartSound(insound);
+		A_ZoomFactor(zoomfactor);
+		switch(CVar.GetCVar("bd_Aim",player).GetInt())
 		{
+		case 0:
+			invoker.aimTics = 5;
 			invoker.aimMode = 2;
-		}
-		else
-		{
+			break;
+		case 1:
 			invoker.aimMode = 1;
-		}
-		TakeInventory("StartDualWield",1);
-		return resolvestate(aim);
-	}
-	
-	action state A_ReadyAim(bool allowreload = false, bool scoped = false, double lowfactor = 3.0, double highfactor = 9.0, string insound = "ADSIN", string outsound = "ADSOUT", statelabel end = 'AimEnd', statelabel fire = 'FireAim')
-	{
-		DoReadyWeaponToBob(player);
-		if(player.PendingWeapon != WP_NOCHANGE)
-		{
-			invoker.aimDest = 'Deselect';
-		}
-		else if(player.cmd.buttons & BT_ATTACK && (!invoker.semiautofired || invoker.semiclear))
-		{
-			return resolvestate(fire);
-		}
-		else if((invoker.aimMode == 2 && !(player.cmd.buttons & BT_ALTATTACK)) || (invoker.aimMode == 1 && JustPressed(BT_ALTATTACK) && (scoped == false || (scoped == true && invoker.scopeZoom == true))))
-		{
-			invoker.aimDest = 'Ready';
-		}
-		else if(player.cmd.buttons & BT_RELOAD && invoker.mag < invoker.magCapacity)
-		{
-			if(CountInv(invoker.ammotype1) >= invoker.magConversion.y)
-			{
-				invoker.aimDest = 'Reload';
-			}
-			else
-			{
-				return resolvestate("NoAmmo");
-			}
-		}
-		else if(player.cmd.buttons & BT_USER2)
-		{
-			invoker.aimDest = 'User2';
-		}
-		else if(player.cmd.buttons & BT_USER3 && !scoped)
-		{
-			if(!invoker.noSpecial)
-			{
-				invoker.aimDest = 'SpecialAction';
-			}
-		}
-		else if(player.cmd.buttons & BT_USER4)
-		{
-			invoker.aimDest = 'User4';
-		}
-		else
-		{
-			invoker.noSpecial = false;
-			invoker.aimDest = null;
-		}
-		if(scoped == true)
-		{
-			if(((JustPressed(BT_ALTATTACK) && invoker.aimMode == 1) || (player.cmd.buttons & BT_USER3 && !(player.oldbuttons & BT_USER3) && invoker.aimMode == 2)) && invoker.scopeZoom == false)
-			{
-				A_StartSound(insound);
-				invoker.scopeZoom = true;
-				A_ZoomFactor(highfactor);
-			}
-			else if(player.cmd.buttons & BT_USER3 && !(player.oldbuttons & BT_USER3) && invoker.aimMode == 2 && invoker.scopeZoom == true)
-			{
-				A_StartSound(outsound);
-				invoker.scopeZoom = false;
-				A_ZoomFactor(lowfactor);
-			}
-			TakeInventory("StartDualWield",1);
-		}
-		if(invoker.aimDest)
-		{
-			return resolvestate(end);
-		}
-		else
-		{
-			return resolvestate(null);
+			break;
+		case 2:
+			invoker.aimMode = 2;
+			break;
 		}
 	}
 	
-	action state A_EndAim()
+	action void A_HandleScope(double lowfactor, double highfactor, string insound = "ADSIN", string outsound = "ADSOUT")
 	{
-		invoker.aimMode = 0;
-		invoker.scopeZoom = false;
-		return resolvestate(invoker.aimDest);
-	}
-	
-	action void SetFired(bool number) //todo: remove when we stop using decorate for weapons
-	{
-		invoker.sideFired = number;
-	}
-	
-	action bool GetFired() //ditto
-	{
-		return invoker.sideFired;
-	}
-	
-	action int GetAim() //ditto
-	{
-		return invoker.aimMode;
-	}
-	
-	action bool GetPressed(int which) //ditto
-	{
-		return player.cmd.buttons & which;
-	}
-	
-	action void SetAimDest(statelabel dest) //ditto
-	{
-		invoker.aimDest = dest;
-	}
-	/*action void A_GetSawSprites() //"PowerBloodOnVisor" "PowerBlueBloodOnVisor" "PowerGreenBloodOnVisor"
-	{
-		string cursprite = TexMan.GetName(player.FindPSprite(1).curstate.GetSpriteTexture(0));'
-		if(cursprite != "TNT1A0")
+		let dplr = BDPPlayerPawn(invoker.owner);
+		if(player.cmd.buttons & BT_USER3 && !dplr.blockSpecial && !invoker.scopeZoom)
 		{
-		string sprname = cursprite.Mid(1,3);
-		A_Print(cursprite);
-		A_Print(sprname);
-			if(CountInv("PowerBloodOnVisor") > 0)
-			{
-				player.FindPSprite(1).sprite = GetSpriteIndex("1"..sprname);
-				string fuck = TexMan.GetName(player.FindPSprite(1).curstate.GetSpriteTexture(0));
-				A_Print(fuck);
-			}
+			dplr.blockSpecial = true;
+			A_StartSound(insound);
+			invoker.scopeZoom = true;
 		}
-	}*/
+		else if(player.cmd.buttons & BT_USER3 && !dplr.blockSpecial && invoker.scopeZoom)
+		{
+			dplr.blockSpecial = true;
+			A_StartSound(outsound);
+			invoker.scopeZoom = false;
+		}
+		A_ZoomFactor(invoker.scopeZoom ? highfactor : lowfactor);
+	}
+	
+	action void A_EndAim(string outsound = "ADSOUT")
+	{
+		if(invoker.aimMode > 0)
+		{
+			A_StartSound(outsound);
+			invoker.aimMode = 0;
+			A_ZoomFactor(1.0);
+		}
+	}
 			
-	action void A_FireVThinker(class<VisualThinker> thinker, int speed = 0, double angle = 0, double pitch = 0, double offsetx = 0, double offsetz = 0, bool relativevelocity = false)
+	action void A_FireVisualThinker(class<VisualThinker> thinker, int speed = 0, double offsetangle = 0, double offsetpitch = 0, double offsetx = 0, double offsety = 0, double offsetz = 0, bool rvel = true)	
 	{
 		let thonk = Level.SpawnVisualThinker(thinker);
 		if(thonk)
 		{
-			thonk.pos = player.mo.pos;
-			thonk.pos.xy += AngleToVector(player.mo.angle - 90, offsetx);
+			BDPGMQuaternion base = BDPGMQuaternion.createFromAngles(angle,pitch,roll);
+			BDPGMQuaternion angl = BDPGMQuaternion.createFromAngles(offsetangle,0,0);
+			BDPGMQuaternion ptch = BDPGMQuaternion.createFromAngles(0,offsetpitch,0);
+			BDPGMQuaternion rotated = base.multiplyQuat(angl).multiplyQuat(ptch);
+			Vector3 dir;
+			[dir.x, dir.y, dir.z] = rotated.toAngles();
+			quat ofsbase = Quat.FromAngles(angle, pitch, roll);
+			Vector3 offset = (offsety, -offsetx, offsetz);
+			Vector3 ppos = ofsbase * offset;
+			Vector3 ofs = level.Vec3Offset(pos, ppos);
+			thonk.pos = ofs;
 			thonk.pos.z += player.mo.height * 0.5 - player.mo.floorclip + player.mo.AttackZOffset*player.crouchFactor - 4 + offsetz; //i want to die
-			invoker.Vel3DFromAngle(speed,player.mo.angle + angle,player.mo.pitch + pitch);
+			invoker.Vel3DFromAngle(speed,dir.x,dir.y);
 			thonk.vel = invoker.vel;
-			invoker.Vel3DFromAngle(clamp(speed/2,0,player.mo.radius),player.mo.angle + angle,player.mo.pitch + pitch);
+			invoker.Vel3DFromAngle(clamp(speed/2,0,player.mo.radius),dir.x,dir.y);
 			thonk.pos += invoker.vel;
-			if(relativevelocity)
+			if(rvel)
 			{
 				thonk.vel += player.mo.vel;
 			}
 		}
 	}
 	
+	action Actor, Actor A_FireProjectileDX(class<Actor> missiletype, double offsetangle = 0, double offsetpitch = 0, double offsetx = 0, double offsety = 0, double offsetz = 0, bool rvel = true)	
+	{
+		FTranslatedLineTarget t;
+		
+		if (missiletype) 
+		{
+			BDPGMQuaternion base = BDPGMQuaternion.createFromAngles(angle,pitch,roll);
+			BDPGMQuaternion angl = BDPGMQuaternion.createFromAngles(offsetangle,0,0);
+			BDPGMQuaternion ptch = BDPGMQuaternion.createFromAngles(0,offsetpitch,0);
+			BDPGMQuaternion rotated = base.multiplyQuat(angl).multiplyQuat(ptch);
+			Vector3 dir;
+			[dir.x, dir.y, dir.z] = rotated.toAngles();
+			quat ofsbase = Quat.FromAngles(angle, pitch, roll);
+			Vector3 offset = (offsety, -offsetx, offsetz);
+			Vector3 ppos = ofsbase * offset;
+			Vector3 ofs = level.Vec3Offset(pos, ppos) - pos;
+			ofs.z += player.viewz - pos.z;
+			// Temporarily adjusts the pitch
+			double saved_player_pitch = pitch;
+			pitch = dir.y;
+			
+			Actor misl, realmisl;
+			[misl, realmisl] = SpawnPlayerMissile (missiletype, dir.x, ofs.x, ofs.y, ofs.z, t, false, true);
+			pitch = saved_player_pitch;
+			
+			// automatic handling of seeker missiles
+			if (misl)
+			{
+				if (t.linetarget && !t.unlinked && misl.bSeekerMissile)
+					misl.tracer = t.linetarget;
+					misl.VelFromAngle(misl.Vel.XY.Length());
+					misl.SetOrigin(pos + ofs,false);
+				if(rvel)
+				{
+					misl.vel += player.mo.vel;
+				}
+			}
+			return misl, realmisl;
+		}
+		return null, null;
+	}
+	
 	action void A_FireParticles(int number = 1, int spread = 12, int offsetx = 0, int offsetz = 0)
 	{
 		for(int i = number; i > 0; i--)
 		{
-			A_FireVThinker("GunfireParticle",random(10,15),random(-spread,spread),random(-9,9),offsetx,offsetz);
+			A_FireVisualThinker("GunfireParticle", i > number / 2 ? 10 : 15,random(-spread,spread),random(-9,9),offsetx,4,offsetz);
 		}
 	}
 	
-	action state A_CheckSlide(statelabel end = "SlideKickingEnd")
+	action void A_WeaponRecoil(double offsetpitch, double offsetangle = 0, int recovertime = 2)
 	{
-		if (CountInv("Kicking") == 0)
+		let dplr = BDPPlayerPawn(invoker.owner);
+		double mod = 1.0;
+		
+		if(dplr.advancedrecoil)
 		{
-			return resolvestate(end);
+			if(dplr.bsprinting) mod *= 1.4;
+			if(dplr.player.crouchfactor < 0.6) mod *= 0.6;
+			if(abs(dplr.player.cmd.forwardmove) > 0 || abs(dplr.player.cmd.sidemove) > 0) mod *= 1.2;
 		}
-		return resolvestate(null);
+		else
+		{
+			if(dplr.antiRecoil.x < 15)
+			{
+				dplr.recoilTics = recovertime;
+				dplr.recoilTicGoal = recovertime;
+			}
+			else
+			{
+				dplr.recoilTics = 1;
+				dplr.recoilTicGoal = recovertime;
+			}
+		}
+		dplr.recoil = (offsetpitch,offsetangle) * mod;
 	}
 	
 	action state A_DualWield()
@@ -707,21 +755,20 @@ Class Brutalweapon : DoomWeapon //Weapon
 			invoker.dualWield = true;
 			invoker.initDual = true;
 			A_SelectWeapon(invoker.DualWeapon);
-			BrutalWeapon nextWeapon = BrutalWeapon(player.PendingWeapon);
+			let nextWeapon = BDPWeaponBase(player.PendingWeapon);
 			if(nextWeapon)
 			{
 				nextWeapon.switchingDual = true;
 			}
 			return resolvestate("InstaDeselect");
 		}
-		A_Print("You must have two "..invoker.GetTag().."s to Dual wield!",3);
 		return resolvestate("Ready");
 	}
 	
 	action state A_EndDual()
 	{
 		A_SelectWeapon(invoker.DualWeapon);
-		BrutalWeapon nextWeapon = BrutalWeapon(player.PendingWeapon);
+		let nextWeapon = BDPWeaponBase(player.PendingWeapon);
 		if(nextWeapon)
 		{
 			nextWeapon.dualWield = false;
@@ -775,18 +822,18 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	{
 	While (CheckForTargets.Next() && countinv("meathook") > 0) 
 {
-    CurrentActor = CheckForTargets.Thing;
-    //If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
-    //Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
-    If ((CurrentActor && CurrentActor.bIsMonster && currentactor.bshootable && !currentactor.bfriendly && !currentactor.findinventory("isplayer") && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && !(currentactor is "ExplosiveBarrel1")) || (currentactor && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && currentactor.findinventory("isplayer") && currentactor != self))
-    {
-        target = currentactor;
+	CurrentActor = CheckForTargets.Thing;
+	//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
+	//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
+	If ((CurrentActor && CurrentActor.bIsMonster && currentactor.bshootable && !currentactor.bfriendly && !currentactor.findinventory("isplayer") && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && !(currentactor is "ExplosiveBarrel1")) || (currentactor && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && currentactor.findinventory("isplayer") && currentactor != self))
+	{
+		target = currentactor;
 		If(target)
 		{
 		
 		
 		
-		vector3 targetpos = LevelLocals.SphericalCoords((pos.x,pos.y,player.viewz),target.pos+(0,0,target.default.height*0.5),(angle,pitch));    
+		vector3 targetpos = LevelLocals.SphericalCoords((pos.x,pos.y,player.viewz),target.pos+(0,0,target.default.height*0.5),(angle,pitch));	
 		if (abs(targetpos.x) <= 20 && abs(targetpos.y) <= 20)
 			{
   //this will execute only if the Other actor's center is within 25 degrees from the center of the player's screet
@@ -805,7 +852,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		
 		
 		
-    }
+	}
 	If (!target)
 	{
 	a_startsound("weapons/empty",190,CHANF_DEFAULT,1,ATTN_NONE);
@@ -827,8 +874,8 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	}
 	
 	
-	//action void A_UnmakeLevel(int times=1){brutalweapon.UnmakeLevel(times);}
-	Action void A_UnmakeLevel(int times=1){
+	//action void A_UnmakeLevel(int times=1){BDPWeaponBase.UnmakeLevel(times);}
+	action void A_UnmakeLevel(int times=1){
 	
 		for(int k=0;k<times;k++){
 		Bool foundsector;
@@ -903,160 +950,101 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			return ResolveState(null);
 		}
 		
-	Action void a_takefatalitystuff()
-	{
-	A_takeinventory("hasagib",666);
-	A_takeinventory("hascacoeye",666);
-	A_takeinventory("lostsoulfatality",666);
-	A_takeinventory("hasbarrel",666);
-	A_takeinventory("shotgunguyhead",666);
-	A_takeinventory("hasimpfatality",666);
-	}
-	
-	Action state A_AutoReload(Name Magtype, Name Ammotype, statelabel label = "Reload", bool force = false)
-	{
-		//FORCE flag is intended for single shot weapons
-		If(countinv(Magtype) == 0 && countinv(Ammotype) > 0 && (invoker.owner.getcvar("bdp_autoreload") == true || force == true))
-		{
-			Return Resolvestate(Label);
-		}
-		Else
-		{
-			Return Resolvestate(Null);
-		}
-	
-	}
-	
 	Action state A_AutoReloadMag(int minammo = 1, statelabel label = "Reload", bool force = false)
 	{
 		//FORCE flag is intended for single shot weapons
 		If(invoker.mag < 1 && countinv(invoker.ammotype1) >= invoker.magConversion.y && (invoker.owner.getcvar("bdp_autoreload") == true || force == true))
-		{
-			if(invoker.aimMode == 0)
-			{
-				Return Resolvestate(Label);
-			}
-			else
-			{
-				invoker.aimDest = Label;
-				return resolvestate("AimEnd");
-			}
-		}
-		Else
-		{
-			Return Resolvestate(Null);
-		}
-	
+			Return Resolvestate(Label);
+		Return Resolvestate(Null);
 	}
 	
-	Action state A_WeaponReadyDX(int dxflags = 0, bool kickflashes = true, bool cansprint = true, bool forcereload = false)
+	action void A_Dryfire(string sound = "weapons/empty", bool force = false)
+	{
+		A_StartSound(sound,3);
+		A_AutoReloadMag(1,"Reload",force);
+	}
+	
+	action void A_MagClick(string sound = "weapons/empty")
+	{
+		double current = invoker.mag;
+		double max = invoker.magCapacity / 4;
+		if(current <= max && CVar.GetCVar("bd_maggoclicky",player).GetBool() == true)
+			A_StartSound(sound,3);
+	}
+	
+	Action state A_WeaponReadyDX(int dxflags = 0, bool kicksprint = true, bool forcereload = false, statelabel fidgetstate = "Fidget")
+	{
+		let dplr = BDPPlayerPawn(invoker.owner);
+		dplr.canLedgeClimb = true;
+		DoReadyWeaponToFire(dplr, !(dxflags & WRF_NoPrimary), !(dxflags & WRF_NoSecondary) && invoker.aimMode != 2);
+		DoReadyWeaponToSwitch(player, !(dxflags & WRF_NoSwitch));
+		if(kicksprint && invoker.aimMode == 0)
+			player.WeaponState |= WF_USER1OK;
+		if(invoker.readyLeft && invoker.readyRight || !invoker.bDUALWEAPON)
 		{
-			brutal_playerbase BDPplr = brutal_playerbase(invoker.owner);
-			bool canreload = false;
+			player.WeaponState |= WF_USER2OK;
+			if(!dplr.blockTaunt)
+				player.WeaponState |= WF_USER4OK;
 			if(dxflags & WRF_ALLOWRELOAD)
 			{
-				canreload = true;
+				invoker.fidgetState = fidgetstate;
+				player.WeaponState |= WF_WEAPONRELOADOK;
 			}
-			dxflags &= ~WRF_ALLOWRELOAD;
-			dxflags |= WRF_ALLOWUSER4;
-			//A_WeaponReadyDX acts as a wrapper for A_weaponready and accepts the same flags
-			A_weaponready(dxflags);
-			if(player.cmd.buttons & BT_RELOAD && canreload)
+			if(!dplr.blockSpecial)
+				player.WeaponState |= WF_USER3OK;
+			if(invoker.CheckSprint() && kicksprint && resolvestate("Sprint") && invoker.aimMode == 0)
+				A_Overlay(50,"Sprint",true);
+			else if(player.FindPSprite(50))
 			{
-				if(forcereload)
-				{
-					return resolvestate("Reload");
-				}
-				if(invoker.mag >= invoker.magCapacity)
-				{
-					if(resolvestate("Fidget")) return resolvestate("Fidget");
-				}
-				else if(CountInv(invoker.ammotype1) < invoker.magConversion.y)
-				{
-					return resolvestate("NoAmmo");
-				}
-				else
-				{
-					return resolvestate("Reload");
-				}
+				A_ClearOverlays(49,50);
+				A_Overlay(49,"SprintEnd");
 			}
-			if(player.cmd.buttons & BT_USER3)
-			{
-				if(!invoker.noSpecial)
-				{
-					return resolvestate("User3");
-				}
-			}
-			else
-			{
-				invoker.noSpecial = false;
-			}
-			if(player.cmd.buttons & BT_USER2)
-			{
-				if(CountInv("AmmoFragGrenade") > 0 || CountInv("AmmoPipeBomb") > 0 || CountInv("PowerSpeed2") > 0)
-				{
-					A_Overlay(90,"TossGrenade");
-					return resolvestate("Grenade");
-				}
-				else
-				{
-					A_Print("Out of grenades");
-				}
-			}
-			//Flag for if holding throwable object
-			If(findinventory("hasagib"))
-			{
-				return resolvestate("ChooseYourGib");
-			}
-			
-			
-			If(invoker.a_checksprint() && cansprint)
-			{
-				return resolvestate('Sprint');
-			}
-			//Slidekick
-			if (BDPplr.player.crouchfactor != 1 && player.cmd.buttons & BT_USER1 && (BDPplr.player.cmd.buttons & BT_CROUCH || BDPplr.player.oldbuttons & BT_CROUCH) && kickflashes && bdpplr && !bdpplr.exhausted && BDPplr.haskicked == 1) {
-				return resolvestate('SlideKick');
-			}
-			//Airkick
-			Else if (Vel.Z != 0 && player.cmd.buttons & BT_USER1 && kickflashes && BDPplr.haskicked == 1) {
-				return resolvestate('AirKick');
-			}
-			//Regular kick	
-			else If (player.cmd.buttons & BT_USER1 && kickflashes && BDPplr.haskicked == 1){
-				return resolvestate('Kick');
-			}
-			
-			//Middle finger
-			if(CountInv(invoker.GetClassName()) > 1 && invoker.initDual == 0) {return resolvestate("SpecialAction");}
-			
-			return resolvestate(null);
-			
-		
 		}
-	
-	Action void A_instaraise()
-
-	{
-    let psp = Player.FindPSprite(OverlayID()); //get pointer to current sprite layer;
-    if (psp)
-      psp.y = WEAPONTOP; //set offset immediately to the fully raised position;
+		if(invoker.aimMode == 2 && invoker.aimTics < 1 && !(player.cmd.buttons & BT_ALTATTACK))
+			return resolvestate("AimEnd");
+		if(CountInv(invoker.GetClassName()) > 1 && invoker.initDual == 0)
+			return resolvestate("SpecialAction");
+		return A_AutoReloadMag(1,"Reload",forcereload);
+		return resolvestate(null);
 	}
 	
-    action bool JustPressed(int which) // "which" being any BT_* value, mentioned above or not
-    {
-        return player.cmd.buttons & which && !(player.oldbuttons & which);
-    }
-    action bool JustReleased(int which)
-    {
-        return !(player.cmd.buttons & which) && player.oldbuttons & which;
-    }
+	action bool JustPressed(int which) // "which" being any BT_* value, mentioned above or not
+	{
+		return player.cmd.buttons & which && !(player.oldbuttons & which);
+	}
+	
+	action bool JustReleased(int which)
+	{
+		return !(player.cmd.buttons & which) && player.oldbuttons & which;
+	}
+	
+	action bool LastPressed(int which, int time, bool strict = false)
+	{
+		let dplr = BDPPlayerPawn(invoker.owner);
+		int counter = -1;
+		for(int i = -1; i < time - 1; i++)
+		{
+			if(i == -1 && player.cmd.buttons & which || i > -1 && dplr.oldInputs[i] & which)
+			{
+				if(!strict || counter == time - 2)
+				{
+					return true;
+				}
+				if(strict && counter != i)
+				{
+					return false;
+				}
+				counter++;
+			}
+		}
+		return false;
+	}
 	
 	action void MoveSpeed(float pspeed, float psidemove)
 	{
-		Brutal_PlayerBase(self).Speed = pspeed;
-		Brutal_PlayerBase(self).SideMove1 = psidemove;
-		Brutal_PlayerBase(self).SideMove2 = psidemove;
+		BDPPlayerPawn(self).Speed = pspeed;
+		BDPPlayerPawn(self).SideMove1 = psidemove;
+		BDPPlayerPawn(self).SideMove2 = psidemove;
 	}
 	
 	//Credit Agent_Ash aka Jekyll Grim Payne and Boondorl
@@ -1103,23 +1091,21 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	
 	action void LedgeReach(float HeightDecrease)
 	{
-		let plr = Brutal_PlayerBase(self);
-		plr.LedgeHeightMax = (plr.LedgeHeight - Height * HeightDecrease * 1.0f);
+		let dplr = BDPPlayerPawn(self);
+		dplr.LedgeHeightMax = (dplr.LedgeHeight - Height * HeightDecrease * 1.0f);
 		A_Stop();
-		SetOrigin((Pos.X, Pos.Y, plr.LedgeHeightMax), True);
+		SetOrigin((Pos.X, Pos.Y, dplr.LedgeHeightMax), True);
 	}
 	//by Emerald
 	action void A_SetCVAR(string cvartoset, int valuetoset)
-    {
-        CVar.GetCVar(cvartoset, Player).SetInt(valuetoset);
-    }
-	
-
-	
-	Bool A_checksprint()
 	{
-		Brutal_Playerbase Player = Brutal_playerbase(owner);
-		If(!Player || !Player.bsprinting)
+		CVar.GetCVar(cvartoset, Player).SetInt(valuetoset);
+	}
+	
+	Bool CheckSprint()
+	{
+		let dplr = BDPPlayerPawn(owner);
+		If(!dplr || !dplr.bsprinting)
 		{
 			Return False;
 		}
@@ -1129,20 +1115,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		}
 	}
 	
-	action state A_KeepSprinting(int dxflags = 0, statelabel end = "SprintEnd")
-	{
-		If(invoker.A_checksprint())
-		{
-		Return A_WeaponReadyDX(dxflags,false,false);
-		Return ResolveState(null);
-		}
-		Else
-		{
-		Return resolvestate(end);
-		}
-	}
-	
-	Action void A_AlertMonstersDX(double maxdist = 0, int flags = 0)
+	action void A_AlertMonstersDX(double maxdist = 0, int flags = 0)
 	{
 		A_alertmonsters(maxdist,flags);
 		
@@ -1152,33 +1125,81 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		}
 	}
 	
-	action void a_semiflag()
+	action void A_SemiFlag(bool secondary = false)
 	{
-		invoker.refireq = false;
-		invoker.semiclear = false;
-		invoker.semiautofired = true;
+		let dplr = BDPPlayerPawn(invoker.owner);
+		if(secondary)
+		{
+			dplr.blockAltfire = true;
+			invoker.semiautofired = 2;
+		}
+		else
+		{
+			dplr.blockFire = true;
+			invoker.semiautofired = 1;
+		}
 	}
 	
-	action state A_SemiRefire(statelabel RefireLabel, statelabel FailLabel)
+	action state A_SemiRefire(statelabel refirelabel = "Fire")
 	{
-		If(invoker.refireq)
+		invoker.semiautofired = 0;
+		if(invoker.semiclear)
 		{
-			invoker.refireq = false;
-			invoker.semiautofired = false;
 			invoker.semiclear = false;
-			Return ResolveState(refirelabel);
+			return resolvestate(refirelabel);
 		}
-		Else if(invoker.owner.player.cmd.buttons & BT_ATTACK)
+		return resolvestate(null);
+	}
+	
+	action state A_RefireDX(statelabel refirelabel = "Fire", bool altfire = false)
+	{
+		if((!altfire && player.cmd.buttons & BT_ATTACK) || (altfire && player.cmd.buttons & BT_ALTATTACK))
 		{
-			Return resolvestate(FailLabel);
+			player.refire++;
+			return resolvestate(refirelabel);
 		}
-		Else
+		else
 		{
-			invoker.refireq = false;
-			invoker.semiautofired = false;
-			invoker.semiclear = false;
-			Return resolvestate(null);
+			player.refire = 0;
+			return resolvestate(null);
 		}
+	}
+	
+	action void A_SetSprites(string sprite, int layer = -1)
+	{
+		let psp = player.FindPSprite(layer == -1 ? OverlayID() : layer);
+		if(psp)
+		{
+			psp.sprite = GetSpriteIndex(sprite);
+		}
+	}
+	
+	action void A_SetFrame(int frame, int layer = 1)
+	{
+		let psp = player.FindPSprite(layer);
+		if(psp)
+		{
+			psp.frame = frame;
+		}
+	}
+	
+	
+	void StainSprites(string sprite, int layer = 1)
+	{
+		if(owner.player && bloodstain > 0)
+		{
+			let psp = owner.player.FindPSprite(layer);
+			if(TexMan.GetName(psp.curstate.GetSpriteTexture(0)).Mid(1,3) == sprite)
+			{
+				psp.sprite = GetSpriteIndex(bloodStain..sprite);
+			}
+		}
+	}
+	
+	virtual void DoSpriteStain()
+	{
+		StainSprites("L1M");
+		StainSprites("UCK");
 	}
 	
 	override void DoEffect() 
@@ -1186,7 +1207,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		super.DoEffect();
 		
 		let player = owner.player;
-		brutal_playerbase BDPplr = brutal_playerbase(owner);
+		let dplr = BDPPlayerPawn(owner);
 		//Flag that forces this weapon to be selected
 		//Used for things that can't be switched off from
 		//Like explosive barrels
@@ -1196,62 +1217,47 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		}
 		If(player && player.readyweapon is self.getclass())
 		{
-			let psp = owner.player.FindPSprite(1);
-			BrutalWeapon fists = BrutalWeapon(FindInventory("BDPFist"));
-			if(psp && fists && !(player.readyweapon is "BDPFist"))
+			if(!(player.readyweapon is "BDPFist"))
 			{
-				string spr = TexMan.GetName(psp.curstate.GetSpriteTexture(0));
-				if(spr && spr.Mid(1,2) == "L1" && fists.bloodStain > 0)
-				{
-					psp.sprite = GetSpriteIndex(fists.bloodStain..spr.Mid(1,3));
-				}
-			if(owner.CountInv("PowerBloodOnVisor") > 0)
+				let fists = BDPWeaponBase(owner.FindInventory("BDPFist"));
+				if(owner.CountInv("PowerBloodOnVisor") > 0)
+					fists.bloodStain = 1;
+				if(owner.CountInv("PowerBlueBloodOnVisor") > 0)
+					fists.bloodStain = 2;
+				if(owner.CountInv("PowerGreenBloodOnVisor") > 0)
+					fists.bloodStain = 3;
+			}
+			if(self.bBLOODSTAIN)
 			{
-				fists.bloodStain = 1;
-				owner.TakeInventory("PowerBloodOnVisor",1);
+				if(owner.CountInv("PowerBloodOnVisor") > 0)
+					bloodStain = 1;
+				if(owner.CountInv("PowerBlueBloodOnVisor") > 0)
+					bloodStain = 2;
+				if(owner.CountInv("PowerGreenBloodOnVisor") > 0)
+					bloodStain = 3;
 			}
-			if(owner.CountInv("PowerBlueBloodOnVisor") > 0)
-			{
-				fists.bloodStain = 2;
-				owner.TakeInventory("PowerBlueBloodOnVisor",1);
-			}
-			if(owner.CountInv("PowerGreenBloodOnVisor") > 0)
-			{
-				fists.bloodStain = 3;
-				owner.TakeInventory("PowerGreenBloodOnVisor",1);
-			}
-			}
-			If(semiautofired && !(player.cmd.buttons & BT_ATTACK))
+			DoSpriteStain();
+			owner.TakeInventory("PowerBloodOnVisor",1);
+			owner.TakeInventory("PowerBlueBloodOnVisor",1);
+			owner.TakeInventory("PowerGreenBloodOnVisor",1);
+			
+			if(player.cmd.buttons & BT_ATTACK && semiautofired == 1 && !dplr.blockFire || player.cmd.buttons & BT_ALTATTACK && semiautofired == 2 && !dplr.blockAltFire)
 			{
 				semiclear = true;
 			}
 			
-			If(semiclear && player.cmd.buttons & BT_ATTACK)
+			if(aimTics > 0 && aimMode > 0)
 			{
-				refireq = true;
+				if(player.cmd.buttons & BT_ALTATTACK)
+					aimTics--;
+				else
+					aimMode = 1;
 			}
 			
-			If(owner.findinventory("rollingstamina"))
-			{
-				If(owner.findinventory("istacticalclass"))
-				{
-					owner.A_GiveInventory("UsedStamina", weight * 30);
-				}
-				owner.takeinventory("rollingstamina",1);
-	
-			}
 			If(!owner.findinventory("grabbermodifier"))
 			{
 				owner.giveinventory("grabbermodifier",1);
 			}
-			if(owner.findinventory("sprintbob")) 
-			{
-				if (player && player.readyweapon) 
-				{
-					player.WeaponState |= WF_WEAPONBOBBING;
-				}
-			}
-			//player.readyweapon.A_setcvar("throwabletype",0);
 			
 			bool autogrenadeswitch;
 			
@@ -1291,45 +1297,52 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			Owner.takeinventory("grenadeswapping",1);
 		
 			
-			If(A_checksprint())
+			If(CheckSprint())
 			{
 				
-				If(owner.findinventory("istacticalclass") && BDPplr)
+				If(owner.findinventory("istacticalclass") && dplr)
 				{
 					If(owner.findinventory("powerstrength") || owner.findinventory("powerboost"))
 					{
 						if (level.time % 2 == 0)
 						{
-							BDPplr.stamina += 2;
+							dplr.stamina += 2;
 						}
 					}
 					Else
 					{
 						if (level.time % 2 == 0)
 						{
-							BDPplr.stamina += 3;
+							dplr.stamina += 3;
 						}
 					}
 					
 				}
-				
-				BobRangeX = 0.8;
-				BobRangeY = 0.8;
+				if(aimMode > 0)
+				{
+					BobRangeX = 0.3;
+					BobRangeY = 0.4;
+				}
+				else
+				{
+					BobRangeX = 0.6;
+					BobRangeY = 0.8;
+				}
 				BobSpeed = 2.9;
-				//owner.speed = (owner.default.speed * 2);
-	
-				//owner.acs_namedexecute("fastplayer",0,0,0,0);
-				//owner.takeinventory("sprintbob",1);
 			}
 			else
 			{
-				BobRangeX = 0.2;
-				BobRangeY = 0.4;
+				if(aimMode > 0)
+				{
+					BobRangeX = 0.1;
+					BobRangeY = 0.2;
+				}
+				else
+				{
+					BobRangeX = 0.2;
+					BobRangeY = 0.4;
+				}
 				BobSpeed = 2.1;
-				//owner.takeinventory("sprintbob",1);
-				//owner.acs_namedexecute("slowplayer",0,0,0,0);
-				
-				//owner.speed = owner.default.speed;
 			}
   
  
@@ -1399,303 +1412,193 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	States
 	{
 	//Fallback weapon states
-	Grenade: //32
-		TNT1 A 32;
-		Goto Ready;
-	Kick: //16
-		TNT1 A 16;
-		Goto Ready;
-	AirKick: //18
-		TNT1 A 18;
-		Goto Ready;
-	SlideKick: //26
-		TNT1 A 26;
-		Goto Ready;
-	Taunt: //30
+	Grenade: //30
 		TNT1 A 30;
 		Goto Ready;
-	Sprint:
-		TNT1 A 4 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
-	SprintLoop:
-		TNT1 A 1 A_KeepSprinting(WRF_ALLOWRELOAD);
-		Loop;
-	SprintEnd:
-		TNT1 A 4 A_WeaponReadyDX(WRF_ALLOWRELOAD,false,false);
+	NoAmmo:
+		TNT1 A 0 A_DryFire();
+		TNT1 A 0
+		{
+			if(invoker.aimMode > 0)
+			{
+				return resolvestate("Aim");
+			}
+			return resolvestate("Ready");
+		}
 		Goto Ready;
-		
-	
-	
-		Tripmineoverlay:
-			TNT1 A 10;
-			TRPM FEDCBBBB 1;
-			TRPM B 1
-				{
-				
-				FLineTraceData wallinmyway;
-				invoker.owner.LineTrace(invoker.owner.angle, 64, invoker.owner.pitch, 0, offsetz: 12, data: wallinmyway);
-				if (wallinmyway.HitType == TRACE_HitWall)
-				{
-					A_fireprojectile("TripMineProjectile",0,true,0,-4);
-					A_TakeMag();
-					return ResolveState("Placedsuccesfully");
-				}
-				Return resolvestate(null);
-				}
-			TRPM BBBMNOPQ 1;
-			//TNT1 A 10;
-			Stop;
-			
-			placedSuccesfully:
-			TRPM GGGGGHIJKL 1;
-			//TNT1 A 10;
-			Stop;
-			
-			
-			
-			Select:
-			Deselect:
-			Fire:
-			Ready:
-			TNT1 A 1 A_Jump(255, "Ready");
-			Loop;	
-		Stop;
-		instadeselect:
-		TNT1 A 0 A_lower();
+	Select:
+	Deselect:
+	Fire:
+	Ready:
+		TNT1 A 1 A_Jump(256, "Ready");
+		Loop;
+	InstaDeselect:
+		TNT1 A 0 A_Lower();
 		Wait;
-		Ready3:
-			TNT1 A 1 A_Jump(255, "Ready3");
-			Loop;	
-			
-		StainedLedgeClimb:
-		LedgeClimb:
-			TNT1 A 0 
+	LedgeClimb:
+		TNT1 A 0 
+		{
+			if(invoker.clearoverlays)
 			{
-			If(invoker.clearoverlays)
-				{
-				 A_clearoverlays(-30,30);
-				}
+				A_clearoverlays(-30,30);
 			}
-			TNT1 A 0 A_overlay(5,"donothing");
-			
-			TNT1 A 0 A_ClearOverlays(6,6);
-			TNT1 A 0 A_takeinventory("sprintbob",1);
-			TNT1 A 0 A_Stop();
-			TNT1 A 0 A_ZoomFactor(1.0);
-			TNT1 A 0 A_GunFlash("LedgeGrabFlash");
-			TNT1 A 0 A_WeaponReady(WRF_NOFIRE|WRF_ALLOWRELOAD|WRF_NOSWITCH);
-			TNT1 A 0 SetPlayerProperty(0,1,PROP_TOTALLYFROZEN);
-			TNT1 A 0 
-			{
-
+			A_clearoverlays(49,50);
+			A_WeaponOffset(0,32);
+			A_Stop();
+			A_ZoomFactor(1.0);
+			SetPlayerProperty(0,1,PROP_TOTALLYFROZEN);
 			A_StartSound("ledgeclimb",5);
-			}
-			CL1M ABC 1 {
-				let plr = Brutal_PlayerBase(self);
-				
-				if(Pos.Z < (plr.LedgeHeight - Height * 0.78f))
-				{
-					A_SetPitch(pitch-pitch/2, SPF_INTERPOLATE);
-					Vel = Vel.Length() ? (0, 0, plr.velz) : (0, 0, 0);
-					//plr.velz--;
-				}
-				else if(Pos.Z < (plr.LedgeHeight - Height * 0.76f))
-				{
-					LedgeReach(0.751);
-
-					return ResolveState("LedgeReach");
-					
-				}
-				return ResolveState(null);
-			}
-		LedgeReach:
-			CL1M D 1 {
-				let plr = Brutal_PlayerBase(self);
-				//if(Pos.Z >= (plr.LedgeHeight - Height * 0.78f) && Pos.Z < (plr.LedgeHeight - Height * 0.76f))
-				if(Pos.Z >= (plr.LedgeHeight - Height * 0.78f))
-				{
-					A_SetPitch(pitch-pitch/2, SPF_INTERPOLATE);
-					GiveInventory("Grabbing_A_Ledge", 1);
-					LedgeReach(0.751);
-				}
-				else if(Pos.Z < (plr.LedgeHeight - Height * 0.78f))
-				{
-					Vel = Vel.Length() ? (0, 0, plr.velz) : (0, 0, 0);
-				}
-			}
-			TNT1 A 0 A_JumpIf(CountInv("Grabbing_A_Ledge")==1, 1);
-			Goto LedgeReach;
+		}
+		CL1M ABC 1 
+		{
+			let dplr = BDPPlayerPawn(self);
 			
-			CL1M E 1 {
-				let plr = Brutal_PlayerBase(self);
-				
-				plr.velz = 3.6;
-				A_SetPitch(0, SPF_INTERPOLATE);
-				LedgeReach(0.751);
-				A_StopSound(CHAN_WEAPON);
-				plr.LedgeAngle = Angle;
-				plr.LedgeCheck = False;
-				plr.LedgeGrabbed = True;
-			}
-			CL1M F 1 {
-				A_SetPitch(pitch-0.5, SPF_INTERPOLATE);
-				Vel = Vel.Length() ? (0, 0, 0.5) : (0, 0, 0);
-			}
-			CL1M G 1 {
-				let plr = Brutal_PlayerBase(self);
-				A_SetPitch(pitch+3, SPF_INTERPOLATE);
-				Vel = Vel.Length() ? (0, 0, plr.velz) : (0, 0, 0);
-			}
-			CL1M HI 1 {
-				let plr = Brutal_PlayerBase(self);
-				A_SetPitch(pitch+4, SPF_INTERPOLATE);
-				Vel = Vel.Length() ? (0, 0, plr.velz) : (0, 0, 0);
-			}
-		FinishClimb:
-			TNT1 A 0 A_GunFlash("LedgeGrabFlash");
-			CL1M JK 1 {
-				let plr = Brutal_PlayerBase(self);
-				
-				plr.velz = 3.6;
-				A_SetPitch(pitch-3, SPF_INTERPOLATE);
-				Vel = Vel.Length() ? (0, 0, plr.velz) : (0, 0, 0);
-			}
-			CL1M LM 1 A_SetPitch(pitch-2, SPF_INTERPOLATE);
-			TNT1 AA 1 {
-				A_SetPitch(pitch-pitch/2, SPF_INTERPOLATE);
-				A_WeaponReady(WRF_NOSWITCH);
-			}
-			TNT1 A 0 A_SetPitch(0, SPF_INTERPOLATE);
-			TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
-			TNT1 A 0 TakeInventory("Grabbing_A_Ledge", 1);
-			TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 2);
-			//TNT1 A 0 A_Overlay(-610, "FirstPersonLegsStand");
-			TNT1 A 0;
-			TNT1 A 0 A_jumpifinventory("hasagib",1,"Chooseyourgib");
-			//Goto Ready3;
-			TNT1 A 0
+			if(Pos.Z < (dplr.LedgeHeight - Height * 0.78f))
 			{
-			If(invoker is "hellishmissilelauncher")
-				{
-				 return resolvestate("ready");
-				}
-				Else
-				{
-				Return resolvestate(null);
-				}
+				pitch -= pitch/2;
+				Vel = Vel.Length() ? (0, 0, dplr.velz) : (0, 0, 0);
+				//dplr.velz--;
 			}
-			TNT1 A 0 A_Jump(256,"Select");
-			Goto Ready;
-			//Goto SelectAnimation;
+			else if(Pos.Z < (dplr.LedgeHeight - Height * 0.76f))
+			{
+				LedgeReach(0.751);
+				return ResolveState("LedgeReach");
+			}
+			return ResolveState(null);
+		}
+	LedgeReach:
+		CL1M D 1
+		{
+			let dplr = BDPPlayerPawn(self);
+			//if(Pos.Z >= (dplr.LedgeHeight - Height * 0.78f) && Pos.Z < (dplr.LedgeHeight - Height * 0.76f))
+			if(Pos.Z >= (dplr.LedgeHeight - Height * 0.78f))
+			{
+				pitch -= pitch/2;
+				GiveInventory("Grabbing_A_Ledge", 1);
+				LedgeReach(0.751);
+			}
+			else if(Pos.Z < (dplr.LedgeHeight - Height * 0.78f))
+			{
+				Vel = Vel.Length() ? (0, 0, dplr.velz) : (0, 0, 0);
+			}
+		}
+		TNT1 A 0 A_JumpIf(CountInv("Grabbing_A_Ledge")==1, 1);
+		Goto LedgeReach;
+		CL1M E 1
+		{
+			let dplr = BDPPlayerPawn(self);
+				
+			dplr.velz = 3.6;
+			pitch = 0;
+			LedgeReach(0.751);
+			A_StopSound(CHAN_WEAPON);
+			dplr.LedgeAngle = Angle;
+			dplr.LedgeCheck = False;
+			dplr.LedgeGrabbed = True;
+		}
+		CL1M F 1
+		{
+			pitch -= 0.5;
+			Vel = Vel.Length() ? (0, 0, 0.5) : (0, 0, 0);
+		}
+		CL1M G 1
+		{
+			let dplr = BDPPlayerPawn(self);
+			pitch += 3;
+			Vel = Vel.Length() ? (0, 0, dplr.velz) : (0, 0, 0);
+		}
+		CL1M HI 1
+		{
+			let dplr = BDPPlayerPawn(self);
+			pitch += 4;
+			Vel = Vel.Length() ? (0, 0, dplr.velz) : (0, 0, 0);
+		}
+	FinishClimb:
+		TNT1 A 0 A_GunFlash("LedgeGrabFlash");
+		CL1M JK 1
+		{
+			let dplr = BDPPlayerPawn(self);
 			
-			
-			
-			
-			InAVehicle:
-			TNT1 A 3;
-			Goto returnFromNothing;
-			
-			Donothing:
-	TNT1 A 0;
-	Stop;
-	Idle:
-	TNT1 A 0 setplayerproperty(0,1,4);
-	TNT1 A 2;
-	TNT1 A 0 setplayerproperty(0,0,4);
-	TNT1 A 0 A_jumpifinventory("hasagib",1,"Chooseyourgib");
-	
-	TTN1 A 0 A_jump(256,"returnfromnothing");
-	returnFromNothing:
-	
-	GoingToReady:
-	SelectingAnimation:
-		  TNT1 A 0 A_JumpIf(GetCvar("bd_Legs")==1, 2);
-		//  TNT1 A 0 A_Overlay(-610, "FirstPersonLegsStand");
-		  TNT1 A 0;
-		  SprintEnd:
-		  TNT1 A 0 A_jumpifinventory("needstoselect",1,"InitWeaponState");
-		  TNT1 A 0 A_TakeInventory("BDWEaponACtion", 1);
-		  TNT1 A 0 A_TakeInventory("ExecuteDownedEnemy", 1);
-		  TNT1 A 0 A_TakeInventory("Kicking",1);
-		  TNT1 A 0 A_TakeInventory("Salute1", 1);
-		  TNT1 A 0 A_TakeInventory("Salute2", 1);
-		  TNT1 A 0 A_TakeInventory("Taunting",1);
-		  TNT1 A 0 A_TakeInventory("TossGrenade",1);
-		  TNT1 A 0 A_TakeInventory("IsRunning",1);
-		  TNT1 A 0 A_TakeInventory("Reloading",1);
-		  TNT1 A 0 A_jumpifinventory("hasagib",1,"Chooseyourgib");
-		  TNT1 A 0 A_Overlay(10, "Flash");
-		  TNT1 A 0 A_Jump(256, "Ready");
-		//   TNT1 A 0 A_Jump(256, "Ready");
-		  Loop;
-	
-	InitWeaponState:		
-		TNT1 A 0;
+			dplr.velz = 3.6;
+			pitch -= 3;
+			Vel = Vel.Length() ? (0, 0, dplr.velz) : (0, 0, 0);
+		}
+		CL1M LM 1 {pitch -= 2;}
+		TNT1 AA 1
+		{
+			pitch -= pitch/2;
+			A_WeaponReady(WRF_NOSWITCH);
+		}
+		TNT1 A 0 {pitch = 0;}
+		TNT1 A 0 SetPlayerProperty(0,0,PROP_TOTALLYFROZEN);
+		TNT1 A 0 TakeInventory("Grabbing_A_Ledge", 1);
+		TNT1 A 0 A_Jump(256,"Select");
+		Goto Ready;
+	InitWeaponState:
 		//TNT1 A 1 Emma you fucking idiot
 		TNT1 A 0
 		{
-		
-		takeinventory("startdualwield",1);
-		takeinventory("swapriflespecial",1);
-		takeinventory("reloading",1);
-		takeinventory("unloading",1);
-		takeinventory("taunting",1);
-		takeinventory("tossgrenade",1);
-		takeinventory("salute1",1);
-		takeinventory("salute2",1);
-		takeinventory("kicking",1);
-		takeinventory("zoomed",1);
-		takeinventory("sprintbob",1);
-		A_zoomfactor(1.0);
-		If(!(invoker is "Explosivebarrelweapon"))
-		{
-			Invoker.owner.takeinventory("explosivebarrelweapon",1);
+			A_zoomfactor(1.0);
+			If(!(invoker is "Explosivebarrelweapon"))
+			{
+				Invoker.owner.takeinventory("explosivebarrelweapon",1);
+			}
+			invoker.aimMode = 0;
+			invoker.semiautofired = 0;
+			invoker.semiclear = false;
+			
+			A_SetCrosshair(-1);
+			a_weaponvoiceline();
+			let psp = Player.FindPSprite(OverlayID()); //get pointer to current sprite layer;
+			if (psp)
+				psp.y = WEAPONTOP; //set offset immediately to the fully raised position;
+			if(invoker.dualWeapon && countinv(invoker.GetClassName()) > 1 && invoker.dualWield == 1 && GetCVar("bd_smartdualwield") == 0)
+			{
+				A_SelectWeapon(invoker.dualWeapon);
+				return resolvestate("InstaDeselect");
+			}
+			if(invoker.dualWeapon && invoker.switchingDual == true)
+			{
+				invoker.switchingDual = false;
+				return resolvestate("SelectFromDual");
+			}
+			return resolvestate("Select");
 		}
-		invoker.aimMode = 0;
-		invoker.scopeZoom = false;
-		invoker.refireq = false;
-		invoker.semiautofired = false;
-		invoker.semiclear = false;
-		
-		A_SetCrosshair(-1);
-		a_weaponvoiceline();
-		A_WeaponReady(WRF_NOFIRE);
-		if(invoker.dualWeapon && countinv(invoker.GetClassName()) > 1 && invoker.dualWield == 1 && GetCVar("bd_smartdualwield") == 0)
-		{
-			A_SelectWeapon(invoker.dualWeapon);
-			return resolvestate("InstaDeselect");
-		}
-		if(invoker.dualWeapon && invoker.switchingDual == true)
-		{
-			invoker.switchingDual = false;
-			return resolvestate("SelectFromDual");
-		}
-		return resolvestate(null);
-		}
-		TNT1 A 0 A_jumpifinventory("hasagib",1,"gibfromnothing");
-		TNT1 A 0 A_Jump(256, "Select");
 		Loop;
-	User4:
-		"####" "#" 0 A_Overlay(69,"TauntAction");
-		"####" "#" 0 A_Jump(256,"Taunt");
+	Reload:
+		#### # 1
+		{
+			if((invoker.mag < invoker.magCapacity || invoker.bDUALWEAPON && DualMag() < invoker.magCapacity) && CountInv(invoker.ammotype1) >= invoker.magConversion.y)
+			{
+				A_ClearOverlays(49,50);
+				return resolvestate("DoReload");
+			}
+			else if(resolvestate(invoker.fidgetState) && invoker.aimMode == 0 && (invoker.fidgetState != "Fidget" || LastPressed(BT_RELOAD,7,true)))
+			{
+				return resolvestate(invoker.fidgetState);
+			}
+			return resolvestate(null);
+		}
+		TNT1 A 0 A_JumpIf(invoker.aimMode > 0,"Aim");
 		Goto Ready;
-   TauntAction:
-		TNT1 A 0 A_Takeinventory("Zoomed",1);
-        TNT1 A 0 A_ZoomFactor(1.0);
-		TNT1 A 0 A_Takeinventory("Taunting",1);
-		"####" A 0 A_jumpif(invoker.handedness == 2, "tauntnone");
-        TNT1 A 4;
-		6UCK A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4);
-		5UCK A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3);
-		4UCK A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2);
-		FUCK N 0;
-		"####" A 0;
-		"####" A 0;
-		
-		"####" A 0 BRIGHT A_FireProjectile("Taunter", 0, 0, -1, 0);
-		"####" A 0 BRIGHT A_FireProjectile("Taunter", -9, 0, -1, 0);
-		"####" A 0 BRIGHT A_FireProjectile("Taunter", 9, 0, -1, 0);
-		//"####" A 0 A_JumpIfInventory("GenderFemale", 1, "TauntFemale");
-		"####" A 0 
+	User4:
+		#### # 1
+		{
+			if(invoker.handedness == 2 && !resolvestate("Taunt"))
+			{
+				return resolvestate("TauntNone");
+			}
+			else
+			{
+				A_Overlay(69,"TauntAction");
+			}
+			return resolvestate(null);
+		}
+		TNT1 A 0 {return resolvestate("Taunt");}
+		Goto Ready;
+	TauntAction:
+		TNT1 A 4;
+		TNT1 A 0 
 		{
 			If(random(1,200) == 7)
 			{
@@ -1705,178 +1608,142 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			{
 				A_startsound("FUCK",455);
 			}
+			A_FireProjectile("Taunter", 0, 0, -1, 0);
+			A_FireProjectile("Taunter", -9, 0, -1, 0);
+			A_FireProjectile("Taunter", 9, 0, -1, 0);
 		}
-	FinishTaunt:
-		"####" A 0 A_jumpif(invoker.handedness == 1, "Finishtauntleft");
-		
-		
-        "####" ABCD 1 A_AlertMonsters();
-		"####" E 1;
-		"####" F 12;
-        "####" EDCBA 1;
-        TNT1 A 4 A_Takeinventory("Taunting",1);
-		TNT1 A 0 A_jumpifinventory("hasagib",1,"Chooseyourgib");
+		TNT1 A 0 A_jumpif(invoker.handedness == 1, "Finishtauntleft");
+		FUCK ABCD 1 A_AlertMonsters();
+		FUCK E 1;
+		FUCK F 12;
+		FUCK EDCBA 1;
+		TNT1 A 4 A_Takeinventory("Taunting",1);
+		TNT1 A 0
+		{
+			let dplr = BDPPlayerPawn(invoker.owner);
+			dplr.blockTaunt = false;
+		}
 		Stop;
 	FinishTauntLeft:
-	//"####" A 0 A_GunFlash("Taunt");
-        "####" GHIJ 1 A_AlertMonsters();
-		"####" K 1;
-		"####" L 12;
-        "####" KJIHG 1;
-        TNT1 A 4 A_Takeinventory("Taunting",1);
-		TNT1 A 0 A_jumpifinventory("hasagib",1,"Chooseyourgib");
-		Stop;
-		
-	TauntNone:
-	6UCK A 0 A_JumpIfInventory("PowerGreenBloodOnVisor",1,4);
-		5UCK A 0 A_JumpIfInventory("PowerBlueBloodOnVisor",1,3);
-		4UCK A 0 A_JumpIfInventory("PowerBloodOnVisor",1,2);
-		FUCK N 0;
-		"####" A 0;
-		"####" A 0;
-		"####" A 0 BRIGHT A_FireProjectile("Taunter", 0, 0, -1, 0);
-		"####" A 0 BRIGHT A_FireProjectile("Taunter", -9, 0, -1, 0);
-		"####" A 0 BRIGHT A_FireProjectile("Taunter", 9, 0, -1, 0);
-		//"####" A 0 A_JumpIfInventory("GenderFemale", 1, "TauntFemale");
-		"####" A 0 A_Jump(256, "FuckYourself2", "FhaccYoself2", "GoFuckYourself2", "GetOffScum2");
-		
-		FuckYourself2:
-		"####" A 0 ACS_NamedExecute("InsultFuckYourself",0,0);
-        "####" B 0 A_StartSound("FUCK1", 2);
-		Goto FinishTauntnone;
-	FhaccYoself2:
-		"####" A 0 ACS_NamedExecute("InsultFhaccYoself",0,0);
-        "####" B 0 A_StartSound("FUCK3", 2);
-		Goto FinishTauntnone;
-	GoFuckYourself2:
-		"####" A 0 ACS_NamedExecute("InsultGoFuckYourself",0,0);
-        "####" B 0 A_StartSound("FUCK4", 2);
-		Goto FinishTauntnone;
-	GetOffScum2:
-		"####" A 0 ACS_NamedExecute("InsultGetOffScum",0,0);
-        "####" B 0 A_StartSound("FUCK2", 2);
-	FinishTauntNone:
-		TNT1 A 0 A_Takeinventory("Taunting",1);
-		TNT1 A 0 A_jumpifinventory("hasagib",1,"Chooseyourgib");
-		Stop;
-	TossPipebomb:
-		TNT1 A 5;
-		//TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_USER2, "DetonateTossedPipebomb");
-		//NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb");
-		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
-		"----" A 0 A_Takeinventory("HasPlasmaWeapon",1);
-		TNT1 A 0 A_TAkeinventory("HasCutingWeapon",1);
-		TNT1 A 0 A_Takeinventory("Zoomed",1);
-		TNT1 A 0 A_Takeinventory("PowerLightAmp",1);
-        TNT1 A 0 A_ZoomFactor(1.0);
-		TNT1 A 0 A_Takeinventory("ADSmode",1);
-		TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "TossGrenadeClassic");
-	    TNT1 A 2; //20 frames left
-		//NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb")
-		TNT1 A 0 A_startsound("MineArm",2);
-		DKPB PQRSTU 1;
-		DKPB FGHI 1;
-		TNT1 A 0 A_StartSound("DukeThrw");
-		//NULL A 0 A_GiveInventory("HasThrownPipebomb",1);
-        TNT1 A 0 
+		FUCK GHIJ 1 A_AlertMonsters();
+		FUCK K 1;
+		FUCK L 12;
+		FUCK KJIHG 1;
+		TNT1 A 4 A_Takeinventory("Taunting",1);
+		TNT1 A 0
 		{
-		if(CountInv("TossGrenade")==1)
+			let dplr = BDPPlayerPawn(invoker.owner);
+			dplr.blockTaunt = false;
+		}
+		Stop;
+	BlanKTaunt:
+		TNT1 A 26;
+		Goto Ready;
+	TauntNone:
+		TNT1 A 26
+		{
+			If(random(1,200) == 7)
 			{
-			A_FireProjectile("PipebombThrownSlow",0,0,0,0);
-			A_QuadSound();
+				A_startsound("FUCK5",455);
 			}
-		else
+			Else
 			{
-			A_FireProjectile("PipebombThrownQuickTossed",0,0,0,0);
-			A_QuadSound();
+				A_startsound("FUCK",455);
+			}
+			A_FireProjectile("Taunter", 0, 0, -1, 0);
+			A_FireProjectile("Taunter", -9, 0, -1, 0);
+			A_FireProjectile("Taunter", 9, 0, -1, 0);
+		}
+		TNT1 A 0
+		{
+			let dplr = BDPPlayerPawn(invoker.owner);
+			dplr.blockTaunt = false;
+		}
+		Goto Ready;
+	User3:
+		#### # 1
+		{
+			let dplr = BDPPlayerPawn(invoker.owner);
+			dplr.blockSpecial = true;
+			if(invoker.dualWeapon && CountInv(invoker.GetClass()) <  invoker.MaxAmount)
+				A_Print("You must have two "..invoker.GetTag().."s to Dual wield!",3);
+			else if(resolvestate("SpecialAction"));
+			{
+				return resolvestate("SpecialAction");
+			}
+			return resolvestate(null);
+		}
+		Goto Ready;
+	User2:
+		#### # 1
+		{
+			if(CountInv("AmmoFragGrenade") > 0 || CountInv("AmmoPipeBomb") > 0 || CountInv("PowerSpeed2") > 0)
+			{
+				let dplr = BDPPlayerPawn(invoker.owner);
+				dplr.canLedgeClimb = false;
+				A_ClearOverlays(49,50);
+				if(CountInv("NadeType") == 1)
+					A_Overlay(90,"TossPipebomb");
+				else
+					A_Overlay(90,"TossGrenade");
+				return resolvestate("Grenade");
+			}
+			else
+			{
+				A_Print("Out of grenades");
+				return resolvestate(null);
 			}
 		}
-		BFGN A 0 A_TakeAmmo("AmmoPipeBomb", 1);
-		DKPB JKKKLLM 1;
-		DKPB NO 1;
-		TNT1 A 6;
-		NULL A 0 A_TakeInventory("TossGrenade",1);
-		Stop;
-	User3:
-		"####" "#" 0 {invoker.noSpecial = true;}
-		"####" "#" 0 A_Jump(256,"SpecialAction");
 		Goto Ready;
 	TossGrenade:
-		"----" "#" 0 A_TakeInventory("TossGrenade", 1);
-		NULL A 0 A_JumpIf(CountInv("NadeType")==1,"TossPipebomb");
-		"----" "#" 0;
 		TNT1 A 5;
-		//TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_USER2, "DetonateTossedPipebomb");
-		//NULL A 0 A_JumpIfInventory("HasThrownPipebomb",1,"DetonateTossedPipebomb");
-		RAIL A 0 A_Takeinventory("HasFreezerWeapon",1);
-		"----" A 0 A_Takeinventory("HasPlasmaWeapon",1);
-		TNT1 A 0 A_TAkeinventory("HasCutingWeapon",1);
-		TNT1 A 0 A_Takeinventory("Zoomed",1);
-		TNT1 A 0 A_Takeinventory("PowerLightAmp",1);
-        TNT1 A 0 A_ZoomFactor(1.0);
-		TNT1 A 0 A_Takeinventory("ADSmode",1);
-		TNT1 A 0 A_JumpIfInventory("IsPlayingAsPurist", 1, "TossGrenadeClassic");
-		
-		GRTH A 1;
-		GRTH BCDE 1;
-		GRTH F 1;//3
-		GRTH G 1;//H 1
-		GRTH I 1;//3
-		TNT1 A 0 A_GiveInventory("FiredGrenade", 1);
-		TNT1 A 0 A_Giveinventory("Punching",1);
-		TNT1 A 0 A_Giveinventory("GoSpecial",1);
+		GRTH ABCDEF 1;
 		TNT1 A 0 A_StartSound ("GRNPIN");
-		GRTH JKLMN 1;
+		GRTH FGHIJK 1;
 		TNT1 A 2;
 		TNT1 A 0 A_StartSound ("CS16uwu");
 		TNT1 A 0 A_Jump(2,2);
 		TNT1 A 0 A_StartSound ("GRNTOSS");
-		TNT1 A 0;
-		//TNT1 A 0 A_JumpIfInventory("TossGrenade", 1, "TossGrenadeGently");
-		//TNT1 A 0 A_Recoil(-2)
-		GRTH OP 1;
-		TNT1 A 0 A_TakeAmmo("AmmoFragGrenade", 1);
-		TNT1 A 0 A_FireProjectile("FakeGrenade", 0, 0, 0, 0, 0, 0);
-	    TNT1 A 0 A_TakeInventory("FiredGrenade", 1);
-		TNT1 A 0 A_FireProjectile("HandGrenade", 0, 0, 0, 0, 0, 0);
-		"####" A 0 A_QuadSound();
-		GRTH Q 1;
-		GRTH RSTU 1;
-		TNT1 A 5; //32 frames in total for a flash.
-		TNT1 A 0 A_TakeInventory("TossGrenade", 1);
-		TNT1 A 0 A_GunFlash();
-		Stop;	
+		GRTH LM 1;
+		TNT1 A 0
+		{
+			A_TakeAmmo("AmmoFragGrenade", 1);
+			A_FireProjectile("HandGrenade", 0, 0, 0, 0, 0, 0);
+			A_QuadSound();
+		}
+		GRTH NOP 1;
+		TNT1 A 5;
+		Stop;
+	TossPipebomb:
+		TNT1 A 5;
+		TNT1 A 0 A_startsound("MineArm",2);
+		DKPB PQRSTUFGHI 1;
+		TNT1 A 0 
+		{
+			A_FireProjectile("PipebombThrownQuickTossed",0,0,0,0);
+			A_StartSound("DukeThrw");
+			A_QuadSound();
+		}
+		BFGN A 0 A_TakeAmmo("AmmoPipeBomb", 1);
+		DKPB JKKKLLMNO 1;
+		TNT1 A 5;
+		Stop;
 	BloodSplashRed:
 		TNT1 A 1
 		{
-		a_overlaypivotalign(overlayid(),PSPA_CENTER,PSPA_CENTER);
-		a_overlayflags(OverlayID(),PSPF_ADDWEAPON | PSPF_ADDBOB,false);
-		a_overlayoffset(OverlayID(),random(-150,150),random(0,0));
-					
-						If(random(1,2)== 1)
-							{
-							a_overlayflags(OverlayID(),PSPF_FLIP,false);
-							}
-						Else
-							{
-							a_overlayflags(OverlayID(),PSPF_FLIP,true);
-							}
-			int randomrot = (random(0,3));
-			If(randomrot == 3)
+			a_overlaypivotalign(overlayid(),PSPA_CENTER,PSPA_CENTER);
+			a_overlayflags(OverlayID(),PSPF_ADDWEAPON | PSPF_ADDBOB,false);
+			a_overlayoffset(OverlayID(),random(-150,150),random(0,0));
+			If(random(0,1) == 1)
 			{
-				a_overlayrotate(Overlayid(),90);
+				a_overlayflags(OverlayID(),PSPF_FLIP,false);
 			}
-			Else If(randomrot == 2)
+			Else
 			{
-				a_overlayrotate(Overlayid(),180);
+				a_overlayflags(OverlayID(),PSPF_FLIP,true);
 			}
-			Else If(randomrot == 1)
-			{
-				a_overlayrotate(Overlayid(),270);
-			}
-			
+			a_overlayrotate(Overlayid(),90 * random(0,3));
 			A_overlayscale(overlayid(),frandom(0.3,1.5));
-		
 		}
 		SBDR A random(10,30);
 		SBDR AAAAAAAAAAAAAAAAAAAAA 1 A_overlayfadeout(0.05); 
@@ -1884,83 +1751,48 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	BloodSplashGreen:
 	TNT1 A 1
 		{
-		a_overlaypivotalign(overlayid(),PSPA_CENTER,PSPA_CENTER);
-		a_overlayflags(OverlayID(),PSPF_ADDWEAPON | PSPF_ADDBOB,false);
-		a_overlayoffset(OverlayID(),random(-150,150),random(0,0));
-					
-						If(random(1,2)== 1)
-							{
-							a_overlayflags(OverlayID(),PSPF_FLIP,false);
-							}
-						Else
-							{
-							a_overlayflags(OverlayID(),PSPF_FLIP,true);
-							}
-			int randomrot = (random(0,3));
-			If(randomrot == 3)
+			a_overlaypivotalign(overlayid(),PSPA_CENTER,PSPA_CENTER);
+			a_overlayflags(OverlayID(),PSPF_ADDWEAPON | PSPF_ADDBOB,false);
+			a_overlayoffset(OverlayID(),random(-150,150),random(0,0));
+			If(random(0,1) == 1)
 			{
-				a_overlayrotate(Overlayid(),90);
+				a_overlayflags(OverlayID(),PSPF_FLIP,false);
 			}
-			Else If(randomrot == 2)
+			Else
 			{
-				a_overlayrotate(Overlayid(),180);
+				a_overlayflags(OverlayID(),PSPF_FLIP,true);
 			}
-			Else If(randomrot == 1)
-			{
-				a_overlayrotate(Overlayid(),270);
-			}
-			
+			a_overlayrotate(Overlayid(),90 * random(0,3));
 			A_overlayscale(overlayid(),frandom(0.3,1.5));
-		
 		}
 		SBDG A random(10,30);
 		SBDG AAAAAAAAAAAAAAAAAAAAA 1 A_overlayfadeout(0.05); 
 		Stop;
-		
 	BloodSplashBlue:
 		TNT1 A 1
 		{
-		a_overlaypivotalign(overlayid(),PSPA_CENTER,PSPA_CENTER);
-		a_overlayflags(OverlayID(),PSPF_ADDWEAPON | PSPF_ADDBOB,false);
-		a_overlayoffset(OverlayID(),random(-150,150),random(0,0));
-					
-						If(random(1,2)== 1)
-							{
-							a_overlayflags(OverlayID(),PSPF_FLIP,false);
-							}
-						Else
-							{
-							a_overlayflags(OverlayID(),PSPF_FLIP,true);
-							}
-			int randomrot = (random(0,3));
-			If(randomrot == 3)
+			a_overlaypivotalign(overlayid(),PSPA_CENTER,PSPA_CENTER);
+			a_overlayflags(OverlayID(),PSPF_ADDWEAPON | PSPF_ADDBOB,false);
+			a_overlayoffset(OverlayID(),random(-150,150),random(0,0));
+			If(random(0,1) == 1)
 			{
-				a_overlayrotate(Overlayid(),90);
+				a_overlayflags(OverlayID(),PSPF_FLIP,false);
 			}
-			Else If(randomrot == 2)
+			Else
 			{
-				a_overlayrotate(Overlayid(),180);
+				a_overlayflags(OverlayID(),PSPF_FLIP,true);
 			}
-			Else If(randomrot == 1)
-			{
-				a_overlayrotate(Overlayid(),270);
-			}
-			
+			a_overlayrotate(Overlayid(),90 * random(0,3));
 			A_overlayscale(overlayid(),frandom(0.3,1.5));
-		
 		}
 		SBDB A random(10,30);
 		SBDB AAAAAAAAAAAAAAAAAAAAA 1 A_overlayfadeout(0.05); 
 		Stop;
-		ReadyShotgunguyHEad:
-        //TNT1 A 0 A_JumpIfInventory("Kicking",1,"KickAction")
-        PTG1 B 1 A_jumpif(invoker.owner.player.cmd.buttons & bt_attack, "shotgunguyheadfire");
-		LOOP;
 	}
 }
 
 
-CLASS TemporaryWeapon : BrutalWeapon
+CLASS TemporaryWeapon : BDPWeaponBase
 {
 	bool hasexploded;
 	Override void doeffect()
@@ -1981,7 +1813,7 @@ CLASS TemporaryWeapon : BrutalWeapon
 	{
 		GunExplodes:
 		TNT1 A 0 A_overlay(5,"GunExplodeOverlay");
-	    TNT1 A 6;
+		TNT1 A 6;
 		NULL A 0 A_FireProjectile("TempGunExplosionSpawner", 0, 0, 0, 0, -2);
 		NULL A 0 A_WeaponOffset(0,32);
 		
@@ -2005,18 +1837,18 @@ CLASS BloodSplasher : Actor
 	Default
 	{
 	
-    damagefactor "Trample", 0.0;
+	damagefactor "Trample", 0.0;
 	DamageType "Blood";
 	Health 1;
 	Radius 1;
 	Height 1;
-    Mass 1;
+	Mass 1;
 	+NOCLIP;
 	+NOGRAVITY;
 	+ACTIVATEMCROSS;
-    +WINDTHRUST;
-    +NODAMAGETHRUST;
-    +PIERCEARMOR;
+	+WINDTHRUST;
+	+NODAMAGETHRUST;
+	+PIERCEARMOR;
 	+BLOODLESSIMPACT;
 	DeathSound "None";
 	}

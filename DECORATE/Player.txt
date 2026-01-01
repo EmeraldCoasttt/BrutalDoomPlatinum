@@ -1,7 +1,7 @@
 const int acsFatality = 312;
 ACTOR IsNOTAMenuDummy: Inventory {Inventory.MaxAmount 1}
 
-ACTOR BDPPlayer : Brutal_PlayerBase Replaces DoomPlayer //PlayerPawn Replaces DoomPlayer
+ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPlayer
 {
 	var int user_sghorizontalspread;
 	var int user_sgverticalspread;

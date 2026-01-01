@@ -25,6 +25,3 @@
 	alias SlowMoBind "i_timescale 0.3; rebind SlowMoBind2"
 	alias SlowMoBind2 "i_timescale 1; rebind SlowMoBind"
 	defaultbind kp1 SlowMoBind
-	
-	addmenukey "Give Everything" giveit
-	alias giveit "Give All"

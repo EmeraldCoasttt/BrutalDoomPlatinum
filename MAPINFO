@@ -64,12 +64,6 @@ episode BDM01
 }
 */
 
-episode test
-{
-	Name = "Testing Map"
-}
-
-
 map TITLEMAP "Title"
 {
 	music = D_DM2TTL	

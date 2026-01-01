@@ -1,4 +1,4 @@
-CLASS BDPBFG9000 : BrutalWeapon
+CLASS BDPBFG9000 : BDPWeaponBase
 {
 	Default
 	{
@@ -16,24 +16,19 @@ CLASS BDPBFG9000 : BrutalWeapon
 	}
 	States
 	{
-	Grenade: //32
+	Grenade: //30
 		BFGS BCDE 1;
-		TNT1 A 24;
+		TNT1 A 22;
 		BFGS EDCB 1;
 		Goto Ready;
-	Kick: //16
-		BFGN BCDE 1;
-		BFGN F 8;
-		BFGN EDCB 1;
-		Goto Ready;
-	AirKick: //18
+	Kick: //18
 		BFGN BCDE 1;
 		BFGN F 10;
 		BFGN EDCB 1;
 		Goto Ready;
-	SlideKick: //26
+	SlideKick: //25
 		BFGN BCDE 1;
-		BFGN F 18;
+		BFGN F 17;
 		BFGN EDCB 1;
 		Goto Ready;
 	Taunt: //30
@@ -45,20 +40,13 @@ CLASS BDPBFG9000 : BrutalWeapon
 		BFGN A 1 A_WeaponReadyDX();
 		Loop;
 	Sprint:
-		BFGN BCDE 1 A_WeaponReadyDX(0,FALSE,FALSE);
+		BFGN BCDE 1 A_SetSprites("TNT1A0",1);
 	SprintLoop:
-		BFGN F 1 A_KeepSprinting();
+		BFGN F 1 A_SetSprites("TNT1A0",1);
 		Loop;
 	SprintEnd:
-		BFGN EDCB 1 A_weaponreadyDX(0,FALSE,FALSE);
-		Goto ready;
-	NoAmmo:
-		TNT1 A 0 A_StartSound("weapons/empty", 3);
-	NoAmmo2:
-		BFGN A 1 A_WeaponReadyDX(WRF_NOFIRE,false,false);
-		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_ATTACK, "NoAmmo2");
-		Goto Ready;
-
+		BFGN EDCB 1 A_SetSprites("TNT1A0",1);
+		Stop;
 	Deselect:
 		BFGS ABCDE 1;
 		TNT1 A 1;
@@ -157,7 +145,7 @@ CLASS BDPBFG9000 : BrutalWeapon
 		BFGA F 1;
 		BFGA FFFFGGHIJK 1 A_SetPitch(Pitch+0.8, SPF_INTERPOLATE);
 		//BFGA FFGGHHIJKL 1 A_SetPitch(Pitch+0.8, SPF_INTERPOLATE)
-		BFGN A 0 A_Refire();
+		BFGN A 0 A_RefireDX();
 		Goto Ready;
 		
 		

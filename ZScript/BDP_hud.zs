@@ -88,7 +88,7 @@ class BDP_HUD : DoomStatusBar
 	override void Tick()
 	{
 		super.Tick();
-		brutal_playerbase BDPplr = brutal_playerbase(cplayer.mo);
+		BDPPlayerPawn BDPplr = BDPPlayerPawn(cplayer.mo);
 		int stamina;
 		If(BDPplr)
 		{
@@ -485,7 +485,7 @@ class BDP_HUD : DoomStatusBar
 			{
 				DrawImage("HASARMR", iconPos + smallIconOfs,DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
 			}
-		brutal_playerbase BDPplr = brutal_playerbase(Cplayer.mo);
+		BDPPlayerPawn BDPplr = BDPPlayerPawn(Cplayer.mo);
 		If(BDPplr && BDPplr.extralives > 0)
 		{
 			DrawString(
@@ -547,7 +547,7 @@ class BDP_HUD : DoomStatusBar
 	
 	void DrawStaminaBar(vector2 pos, int flags = 0)
 	{		
-		brutal_playerbase BDPplr = brutal_playerbase(Cplayer.mo);
+		BDPPlayerPawn BDPplr = BDPPlayerPawn(Cplayer.mo);
 		if (!BDPplr || !BDPplr.istactical)
 			return;
 		
@@ -618,7 +618,7 @@ class BDP_HUD : DoomStatusBar
 		int MagAmt;
 		int ammo3Amt;
 		Class<Inventory> Ammo3;
-		let weap = BrutalWeapon(CPlayer.mo.player.ReadyWeapon);
+		let weap = BDPWeaponBase(CPlayer.mo.player.ReadyWeapon);
 		if (weap)
 		{
 			Ammo3 = Weap.Ammotype3;
@@ -626,7 +626,15 @@ class BDP_HUD : DoomStatusBar
 			{
 				ammo3amt = CPlayer.mo.countinv(ammo3);
 			}
-			MagAmt = Weap.mag;
+			if(weap.bDUALWEAPON)
+			{
+				let dualweap = BDPWeaponBase(CPlayer.mo.FindInventory(weap.DualWeapon));
+				MagAmt = Weap.mag + DualWeap.mag;
+			}
+			else
+			{
+				MagAmt = Weap.mag;
+			}
 		}
 		
 		
@@ -693,7 +701,7 @@ class BDP_HUD : DoomStatusBar
 		iconPos += (iconSpacing * 1, 17);
 		DrawGrenadeIndicator(mIndexfnt, iconPos, iconFlags, (22,22));
 		
-		let plr = Brutal_Playerbase(CPlayer.mo);
+		let plr = BDPPlayerPawn(CPlayer.mo);
 		if (plr && plr.focusWeapon && !automapactive)
 		{
 			textureID focusicon = geticon(plr.focusweapon,0);
@@ -828,7 +836,7 @@ class BDP_HUD : DoomStatusBar
 		int flags = DI_SCREEN_RIGHT_TOP|DI_TEXT_ALIGN_RIGHT;
 		vector2 pos = basePos;
 		double Ystep = fnt.mFont.GetHeight();
-		brutal_playerbase BDPplr = brutal_playerbase(Cplayer.mo);
+		BDPPlayerPawn BDPplr = BDPPlayerPawn(Cplayer.mo);
 		If(BDPplr && BDPplr.scoremaster)
 		{
 			DrawString(
@@ -875,7 +883,7 @@ class BDP_HUD : DoomStatusBar
 	void DrawCrosshairs()
 	{		
 		// Get player
-		brutal_playerbase BDPplr = brutal_playerbase(Cplayer.mo);
+		BDPPlayerPawn BDPplr = BDPPlayerPawn(Cplayer.mo);
 		If(BDPplr && BDPplr.health > 0)
 		{
 			let curvehicle = Veh_Manager(BDPplr.FindInventory("Veh_Manager"));
@@ -922,7 +930,7 @@ class BDP_HUD : DoomStatusBar
 	void Drawkillstreak()
 	{		
 		// Get player
-		brutal_playerbase BDPplr = brutal_playerbase(Cplayer.mo);
+		BDPPlayerPawn BDPplr = BDPPlayerPawn(Cplayer.mo);
 		
 		If(BDPplr && BDPplr.killstreak > 2)
 		{
@@ -959,7 +967,7 @@ class BDP_HUD : DoomStatusBar
 		{
 			hintfade += 0.02;
 		}
-		brutal_playerbase BDPplr = brutal_playerbase(cplayer.mo);
+		BDPPlayerPawn BDPplr = BDPPlayerPawn(cplayer.mo);
 		bool nightmare = BDPplr.ultranightmare;
 		If(hinttimer >= 150 && !nightmare)
 		{
@@ -1095,11 +1103,11 @@ class BDP_OverlayUI : EventHandler
 	override void RenderOverlay(RenderEvent e)
 	{	
 		// Get player
-		brutal_playerbase BDPplr = brutal_playerbase(e.Camera);
+		BDPPlayerPawn BDPplr = BDPPlayerPawn(e.Camera);
 		if(!BDPplr)
 		{
 			let BDPcam = BDPVehCamera(e.Camera);
-			if(BDPcam) BDPplr = brutal_playerbase(BDPcam.source);
+			if(BDPcam) BDPplr = BDPPlayerPawn(BDPcam.source);
 			if(!BDPplr) return;
 		}
 		

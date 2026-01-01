@@ -841,7 +841,7 @@ CLASS LifeSphereOneUp : LifeSphere
 		override bool TryPickup (in out Actor toucher)
 	{
 		toucher.Score += 500;
-		brutal_playerbase BDPplr = brutal_playerbase(toucher);
+		BDPPlayerPawn BDPplr = BDPPlayerPawn(toucher);
 		If(BDPplr)
 		{
 			BDPplr.extralives ++;
@@ -922,7 +922,7 @@ CLASS EnergySphereOneUp : EnergySphere
 	override bool TryPickup (in out Actor toucher)
 	{
 		toucher.Score += 500;
-		brutal_playerbase BDPplr = brutal_playerbase(toucher);
+		BDPPlayerPawn BDPplr = BDPPlayerPawn(toucher);
 		If(BDPplr)
 		{
 			BDPplr.extralives += 3;

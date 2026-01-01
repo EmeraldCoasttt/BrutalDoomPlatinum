@@ -37,7 +37,7 @@ ACTOR BaseMagActor
 	}
 }
 
-ACTOR EmptypPistolClip: BaseMagActor
+ACTOR EmptyPistolMag: BaseMagActor
 {
    BounceFactor 0.6
    SeeSound "weapons/smallmagdrop"
@@ -46,10 +46,28 @@ ACTOR EmptypPistolClip: BaseMagActor
    States
    {
    Spawn:
-      TNT1 A 5 A_PlaySound("NULL")
 	  ECLI C 4
-	  ECLI CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 4 A_SetRoll(roll+45)
-      Stop
+	  ECLI C 1 A_SetRoll(roll+11.25)
+      Wait
+   Death:
+		"####" "#" 0
+		"####" "#" 350 A_SetRoll(90)
+		Goto Fadeout
+   }
+}
+
+ACTOR EmptySMGMag: BaseMagActor
+{
+   BounceFactor 0.6
+   SeeSound "weapons/smallmagdrop"
+   DeathSound "weapons/smallmagdrop"
+   BounceSound "weapons/smallmagdrop"
+   States
+   {
+   Spawn:
+	  ECLI K 4
+	  ECLI K 1 A_SetRoll(roll+11.25)
+      Wait
    Death:
 		"####" "#" 0
 		"####" "#" 350 A_SetRoll(90)
@@ -92,7 +110,6 @@ ACTOR EmptyClip: BaseMagActor
    States
    {
    Spawn:
-      TNT1 A 7 A_PlaySound("NULL")
 	  ECLI B 4 
 	  ECLI BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB 4 A_SetRoll(roll+45)
       Stop
@@ -132,7 +149,7 @@ ACTOR EmptyRifleClip: BaseMagActor
 	  TNT1 A 0
 	  TNT1 A 0 A_playsound("BR45PING")
 	  ECLI I 4 
-	  ECLI IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII 4 A_SetRoll(roll+45)
+	  ECLI IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII 4 A_SetRoll(roll+45,SPF_INTERPOLATE)
       Stop
    Death:
 	  TNT1 A 0
@@ -179,7 +196,6 @@ ACTOR EmptyRocketChamber: BaseMagActor
    States
    {
    Spawn:
-      TNT1 A 7 A_PlaySound("NULL")
 	 RCSE A 4
 	  RCSE AAAAAAAAAAAAAAAAAAAAAAAAAAA 4 A_SetRoll(roll-45)
       Stop
@@ -246,7 +262,7 @@ ACTOR EmptyPistolClipSpawn
 	{
 	Spawn:
 		TNT1 A 0
-		TNT1 A 1 A_CustomMissile("EmptypPistolClip",1,0,random(85,95),2,1)
+		TNT1 A 1 A_CustomMissile("EmptyPistolMag",1,0,random(85,95),2,1)
 		Stop
 	}
 }
