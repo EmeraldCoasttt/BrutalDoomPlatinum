@@ -231,7 +231,7 @@ Class BDPWeaponBase : DoomWeapon //Weapon
 					}
 				}
 				double BobSpeed = (BobSpeed * 128);
-				double angle = (BobSpeed * owner.player.GetWBobSpeed() * 35 /	TICRATE*(owner.player.BobTimer - 1 + i)) * (360. / 8192.);
+				double angle = (BobSpeed * owner.player.GetWBobSpeed() * 35 /	TICRATE*(owner.BobTimer - 1 + i)) * (360. / 8192.);
 				double BobIntensity = (owner.player.WeaponState & WF_WEAPONBOBBING) ? 1. : owner.player.GetWBobFire();
 				if (curbob != 0)
 				{
