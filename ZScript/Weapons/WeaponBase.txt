@@ -693,7 +693,7 @@ Class BDPWeaponBase : DoomWeapon //Weapon
 			pitch = dir.y;
 			
 			Actor misl, realmisl;
-			[misl, realmisl] = SpawnPlayerMissile (missiletype, dir.x, ofs.x, ofs.y, ofs.z, t, false, true);
+			[misl, realmisl] = SpawnPlayerMissile (missiletype, dir.x, 0, 0, 0, t, false, true);
 			pitch = saved_player_pitch;
 			
 			// automatic handling of seeker missiles

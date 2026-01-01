@@ -38,9 +38,6 @@ class BDPUnmaker : BDPWeaponBase
 		UNHG I 22;
 		UNHG HGFE 1;
 		Goto Ready;
-	Ready:
-		BFGN A 1 A_WeaponReadyDX();
-		Loop;
 	Sprint:
 		UNHG EFGH 1 A_SetSprites("TNT1A0",1);
 	SprintLoop:
@@ -64,7 +61,7 @@ class BDPUnmaker : BDPWeaponBase
 	Select:
 		TNT1 A 1 A_SetCrosshairDX("UNMRet", 1000);
 		TNT1 A 0 A_StartSound("UNMAKSEL");
-		UNHS EDCBA 1 A_WeaponReady(WRF_NOFIRE);
+		UNHS EDCBA 1;
 		Goto Ready;
     Spawn:
         UNHW A 1;

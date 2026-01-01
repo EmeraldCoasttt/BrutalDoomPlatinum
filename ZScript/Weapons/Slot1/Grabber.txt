@@ -96,13 +96,13 @@ class BDPGrabber : BDPWeaponBase
 		BFGN A 1 A_WeaponReadyDX();
 		Loop;
 	Sprint:
-		BFGN BCDE 1 A_WeaponReadyDX(0,false);
+		BFGN BCDE 1 A_SetSprites("TNT1A0",1);
 	SprintLoop:
-		BFGN F 1 A_KeepSprinting();
+		BFGN F 1 A_SetSprites("TNT1A0",1);
 		Loop;
 	SprintEnd:
-		BFGN EDCB 1 A_WeaponReadyDX(0,false);
-		Goto ready;
+		BFGN EDCB 1 A_SetSprites("TNT1A0",1);
+		Stop;
 	Deselect:
 		BFGS ABCDE 1;
 		TNT1 A 1;

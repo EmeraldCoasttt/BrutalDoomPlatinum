@@ -75,6 +75,7 @@ class BDPPlasmaRifle : BDPWeaponBase
 		3LSI ABCDE 0;
 		4LSN KLMNOPQRST 0;
 		4LSI ABCDE 0;
+		3LSR AB 0;
 		Stop;
 	Grenade: //30
 		PLSN QRST 1 A_LowSprites("3LSN","2LSN","PLSN");
@@ -135,7 +136,11 @@ class BDPPlasmaRifle : BDPWeaponBase
 		4LSN OOOOOO 1 A_SetSprites("TNT1A0",1);
 		Loop;
 	SprintEnd:
+		PLSN A 0 A_LowSprites("3LSN","2LSN","PLSN","SprintEndLowAmmo");
 		#### NMLK 1 A_SetSprites("TNT1A0",1);
+		Stop;
+	SprinEndNoAmmo:
+		4LSN OONMLK 1 A_SetSprites("TNT1A0",1);
 		Stop;
 	Fidget:
 		PLSI A 0 A_LowSprites("3LSI","2LSI","PLSI");
@@ -276,7 +281,7 @@ class BDPPlasmaRifle : BDPWeaponBase
 		{
 			A_GunLight(300,2,0,128,255);
 			if (CountInv("Reloading") == 1) { return resolvestate("Reload"); }
-			A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH|WRF_DISABLESWITCH);
+			A_WeaponReady(WRF_NOFIRE|WRF_NOSWITCH);
 			A_WeaponOffset( random(-2,2),32+random(-2,2) );
 			A_StartSound("PLSFULL", 6, CHANF_LOOPING, 1, 0.8);
 			return resolvestate(null);

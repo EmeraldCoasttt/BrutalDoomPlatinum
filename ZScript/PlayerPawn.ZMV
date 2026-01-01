@@ -353,7 +353,7 @@ class BDPPlayerPawn : PlayerPawn
 		if(bloodStain > 0)
 		{
 			let psp = player.FindPSprite(layer);
-			if(TexMan.GetName(psp.curstate.GetSpriteTexture(0)).Mid(1,3) == sprite)
+			if(psp && TexMan.GetName(psp.curstate.GetSpriteTexture(0)).Mid(1,3) == sprite)
 			{
 				psp.sprite = GetSpriteIndex(bloodStain..sprite);
 			}

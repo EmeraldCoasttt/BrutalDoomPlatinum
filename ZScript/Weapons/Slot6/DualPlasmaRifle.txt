@@ -275,8 +275,8 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		TNT1 A 5 A_DrawDualOverlays("SelectOverlay","SelectOverlay",true);
 		Goto Ready;
 	NoAmmo:
-		TNT1 A 0 A_StartSound("BEPBEP");
+		TNT1 A 0 A_StartSound("BEP");
 		TNT1 A 0 A_AutoReloadMag();
-		Goto Ready;
+		Goto ReadyOverlay;
 	}
 }

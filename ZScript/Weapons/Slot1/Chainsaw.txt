@@ -7,6 +7,14 @@ class BDPChainsaw : BDPWeaponBase
 		StainSprites("AWF");
 		StainSprites("AWG");
 		StainSprites("AWS");
+		StainSprites("AWB",49);
+		StainSprites("AWF",49);
+		StainSprites("AWG",49);
+		StainSprites("AWS",49);
+		StainSprites("AWB",50);
+		StainSprites("AWF",50);
+		StainSprites("AWG",50);
+		StainSprites("AWS",50);
 	}
 	
 	Default
@@ -86,15 +94,15 @@ class BDPChainsaw : BDPWeaponBase
 		SAWS YXWV 1;
 		Goto Ready;
 	Sprint:
-		SAWS VWXY 1 A_SetSprites("TNT1A0");
+		SAWS VWXY 1 A_SetSprites("TNT1A0",1);
 	SprintLoop:
-		SAWS [Z 2 A_SetSprites("TNT1A0");
+		SAWS [[ZZ 1 A_SetSprites("TNT1A0",1);
 		TNT1 A 0 {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,-10);}
-		SAWS [Z 2 A_SetSprites("TNT1A0");
+		SAWS [[ZZ 1 A_SetSprites("TNT1A0",1);
 		Loop;
 	SprintEnd:
-		SAWS YXWV 1 A_SetSprites("TNT1A0");
-		Goto Ready;
+		SAWS YXWV 1 A_SetSprites("TNT1A0",1);
+		Stop;
 	Select:
 		TNT1 A 1 {A_SetCrosshairDX("Null"); A_GiveInventory("HasCutingWeapon",1);}
 		SAWS NOPQ 1 A_WeaponReady(WRF_NOFIRE);
@@ -124,12 +132,12 @@ class BDPChainsaw : BDPWeaponBase
 		SAWS HIJKLM 1 A_WeaponReadyDX(WRF_NOFIRE);
 		Goto Ready;
 	Ready:
-		TNT1 A 0 {A_StopSound(1); A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,0,5);}
+		TNT1 A 0 {A_StopSound(1); if(!invoker.CheckSprint()) {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,0,5);}}
 		SAWG ABCDEFGG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		TNT1 A 0 A_JumpIf(invoker.bloodStain == 0,"Ready");
-		TNT1 A 0 {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,0,5);}
+		TNT1 A 0 {if(!invoker.CheckSprint()) {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,0,5);}}
 		1AWB ABCDEFGG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		TNT1 A 0 {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,0,5);}
+		TNT1 A 0 {if(!invoker.CheckSprint()) {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,0,5);}}
 		1AWB HIJKLMNN 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		Loop;
 	Fire:
