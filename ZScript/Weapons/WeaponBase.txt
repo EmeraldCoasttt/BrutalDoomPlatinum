@@ -953,7 +953,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 	Action state A_AutoReloadMag(int minammo = 1, statelabel label = "Reload", bool force = false)
 	{
 		//FORCE flag is intended for single shot weapons
-		If(invoker.mag < 1 && countinv(invoker.ammotype1) >= invoker.magConversion.y && (invoker.owner.getcvar("bdp_autoreload") == true || force == true))
+		If(invoker.mag < 1 && countinv(invoker.ammotype1) >= invoker.magConversion.y && (invoker.owner.getcvar("bdp_autoreload") == true || force == true) && (invoker.readyLeft && invoker.readyRight || !invoker.bDUALWEAPON))
 			Return Resolvestate(Label);
 		Return Resolvestate(Null);
 	}
