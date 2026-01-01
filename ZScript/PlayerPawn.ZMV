@@ -1322,7 +1322,7 @@ class BDPPlayerPawn : PlayerPawn
 					geigertimer += random(-1,2);
 					
 					//console.printf("%i",geigertimer);
-					a_startsound("GEIGER",102,0);
+					a_startsound("GEIGER",102,0,0.5);
 				}
 				
 				
