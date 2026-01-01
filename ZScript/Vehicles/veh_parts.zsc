@@ -27,7 +27,7 @@ class Veh_Manager : Inventory
 		{
 			noweap.veh = onveh;
 			let weap = to.player.ReadyWeapon;
-			if(weap) noweap.defaultstate = weap.FindState("Select");
+			if(weap) noweap.defaultstate = weap.FindState("InitWeaponState");
 			noweap.disableweaps = disableweaps;
 		}
 		return noweap;

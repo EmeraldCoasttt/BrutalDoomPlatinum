@@ -413,7 +413,7 @@ class BDPPlayerPawn : PlayerPawn
 					tr = "AirKickTranslatable";
 				}
 				A_StartSound("KICK",69);
-				if(kickflash && weap.resolvestate(st))
+				if(kickflash && weap.resolvestate(st) && !bSPRINTING)
 					player.SetPSprite(1,weap.resolvestate(st));
 				A_Overlay(-601,tr);
 				A_OverlayFlags(-601, PSPF_PLAYERTRANSLATED, true);
@@ -1895,9 +1895,9 @@ class BDPPlayerPawn : PlayerPawn
 			{
 				BDP_DoorBuster.DestroyDoor(self,  breakLocks: BDP_DoorBuster.LB_CheckKey);
 			}
-			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,0,SXF_ABSOLUTEVELOCITY);
-			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,0,SXF_ABSOLUTEVELOCITY);
-			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,0,SXF_ABSOLUTEVELOCITY);
+			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,VectorAngle(cmd.forwardmove,-cmd.sidemove),SXF_ABSOLUTEVELOCITY);
+			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,VectorAngle(cmd.forwardmove,-cmd.sidemove),SXF_ABSOLUTEVELOCITY);
+			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,VectorAngle(cmd.forwardmove,-cmd.sidemove),SXF_ABSOLUTEVELOCITY);
 			
 			Actor speedMo = Spawn("PlayerSpeedTrail", Pos, NO_REPLACE);
 			if (speedMo)
