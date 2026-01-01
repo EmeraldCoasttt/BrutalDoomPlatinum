@@ -51,6 +51,12 @@ DoomEdNums
 	25869 = EnergyArmor
 }
 	
+	
+episode test
+{
+	Name = "Testing Map"
+}
+
 episode EDAY01
 {
 	optional
