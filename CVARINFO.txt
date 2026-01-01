@@ -59,8 +59,6 @@ server int bd_newliquids = 1;
 //Dox's CVARS
 user int donotclimb = 1;
 
-user int donotdoublejump = 1;
-
 user int bd_Legs = 0;
 
 //GRAPHICAL
