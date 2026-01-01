@@ -187,3 +187,4 @@ DHINT31 = "Remember to drink plenty of water.";
 DHINT32 = "Crosshairs act as a guide for your weapon's spread.";
 DHINT33 = "If you reload certain weapons early, a round will be left in the chamber.";
 DHINT33 = "The pistol's suppressor decreases its damage, but makes it inaudible to enemies.";
+DHINT34 = "The booster frame amplifies prolonged sprinting and even lets you double jump.";
