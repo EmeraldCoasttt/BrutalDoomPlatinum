@@ -1010,7 +1010,9 @@ class BDP_HUD : DoomStatusBar
 		"$DHINT30",
 		"$DHINT31",
 		"$DHINT32",
-		"$DHINT33"
+		"$DHINT33",
+		"$DHINT34",
+		"$DHINT35"
 		
 	};
 }
