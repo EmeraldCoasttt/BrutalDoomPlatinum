@@ -3,13 +3,18 @@ class BDPFist : BDPWeaponBase replaces Fist
 	override void DoSpriteStain()
 	{
 		super.DoSpriteStain();
-		StainSprites("ISA");
-		StainSprites("KUP");
-		StainSprites("ONG");
-		StainSprites("UNS");
-		StainSprites("UN3");
-		StainSprites("UN5");
-		StainSprites("UCK");
+		if(!(owner.player.FindPSprite(50) || owner.player.FindPSprite(49)))
+			{
+			StainSprites("ISA");
+			StainSprites("KUP");
+			StainSprites("ONG");
+			StainSprites("UNS");
+			StainSprites("UN3");
+			StainSprites("UN5");
+			StainSprites("UCK");
+		}
+		StainSprites("ISA",49);
+		StainSprites("ISA",50);
 	}
 	
 	Default

@@ -3,17 +3,14 @@ class BDPChainsaw : BDPWeaponBase
 	override void DoSpriteStain()
 	{
 		super.DoSpriteStain();
-		StainSprites("AWB");
-		StainSprites("AWF");
-		StainSprites("AWG");
-		StainSprites("AWS");
-		StainSprites("AWB",49);
-		StainSprites("AWF",49);
-		StainSprites("AWG",49);
+		if(!(CheckSprint() || owner.player.FindPSprite(49)))
+		{
+			StainSprites("AWB");
+			StainSprites("AWF");
+			StainSprites("AWG");
+			StainSprites("AWS");
+		}
 		StainSprites("AWS",49);
-		StainSprites("AWB",50);
-		StainSprites("AWF",50);
-		StainSprites("AWG",50);
 		StainSprites("AWS",50);
 	}
 	

@@ -1670,6 +1670,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 				A_Print("You must have two "..invoker.GetTag().."s to Dual wield!",3);
 			else if(resolvestate("SpecialAction"));
 			{
+				A_ClearOverlays(49,50);
 				return resolvestate("SpecialAction");
 			}
 			return resolvestate(null);
