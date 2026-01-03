@@ -164,7 +164,7 @@ class BDPPistol : BDPWeaponBase replaces Pistol
 					A_SetFrame(random(6,7));
 			}
 			A_SemiFlag();
-			A_WeaponRecoil(0.4);
+			A_WeaponRecoil(0.8);
 			A_QuadSound();
 			A_MagClick();
 			A_TakeMag();

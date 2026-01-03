@@ -148,7 +148,7 @@ CLASS BDPBattleRifle : BDPWeaponBase
 			BR4F "#" 1
 			{
 				A_FireBattleRifle();
-				A_WeaponRecoil(1);
+				A_WeaponRecoil(3);
 				A_ZoomFactor(0.99);
 				A_FireParticles(1,8);
 				A_FireBattleRifle();
@@ -228,7 +228,7 @@ CLASS BDPBattleRifle : BDPWeaponBase
 				player.fov = player.fov / 0.95;
 				A_FireParticles(1,8);
 				A_FireBattleRifle();
-				A_WeaponRecoil(0.5);
+				A_WeaponRecoil(1.5);
 				A_startsound("BR45FIRE",1,0,0.85);
 				A_QuadSound();
 				A_AlertMonstersDX();

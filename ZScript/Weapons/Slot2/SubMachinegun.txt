@@ -74,7 +74,7 @@ class BDPSubmachineGun : BDPWeaponBase
 		SMGF A 1 Bright
 		{
 			A_FireBullets (3, 3, 1, 12, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-14);
-			A_WeaponRecoil(0.3,0,1);
+			A_WeaponRecoil(0.4,0);
 			A_FireParticles(1,8);
 			A_StartSound("SMGFIRE", 1);
 			A_StartSound("FARSMG", 6);
@@ -99,7 +99,7 @@ class BDPSubmachineGun : BDPWeaponBase
 		SMGZ G 1 Bright
 		{
 			A_FireBullets (1.5, 1.5, -1, 12, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-6);
-			A_WeaponRecoil(0.3,0,1);
+			A_WeaponRecoil(0.2);
 			A_FireParticles(1,8);
 			A_StartSound("SMGFIRE", 1);
 			A_StartSound("FARSMG", 6);

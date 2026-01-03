@@ -133,7 +133,7 @@ class BDPDualSMG : BDPWeaponBase
 			A_ZoomFactor(0.99);
 			A_QuadSound();
 			A_GunLight();
-			A_WeaponRecoil(0.8,frandom(-0.8,0.8));
+			A_WeaponRecoil(1.0,frandom(-0.8,0.8));
 			if(invoker.sideFired)
 			{
 				A_MagClick();
