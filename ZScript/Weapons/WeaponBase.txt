@@ -721,7 +721,7 @@ Class BDPWeaponBase : DoomWeapon //Weapon
 		}
 	}
 	
-	action void A_WeaponRecoil(double offsetpitch, double offsetangle = 0, int recovertime = 2)
+	action void A_WeaponRecoil(double offsetpitch, double offsetangle = 0, int recovertime = 2, double recoverspeed = 2)
 	{
 		let dplr = BDPPlayerPawn(invoker.owner);
 		double mod = 1.0;
@@ -746,6 +746,7 @@ Class BDPWeaponBase : DoomWeapon //Weapon
 			}
 		}
 		dplr.recoil = (offsetpitch,offsetangle) * mod;
+		dplr.antiRecoilSpeed = recoverspeed;
 	}
 	
 	action state A_DualWield()

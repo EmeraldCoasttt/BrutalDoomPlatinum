@@ -119,14 +119,14 @@ class BDPChainsaw : BDPWeaponBase
 		Wait;
 	Fidget:
 		TNT1 A 0 A_StartSound("DSSAWZIP", 1);
-		SAWS A 3 A_WeaponReadyDX(WRF_NOFIRE);
-		SAWS BCCD 1 A_WeaponReadyDX(WRF_NOFIRE);
+		SAWS A 3 A_WeaponReadyDX(0,false);
+		SAWS BCCD 1 A_WeaponReadyDX(0,false);
 	FidgetLoop:
-		SAWS D 1 A_WeaponReadyDX(WRF_NOFIRE);
+		SAWS D 1 A_WeaponReadyDX(0,false);
 		TNT1 A 0 A_PressingReload("FidgetLoop");
-		SAWS EFG 1 A_WeaponReadyDX(WRF_NOFIRE);
+		SAWS EFG 1 A_WeaponReadyDX(0,false);
 		TNT1 A 0 A_StartSound("weapons/chainsaw/draw", 3);
-		SAWS HIJKLM 1 A_WeaponReadyDX(WRF_NOFIRE);
+		SAWS HIJKLM 1 A_WeaponReadyDX(0,false);
 		Goto Ready;
 	Ready:
 		TNT1 A 0 {A_StopSound(1); if(!invoker.CheckSprint()) {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,0,5);}}

@@ -245,6 +245,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		TNT1 NNO 1;
 		TNT1 PPPQRSSTTTUUVWX 1;
 		TNT1 A 0 A_StartSound("foley/PlasmaInspectMisc",10);
+		TNT1 A 0 A_ReloadDualMag();
 		TNT1 YZ 1;
 		TNT1 [ 1;
 		TNT1 \ 1;

@@ -246,6 +246,7 @@ class BDPPlayerPawn : PlayerPawn
 	Vector2 recoil;
 	Vector2 antiRecoil;
 	Vector2 recoilSpeed;
+	double antiRecoilSpeed;
 	int recoilTics;
 	int recoilTicGoal;
 	
@@ -2190,20 +2191,20 @@ class BDPPlayerPawn : PlayerPawn
 		{
 			if(antiRecoil.x < 15 + recoilSpeed.x)
 			{
-				if(antiRecoil.x > 2)
+				if(antiRecoil.x > antiRecoilSpeed)
 				{
-					pitch += 2;
-					antiRecoil.x -= 2;
+					pitch += antiRecoilSpeed;
+					antiRecoil.x -= antiRecoilSpeed;
 				}
 				else
 				{
 					pitch += antiRecoil.x;
 					antiRecoil.x = 0;
 				}
-				if(abs(antiRecoil.y) > 2)
+				if(abs(antiRecoil.y) > antiRecoilSpeed)
 				{
-					angle += antiRecoil.y > 0 ? 2 : -2;
-					antiRecoil.y -= antiRecoil.y > 0 ? 2 : -2;
+					angle += antiRecoil.y > 0 ? antiRecoilSpeed : -antiRecoilSpeed;
+					antiRecoil.y -= antiRecoil.y > 0 ? antiRecoilSpeed : -antiRecoilSpeed;
 				}
 				else
 				{
