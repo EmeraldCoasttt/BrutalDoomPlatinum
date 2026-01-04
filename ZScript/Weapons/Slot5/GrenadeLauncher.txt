@@ -496,7 +496,7 @@ CLASS FireGrenade : actor
 
 
   //  +BLOODSPLATTER
-	Gravity 0.7;
+	Gravity 0.3;
 	Damagefunction 0;
 	+MISSILE;
 	+FORCEXYBILLBOARD;

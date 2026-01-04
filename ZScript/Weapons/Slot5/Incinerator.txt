@@ -83,9 +83,9 @@ CLASS BDPIncinerator : BDPWeaponBase
 		TNT1 A 0 A_GunLight(500,3);
 		TNT1 A 0 A_StartSound("FLAMSTOP", 1);
 		Goto Ready;
-	Altfire:
+	SpecialAction:
 		FLMG A 0 A_JumpIf(waterlevel > 1, "NoAmmo");
-		FLMG A 0 A_CheckIfMag(5);
+		FLMG A 0 A_CheckIfMag(5,"NoAmmoAlt");
 	SmokeFireball:	
 		NULL A 0 A_StartSound("weapons/firegrenade");
 		TNT1 A 0 a_alertmonstersDX();
@@ -93,27 +93,62 @@ CLASS BDPIncinerator : BDPWeaponBase
 		{
 			A_FireCustomMissile("SmokeSpewer", 0, 0, 0, -6);
 			A_FireParticles(12);
-			A_StartSound("weapons/firegrenade");
+			A_StartSound("weapons/firegrenade",3);
 			A_alertmonstersDX();
+			A_WeaponRecoil(5);
 			A_TakeMag(5);
 		}
 		FLMT D 1 Bright
 		{
 			A_WeaponOffset(random(-1,1),32+random(0,1) );
-			A_SetPitch(-4.0 + pitch, SPF_INTERPOLATE);
+			
 			A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
 		}
 		FLMT E 1 Bright;
-		FLMT AB 1 A_SetPitch(+2.0 + pitch, SPF_INTERPOLATE);
+		FLMT AB 1;
+		FLMT CABC 1;
+		Goto Ready;
+	AltFire:
+		FLMG A 0 A_CheckIfMag(20,"NoAmmoAlt");
+	SmokeFireball:	
+		NULL A 0 A_StartSound("weapons/firegrenade");
+		TNT1 A 0 a_alertmonstersDX();
+		FLMT D 1 Bright
+		{
+			A_FireProjectile("FireGrenade",0,0,0,-6);
+			A_FireParticles(12);
+			A_StartSound("weapons/firegrenade",3);
+			A_alertmonstersDX();
+			A_TakeMag(20);
+			A_WeaponRecoil(10);
+		}
+		FLMT D 1 Bright
+		{
+			A_WeaponOffset(random(-1,1),32+random(0,1) );
+			//A_SetPitch(-4.0 + pitch, SPF_INTERPOLATE);
+			A_FireCustomMissile("ShakeYourAssDouble", 0, 0, 0, 0);
+		}
+		FLMT E 1 Bright;
+		FLMT AB 1;
 		FLMT CABC 1;
 		Goto Ready;
 	DoReload:	
-		FLMT K 1 A_Startsound("FLMRUNLD");
+		FLMT K 1 A_Startsound("FLMRUNLD",2);
 		FLMT OPQRSS 1;
 		FLMT T 1 {A_DiscardMag(); A_FireProjectileDX("emptyflamercan",3,-30,30,0,-10);}
 		FLMT ZZTSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 1;
 		FLMT T 1 {A_ReloadMag(); A_Startsound("FLMRLOAD");}
 		FLMT TZZTSSSSSSSSSTUVWXYK 1;
+		Goto Ready;
+		
+	NoAmmoAlt:
+		TNT1 A 0
+		{
+			A_StartSound("Weapons/Empty",3);
+			If(invoker.mag < 20 && countinv(invoker.ammotype1) >= invoker.magConversion.y)
+			Return Resolvestate("Reload");
+			Return Resolvestate(Null);
+		}
 		Goto Ready;
 		
 	}
