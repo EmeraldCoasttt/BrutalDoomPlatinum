@@ -226,7 +226,7 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 		{
 				A_FireBullets (5, 5, 5, 13, "ShotgunPuff", FBF_NORANDOM,8192,"decorativetracer",-4);
 				A_FireBullets (2.5, 2.5, 4, 13, "ShotgunPuff2", FBF_NORANDOM,400,"decorativetracer",-4);
-				A_WeaponRecoil(4);
+				A_WeaponRecoil(8,0,2,0.75);
 				A_HookOverlay("AltFire1Hook");
 				A_FireParticles(10);
 				A_StartSound("SSGALTFI", 1); 
@@ -251,7 +251,7 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 		{
 				A_FireBullets (5, 5, 5, 13, "ShotgunPuff", FBF_NORANDOM,8192,"decorativetracer",-4);
 				A_FireBullets (2.5, 2.5, 4, 13, "ShotgunPuff2", FBF_NORANDOM,400,"decorativetracer",-4);
-				A_WeaponRecoil(4);
+				A_WeaponRecoil(8,0,2,0.75);
 				A_HookOverlay("AltFire2Hook");
 				A_FireParticles(10);
 				A_StartSound("SSGALTFI", 1); 
