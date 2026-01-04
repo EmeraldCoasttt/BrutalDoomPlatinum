@@ -173,11 +173,13 @@ class BDPMinigun : BDPWeaponBase
 		Goto DoneHolding;
 	SpinFire:
 		TNT1 A 0 A_CheckIfAmmo("BDPClip2",1,"NoAmmoHold");
+	SpinReFire:
+		TNT1 A 0 A_CheckIfAmmo("BDPClip2",1,"NoAmmoHoldWasFiring");
 		CHAF G 1 Bright
 		{
 			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
-			A_WeaponRecoil(0.6,frandom(-0.6,0.6));
+			A_WeaponRecoil(1.5,frandom(-0.6,0.6));
 			A_FireParticles();
 			A_StartSound("CHAINSPI", 5,CHANF_LOOPING,0.5);
 			A_StartSound("CHAINSHO", 1,CHANF_LOOPING,0.5);
@@ -196,14 +198,14 @@ class BDPMinigun : BDPWeaponBase
 			A_AlertMonstersDX();
 			A_ZoomFactor(0.99);
 			A_QuadSound();
-			A_GunLight();
+			//A_GunLight();
 		}
-		TNT1 A 0 A_CheckIfAmmo("BDPClip2",1,"NoAmmoHold");
+		TNT1 A 0 A_CheckIfAmmo("BDPClip2",1,"NoAmmoHoldWasFiring");
 		CHAF E 1 Bright
 		{
 			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
-			A_WeaponRecoil(0.6,frandom(-0.6,0.6));
+			A_WeaponRecoil(1.5,frandom(-0.6,0.6));
 			A_FireProjectile("50CaseSpawn2",0,0,12,-18);
 			A_FireProjectile("SmokeSpawner11",0,0,0,0);
 			A_FireParticles();
@@ -222,7 +224,7 @@ class BDPMinigun : BDPWeaponBase
 			A_AlertMonstersDX();
 			A_ZoomFactor(0.99);
 			A_QuadSound();
-			A_GunLight();
+			//A_GunLight();
 		}
 		TNT1 A 0
 		{
@@ -232,7 +234,7 @@ class BDPMinigun : BDPWeaponBase
 			A_ZoomFactor(1.0);
 			A_WeaponOffset(0,32);
 		}
-		TNT1 A 0 A_RefireDX("SpinFire");
+		TNT1 A 0 A_RefireDX("SpinReFire");
 		TNT1 A 0 A_StartSound("CHAINSH2",1,0,0.5);
 		Goto DoneHolding;
 	DoneHolding:
