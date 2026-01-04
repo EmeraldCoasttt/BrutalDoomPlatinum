@@ -189,3 +189,4 @@ DHINT33 = "If you reload certain weapons early, a round will be left in the cham
 DHINT33 = "The pistol's suppressor decreases its damage, but makes it inaudible to enemies.";
 DHINT34 = "The booster frame amplifies prolonged sprinting and even lets you double jump.";
 DHINT35 = "Your geiger counter activates in damaging sectors.";
+DHINT36 = "Chaos Field Grenades don't deal damage, but cause infighting.";
