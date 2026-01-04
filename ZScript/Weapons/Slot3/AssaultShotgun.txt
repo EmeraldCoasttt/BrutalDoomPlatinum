@@ -82,8 +82,8 @@ class BDPAssaultShotgun : BDPWeaponBase
 		A12F "#" 1 Bright
 		{
 			A_FireBullets (3, 3, 5, 14, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-7);
-			A_FireBullets (1.5, 1.5, 4, 5, "ShotgunPuff", FBF_NORANDOM,400,"decorativetracer",-7);
-			A_WeaponRecoil(2.6);
+			A_FireBullets (1.5, 1.5, 4, 8, "ShotgunPuff", FBF_NORANDOM,400,"decorativetracer",-7);
+			A_WeaponRecoil(8,frandom(-4,4),2,0.75);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_FireParticles(8);
 			A_StartSound("A12FIR", 1,0,0.6);
@@ -107,7 +107,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 			{
 				A_FireProjectile("DragonsBreathSparkle",frandom(-3 - invoker.burstCount,3 + invoker.burstCount),false,0,-4,0,frandom(-3 - invoker.burstCount,3 + invoker.burstCount));
 			}
-			A_WeaponRecoil(2.6,0,2);
+			A_WeaponRecoil(8,frandom(-4,4),2,0.75);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_FireParticles(8);
 			A_StartSound("A12FIR", 1,0,0.6);
