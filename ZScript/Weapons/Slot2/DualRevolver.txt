@@ -144,14 +144,14 @@ class BDPDualRevolver : BDPWeaponBase
 		{
 			if(OverlayID() == 3)
 			{
-				A_FireBullets(8, 6, 1, 60, "RevolverPuff", FBF_NORANDOM,0,"DecorativeTracer",-6,10);
+				A_FireBullets(2, 2, 1, 60, "RevolverPuff", FBF_NORANDOM,0,"DecorativeTracer",-6,10);
 				A_WeaponRecoil(15.0,5,2,0.75);
 				A_FireParticles(5,12,5);
 				A_TakeDualMag();
 			}
 			else
 			{
-				A_FireBullets(8, 6, 1, 60, "RevolverPuff", FBF_NORANDOM,0,"DecorativeTracer",-6,-10);
+				A_FireBullets(2, 2, 1, 60, "RevolverPuff", FBF_NORANDOM,0,"DecorativeTracer",-6,-10);
 				A_WeaponRecoil(15.0,-5,2,0.75);
 				A_FireParticles(5,12,-5);
 				A_TakeMag();

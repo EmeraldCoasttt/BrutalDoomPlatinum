@@ -70,7 +70,7 @@ class BDPRevolver : BDPWeaponBase
 		REVO A 1 A_StartSound("REVFIRE1");
 		REVO M 1 Bright
 		{
-			A_FireBullets (2, 2, 1, 60, "RevolverPuff", FBF_NORANDOM,0,"DecorativeTracer",-4);
+			A_FireBullets (0, 0, 1, 60, "RevolverPuff", FBF_NORANDOM,0,"DecorativeTracer",-4);
 			A_FireParticles(5);
 			A_StartSound("REVFIRE2", 1);
 			A_StartSound("FARSHT", 6);
