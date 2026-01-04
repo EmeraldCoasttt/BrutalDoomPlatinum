@@ -148,7 +148,6 @@ CLASS BDPBattleRifle : BDPWeaponBase
 			BR4F "#" 1
 			{
 				A_FireBattleRifle();
-				A_WeaponRecoil(3);
 				A_ZoomFactor(0.99);
 				A_FireParticles(1,8);
 				A_FireBattleRifle();
@@ -158,6 +157,14 @@ CLASS BDPBattleRifle : BDPWeaponBase
 				A_TakeMag();
 				A_GunLight();
 				invoker.burstcount++;
+				If(invoker.burstcount < 3)
+				{
+					A_WeaponRecoil(3);
+				}
+				Else
+				{
+					A_WeaponRecoil(8,0,2,0.75);
+				}
 			}
 			BR45 D 1
 			{
@@ -228,13 +235,20 @@ CLASS BDPBattleRifle : BDPWeaponBase
 				player.fov = player.fov / 0.95;
 				A_FireParticles(1,8);
 				A_FireBattleRifle();
-				A_WeaponRecoil(1.5);
 				A_startsound("BR45FIRE",1,0,0.85);
 				A_QuadSound();
 				A_AlertMonstersDX();
 				A_GunLight();
 				A_TakeMag();
 				invoker.burstcount++;
+				If(invoker.burstcount < 3)
+				{
+					A_WeaponRecoil(1.5);
+				}
+				Else
+				{
+					A_WeaponRecoil(4,0,2,0.75);
+				}
 			}
 			BR4Z D 1 Bright
 			{
