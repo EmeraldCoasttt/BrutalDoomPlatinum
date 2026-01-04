@@ -1204,6 +1204,80 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		StainSprites("UCK");
 	}
 	
+	action void A_FirePiercingBullet(int damage, class<Actor> pufftype = "BulletPuff", double spread_xy = 0, double spread_z = 0, int spawnofs_xy = 0, double spawnofs_z = 0, double range = 8192)
+	{
+	
+		spread_xy = spread_xy * Random2[crailgun]() / 255.;
+		spread_z = spread_z * Random2[crailgun]() / 255.;
+		
+		FRailParams p;
+		p.damage = damage;
+		p.offset_xy = 0;
+		p.offset_z = 0;
+		p.color1 = -1;
+		p.color2 = -1;
+		p.maxdiff = 0;
+		p.flags = RGF_SILENT | RGF_NORANDOMPUFFZ;
+		p.puff = pufftype;
+		p.angleoffset = spread_xy;
+		p.pitchoffset = spread_z;
+		p.distance = range;
+		p.duration = 0;
+		p.sparsity = 1.0;
+		p.drift = 0;
+		p.spawnclass = null;
+		p.SpiralOffset = 0;
+		p.limit = 0;
+		self.RailAttack(p);
+		//Railattack's puff spawning is fucked so we're faking it with a linetrace
+		FLineTraceData lasersight;
+		LineTrace(angle + spread_xy, range, pitch + spread_z, TRF_THRUACTORS, offsetz: player.viewz - pos.z, data: lasersight);
+		vector3 targetpos = lasersight.HitLocation;
+		double ricochetangle;
+		if (lasersight.HitType == TRACE_HitWall)
+			{
+			//	A_logint(wallangle.lineside);
+			   ricochetangle = atan2(lasersight.hitline.delta.y, lasersight.hitline.delta.x) - 90;
+			vector2 wallnormal = (-lasersight.HitLine.delta.y,lasersight.HitLine.delta.x).unit();
+				//We need to create consistent behaviour for either line side
+				If (lasersight.lineside == 1)
+				{
+					RicochetAngle = (ricochetangle - 180);
+					
+					targetpos += (wallnormal * 6);
+				}
+				else
+				{	
+					rotatevector(wallnormal,180);
+					targetpos += (wallnormal * -6);
+					
+				}
+				
+			}
+		Else
+		{
+			ricochetangle = angle + 180;
+		}
+		let ricochet = Spawn("ricochet",targetpos);
+		If(ricochet)
+		{	
+			//Doing this from the ricochet to avoid recalculating offsets
+			If(lasersight.HitType == TRACE_HitWall)
+			{
+				ricochet.angle = ricochetangle + 180;
+				ricochet.a_spraydecal("BulletDecalNew1",172,(0,0,-1));
+			}
+			
+			ricochet.angle = ricochetangle;
+		}
+		double saved_player_pitch = self.Pitch;
+		self.Pitch += spread_z;
+		double ang = self.Angle - 90;
+		Vector2 ofs = AngleToVector(ang, spawnofs_xy);
+		SpawnPlayerMissile("decorativetracer",angle + spread_xy,ofs.x,ofs.y,spawnofs_z);
+		self.Pitch = saved_player_pitch;
+	}
+	
 	override void DoEffect() 
 	{
 		super.DoEffect();
