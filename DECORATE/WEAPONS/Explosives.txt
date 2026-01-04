@@ -349,6 +349,7 @@ States    {
 	TNT1 A 0 A_SpawnItem("WhiteShockwave")
 	TNT1 A 3
 	TNT1 A 0 A_Explode(75,170)
+	TNT1 A 0 A_RadiusThrust(6000,356,RTF_CIRCULARTHRUST | RTF_AFFECTSOURCE  | RTF_NOTMISSILE)
         Stop}}
 		
 Actor rocketexplosionXL : RocketExplosion

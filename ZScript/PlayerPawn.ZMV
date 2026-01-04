@@ -1082,10 +1082,12 @@ class BDPPlayerPawn : PlayerPawn
 	
 	Override int takespecialdamage(Actor inflictor, Actor source, int damage, Name damagetype)
 		{
-			If(inflictor is "grenadeexplosion" && source == self || inflictor is "leadburstertracer2")
+			If(inflictor is "RifleRocketexplosion" && source == self)
 			{
-				Damage = (damage * 0.25);
+				Damage = (damage * 0.15);
 			}
+			
+			//console.printf(inflictor.getclassname());
 			If(source is "BDPBIKE" && !invehicle)
 				{
 					damage = 0;
