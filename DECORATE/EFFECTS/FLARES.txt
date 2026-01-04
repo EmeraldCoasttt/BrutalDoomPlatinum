@@ -456,6 +456,24 @@ states
 	}
 }
 
+
+Actor GrenadeFlareGreen : Flare_General
+{
+alpha 1.0
+yscale 0.4
+xscale 0.4
++rollsprite
+states
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_setroll(frandom(0,360))
+	    LEYS G 1 BRIGHT
+		Stop
+	}
+}
+
+
 Actor NukeFlare : Flare_General
 {
 alpha 0.8

@@ -91,7 +91,27 @@ ACTOR ExplosionParticleVerySlow: ExplosionParticleHeavy
  Scale 0.03
 }
 
-
+ACTOR StupidParticle: ExplosionParticle2
+{
+ speed 3
+ radius 8
+ height 1
+ Gravity 0.3
+ RenderStyle Add
+ Scale 0.04
+ Alpha 0.9
+    States
+    {
+     Spawn:
+	  TNT1 A 2
+       SPKG AAAA 1 Bright A_FadeOut(0.02)
+	   TNT1 A 0 A_ChangeFlag(NOGRAVITY, 0)
+	   SPKG AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 Bright A_FadeOut(0.1)
+        stop
+     Death:
+       Stop
+    }
+}
 
 ACTOR ShotgunParticles: ExplosionParticle2
 {
