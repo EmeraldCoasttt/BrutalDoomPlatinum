@@ -90,10 +90,11 @@ class BDPUnmaker : BDPWeaponBase
 			BDPMath.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle + (3 + invoker.lasercount * 3),invoker.owner.pitch,0,60);
 			BDPMath.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle - (3 + invoker.lasercount * 3),invoker.owner.pitch,0,60);
 			invoker.LaserCount++;
+			A_WeaponRecoil(1.2);
 		}
-		UNHF IJ 1 A_SetPitch(pitch-0.6);
+		UNHF IJ 1;
 		UNHF K 1;
-		UNHF MN 1 A_SetPitch(pitch+0.6);
+		UNHF MN 1;
 		TNT1 A 0 A_RefireDX("ContinueFire");
 		UNHF DCBA 1;
 		Goto Ready;
