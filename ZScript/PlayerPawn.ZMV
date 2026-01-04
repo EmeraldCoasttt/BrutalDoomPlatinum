@@ -1712,19 +1712,19 @@ class BDPPlayerPawn : PlayerPawn
 		If(boostlevel >=3 && !boostersound)
 		{
 			Boostersound = true;
-			A_startsound("BSTRSTRT",127);
-			A_startsound("BSTRLoop",128,CHANF_LOOPING);
+			A_startsound("BSTRSTRT",127,0,0.50);
+			A_startsound("BSTRLoop",128,CHANF_LOOPING,0.25);
 			//A_startsound("BSTRWind",129,CHANF_LOOPING);
-			oldmaxstepheight = maxstepheight;
-			maxstepheight = (maxstepheight * 2);
+			//oldmaxstepheight = maxstepheight;
+			//maxstepheight = (maxstepheight * 2);
 		}
 		Else if (boostlevel < 3 && boostersound)
 		{
 			boostersound = false;
-			A_StartSound("BSTRStop",127);
+			A_StartSound("BSTRStop",127,0,0.50);
 			A_stopsound(128);
 			A_StopSound(129);
-			maxstepheight = oldmaxstepheight;
+			//maxstepheight = oldmaxstepheight;
 		}
 		
 		if (cmd.forwardmove | cmd.sidemove)
@@ -1785,8 +1785,8 @@ class BDPPlayerPawn : PlayerPawn
 			
 			If(boostlevel >= 3)
 			{
-				fm *= 1.5;
-				sm *= 1.5;
+				fm *= 2;
+				sm *= 2;
 				//console.printf("%i",vel.length());
 			}
 			
