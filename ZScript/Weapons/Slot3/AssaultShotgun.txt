@@ -1,6 +1,25 @@
+class ASGShield : Ammo
+{
+	Default
+	{
+		Inventory.PickupMessage "$GOTCLIP";
+		Inventory.Amount 0;
+		Inventory.MaxAmount 100;
+		Inventory.Icon "CLIPA0";
+		Tag "$AMMO_CLIP";
+	}
+}
+
+
+
 class BDPAssaultShotgun : BDPWeaponBase
 {
 	int burstCount;
+	bool shieldready;
+	bool shieldwasactive;
+	bool shieldbroken;
+	int shieldtimer;
+	int rechargetimer;
 	
 	Default
 	{
@@ -9,6 +28,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 		Weapon.SlotPriority 3;
 		Weapon.SelectionOrder 1200;
 		Weapon.AmmoType "BDPShell";
+		Weapon.AmmoType2 "ASGShield";
 		BDPWeaponBase.MagCapacity 15;
 		Obituary "%o was shot down by %k's Assault Shotgun.";
 		AttackSound "None";
@@ -16,6 +36,66 @@ class BDPAssaultShotgun : BDPWeaponBase
 		Inventory.Pickupmessage "You got the Assault Shotgun! (Slot 3)";
 		Tag "$BDPASG";
 		Inventory.AltHUDIcon "A12PA0";
+	}
+	
+	override void DoEffect() 
+	{
+		super.DoEffect();
+		
+		If(owner.player && owner.player.readyweapon is "BDPAssaultShotgun" && owner.player.cmd.buttons & BT_ALTATTACK && shieldready && countinv("ASGShield") > 0)
+		{
+			owner.Player.SetPSprite(-14,resolvestate("ASGShield"));
+			If(!shieldwasactive)
+			{
+				owner.Player.SetPSprite(-14,resolvestate("ASGShieldBash"));
+			}
+			shieldwasactive = true;
+			asgshieldactive = true;
+			owner.bnoblood = true;
+			//console.printf("Shield active wooo");
+		}
+		else if(owner.player)
+		{
+			asgshieldactive = false;
+			owner.bnoblood = false;
+			If(shieldwasactive)
+			{
+				Shieldtimer = 35;
+				shieldready = false;
+				If(countinv("ASGShield") < 1)
+				{
+					shieldbroken = true;
+				}
+				shieldwasactive = false;
+			}
+			If(shieldtimer > 0)
+			{
+				shieldtimer--;
+			}
+			Else if(!shieldbroken)
+			{
+				shieldready = true;
+			}
+			If(ShieldTimer < 1)
+			{
+				If(rechargetimer < 5)
+				{
+					rechargetimer++;
+				}
+				Else if(countinv("ASGShield") < 100)
+				{
+					rechargetimer = 0;
+					giveinventory("ASGShield",1);
+				}
+				Else
+				{
+					ShieldBroken = false;
+					ShieldReady = true;
+				}
+			}
+			
+			
+		}
 	}
 	States
 	{
@@ -48,7 +128,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 		A12G EDCB 1 A_SetSprites("TNT1A0",1);
 		Stop;
 	Ready:
-		A12G A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		A12G A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD|WRF_NOSECONDARY);
 		Loop;
 	Deselect:
 		A12S ABCDE 1;
@@ -74,6 +154,12 @@ class BDPAssaultShotgun : BDPWeaponBase
 		TNT1 A 0 A_StartSound("ASGSEL");
 		A12S EDCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
+	ASGShieldBash:
+		TNT1 A 0 A_FireProjectile("MeleeAttackRifleBash");
+	ASGShield:
+		RSHD E 1;
+		STOP;
+	
 	 Fire:
 		TNT1 A 0 A_CheckIfMag();
 		TNT1 A 0 A_JumpIf(Countinv("PlasmaShellSelected")==1,"FireEnergy");
@@ -130,22 +216,22 @@ class BDPAssaultShotgun : BDPWeaponBase
 		TNT1 A 0 A_SemiRefire();
 		Goto Ready;
 	Fidget:
-		A12R ABCD 1 A_WeaponReadyDX(0,false);
+		A12R ABCD 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
 		212G A 0 A_JumpIf(Countinv("PlasmaShellSelected")==1, 2);
 		A12G A 0;
 		"####" A 0;
-		"####" T 1 A_WeaponReadyDX(0,false);
+		"####" T 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
 	FidgetLoop:
-		"####" GGGGHIJK 1 A_WeaponReadyDX(0,false);
+		"####" GGGGHIJK 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
 		"####" X 0 A_StartSound("ASGINSP",1);
-		"####" L 6 A_WeaponReadyDX(0,false);
-		"####" MNOONNOONNNOOO 1 A_WeaponReadyDX(0,false);
+		"####" L 6 A_WeaponReadyDX(WRF_NOSECONDARY,false);
+		"####" MNOONNOONNNOOO 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
 		"####" A 0 A_StopSound(1);
-		"####" PQRSGGG 1 A_WeaponReadyDX(0,false);
+		"####" PQRSGGG 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
 		"####" A 0 A_PressingReload("FidgetLoop");
 		"####" X 0 A_StartSound("foley/ASGPump", 10);
-		"####" T 1 A_WeaponReadyDX(0,false);
-		A12R DCBA 1 A_WeaponReadyDX(0,false);
+		"####" T 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
+		A12R DCBA 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
 		Goto Ready;
 	DoReload:
 		A12G A 1;

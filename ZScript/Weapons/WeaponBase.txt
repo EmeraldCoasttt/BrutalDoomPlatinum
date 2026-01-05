@@ -91,6 +91,8 @@ Class BDPWeaponBase : DoomWeapon //Weapon
 	bool ForceSelect;
 	Property ForceSelect : ForceSelect;
 	
+	bool asgshieldactive;
+	
 	Default
 	{
 	BDPWeaponBase.Handedness 0;

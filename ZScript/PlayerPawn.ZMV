@@ -1082,6 +1082,16 @@ class BDPPlayerPawn : PlayerPawn
 	
 	Override int takespecialdamage(Actor inflictor, Actor source, int damage, Name damagetype)
 		{
+		
+			//console.printf(player.readyweapon.getclassname());
+			BDPAssaultShotgun weap = BDPAssaultShotgun(player.ReadyWeapon);
+			If(weap && weap.ASGSHieldActive)
+			{
+				TakeInventory("ASGShield",damage * 2);
+				//console.printf("Shield active wooo");
+				a_startsound("StickyGrenade/Hit",125);
+				damage = 0;
+			}
 			If(inflictor is "RifleRocketexplosion" && source == self)
 			{
 				Damage = (damage * 0.15);
