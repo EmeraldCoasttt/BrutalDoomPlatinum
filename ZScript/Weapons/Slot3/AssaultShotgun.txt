@@ -20,6 +20,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 	bool shieldbroken;
 	int shieldtimer;
 	int rechargetimer;
+	bool hasbeenpickedup;
 	
 	Default
 	{
@@ -37,17 +38,16 @@ class BDPAssaultShotgun : BDPWeaponBase
 		Tag "$BDPASG";
 		Inventory.AltHUDIcon "A12PA0";
 	}
-	
 	override void DoEffect() 
 	{
 		super.DoEffect();
-		
 		If(owner.player && owner.player.readyweapon is "BDPAssaultShotgun" && owner.player.cmd.buttons & BT_ALTATTACK && shieldready && countinv("ASGShield") > 0)
 		{
 			owner.Player.SetPSprite(-14,resolvestate("ASGShield"));
 			If(!shieldwasactive)
 			{
 				owner.Player.SetPSprite(-14,resolvestate("ASGShieldBash"));
+				owner.A_startsound("ASGSHLD3",234);
 			}
 			shieldwasactive = true;
 			asgshieldactive = true;
@@ -60,11 +60,13 @@ class BDPAssaultShotgun : BDPWeaponBase
 			owner.bnoblood = false;
 			If(shieldwasactive)
 			{
+				owner.A_startsound("ASGSHLD4",234);
 				Shieldtimer = 35;
 				shieldready = false;
 				If(countinv("ASGShield") < 1)
 				{
 					shieldbroken = true;
+					owner.A_startsound("ASGSHLD1",234);
 				}
 				shieldwasactive = false;
 				ChangeAmmoIcon2("ASGSB0");
@@ -76,9 +78,10 @@ class BDPAssaultShotgun : BDPWeaponBase
 			Else if(!shieldbroken && !shieldready)
 			{
 				shieldready = true;
-				ChangeAmmoIcon2("ASGSA0");
+				
 				If(owner.player && owner.player.readyweapon is "BDPAssaultShotgun")
 					{
+						ChangeAmmoIcon2("ASGSA0");
 						owner.A_startsound("ASGSHLD",233);
 					}
 			}

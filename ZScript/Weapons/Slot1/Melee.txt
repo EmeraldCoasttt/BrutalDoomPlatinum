@@ -748,7 +748,7 @@ CLASS MeleeAttack : Actor
 						mo.vel.z = -mo.vel.z;
 						mo.vel *= 4;
 						mo.giveinventory("grabberdamage",1);
-						A_startsound("FISTWALL",28);
+						A_startsound("ASGSHLD1",28);
 						target.A_quake(2,12,0,200,"null");
 						for (int i = 0; i < 11; i++)
 						{
@@ -1230,7 +1230,6 @@ CLASS MeleeAttackRight : MeleeAttackLeft
 	
 	
 	
-	
 	}
 	
 	
@@ -1239,10 +1238,24 @@ CLASS MeleeAttackRight : MeleeAttackLeft
 		Default
 			{
 				MeleeAttack.basedamage 45;
-				MeleeAttack.berserkdamage 105;
+				MeleeAttack.berserkdamage 45;
 			}
 	
 	
+		States
+		{
+			Death:
+				TNT1 A 0;
+				STOP;
+				XDEath:
+				TNT1 A 0 A_AlertMonsters(32);
+				//TNT1 A 0 A_CheckFloor("DeathOnGround");
+				PUFF A 0 A_startSound("ASGSHLD2", 3);
+		//		EXPL AAAAAA 0 A_spawnprojectile ("MeleeSmoke", 0, 0, random (0, 360), 2, random (0, 360))
+				TNT1 A 0 Radius_Quake (2, 6, 0, 5, 0);//(intensity, duration, damrad, tremrad, tid)			
+				TNT1 A 10;
+				Stop;
+		}
 	
 	
 	}
