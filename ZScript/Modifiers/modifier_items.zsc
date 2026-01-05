@@ -11,7 +11,6 @@ class modifierspawner : randomspawner
 		DropItem "UltraNightmarePickup";
 		DropItem "SequenceBreakPickup";
 		DropItem "MaximumOverdrivePickUp";
-		DropItem "ReversalPickUp";
 		DropItem "SkullcrusherPickUp";
 		DropItem "ScoreMasterPickUp";
 		DropItem "RealismPickUp";
@@ -169,16 +168,7 @@ class MaximumOverdrivePickup : BDPModifierpickup
     }
 }
 
-class ReversalPickup : BDPModifierpickup
-{
- Default
-    {
-        
-		BDPModifierpickup.modifierclass "Modifier_Reversal";
-		BDPModifierpickup.modifiermessage "Return To Sender Unlocked!";
-		+floatbob;
-    }
-}
+
 
 class ChatterboxPickup : BDPModifierpickup
 {

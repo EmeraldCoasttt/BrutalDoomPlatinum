@@ -101,31 +101,7 @@ class Modifier_Triathlon : BDPModifier
 
 }
 
-class Modifier_Reversal : BDPModifier
-{
-	Default
-	{
-		BDPModifier.Icon "MODPRY1";
-		BDPModifier.DisplayName "Return To Sender";
-		BDPModifier.Description "Berserked Melee attacks can parry projectiles, dealing increased damage";
-	}
-	
-	override void WorldTick()
-	{
-		for(int i = 0; i < MAXPLAYERS; i++)
-		{
-			if(!PlayerInGame[i]) continue;
-			PlayerInfo plr = players[i];
-			if(!plr) continue;
-			
-			let dplr = BDPPlayerPawn(plr.mo);
-			if(!dplr) continue;
-			
-			dplr.reversalmodifier = true;
-		}
-	}
 
-}
 
 class Modifier_OneUpmanship : BDPModifier
 {
