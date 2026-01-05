@@ -5,7 +5,7 @@ class ASGShield : Ammo
 		Inventory.PickupMessage "$GOTCLIP";
 		Inventory.Amount 0;
 		Inventory.MaxAmount 100;
-		Inventory.Icon "CLIPA0";
+		Inventory.Icon "ASGSA0";
 		Tag "$AMMO_CLIP";
 	}
 }
@@ -67,14 +67,20 @@ class BDPAssaultShotgun : BDPWeaponBase
 					shieldbroken = true;
 				}
 				shieldwasactive = false;
+				ChangeAmmoIcon2("ASGSB0");
 			}
 			If(shieldtimer > 0)
 			{
 				shieldtimer--;
 			}
-			Else if(!shieldbroken)
+			Else if(!shieldbroken && !shieldready)
 			{
 				shieldready = true;
+				ChangeAmmoIcon2("ASGSA0");
+				If(owner.player && owner.player.readyweapon is "BDPAssaultShotgun")
+					{
+						owner.A_startsound("ASGSHLD",233);
+					}
 			}
 			If(ShieldTimer < 1)
 			{
@@ -87,10 +93,15 @@ class BDPAssaultShotgun : BDPWeaponBase
 					rechargetimer = 0;
 					giveinventory("ASGShield",1);
 				}
-				Else
+				Else if(shieldbroken)
 				{
 					ShieldBroken = false;
 					ShieldReady = true;
+					ChangeAmmoIcon2("ASGSA0");
+					If(owner.player && owner.player.readyweapon is "BDPAssaultShotgun")
+					{
+						owner.A_startsound("ASGSHLD",233);
+					}
 				}
 			}
 			
@@ -155,7 +166,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 		A12S EDCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
 	ASGShieldBash:
-		TNT1 A 0 A_FireProjectile("MeleeAttackRifleBash");
+		TNT1 A 0 A_FireProjectile("ShieldBash");
 	ASGShield:
 		RSHD E 1;
 		STOP;

@@ -511,7 +511,7 @@ Model DetectCeilCraterSmall     // Name of actor in DECORATE
 Model SparkX // Name of actor in DECORATE
 { 
    Path "Models/Projectiles" // Path to model in PK3
-   SKIN 0 "tracer1.tga" // Model index, model file
+   SKIN 0 "tracerGREEN.tga" // Model index, model file
    MODEL 0 "Tracer.md3" // Model index, texture (can be in any format supported by GZDoom)
    Scale 2.0 2.0 2.0 // Scale values
    PITCHFROMMOMENTUM // A flag that will fix the model pitch for projectiles

@@ -687,7 +687,7 @@ CLASS MeleeAttack : Actor
 	
 	Override void postbeginplay()
 	{
-		If((target && target.findinventory("canparry") && target.findinventory("powerstrength") && Parry) || self is "MeleeAttackRifleBash")
+		If(self is "ShieldBash")
 		{
 			//Console.printf("parryready!");
 			Vector3 viewPos = (pos.xy, pos.z); // player view point
@@ -766,6 +766,10 @@ CLASS MeleeAttack : Actor
 						If(previousTarget)
 						{
 							mo.tracer = previoustarget;
+						}
+						If(target)
+						{
+							target.takeinventory("ASGShield",20);
 						}
 					
 					
@@ -1222,6 +1226,20 @@ CLASS MeleeAttackRight : MeleeAttackLeft
 				MeleeAttack.basedamage 45;
 				MeleeAttack.berserkdamage 105;
 				MeleeAttack.uppercut TRUE;
+			}
+	
+	
+	
+	
+	}
+	
+	
+		CLASS ShieldBash : MeleeAttackRight
+{
+		Default
+			{
+				MeleeAttack.basedamage 45;
+				MeleeAttack.berserkdamage 105;
 			}
 	
 	
