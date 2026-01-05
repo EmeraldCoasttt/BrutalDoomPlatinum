@@ -540,7 +540,7 @@ class Modifier_KickintheHead : BDPModifier
 {
 	Default
 	{
-		BDPModifier.Icon "REVOQ0";
+		BDPModifier.Icon "STKICK";
 		BDPModifier.DisplayName "Kick In The Head";
 		BDPModifier.Description "Recoil is affected by movement and will not auto-correct";
 	}
