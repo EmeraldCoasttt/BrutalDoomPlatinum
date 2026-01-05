@@ -98,6 +98,7 @@ class BDPMinigun : BDPWeaponBase
 		CHAE A 0;
 		#### A 0 A_JumpIf(invoker.spinning,"SpinSprintEnd");
 		#### KJIH 1 A_SetSprites("TNT1A0",1);
+		TNT1 A 0 A_SetSPrites("CHAGA0",1);
 		Stop;
 	SpinSprint:
 		#### MNOP 1 A_SetSprites("TNT1A0",1);
@@ -107,6 +108,7 @@ class BDPMinigun : BDPWeaponBase
 		Loop;
 	SpinSprintEnd:
 		#### PONM 1 A_SetSprites("TNT1A0",1);
+		TNT1 A 0 A_SetSPrites("CHAGA0",1);
 		Stop;
 	Spawn:
 		TNT1 A 0;
