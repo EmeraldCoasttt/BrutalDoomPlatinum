@@ -61,7 +61,9 @@ class BDPAssaultShotgun : BDPWeaponBase
 			owner.bnoblood = false;
 			If(shieldwasactive)
 			{
+				owner.Player.SetPSprite(-14,resolvestate("ShieldBreak"));
 				owner.A_startsound("ASGSHLD4",234);
+				owner.a_startsound("StickyGrenade/Hit",125);
 				Shieldtimer = 35;
 				shieldready = false;
 				If(countinv("ASGShield") < 1)
@@ -84,6 +86,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 					{
 						ChangeAmmoIcon2("ASGSA0");
 						owner.A_startsound("ASGSHLD",233);
+						
 					}
 			}
 			If(ShieldTimer < 1)
@@ -185,7 +188,9 @@ class BDPAssaultShotgun : BDPWeaponBase
 			}
 		}
 		STOP;
-	
+	ShieldBreak:
+		PSHL A 0 A_FireShieldParticles();
+		STOP;
 	 Fire:
 		TNT1 A 0 A_CheckIfMag();
 		TNT1 A 0 A_JumpIf(Countinv("PlasmaShellSelected")==1,"FireEnergy");

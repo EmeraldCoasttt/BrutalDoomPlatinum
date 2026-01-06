@@ -22,6 +22,30 @@ class GunfireParticle : VisualThinker
 	}
 }
 
+class ShieldParticle : VisualThinker
+{
+	override void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		texture = TexMan.CheckForTexture('SPKGA0');
+		scale = (0.01,0.01);
+		alpha = 1;
+		flags = SPF_FULLBRIGHT;
+		SetRenderStyle(STYLE_Add);
+	}
+	
+	override void Tick()
+	{
+		if(alpha <= 0)
+		{
+			Destroy();
+		}
+		vel.z -= 0.2;
+		alpha -= 0.04;
+		Super.Tick();
+	}
+}
+
 Class BDPWeaponBase : DoomWeapon //Weapon
 {
 	int BDPWeaponFlags;
@@ -720,6 +744,13 @@ Class BDPWeaponBase : DoomWeapon //Weapon
 		for(int i = number; i > 0; i--)
 		{
 			A_FireVisualThinker("GunfireParticle", i > number / 2 ? 10 : 15,random(-spread,spread),random(-9,9),offsetx,4,offsetz);
+		}
+	}
+	action void A_FireShieldParticles()
+	{
+		for(int i = 40; i > 0; i--)
+		{
+			A_FireVisualThinker("ShieldParticle", i > 40 / 2 ? 2 : 4,random(-4,4),random(-20,20),frandom(-20,20),10,frandom(0,6));
 		}
 	}
 	
