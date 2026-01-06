@@ -63,7 +63,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 			{
 				owner.Player.SetPSprite(-14,resolvestate("ShieldBreak"));
 				owner.A_startsound("ASGSHLD4",234);
-				owner.a_startsound("StickyGrenade/Hit",125);
+				owner.a_startsound("StickyGrenade/Hit",125,0,0.5);
 				Shieldtimer = 35;
 				shieldready = false;
 				If(countinv("ASGShield") < 1)
