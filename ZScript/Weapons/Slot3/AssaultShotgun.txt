@@ -21,6 +21,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 	int shieldtimer;
 	int rechargetimer;
 	bool hasbeenpickedup;
+	int ShieldFrame;
 	
 	Default
 	{
@@ -171,7 +172,18 @@ class BDPAssaultShotgun : BDPWeaponBase
 	ASGShieldBash:
 		TNT1 A 0 A_FireProjectile("ShieldBash");
 	ASGShield:
-		RSHD E 1;
+		TNT1 A 0 A_JumpIf(Invoker.ShieldFrame > 2,"ASGShield2");
+		PSHL A 1 BRIGHT {invoker.ShieldFrame++;}
+		STOP;
+	ASGShield2:
+		PSHL B 1 BRIGHT
+		{
+			Invoker.ShieldFrame++;
+			If(invoker.shieldframe >= 5)
+			{
+				Invoker.shieldframe = 0;
+			}
+		}
 		STOP;
 	
 	 Fire:
@@ -181,8 +193,8 @@ class BDPAssaultShotgun : BDPWeaponBase
 		A12F A 0;
 		A12F "#" 1 Bright
 		{
-			A_FireBullets (3, 3, 5, 14, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-7);
-			A_FireBullets (1.5, 1.5, 4, 8, "ShotgunPuff", FBF_NORANDOM,400,"decorativetracer",-7);
+			A_FireBullets (3, 3, 5, 10, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-7);
+			A_FireBullets (1.5, 1.5, 4, 6, "ShotgunPuff", FBF_NORANDOM,400,"decorativetracer",-7);
 			A_WeaponRecoil(8,frandom(-4,4),2,0.75);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_FireParticles(8);
