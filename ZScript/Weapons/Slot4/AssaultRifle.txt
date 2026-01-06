@@ -7,6 +7,20 @@ class BDPAssaultRifle : BDPWeaponBase
 		grenade = true;
 		Super.beginplay();
 	}
+	override void DoEffect() 
+	{
+		super.DoEffect();
+		
+		If(grenade)
+		{
+			ChangeAmmoIcon2("ROCKA0");
+		}
+		Else
+		{
+			ChangeAmmoIcon2("NOGREN");
+		}
+	}
+	
 	
 	Default
 	{

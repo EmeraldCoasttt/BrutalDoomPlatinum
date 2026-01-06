@@ -61,6 +61,7 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
 	Player.startitem "AmmoFragGrenade", 2
 	Player.StartItem "BDPClip1", 60
 	Player.startitem "ASGShield", 100
+	Player.startitem "BDPRocketAmmo", 2
 	
 	Player.StartItem "IsPlayer", 1
 	Player.StartItem "JustStartedGame", 1
