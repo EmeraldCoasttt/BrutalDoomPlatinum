@@ -173,20 +173,21 @@ class BDPAssaultShotgun : BDPWeaponBase
 		A12S EDCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
 	ASGShieldBash:
-		TNT1 A 0 A_FireProjectile("ShieldBash");
+		PSHL E 0 A_FireProjectile("ShieldBash");
 	ASGShield:
-		TNT1 A 0 A_JumpIf(Invoker.ShieldFrame > 2,"ASGShield2");
+		TNT1 A 0 A_JumpIf(Invoker.ShieldFrame > 0,"ASGShield2");
 		PSHL A 1 BRIGHT {invoker.ShieldFrame++;}
 		STOP;
 	ASGShield2:
-		PSHL B 1 BRIGHT
-		{
-			Invoker.ShieldFrame++;
-			If(invoker.shieldframe >= 5)
-			{
-				Invoker.shieldframe = 0;
-			}
-		}
+		TNT1 A 0 A_JumpIf(Invoker.ShieldFrame > 1,"ASGShield3");
+		PSHL B 1 BRIGHT {invoker.ShieldFrame++;}
+		STOP;
+	ASGShield3:
+		TNT1 A 0 A_JumpIf(Invoker.ShieldFrame > 2,"ASGShield4");
+		PSHL C 1 BRIGHT {invoker.ShieldFrame++;}
+		STOP;
+	ASGShield4:
+		PSHL D 1 BRIGHT {invoker.ShieldFrame = 0;}
 		STOP;
 	ShieldBreak:
 		PSHL A 0 A_FireShieldParticles();
