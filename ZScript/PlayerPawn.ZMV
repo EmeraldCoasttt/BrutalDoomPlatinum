@@ -277,7 +277,7 @@ class BDPPlayerPawn : PlayerPawn
 	const PICKUPSTR_SWAP = " to swap for \cg%s\c-";
 	const PICKUPSTR_PICK = " to pick up \cg%s\c-";
 	const PICKUPSTR_DW = " to dual wield \cg%s\c-"; 
-	const MAXOWNEDWEAPONS = 4;
+	const MAXOWNEDWEAPONS = 3;
 	
 	Default
 	{
