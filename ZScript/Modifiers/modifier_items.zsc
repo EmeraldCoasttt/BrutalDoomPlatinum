@@ -236,4 +236,16 @@ class GluttonyPickup : BDPModifierpickup
     }
 }
 
+
+class KickInTheHeadPickup : BDPModifierpickup
+{
+ Default
+    {
+        
+		BDPModifierpickup.modifierclass "Modifier_KickintheHead";
+		BDPModifierpickup.modifiermessage "Kick In The Head Unlocked!";
+		+floatbob;
+    }
+}
+
 //Man And A Half "200:207=[117,117,117]:[0,0,0]"
