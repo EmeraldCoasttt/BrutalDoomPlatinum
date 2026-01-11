@@ -192,3 +192,4 @@ DHINT35 = "Your geiger counter activates in damaging sectors.";
 DHINT36 = "Chaos Field Grenades don't deal damage, but cause infighting.";
 DHINT37 = "The assault rifle is perfect for grenade jumping.";
 DHINT38 = "Jumping as soon as you land preserves your momentum.";
+DHINT39 = "The revolver is perfectly accurate, if you can manage it's recoil.";
