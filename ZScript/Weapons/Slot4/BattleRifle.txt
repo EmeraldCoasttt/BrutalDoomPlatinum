@@ -157,14 +157,9 @@ CLASS BDPBattleRifle : BDPWeaponBase
 				A_TakeMag();
 				A_GunLight();
 				invoker.burstcount++;
-				If(invoker.burstcount < 3)
-				{
-					A_WeaponRecoil(3);
-				}
-				Else
-				{
-					A_WeaponRecoil(8,0,2,0.75);
-				}
+				
+				A_WeaponRecoil(3);
+				
 			}
 			BR45 D 1
 			{
@@ -241,14 +236,9 @@ CLASS BDPBattleRifle : BDPWeaponBase
 				A_GunLight();
 				A_TakeMag();
 				invoker.burstcount++;
-				If(invoker.burstcount < 3)
-				{
-					A_WeaponRecoil(1.5);
-				}
-				Else
-				{
-					A_WeaponRecoil(4,0,2,0.75);
-				}
+				
+				A_WeaponRecoil(1.5);
+				
 			}
 			BR4Z D 1 Bright
 			{
