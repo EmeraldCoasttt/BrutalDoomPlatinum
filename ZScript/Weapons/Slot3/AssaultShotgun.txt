@@ -199,7 +199,23 @@ class BDPAssaultShotgun : BDPWeaponBase
 		PSHL C 1 BRIGHT {invoker.ShieldFrame++;}
 		STOP;
 	ASGShield4:
-		PSHL D 1 BRIGHT {invoker.ShieldFrame = 0;}
+		TNT1 A 0 A_JumpIf(Invoker.ShieldFrame > 3,"ASGShield5");
+		PSHL D 1 BRIGHT {invoker.ShieldFrame++;}
+		STOP;
+	ASGShield5:
+		TNT1 A 0 A_JumpIf(Invoker.ShieldFrame > 4,"ASGShield6");
+		PSHL E 1 BRIGHT {invoker.ShieldFrame++;}
+		STOP;
+	ASGShield6:
+		TNT1 A 0 A_JumpIf(Invoker.ShieldFrame > 5,"ASGShield7");
+		PSHL F 1 BRIGHT {invoker.ShieldFrame++;}
+		STOP;
+	ASGShield7:
+		TNT1 A 0 A_JumpIf(Invoker.ShieldFrame > 6,"ASGShield8");
+		PSHL G 1 BRIGHT {invoker.ShieldFrame++;}
+		STOP;
+	ASGShield8:
+		PSHL H 1 BRIGHT {invoker.ShieldFrame = 0;}
 		STOP;
 	ShieldBreak:
 		PSHL A 0 A_FireShieldParticles();
