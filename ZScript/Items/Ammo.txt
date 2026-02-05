@@ -42,10 +42,13 @@ class BDPAmmo : Ammo
 {
 	int score;
 	property Score : score;
+
+	
 	
 	override bool TryPickup (in out Actor toucher)
 	{
-	if(super.trypickup(Toucher))
+		
+		if(super.trypickup(Toucher))
 		{
 			toucher.Score += score;
 			return true;
@@ -73,40 +76,61 @@ class BDPAmmo : Ammo
 	}
 }
 
-class BDPClipSpawner : RandomSpawner replaces Clip
+class BDPMultiAmmo : Inventory
 {
-	Default
+	string ammotype1;
+	property ammotype1 : ammotype1;
+	string ammotype2;
+	property ammotype2 : ammotype2;
+	int ammoamount1;
+	property ammoamount1 : ammoamount1;
+	int ammoamount2;
+	property ammoamount2 : ammoamount2;
+	
+	override bool TryPickup(in out Actor toucher)
 	{
-		DropItem "BDPClip1", 255, 1;
-		DropItem "BDPClip2", 255, 3;
+	  bool success;
+	  Ammo a1 = Ammo(Actor.Spawn(ammotype1, pos));
+	  Ammo a2 = Ammo(Actor.Spawn(ammotype2, pos));
+	  if (a1)
+	  {
+		a1.amount = ammoamount1;
+		if (a1.CallTryPickup(toucher))
+		  success = true;
+		else
+		  a1.Destroy();
+	  }
+	  if (a2)
+	  {
+		a2.amount = ammoamount2;
+		if (a2.CallTryPickup(toucher))
+		  success = true;
+		else
+		  a2.Destroy();
+	  }
+	  if (success) GoAwayAndDie();
+		return success;
+	  
 	}
+
 }
 
-class BDPClipBoxSpawner : RandomSpawner replaces ClipBox
-{
-	Default
-	{
-		DropItem "BDPClipBox1", 255, 1;
-		DropItem "BDPClipBox2", 255, 3;
-	}
-}
 
-class BDPClip1 : BDPAmmo
+class BDPSmallBulletBox : BDPMultiAmmo replaces Clip
 {
 	Default
 	{
-		Inventory.PickupMessage "Picked up a small box of pistol ammunition.";
-		Inventory.Amount 15;
-		Inventory.MaxAmount 200;
-		Ammo.BackpackAmount 15;
-		Ammo.BackpackMaxAmount 400;
-		Inventory.Icon "CLP1A0";
-		Inventory.PickupSound "CLIPICK";
+		BDPMultiAmmo.ammotype1 "BDPClip1";
+		BDPMultiAmmo.ammotype2 "BDPClip2";
+		BDPMultiAmmo.ammoamount1 15;
+		BDPMultiAmmo.ammoamount2 30;
+		Inventory.PickupMessage "Picked up a small box of bullets.";
+		Inventory.PickupSound "CLIPICK2";
 	}
 	States
 	{
 	Spawn:
-		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5", "Spawn6", "Spawn7");
+		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5", "Spawn6", "Spawn7", "Spawn8");
 	Spawn1:
 		CLP1 A -1;
 		stop;
@@ -128,65 +152,21 @@ class BDPClip1 : BDPAmmo
 	Spawn7:
 		CLP1 G -1;
 		stop;
+	Spawn8:
+		CLP1 H -1;
+		stop;
 	}
 }
 
-class BDPClipBox1 : BDPClip1
+class BDPLargeBulletBox : BDPSmallBulletBox replaces ClipBox
 {
-	 Default
-	 {
-		Radius 20;
-		Height 16;
-		Inventory.PickupMessage "Picked up a large box of pistol ammunition.";
+	Default
+	{
+		BDPMultiAmmo.ammoamount1 40;
+		BDPMultiAmmo.ammoamount2 80;
+		Inventory.PickupMessage "Picked up a large box of bullets.";
 		Inventory.PickupSound "CBOXPICK";
-		Inventory.Amount 60;
-	}
-	States
-	{
-	Spawn:
-		AMM1 A -1;
-		Stop;
-	}
-}
-
-class BDPClip2 : BDPAmmo
-{
-	Default
-	{
-		Inventory.PickupMessage "Picked up a rifle magazine.";
-		Inventory.Amount 30;
-		Inventory.MaxAmount 300;
-		Ammo.BackpackAmount 30;
-		Ammo.BackpackMaxAmount 600;
-		Inventory.Icon "CLP2C0";
-		Inventory.PickupSound "CLIPICK2";
-		+SQUAREPIXELS
-	}
-	States
-	{
-	Spawn:
-		TNT1 A 0 NoDelay{if(random(0,1) == 0) bXFlip = true;}
-		TNT1 A 0 A_Jump(256,"Spawn1","Spawn2","Spawn3");
-	Spawn1:
-		CLP2 A -1 {self.Scale.Y =1.2;}
-		Stop;
-	Spawn2:
-		CLP2 B -1	{self.Scale.X = 1.2;}
-		Stop;
-	Spawn3:
-		CLP2 C -1 {self.Scale.Y = 1.2;}
-		Stop;
-	}
-}
-
-class BDPClipBox2 : BDPClip2
-{
-	Default
-	{
-	Inventory.PickupMessage "Picked up a box of rifle ammunition.";
-	Inventory.PickupSound "CBOXPICK";
-	Inventory.Amount 75;
-	-SQUAREPIXELS
+		
 	}
 	States
 	{
@@ -218,6 +198,98 @@ class BDPClipBox2 : BDPClip2
 		Stop;
 	}
 }
+
+
+class BDPClip1 : BDPAmmo
+{
+	Default
+	{
+		Inventory.PickupMessage "Picked up pistol ammo.";
+		Inventory.Amount 15;
+		Inventory.MaxAmount 200;
+		Ammo.BackpackAmount 15;
+		Ammo.BackpackMaxAmount 400;
+		Inventory.Icon "CLP1H0";
+		Inventory.PickupSound "CLIPICK";
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5", "Spawn6", "Spawn7");
+	Spawn1:
+		CLP1 A -1;
+		stop;
+	Spawn2:
+		CLP1 B -1;
+		stop;
+	Spawn3:
+		CLP1 C -1;
+		stop;
+	Spawn4:
+		CLP1 D -1;
+		stop;
+	Spawn5:
+		CLP1 E -1;
+		stop;
+	Spawn6:
+		CLP1 F -1;
+		stop;
+	Spawn7:
+		CLP1 G -1;
+		stop;
+	}
+	
+	
+}
+
+
+class BDPClip2 : BDPAmmo
+{
+	
+	Default
+	{
+		Inventory.PickupMessage "Picked up rifle ammo.";
+		Inventory.Amount 30;
+		Inventory.MaxAmount 300;
+		Ammo.BackpackAmount 30;
+		Ammo.BackpackMaxAmount 600;
+		Inventory.Icon "AMM2A0";
+		Inventory.PickupSound "CLIPICK2";
+	}
+	
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5", "Spawn6", "Spawn7", "Spawn8");
+	Spawn1:
+		CLP1 A -1;
+		stop;
+	Spawn2:
+		CLP1 B -1;
+		stop;
+	Spawn3:
+		CLP1 C -1;
+		stop;
+	Spawn4:
+		CLP1 D -1;
+		stop;
+	Spawn5:
+		CLP1 E -1;
+		stop;
+	Spawn6:
+		CLP1 F -1;
+		stop;
+	Spawn7:
+		CLP1 G -1;
+		stop;
+	Spawn8:
+		CLP1 H -1;
+		stop;
+	}
+	
+}
+
+
 
 class BDPShell : BDPAmmo replaces Shell
 {
