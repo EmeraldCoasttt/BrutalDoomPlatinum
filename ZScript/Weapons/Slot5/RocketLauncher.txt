@@ -237,11 +237,13 @@ CLASS BDPRocketLauncher : BDPWeaponBase
 	LOOP;
 	
 	
-		
+	MuzzleFlash:
+		MISM AB 1 Bright;
+		Stop;
 	Fire:
 		RLNG A 0;
 		RLNG A 0 A_CheckIfMag();
-		TNT1 AAAA 0;
+		TNT1 A 0 A_FlashOverlay();
 		RLNG A 0 A_ALertMonstersDX();
 		//RLNG A 0 A_JumpIfInventory("Zoomed",1,"ZoomedFire")
 //		RLNG A 1

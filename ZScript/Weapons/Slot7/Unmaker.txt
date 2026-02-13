@@ -66,14 +66,17 @@ class BDPUnmaker : BDPWeaponBase
     Spawn:
         UNHW A 1;
         Loop;
+	MuzzleFlash:
+		UNHM BC 1 Bright;
+		Stop;
 	Fire:
 		UNHG A 0 A_StartSound("UNMCRAK2",3);
 		UNHF ABCD 1;
-		UNHF E 1 A_gunlight(500,2,255,0,0);
 	ContinueFire:
 		UNHG A 0 
 		{
 			A_GunLight(500,2,255,0,0);
+			A_FlashOverlay();
 			A_AlertmonstersDX();
 			A_StartSound("UNMALT",1);
 			if(countinv("BDPCell") < 1 && !findinventory("powerspeed2"))

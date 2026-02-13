@@ -186,6 +186,8 @@ class BDPAssaultShotgun : BDPWeaponBase
 				{
 					A_OverlayFlags(-14,PSPF_FLIP,false);
 				}
+				A_OverlayFlags(-14,PSPF_RENDERSTYLE|PSPF_FORCESTYLE,true);
+				A_OverlayRenderStyle(-14,STYLE_Add);
 		}
 		TNT1 A 0 A_JumpIf(Invoker.ShieldFrame > 0,"ASGShield2");
 		PSHL A 1 BRIGHT {invoker.ShieldFrame++;}
@@ -220,15 +222,18 @@ class BDPAssaultShotgun : BDPWeaponBase
 	ShieldBreak:
 		PSHL A 0 A_FireShieldParticles();
 		STOP;
+	MuzzleFlash:
+		A12M B 0;
+		A12M A 1 Bright A_SetFrame(random(0,1),-1);
+		Stop;
 	 Fire:
 		TNT1 A 0 A_CheckIfMag();
 		TNT1 A 0 A_JumpIf(Countinv("PlasmaShellSelected")==1,"FireEnergy");
-		A12F B 0 A_Jump(128,2);
-		A12F A 0;
-		A12F "#" 1 Bright
+		A12F A 1 Bright
 		{
 			A_FireBullets (3, 3, 5, 10, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-7);
 			A_FireBullets (1.5, 1.5, 4, 6, "ShotgunPuff", FBF_NORANDOM,400,"decorativetracer",-7);
+			A_FlashOverlay();
 			A_WeaponRecoil(8,frandom(-4,4),2,0.75);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_FireParticles(8);
@@ -245,14 +250,13 @@ class BDPAssaultShotgun : BDPWeaponBase
 		TNT1 A 0 A_RefireDX();
 		Goto Ready;
 	FireEnergy:
-		A12F B 0 A_Jump(128,2);
-		A12F A 0;
-		A12F "#" 1 Bright
+		A12F A 1 Bright
 		{
 			for(int i = 0; i < 23; i++)
 			{
 				A_FireProjectile("DragonsBreathSparkle",frandom(-3 - invoker.burstCount,3 + invoker.burstCount),false,0,-4,0,frandom(-3 - invoker.burstCount,3 + invoker.burstCount));
 			}
+			A_FlashOverlay();
 			A_WeaponRecoil(8,frandom(-4,4),2,0.75);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_FireParticles(8);

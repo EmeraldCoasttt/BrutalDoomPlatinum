@@ -1225,6 +1225,12 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		}
 	}
 	
+	action void A_FlashOverlay(int layer = -1, statelabel state = "MuzzleFlash")
+	{
+		A_Overlay(layer,state);
+		A_OverlayFlags(layer,PSPF_RENDERSTYLE|PSPF_FORCESTYLE,true);
+		A_OverlayRenderStyle(layer,STYLE_Add);
+	}
 	
 	void StainSprites(string sprite, int layer = 1)
 	{

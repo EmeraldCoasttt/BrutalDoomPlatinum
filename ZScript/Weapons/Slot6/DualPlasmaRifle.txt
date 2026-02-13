@@ -168,6 +168,9 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		DUPL TTTTT 1 A_LowSprites("3UPL","2UPL","DUPL");
 		TNT1 A 0 A_DrawDualOverlays("ReadyOverlay","ReadyOverlay",true);
 		Goto Ready;
+	MuzzleFlash:
+		DUPM AB 1 Bright;
+		Stop;
 	Fire:
 		TNT1 A 0
 		{
@@ -182,11 +185,14 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 			{
 				A_FireProjectileDX("Plasma_Ball",random(-4, 4),random(-4,4),-8,0,-8,false);
 				A_TakeDualMag();
+				A_FlashOverlay();
 			}
 			else
 			{
 				A_FireProjectileDX("Plasma_Ball",random(-4, 4),random(-4,4),8,0,-8,false);
 				A_TakeMag();
+				A_FlashOverlay(-2);
+				A_OverlayFlags(-2,PSPF_FLIP|PSPF_MIRROR,true);
 			}
 			A_FirePitchDown("PLSM9", 1, 30);
 			a_alertmonstersDX();

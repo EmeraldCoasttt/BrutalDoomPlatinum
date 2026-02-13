@@ -80,10 +80,14 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		TNT1 A 0 A_StartSound("ROCKPKUP");
 		GLSA EDCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto StrapIdle;
+	MuzzleFlash:
+		GLAM AB 1 Bright;
+		Stop;
 	Fire:
 		TNT1 A 0 A_CheckIfMag();
 		GLAF A 1 Bright 
 		{
+			A_FlashOverlay();
 			A_FireProjectileDX(invoker.chaosGrenades ? "StupidGrenade" : "GrenadeDetonates",rvel:false);
 			A_FireProjectile("RedFlareSpawn",-5,0,0,0);
 			A_FireProjectile("GrenadeMissileBreaksGlass", 0, 0, 0, 0);

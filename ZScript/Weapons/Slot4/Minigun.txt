@@ -164,6 +164,24 @@ class BDPMinigun : BDPWeaponBase
 		CHAE A 0;
 		#### UVWX 1;
 		Goto Ready;
+	MuzzleFlash:
+		CHAM A 1 Bright;
+		Stop;
+	MuzzleFlash2:
+		CHAM C 1 Bright;
+		Stop;
+	MuzzleFlash3:
+		CHAM E 1 Bright;
+		Stop;
+	MuzzleFlash4:
+		CHAM G 1 Bright;
+		Stop;
+	MuzzleFlash5:
+		CHAM J 1 Bright;
+		Stop;
+	MuzzleFlash6:
+		CHAM M 1 Bright;
+		Stop;
 	Fire:
 		TNT1 A 0
 		{
@@ -188,6 +206,7 @@ class BDPMinigun : BDPWeaponBase
 		CHAF G 1 Bright
 		{
 			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
+			A_FlashOverlay(state:"MuzzleFlash4");
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_WeaponRecoil(1.5,frandom(-0.6,0.6));
 			A_FireParticles();
@@ -199,7 +218,7 @@ class BDPMinigun : BDPWeaponBase
 			A_GunLight();
 			A_TakeAmmo("BDPClip2",1);
 		}
-		CHAF B 1 Bright
+		CHAF B 1
 		{
 			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
@@ -214,6 +233,7 @@ class BDPMinigun : BDPWeaponBase
 		CHAF E 1 Bright
 		{
 			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
+			A_FlashOverlay(state:"MuzzleFlash3");
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_WeaponRecoil(1.5,frandom(-0.6,0.6));
 			A_FireProjectile("50CaseSpawn2",0,0,12,-18);
@@ -225,9 +245,9 @@ class BDPMinigun : BDPWeaponBase
 			A_GunLight();
 			A_TakeAmmo("BDPClip2",1);
 		}
-		CHAF D 1 Bright
+		CHAF D 1
 		{
-			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
+			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);;
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_FireProjectile("50CaseSpawn2",0,0,12,-18);
 			A_FireParticles();

@@ -50,7 +50,10 @@ CLASS BDPIncinerator : BDPWeaponBase
 		FLMT ABC 1 A_weaponreadyDX(WRF_ALLOWRELOAD);
 		Loop;
 	Deselect:
-		TNT1 A 0 A_StopSound(CHAN_WEAPON);
+		TNT1 A 0 {
+			A_ClearOverlays(-1,-1);
+			A_StopSound(CHAN_WEAPON);
+		}
 		FLRS ABCDE 1;
 		TNT1 A 1;
 		TNT1 A 0 A_Lower();
@@ -63,11 +66,15 @@ CLASS BDPIncinerator : BDPWeaponBase
 	Spawn:
 		FLMT F 1;
 		Loop;
+	MuzzleFlash:
+		FLMM AB 1 Bright;
+		Stop;
 	Fire:
 		TNT1 A 0 A_JumpIf(waterlevel > 1, "NoAmmo");
 		TNT1 A 0 A_CheckIfMag();
 		FLMT D 1 Bright
 		{
+			A_FlashOverlay();
 			A_Fireprojectile("NewIncineratorFlame",0,false,0,-12);
 			A_FireParticles(3);
 			A_StartSound("FLAMER", 1, CHANF_LOOPING);
@@ -83,6 +90,9 @@ CLASS BDPIncinerator : BDPWeaponBase
 		TNT1 A 0 A_GunLight(500,3);
 		TNT1 A 0 A_StartSound("FLAMSTOP", 1);
 		Goto Ready;
+	MuzzleFlash2:
+		FLMM AAB 1 Bright;
+		Stop;
 	SpecialAction:
 		FLMG A 0 A_JumpIf(waterlevel > 1, "NoAmmo");
 		FLMG A 0 A_CheckIfMag(5,"NoAmmoAlt");
@@ -91,6 +101,7 @@ CLASS BDPIncinerator : BDPWeaponBase
 		TNT1 A 0 a_alertmonstersDX();
 		FLMT D 1 Bright
 		{
+			A_FlashOverlay(state:"MuzzleFlash2");
 			A_FireCustomMissile("SmokeSpewer", 0, 0, 0, -6);
 			A_FireParticles(12);
 			A_StartSound("weapons/firegrenade",3);
@@ -115,6 +126,7 @@ CLASS BDPIncinerator : BDPWeaponBase
 		TNT1 A 0 a_alertmonstersDX();
 		FLMT D 1 Bright
 		{
+			A_FlashOverlay(state:"MuzzleFlash2");
 			A_FireProjectile("FireGrenade",0,0,0,-6);
 			A_FireParticles(12);
 			A_StartSound("weapons/firegrenade",3);

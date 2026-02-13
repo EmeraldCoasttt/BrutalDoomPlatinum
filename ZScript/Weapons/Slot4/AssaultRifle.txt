@@ -95,13 +95,16 @@ class BDPAssaultRifle : BDPWeaponBase
 		TNT1 A 0 A_StartSound("CLIPIN");
 		RIFG IHGF 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
+	MuzzleFlash:
+		RIFM B 0;
+		RIFM A 1 Bright A_SetFrame(random(0,1),-1);
+		Stop;
 	Fire:
 		RIFG A 0 A_CheckIfMag();
-		RIFF D 0 A_Jump(128,2);
-		RIFF A 0;
-		RIFF "#" 1 Bright
+		RIFF A 1 Bright
 		{
 			A_FireBullets (2.5, 2.5, -1, 20, "HitPuff", FBF_NORANDOM,0,"decorativetracer",-12);
+			A_FlashOverlay();
 			A_FireParticles(1,8);
 			A_StartSound("weapons/rifle", 1);
 			A_StartSound("FARRIF", 6);
@@ -119,11 +122,15 @@ class BDPAssaultRifle : BDPWeaponBase
 		RIFG A 1 A_WeaponOffset(0,32);
 		TNT1 A 0 A_RefireDX();
 		Goto Ready;
+	AltMuzzleFlash:
+		RIFM C 1 Bright;
+		Stop;
 	AltFire:
 		TNT1 A 0 A_JumpIf(!invoker.grenade,"NoAmmo");
-		RIFF E 1 BRIGHT
+		RIFG A 1 BRIGHT
 		{
 			A_FireBullets (0, 0, -1, 200, "GrenadePuff", FBF_NORANDOM,0,"RifleGrenadeTracer",-12);
+			A_FlashOverlay(state:"AltMuzzleFlash");
 			A_WeaponRecoil(8);
 			A_FireParticles(3,8);
 			A_StartSound("Weapons/Firegrenade", 1);

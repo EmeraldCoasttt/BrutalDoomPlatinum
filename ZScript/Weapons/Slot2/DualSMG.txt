@@ -99,11 +99,15 @@ class BDPDualSMG : BDPWeaponBase
 		SM2S JKLMNOPQ 1 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_DrawDualOverlays("ReadyLeft","ReadyRight");
 		Goto Ready;
+	MuzzleFlashLeft:
+		LSMM A 1 Bright;
+		Stop;
 	FireLeft:
 		TNT1 A 0 A_CheckIfMag(1,"NoAmmoLeft");
 		LSMF A 1 Bright
 		{
 			A_FireBullets (6, 6, -1, 8, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-6,-10);
+			A_FlashOverlay(-2, "MuzzleFlashLeft");
 			A_FireParticles(1,8,-5);
 			A_StartSound("SMGFIRE", 2);
 			A_StartSound("FARSMG", 7);
@@ -123,11 +127,15 @@ class BDPDualSMG : BDPWeaponBase
 		}
 		LSMF C 1;
 		Goto ReadyLeft;
+	MuzzleFlashRight:
+		RSMM A 1 Bright;
+		Stop;
 	FireRight:
 		TNT1 A 0 A_CheckIfDualMag(1,"NoAmmoRight");
 		RSMF A 1 Bright
 		{
 			A_FireBullets (6, 6, -1, 8, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-6,10);
+			A_FlashOverlay(state:"MuzzleFlashRight");
 			A_FireParticles(1,8,5);
 			A_StartSound("SMGFIRE", 1);
 			A_StartSound("FARSMG", 6);

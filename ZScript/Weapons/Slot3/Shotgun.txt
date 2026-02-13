@@ -115,17 +115,43 @@ class BDPShotgun : BDPWeaponBase
 		TNT1 A 0 ChangeAmmoIcon1("SHELA0");
 		TNT1 A 0 A_Lower;
 		Wait;
+	MuzzleFlash:
+		SHTM AB 1 Bright;
+		Stop;
 	Fire:
 		SHTN A 0 A_CheckIfMag();
 		TNT1 A 0 A_JumpIf(invoker.glassSlugs, "FireSlug");
 		TNT1 A 0 A_JumpIf(invoker.emptyChamber,"Pump1");
 		SHTA A 1 Bright
 		{
-			A_FireBullets(5, 5, 5, 13, "ShotgunPuff", FBF_NORANDOM,8192,"DecorativeTracer",-4);
-			A_FireBullets(2.5, 2.5, 4, 13, "ShotgunPuff2", FBF_NORANDOM,400,"DecorativeTracer",-4);
+			if(invoker.glassSlugs)
+			{
+				A_FireBullets(0.2, 0.1, 1, 95, "ShotgunPuffSlug", FBF_NORANDOM);
+				for(int i = 0; i < 3; i++)
+				{
+					A_FireProjectile("SlugGlass", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+					A_FireProjectile("SlugGlass2", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+					A_FireProjectile("SlugGlass4", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+					A_FireProjectile("SlugGlass5", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+					A_FireProjectile("SlugGlass5", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+				}
+				A_FireProjectile("DecorativeNail", 0, 0, 0, 2, 0, 0);
+				A_FireProjectile("SlugMetalShard", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+				A_FireProjectile("SlugMetalShard", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+				A_FireProjectile("SlugMetalShard2", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+				A_FireProjectile("SlugGlass3", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+				A_FireProjectile("SlugGlass3", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+				A_StartSound("weapons/sgSLUG", 1);
+			}
+			else
+			{
+				A_FireBullets(5, 5, 5, 13, "ShotgunPuff", FBF_NORANDOM,8192,"DecorativeTracer",-4);
+				A_FireBullets(2.5, 2.5, 4, 13, "ShotgunPuff2", FBF_NORANDOM,400,"DecorativeTracer",-4);
+				A_StartSound("weapons/sg", 1);
+			}
+			A_FlashOverlay();
 			A_WeaponRecoil(8);
 			A_FireParticles(12);
-			A_StartSound("weapons/sg", 1);
 			A_StartSound("FARSHT", 6);
 			A_AlertMonstersDX();
 			A_ZoomFactor(0.96);
@@ -143,44 +169,8 @@ class BDPShotgun : BDPWeaponBase
 		TNT1 A 0 A_AutoReloadMag(1,"Pump1");
 		TNT1 A 0 A_CheckIfMag(1,"Ready");
 		Goto Pump1;
-	FireSlug:
-		TNT1 A 0 A_JumpIf(invoker.emptyChamber,"PumpingSlug");
-		SHTA A 1 Bright
-		{
-			A_FireBullets(0.2, 0.1, 1, 95, "ShotgunPuffSlug", FBF_NORANDOM);
-			for(int i = 0; i < 3; i++)
-			{
-				A_FireProjectile("SlugGlass", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-				A_FireProjectile("SlugGlass2", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-				A_FireProjectile("SlugGlass4", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-				A_FireProjectile("SlugGlass5", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-				A_FireProjectile("SlugGlass5", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-			}
-			A_FireProjectile("DecorativeNail", 0, 0, 0, 2, 0, 0);
-			A_FireProjectile("SlugMetalShard", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-			A_FireProjectile("SlugMetalShard", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-			A_FireProjectile("SlugMetalShard2", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-			A_FireProjectile("SlugGlass3", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-			A_FireProjectile("SlugGlass3", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-			A_WeaponRecoil(8);
-			A_FireParticles(12);
-			A_StartSound("weapons/sgSLUG", 1);
-			A_StartSound("FARSHT", 6);
-			A_AlertMonstersDX();
-			A_ZoomFactor(0.96);
-			A_QuadSound();
-			A_GunLight();
-			A_TakeMag();
-			invoker.emptyChamber = true;
-		}
-		SHTA B 1 Bright;
-		SHTN A 0 A_ZoomFactor(1.00);
-		SHTA CDEW 1;
-		TNT1 A 0 A_JumpIf(GetCvar("ManualShotgunPump")==1,"Ready") ;
-		TNT1 A 0 A_AutoReloadMag(1,"Pump1");
-		TNT1 A 0 A_CheckIfMag(1,"Ready");
-		Goto Pumpingslug;
 	Pump1:
+		TNT1 A 0 A_JumpIf(invoker.glassSlugs,"PumpingSlug");
 		TNT1 A 0 A_StartSound("foley/ShotgunPumpMisc", 10);
 		SHTN ABCDEFG 1;
 		TNT1 A 0 A_AutoReloadMag(1,"ReloadFromPumping");
@@ -286,17 +276,42 @@ class BDPShotgun : BDPWeaponBase
 		SHT8 A 1;
 		TNT1 A 0 A_EndAim();
 		Goto Ready;
+	MuzzleFlashAim:
+		SHTM C 1 Bright;
+		Stop;
 	FireAim:
 		TNT1 A 0 A_CheckIfMag();
 		TNT1 A 0 A_JumpIf(invoker.emptyChamber,"PumpAim");
-		TNT1 A 0 A_JumpIf(invoker.glassSlugs, "FireAimSlug");
 		SHT8 D 1 Bright
 		{
-			A_FireBullets(4, 4, 5, 13, "ShotgunPuff", FBF_NORANDOM,8192,"DecorativeTracer",-4);
-			A_FireBullets(2, 2, 4, 13, "ShotgunPuff2", FBF_NORANDOM,400,"DecorativeTracer",-4);
+			if(invoker.glassSlugs)
+			{
+				A_FireBullets(0.3, 0.2, 1, 90, "ShotgunPuffSlug", FBF_NORANDOM);
+				for(int i = 0; i < 3; i++)
+				{
+					A_FireProjectile("SlugGlass", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+					A_FireProjectile("SlugGlass2", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+					A_FireProjectile("SlugGlass4", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+					A_FireProjectile("SlugGlass5", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+					A_FireProjectile("SlugGlass5", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+				}
+				A_FireProjectile("DecorativeNail", 0, 0, 0, 2, 0, 0);
+				A_FireProjectile("SlugMetalShard", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+				A_FireProjectile("SlugMetalShard", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+				A_FireProjectile("SlugMetalShard2", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+				A_FireProjectile("SlugGlass3", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+				A_FireProjectile("SlugGlass3", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+				A_StartSound("weapons/sgSLUG", 1);
+			}
+			else
+			{
+				A_FireBullets(4, 4, 5, 13, "ShotgunPuff", FBF_NORANDOM,8192,"DecorativeTracer",-4);
+				A_FireBullets(2, 2, 4, 13, "ShotgunPuff2", FBF_NORANDOM,400,"DecorativeTracer",-4);
+				A_StartSound("weapons/sg", 1);
+			}
+			A_FlashOverlay(state:"MuzzleFlashAim");
 			A_WeaponRecoil(8);
 			A_FireParticles(12);
-			A_StartSound("weapons/sg", 1);
 			A_StartSound("FARSHT", 6);
 			A_AlertMonstersDX();
 			A_ZoomFactor(1.16);
@@ -308,40 +323,6 @@ class BDPShotgun : BDPWeaponBase
 		SHT8 E 1 A_ZoomFactor(1.2);
 		SHT8 EFGCC 1;
 		TNT1 A 0 A_JumpIf(GetCvar("ManualShotgunPump")==1,"Aim") ;
-		TNT1 A 0 A_CheckIfMag(1,"Aim");
-		Goto PumpAim;
-	FireAimSlug:
-		SHT8 D 1 Bright
-		{
-			A_FireBullets(0.3, 0.2, 1, 90, "ShotgunPuffSlug", FBF_NORANDOM);
-			for(int i = 0; i < 3; i++)
-			{
-				A_FireProjectile("SlugGlass", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-				A_FireProjectile("SlugGlass2", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-				A_FireProjectile("SlugGlass4", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-				A_FireProjectile("SlugGlass5", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-				A_FireProjectile("SlugGlass5", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-			}
-			A_FireProjectile("DecorativeNail", 0, 0, 0, 2, 0, 0);
-			A_FireProjectile("SlugMetalShard", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-			A_FireProjectile("SlugMetalShard", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-			A_FireProjectile("SlugMetalShard2", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-			A_FireProjectile("SlugGlass3", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-			A_FireProjectile("SlugGlass3", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-			A_WeaponRecoil(8);
-			A_FireParticles(12);
-			A_StartSound("weapons/sgSLUG", 1);
-			A_StartSound("FARSHT", 6);
-			A_AlertMonstersDX();
-			A_ZoomFactor(1.16);
-			A_QuadSound();
-			A_GunLight();
-			A_TakeMag();
-			invoker.emptyChamber = true;
-		}
-		SHT8 E 1 A_ZoomFactor(1.2);
-		SHT8 EFGCC 1;
-		TNT1 A 0 A_JumpIf(GetCvar("ManualShotgunPump")==1,"Aim");
 		TNT1 A 0 A_CheckIfMag(1,"Aim");
 		Goto PumpAim;
 	PumpAim:

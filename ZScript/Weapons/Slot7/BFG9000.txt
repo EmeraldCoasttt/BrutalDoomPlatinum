@@ -59,7 +59,12 @@ CLASS BDPBFG9000 : BDPWeaponBase
 		BFGS EDCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
 
-		
+	ChargeFlash:
+		BFGM ABCD 1 Bright;
+		Stop;
+	MuzzleFlash:
+		BFGM EFGHI 1 Bright;
+		Stop;
 	Fire:
 		BFGN A 0;
 		TNT1 A 0 A_checkifammo("BDPCell",100);
@@ -67,31 +72,38 @@ CLASS BDPBFG9000 : BDPWeaponBase
 		//BFGN A 0 A_TakeInventory("BDPCell", 50)
 		BFGN A 0 A_startSound("BFGCHARGE");
 		TNT1 A 0 a_alertmonstersDX();
+		TNT1 A 0 A_FlashOverlay(state:"ChargeFlash");
 		BFGC ABCD 1 
 		{
 			A_GunLight(250,2,0,255,0); //8
 			A_TakeAmmo("BDPCell",2);
 		}
+		TNT1 A 0 A_FlashOverlay(state:"ChargeFlash");
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
 			A_TakeAmmo("BDPCell",2); //8
 		} //8
+		TNT1 A 0 A_FlashOverlay(state:"ChargeFlash");
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
 			A_TakeAmmo("BDPCell",2); //8
 		} //12
+		TNT1 A 0 A_FlashOverlay(state:"ChargeFlash");
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
 			A_TakeAmmo("BDPCell",2); //8
 		} //20
+		TNT1 A 0 A_FlashOverlay(state:"ChargeFlash");
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
 			A_TakeAmmo("BDPCell",6); //4
 		} //28
+		TNT1 A 0 A_FlashOverlay(state:"ChargeFlash");
 		BFGC ABCD 1 {
 			A_GunLight(250,2,0,255,0);
 			A_TakeAmmo("BDPCell",6); //4
 		} //40
+		TNT1 A 0 A_FlashOverlay(state:"ChargeFlash");
 		BFGC ABC 1 {
 			A_GunLight(250,2,0,255,0);
 			A_TakeAmmo("BDPCell",6); //4
@@ -100,6 +112,7 @@ CLASS BDPBFG9000 : BDPWeaponBase
 		
 		BFGA A 1 BRIGHT 
 		{
+		A_FlashOverlay();
 		A_GunLight(500,2,0,255,0);
 		A_ZoomFactor(0.96);
 		}

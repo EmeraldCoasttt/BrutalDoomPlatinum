@@ -173,10 +173,14 @@ class BDPGrabber : BDPWeaponBase
 			return resolvestate(null);
 		}
 		Goto GrabDie;
+	ShootFlash:
+		BFGM EFGHI 1 Bright;
+		Stop;
 	GrabShoot:
 		TNT1 A 0
 		{
 			A_startsound("GRBRFIRE",12);
+			A_FlashOverlay(state:"ShootFlash");
 			if(invoker.grabbedactor)
 			{
 				invoker.grabbedactor.bmissile = invoker.previousmissile;
@@ -218,6 +222,9 @@ class BDPGrabber : BDPWeaponBase
 		BFGA F 1;
 		BFGA FFFFGGHIJK 1 A_SetPitch(Pitch+0.8, SPF_INTERPOLATE);
 		Goto Ready;
+	MuzzleFlash:
+		BFGM JKL 1 Bright;
+		Stop;
 	GrabDie:
 		TNT1 A 0
 		{
@@ -238,13 +245,20 @@ class BDPGrabber : BDPWeaponBase
 				invoker.grabbedactor = null;
 			}
 		}
-		BFGN GHIGHI 1
+		TNT1 A 0 A_FlashOverlay();
+		BFGN GHI 1
+		{
+			A_overlayoffset(overlayid(),frandom(-1,0),frandom(32,33));
+		}
+		TNT1 A 0 A_FlashOverlay();
+		BFGN GHI 1
 		{
 			A_overlayoffset(overlayid(),frandom(-1,0),frandom(32,33));
 		}
 		Goto Ready;
 	GrabLoop:
-		BFGN GHIGHIGHI 1
+		TNT1 A 0 A_FlashOverlay();
+		BFGN GHI 1
 		{
 			invoker.grabbedtimer++;
 			A_startsound("GRBRLOOP",12,CHANF_LOOPING);
@@ -290,6 +304,7 @@ class BDPGrabber : BDPWeaponBase
 		Loop;
 	SpecialAction:
 		TNT1 A 0 A_startsound("GRBRFIRE",12);
+		TNT1 A 0 A_FlashOverlay(state:"ShootFlash");
 		BFGA AB 1 Bright;
 		BFGA C 1 Bright A_ZoomFactor(0.9);
 		BFGA D 1 Bright

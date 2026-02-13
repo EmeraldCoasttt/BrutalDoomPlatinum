@@ -69,10 +69,14 @@ class BDPSubmachineGun : BDPWeaponBase
 		SMGR A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		TNT1 A 0 A_AutoReloadMag();
 		Loop;
+	MuzzleFlash:
+		SMGM A 1 Bright;
+		Stop;
 	Fire:
 		TNT1 A 0 A_CheckIfMag();
 		SMGF A 1 Bright
 		{
+			A_FlashOverlay();
 			A_FireBullets (3, 3, 1, 12, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-14);
 			A_WeaponRecoil(0.4,0);
 			A_FireParticles(1,8);
@@ -94,11 +98,15 @@ class BDPSubmachineGun : BDPWeaponBase
 		TNT1 A 0 A_ReFireDX();
 		TNT1 A 0 A_WeaponOffset(0,32);
 		Goto Ready;
+	MuzzleFlashAim:
+		SMGM B 1 Bright;
+		Stop;
 	 FireAim:
 		TNT1 A 0 A_CheckIfMag();
 		SMGZ G 1 Bright
 		{
 			A_FireBullets (1.5, 1.5, -1, 12, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-6);
+			A_FlashOverlay(state:"MuzzleFlashAim");
 			A_WeaponRecoil(0.2);
 			A_FireParticles(1,8);
 			A_StartSound("SMGFIRE", 1);
