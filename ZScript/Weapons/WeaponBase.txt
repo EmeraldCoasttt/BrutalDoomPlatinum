@@ -226,10 +226,10 @@ Class BDPWeaponBase : DoomWeapon //Weapon
 		return resolvestate(null);
 	}
 	
-	override Vector2 ModifyBobLayer(Vector2 Bob, int layer, double ticfrac)
+	/*override Vector2 ModifyBobLayer(Vector2 Bob, int layer, double ticfrac)
 	{
 		let dplr = PlayerPawn(owner);
-		if(layer == 2 && owner.player && dplr)
+		if(layer == 2 || layer == -2 && owner.player && dplr)
 		{
 			if (self.bDontBob || owner.player.GetWBobSpeed() == 0)
 			{
@@ -277,7 +277,7 @@ Class BDPWeaponBase : DoomWeapon //Weapon
 			return p1 * (1. - ticfrac) + p2 * ticfrac;
 		}
 		return Bob;
-	}
+	}*/
 	
 	action void a_weaponvoiceline()
 	{
@@ -1207,18 +1207,18 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 		}
 	}
 	
-	action void A_SetSprites(string sprite, int layer = -1)
+	action void A_SetSprites(string sprite, int layer = 2147483647) //this is reserved for the built-in powertargeter class, so it should never be actually used as an overlay layer, and is safe to use as a dummy.
 	{
-		let psp = player.FindPSprite(layer == -1 ? OverlayID() : layer);
+		let psp = player.FindPSprite(layer == 2147483647 ? OverlayID() : layer);
 		if(psp)
 		{
 			psp.sprite = GetSpriteIndex(sprite);
 		}
 	}
 	
-	action void A_SetFrame(int frame, int layer = 1)
+	action void A_SetFrame(int frame, int layer = 2147483647)
 	{
-		let psp = player.FindPSprite(layer);
+		let psp = player.FindPSprite(layer == 2147483647 ? OverlayID() : layer);
 		if(psp)
 		{
 			psp.frame = frame;
