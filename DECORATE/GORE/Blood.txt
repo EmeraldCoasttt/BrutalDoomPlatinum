@@ -3,7 +3,7 @@
 
 //Hit puff actor
 
-actor Brutal_Blood Replaces Blood
+actor Brutal_Blood
 {	
 	Decal BrutalBloodSplat
 	Renderstyle Translucent

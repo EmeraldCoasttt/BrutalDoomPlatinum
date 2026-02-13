@@ -193,3 +193,91 @@ DHINT36 = "Chaos Field Grenades don't deal damage, but cause infighting.";
 DHINT37 = "The assault rifle is perfect for grenade jumping.";
 DHINT38 = "Jumping as soon as you land preserves your momentum.";
 DHINT39 = "The revolver is perfectly accurate, if you can manage it's recoil.";
+
+//nashgore
+OPTMNU_NASHGORE = "Customize NashGore NEXT";
+
+NASHGOREMNU_TITLE = "NashGore NEXT Options";
+
+NASHGOREMNU_BLOOD_TITLE = "Blood Options";
+NASHGOREMNU_GIB_TITLE = "Gib Options";
+NASHGOREMNU_MISC_TITLE = "Misc Options";
+NASHGOREMNU_CONTROLS_TITLE = "Controls";
+
+NASHGOREMNU_BLOOD_TYPE = "Blood type";
+NASHGOREMNU_BLOOD_AMOUNT = "Blood amount";
+NASHGOREMNU_BLOOD_SPRITES = "Blood spot type";
+NASHGOREMNU_BLOOD_SPURTS = "Blood spurts";
+
+NASHGOREMNU_GIB_TYPE = "Gib type";
+NASHGOREMNU_GIB_AMOUNT = "Gib amount";
+
+NASHGOREMNU_MISC_UNINSTALL = "Uninstall";
+NASHGOREMNU_MISC_CLEARGORENOW = "Clear gore now";
+NASHGOREMNU_MISC_PERMAGORE = "Permanent gore";
+NASHGOREMNU_MISC_MAXGORE = "Max gore objects";
+NASHGOREMNU_MISC_CORPSEBLOOD = "Corpse blood";
+NASHGOREMNU_MISC_BLOODTRAIL = "Blood trail";
+NASHGOREMNU_MISC_FOOTPRINTS = "Footprints";
+NASHGOREMNU_MISC_FOOTPRINTTYPE = "Footprint type";
+NASHGOREMNU_MISC_DEATHFLIP = "Flip death sprite";
+NASHGOREMNU_MISC_SQUISH = "Squish effect";
+NASHGOREMNU_MISC_ICEDEATH = "Ice effects";
+NASHGOREMNU_MISC_SPLAT = "Fall splat";
+NASHGOREMNU_MISC_GIBCORPSE = "Gibbable corpses";
+NASHGOREMNU_MISC_PRECISEFLOATCHECK = "Precise float check";
+NASHGOREMNU_MISC_SLAUGHTERMAP = "Slaughtermap mode";
+
+NASHGOREMNU_SOUND_BLOODIMPACTVOLUME = "Blood impact volume";
+
+NASHGOREMNU_CONTROLS_CLEARGORE = "Clear gore effects";
+
+// Generic reusable labels
+NASHGOREMNU_ENABLED = "Enabled";
+NASHGOREMNU_DEFAULT = "Default";
+NASHGOREMNU_VANILLA = "Vanilla";
+NASHGOREMNU_REALISTIC = "Realistic";
+
+// Specific labels
+NASHGOREMNU_BLOOD_TYPE_CLASSIC = "Classic";
+NASHGOREMNU_GIB_TYPE_NOSTICKYGIBS = "No wall & ceiling gibs";
+NASHGOREMNU_BLOOD_SPRITE_DECALS = "Decals";
+NASHGOREMNU_BLOOD_SPRITE_SPRITES = "Sprites";
+NASHGOREMNU_FOOTPRINT_TYPE_TREADEDBOOTS = "Treaded boots";
+NASHGOREMNU_FOOTPRINT_TYPE_GENERICSHOES = "Generic shoes";
+NASHGOREMNU_FOOTPRINT_TYPE_BAREFOOTHUMAN = "Bare foot (human)";
+
+// Help text
+NASHGOREMNU_HELPTEXT_BLOOD_TYPE = "Hitscan blood effect type.";
+NASHGOREMNU_HELPTEXT_BLOOD_AMOUNT = "Blood amount multiplier. May cause performance issues at higher values.";
+NASHGOREMNU_HELPTEXT_BLOOD_SPRITES = "Use decals or sprites for blood spots.";
+NASHGOREMNU_HELPTEXT_BLOOD_SPURTS = "Enables blood spurts on corpses.";
+NASHGOREMNU_HELPTEXT_GIB_TYPE = "Gib effect type.";
+NASHGOREMNU_HELPTEXT_GIB_AMOUNT = "Gib amount multiplier. May cause performance issues at higher values.";
+NASHGOREMNU_HELPTEXT_MISC_MAXGORE = "Maximum number of blood & gore objects to spawn.";
+NASHGOREMNU_HELPTEXT_MISC_PERMAGORE = "Gore objects stay permanently. May cause performance issues during extended play sessions.";
+NASHGOREMNU_HELPTEXT_MISC_CORPSEBLOOD = "Enables blood pools under corpses.";
+NASHGOREMNU_HELPTEXT_MISC_BLOODTRAIL = "Enables a trail of blood under sliding corpses.";
+NASHGOREMNU_HELPTEXT_MISC_FOOTPRINTS = "Enables bloody footprints.";
+NASHGOREMNU_HELPTEXT_MISC_FOOTPRINTTYPE = "Footprint texture type.";
+NASHGOREMNU_HELPTEXT_MISC_DEATHFLIP = "Randomly flip corpses horizontally.";
+NASHGOREMNU_HELPTEXT_MISC_SQUISH = "Enables squishy flesh when corpses are crushed.";
+NASHGOREMNU_HELPTEXT_MISC_ICEDEATH = "Enhanced effects upon breaking a frozen enemy.";
+NASHGOREMNU_HELPTEXT_MISC_SPLAT = "Enables a splat effect when corpses fall from a tall height.";
+NASHGOREMNU_HELPTEXT_MISC_GIBCORPSE = "Enables gibbable corpses. Gibbed corpses will be removed permanently and cannot be resurrected by the Arch-Vile.";
+NASHGOREMNU_HELPTEXT_MISC_PRECISEFLOATCHECK = "Enables a better algorithm for checking blood splats that hang over ledges. May cause severe performance issues on moving platforms.";
+NASHGOREMNU_HELPTEXT_MISC_SLAUGHTERMAP = "Enable slaughtermap optimization. Monsters beyond a certain distance will be exempt from NashGore enhancements. Useful for maps with high monster counts.";
+NASHGOREMNU_HELPTEXT_SOUND_BLOODIMPACTVOLUME = "Volume of blood impacts.";
+NASHGOREMNU_HELPTEXT_MISC_CLEARGORENOW = "Removes all gore objects and wall decals immediately.";
+NASHGOREMNU_HELPTEXT_MISC_UNINSTALL = "Safely deactivates NashGore NEXT.";
+
+NASHGOREMNU_HELPTEXT_CONTROLS_CLEARGORE = "Keybind to remove all gore objects and wall decals.";
+
+NASHGORE_MSG_UNINSTALL_SUCCESS =
+	"NashGore NEXT has been uninstalled successfully."
+	"\n\n"
+	"Please save your game into a new slot before updating or removing the mod."
+	"\n\n"
+	"Be sure that all combat is completely inactive before making a new saved game."
+	"\n\n"
+	"Do not attempt to operate the NashGore options menu after uninstallation.";

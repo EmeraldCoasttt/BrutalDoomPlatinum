@@ -1,0 +1,534 @@
+// “Commons Clause” License Condition v1.0
+//
+// The Software is provided to you by the Licensor under the License, as
+// defined below, subject to the following condition.
+//
+// Without limiting other conditions in the License, the grant of rights under
+// the License will not include, and the License does not grant to you, the
+// right to Sell the Software.
+//
+// For purposes of the foregoing, “Sell” means practicing any or all of the
+// rights granted to you under the License to provide to third parties, for a
+// fee or other consideration (including without limitation fees for hosting or
+// consulting/ support services related to the Software), a product or service
+// whose value derives, entirely or substantially, from the functionality of
+// the Software. Any license notice or attribution required by the License must
+// also include this Commons Clause License Condition notice.
+//
+// Software: NashGore NEXT v1.0
+//
+// License: BSD-2-Clause
+//
+// Licensor: Nash Muhandes
+
+// The 2-Clause BSD License
+//
+// Copyright (c) 2006 - 2024, Nash Muhandes
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+// 1. Redistributions of source code must retain the above copyright notice,
+//    this list of conditions and the following disclaimer.
+//
+// 2. Redistributions in binary form must reproduce the above copyright notice,
+//    this list of conditions and the following disclaimer in the documentation
+//    and/or other materials provided with the distribution.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+//
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+// POSSIBILITY OF SUCH DAMAGE.
+
+//===========================================================================
+//
+// You MAY:
+// - Use this mod in your play session, as long as all licenses and headers
+//   remain intact
+// - Embed this mod into your mods or projects that are FREELY downloadable
+//   without any kind of monetary transaction involved, as long as all licenses
+//   and headers remain intact
+//
+// You MAY NOT:
+// - Use or embed this mod into your project (either partially or fully) if
+//   you are making money off your mod/project, including commercially-sold
+//   games, or via crowdfunding platforms like Kickstarter, Patreon, Ko-fi
+//   and other similar platforms
+//
+//===========================================================================
+
+class NashGoreActor : NashGorePlugin
+{
+	bool canBleed;
+	bool isDead;
+	bool isDeathSpriteFlipped;
+	bool isGibbed;
+	bool spawnedCorpseBlood;
+	bool isShattered;
+	bool spawnedBloodTrail;
+
+	bool spawnedCorpseHitbox;
+
+	const MAX_FALLTICS = 15;
+	int fallTics;
+
+	const MAX_FOOTPRINT_DURATION = 65;
+	const FOOTPRINT_INTERVAL = 7;
+	uint8 footprintFootSide;
+	int footprintDuration;
+	int footprintSpawnInterval;
+	NashGoreCorpseBlood lastCorpseBloodSteppedOn;
+	NashGoreCorpseBlood myCorpseBlood;
+	NashGoreCorpseHitbox chb;
+
+	// keep track of NashGore-enabled monsters in slaughtermap mode
+	// TO DO: mark as private?
+	Array<Actor> activeMonsters;
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	override void AttachToOwner(Actor other)
+	{
+		Super.AttachToOwner(other);
+
+		if (Owner)
+		{
+			canBleed = (!Owner.bNoBlood && !Owner.bNoBloodDecals);
+
+			// was already dead upon activation
+			if (Owner.Health <= 0)
+			{
+				// make sure some death stuff don't repeat
+				isDead = true;
+				spawnedCorpseBlood = true;
+				isDeathSpriteFlipped = true;
+				isGibbed = true;
+			}
+		}
+	}
+
+	override void DoEffect(void)
+	{
+		if (!Owner)
+			return;
+
+		if (!bNoTimeFreeze && isFrozen())
+			return;
+
+		// footprint stuff (only for players)
+		if (Owner is "PlayerPawn")
+		{
+			// clean up the monster array if slaughtermap mode is turned off
+			if (nashgore_slaughtermapmode)
+				DoSlaughtermapMode();
+			else if (!nashgore_slaughtermapmode && activeMonsters.Size() > 0)
+				activeMonsters.Clear();
+
+			footprintSpawnInterval--;
+
+			if (NashGoreGameplayStatics.GetVelocity(Owner) > 0 && NashGoreGameplayStatics.IsOnFloor(Owner) && footprintDuration > 0)
+			{
+				footprintDuration--;
+
+				if (footprintSpawnInterval <= 0)
+				{
+					// lower intervals produce more dense footprints
+					footprintSpawnInterval = FOOTPRINT_INTERVAL;
+
+					// find the last corpse blood that was stepped on
+					if (lastCorpseBloodSteppedOn)
+					{
+						let bloodTranslation = lastCorpseBloodSteppedOn.Translation;
+
+						class<Actor> cls;
+						if (footprintFootSide == 0)
+							cls = "NashGoreFootPrintLeft";
+						else if (footprintFootSide == 1)
+							cls = "NashGoreFootPrintRight";
+
+						let footprint = Spawn(cls, Owner.Pos, ALLOW_REPLACE);
+
+						if (footprint)
+						{
+							bool validFootprint = true;
+
+							// check for nearby footprints (to prevent excessive clumping)
+							double distance = 15.0;
+
+							/*
+							if (footprint.CheckProximity("NashGoreFootPrint", distance))
+							{
+								footprint.Destroy();
+								validFootprint = false;
+							}
+							*/
+
+							// CheckProximity would be too slow (according to the engine source, it's not using a BlockThingsIterator)
+							BlockThingsIterator it = BlockThingsIterator.Create(footprint, distance);
+							while (it.Next())
+							{
+								let otherFootprint = it.Thing;
+								if (otherFootprint == footprint)
+									continue;
+								if (!(otherFootprint is "NashGoreFootPrint"))
+									continue;
+
+								if (footprint.Distance3D(otherFootprint) < (distance - 1.0))
+								{
+									// new footprint is too close to an existing footprint, don't let it spawn
+									footprint.Destroy();
+									validFootprint = false;
+
+									// no need to keep checking
+									break;
+								}
+							}
+
+							if (validFootprint)
+							{
+								double ang = Owner.Angle;
+								footprint.Translation = bloodTranslation;
+								footprint.Angle = ang;
+
+								// calculate footprint spawn offset
+								if (footprintFootSide == 0)
+									footprintFootSide = 1;
+								else if (footprintFootside == 1)
+									footprintFootSide = 0;
+								double feetDistance = 5.0;
+								double angAdjust = 90.0 * ((footprintFootSide == 0) ? -1 : 1);
+								double ox = cos(ang + angAdjust) * feetDistance;
+								double oy = sin(ang + angAdjust) * feetDistance;
+
+								// move footprint to position
+								footprint.SetOrigin(Owner.Vec3Offset(ox, oy, 0.0), false);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// death stuff
+		if (isDead)
+		{
+			// spawn gibbable corpse
+			SpawnCorpseHitbox();
+
+			// if it was crushed, destroy the hitbox
+			if (InStateSequence(Owner.CurState, Owner.ResolveState('Crush')) || InStateSequence(Owner.CurState, Owner.ResolveState('GenericCrush')))
+			{
+				if (chb)
+					chb.Destroy();
+			}
+
+			// randomly mirror death sprite
+			if (nashgore_deathflip && !Owner.bIceCorpse && !isDeathSpriteFlipped)
+			{
+				NashGoreGameplayStatics.RandomXFlip(Owner);
+				isDeathSpriteFlipped = true;
+			}
+
+			// blood trail
+			if (nashgore_bloodtrail && !Owner.bIceCorpse)
+			{
+				// only one chance to make it happen
+				if (!spawnedBloodTrail && random[rnd_SpawnBloodTrail]() < 85)
+					spawnedBloodTrail = true;
+
+				// how fast must a corpse be sliding to be eligible for a blood trail
+				double bloodTrailSpeedFactor = 6.0;
+
+				if (!spawnedBloodTrail && canBleed
+					&& NashGoreGameplayStatics.IsOnFloor(Owner)
+					&& NashGoreGameplayStatics.GetVelocity(Owner, xyOnly: true) > bloodTrailSpeedFactor
+					&& Owner.WaterLevel < 2)
+				{
+					let btrail = NashGoreBloodTrail(Owner.Spawn("NashGoreBloodTrail", Owner.Pos, NO_REPLACE));
+					if (btrail)
+					{
+						btrail.mo = Owner;
+						btrail.Translation = btrail.mo.BloodTranslation;
+						btrail.Angle = VectorAngle(Owner.Vel.X, Owner.Vel.Y);
+						btrail.Pitch = 90.0;
+						spawnedBloodTrail = true;
+					}
+				}
+			}
+
+			// spawn corpse blood when it's stopped moving
+			if (Owner.Vel ~== (0.0, 0.0, 0.0) && !spawnedCorpseBlood && !Owner.bIceCorpse && canBleed)
+			{
+				static const class<Actor> cls[] =
+				{
+					"NashGoreCorpseBlood01",
+					"NashGoreCorpseBlood02",
+					"NashGoreCorpseBlood03",
+					"NashGoreCorpseBlood04",
+					"NashGoreCorpseBlood05"
+				};
+
+				if (!myCorpseBlood)
+				{
+					myCorpseBlood = NashGoreCorpseBlood(Owner.Spawn(cls[random[rnd_CorpseBloodClass](0, 4)], Owner.Pos, ALLOW_REPLACE));
+					if (myCorpseBlood)
+						myCorpseBlood.Translation = Owner.BloodTranslation;
+				}
+
+				// spawn blood spurts
+				if (nashgore_bloodspurt)
+				{
+					bool result;
+					Actor mo;
+					int failChance = 200;
+					[result, mo] = Owner.A_SpawnItemEx("NashGoreBloodSpurtSpawner", flags: SXF_USEBLOODCOLOR, failChance);
+					if (result && mo)
+					{
+						let spurt = NashGoreBloodSpurtSpawner(mo);
+						spurt.spurter = Owner;
+
+						// the spurt spawner needs the correct blood color for decal spraying later
+						spurt.CopyBloodColor(spurt.spurter);
+					}
+				}
+
+				spawnedCorpseBlood = true;
+			}
+
+			// falling death. SPLAT!
+			if (nashgore_splat && !Owner.bIceCorpse)
+			{
+				double fallVel = 10.0;
+
+				if (fallTics < MAX_FALLTICS && !NashGoreGameplayStatics.IsOnFloor(Owner) && Owner.Vel.Z < fallVel)
+					fallTics++;
+
+				if (fallTics == MAX_FALLTICS && NashGoreGameplayStatics.IsOnFloor(Owner) && !Owner.bIceCorpse
+					&& Owner.WaterLevel < 2 && !NashGoreGameplayStatics.CheckLiquid(Owner)
+					&& Owner.Vel.Z < fallVel)
+				{
+					if (canBleed)
+					{
+						Owner.A_StartSound("nashgore/bodydrop");
+						for (int i = 0; i < 20; i++)
+						{
+							int amt = NashGoreGameplayStatics.GetAmountMult(nashgore_bloodmult);
+							for (int i = 0; i < amt; i++)
+							{
+								Owner.A_SpawnItemEx("NashGoreBloodSpurt",
+									frandom[rnd_BloodSpurt](-4.0, 4.0), frandom[rnd_BloodSpurt](-4.0, 4.0), frandom[rnd_BloodSpurt](10.0, 20.0),
+									frandom[rnd_BloodSpurt](-4.0, 4.0), frandom[rnd_BloodSpurt](-4.0, 4.0), frandom[rnd_BloodSpurt](5.0, 10.0),
+									frandom[rnd_BloodSpurt](0.0, 360.0), SXF_USEBLOODCOLOR);
+							}
+						}
+					}
+					fallTics = MAX_FALLTICS + 1;
+				}
+			}
+
+			// gibbed stuff
+			if (!isGibbed && !Owner.bIceCorpse)
+			{
+				// cheap fix for DeHacked monsters with identical Death and XDeath states :^)
+				// (thanks to The Zombie Killer for the idea)
+				bool bogusXDeathStates = false;
+				if (Owner.FindState('Death.Extreme', true) != NULL)
+				{
+					let deathSpr = Owner.FindState('Death', true).GetSpriteTexture(0);
+					let xDeathSpr = Owner.FindState('Death.Extreme', true).GetSpriteTexture(0);
+					//Console.Printf("%s, %s", TexMan.GetName(deathSpr), TexMan.GetName(xDeathSpr));
+					if (deathSpr == xDeathSpr)
+						bogusXDeathStates = true;
+				}
+
+				bool validXDeath =
+				(
+					Owner.FindState('Death.Extreme', true) != NULL &&
+					Owner.InStateSequence(Owner.CurState, Owner.ResolveState('Death.Extreme'))
+				);
+
+				bool passedGibHealthCheck = Owner.Health < Owner.GetGibHealth();
+
+				bool canGib = passedGibHealthCheck && validXDeath && !bogusXDeathStates;
+
+				if (canGib && canBleed)
+					NashGoreGibs.SpawnGibs(Owner);
+
+				isGibbed = true;
+			}
+
+			// spawn ice gore stuff
+			if (nashgore_icedeath && Owner.bIceCorpse && (Owner.bShattering || Owner.tics == 1) && !isShattered && canBleed)
+			{
+				isShattered = true;
+				int spawnFlags = SXF_USEBLOODCOLOR | SXF_NOCHECKPOSITION;
+				int failChance = 125;
+				for (int i = 0; i < 20; i++)
+				{
+					Owner.A_SpawnItemEx("NashGoreGibs",
+						zofs: Owner.Height,
+						frandom[rnd_IceGibs](-2.0, 2.0), frandom[rnd_IceGibs](-2.0, 2.0), frandom[rnd_IceGibs](-4.0, 4.0),
+						flags: spawnFlags, failChance);
+				}
+			}
+		}
+	}
+
+	override void OnDestroy(void)
+	{
+		// don't leave behind corpse hitbox
+		if (chb)
+			chb.Destroy();
+
+		Super.OnDestroy();
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	void DoSlaughtermapMode(void)
+	{
+		let pmo = Owner;
+		if (!pmo)
+			return;
+
+		for (int i = 0; i < activeMonsters.Size(); i++)
+		{
+			if (!activeMonsters[i])
+			{
+				activeMonsters.Delete(i--);
+				continue;
+			}
+
+			// It's too far, mark it as inactive
+			if (pmo.Distance2DSquared(activeMonsters[i]) > SLAUGHTERMAP_DIST * SLAUGHTERMAP_DIST)
+			{
+				//Console.Printf("[slaughtermap mode] disabled %s", activeMonsters[i].GetTag());
+				NashGoreActor.Disable(activeMonsters[i]);
+
+				activeMonsters.Delete(i--);
+			}
+		}
+
+		BlockThingsIterator it = BlockThingsIterator.Create(pmo, SLAUGHTERMAP_DIST);
+		while (it.Next())
+		{
+			let other = it.Thing;
+
+			if (!other.bIsMonster ||
+				activeMonsters.Find(other) < activeMonsters.Size() ||
+				pmo.Distance2DSquared(other) > SLAUGHTERMAP_DIST * SLAUGHTERMAP_DIST)
+					continue;
+
+			// It's close, mark is as active
+			activeMonsters.Push(other);
+
+			//Console.Printf("[slaughtermap mode] enabled %s", other.GetTag());
+			NashGoreActor.Enable(other);
+		}
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static void Enable(Actor mo)
+	{
+		if (!mo)
+			return;
+		let a = NashGoreActor(mo.FindInventory("NashGoreActor", true));
+		if (!a)
+		{
+			mo.GiveInventory("NashGoreActor", 1);
+			//Console.Printf("Enabled NashGore for %s", mo.GetClassName());
+		}
+	}
+
+	static void Disable(Actor mo)
+	{
+		if (!mo)
+			return;
+		let a = NashGoreActor(mo.FindInventory("NashGoreActor", true));
+		if (a)
+		{
+			if (a.lastCorpseBloodSteppedOn)
+				a.lastCorpseBloodSteppedOn = NULL;
+			if (a.chb)
+				a.chb.Destroy();
+			mo.TakeInventory("NashGoreActor", int.max);
+			//Console.Printf("Disabled NashGore for %s", mo.GetClassName());
+		}
+	}
+
+	static NashGoreActor Find(Actor mo)
+	{
+		if (!mo)
+			return NULL;
+		return NashGoreActor(mo.FindInventory("NashGoreActor", true));
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	void SpawnCorpseHitbox(void)
+	{
+		// Exit this function if either of these is true:
+		// - CVar is disabled
+		// - It's already spawned
+		// - If turned to ice
+		// - If this is a player pawn (not a good idea to destroy a dead player's body)
+		if (!nashgore_gibbablecorpses || spawnedCorpseHitbox || Owner.bIceCorpse || Owner.player)
+			return;
+
+		chb = NashGoreCorpseHitbox(Owner.Spawn("NashGoreCorpseHitbox", Owner.Pos, NO_REPLACE));
+		if (!chb)
+			return;
+
+		chb.corpseOwner = Owner;
+		chb.bNoBlood = Owner.bNoBlood;
+		chb.CopyBloodColor(Owner);
+		chb.A_SetSize(Owner.Radius * 0.5, Owner.Height);
+
+		// initially undamagable
+		chb.bShootable = false;
+		chb.bNoDamage = true;
+
+		spawnedCorpseHitbox = true;
+	}
+
+	void ResetActor(void)
+	{
+		isDead = false;
+		spawnedCorpseBlood = false;
+		spawnedBloodTrail = false;
+		isGibbed = false;
+		fallTics = 0;
+		footprintDuration = 0;
+		lastCorpseBloodSteppedOn = NULL;
+		isDeathSpriteFlipped = false;
+		Owner.bSpriteFlip = false;
+		spawnedCorpseHitbox = false;
+		if (chb)
+			chb.Destroy();
+	}
+}

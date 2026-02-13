@@ -1,0 +1,4 @@
+#include "models/nashgore/BloodSpot/_models.lmp"
+#include "models/nashgore/CorpseBlood/_models.lmp"
+#include "models/nashgore/Footprint/_models.lmp"
+#include "models/nashgore/BloodTrail/_models.lmp"

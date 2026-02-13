@@ -636,3 +636,104 @@ OptionValue LegStainingOption
 4, "Permanent Green"
 //5, "Permanent nukage"
 }
+
+//nashgore
+AddOptionMenu "OptionsMenu"
+{
+	StaticText "NashGore NEXT v1.0"
+	Submenu "$OPTMNU_NASHGORE", "NashGoreOptionMenu"
+	StaticText ""
+}
+
+AddOptionMenu "OptionsMenuSimple"
+{
+	StaticText "NashGore NEXT v1.0"
+	Submenu "$OPTMNU_NASHGORE", "NashGoreOptionMenu"
+	StaticText ""
+}
+
+OptionMenu "NashGoreOptionMenu"
+{
+	Class "NashGoreOptionMenu"
+	Title "$NASHGOREMNU_TITLE"
+	Position -32
+
+	StaticText ""
+
+	StaticText "$NASHGOREMNU_BLOOD_TITLE", 1
+	NashGoreOption "$NASHGOREMNU_BLOOD_TYPE",		"$NASHGOREMNU_HELPTEXT_BLOOD_TYPE",			"nashgore_bloodtype",	"NashGoreBloodTypes"
+	NashGoreSlider "$NASHGOREMNU_BLOOD_AMOUNT",		"$NASHGOREMNU_HELPTEXT_BLOOD_AMOUNT",		"nashgore_bloodmult",	0.0, 10.0, 0.1, 1
+	NashGoreOption "$NASHGOREMNU_BLOOD_SPRITES",	"$NASHGOREMNU_HELPTEXT_BLOOD_SPRITES",		"nashgore_spriteblood",	"NashGoreBloodSpriteValues"
+	NashGoreOption "$NASHGOREMNU_BLOOD_SPURTS",		"$NASHGOREMNU_HELPTEXT_BLOOD_SPURTS",		"nashgore_bloodspurt",	"OnOff"
+
+	StaticText ""
+
+	StaticText "$NASHGOREMNU_GIB_TITLE", 1
+	NashGoreOption "$NASHGOREMNU_GIB_TYPE",			"$NASHGOREMNU_HELPTEXT_GIB_TYPE",			"nashgore_gibtype",		"NashGoreGibTypes"
+	NashGoreSlider "$NASHGOREMNU_GIB_AMOUNT",		"$NASHGOREMNU_HELPTEXT_GIB_AMOUNT",			"nashgore_gibmult",		0.0, 10.0, 0.1, 1
+
+	StaticText ""
+
+	StaticText "$NASHGOREMNU_MISC_TITLE", 1
+	NashGoreSlider "$NASHGOREMNU_MISC_MAXGORE",				"$NASHGOREMNU_HELPTEXT_MISC_MAXGORE",				"nashgore_maxgore",				0, 5000, 1, 0
+	NashGoreOption "$NASHGOREMNU_MISC_PERMAGORE",			"$NASHGOREMNU_HELPTEXT_MISC_PERMAGORE",				"nashgore_permanentgore",		"OnOff"
+	NashGoreOption "$NASHGOREMNU_MISC_CORPSEBLOOD",			"$NASHGOREMNU_HELPTEXT_MISC_CORPSEBLOOD",			"nashgore_corpseblood",			"OnOff"
+	NashGoreOption "$NASHGOREMNU_MISC_BLOODTRAIL",			"$NASHGOREMNU_HELPTEXT_MISC_BLOODTRAIL",			"nashgore_bloodtrail",			"OnOff"
+	NashGoreOption "$NASHGOREMNU_MISC_FOOTPRINTS",			"$NASHGOREMNU_HELPTEXT_MISC_FOOTPRINTS",			"nashgore_footprints",			"OnOff"
+	NashGoreOption "$NASHGOREMNU_MISC_FOOTPRINTTYPE",		"$NASHGOREMNU_HELPTEXT_MISC_FOOTPRINTTYPE",			"nashgore_footprinttype",		"NashGoreFootprintTypeValues"
+	NashGoreOption "$NASHGOREMNU_MISC_DEATHFLIP",			"$NASHGOREMNU_HELPTEXT_MISC_DEATHFLIP",				"nashgore_deathflip",			"OnOff"
+	NashGoreOption "$NASHGOREMNU_MISC_SQUISH",				"$NASHGOREMNU_HELPTEXT_MISC_SQUISH",				"nashgore_squish",				"OnOff"
+	NashGoreOption "$NASHGOREMNU_MISC_ICEDEATH",			"$NASHGOREMNU_HELPTEXT_MISC_ICEDEATH",				"nashgore_icedeath",			"OnOff"
+	NashGoreOption "$NASHGOREMNU_MISC_SPLAT",				"$NASHGOREMNU_HELPTEXT_MISC_SPLAT",					"nashgore_splat",				"OnOff"
+	NashGoreOption "$NASHGOREMNU_MISC_GIBCORPSE",			"$NASHGOREMNU_HELPTEXT_MISC_GIBCORPSE",				"nashgore_gibbablecorpses",		"OnOff"
+	NashGoreOption "$NASHGOREMNU_MISC_PRECISEFLOATCHECK",	"$NASHGOREMNU_HELPTEXT_MISC_PRECISEFLOATCHECK",		"nashgore_precisefloatcheck",	"OnOff"
+	NashGoreOption "$NASHGOREMNU_MISC_SLAUGHTERMAP",		"$NASHGOREMNU_HELPTEXT_MISC_SLAUGHTERMAP",			"nashgore_slaughtermapmode",	"OnOff"
+
+	StaticText ""
+
+	StaticText "$$OPTMNU_SOUND", 1
+	NashGoreSlider "$NASHGOREMNU_SOUND_BLOODIMPACTVOLUME",	"$NASHGOREMNU_HELPTEXT_SOUND_BLOODIMPACTVOLUME", "nashgore_bloodimpactsoundvolume", 0.0, 1.0, 0.1, 2
+
+	StaticText ""
+
+	StaticText "$NASHGOREMNU_CONTROLS_TITLE", 1
+	StaticTextSwitchable "$CNTRLMNU_SWITCHTEXT1", "$CNTRLMNU_SWITCHTEXT2", "ControlMessage"
+	NashGoreControl "$NASHGOREMNU_CONTROLS_CLEARGORE", "$NASHGOREMNU_HELPTEXT_CONTROLS_CLEARGORE", "netevent EV_ClearGore"
+
+	StaticText ""
+
+	SafeCommand "$NASHGOREMNU_MISC_CLEARGORENOW",			"netevent EV_ClearGore"
+	SafeCommand "$OPTMNU_DEFAULTS",							"netevent EV_NashGore_ResetToDefault"
+	/*
+	StaticText ""
+	// uninstall feature intentionally disabled for the time being. it doesn't work properly.
+	SafeCommand "$NASHGOREMNU_MISC_UNINSTALL",				"netevent EV_NashGore_Uninstall"
+	*/
+}
+
+OptionValue "NashGoreBloodTypes"
+{
+	0, "$NASHGOREMNU_DEFAULT"
+	1, "$NASHGOREMNU_BLOOD_TYPE_CLASSIC"
+	2, "$NASHGOREMNU_VANILLA"
+}
+
+OptionValue "NashGoreBloodSpriteValues"
+{
+	0, "$NASHGOREMNU_BLOOD_SPRITE_DECALS"
+	1, "$NASHGOREMNU_BLOOD_SPRITE_SPRITES"
+}
+
+OptionValue "NashGoreGibTypes"
+{
+	0, "$NASHGOREMNU_DEFAULT"
+	1, "$NASHGOREMNU_GIB_TYPE_NOSTICKYGIBS"
+	2, "$NASHGOREMNU_VANILLA"
+}
+
+OptionValue "NashGoreFootprintTypeValues"
+{
+	0, "$NASHGOREMNU_FOOTPRINT_TYPE_TREADEDBOOTS"
+	1, "$NASHGOREMNU_FOOTPRINT_TYPE_GENERICSHOES"
+	2, "$NASHGOREMNU_FOOTPRINT_TYPE_BAREFOOTHUMAN"
+}

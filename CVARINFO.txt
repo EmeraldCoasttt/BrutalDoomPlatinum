@@ -144,3 +144,25 @@ user bool bdp_autoreload = true;
 user float bdp_crosshair_trans = 0.65;
 
 user bool bdp_hold_spin = false;
+
+//nashgore
+server bool nashgore_permanentgore = false;
+server int nashgore_maxgore = 1024;
+server int nashgore_bloodtype = 0;
+server float nashgore_bloodmult = 1.0;
+server bool nashgore_spriteblood = false;
+server bool nashgore_bloodspurt = true;
+server int nashgore_gibtype = 0;
+server float nashgore_gibmult = 1.0;
+server bool nashgore_corpseblood = true;
+server bool nashgore_footprints = true;
+server int nashgore_footprinttype = 0;
+server bool nashgore_bloodtrail = true;
+server bool nashgore_deathflip = true;
+server bool nashgore_squish = true;
+server bool nashgore_icedeath = true;
+server bool nashgore_splat = true;
+server bool nashgore_gibbablecorpses = false;
+server bool nashgore_precisefloatcheck = false;
+server bool nashgore_slaughtermapmode = false;
+user float nashgore_bloodimpactsoundvolume = 0.55;

@@ -1,0 +1,507 @@
+// “Commons Clause” License Condition v1.0
+//
+// The Software is provided to you by the Licensor under the License, as
+// defined below, subject to the following condition.
+//
+// Without limiting other conditions in the License, the grant of rights under
+// the License will not include, and the License does not grant to you, the
+// right to Sell the Software.
+//
+// For purposes of the foregoing, “Sell” means practicing any or all of the
+// rights granted to you under the License to provide to third parties, for a
+// fee or other consideration (including without limitation fees for hosting or
+// consulting/ support services related to the Software), a product or service
+// whose value derives, entirely or substantially, from the functionality of
+// the Software. Any license notice or attribution required by the License must
+// also include this Commons Clause License Condition notice.
+//
+// Software: NashGore NEXT v1.0
+//
+// License: BSD-2-Clause
+//
+// Licensor: Nash Muhandes
+
+// The 2-Clause BSD License
+//
+// Copyright (c) 2006 - 2024, Nash Muhandes
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+// 1. Redistributions of source code must retain the above copyright notice,
+//    this list of conditions and the following disclaimer.
+//
+// 2. Redistributions in binary form must reproduce the above copyright notice,
+//    this list of conditions and the following disclaimer in the documentation
+//    and/or other materials provided with the distribution.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+//
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+// POSSIBILITY OF SUCH DAMAGE.
+
+//===========================================================================
+//
+// You MAY:
+// - Use this mod in your play session, as long as all licenses and headers
+//   remain intact
+// - Embed this mod into your mods or projects that are FREELY downloadable
+//   without any kind of monetary transaction involved, as long as all licenses
+//   and headers remain intact
+//
+// You MAY NOT:
+// - Use or embed this mod into your project (either partially or fully) if
+//   you are making money off your mod/project, including commercially-sold
+//   games, or via crowdfunding platforms like Kickstarter, Patreon, Ko-fi
+//   and other similar platforms
+//
+//===========================================================================
+
+class NashGoreHandler : EventHandler
+{
+	int maxgore;
+	int maxgore_old, maxgore_new;
+
+	bool slaughtermapmode;
+	bool slaughtermapmode_old, slaughtermapmode_new;
+
+	Array<String> bloodTypes;
+
+	transient CVar cvBloodImpactSoundVolume;
+
+	// Voxel Doom check
+	private bool hasVoxels;
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	// Players will always have NashGore activated,
+	// ignoring the slaughtermap mode option
+
+	override void PlayerEntered(PlayerEvent e)
+	{
+		PlayerPawn pmo = players[e.PlayerNumber].mo;
+		if (pmo)
+			NashGoreActor.Enable(pmo);
+	}
+
+	override void PlayerRespawned(PlayerEvent e)
+	{
+		PlayerPawn pmo = players[e.PlayerNumber].mo;
+		if (pmo)
+			DoThingRevive(pmo);
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	override void WorldLoaded(WorldEvent e)
+	{
+		BuildBloodTypes();
+		ClearSlaughtermapModeArray();
+	}
+
+	override void WorldTick(void)
+	{
+		// update gore queue
+		maxgore_new = nashgore_maxgore;
+		if (maxgore_old != maxgore_new)
+		{
+			maxgore = maxgore_new;
+			maxgore_old = maxgore_new;
+		}
+
+		// update slaughtermap mode
+		slaughtermapmode_new = nashgore_slaughtermapmode;
+		if (slaughtermapmode_old != slaughtermapmode_new)
+		{
+			slaughtermapmode = slaughtermapmode_new;
+			slaughtermapmode_old = slaughtermapmode_new;
+
+			if (nashgore_slaughtermapmode)
+			{
+				//Console.Printf("Enabling slaughtermap mode");
+				// remove NashGore from all non-players, then let NashGoreActor::TickSlaughtermapMode take over
+				ThinkerIterator it = ThinkerIterator.Create("Actor");
+				Actor mo;
+				while (mo = Actor(it.Next()))
+				{
+					if (mo.bIsMonster)
+						DoThingDisableNashGore(mo);
+				}
+			}
+			else
+			{
+				//Console.Printf("Disabling slaughtermap mode");
+				ThinkerIterator it = ThinkerIterator.Create("Actor");
+				Actor mo;
+				while (mo = Actor(it.Next()))
+				{
+					if (mo.bIsMonster)
+						DoThingEnableNashGore(mo);
+				}
+			}
+		}
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	override void WorldThingSpawned(WorldEvent e)
+	{
+		if (!e.Thing)
+			return;
+
+		if (!nashgore_slaughtermapmode)
+			DoThingEnableNashGore(e.Thing);
+	}
+
+	override void WorldThingDied(WorldEvent e)
+	{
+		if (!e.Thing)
+			return;
+		DoThingDie(e.Thing);
+	}
+
+	override void WorldThingRevived(WorldEvent e)
+	{
+		if (!e.Thing)
+			return;
+		DoThingRevive(e.Thing);
+	}
+
+	override void WorldThingGround(WorldEvent e)
+	{
+		if (!e.Thing)
+			return;
+		Actor mo = e.Thing;
+		State st = mo.FindState('GenericCrush', true);
+		bool hasCustomCrushState = (e.CrushedState != NULL) && e.CrushedState != st;
+		DoThingGrind(mo, hasCustomCrushState, st, !mo.bNoBlood);
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	override void CheckReplacement(ReplaceEvent e)
+	{
+		// blood stuff
+		for (int i = 0; i < bloodTypes.Size(); i++)
+		{
+			// find all known blood types from the BLUDTYPE lump
+			class<Actor> miscBloodCls;
+			miscBloodCls = String.Format("%s", bloodTypes[i]);
+
+			if (e.Replacee == "Blood" || e.Replacee == "BloodSplatter" || e.Replacee == "AxeBlood"
+				|| (miscBloodCls != NULL && e.Replacee == miscBloodCls))
+			{
+				class<Actor> bloodCls;
+
+				switch (nashgore_bloodtype)
+				{
+				default:
+				case 0:
+					bloodCls = "NashGoreDefaultBlood";
+					break;
+				case 1:
+					bloodCls = "NashGoreClassicBlood";
+					break;
+				case 2:
+					bloodCls = "Blood";
+					break;
+				}
+
+				e.Replacement = bloodCls;
+			}
+		}
+
+		// other stuff
+		if (nashgore_squish && e.Replacee == "RealGibs")
+			e.Replacement = "NashGoreRealGibs";
+		if (nashgore_icedeath && e.Replacee == "IceChunk")
+			e.Replacement = "NashGoreIceChunk";
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		if (gamestate != GS_LEVEL && gamestate != GS_TITLELEVEL)
+		{
+			Console.Printf("Error: Tried to invoke a function from the NashGore menu while not in-game!");
+			return;
+		}
+
+		if (e.Name == 'EV_ClearGore')
+			NashGoreGameplayStatics.ClearGore();
+		else if (e.Name == 'EV_NashGore_Uninstall')
+			NashGoreGameplayStatics.Uninstall();
+		else if (e.Name == 'EV_NashGore_ResetToDefault')
+			NashGoreGameplayStatics.ResetToDefault();
+
+		// TO DO: EV_NashGore_ResetToDefault doesn't work if you're not in-game LOL
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static double GetBloodImpactSoundVolume(void)
+	{
+		let eh = NashGoreHandler(EventHandler.Find("NashGoreHandler"));
+		if (!eh)
+			return 0.0;
+
+		// cache the CVar if it hasn't been yet
+		if (!eh.cvBloodImpactSoundVolume)
+			eh.cvBloodImpactSoundVolume = CVar.GetCVar('nashgore_bloodimpactsoundvolume', players[consoleplayer]);
+
+		if (!eh.cvBloodImpactSoundVolume)
+			ThrowAbortException("NashGoreGameplayStatics::GetBloodImpactSoundVolume failed to cache CVar");
+
+		return eh.cvBloodImpactSoundVolume.GetFloat();
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	void BuildBloodTypes(void)
+	{
+		bloodTypes.Clear();
+
+		int lump = -1;
+		while (-1 != (lump = Wads.FindLump('BLUDTYPE', lump + 1)))
+		{
+			String data = Wads.ReadLump(lump);
+
+			// split lines
+			Array<String> lines;
+			lines.Clear();
+			data.Split(lines, "\n", TOK_KEEPEMPTY);
+
+			// strip comments
+			for (int i = 0; i < lines.Size(); i++)
+			{
+				if (lines[i].IndexOf("//") == 0)
+				{
+					continue;
+				}
+				else
+				{
+					bloodTypes.Push(lines[i]);
+				}
+			}
+
+			// [lolhack] remove the last line because it's usually blank
+			//bloodTypes.Delete(bloodTypes.Size() - 1, 1);
+		}
+
+		//Console.Printf("size: %d", bloodTypes.Size());
+		for (int i = 0; i < bloodTypes.Size(); i++)
+		{
+			// delete that weird character that gets added at the end
+			bloodTypes[i].Truncate(bloodTypes[i].Length() - 1);
+
+			/*
+			if (bloodTypes[i])
+				Console.Printf("%s\n", bloodTypes[i]);
+			*/
+		}
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	void DoThingEnableNashGore(Actor mo)
+	{
+		// monster?
+		bool isMonster = mo.bIsMonster;
+
+		// plug in generic monster behaviour
+		let a = NashGoreActor.Find(mo);
+		if (isMonster && !a)
+			NashGoreActor.Enable(mo);
+	}
+
+	void DoThingDisableNashGore(Actor mo)
+	{
+		let a = NashGoreActor.Find(mo);
+		if (a)
+			NashGoreActor.Disable(mo);
+	}
+
+	void DoThingDie(Actor mo)
+	{
+		bool isMonster = mo.bIsMonster;
+		bool isPlayer = (mo is "PlayerPawn");
+
+		if (isMonster || isPlayer)
+		{
+			let a = NashGoreActor.Find(mo);
+			if (a)
+				a.isDead = true;
+		}
+	}
+
+	void DoThingRevive(Actor mo)
+	{
+		//Console.Printf("%s lives again!", mo.GetClassName());
+		let a = NashGoreActor.Find(mo);
+		if (a)
+			a.ResetActor();
+	}
+
+	void DoThingGrind(Actor mo, bool hasCustomCrushState, State crushState, bool canBleed)
+	{
+		bool isPlayerPawn = (mo is "PlayerPawn");
+
+		double ang = mo.Angle;
+
+		NashGoreCrushedGibs gib;
+		NashGoreRealGibsPlayer pgib;
+		NashGoreSquishyGibs squish;
+
+		// determine size
+		int size = 1;
+
+		if (mo.Default.Radius <= 20.0)
+			size = 1;
+		else if (mo.Default.Radius > 20.0 && mo.Default.Radius < 40.0)
+			size = 2;
+		else if (mo.Default.Radius >= 40.0)
+			size = 3;
+
+		// handle resurrectable crushed gibs
+		// resurrected actors do not get destroyed, instead their
+		// sprite is just swapped out (in AActor::Grind)
+		// don't overwrite the actor's custom crush state, though
+		bool canResurrect = (Level.compatflags & COMPATF_CORPSEGIBS);
+
+		/*
+		// can't remember why was this here???
+		if (!hasCustomCrushState && canResurrect && canBleed)
+			NashGoreCrushedGibs.SetCrushedSprite(mo, size);
+		*/
+
+		// spawn dynamic crushed gib actor
+		if (!isPlayerPawn && !hasCustomCrushState && !canResurrect && canBleed)
+		{
+			gib = NashGoreCrushedGibs(mo.Spawn("NashGoreCrushedGibs", mo.Pos, NO_REPLACE));
+			if (gib)
+			{
+				gib.A_SetRenderStyle(mo.Alpha, mo.GetRenderStyle());
+				gib.Translation = mo.BloodTranslation;
+				gib.SetSize(size);
+				gib.Angle = ang;
+			}
+		}
+
+		// special case for player
+		if (isPlayerPawn && !hasCustomCrushState)
+		{
+			pgib = NashGoreRealGibsPlayer(mo.Spawn("NashGoreRealGibsPlayer", mo.Pos, NO_REPLACE));
+			if (pgib)
+			{
+				pgib.A_SetRenderStyle(mo.Alpha, mo.GetRenderStyle());
+				pgib.Translation = mo.BloodTranslation;
+				pgib.Angle = ang;
+				pgib.Master = mo;
+			}
+		}
+
+		// spawn squishy gib
+		if (nashgore_squish && canBleed)
+		{
+			squish = NashGoreSquishyGibs(mo.Spawn("NashGoreSquishyGibs", mo.Pos, NO_REPLACE));
+			if (squish)
+			{
+				squish.Master = hasCustomCrushState ? Actor(mo) : Actor(gib);
+				squish.Translation = mo.BloodTranslation;
+				squish.Angle = ang;
+
+				// special case for player
+				if (isPlayerPawn)
+					squish.Master = Actor(mo);
+			}
+		}
+
+		if (!isPlayerPawn && mo && gib && !hasCustomCrushState)
+			mo.Destroy();
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	void ClearSlaughtermapModeArray(void)
+	{
+		for (int i = 0; i < MAXPLAYERS; i++)
+		{
+			if (playeringame[i])
+			{
+				let pmo = PlayerPawn(players[i].mo);
+				if (pmo)
+				{
+					let a = NashGoreActor(pmo.FindInventory("NashGoreActor", true));
+					if (a)
+					{
+						if (a.activeMonsters.Size() > 0)
+							a.activeMonsters.Clear();
+					}
+				}
+			}
+		}
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static bool CheckForVoxels(void)
+	{
+		let eh = NashGoreHandler(EventHandler.Find("NashGoreHandler"));
+		return eh.hasVoxels;
+	}
+
+	static void SetHasVoxels(bool set)
+	{
+		let eh = NashGoreHandler(EventHandler.Find("NashGoreHandler"));
+		eh.hasVoxels = set;
+	}
+}

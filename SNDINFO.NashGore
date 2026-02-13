@@ -1,0 +1,110 @@
+//===========================================================================
+//
+// Blood Splash
+//
+//===========================================================================
+
+nashgore/bloodsplash1 "sounds/nashgore/blood splash 01.ogg"
+nashgore/bloodsplash2 "sounds/nashgore/blood splash 02.ogg"
+nashgore/bloodsplash3 "sounds/nashgore/blood splash 03.ogg"
+
+$random nashgore/bloodsplash
+{
+	nashgore/bloodsplash1
+	nashgore/bloodsplash2
+	nashgore/bloodsplash3
+}
+
+$limit nashgore/bloodsplash 2
+$volume nashgore/bloodsplash 0.3
+
+//===========================================================================
+//
+// Blood Drop
+//
+//===========================================================================
+
+nashgore/blooddrop01 "sounds/nashgore/blood drop 01.ogg"
+nashgore/blooddrop02 "sounds/nashgore/blood drop 02.ogg"
+
+$random nashgore/blooddrop
+{
+	nashgore/blooddrop01
+	nashgore/blooddrop02
+}
+
+$volume nashgore/blooddrop 0.25
+$limit nashgore/blooddrop 2
+
+//===========================================================================
+//
+// Small Gib
+//
+//===========================================================================
+
+nashgore/gibsmall01 "sounds/nashgore/gib small 01.ogg"
+nashgore/gibsmall02 "sounds/nashgore/gib small 02.ogg"
+
+$random nashgore/gibsmall
+{
+	nashgore/gibsmall01
+	nashgore/gibsmall02
+}
+
+$volume nashgore/gibsmall 0.44;
+
+//===========================================================================
+//
+// XDeath
+//
+//===========================================================================
+
+nashgore/xdeath01 "sounds/nashgore/xdeath 01.ogg"
+nashgore/xdeath02 "sounds/nashgore/xdeath 02.ogg"
+nashgore/xdeath03 "sounds/nashgore/xdeath 03.ogg"
+
+$random nashgore/xdeath
+{
+	nashgore/xdeath01
+	nashgore/xdeath02
+	nashgore/xdeath03
+}
+
+$limit nashgore/xdeath 3
+
+//===========================================================================
+//
+// Bouncing Gib
+//
+//===========================================================================
+
+nashgore/gibbounce01 "sounds/nashgore/gib bounce 01.ogg"
+nashgore/gibbounce02 "sounds/nashgore/gib bounce 02.ogg"
+nashgore/gibbounce03 "sounds/nashgore/gib bounce 03.ogg"
+
+$random nashgore/gibbounce
+{
+	nashgore/gibbounce01
+	nashgore/gibbounce02
+	nashgore/gibbounce03
+}
+
+$volume nashgore/gibbounce 0.225
+$limit nashgore/gibbounce 4
+
+//===========================================================================
+//
+// Body Drop
+//
+//===========================================================================
+
+nashgore/bodydrop "sounds/nashgore/body drop 01.ogg"
+
+//===========================================================================
+//
+// Bullet Hit Flesh
+//
+//===========================================================================
+
+nashgore/bullethitflesh "sounds/nashgore/bullet hit flesh.ogg"
+$volume nashgore/bullethitflesh 0.23

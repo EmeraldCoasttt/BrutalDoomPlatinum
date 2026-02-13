@@ -70,6 +70,24 @@ version "4.14.0"
 #include "Zscript/Weapons/Slot9/Mines.txt"
 #include "Zscript/Weapons/Slot9/VoidGrenades.txt"
 
+#include "zscript/Gore/NashGoreMath.zc"
+#include "zscript/Gore/NashGorePlugin.zc"
+#include "zscript/Gore/NashGoreGameplayStatics.zc"
+#include "zscript/Gore/NashGoreFloaterDetector.zc"
+#include "zscript/Gore/NashGoreHandler.zc"
+#include "zscript/Gore/NashGoreBlood.zc"
+#include "zscript/Gore/NashGoreBloodPlane.zc"
+#include "zscript/Gore/NashGoreGibs.zc"
+#include "zscript/Gore/NashGoreRealGibs.zc"
+#include "zscript/Gore/NashGoreCrushedGibs.zc"
+#include "zscript/Gore/NashGoreSquishyGibs.zc"
+#include "zscript/Gore/NashGoreIceChunk.zc"
+#include "zscript/Gore/NashGoreLiquidBlood.zc"
+#include "zscript/Gore/NashGoreActor.zc"
+#include "zscript/Gore/NashGoreCorpseHitbox.zc"
+#include "zscript/Gore/NashGoreTestMonster.zc"
+#include "zscript/Gore/NashGoreOptionMenu.zc"
+
 #include "Zscript/Monsters/ExplosiveBarrel.txt"
 #include "Zscript/Monsters/Archvile.txt"
 #include "Zscript/Monsters/Zombie.txt"
@@ -153,3 +171,8 @@ class DecoActor : Actor
 	}
 }
 
+
+// nashgore global constants
+const STAT_NashGore_Gore = Thinker.STAT_USER + 1;
+const SLAUGHTERMAP_DIST = 1000.0;
+const MAP_EPSILON = 1 / 65536.;

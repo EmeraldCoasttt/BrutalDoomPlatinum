@@ -1,0 +1,476 @@
+// “Commons Clause” License Condition v1.0
+//
+// The Software is provided to you by the Licensor under the License, as
+// defined below, subject to the following condition.
+//
+// Without limiting other conditions in the License, the grant of rights under
+// the License will not include, and the License does not grant to you, the
+// right to Sell the Software.
+//
+// For purposes of the foregoing, “Sell” means practicing any or all of the
+// rights granted to you under the License to provide to third parties, for a
+// fee or other consideration (including without limitation fees for hosting or
+// consulting/ support services related to the Software), a product or service
+// whose value derives, entirely or substantially, from the functionality of
+// the Software. Any license notice or attribution required by the License must
+// also include this Commons Clause License Condition notice.
+//
+// Software: NashGore NEXT v1.0
+//
+// License: BSD-2-Clause
+//
+// Licensor: Nash Muhandes
+
+// The 2-Clause BSD License
+//
+// Copyright (c) 2006 - 2024, Nash Muhandes
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//
+// 1. Redistributions of source code must retain the above copyright notice,
+//    this list of conditions and the following disclaimer.
+//
+// 2. Redistributions in binary form must reproduce the above copyright notice,
+//    this list of conditions and the following disclaimer in the documentation
+//    and/or other materials provided with the distribution.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+//
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+// LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+// CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+// SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+// INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+// POSSIBILITY OF SUCH DAMAGE.
+
+//===========================================================================
+//
+// You MAY:
+// - Use this mod in your play session, as long as all licenses and headers
+//   remain intact
+// - Embed this mod into your mods or projects that are FREELY downloadable
+//   without any kind of monetary transaction involved, as long as all licenses
+//   and headers remain intact
+//
+// You MAY NOT:
+// - Use or embed this mod into your project (either partially or fully) if
+//   you are making money off your mod/project, including commercially-sold
+//   games, or via crowdfunding platforms like Kickstarter, Patreon, Ko-fi
+//   and other similar platforms
+//
+//===========================================================================
+
+class NashGoreGameplayStatics play
+{
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static double GetVelocity(Actor self, bool xyOnly = false)
+	{
+		if (xyOnly)
+			return self.Vel.XY.Length();
+
+		return self.Vel.Length();
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static bool IsOnFloor(Actor self)
+	{
+		return (self.Pos.Z <= self.FloorZ || self.bOnMobj);
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static void RandomXFlip(Actor self)
+	{
+		self.bSpriteFlip = RandomPick[rnd_RandomXFlip](false, true);
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static double RandomAngle4(void)
+	{
+		return RandomPick[rnd_RandomAngle4](0.0, 90.0, 180.0, 270.0);
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static bool CheckSky(Actor self)
+	{
+		if (NashGoreGameplayStatics.IsOnfloor(self) && self.floorpic == skyflatnum)
+			return true;
+		else if ((self.Pos.Z >= (self.CeilingZ - 4)) && self.ceilingpic == skyflatnum)
+			return true;
+
+		return false;
+	}
+
+	static bool CheckLiquid(Actor self)
+	{
+		if (self.GetFloorTerrain().IsLiquid)
+			return true;
+
+		return false;
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static void FixZFighting(Actor self)
+	{
+		self.WorldOffset = (0.0, 0.0, frandom[rnd_wofs](0.0, 0.10001));
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	// Returns the center of an Actor accounting for floor clipping.
+	// * mo - The Actor to get the center of.
+	// * ofs - How much to additionally offset.
+	clearscope static double Center(Actor mo, double ofs = 0.0)
+	{
+		return mo.Height * 0.5 - mo.FloorClip + ofs;
+	}
+
+	// Populates line trace data with ceiling or floor hit results without the need to fire off a tracer.
+	// * mo - The Actor considered the one doing the trace.
+	// * res - The output results. Distance traveled is relative to the center of the Actor.
+	// * ceiling - If true, get data on the ceiling instead of the floor.
+	static void SetFloorCeilingData(Actor mo, out FLineTraceData res, bool ceiling = false)
+	{
+		if (ceiling)
+		{
+			let [z, sec, ff] = mo.CurSector.NextHighestCeilingAt(mo.Pos.X, mo.Pos.Y, mo.Pos.Z, mo.Pos.Z + mo.Height);
+
+			res.HitSector = sec;
+			res.Hit3DFloor = ff;
+			res.HitTexture = ff ? ff.model.GetTexture(Sector.floor) : sec.GetTexture(Sector.ceiling);
+			res.HitLocation = (mo.Pos.XY, z);
+			res.HitDir = (0.0, 0.0, 1.0);
+			res.Distance = max(z - (mo.Pos.Z + Center(mo)), 0.0);
+			res.NumPortals = 0;
+			res.SectorPlane = Sector.ceiling;
+			res.HitType = TRACE_HitCeiling;
+		}
+		else
+		{
+			let [z, sec, ff] = mo.CurSector.NextLowestFloorAt(mo.Pos.X, mo.Pos.Y, mo.Pos.Z + MAP_EPSILON);
+
+			res.HitSector = sec;
+			res.Hit3DFloor = ff;
+			res.HitTexture = ff ? ff.model.GetTexture(Sector.ceiling) : sec.GetTexture(Sector.floor);
+			res.HitLocation = (mo.Pos.XY, z);
+			res.HitDir = (0.0, 0.0, -1.0);
+			res.Distance = max(mo.Pos.Z + Center(mo) - z, 0.0);
+			res.NumPortals = 0;
+			res.SectorPlane = Sector.floor;
+			res.HitType = TRACE_HitFloor;
+		}
+	}
+
+	// Returns the normal of a given surface. For walls this is based on the direction the trace came from.
+	// * res - The data from the fired trace.
+	static Vector3 GetSurfaceNormal(FLineTraceData res)
+	{
+		if (res.HitType != TRACE_HitWall && res.HitType != TRACE_HitFloor && res.HitType != TRACE_HitCeiling)
+			return (0.0, 0.0, 0.0);
+
+		Vector3 normal;
+		if (res.HitType == TRACE_HitWall)
+		{
+			if (Level.PointOnLineSide(res.HitLocation.XY - res.HitDir.XY, res.HitLine))
+				normal.XY = (res.HitLine.delta.Y, -res.HitLine.delta.X);
+			else
+				normal.XY = (-res.HitLine.delta.Y, res.HitLine.delta.X);
+
+			return normal.Unit();
+		}
+
+		if (res.HitType == TRACE_HitCeiling)
+			normal = res.Hit3DFloor ? -res.Hit3DFloor.model.FloorPlane.normal : res.HitSector.CeilingPlane.normal;
+		else
+			normal = res.Hit3DFloor ? -res.Hit3DFloor.model.CeilingPlane.normal : res.HitSector.FloorPlane.normal;
+
+		return normal;
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static void AlignToPlane(Actor self, bool ceiling = false)
+	{
+		// Note: I leave the 'self' references intact because in my other projects
+		// that reuse this method, this is usually a static method.
+		// This helps with copy/pasting when doing an update pass on all of them.
+
+		if (!self)
+			return;
+
+		FLineTraceData data;
+		SetFloorCeilingData(self, data, ceiling);
+
+		Vector3 norm = GetSurfaceNormal(data);
+		if (abs(norm.Z) ~== 1.0)
+		{
+			self.Pitch = norm.Z < 0.0 ? 180.0 : 0.0;
+			self.Roll = 0.0;
+			return;
+		}
+
+		Vector2 angles = NashGoreMath.GetAngles(norm);
+		double actorPitch = angles.Y + 90.0;
+
+		double diff = Actor.DeltaAngle(self.Angle, angles.X);
+		self.Pitch = actorPitch * cos(diff);
+		self.Roll = -actorPitch * sin(diff);
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static void QueueGore(void)
+	{
+		if (nashgore_permanentgore)
+			return;
+
+		let eh = NashGoreHandler(NashGoreHandler.Find("NashGoreHandler"));
+		if (eh)
+		{
+			// get max gore count
+			int countmax = eh.maxgore;
+
+			// count current amount of gore objects
+			ThinkerIterator it = ThinkerIterator.Create("Actor", STAT_NashGore_Gore);
+			Actor mo;
+			int count;
+			while (mo = Actor(it.Next()))
+			{
+				count++;
+			}
+
+			// clean up excessive gore
+			while (count > countmax)
+			{
+				// destroy the first one it can find
+				it.Reinit();
+				if (mo = Actor(it.Next()))
+				{
+					bool valid =
+					(
+						mo is "NashGoreBloodPlane" ||
+						mo is "NashGoreGibs" ||
+						mo is "NashGoreIceChunk" ||
+						mo is "NashGoreSquishyGibs"
+					);
+
+					if (valid)
+						mo.Destroy();
+
+					count--;
+				}
+			}
+		}
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static void ClearGore(void)
+	{
+		ThinkerIterator it = ThinkerIterator.Create("Actor", STAT_NashGore_Gore);
+		Actor mo;
+		while (mo = Actor(it.Next()))
+		{
+			mo.Destroy();
+		}
+
+		/*
+		ThinkerIterator decalFinder = ThinkerIterator.Create("Object", Thinker.STAT_AUTODECAL);
+		Thinker t;
+		while (t = Thinker(decalFinder.Next()))
+		{
+			t.Destroy();
+		}
+		*/
+
+		// clear wall decals by finding a sprayable line and spamming it with an empty decal :^)
+		// this workaround will have to do because of the lack of access to impact decals in ZScript
+		for (int l = 0; l < level.Lines.Size(); l++)
+		{
+			Line ln = level.Lines[l];
+			if (ln && !(ln.flags & Line.ML_TWOSIDED))
+			{
+				Vector2 mid = ln.v1.p + ln.delta * 0.5;
+				double ang = atan2(ln.delta.Y, ln.delta.X) + 90.0;
+				double dist = -1.0;
+				let sprayer = Actor.Spawn("Mapspot", (mid.X, mid.Y, 0.0), NO_REPLACE);
+				if (sprayer)
+				{
+					sprayer.SetOrigin(sprayer.Vec3Offset(cos(ang) * dist, sin(ang) * dist, 0.0), false);
+					sprayer.Angle = ang;
+					for (int i = 0; i < cl_maxdecals + 1; i++)
+					{
+						sprayer.A_SprayDecal("NoBlood");
+					}
+					sprayer.Destroy();
+				}
+
+				// no need to search anymore
+				break;
+			}
+		}
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static void Uninstall(void)
+	{
+		// clear gore
+		NashGoreGameplayStatics.ClearGore();
+
+		ThinkerIterator it = ThinkerIterator.Create("Actor");
+		Actor mo;
+		while (mo = Actor(it.Next()))
+		{
+			// remove NashGorePlugin from everything
+			let a = NashGoreActor.Find(mo);
+			if (a)
+			{
+				if (a.isDeathSpriteFlipped)
+					mo.bSpriteFlip = false;
+
+				NashGoreActor.Disable(mo);
+			}
+
+			// remove NashGore-specific actors
+			bool isNashGoreObject =
+			(
+				(mo is "NashGoreCrushedGibs")
+				|| (mo is "NashGoreRealGibs")
+				|| (mo is "NashGoreSquishyGibs")
+				|| (mo is "NashGoreCorpseHitbox")
+				|| (mo is "NashGoreLiquidBlood")
+				|| (mo is "NashGoreBloodBase")
+				|| (mo is "NashGoreBloodSpurtSpawner")
+				|| (mo is "NashGoreBloodFloorSplashSpawner")
+				|| (mo is "Blood")
+				|| (mo is "NashGoreGibs")
+				|| (mo is "NashGoreIceChunk")
+			);
+
+			if (isNashGoreObject)
+				mo.Destroy();
+		}
+
+		// remove the event handler
+		let eh = NashGoreHandler(EventHandler.Find("NashGoreHandler"));
+		if (eh)
+			eh.Destroy();
+
+		Console.MidPrint(bigfont, StringTable.Localize("$NASHGORE_MSG_UNINSTALL_SUCCESS"));
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static void ResetToDefault(void)
+	{
+		CVar cv;
+
+		static const Name cvars[] =
+		{
+			'nashgore_permanentgore',
+			'nashgore_maxgore',
+			'nashgore_bloodtype',
+			'nashgore_bloodmult',
+			'nashgore_spriteblood',
+			'nashgore_bloodspurt',
+			'nashgore_gibtype',
+			'nashgore_gibmult',
+			'nashgore_corpseblood',
+			'nashgore_footprints',
+			'nashgore_footprinttype',
+			'nashgore_bloodtrail',
+			'nashgore_deathflip',
+			'nashgore_squish',
+			'nashgore_icedeath',
+			'nashgore_splat',
+			'nashgore_gibbablecorpses',
+			'nashgore_precisefloatcheck',
+			'nashgore_bloodimpactsoundvolume'
+		};
+
+		for (int i = 0; i < cvars.Size(); i++)
+		{
+			cv = CVar.FindCVar(cvars[i]);
+			if (cv)
+				cv.ResetToDefault();
+		}
+	}
+
+	//===========================================================================
+	//
+	//
+	//
+	//===========================================================================
+
+	static int, int GetAmountMult(double cv, int chance = 0)
+	{
+		int amt = int(cv);
+		if (amt < 1)
+			amt = 1;
+
+		int cmul = int(chance + (256 - chance) * (1.0 - cv));
+		if (cmul > 256)
+			cmul = 256;
+
+		return amt, cmul;
+	}
+}
