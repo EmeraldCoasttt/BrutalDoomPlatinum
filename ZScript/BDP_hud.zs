@@ -901,7 +901,7 @@ class BDP_HUD : DoomStatusBar
 				aimAct = BDPVehicle(curvehicle.veh).aimActor;
 			}
 			
-			bool hostileAim = aimAct && aimAct.isHostile(bdpplr) && aimAct.bISMONSTER && !(aimAct is "BDPVehicle");
+			bool hostileAim = aimAct && aimAct.isHostile(bdpplr) && aimAct.bISMONSTER && !(aimAct is "BDPVehicle") && !aimAct.bSHADOW;
 			
 			If(aimAct && aimAct is "BASEHEADSHOT")
 			{
