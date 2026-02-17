@@ -119,12 +119,12 @@ painchance "Head", 255
 		TNT1 AA 0 A_SpawnItem ("HeadshotTarget20", 4, 44,0)
 		
 		DPZH A 12 A_Look
-		DPZH H 12 A_Look
+		DPZH A 12 A_Look
 		Loop
 	
 	Stand2:
 		DPZH A 12 A_Look
-		DPZH H 12 A_Look
+		DPZH A 12 A_Look
 		TNT1 A 0 A_CheckSight("Stand2")
 		Goto Stand
 		
