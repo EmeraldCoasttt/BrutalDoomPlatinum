@@ -1,7 +1,7 @@
 //CHANGES MADE:
 //new bloodless kick frames, better dropped shotgun
 
-actor ShotgunGuySpawner : RandomSpawner replaces ShotgunGuy
+actor BDPShotgunGuySpawner : RandomSpawner replaces ShotgunGuy
 {
 	DropItem "ShotgunGuy1", 255, 3
 	DropItem "ShotgunGuyHelmet", 255, 3

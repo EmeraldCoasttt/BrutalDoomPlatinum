@@ -1,4 +1,4 @@
-actor ZombieSpawner : RandomSpawner replaces Zombieman
+actor BDPZombiemanSpawner : RandomSpawner replaces Zombieman
 {
 	DropItem "RifleZombie", 255, 2
 	DropItem "HelmetRifleZombie", 255, 2
