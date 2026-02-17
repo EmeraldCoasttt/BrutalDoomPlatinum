@@ -286,7 +286,7 @@ class Weather : Actor
 			}
 			else
 			{
-				for (uint i = 0; i < sec.Get3DFloorCount(); ++i)
+				for (int i = 0; i < sec.Get3DFloorCount(); ++i)
 				{
 					let ffloor = sec.Get3DFloor(i);
 					if (!(ffloor.flags & F3DFloor.FF_EXISTS)
@@ -307,7 +307,7 @@ class Weather : Actor
 	
 	private bool In3DFloor(Sector sec, Vector3 spot)
 	{
-		for (uint i = 0; i < sec.Get3DFloorCount(); ++i)
+		for (int i = 0; i < sec.Get3DFloorCount(); ++i)
 		{
 			let ffloor = sec.Get3DFloor(i);
 			if (!(ffloor.flags & F3DFloor.FF_EXISTS) || !(ffloor.flags & F3DFloor.FF_SOLID))

@@ -308,7 +308,7 @@ class Modifier_PerfectHatred : BDPModifier
 	{
 		If(e.thing && e.thing.bismonster)
 		{
-			e.thing.bmissilemore = true;
+			e.thing.MissileChanceMult *= 0.5;
 			//e.thing.bmissileevenmore = true;
 			e.thing.speed = (e.thing.speed * 1.5);
 			e.thing.bnopain = true;

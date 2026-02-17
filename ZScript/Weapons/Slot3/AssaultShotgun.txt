@@ -268,7 +268,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 			A_GunLight();
 			A_TakeMag();
 			invoker.burstCount++;
-			if(invoker.burstCount == 3);
+			if(invoker.burstCount == 3)
 			{
 				A_SemiFlag();
 			}

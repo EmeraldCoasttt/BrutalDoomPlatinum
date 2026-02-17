@@ -517,7 +517,7 @@ BounceSound "Weapons/GrenadeBounce";
 		tracer = null;
 		bnogravity = false;
 		}
-	Goto Deathfloor;
+	Goto Death;
 	
 	
 	Bounce:
@@ -539,8 +539,9 @@ Class FireGrenade_Debris : Actor
 	radius 1;
 	mass 0;
 	speed 3;
-	+CLIENTSIDEONLY;
-	+MISSILE +NOBLOCKMAP +DOOMBOUNCE;
+	+CLIENTSIDEONLY
+	+MISSILE +NOBLOCKMAP
+	BounceType 'Doom';
 	bouncefactor 0.3;
 	renderstyle "Add";
 	scale 0.03;

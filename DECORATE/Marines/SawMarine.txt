@@ -47,7 +47,7 @@ ACTOR Marine_Saw: Marine_Rifle
 	Health 200
 	MaxTargetRange 512
 	Translation "Dox778"
-	DropItem "ChainsawSpawner"
+	DropItem "BDPChainsaw"
 	States
 	{
 	Active:

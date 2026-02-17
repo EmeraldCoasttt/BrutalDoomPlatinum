@@ -282,7 +282,7 @@ Model bfgtendril2 // Name of actor in DECORATE
 
 Model "BEAMZ_LaserBeam"
 {
-	Path "models/"
+	Path "models/projectiles"
 	Model 0 "beam.md3"
 	Skin 0 "beam.png"
 	USEACTORPITCH

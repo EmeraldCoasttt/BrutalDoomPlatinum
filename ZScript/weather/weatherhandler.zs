@@ -159,7 +159,7 @@ class PrecipitationType : Object
 struct ParserError
 {
 	string message;
-	uint index;
+	int index;
 }
 
 enum EParserTokens
@@ -362,7 +362,7 @@ class WeatherHandler : StaticEventHandler
 	{
 		bool open = false;
 		bool dontSpace = false;
-		for (uint i = 0; i < words.Size(); ++i)
+		for (int i = 0; i < words.Size(); ++i)
 		{
 			string word = words[i].MakeLower();
 			if (word == "")
@@ -375,8 +375,8 @@ class WeatherHandler : StaticEventHandler
 			int lInd = word.IndexOf("\"");
 			if (lInd >= 0)
 			{
-				int rInd = word.RightIndexOf("\"");
-				uint count = 0;
+				uint rInd = word.RightIndexOf("\"");
+				int count = 0;
 				int index = 0;
 				do
 				{
@@ -590,7 +590,7 @@ class WeatherHandler : StaticEventHandler
 	void CreatePrecipitation(Array<string> words)
 	{
 		PrecipitationType cur;
-		for (uint i = 0; i < words.Size(); ++i)
+		for (int i = 0; i < words.Size(); ++i)
 		{
 			string word = words[i].MakeLower();
 			
@@ -646,7 +646,7 @@ class WeatherHandler : StaticEventHandler
 		if (name == "")
 			return null;
 		
-		for (uint i = 0; i < precipTypes.Size(); ++i)
+		for (int i = 0; i < precipTypes.Size(); ++i)
 		{
 			if (precipTypes[i].GetName() ~== name)
 				return precipTypes[i];

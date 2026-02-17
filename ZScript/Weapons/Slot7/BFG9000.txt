@@ -979,9 +979,9 @@ class BFGDeathParticle : Actor
 	  +Missile
 	  +NoBlockMap
 	  -NoGravity
-	  +LowGravity
 	  +DontSplash
-	  +DoomBounce
+	  Gravity 0.125;
+	  BounceType 'Doom';
 	  BounceFactor 0.5;
 	  RenderStyle 'Add';
 	  Scale 0.04;
@@ -1043,7 +1043,6 @@ class BFGFireParticle: BFGDeathParticle
 {
 	Default
 	{
-  -LowGravity
   Gravity 0.8;
   BounceFactor 0.3;
   Scale 0.03;

@@ -315,7 +315,7 @@ class BDPPlasmaRifle : BDPWeaponBase
 			A_WeaponOffset(0,32);
 			A_ClearOverlays(6,6);
 			A_Recoil(3*cos(pitch));
-			if(momZ != 0)
+			if(vel.z != 0)
 				ThrustThingZ(0,pitch/2,0,1);
 			else
 				ThrustThingZ(0,pitch/3,0,1);

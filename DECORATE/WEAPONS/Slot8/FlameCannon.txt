@@ -80,7 +80,6 @@ ACTOR FlameCannon : BDPWeaponBase
 		TNT1 A 0
 		TNT1 A 0 A_jumpifinventory("dualflamerselected",1,"selectdual")
 		NULL A 0{if(GetCVAR("bd_SmartCrosshairs") == 1){A_SetCrosshair(GetCVAR("FlamecannonCrosshair"));}else{A_SetCrosshair(0);}}
-		Goto SelectFirstPersonLegs
 		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1)  
 		
 		

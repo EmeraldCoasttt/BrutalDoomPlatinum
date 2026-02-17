@@ -462,7 +462,7 @@ ACTOR PickyNuke : Nuke
 		TNT1 A 0
 		TNT1 A 0 //A_JumpIfInventory("BFG10k",1,"stay",AAPTR_PLAYER1)
 		nope:
-		 TNT1 A 0 A_SpawnItemEx ("AmmoCellPack",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_TRANSFERSPECIAL|SXF_TRANSFERAMBUSHFLAG,0, tid)
+		 TNT1 A 0 A_SpawnItemEx ("BDPCellPack",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_TRANSFERSPECIAL|SXF_TRANSFERAMBUSHFLAG,0, tid)
  		stop
 		Stay:
 		TNT1 A 0 A_JumpIfInventory("Nuke",1,"nope",AAPTR_PLAYER1)
@@ -476,25 +476,6 @@ ACTOR PickyNuke : Nuke
 	}
 
 
-}
-
-ACTOR Mauser9mm : Ammo
-{
-	Game Doom
-	Inventory.PickupMessage "Picked up a Pistol Magazine."
-	Inventory.Amount 10
-	Inventory.MaxAmount 200
-	Ammo.BackpackAmount 150
-	Ammo.BackpackMaxAmount 400
-	Inventory.Icon "CLIPB0"
-	Inventory.PickupSound "CLIPICK"
-	Scale 0.9
-	States
-	{
-	Spawn:
-		CLIP B -1
-		Stop
-	}
 }
 
 Actor AmmoFragGrenade : Ammo

@@ -817,7 +817,8 @@ Class Spark_Debris : Actor
 	mass 0;
 	speed 3;
 	+CLIENTSIDEONLY;
-	+MISSILE +NOBLOCKMAP +DOOMBOUNCE;
+	+MISSILE +NOBLOCKMAP
+	bouncetype 'Doom';
 	bouncefactor 0.3;
 	renderstyle "Add";
 	scale 0.03;
@@ -1011,7 +1012,8 @@ Class wooddebris : Actor
 		+noteleport;
 		+forcexybillboard;
 		speed 15;
-		+MISSILE +NOBLOCKMAP +DOOMBOUNCE;
+		+MISSILE +NOBLOCKMAP
+		bouncetype 'Doom';
 		bouncefactor 0.3;
 	}
 	float rollfactor;

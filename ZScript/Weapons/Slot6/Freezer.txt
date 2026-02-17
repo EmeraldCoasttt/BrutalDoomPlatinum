@@ -363,7 +363,7 @@ class Freezebot : BrutalFriend
 		+FORCEXYBILLBOARD
 		-NORADIUSDMG
 		+QUICKTORETALIATE
-		+DONTHURTSPECIES
+		+DONTHARMSPECIES
 		+FIXMAPTHINGPOS 
 		+LOOKALLAROUND
 		+PUSHABLE
@@ -759,12 +759,10 @@ class FreezebotPathfinder : Actor
 		DamageFactor "SpawnMarine", 8000.0;
 		MaxDropOffHeight 1200;
 		MaxStepHeight 1200;
+		MissileChanceMult 0.0625;
 		-COUNTKILL;
 		+NOTARGET;
 		+THRUACTORS;
-		+MISSILEMORE;
-		+MISSILEEVENMORE;
-		+FASTER;
 		+DONTSPLASH;
 		-SHOOTABLE;
 		-FRIENDLY;

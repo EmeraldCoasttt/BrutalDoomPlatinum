@@ -131,7 +131,7 @@ class BDPGrabber : BDPWeaponBase
 				invoker.grabbedactor.bnogravity = TRUE;
 				invoker.grabbedactor.bforcexybillboard = TRUE;
 				invoker.grabbedactor.bfriendly = TRUE;
-				invoker.grabbedactor.bmissilemore = TRUE;
+				invoker.grabbedactor.missilechancemult *= 0.5;
 				invoker.grabbedactor.bnopain = TRUE;
 				invoker.grabbedactor.blookallaround = TRUE;
 				invoker.grabbedactor.bdontharmspecies = FALSE;
@@ -161,7 +161,7 @@ class BDPGrabber : BDPWeaponBase
 				invoker.grabbedactor.bnogravity = TRUE;
 				invoker.grabbedactor.bforcexybillboard = TRUE;
 				invoker.grabbedactor.bfriendly = TRUE;
-				invoker.grabbedactor.bmissilemore = TRUE;
+				invoker.grabbedactor.missilechancemult *= 0.5;
 				invoker.grabbedactor.bnopain = TRUE;
 				invoker.grabbedactor.blookallaround = TRUE;
 				invoker.grabbedactor.bdontharmspecies = FALSE;
@@ -188,6 +188,7 @@ class BDPGrabber : BDPWeaponBase
 				invoker.grabbedactor.bnogravity = invoker.previousgravity;
 				invoker.grabbedactor.bforcexybillboard = invoker.previousxy;
 				invoker.grabbedactor.bfriendly = invoker.previousfriend;
+				invoker.grabbedactor.missilechancemult /= 0.5;
 				if(invoker.grabbedactor.bmissile)
 				{
 					invoker.grabbedactor.giveinventory("grabberdamage",1);
@@ -237,6 +238,7 @@ class BDPGrabber : BDPWeaponBase
 				invoker.grabbedactor.bnogravity = invoker.previousgravity;
 				invoker.grabbedactor.bforcexybillboard = invoker.previousxy;
 				invoker.grabbedactor.bfriendly = invoker.previousfriend;
+				invoker.grabbedactor.missilechancemult /= 0.5;
 				if(invoker.grabbedactor.bmissile)
 				{
 					invoker.grabbedactor.vel.xy = (0,0);

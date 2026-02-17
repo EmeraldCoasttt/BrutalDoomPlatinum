@@ -12,7 +12,7 @@ ACTOR VanillaZombieMan: RifleZombie
 	DeathSound "grunt/death"
 	ActiveSound "grunt/active"
 	Obituary "$OB_ZOMBIE"
-	DropItem "RifleSpawner"
+	DropItem "BDPAssaultRifle"
 	DamageFactor "Avoid", 0 DamageFactor "Taunt", 0
 	States
 	{

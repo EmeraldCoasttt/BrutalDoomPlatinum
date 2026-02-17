@@ -1569,7 +1569,7 @@ ACTOR DropedAxe
 	 
 	 Death:
 	 TNT1 A 0
-	 TNT1 A 0 A_SPawnItem("AxeSpawner")
+	 //TNT1 A 0 A_SPawnItem("AxeSpawner")
 	 Stop
     }
 }
@@ -1605,7 +1605,7 @@ ACTOR DropedAxe2
 	 
 	 Death:
 	 TNT1 A 0
-	 TNT1 A 0 A_SPawnItem("AxeSpawner")
+	 //TNT1 A 0 A_SPawnItem("AxeSpawner")
 	 Stop
     }
 }

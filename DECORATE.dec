@@ -86,7 +86,7 @@ damage 0
 #include DECORATE/MONSTERS/MUMMY.txt
 #include DECORATE/MONSTERS/SERGEANTS.txt
 #include DECORATE/MONSTERS/ShotgunGuyHelmet.txt
-#include DECORATE/MONSTERS/RiotSergeant.txt
+//#include DECORATE/MONSTERS/RiotSergeant.txt
 #include DECORATE/MONSTERS/COMANDO.txt
 #include DECORATE/MONSTERS/LABGUY.txt
 #include DECORATE/MONSTERS/ZOMBIEGUY.txt
@@ -119,7 +119,7 @@ damage 0
 //MISC
 #include DECORATE/MONSTERS/UnderwaterMonsters.txt
 #include DECORATE/MONSTERS/StealthMonsters.txt
-#include DECORATE/MONSTERS/BossBrain.txt
+//#include DECORATE/MONSTERS/BossBrain.txt
 #include DECORATE/MONSTERS/VanillaMonsters.txt
 #include DECORATE/MONSTERS/DyingGuys.txt
 #include DECORATE/MONSTERS/LastStandMonsters.txt
@@ -409,6 +409,6 @@ ACTOR DemonCoreSpawner : RandomSpawner
 	DropItem "SpiderMastermind", 255, 3
 //	DropItem "ZombieArtilleryTank", 255, 3
 	DropItem "Cyberdemon", 255, 2
-	DropItem "ZombieTank", 255, 2
+//	DropItem "ZombieTank", 255, 2
 //	DropItem "Juggernaut", 255, 1
 }

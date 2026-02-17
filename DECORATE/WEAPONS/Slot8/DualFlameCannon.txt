@@ -85,7 +85,6 @@ ACTOR DualFlameCannon : BDPWeaponBase
 		Loop
 	Select:
 		TNT1 A 0
-		Goto SelectFirstPersonLegs
 		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1)
 		
 		

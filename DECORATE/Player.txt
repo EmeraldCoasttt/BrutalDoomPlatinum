@@ -5069,72 +5069,6 @@ SFNZ C 8
 
 		 
 		 
-		 
-		 
-		 
-		//When you get MeatShields
-		
-		
-		GotImpShield:
-		NULL A 0 A_TakeInventory("MeatAmmo", 100)
-		NULL A 0 A_GiveInventory("ImpShield")
-		NULL A 0 A_SelectWeapon("ImpShield")
-		NULL A 0 A_TakeInventory("Punching", 1)
-		Goto SeeImpShield
-		
-		
-		SeeImpShield:
-	    NULL A 0 A_TakeInventory("Punching", 1)
-		MAIS A 8
-		NULL A 0 A_JumpIfInventory("Punching", 1, "Punch")
-		MAIS B 8
-		NULL A 0 A_JumpIfInventory("Punching", 1, "Punch")
-		//Goto See
-		Loop
-		 
-		 
-		 
-		 		GotZmanShield:
-		NULL A 0 A_TakeInventory("MeatAmmo", 100)
-		NULL A 0 A_GiveInventory("ZmanShield")
-		NULL A 0 A_SelectWeapon("ZmanShield")
-		NULL A 0 A_TakeInventory("Punching", 1)
-		Goto SeeZmanShield
-		
-		
-		SeeZmanShield:
-	    NULL A 0 A_TakeInventory("Punching", 1)
-		MAZS A 8
-		NULL A 0 A_JumpIfInventory("Punching", 1, "Punch")
-		MAZS B 8
-		NULL A 0 A_JumpIfInventory("Punching", 1, "Punch")
-		//Goto See
-		Loop
-		
-		
-		GotSguyShield:
-		NULL A 0 A_TakeInventory("MeatAmmo", 100)
-		NULL A 0 A_GiveInventory("SguyShield")
-		NULL A 0 A_SelectWeapon("SguyShield")
-		NULL A 0 A_TakeInventory("Punching", 1)
-		Goto SeeSGuyShield
-		
-		SeeSGuyShield:
-	    NULL A 0 A_TakeInventory("Punching", 1)
-		MASS A 8
-		NULL A 0 A_JumpIfInventory("Punching", 1, "Punch")
-		MASS B 8
-		NULL A 0 A_JumpIfInventory("Punching", 1, "Punch")
-		//Goto See
-		Loop 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
     Salutes1:
 	    NULL A 0
 		NULL A 0 A_PlaySound ("SALUTE")
@@ -5289,8 +5223,8 @@ SFNZ C 8
 		Goto RifleKick
 	*/
 	ImpExecuteFloor:	
-		TNT1 A 0 A_CustomMissile("ExecutionFrontWallDetect", 32, 0, 0, 2)
-		TNT1 A 0 A_CustomMissile("ExecutionLeftWallDetect", 52, 0, 90, 2)
+		//TNT1 A 0 A_CustomMissile("ExecutionFrontWallDetect", 32, 0, 0, 2)
+		//TNT1 A 0 A_CustomMissile("ExecutionLeftWallDetect", 52, 0, 90, 2)
 		TNT1 A 0 A_Stop
 		PLAY AA 1
 		//TNT1 A 0  A_Recoil(-2)

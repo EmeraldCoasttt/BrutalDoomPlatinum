@@ -252,7 +252,7 @@ bouncecount 5;
 		tracer = null;
 		bnogravity = false;
 		}
-	Goto Deathfloor;
+	Goto Death;
 	
 	
 	Bounce:

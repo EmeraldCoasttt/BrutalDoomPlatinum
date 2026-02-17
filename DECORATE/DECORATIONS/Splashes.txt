@@ -246,7 +246,6 @@ actor NukageSplashBaseSmall : nukageSplashBase
 	TNT1 FFF 0 A_CustomMissile ("nukageParticleXFaster", 12, random(-5,5), random (0, 360), 2, random (50, 140))
 	TNT1 A 0 A_RadiusGive("IsOverNukage", 64, RGF_OBJECTS, 1)
 	TNT1 A 0 A_Explode(2, 6)
-	TNT1 A 0 A_SpawnItem("NukageSplashWaves")
 	TNT1 A 0
 	TNT1 A 0 A_NoBlocking
     Stop

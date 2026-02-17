@@ -589,7 +589,7 @@
 		*/
 		If(e.damagetype == "taunt" && !e.thing.findinventory("thisreallypissesmeoff") && e.thing.bismonster)
 		{
-		e.thing.bmissilemore = true;
+		e.thing.missilechancemult *= 0.5;
 		//e.thing.bmissileevenmore = true;
 		e.thing.speed = (e.thing.speed * 1.5);
 		e.thing.bnopain = true;

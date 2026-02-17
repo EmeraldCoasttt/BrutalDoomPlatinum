@@ -46,7 +46,7 @@ ACTOR Marine_Shotgun: Marine_Rifle
 {
 	Health 175
 	MaxTargetRange 1024
-	DropItem "ShotgunSpawnerDroped"
+	DropItem "BDPShotgun"
 	//translation "112:127=[170,170,170]:[0,0,0]"
 	translation "Gray"
 	States
@@ -224,7 +224,7 @@ ACTOR Marine_Shotgun: Marine_Rifle
 
 	Waits3:
 		MAR3 D 0
-		TNT1 A 0 A_JumpIfInTargetInventory("AmmoShell", 4, 1)
+		TNT1 A 0 A_JumpIfInTargetInventory("BDPShell", 4, 1)
 		Goto GiveAmmo
 		TNT1 A 0 A_SetAngle(random(90, -90) + angle)
 		TNT1 A 0 A_marinechatter
@@ -251,7 +251,7 @@ ACTOR Marine_Shotgun: Marine_Rifle
 		TNT1 A 0 A_PlaySound("MRNGI1")
 		MAR3 D 15 A_FaceTarget
 		PLA1 H 1 A_FaceTarget
-		PLA1 E 4 A_SpawnItemEx("AmmoShell",16,0,32,5)
+		PLA1 E 4 A_SpawnItemEx("BDPShell",16,0,32,5)
 		PLA1 H 1 A_FaceTarget
 		MAR3 D 6 A_FaceTarget
 		Goto Waits
@@ -1005,7 +1005,7 @@ ACTOR BlackMarine_Shotgun: Marine_Rifle
 {
 	Health 175
 	MaxTargetRange 1024
-	DropItem "ShotgunSpawnerDroped"
+	DropItem "BDPShotgun"
 	//translation "112:127=[170,170,170]:[0,0,0]"
 	translation "GrayBlack"
 	States
@@ -1183,7 +1183,7 @@ ACTOR BlackMarine_Shotgun: Marine_Rifle
 
 	Waits3:
 		MAR3 D 0
-		TNT1 A 0 A_JumpIfInTargetInventory("AmmoShell", 4, 1)
+		TNT1 A 0 A_JumpIfInTargetInventory("BDPShell", 4, 1)
 		Goto GiveAmmo
 		TNT1 A 0 A_SetAngle(random(90, -90) + angle)
 		TNT1 A 0 A_marinechatter
@@ -1210,7 +1210,7 @@ ACTOR BlackMarine_Shotgun: Marine_Rifle
 		TNT1 A 0 A_PlaySound("MRNGI1")
 		MAR3 D 15 A_FaceTarget
 		PLA1 H 1 A_FaceTarget
-		PLA1 E 4 A_SpawnItemEx("AmmoShell",16,0,32,5)
+		PLA1 E 4 A_SpawnItemEx("BDPShell",16,0,32,5)
 		PLA1 H 1 A_FaceTarget
 		MAR3 D 6 A_FaceTarget
 		Goto Waits

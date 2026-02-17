@@ -169,7 +169,7 @@ class RainAndSnow : Weather
 		wh = WeatherHandler(StaticEventHandler.Find("WeatherHandler"));
 		if (wh)
 		{
-			for (uint i = 0; i < wh.precipTypes.Size(); ++i)
+			for (int i = 0; i < wh.precipTypes.Size(); ++i)
 			{
 				string n = wh.precipTypes[i].GetName().Mid(3);
 				if (weatherTypes.Find(n) >= weatherTypes.Size())

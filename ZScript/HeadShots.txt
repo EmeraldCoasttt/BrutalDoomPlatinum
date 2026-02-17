@@ -176,6 +176,18 @@ CLASS ZOMBIEHEADSHOT : BASEHEADSHOT
 
 }
 
+CLASS ZOMBIEGUYHEADSHOT : BASEHEADSHOT
+{
+
+	Default
+	{
+		baseheadshot.offsetz 36;
+		baseheadshot.offsetx 16;
+		radius 8;
+		height 16;
+	}
+}
+
 CLASS IMPHEADSHOT : BASEHEADSHOT
 {
 
@@ -250,7 +262,6 @@ CLASS KNIGHTHEADSHOT : BASEHEADSHOT
 		baseheadshot.offsetx 8;
 		radius 10;
 		height 16;
-		BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood";
 		BloodColor "DarkGreen";
 		Species "nobles";
 	}
@@ -266,7 +277,6 @@ CLASS BARONHEADSHOT : BASEHEADSHOT
 		baseheadshot.offsetx 8;
 		radius 12;
 		height 18;
-		BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood";
 		bloodcolor "darkgreen";
 		Species "nobles";
 	}
@@ -280,7 +290,6 @@ CLASS CACOHEADSHOT : BASEHEADSHOT
 	{
 		baseheadshot.offsetz 32;
 		baseheadshot.offsetx 24;
-		bloodtype "Blue_Blood", "BlueSawBlood", "BlueSawBlood";
 		bloodcolor "blue";
 		radius 14;
 		height 14;

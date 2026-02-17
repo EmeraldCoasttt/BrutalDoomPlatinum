@@ -100,6 +100,7 @@ version "4.14.0"
 #include "Zscript/Monsters/GoreNest.txt"
 #include "Zscript/Monsters/Banshee.txt"
 #include "Zscript/Monsters/bossbrain.txt"
+#include "Zscript/Monsters/ZombieGuy.txt"
 
 #include "ZScript/Vehicles/Kinematics/kine_parts.zsc" 
 #include "ZScript/Vehicles/veh_parts.zsc"

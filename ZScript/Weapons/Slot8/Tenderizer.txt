@@ -281,7 +281,6 @@ CLASS Tenderizer : BDPWeaponBase
 		Select:
 			TNT1 A 0;
 			TNT1 A 0 A_SetCrosshair(41);
-			Goto SelectFirstPersonLegs;
 		SelectContinue: "####" A 0 A_GiveInventory("IsPlayingDoxMod",1); 
 			UNHG A 0 A_takeinventory("disabletilting",1);
 			TNT1 AAAAAAAAAAAAAA 0 A_Raise();
@@ -426,7 +425,7 @@ CLASS Tenderizer : BDPWeaponBase
 			invoker.grabbedactor.bnogravity = TRUE;
 			invoker.grabbedactor.bforcexybillboard = TRUE;
 			invoker.grabbedactor.bfriendly = TRUE;
-			invoker.grabbedactor.bmissilemore = TRUE;
+			invoker.grabbedactor.missilechancemult *= 0.5;
 			invoker.grabbedactor.bnopain = TRUE;
 			invoker.grabbedactor.blookallaround = TRUE;
 			invoker.grabbedactor.bdontharmspecies = FALSE;
