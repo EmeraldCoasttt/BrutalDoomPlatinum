@@ -127,7 +127,7 @@ class BDPSubmachineGun : BDPWeaponBase
 		SMGZ F 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		Loop;
 	AimEnd:
-		SMGZ E 1 {A_StartSound("ADSOUT"); A_EndAim();}
+		SMGZ E 1 A_EndAim();
 		SMGZ DC 1;
 		Goto Ready;
 	DoReload: 

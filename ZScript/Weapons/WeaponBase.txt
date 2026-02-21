@@ -22,6 +22,22 @@ class GunfireParticle : VisualThinker
 	}
 }
 
+class HookTracer : LineTracer
+{
+	override ETraceStatus TraceCallback()
+	{
+		if(results.HitType == TRACE_HitActor && (results.hitActor.bIsMonster && results.hitActor.bshootable && !results.hitActor.bfriendly || results.hitActor is "BDPPlayerPawn"))
+		{
+			return TRACE_Stop;
+		}
+		else
+		{
+			return TRACE_Skip;
+		}
+	}
+}
+		
+
 class ShieldParticle : VisualThinker
 {
 	override void PostBeginPlay()
@@ -46,7 +62,7 @@ class ShieldParticle : VisualThinker
 	}
 }
 
-Class BDPWeaponBase : DoomWeapon //Weapon
+Class BDPWeaponBase : DoomWeapon abstract//Weapon
 {
 	int BDPWeaponFlags;
 	flagdef BloodStain : BDPWeaponFlags, 0;
@@ -317,6 +333,17 @@ Class BDPWeaponBase : DoomWeapon //Weapon
 	
 	}
 	
+	action void A_SetTargeterCrosshair(string crosshairname, int crosshairrange = 5000, double crosshairscale = 1.0)
+	{
+		let dplr = BDPPlayerPawn(invoker.owner);
+			if(dplr)
+			{
+				dplr.targetercrosshair = crosshairname;
+				dplr.targetercrosshairscale = (crosshairscale,crosshairscale);
+				dplr.targetercrosshairrange = crosshairrange;
+			}
+	
+	}
 	action void A_QuadSound()
 	{	
 		If(invoker.owner.findinventory("PowerQuakeDamage"))
@@ -858,64 +885,21 @@ Class BDPWeaponBase : DoomWeapon //Weapon
 	
 	action void A_trymeathook(int meathookrange = 256)
 	{
-	BlockThingsIterator CheckForTargets = BlockThingsIterator.create(Self,meathookrange); //256 can be whatever range around the actor.
-Actor CurrentActor; //A pointer to whatever actor the iterator is iterating through.
-	If(countinv("meathook") > 0)
-	{
-	While (CheckForTargets.Next() && countinv("meathook") > 0) 
-{
-	CurrentActor = CheckForTargets.Thing;
-	//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
-	//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
-	If ((CurrentActor && CurrentActor.bIsMonster && currentactor.bshootable && !currentactor.bfriendly && !currentactor.findinventory("isplayer") && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && !(currentactor is "ExplosiveBarrel1")) || (currentactor && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && currentactor.findinventory("isplayer") && currentactor != self))
-	{
-		target = currentactor;
-		If(target)
+		let dplr = BDPPlayerPawn(invoker.owner);
+		if(dplr.aimActor2)
 		{
-		
-		
-		
-		vector3 targetpos = LevelLocals.SphericalCoords((pos.x,pos.y,player.viewz),target.pos+(0,0,target.default.height*0.5),(angle,pitch));	
-		if (abs(targetpos.x) <= 20 && abs(targetpos.y) <= 20)
-			{
-  //this will execute only if the Other actor's center is within 25 degrees from the center of the player's screet
-	
-		//A_customrailgun(8,0,"","",RGF_SILENT|RGF_NOPIERCING,1,20,"bfgpuff",0,0,0,0,1.0,1,"none",-10);
-		
-		A_spawnprojectile("hook",32);
-		A_takeinventory("meathook",1);
-		//A_fireprojectile("")
-		//A_takeinventory("meathook",1);
-		a_startsound("MHKSTRT",193,CHANF_DEFAULT,1,ATTN_NONE);
+			target = dplr.aimActor2;
+			A_spawnprojectile("hook",32);
+			A_takeinventory("meathook",1);
+			a_startsound("MHKSTRT",193,CHANF_DEFAULT,1,ATTN_NONE);
+			return;
 		}
-		//Else A_cleartarget();
+		else
+		{
+			A_StartSound("weapons/empty",190,CHANF_DEFAULT,1,ATTN_NONE);
 		}
-		
-		
-		
-		
 	}
-	If (!target)
-	{
-	a_startsound("weapons/empty",190,CHANF_DEFAULT,1,ATTN_NONE);
-	}
-	//A_cleartarget();
-}
-	}
-	
-	
-	
-	
-	Else
-	{
-	a_startsound("weapons/empty",193,CHANF_DEFAULT,1,ATTN_NONE);
-	}
-	
-	
-	
-	}
-	
-	
+
 	//action void A_UnmakeLevel(int times=1){BDPWeaponBase.UnmakeLevel(times);}
 	action void A_UnmakeLevel(int times=1){
 	
@@ -1034,7 +1018,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			}
 			if(!dplr.blockSpecial)
 				player.WeaponState |= WF_USER3OK;
-			if(invoker.CheckSprint() && kicksprint && resolvestate("Sprint") && invoker.aimMode == 0)
+			if(player.cmd.buttons & BT_SPEED && player.crouchdir != -1 && kicksprint && resolvestate("Sprint") && invoker.aimMode == 0)
 				A_Overlay(50,"Sprint",true);
 			else if(player.FindPSprite(50))
 			{
@@ -1668,6 +1652,7 @@ Actor CurrentActor; //A pointer to whatever actor the iterator is iterating thro
 			invoker.aimMode = 0;
 			invoker.semiautofired = 0;
 			invoker.semiclear = false;
+			A_SetTargeterCrosshair("",0);
 			
 			A_SetCrosshair(-1);
 			a_weaponvoiceline();

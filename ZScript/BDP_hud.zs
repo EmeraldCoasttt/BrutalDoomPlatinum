@@ -14,6 +14,8 @@ class BDP_HUD : DoomStatusBar
 	int hinttimer;
 	double hintfade;
 	int randomhint;
+	DynamicValueInterpolator hookinterpx;
+	DynamicValueInterpolator hookinterpy;
 
 	static clearscope double LinearMap(double val, double source_min, double source_max, double out_min, double out_max) 
 	{
@@ -42,6 +44,8 @@ class BDP_HUD : DoomStatusBar
 		mHUDFont = HUDFont.Create(fnt, fnt.GetCharWidth("0"), Mono_CellLeft, 1, 1);
 		Arrowtimer = 66;
 		weapPromptFnt = HUDFont.Create(Font.GetFont('BigUpper'));
+		hookinterpx = DynamicValueInterpolator.Create(0,10,1,5);
+		hookinterpy = DynamicValueInterpolator.Create(0,10,1,5);
 	}
 	
 	override void Draw (int state, double TicFrac)
@@ -1125,6 +1129,35 @@ class BDP_OverlayUI : EventHandler
 			DrawKeys(e);
 		}
 		
+		If(BDPplr && BDPplr.health > 0)
+		{
+			Actor aimAct = bdpplr.aimActor2; 
+			bool hostileAim = aimAct && aimAct.isHostile(bdpplr) && aimAct.bISMONSTER && !(aimAct is "BDPVehicle") && !aimAct.bSHADOW;
+			if(aimAct)
+			{
+				// Project KeyNAV
+				HLViewProjection viewproj = HLSBS.GetEventViewerProj(e);
+				bool infront;
+				vector2 apos;
+				[infront, apos] = HLSBS.GetActorHUDPos (
+					viewproj,
+					aimAct, 0, 0, aimAct.height / 2
+				);
+				string crosshair = bdpplr.targetercrosshair;
+				vector2 retsize = bdpplr.targetercrosshairscale;
+				if(infront && crosshair)
+				{
+					double dist = e.Camera.Distance3D(aimAct);
+					vector2 distscale = (1,1);
+					distscale *= dist/200.;
+					distscale.x = clamp(distscale.x, 2.0, 2.0);
+					distscale.y = clamp(distscale.y, 2.0, 2.0);
+					double trans = CVar.GetCVAR("bdp_crosshair_trans",BDPplr.player).GetFloat();
+					
+					HLSBS.DrawImage(crosshair..0, apos, 0, trans, scale:retsize / 1.33, absolute:true);
+				}
+			}
+		}
 		
 		// Keep track of time, always.
 		if(!prevMS)

@@ -231,9 +231,14 @@ class BDPPlayerPawn : PlayerPawn
 	vector3 aimActor_pos;
 	Actor aimActor;
 	vector3 aimpos;
+	Actor aimActor2;
+	vector3 aimpos2;
 	string crosshair;
 	vector2 crosshairscale;
 	int crosshairrange;
+	string targetercrosshair;
+	vector2 targetercrosshairscale;
+	int targetercrosshairrange;
 	
 	//input handling
 	bool blockFire;
@@ -394,7 +399,7 @@ class BDPPlayerPawn : PlayerPawn
 		TNT1 A 1
 		{
 			A_OverlayFlags(-602, PSPF_ADDBOB, false);
-			if(player.cmd.buttons & BT_USER1 && !blockKick && CountInv("veh_manager") < 1)
+			if((player.cmd.buttons & BT_USER1 || player.cmd.forwardmove > 0 && Player.CrouchFactor != 1 && player.cmd.buttons & BT_SPEED && !(player.oldbuttons & BT_CROUCH) && player.crouchdir != 1) && !blockKick && CountInv("veh_manager") < 1)
 			{
 				BDPWeaponBase weap = BDPWeaponBase(player.ReadyWeapon);
 				bool kickflash = (weap.readyLeft && weap.readyRight || !weap.bDUALWEAPON) && player.WeaponState & WF_USER1OK;
@@ -402,7 +407,7 @@ class BDPPlayerPawn : PlayerPawn
 				statelabel st = "Kick";
 				statelabel ac = "KickAction";
 				statelabel tr = "KickTranslatable";
-				if(player.crouchfactor != 1 && (player.cmd.buttons & BT_CROUCH || player.oldbuttons & BT_CROUCH) && !exhausted)
+				if(player.cmd.forwardmove > 0 && Player.CrouchFactor != 1 && player.cmd.buttons & BT_SPEED && !(player.oldbuttons & BT_CROUCH && player.crouchdir != 1) && !exhausted)
 				{
 					st = "SlideKick";
 					ac = "SlideKickAction";
@@ -492,7 +497,7 @@ class BDPPlayerPawn : PlayerPawn
 			player.MaxPitch = 90;
 			player.crouching = 0;
 		}
-		SLID HIJ 1
+		PISG HIJ 1
 		{
 			viewbob += 0.1;
 			if(pitch <= 11)
@@ -968,7 +973,7 @@ class BDPPlayerPawn : PlayerPawn
 						seenmonstercount++;
 						//HACKY AS HELL!!!
 						currentactor.giveinventory("youveseenme",1);
-						if(currentactor is "Cacodemon" || currentactor is "PainElemental1")
+						if(currentactor is "Cacodemon" || currentactor is "BDPPainElemental")
 						cacocount++;
 						if(currentactor is "Cyberdemon")
 						seencyber = true;
@@ -2242,7 +2247,7 @@ class BDPPlayerPawn : PlayerPawn
 			blockAltfire = false;
 		if(blockSpecial && !(player.cmd.buttons & BT_USER3))
 			blockSpecial = false;
-		if(blockKick && !(player.cmd.buttons & BT_USER1))
+		if(blockKick && !(player.cmd.buttons & BT_USER1) && !(player.cmd.buttons & BT_CROUCH) && player.crouchFactor == 1)
 			blockKick = false;
 		if(blockTaunt && !(player.cmd.buttons & BT_USER4))
 			blockTaunt = false;
@@ -2276,6 +2281,33 @@ class BDPPlayerPawn : PlayerPawn
 				
 				aimpos = lt.HitLocation;
 				aimActor = lt.HitActor;
+				if(targetercrosshairrange > 0)
+				{
+					aimActor2 = null;
+					double lastAim = -1;
+					BlockThingsIterator CheckForTargets = BlockThingsIterator.create(Self,targetercrosshairrange); //256 can be whatever range around the actor.
+					Actor CurrentActor; //A pointer to whatever actor the iterator is iterating through.
+					While (CheckForTargets.Next()) 
+					{
+						CurrentActor = CheckForTargets.Thing;
+						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
+						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
+						If(CurrentActor && (CurrentActor.bIsMonster && currentactor.bshootable && !currentactor.bfriendly || currentactor is "BDPPlayerPawn") && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && currentactor != self)
+						{
+							vector3 targetpos = LevelLocals.SphericalCoords((pos.x,pos.y,player.viewz),currentactor.pos+(0,0,currentactor.default.height*0.5),(angle,pitch));
+							let tr = new("HookTracer");
+							if(tr)
+							{
+								tr.Trace((pos.x,pos.y,player.viewz),cursector,(AngleToVector(angle - targetpos.x, cos(pitch - targetpos.y)), -sin(pitch - targetpos.y)),targetercrosshairrange,0,ignore:self);
+								if (tr.results.HitActor == CurrentActor && abs(targetpos.x) <= CurrentActor.Radius * 2 / (Distance3D(CurrentActor) / 100) && abs(targetpos.y) <= CurrentActor.Height / (Distance3D(CurrentActor) / 100) && (lastAim == -1 || abs(targetpos.x) + abs(targetpos.y) <= lastAim))
+								{
+									lastAim = abs(targetpos.x) + abs(targetpos.y);
+									aimActor2 = currentactor;
+								}
+							}
+						}
+					}
+				}
 			}
 			
 	
