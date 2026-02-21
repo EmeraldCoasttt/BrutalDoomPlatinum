@@ -292,7 +292,7 @@ ACTOR CameraShakeMinor: CameraShake
 /////////////////
 
 
-ACTOR XDeathArm1
+/*ACTOR XDeathArm1
 {
     Radius 8
     Height 8
@@ -330,7 +330,7 @@ ACTOR XDeathArm1
 		TNT1 A 0
 		Stop
     }
-}
+}*/
 
 actor Gib_Arm: LimbBase
 {

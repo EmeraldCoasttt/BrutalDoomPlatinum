@@ -1,0 +1,918 @@
+class BDPArchVile: Archvile Replaces Archvile
+{
+	Default
+	{
+		Radius 20;
+		Height 56;
+		// damagefactor "Crush", 10.0
+		Mass 500;
+		Speed 15;
+		Health 900;
+		GibHealth 30;
+		PainChance 4;
+		PainChance "Kick", 90;
+		damagefactor "Avoid", 0.0;
+		PainChance "HangingHook", 0;
+		damagefactor "GibRemoving", 0.0;
+		BloodType "Brutal_Blood", "SawBlood", "SawBlood";
+		Monster;
+		MaxTargetRange 896;
+		+QUICKTORETALIATE 
+		+FLOORCLIP 
+		+NOTARGET
+		DamageType "Burn";
+		//DropItem "DemonRunespawner", 4
+		//DropItem "Demonstrengthrune", 8
+		SeeSound "vile/sight";
+		PainSound "vile/pain";
+		DeathSound "vile/death";
+		ActiveSound "vile/active";
+		MeleeSound "vile/stop";
+		damagefactor "TeleportRemover", 0.0;
+		Obituary "%o was exploded by an Arch-Vile.";
+		damagefactor "Blood", 0.0; damagefactor "BlueBlood", 0.0; damagefactor "GreenBlood", 0.0;
+		DeathHeight 4;
+		BurnHeight 0;
+		Tag "Archvile";
+		Species "archviles";
+	}
+	
+	Override void tick()
+	{
+		If(getcvar("bd_archvileteleport") == 0 && !findinventory("imteleporting"))
+		{
+			painchance = random(70,140);
+			bnopain = false;
+		}
+		Else
+		{
+			//console.printf("Homosexual");
+			painchance = 10;
+		}
+		Super.tick();
+	}
+	
+	Action state a_vilechecktarget()
+	{
+		bool cantseeplayer;
+		If(random(1,70) > 50)
+		{
+			If(target && !checksight(target))
+			{
+				cantseeplayer = true;
+			}
+		}
+		If(!cantseeplayer) 
+		{
+			return resolvestate(null);
+		}
+		Else
+		{
+			return resolvestate("teleportawaysee");
+		}
+	}
+	
+	Action state a_viletryteleport(statelabel TeleportState = "doteleport")
+	{
+		Int teleportcount;
+		bool teleportsuccess;
+		Actor viletarget;
+		while(!teleportsuccess && teleportcount < 60)
+		{
+			FLineTraceData lasersight;
+			LineTrace(frandom(0,365), 1000, frandom(0,365), TRF_THRUACTORS | TRF_BLOCKSELF, offsetz: 64, data: lasersight);
+			vector3 targetpos = lasersight.HitLocation;
+			if (lasersight.HitLine)
+			{
+				vector2 wallnormal = (-lasersight.HitLine.delta.y,lasersight.HitLine.delta.x).unit();
+				if (!lasersight.LineSide)
+				wallnormal *= -1;
+				targetpos += (wallnormal * 18);
+			}
+			if (lasersight.hittype == trace_hitceiling)
+			{
+				targetpos.z -= 13;
+			}
+			VileTarget = Spawn("Viletarget",(targetpos.x,targetpos.y,-999));
+			
+			If(viletarget && distance2d(viletarget) > 300 && checkmove((viletarget.pos.x, viletarget.pos.y),PCM_DROPOFF || PCM_NOACTORS))
+			{
+				teleportsuccess = true;
+				//console.printf("teleportsuccessful");
+				tracer = viletarget;
+				viletarget.tracer = self;
+			}
+			Else
+			{
+				If(viletarget)
+				viletarget.destroy();
+				//console.printf("TeleportFailed " "%i",teleportcount);
+				teleportcount++;
+			}
+		}
+		If(tracer && tracer is "viletarget" && teleportsuccess)
+		{
+			//A_startsound("Weapons/Unmaker/UseTeleporter",12);
+			Return resolvestate(teleportstate);
+		}
+		Else
+		{
+			Return resolvestate(null);
+		}
+	}
+	
+	Action state a_vileteleport(statelabel teleportback = "teleportback")
+	{
+		//A_wander();
+		A_spawnitemex("TinyBurningPieceArchvile");
+		A_checkforresurrection(resolvestate("stayteleported"));
+		A_facetracer();
+		vector3 movepos = Vec3Angle(34,angle,0);
+		If (checkmove(Vec2Angle(34,angle),PCM_NOACTORS))
+		{
+			setorigin(movepos,TRUE);
+		}
+		Else if(!checkblock())
+		{
+			if(tracer)
+			tracer.Destroy();
+			A_startsound("Weapons/Unmaker/UseTeleporter",12);
+			Return resolvestate(teleportback);
+		}
+		If(tracer && distance2d(tracer) <= 32 && !checkblock())
+		{
+			if(tracer)
+			tracer.Destroy();
+			A_startsound("Weapons/Unmaker/UseTeleporter",12);
+			Return resolvestate(teleportback);
+		}
+		Return resolvestate(null);
+	}
+	
+	Action void a_vileteleport2()
+	{
+		//A_wander();
+		angle = frandom(0,360);
+		A_spawnitemex("TinyBurningPieceArchvile");
+		A_recoil(-6);
+	}
+	
+	States
+	{
+	Spawn:
+		DIAB B 0;
+		TNT1 A 0 A_spawnitemex("VileHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_GiveInventory("EnemyIsArchvile");
+		MARN A 0 ACS_ExecuteAlways(177, 0, 0, 0, 0);//Check if you are playing on an Wolfenstein level
+		TNT1 A 0 ACS_NamedExecuteAlways("BDCHeckClassicMonsters", 0, 0, 0, 0);//Check if Vanilla Mode is activated
+		
+	Spawn2:	
+		DIAB B 20 A_Look();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget20", 12, 56,0);
+		Loop;
+	See:
+		DIAB AA 2 A_VileChase();
+		DIAB BB 2 A_VileChase();
+		DIAB CC 2 A_VileChase();
+		DIAB DD 2 A_VileChase();
+		//TNT1 A 0 A_VileCheckTarget
+		TNT1 A 0 A_GiveInventory("EnemyIsArchvile");
+		Loop;
+	Missile:
+		DIAB E 0 BRIGHT A_VileStart();
+		TNT1 A 0 A_facetarget();
+		TNT1 A 0 A_spawnitemex("archvilefirewall",100,0,0,0,0,0,0,SXF_SETMASTER);
+		TNT1 A 0 A_spawnitemex("archvilefirewall",100,0,0,0,0,0,-10,SXF_SETMASTER);
+		TNT1 A 0 A_spawnitemex("archvilefirewall",100,0,0,0,0,0,-20,SXF_SETMASTER);
+		TNT1 A 0 A_spawnitemex("archvilefirewall",100,0,0,0,0,0,-30,SXF_SETMASTER);
+		TNT1 A 0 A_spawnitemex("archvilefirewall",100,0,0,0,0,0,-40,SXF_SETMASTER);
+		TNT1 A 0 A_spawnitemex("archvilefirewall",100,0,0,0,0,0,-50,SXF_SETMASTER);
+		TNT1 A 0 A_spawnitemex("archvilefirewall",100,0,0,0,0,0,10,SXF_SETMASTER);
+		TNT1 A 0 A_spawnitemex("archvilefirewall",100,0,0,0,0,0,20,SXF_SETMASTER);
+		TNT1 A 0 A_spawnitemex("archvilefirewall",100,0,0,0,0,0,30,SXF_SETMASTER);
+		TNT1 A 0 A_spawnitemex("archvilefirewall",100,0,0,0,0,0,40,SXF_SETMASTER);
+		TNT1 A 0 A_spawnitemex("archvilefirewall",100,0,0,0,0,0,50,SXF_SETMASTER);
+	MissilePart2:
+		TNT1 A 0 A_SpawnItem("HeadshotTarget20", -12, 56,0);
+		DIAB E 10 A_FaceTarget();
+		DIAB E 1 A_VileTarget();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget20", -12, 56,0);
+		DIAB E 7 A_VileTarget();
+
+		
+		DIAB E 1 A_VileTarget();
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, 35, random (0, 40), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, -35, random (0, 40), 2, random (0, 160));
+		DIAB E 3 A_FaceTarget();
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, 35, random (0, 40), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, -35, random (0, 40), 2, random (0, 160));
+		DIAB F 3 BRIGHT A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget20", -12, 56,0);
+		DIAB F 3 BRIGHT A_FaceTarget();
+		DIAB E 1 A_VileTarget();
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, 35, random (0, 40), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, -35, random (0, 40), 2, random (0, 160));
+		DIAB F 3 A_FaceTarget();
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, 35, random (0, 40), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, -35, random (0, 40), 2, random (0, 160));
+		DIAB F 3 BRIGHT A_FaceTarget();
+		DIAB E 1 A_VileTarget();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget20", -12, 56,0);
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, 35, random (0, 40), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, -35, random (0, 40), 2, random (0, 160));
+		DIAB F 3 A_FaceTarget();
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, 35, random (0, 40), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, -35, random (0, 40), 2, random (0, 160));
+		DIAB F 3 BRIGHT A_FaceTarget();
+		DIAB E 1 A_VileTarget();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget20", -12, 56,0);
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, 35, random (0, 40), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, -35, random (0, 40), 2, random (0, 160));
+		DIAB E 3 A_FaceTarget();
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, 35, random (0, 40), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("SmallFlameTrails", 85, -35, random (0, 40), 2, random (0, 160));
+		DIAB F 3 BRIGHT A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget20", 12, 56,0);
+		DIAB JKLMN 3 BRIGHT A_FaceTarget();
+		DIAB O 3 BRIGHT A_VileAttack();//("vile/stop",15,40,140,1.5)
+		DIAB P 3 BRIGHT;
+		TNT1 A 0 A_KillChildren();
+		Goto See;
+	Heal:
+		TNT1 A 0;
+		TNT1 A 0 A_SpawnItem("PentagramSpawner");
+		DIBR X 10 BRIGHT;
+		Goto See;
+		
+	pain.shotgun:
+		NULL A 0 A_JumpIfCloser(300,2);
+		Goto Pain;
+		NULL AAA 0;
+	pain.SSG:
+		//TNT1 A 0 A_CustomMissile ("XDeath3", 0, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("XDeath1", 0, 0, random (0, 360), 2, random (0, 160));
+	Pain:
+		//DIAB Q 3
+		TNT1 A 0 A_KillChildren();
+		TNT1 A 0 A_jump(250,"teleportaway");
+	PainAnyways:
+		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 16, 56,0);
+		DIAB Q 5;
+		DIAB Q 5 A_Pain();
+		Goto See;
+
+	Pain.Kick:
+		TNT1 A 0;
+		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 16, 56,0);
+		TNT1 A 0 A_FaceTarget();
+		TNT1 A 0 A_Recoil(8);
+		DIAB Q 10 A_Pain();
+		DIAB Q 10;
+		Goto See;
+		
+	Teleportaway:
+		//TNT1 A 0 A_jumpif(getcvar("bd_archvileteleport") == 1, "painanyways")
+		TNT1 A 0 A_viletryteleport("doteleport");
+		Goto painanyways;
+	Teleportawaysee:
+		//TNT1 A 0 A_jumpif(getcvar("bd_archvileteleport") == 1, "see")
+		TNT1 A 0 A_viletryteleport("doteleport");
+		Goto see;
+	DoTeleport:
+		DIAB E 7 BRIGHT;
+		TNT1 A 0 A_stop();
+		TNT1 A 0 A_spawnitemex("teleportfog");
+		//TNT1 A 0 A_changeflag("nointeraction",true)
+		TNT1 A 0 A_giveinventory("imteleporting",1);
+		TNT1 A 0 A_changeflag("thruactors",true);
+		TNT1 A 0 A_changeflag("shootable",false);
+		TNT1 A 0 A_changeflag("solid",false);
+		TNT1 A 0 A_changeflag("nopain",true);
+		TNT1 A 0 A_changeflag("floorhugger",true);
+	Stayteleported:
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport();
+		Loop;
+	Teleportback:
+		TNT1 A 0 A_stop();
+		TNT1 A 0 A_takeinventory("imteleporting",1);
+		TNT1 A 0 A_changeflag("floorhugger",false);
+		TNT1 A 0 A_spawnitemex("teleportfog");
+		TNT1 A 0 A_changeflag("nopain",false);
+		TNT1 A 0 A_changeflag("thruactors",false);
+		TNT1 A 0 A_changeflag("shootable",true);
+		TNT1 A 0 A_changeflag("solid",true);
+		Goto See;
+
+
+	Death.Head:
+		TNT1 A 0 A_KillChildren();
+		TNT1 A 0 A_JumpIfInTargetInventory("HasFreezerWeapon", 1, "Death.Freeze");
+		TNT1 A 0 A_PlaySound("misc/xdeath4");
+		TNT1 AAAAA 0 A_CustomMissile ("BloodMistBig", 40, 0, random (0, 360), 2, random (30, 90));
+		TNT1 AAAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 40, 0, random (0, 360), 2, random (30, 90));
+		TNT1 A 0 A_CustomMissile ("Brains2", 40, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("Brains3", 40, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAA 0 A_CustomMissile ("SmallBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10));
+		TNT1 AAAAA 0 A_CustomMissile ("SmallBrainPiece", 40, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAA 0 A_CustomMissile ("Teeth", 40, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAA 0 A_CustomMissile ("XDeath1", 40, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AA 0 A_CustomMissile ("XDeath3b", 40, 0, random (0, 360), 2, random (50, 90));
+		TNT1 A 0 A_CustomMissile ("XDeath3b", 40, 0, random (0, 360), 2, random (50, 90));
+		TNT1 A 0 A_XScream();
+		TNT1 A 0 A_NoBlocking();
+		VID2 ABCDE 4;
+		TNT1 A 0 A_SpawnItem("DeadArchvileVID2G");
+		TNT1 A -1;
+		Stop;
+	DeathAnyways:
+		TNT1 A 0 A_Jump(64, "DeathArmAnyways");
+		GOTO Death.simple;
+	Death:
+		TNT1 A 0 A_KillChildren();
+		TNT1 A 0;
+		//TNT1 A 0 A_jump(100,"deathteleport")
+		TNT1 A 0 A_Jump(64, "Death.ARm");
+	Death.Simple:
+		TNT1 A 0 A_KillChildren();
+		TNT1 A 0 A_Scream();
+		TNT1 A 0 A_NoBlocking();
+		DIAB RSTUVWX 5 A_SpawnItem ("MuchBlood", 40);
+		TNT1 A 0 A_SpawnItem ("GrowingBloodPool");
+		TNT1 A 0 A_SpawnItem("DeadArchvile");
+		TNT1 A -1;
+		Stop;
+	Death.Arm:
+	Death.Minigun:
+		TNT1 A 0 A_KillChildren();
+		TNT1 A 0 A_JumpIfInTargetInventory("HasFreezerWeapon", 1, "Death.Freeze");
+		//TNT1 A 0 A_jump(100,"deathteleport")
+	DeathArmAnyways:
+		TNT1 A 0 A_Scream();
+		TNT1 A 0 A_NoBlocking();
+		TNT1 AA 0 A_CustomMissile ("XDeath1", 52, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("XDeathArchvileArm", 52, 0, random (0, 360), 2, random (40, 120));
+		TNT1 AAA 0 A_SpawnItem ("MuchBlood", 50);
+		VID2 HHIJ 5;
+		TNT1 A 0 A_SpawnItem("DyingArchvileNoArm");
+		TNT1 A -1;
+		Stop;
+		
+	Death.Shotgun:
+	Death.SSG:
+		TNT1 A 0;
+		TNT1 A 0 A_KillChildren();
+		//TNT1 A 0 A_jump(100,"deathteleport")
+	ssgdeathanyways:
+		TNT1 A 0 A_Jump(96, "Death.ARm");
+		TNT1 A 0 A_Jump(96, "Death.Cut");
+		TNT1 A 0 A_JumpIfInTargetInventory("SSGSelected", 1, "BrutalDeath");
+		TNT1 A 0 A_Jump(96, "BrutalDeath");
+		TNT1 A 0;
+		Goto Death;
+	
+	Death.Desintegrate:
+		TNT1 A 0;
+		TNT1 A 0 A_KillChildren();
+		TNT1 A 0 A_Scream();
+		TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn");
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15));
+		TNT1 AAA 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35));
+		Goto RippedOpen;
+		
+	Death.Cut:
+		TNT1 A 0;
+		//TNT1 A 0 A_jump(100,"deathteleport")
+		TNT1 A 0 A_KillChildren();
+		TNT1 A 0 A_Scream();
+		TNT1 A 0 A_CustomMissile ("XDeathArchvileArm", 52, 0, random (0, 360), 2, random (60, 120));
+		TNT1 A 0 A_CustomMissile ("XDeathArchvile", 42, 0, random (0, 360), 2, random (60, 120));
+		Goto RippedOpen;
+		
+	Death.Deletus:
+		TNT1 A 0;
+		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
+		TNT1 A 0 A_NoBlocking();
+		Stop;
+		
+	BrutalDeath:
+	Death.Saw:
+	Death.Blast:
+		//TNT1 A 0 A_jump(100,"deathteleport")
+		TNT1 A 0;
+		TNT1 A 0 A_KillChildren();
+		TNT1 A 0 A_SpawnItem("SplatteredLarge");
+		TNT1 A 0 A_Scream();
+		TNT1 AA 0 A_CustomMissile ("XDeathArchvileArm", 52, 0, random (0, 360), 2, random (60, 120));
+		TNT1 A 0 A_CustomMissile ("XDeathArchvileHead", 52, 0, random (0, 360), 2, random (60, 120));
+	RippedOpen:
+		TNT1 AAAA 0 A_CustomMissile ("XDeath1", 32, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AA 0 A_CustomMissile ("XDeath2b", 52, 0, random (0, 360), 2, random (60, 120));
+		TNT1 AA 0 A_CustomMissile ("XDeath3b", 52, 0, random (0, 360), 2, random (60, 120));
+		TNT1 A 0 A_CustomMissile ("XDeath2", 52, 0, random (0, 360), 2, random (30, 120));
+		TNT1 A 0 A_CustomMissile ("XDeath3", 52, 0, random (0, 360), 2, random (30, 120));
+		TNT1 A 0 A_CustomMissile ("XDeathOrgan1", 24, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("XDeathOrgan2", 24, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_SpawnItem("MuchBlood2", 0, 40);
+		TNT1 AAAA 0 A_CustomMissile ("SuperWallRedBlood", 32, 0, random (170, 190), 2, random (0, 40));
+		TNT1 AAAA 0 A_CustomMissile ("BloodMistBig", 40, 0, random (0, 360), 2, random (30, 90));
+		TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (0, 360), 2, random (60, 120));
+		TNT1 A 0 A_NoBlocking();
+		VID3 A 3;
+		VID3 AAAAAAAAAAAAAAAAAAAAA 2 A_CustomMissile ("Brutal_LiquidBlood", 46, 0, random (0, 360), 2, random (0, 45));
+		VID3 BCDEFGHIJK 3;
+		TNT1 A 0 A_SpawnItem ("GrowingBloodPool");
+		TNT1 A 0 A_SpawnItem("DeadArchvileVID3L");
+		TNT1 A -1;
+		Stop;
+
+
+	XDeath:
+	Death.ExplosiveImpact:
+	Death.Explosives:
+		TNT1 A 0 A_KillChildren();
+		//TNT1 A 0 A_jump(100,"deathteleport")
+		TNT1 A 0;
+	explosiveimpactdeathanyways:
+		TNT1 A 0 A_SpawnItem("SplatteredLarge");
+		TNT1 A 0 A_XScream();
+		TNT1 A 0 A_Jump(96, "Death.Saw");
+		TNT1 A 0 A_CustomMissile ("XDeathArchvile", 52, 0, random (0, 360), 2, random (60, 120));
+		TNT1 A 0 A_CustomMissile ("XDeathArchvileArm", 52, 0, random (0, 360), 2, random (40, 120));
+		TNT1 AA 0 A_CustomMissile ("XDeathArchvileLeg", 32, 0, random (0, 360), 2, random (40, 120));
+		TNT1 AAA 0 A_CustomMissile ("XDeath1", 32, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AA 0 A_CustomMissile ("XDeath2b", 52, 0, random (0, 360), 2, random (60, 120));
+		TNT1 AA 0 A_CustomMissile ("XDeath3b", 52, 0, random (0, 360), 2, random (60, 120));
+		TNT1 A 0 A_CustomMissile ("XDeath2", 52, 0, random (0, 360), 2, random (30, 120));
+		TNT1 A 0 A_CustomMissile ("XDeath3", 52, 0, random (0, 360), 2, random (30, 120));
+		TNT1 A 0 A_CustomMissile ("XDeathOrgan1", 24, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("XDeathOrgan2", 24, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_SpawnItem("MuchBlood2", 0, 40);
+		TNT1 AAAA 0 A_CustomMissile ("SuperWallRedBlood", 32, 0, random (170, 190), 2, random (0, 40));
+		TNT1 AAAA 0 A_CustomMissile ("BloodMistBig", 40, 0, random (0, 360), 2, random (30, 90));
+		TNT1 AAAA 0 A_CustomMissile ("Guts", 32, 0, random (0, 360), 2, random (60, 120));
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItem ("BigBloodSpot");
+		TNT1 A 0;
+		Stop;
+	Death.SuperPlasma:
+	Death.Plasma:
+	Death.Plasma2:
+		TNT1 A 0;
+		TNT1 A 0 A_KillChildren();
+		//TNT1 A 0 A_jump(100,"deathteleport")
+		TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn");
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15));
+		TNT1 AAA 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35));
+		TNT1 AAAA 0 A_CustomMissile ("BluePlasmaFireNonStatic", 42, 0, random (0, 360), 2, random (0, 180));
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_Stop();
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35));
+		TNT1 A 0;
+		TNT1 A 0 A_Scream();
+		TNT1 AAAA 0 A_CustomMissile ("XDeath1", 32, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AA 0 A_CustomMissile ("XDeath2b", 52, 0, random (0, 360), 2, random (60, 120));
+		TNT1 AA 0 A_CustomMissile ("XDeathBurnedMeat", 52, 0, random (0, 360), 2, random (60, 120));
+		TNT1 A 0 A_CustomMissile ("XDeathOrgan1", 24, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("XDeathOrgan2", 24, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_SpawnItem("MuchBlood2", 0, 40);
+		TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (0, 360), 2, random (60, 120));
+		TNT1 A 0 A_NoBlocking();
+		XVIP ABCDEFGHIJKLMNOPQ 2;
+		XVIP Q -1;
+		Stop;
+		
+	Death.Fire:
+		TNT1 A 0;
+		TNT1 A 0 A_KillChildren();
+		//TNT1 A 0 A_jump(100,"deathteleport")
+		TNT1 A 0 A_Scream();
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_Playsound("props/redfire");
+		TNT1 AAA 0 A_CustomMissile ("Brutal_FlyingBlood", 50, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("XDeathBurnedMeat3", 32, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("XDeathBurnedMeat2", 32, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("XDeathBurnedMeat", 32, 0, random (0, 360), 2, random (0, 160));
+		CARB MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM 2 A_CustomMissile ("FlameTrails", 15, 0, random (0, 360), 2, random (70, 130));
+		CARB MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM 10 A_CustomMissile ("SmallSmoke", 15, 0, random (0, 360), 2, random (70, 130));
+		CARB M -1;
+		Stop;
+
+	Death.Fatality:
+		TNT1 A 0 A_Pain();
+		TNT1 A 0 A_FaceTarget();
+		TNT1 AAAA 0 A_SpawnItemEx("HealthPlusFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
+		TNT1 AAAA 0 A_SpawnItemEx("ArmorShardFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
+		TNT1 A 0 A_GiveToTarget("GoFatality", 1);
+		TNT1 A 0 A_NoBlocking();
+		//TNT1 A 0 A_Jump(128, "Death.Fatality2")
+		TNT1 A 0 A_GiveToTarget("ArchvileFatality", 1);
+		TNT1 A 2;
+		Stop;
+	Death.Fatality2:
+		TNT1 A 0 A_GiveToTarget("ArchvileFatality2", 1);
+		Stop;
+	Crush:
+		TNT1 A 0;
+		TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 AAAA 0 A_SpawnItemEx ("BodyRemovalThing",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 1 A_XScream();
+		Stop;
+
+	Pain.KillMe:
+	Pain.Taunt:
+		TNT1 A 0 HealThing(1);
+		Goto Missile;
+	Death.KillMe:
+	Death.Taunt:
+		TNT1 A 0 A_ChangeFlag("SOLID", 0);
+		TNT1 A 0 A_SpawnItem("ArchVile");
+		Stop;
+	
+	Death.Ice:
+	Death.Freeze:
+	Death.Frost:
+		TNT1 A 0 A_KillChildren();
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
+		TNT1 A 0 A_ChangeFlag("SOLID", 0);
+		TNT1 A 0 A_SpawnItem("FrozenArchvile");
+		Stop;
+	
+	
+	DeathTeleport:
+		DIAB E 7 BRIGHT;
+		TNT1 A 0 A_stop();
+		TNT1 A 0 A_scream();
+		TNT1 A 0 A_spawnitemex("teleportfog");
+		//TNT1 A 0 A_changeflag("nointeraction",true)
+		TNT1 A 0 A_noblocking();
+		
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+	DeathStayteleported:
+		TNT1 A 1;
+		TNT1 A 0 A_vileteleport2();
+		TNT1 A 0 A_jump(25, "Deathteleportback");
+		Loop;
+	DeathTeleportback:
+		TNT1 A 0 A_stop();
+		TNT1 A 0 A_jump(256,"Deathanyways","explosiveimpactdeathanyways","ssgdeathanyways");
+	}
+}
+
+class BDPArchVileDamaged : BDPArchVile
+{
+	Default
+	{
+		Health 20;
+		Speed 4;
+	}
+}
+
+class ArchvileFire2 : Actor replaces ArchvileFire
+{
+	Default
+	{
+		Scale 1.0;
+		+NOBLOCKMAP
+		+NOGRAVITY
+		RenderStyle "Add";
+		Alpha 0.8;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 1 bright A_StartFire();
+		INFE ABCDEF 1 bright A_Fire();
+		INFE G 1 bright A_FireCrackle();
+		INFE HIJKLM 1 bright A_Fire();
+		INFE N 1 bright A_FireCrackle();
+		INFE OPQRS 1 bright A_Fire();
+		INFE T 1 bright A_FireCrackle();
+		TNT1 A 2;
+		Stop;
+	}
+}
+
+class DeadArchvile: CurbstompedMarine
+{
+	States
+	{
+	Spawn:
+		DIAB X -1;
+		Stop;
+	}
+}
+
+class DeadArchvileVID2G: DeadArchvile
+{
+	States
+	{
+	Spawn:
+		VID2 G -1;
+		Stop;
+	}
+}
+
+class DeadArchvileXVILQ: DeadArchvile
+{
+	States
+	{
+	Spawn:
+		XVIL Q -1;
+		Stop;
+	}
+}
+
+class DeadArchvileVIGIJ: DeadArchvile
+{
+	States
+	{
+	Spawn:
+		VIGI J -1;
+		Stop;
+	}
+}
+
+class FatalizedArchVile1: CurbstompedMarine
+{
+	States
+	{
+	Spawn:
+		AVF1 Z -1;
+		Stop;
+	}
+}
+
+class ArchvileStabbedTheFuckOut: CurbstompedMarine
+{
+	States
+	{
+	Spawn:
+		AVF2 T 1 A_SpawnItem("Brutal_BloodSpot",0,0,0,1);
+		AVF2 T -1;
+		Stop;
+	}
+}
+
+class DeadArchvileVID3Q: DeadArchvile
+{
+	States
+	{
+	Spawn:
+		VID3 Q -1;
+		Stop;
+	}
+}
+
+class DeadArchvileVID2O: DeadArchvile
+{
+	States
+	{
+	Spawn:
+		VID2 O -1;
+		Stop;
+	}
+}			
+		
+		
+class DeadArchvileVID3L: DeadArchvile
+{
+	States
+	{
+	Spawn:
+		VID3 L -1;
+		Stop;
+	}
+}		
+
+class DyingArchvileNoArm: BDPArchVile
+{
+	Default
+	{
+		Radius 12;
+		Height 52;
+		Speed 9;
+		Health 50;
+		-COUNTKILL
+		+GHOST
+		+THRUGHOST
+		Mass 500;
+		DeathHeight 4;
+		BurnHeight 0;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_FaceTarget();
+		VID2 KKKLLL 2 A_CustomMissile ("Brutal_LiquidBlood", 24, 0, random (0, 360), 2, random (0, 45));
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 52,0);
+		VID2 KKKLLL 2 A_CustomMissile ("Brutal_LiquidBlood", 24, 0, random (0, 360), 2, random (0, 45));
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 52,0);
+		VID2 KKKLLL 2 A_CustomMissile ("Brutal_LiquidBlood", 24, 0, random (0, 360), 2, random (0, 45));
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 52,0);
+		VID2 KKKLLL 2 A_CustomMissile ("Brutal_LiquidBlood", 24, 0, random (0, 360), 2, random (0, 45));
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 52,0);
+		VID2 KKKLLL 2 A_CustomMissile ("Brutal_LiquidBlood", 24, 0, random (0, 360), 2, random (0, 45));
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 0, 52,0);
+	Death: 
+		VID2 A 0 A_Scream();
+		TNT1 A 0 A_NoBlocking();
+		VID2 MN 6;
+		TNT1 A 0 A_SpawnItem("DeadArchvileVID2O");
+		Stop;
+		
+	Death.Desintegrate:
+		TNT1 A 0;
+		TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn");
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15));
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35));
+	
+	
+	Death.Head:
+		TNT1 A 0 A_PlaySound("misc/xdeath4");
+		TNT1 AAAAA 0 A_CustomMissile ("BloodMistBig", 40, 0, random (0, 360), 2, random (30, 90));
+		TNT1 AAAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 40, 0, random (0, 360), 2, random (30, 90));
+		TNT1 A 0 A_CustomMissile ("Brains2", 40, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("Brains3", 40, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAA 0 A_CustomMissile ("SmallBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10));
+		TNT1 AAAAA 0 A_CustomMissile ("SmallBrainPiece", 40, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAA 0 A_CustomMissile ("Teeth", 40, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAA 0 A_CustomMissile ("XDeath1", 40, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AA 0 A_CustomMissile ("XDeath3b", 40, 0, random (0, 360), 2, random (50, 90));
+		TNT1 A 0 A_CustomMissile ("XDeath3b", 40, 0, random (0, 360), 2, random (50, 90));
+		TNT1 A 0 A_XScream();
+		TNT1 A 0 A_NoBlocking();
+		VID3 MNOP 4;
+		TNT1 A 0 A_SpawnItem("DeadArchvileVID3Q");
+		TNT1 A -1;
+		Stop;
+	
+	BrutalDeath:
+	Death.Saw:
+	Death.Minigun:
+	Death.Shotgun:
+	Death.SSG:
+	Death.Blast:
+		TNT1 A 0;
+		TNT1 A 0 A_SpawnItem("SplatteredLarge");
+		TNT1 A 0 A_XScream();
+		TNT1 A 0 A_CustomMissile ("XDeathArchvile", 52, 0, random (0, 360), 2, random (60, 120));
+		TNT1 AAA 0 A_CustomMissile ("XDeath1", 32, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AA 0 A_CustomMissile ("XDeath2b", 52, 0, random (0, 360), 2, random (60, 120));
+		TNT1 AA 0 A_CustomMissile ("XDeath3b", 52, 0, random (0, 360), 2, random (60, 120));
+		TNT1 A 0 A_CustomMissile ("XDeath2", 52, 0, random (0, 360), 2, random (30, 120));
+		TNT1 A 0 A_CustomMissile ("XDeath3", 52, 0, random (0, 360), 2, random (30, 120));
+		TNT1 A 0 A_CustomMissile ("XDeathOrgan1", 24, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_CustomMissile ("XDeathOrgan2", 24, 0, random (0, 360), 2, random (0, 160));
+		TNT1 A 0 A_SpawnItem("MuchBlood2", 0, 40);
+		TNT1 AAAA 0 A_CustomMissile ("SuperWallRedBlood", 32, 0, random (170, 190), 2, random (0, 40));
+		TNT1 AAAA 0 A_CustomMissile ("BloodMistBig", 40, 0, random (0, 360), 2, random (30, 90));
+		TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (0, 360), 2, random (60, 120));
+		TNT1 A 0 A_NoBlocking();
+		VID3 A 3;
+		VID3 AAAAAAAAAAAAAAAAAAAAA 2 A_CustomMissile ("Brutal_LiquidBlood", 46, 0, random (0, 360), 2, random (0, 45));
+		VID3 BCDEFGHIJK 3;
+		TNT1 A 0 A_SpawnItem ("GrowingBloodPool");
+		TNT1 A 0 A_SpawnItem("DeadArchvileVID3L");
+		TNT1 A -1;
+		Stop;
+	
+	}
+}
+	
+CLASS ArchvileFirewall : actor
+{
+	Default
+	{
+		+Shootable;
+		Health 105;
+		Radius 32;
+		Height 72;
+		Damagefactor "Railgun", 0.3;
+		Scale 0.3;
+		Renderstyle "add";
+		+noblood;
+		+nogravity;
+		+dontthrust;
+		//+solid;
+		Species "archviles";
+		+thruspecies;
+		+dontrip;
+		+stoprails;
+		DamageFactor "Freeze",3.0;
+		DamageFactor "Ice",3.0;
+		DamageFactor "Frost",3.0;
+	}
+	States
+	{
+	Spawn:
+		TNT1 ABABABABABABABABABABABABABABABABABABABABABABABABBABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABA 1 BRIGHT NODELAY
+		{
+			A_spawnprojectile("FlameTrailsLonger", 0, 0, random (0, 360), 2, random (-70, -120));
+		}
+	Death:
+		TNT1 AA 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_spawnprojectile ("BDExplosionparticles", 0, 0, random (0, 360), 2, random (-40, -90));
+		TNT1 A 0 A_spawnprojectile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (-40, -90));
+		TNT1 A 0 A_spawnprojectile ("BDExplosionparticles3", 10, 0, random (0, 360), 2, random (-40, -90));
+		EXPL A 0 A_spawnprojectile ("FlamethrowerFireParticles", 6, 0, random (0, 360), 2, random (0, -90));
+		//FRFX ZZZ 0 BRIGHT A_spawnprojectile ("BigBlackSmoke", 2, 0, random (0, 360), 2, random (0, 30))
+		//TNT1 A 2 A_SpawnItem("BurningGroundLowDamage")
+		//TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15));
+		//TNT1 A 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35));
+		//TNT1 A 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35));
+		TNT1 AA 20 A_spawnprojectile ("BigBlackSmoke", 0, 0, random (0, 360), 2, random (-40, -160));
+		Stop;
+	}
+}
+	
+CLASS VileTarget : ACTOR
+{ 
+	Default
+	{
+		Height 64;
+		+floorhugger;
+	}
+	
+	Override void tick()
+	{
+		
+		If ( tracer && tracer.tracer != self )
+		{
+			Destroy();
+		}
+		Super.tick();
+	}
+	
+	States
+	{
+	Spawn:
+		TNT1 A 1;
+		LOOP;
+	}
+}

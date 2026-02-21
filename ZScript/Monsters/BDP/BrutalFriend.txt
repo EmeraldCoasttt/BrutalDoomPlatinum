@@ -1,6 +1,6 @@
-	CLASS BrutalFriend : BDPNotMonster
+	CLASS BrutalFriend : BDPNotMonster abstract
 		{
-			Action void A_friendchase(int chance = 2, int heightoffset = 30, string fogtype = 'null')
+			Action void A_friendchase(int chance = 2, int heightoffset = 30, string fogtype = "null")
 			{
 				
 				If(random(1,256) <= chance)
@@ -12,7 +12,7 @@
 						While (CheckForplayers.Next())
 							{
 								CurrentActor = CheckForplayers.Thing;
-								If(currentactor && currentactor is 'playerpawn' && !invoker.CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && !foundplayer && currentactor.player && currentactor.player.mo && currentactor.player.mo == currentactor)
+								If(currentactor && currentactor is "playerpawn" && !invoker.CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && !foundplayer && currentactor.player && currentactor.player.mo && currentactor.player.mo == currentactor)
 								{
 									invoker.A_spawnitemex(fogtype);
 									

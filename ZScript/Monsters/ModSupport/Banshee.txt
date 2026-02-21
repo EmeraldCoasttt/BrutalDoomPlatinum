@@ -1,4 +1,4 @@
-Class BDPBanshee : Actor
+class BDPBanshee : Actor
 {
 	Default
 	{

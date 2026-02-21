@@ -46,7 +46,7 @@ ACTOR Marine_Flame: Marine_Rifle
 {
 	Health 100
 	MaxTargetRange 4096
-	DropItem "FlameCannon"
+	DropItem "BDPIncinerator"
 	translation "112:127=[255,168,0]:[64,12,0]"
 	States
 	{
@@ -1277,7 +1277,7 @@ ACTOR BlackMarine_Flame: Marine_Rifle
 {
 	Health 100
 	MaxTargetRange 4096
-	DropItem "FlameCannon"
+	DropItem "BDPIncinerator"
 	translation "OrangeBlack"
 	States
 	{

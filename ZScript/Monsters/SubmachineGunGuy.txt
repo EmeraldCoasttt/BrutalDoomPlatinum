@@ -1,0 +1,554 @@
+class BDPSubmachineGunGuy : BDPShotgunGuy
+{
+	Default
+	{
+		DropItem "SMGDrop";
+		Tag "SMG Zombie";
+		Obituary "%o got punctured by a SMG Zombie.";
+	}
+	States
+	{
+	Pain.Avoid:
+		TNT1 A 0;
+		TNT1 A 0 A_Jump(256, "HopNRollLeft", "HopNRollRight");
+		TNT1 A 0 A_Jump(256, "AvoidLeft","AvoidJumpLeft", "AvoidRight","AvoidJumpRight");
+		Goto AvoidLeft;
+	HopNRollRight:
+		PSS3 A 3 A_FaceTarget();
+		PSS3 E 3 A_FaceTarget();
+		TNT1 A 0 ThrustThingZ(0, 20, 0, 0);
+		TNT1 A 0 ThrustThing(angle*256/360+64, 8, 0, 0);
+		ZRO3 AB 6;
+	leftHopNRollloop:
+		//ZRO1 H 1 A_FaceTarget();
+		ZRO3 B 1 A_CheckFloor("AvoidRightShort");
+		TNT1 A 0 A_CheckCeiling("AvoidRightShort"); //For corruption cards
+		Goto leftHopNRollloop;
+	HopNRollLeft:
+		PSS3 A 3 A_FaceTarget();
+		PSS3 E 3 A_FaceTarget();
+		TNT1 A 0 ThrustThingZ(0, 20, 0, 0);
+		POSR A 0 ThrustThing(angle*256/360+192, 8, 0, 0);
+		ZRO3 AH 6;
+	RightHopNRollloop:
+		// ZRO1 B 1 A_FaceTarget();
+		ZRO3 H 1 A_CheckFloor("AvoidLeftShort");
+		TNT1 A 0 A_CheckCeiling("AvoidLeftShort"); //For corruption cards
+		Goto RightHopNRollloop;
+	AvoidLeftShort:
+		TNT1 A 0 ThrustThing(angle*256/360+192, 12, 0, 0);
+		ZRO3 GFEDCBA 2 A_FaceTarget();
+		TNT1 A 0 A_CheckSight("SeeContinue");
+		Goto MissileCrouched;
+	AvoidRightShort:
+		TNT1 A 0 ThrustThing(angle*256/360+64, 12, 0, 0);
+		ZRO3 CDEFGHA 2 A_FaceTarget();
+		TNT1 A 0 A_CheckSight("SeeContinue");
+		Goto MissileCrouched;
+	AvoidJumpLeft:
+		PSS3 A 3 A_FaceTarget();
+		PSS3 E 3 A_FaceTarget();
+		TNT1 A 0 ThrustThingZ(0, 20, 0, 0);
+		POSR A 0 ThrustThing(angle*256/360+192, 8, 0, 0);
+	leftjumploop:
+		ZRO3 A 1 A_FaceTarget();
+		ZRO3 A 1 A_CheckFloor("missile");
+		TNT1 A 0 A_CheckCeiling("missile"); //For corruption cards
+		Goto leftjumploop;
+	AvoidJumpRight:
+		PSS3 A 3 A_FaceTarget();
+		PSS3 E 3 A_FaceTarget();
+		TNT1 A 0 ThrustThingZ(0, 20, 0, 0);
+		TNT1 A 0 ThrustThing(angle*256/360+64, 8, 0, 0);
+	rightjumploop:
+		ZRO3 A 1 A_FaceTarget();
+		ZRO3 A 1 A_CheckFloor("missile");
+		TNT1 A 0 A_CheckCeiling("missile"); //For corruption cards
+		Goto rightjumploop;
+	AvoidLeft:
+		PSS3 A 1 A_FaceTarget();
+		TNT1 A 0 ThrustThing(angle*256/360+192, 15, 0, 0);
+		ZRO3 HGFEDCBA 2 A_FaceTarget();
+		TNT1 A 0 A_CheckSight("SeeContinue");
+		Goto MissileCrouched;
+	AvoidRight:
+		PSS3 A 1 A_FaceTarget();
+		TNT1 A 0 ThrustThing(angle*256/360+64, 15, 0, 0);
+		ZRO3 ABCDEFGH 2 A_FaceTarget();
+		TNT1 A 0 A_CheckSight("SeeContinue");
+		Goto MissileCrouched;
+	MissileCrouched:
+		TNT1 A 0 A_Stop();
+		TNT1 A 0 A_JumpIfHealthLower(1, "Death");
+		TNT1 A 0 A_TakeInventory("EnemyMemory", 10);
+		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
+		TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1);
+		TNT1 A 0 A_SetSize(-1,30);
+		TNT1 A 0 A_GiveInventory("SergeantAmmo", 1);
+		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 21,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		ZRO2 ] 10 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget20", 0, 21,0);
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 28, 0, random(-7, 7), 1, random(-4, 4));
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0);
+		TNT1 A 0 A_PlaySound("FARSHT", 6);
+		TNT1 A 0 A_PlaySound("SMGFIRE", 1);
+		ZRO1 ] 1 BRIGHT;
+		ZRO2 ] 2 A_FaceTarget();
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 28, 0, random(-7, 7), 1, random(-4, 4));
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0);
+		TNT1 A 0 A_PlaySound("FARSHT", 6);
+		TNT1 A 0 A_PlaySound("SMGFIRE", 1);
+		ZRO1 ] 1 BRIGHT;
+		ZRO2 ] 2 A_FaceTarget();
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 28, 0, random(-7, 7), 1, random(-4, 4));
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0);
+		TNT1 A 0 A_PlaySound("FARSHT", 6);
+		TNT1 A 0 A_PlaySound("SMGFIRE", 1);
+		ZRO1 ] 1 BRIGHT;
+		ZRO2 ] 2 A_FaceTarget();
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 28, 0, random(-7, 7), 1, random(-4, 4));
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0);
+		TNT1 A 0 A_PlaySound("FARSHT", 6);
+		TNT1 A 0 A_PlaySound("SMGFIRE", 1);
+		ZRO1 ] 1 BRIGHT;
+		ZRO2 ] 2 A_FaceTarget();
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 28, 0, random(-7, 7), 1, random(-4, 4));
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0);
+		TNT1 A 0 A_PlaySound("FARSHT", 6);
+		TNT1 A 0 A_PlaySound("SMGFIRE", 1);
+		ZRO1 ] 1 BRIGHT;
+		ZRO2 ] 2 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 21,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		ZRO2 ] 5 A_FaceTarget();
+		ZRO3 Y 5;
+		TNT1 A 0 A_SetSize(-1,40);
+		TNT1 A 0 A_JumpIfInTargetInventory("IsInvisible", 1, "SearchForPlayer");
+		Goto SeeContinue;
+	Spawn:
+		SHID A 1;
+		TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
+		TNT1 A 0 ACS_NamedExecuteAlways("BDCHeckClassicMonsters", 0, 0, 0, 0);//Check if Vanilla Mode is activated
+		TNT1 A 0 A_GiveInventory("SKShotgunGuy", 1);
+		TNT1 A 0 A_GiveInventory("TypeSergeant", 1);
+		TNT1 A 0 A_TakeInventory("SergeantAmmo", 6);
+		TNT1 A 0 A_GiveInventory("SergeantAmmo", random(0,5));
+		TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
+		PSS3 B 1;
+		Goto Stand;
+	Stand:
+		TNT1 A 0 A_CheckSight("Stand2");
+		TNT1 AA 0 A_SpawnItem ("HeadshotTarget20", 4, 44,0);
+		PSS3 A 11 A_Look();
+		PSS3 M 11 A_Look();
+		Loop;
+	Stand2:
+		PSS3 A 11 A_Look();
+		PSS3 M 11 A_Look();
+		TNT1 A 0 A_CheckSight("Stand2");
+		Goto Stand;
+	Pain.GAvoid:
+		TNT1 A 0 A_JumpIfHealthLower(1, "Death");
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget4", 10);
+		PSS3 DDCC 2 A_Recoil(3);
+		TNT1 A 0 A_JumpIfHealthLower(1, "Death");
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget4", 10);
+		PSS3 BBAA 2 A_Recoil(3);
+	FallBack:
+		TNT1 A 0 A_CheckSight("Advance");
+		TNT1 A 0 A_ChangeFLag("NODROPOFF", 1);
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -5, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget4", 10);
+		PSS3 D 2 A_FaceTarget();
+		TNT1 A 0 A_Jump(100, "Missile", "Pain.Avoid");
+		TNT1 A 0;
+		PSS3 D 2 A_Recoil(4);
+		TNT1 A 0 A_Jump(64, "Missile");
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -5, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget4", 10);
+		PSS3 C 2 A_FaceTarget();
+		PSS3 C 2 A_Recoil(4);
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -5, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget4", 10);
+		PSS3 B 2 A_FaceTarget();
+		PSS3 B 2 A_Recoil(4);
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -5, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget4", 10);
+		PSS3 A 2 A_FaceTarget();
+		PSS3 A 2 A_Recoil(4);
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -5, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget4", 10);
+		PSS3 D 2 A_FaceTarget();
+		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
+		Goto Missile;
+	SearchForPlayer:
+	Idle:
+		TNT1 A 0 A_ClearTarget();
+		TNT1 A 0 A_TakeInventory("EnemyMemory", 30);
+		TNT1 A 0 A_GiveInventory("SKShotgunGUy", 1);
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 5, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 A 10 A_Look();
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 5, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 A 10 A_Look();
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 5, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 A 10 A_Look();
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 5, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 A 10 A_Look();
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 5, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 A 10 A_Look();
+		PSS3 A 4 A_Look();
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
+		TNT1 A 0 A_Wander();
+		PSS3 B 4 A_Look();
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
+		TNT1 A 0 A_Wander();
+		PSS3 C 4 A_Look();
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
+		TNT1 A 0 A_Wander();
+		PSS3 D 4 A_Look();
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
+		TNT1 A 0 A_Wander();
+		TNT1 A 0 A_Jump(128, "Idle");
+		PSS3 A 4 A_Look();
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
+		TNT1 A 0 A_Wander();
+		PSS3 B 4 A_Look();
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
+		TNT1 A 0 A_Wander();
+		PSS3 C 4 A_Look();
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
+		TNT1 A 0 A_Wander();
+		PSS3 D 4 A_Look();
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
+		TNT1 A 0 A_Wander();
+		Loop;
+	See:
+		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
+		TNT1 A 0 A_TakeInventory("SKZombieman", 1);
+		TNT1 A 0 A_TakeInventory("EnemyMemory", 15);
+		TNT1 A 0 A_CheckSight("SeeNeverSeen");
+		Goto SeeContinue;
+	SeeContinue:
+		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
+		TNT1 A 0 A_JumpIfCloser(200, "FallBack");
+		//Advance:
+		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
+		TNT1 A 0 A_JumpIfInventory("EnemyMemory", 15, "SearchForPlayer");
+		TNT1 A 0 A_GiveInventory("EnemyMemory", 1);
+		//TNT1 A 0 A_SpawnItemEx("FootSep", 0, 0, 20, 0, 0);
+		TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1);
+		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 AAA 2 A_Chase();
+		TNT1 A 0 A_Jump(8, "Pain.Avoid");
+		TNT1 A 0;
+		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 BBB 2 A_Chase();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 CCC 2 A_Chase();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 DDD 2 A_Chase();
+		TNT1 A 0 A_JumpIfInTargetInventory("IsInvisible", 1, "Idle");
+		Loop;
+	SeeNeverSeen:
+		TNT1 A 0 A_JumpIfCloser(200, "FallBack");
+	Advance:
+		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
+		//TNT1 A 0 A_SpawnItemEx("FootSep", 0, 0, 10, 0, 0);
+		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 AAA 2 A_Chase();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 BBB 2 A_Chase();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 CCC 2 A_Chase();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 DDD 2 A_Chase();
+		Loop;
+	Missile:
+		TNT1 A 0 A_Stop();
+		TNT1 A 0 A_JumpIfHealthLower(1, "Death");
+		TNT1 A 0 A_TakeInventory("EnemyMemory", 10);
+		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
+		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
+		TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1);
+		//TNT1 A 0 A_TakeInventory("CantFire", 1);
+		//TNT1 A 0 A_CustomMissile("MonsterTargetCheck", 34, 0, 0, 0); 
+		//TNT1 A 0 A_CustomMissile("MonsterTargetCheckFaster", 34, 0, 0, 0); 
+		PSS3 D 3 A_FaceTarget();
+		//TNT1 A 0 A_JumpIfInventory("CantFire",1, "Advance");
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		TNT1 A 0 A_GiveInventory("SergeantAmmo", 1);
+		PSS3 D 3 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 E 10 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0);
+		PSS3 E 4 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget20", 0, 40,0);
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 36, 0, random(-7, 7), 1, random(-4, 4));
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0);
+		TNT1 A 0 A_PlaySound("FARSHT", 6);
+		TNT1 A 0 A_PlaySound("SMGFIRE", 1);
+		PSS3 F 1 BRIGHT;
+		PSS3 E 2 A_FaceTarget();
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 36, 0, random(-7, 7), 1, random(-4, 4));
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0);
+		TNT1 A 0 A_PlaySound("FARSHT", 6);
+		TNT1 A 0 A_PlaySound("SMGFIRE", 1);
+		PSS3 F 1 BRIGHT;
+		PSS3 E 2 A_FaceTarget();
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 36, 0, random(-7, 7), 1, random(-4, 4));
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0);
+		TNT1 A 0 A_PlaySound("FARSHT", 6);
+		TNT1 A 0 A_PlaySound("SMGFIRE", 1);
+		PSS3 F 1 BRIGHT;
+		PSS3 E 2 A_FaceTarget();
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 36, 0, random(-7, 7), 1, random(-4, 4));
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0);
+		TNT1 A 0 A_PlaySound("FARSHT", 6);
+		TNT1 A 0 A_PlaySound("SMGFIRE", 1);
+		PSS3 F 1 BRIGHT;
+		PSS3 E 2 A_FaceTarget();
+		TNT1 A 0 A_CustomMissile("ZombieManTracer", 36, 0, random(-7, 7), 1, random(-4, 4));
+		TNT1 A 0 A_SpawnItem ("PistolCaseSpawn", 0, 30,0);
+		TNT1 A 0 A_PlaySound("FARSHT", 6);
+		TNT1 A 0 A_PlaySound("SMGFIRE", 1);
+		PSS3 F 1 BRIGHT;
+		PSS3 E 2 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
+		PSS3 E 10 A_FaceTarget();
+		TNT1 A 0 A_JumpIfInTargetInventory("IsInvisible", 1, "SearchForPlayer");
+		Goto SeeContinue;
+	Reload:
+		TNT1 A 0;
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
+		SPSR A 15;
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
+		ID12 EFG 5;
+		TNT1 A 0 A_PlaySound("insertshell");
+		TNT1 A 0 A_TakeInventory("SergeantAmmo", 1);
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
+		ID12 EFG 5;
+		TNT1 A 0 A_PlaySound("insertshell");
+		TNT1 A 0 A_TakeInventory("SergeantAmmo", 1);
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
+		ID12 EFG 5;
+		TNT1 A 0 A_PlaySound("insertshell");
+		TNT1 A 0 A_TakeInventory("SergeantAmmo", 1);
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
+		ID12 EFG 5;
+		TNT1 A 0 A_PlaySound("insertshell");
+		TNT1 A 0 A_TakeInventory("SergeantAmmo", 1);
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
+		ID12 EFG 5;
+		TNT1 A 0 A_PlaySound("insertshell");
+		TNT1 A 0 A_TakeInventory("SergeantAmmo", 1);
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
+		ID12 EFG 5;
+		TNT1 A 0 A_PlaySound("insertshell");
+		TNT1 A 0 A_TakeInventory("SergeantAmmo", 1);
+		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
+		SPSR A 10;
+		TNT1 A 0 A_PlaySound("weapons/sgpump");
+		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
+		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
+		SPSR B 10;
+		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
+		SPSR A 10;
+		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
+		Goto SeeContinue;
+	Pain.Cut:
+	Pain.Saw:
+		TNT1 A 0;
+		TNT1 A 0 A_Stop();
+	Pain:
+		TNT1 A 0 A_SetSize(-1,40);
+		TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "PainIsDown");
+		PSS3 G 3;
+		TNT1 A 0 A_TakeInventory("SKZombieman", 1);
+		PSS3 G 3 A_Pain();
+		TNT1 A 0 A_Jump(196, "Missile");
+		Goto SeeContinue;
+	PainIsDown:
+		TNT1 AAAA 0;
+		TNT1 A 0 A_Pain();
+		TNT1 A 0 A_ChangeFlag("SPECTRAL", 0);
+		TNT1 A 0 A_TAkeInventory("BarrelExpMeasure", 100);
+		ID11 H 8;
+		Goto GetUp+2;
+	Pain.Mine:
+		TNT1 A 0 A_SetSize(-1,40);
+		TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "PainIsDown");
+		PSS3 G 3;
+		TNT1 A 0 A_TakeInventory("SKZombieman", 1);
+		PSS3 G 40 A_Pain();
+		Goto SeeContinue;
+	Pain.Melee:
+		TNT1 A 0;
+		TNT1 A 0 A_SetSize(-1,40);
+		//TNT1 A 0 A_JumpIfInventory ("SKShotgunGuy", 1, "GotoStealthKill");
+		TNT1 A 0 A_JumpIfInventory ("IsDown", 1, 6);
+		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0);
+		PSS3 G 4;
+		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0);
+		PSS3 G 4 A_Pain();
+		Goto SeeContinue;
+		TNT1 AAAAA 0;
+		TNT1 A 0 A_Pain();
+		ID11 H 8;
+		ID11 S 35;
+		TNT1 A 0 A_TakeInventory("IsDown", 1);
+		ID11 T 10;
+		Goto SeeContinue;
+	Pain.ExplosiveImpact:
+	Pain.ExtremePunches:
+	Pain.Explosive:
+		TNT1 A 0 A_SetSize(-1,40);
+		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1);
+		TNT1 A 0;
+		TNT1 A 0 A_Pain();
+		TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain");
+		TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1);
+		TNT1 A 0 A_GiveInventory("IsDown", 1);
+		TNT1 A 0 ThrustThingZ(0,40,0,1);
+		SPO4 UUVWXY 4;
+		Goto FallingAfterImpact;
+	Pain.LowKick:
+		TNT1 A 0;
+		TNT1 A 0 A_SetSize(-1,40);
+		TNT1 A 0 A_JumpIfInventory("IsDown", 1, "Death.LowKick");
+		Goto Pain;
+	Death.LowKick:
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_GiveToTarget("GoFatality", 1);
+		TNT1 A 0 A_GiveToTarget("IsCurbstompingSergeant", 1);
+		Stop;
+	Pain.Slide:
+		TNT1 A 0;
+		TNT1 A 0 A_SetSize(-1,40);
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1);
+		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
+		TNT1 A 0 A_ChangeFlag("GHOST", 1);
+		TNT1 A 0 A_ChangeFlag("THRUGHOST", 1);	
+		TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain");
+		ID11 G 1 A_Pain();
+		TNT1 A 0 A_GiveInventory("IsDown", 1);
+		TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1);
+		TNT1 A 0 ThrustThingZ(0,30,0,1);
+		TNT1 A 0 A_ChangeFlag("NOPAIN", 1);
+		//ID11 E 1 A_Chase(); ("","");
+		SPO4 U 1 A_FaceTarget();
+		SPO4 U 3;
+		TNT1 A 0 A_Recoil(-5);
+		SPO4 UVWXY 3;
+		TNT1 A 0 A_ChangeFlag("NOPAIN", 0);
+		TNT1 A 0 A_ChangeFlag("GHOST", 0);
+		TNT1 A 0 A_ChangeFlag("THRUGHOST", 0);	
+		Goto FallingAfterImpact;
+	FallingAfterImpact:
+		ID11 H 1 A_GiveInventory ("FallingHeight", 1);
+		ID11 H 1 A_CheckFloor ("GetUp");
+		NULL A 0 A_JumpIf (vel.z == 0, "GetUp");
+		Loop;
+	Pain.Kick:
+	Pain.HeavyImpact:
+		TNT1 A 0 A_SetSize(-1,40);
+		TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1);
+		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
+		TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Pain");
+		ID11 G 1 A_Pain();
+		TNT1 A 0 A_GiveInventory("IsDown", 1);
+		TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1);
+		TNT1 A 0 ThrustThingZ(0,30,0,1);
+		TNT1 A 0 A_ChangeFlag("NOPAIN", 1);
+		//ID11 E 1 A_Chase(); ("","");
+		POS5 H 1 A_FaceTarget();
+		POS5 H 3 ThrustThing(angle*256/360+128, 10, 0, 0);
+		POS5 HIJKL 3;
+		TNT1 A 0 A_ChangeFlag("NOPAIN", 0);
+		Goto FallingAfterImpact;
+	FallingAfterImpact:
+		ID11 H 1 A_GiveInventory ("FallingHeight", 1);
+		ID11 H 1 A_CheckFloor ("GetUp");
+		NULL A 0 A_JumpIf (vel.z == 0, "GetUp");
+		Loop;
+	GetUp:
+		TNT1 A 0;
+		TNT1 A 0 A_GiveInventory("IsDown", 1);
+		MARN A 0 A_SpawnItem("bdbodythud");
+		TNT1 A 0 A_ChangeFlag("FORCEXYBILLBOARD", 1);
+		TNT1 A 0 A_ChangeFlag("NOPAIN", 0);
+		TNT1 A 0 A_ChangeFLag("GHOST", 1);
+		TNT1 A 0 A_JumpIfInventory ("FallingHeight", 5, "FallingDie");
+		POS5 M 1;
+		POS5 MMMMMMMMMM 5 A_JumpIf(vel.z < 0, "FallingAfterImpact");
+		TNT1 A 0 A_TakeInventory("FallingHeight", 100);
+		POS5 N 10;
+		TNT1 A 0 A_ChangeFlag("FORCEXYBILLBOARD", 0);
+		TNT1 A 0 A_TakeInventory("IsDown", 1);
+		TNT1 A 0 A_ChangeFlag("GHOST", 0);
+		Goto SeeContinue;
+	FallingDie:
+		TNT1 A 0;
+		TNT1 A 0 A_Stop();
+		TNT1 A 0 A_CustomMissile("BodyCrash1", 10);
+		Goto Getup+8;
+	Death.Fall:
+		TNT1 A 0;
+		TNT1 A 0 A_Scream();
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_Stop();
+		TNT1 AAAA 0 A_CustomMissile ("XDeath1", 32, 0, random (0, 360), 2, random (50, 130));
+		ID11 EF 2;
+		TNT1 A 0 A_SpawnItem("DeadShotgunguy");
+		ID11 F 2;
+		MARN AAA 0 A_SpawnItem("bdbodythud");
+		TNT1 A -1;
+		Stop;
+	Pain.KillMe:
+		TNT1 A 0;
+		Goto Missile;
+	Death.Ice:
+	Death.Freeze:
+	Death.Frost:
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
+		TNT1 A 0 A_ChangeFlag("SOLID", 0);
+		TNT1 A 0 A_SpawnItem("FrozenSMGGuy");
+		Stop;
+		}
+}
+
+class BDPSubmachineGunGuyDamaged : BDPSubmachineGunGuy 
+{
+	Default
+	{
+		Speed 2;
+		FastSpeed 4;
+		Health 10;
+	}
+}

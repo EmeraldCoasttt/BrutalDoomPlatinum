@@ -767,27 +767,27 @@ flickerlight2 ZOMBIEATK
     offset 0 40 0
 }
 
-object RifleZombie
+object BDPZombieman
 {
     frame POSRF { light ZOMBIEATK }
 }
 
-object PistolZombie
+object BDPZombiemanHelmet
 {
     frame PSPOF { light ZOMBIEATK }
 }
 
-object ShotgunGuy1
+object BDPShotgunGuy
 {
     frame SPOSF { light ZOMBIEATK }
 }
 
-object TehArchvile
+object BDPArchvile
 {
     frame DIABF { light ZOMBIEATK }
 }
 
-object TehArchvile
+object BDPArchvile
 {
     frame DIABE { light ZOMBIEATK }
 }
@@ -969,7 +969,7 @@ flickerlight LOSTSOUL_X4
     chance 0.25
 }
 
-object TehLostSoul
+object BDPLostSoul
 {
     frame LSOL { light LOSTSOUL_X1 }
 }
@@ -1155,7 +1155,7 @@ pointlight SPIDERSHADOW
 }
 
 
-object Chaingunguy1
+object BDPChaingunGuy
 {
 	frame CPOSF { light ZOMBIEATK }
 	frame CPDRB { light ZOMBIEATK }

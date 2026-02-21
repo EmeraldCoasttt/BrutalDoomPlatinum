@@ -1433,7 +1433,7 @@ Height 32
 		stop
 		}}
 		
-Actor PinnedLostSoul: TehLostSoul
+Actor PinnedLostSoul: BDPLostSoul
 {
 Radius 16
 	Height 32

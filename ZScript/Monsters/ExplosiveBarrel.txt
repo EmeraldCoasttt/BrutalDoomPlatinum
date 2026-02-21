@@ -14,7 +14,7 @@ CLASS Explosivebarrelbase : actor
 			{
 			CurrentActor = CheckFortracers.Thing;
 
-			If (CurrentActor && CurrentActor is "baronofhell2" && currentactor.health > 0 &&  CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && !tracerfound && currentactor.target && currentactor.checksight(currentactor.target) && !currentactor.findinventory("hasexplosivebarrel") && currentactor.target is "playerpawn")
+			If (CurrentActor && CurrentActor is "bdpbaronofhell" && currentactor.health > 0 &&  CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && !tracerfound && currentactor.target && currentactor.checksight(currentactor.target) && !currentactor.findinventory("hasexplosivebarrel") && currentactor.target is "playerpawn")
 				{
 					tracer = currentactor;
 					If(tracer)

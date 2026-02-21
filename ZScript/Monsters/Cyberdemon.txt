@@ -1,0 +1,868 @@
+class BDPCyberdemon : Cyberdemon Replaces Cyberdemon
+{
+	Default
+	{
+		damagefactor "HKFT", 0.05;
+		damagefactor "HKFT", 0.05;
+		damagefactor "Decaptate", 5.0;
+		damagefactor "Avoid", 0.0;
+		+NOICEDEATH
+		Health 5000;
+		damagefactor "Crush", 20.0;
+		PainSound "CYBPAIN";
+		MaxStepHeight 24;
+		MaxDropOffHeight 32;
+		Scale 1.2;
+		//Radius 45
+		//Height 94
+		Radius 40;
+		Height 106;
+		+NORADIUSDMG
+		+QUICKTORETALIATE
+		MissileChanceMult 0.0625;
+		Speed 16;
+		FastSpeed 22;
+		painchance "kick", 255;
+		painchance "Fire", 60;
+		painchance 20;
+		mass 5000;
+		//damagefactor "fatality", 5000.0
+		PainChance "Head", 40;
+		PainChance "KillMe", 64;
+		PainChance "Taunt", 255;
+		PainChance "Cut", 5;
+		//DropItem "DemonRunespawner", 25
+		//DropItem "Demonstrengthrune", 25
+		Painchance "Fatality", 90;
+		BloodType "CyberDemon_Blood", "CyberDemon_SawBlood", "CyberDemon_Blood";
+		Tag "Cyberdemon";
+		painchance "fire", 1;
+		//damagefactor "fire", 0.3
+		//damagefactor "desintegrate", 0.5
+		painchance "desintegrate", 1;
+	}
+	States
+	{
+	Pain:
+		CYBR G 1;
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR G 4 A_Pain();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR G 4 A_Pain();
+		Goto See;
+	Spawn:
+		CYBR D 0;
+		TNT1 A 0 A_spawnitemex("CyberHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
+		TNT1 A 0 ACS_NamedExecuteAlways("BDCHeckClassicMonsters", 0, 0, 0, 0);//Check if Vanilla Mode is activated
+		//TNT1 A 0 A_JumpIf(x == -1472, "ReplaceForBOSS")
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		TNT1 A 0 A_GiveInventory("TargetIsACyberdemon");
+	Stand:
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR Z 10 A_Look();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR D 10 A_Look();
+		Loop;
+	See:
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		TNT1 A 0 A_SpawnItem("HeavyFootSteps32");
+		CYBR A 3 A_Hoof();
+		CYBR A 3; //A_Chase
+		TNT1 A 0 A_JumpIfCloser(120, "Stomp");
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR AA 2 A_Chase();
+		TNT1 A 0 A_JumpIfCloser(120, "Stomp");
+		//TNT1 A 0 A_SpawnItemEx("CyberStep",12,-30)
+		CYBR BB 2 A_Chase();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR BBC 2 A_Chase();
+		TNT1 A 0 A_SpawnItem("HeavyFootSteps32");
+		TNT1 A 0 A_JumpIfCloser(120, "Stomp");
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR C 2 A_Chase();
+		CYBR C 2;
+		CYBR C 2 A_Metal();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		//TNT1 A 0 A_SpawnItemEx("CyberStep",12,30)
+		CYBR D 2 A_Chase();
+		CYBR D 2 A_Chase();
+		TNT1 A 0 A_JumpIfCloser(120, "Stomp");
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR DD 2 A_Chase();
+		Loop;
+	Missile:
+		TNT1 A 0 A_JumpIfCloser(800, "MaybeCharge");
+		TNT1 A 0 A_JumpIfCloser(180, "Stomp");
+	MissileAnyways:
+		TNT1 A 0 A_jump(40,"meteor");
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIfInventory("Enraged", 1, "SpecialAttack");
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR E 8 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR F 3 BRIGHT A_CustomMissile("CyberBalls",60,-25,0,0);
+		TNT1 A 0 A_JumpIfCloser(180, "Stomp");
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR EE 6 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR F 3 BRIGHT A_CustomMissile("CyberBalls",60,-25,-7,0);
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR EE 6 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR F 3 BRIGHT A_CustomMissile("CyberBalls",60,-25,7,0);
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR EE 6 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR F 3 BRIGHT A_CustomMissile("CyberBalls",60,-25,0,0);
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR EE 6 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR E 12;
+		Goto See;
+	Meteor:
+		//TNT1 A 0 A_cyberwarn
+		TNT1 A 0 A_JumpIfInventory("Enraged", 1, "Omegameteor");
+		CYBR Q 5 A_FaceTarget();
+		CYBR R 5 BRIGHT A_CustomMissile("cyberfireup1",150, -50,0,CMF_AIMDIRECTION,75);
+		TNT1 A 0 A_spawnitemex("cyberfireup2",0,0,0,0,0,0,0,SXF_SETMASTER | SXF_NOCHECKPOSITION);
+		CYBR Q 3 A_FaceTarget();
+		CYBR Q 5 A_FaceTarget();
+		CYBR R 5 BRIGHT A_CustomMissile("cyberfireup1",150, -50,0,CMF_AIMDIRECTION,75);
+		TNT1 A 0 A_spawnitemex("cyberfireup2",0,0,0,0,0,0,0,SXF_SETMASTER | SXF_NOCHECKPOSITION);
+		CYBR Q 3 A_FaceTarget();
+		CYBR Q 5 A_FaceTarget();
+		CYBR R 5 BRIGHT A_CustomMissile("cyberfireup1",150, -50,0,CMF_AIMDIRECTION,75);
+		TNT1 A 0 A_spawnitemex("cyberfireup2",0,0,0,0,0,0,0,SXF_SETMASTER | SXF_NOCHECKPOSITION);
+		CYBR Q 3 A_FaceTarget();
+		CYBR Q 5 A_FaceTarget();
+		CYBR R 5 BRIGHT A_CustomMissile("cyberfireup1",150, -50,0,CMF_AIMDIRECTION,75);
+		TNT1 A 0 A_spawnitemex("cyberfireup2",0,0,0,0,0,0,0,SXF_SETMASTER | SXF_NOCHECKPOSITION);
+		CYBR Q 3 A_FaceTarget();
+		CYBR Q 5 A_FaceTarget();
+		CYBR Q 20 A_FaceTarget();
+		Goto See;
+	Omegameteor:
+		CYBR Q 3 A_FaceTarget();
+		CYBR R 5 BRIGHT A_CustomMissile("cyberfireup1",150, -50,0,CMF_AIMDIRECTION,75);
+		TNT1 A 0 A_spawnitemex("cyberfireup2",0,0,0,0,0,0,0,SXF_SETMASTER | SXF_NOCHECKPOSITION);
+		//CYBR Q 3 A_FaceTarget
+		CYBR Q 3 A_FaceTarget();
+		CYBR R 5 BRIGHT A_CustomMissile("cyberfireup1",150, -50,0,CMF_AIMDIRECTION,75);
+		TNT1 A 0 A_spawnitemex("cyberfireup2",0,0,0,0,0,0,0,SXF_SETMASTER | SXF_NOCHECKPOSITION);
+		//CYBR Q 3 A_FaceTarget
+		CYBR Q 3 A_FaceTarget();
+		CYBR R 5 BRIGHT A_CustomMissile("cyberfireup1",150, -50,0,CMF_AIMDIRECTION,75);
+		TNT1 A 0 A_spawnitemex("cyberfireup2",0,0,0,0,0,0,0,SXF_SETMASTER | SXF_NOCHECKPOSITION);
+		//CYBR Q 3 A_FaceTarget
+		CYBR Q 3 A_FaceTarget();
+		CYBR R 5 BRIGHT A_CustomMissile("cyberfireup1",150, -50,0,CMF_AIMDIRECTION,75);
+		TNT1 A 0 A_spawnitemex("cyberfireup2",0,0,0,0,0,0,0,SXF_SETMASTER | SXF_NOCHECKPOSITION);
+		//CYBR Q 3 A_FaceTarget
+		CYBR Q 3 A_FaceTarget();
+		CYBR R 5 BRIGHT A_CustomMissile("cyberfireup1",150, -50,0,CMF_AIMDIRECTION,75);
+		TNT1 A 0 A_spawnitemex("cyberfireup2",0,0,0,0,0,0,0,SXF_SETMASTER | SXF_NOCHECKPOSITION);
+		CYBR Q 3 A_FaceTarget();
+		CYBR R 5 BRIGHT A_CustomMissile("cyberfireup1",150, -50,0,CMF_AIMDIRECTION,75);
+		TNT1 A 0 A_spawnitemex("cyberfireup2",0,0,0,0,0,0,0,SXF_SETMASTER | SXF_NOCHECKPOSITION);
+		CYBR Q 3 A_FaceTarget();
+		CYBR R 5 BRIGHT A_CustomMissile("cyberfireup1",150, -50,0,CMF_AIMDIRECTION,75);
+		TNT1 A 0 A_spawnitemex("cyberfireup2",0,0,0,0,0,0,0,SXF_SETMASTER | SXF_NOCHECKPOSITION);
+		CYBR Q 3 A_FaceTarget();
+		CYBR R 5 BRIGHT A_CustomMissile("cyberfireup1",150, -50,0,CMF_AIMDIRECTION,75);
+		TNT1 A 0 A_spawnitemex("cyberfireup2",0,0,0,0,0,0,0,SXF_SETMASTER | SXF_NOCHECKPOSITION);
+		CYBR Q 5 A_FaceTarget();
+		//CYBR Q 20 A_FaceTarget
+		Goto See;
+	Stomp:
+	Melee:
+		TNT1 A 0;
+		TNT1 A 0 A_jumpifinventory("grabbedmonsterdamage",1,"missileanyways");
+		TNT1 A 0 A_JumpIfInTargetInventory("IsInATank", 1, "SpecialAttack");
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR Z 5 A_FaceTarget();
+		TNT1 A 0 A_Recoil(-5);
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYMA A 7 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		TNT1 A 0 A_CustomMissile("CyberStomp",10,0,0,0);
+		CYMA B 7;
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYMA B 7;
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		Goto See;
+	Death:
+		CYBR H 0;
+		CYBR H 0 A_Scream();
+		CYBR H 10;
+		CYBR I 4;
+		CYBR J 4;
+		TNT1 AAAAAA 0 A_CustomMissile ("HighExplosiveFlames2", random (40, 90), 0, random (0, 360), 2, random (0, 360));
+		CYBR J 4;
+		EXPL A 0 Radius_Quake (6, 50, 0, 22, 0);
+		TNT1 A 0 A_CustomMissile("ExplosionSplashSpawner");
+		TNT1 AA 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_CustomMissile ("XDeathCyberdemonHead", 120, 0, random (0, 360), 2, random (0, 180));
+		TNT1 A 0 A_CustomMissile ("XDeathCyberdemonArm", 120, 0, random (0, 360), 2, random (0, 180));
+		TNT1 A 0 A_CustomMissile ("XDeathCyberdemonGun", 120, 0, random (0, 360), 2, random (0, 180));
+		TNT1 A 0 A_CustomMissile ("XDeathCyberdemonPiece", 120, 0, random (0, 360), 2, random (0, 180));
+		TNT1 A 0 A_CustomMissile ("XDeathCyberdemonTorso", 120, 0, random (0, 360), 2, random (0, 180));
+		TNT1 AAA 0 A_CustomMissile ("BDExplosionparticles3", 74, 0, random (0, 360), 2, random (40, 90));
+		TNT1 AAA 0 A_CustomMissile ("BDExplosionparticles4", 76, 0, random (0, 360), 2, random (40, 90));
+		TNT1 AA 0 A_CustomMissile ("ExplosionSpawner", 40, 0, random (0, 360), 2, random (10, 90));
+		EXPL AA 0 A_CustomMissile ("BigBlackSmokeLarger", 40, 0, random (0, 360), 2, random (10, 90));
+		TNT1 A 0 A_CustomMissile ("CyberXDeath", 0, 0, random (0, 360), 2, random (0, 160));
+		CYBR M 5 A_NoBlocking();
+		CYBR NOP 5;
+		CYBR P 120;
+		TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_BossDeath();
+		CYBR P -1 A_BossDeath();
+		Stop;
+	Death.Head:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIfInTargetInventory("HasCutingWeapon", 1, "Death.Decaptate");
+		TNT1 AAA 0 A_CustomMissile ("Brains6Big", 120, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAA 0 A_CustomMissile ("Brains7Big", 210, 0, random (0, 360), 2, random (0, 160));
+		TNT1 AAAAA 0 A_CustomMissile ("XDeath3b", 120, 0, random (0, 360), 2, random (50, 90));
+		TNT1 AAAAA 0 A_CustomMissile ("XDeath2b", 120, 0, random (0, 360), 2, random (50, 90));
+		TNT1 AA 0 A_CustomMissile ("MeatDeath", 120, 0, random (0, 360), 2, random (50, 90));
+		CYBB AAAA 6 A_SpawnItem("MuchBlood3", 0, 120);
+		CYBB ABCABCB 8 A_SpawnItem("MuchBlood", 0, 120);
+		EXPL A 0 Radius_Quake (6, 100, 0, 22, 0);
+		TNT1 AAAA 0 A_CustomMissile ("ExplosionSpawner", 90, 0, random (0, 360), 2, random (0, 180));
+		TNT1 AAAAAA 0 A_CustomMissile ("ExplosionSpawner", 90, 0, random (0, 360), 2, random (0, 180));
+		TNT1 AAAA 0 A_CustomMissile ("UltraGoreSPawner", 90, 0, random (0, 360), 2, random (0, 180));
+		TNT1 AAAAAA 0 A_CustomMissile ("UltraGoreSpawner", 90, 0, random (0, 360), 2, random (0, 180));
+		TNT1 A 0 A_CustomMissile ("CyberXDeath", 0, 0, random (0, 360), 2, random (0, 160));
+		CYBR I 0 A_Fall();
+		CYBR JKL 0;
+		CYBR M 0 A_NoBlocking();
+		CYBR NOP 0;
+		CYBR P 120;
+		CYBR P -1 A_BossDeath();
+		Stop;
+	Death.Decaptate:
+		TNT1 A 0 A_CustomMissile ("XDeathCyberdemonHead", 120, 0, random (0, 360), 2, random (0, 180));
+		TNT1 AAAAAAAAA 0 A_CustomMissile ("XDeath1", 120, 0, random (0, 360), 2, random (0, 180));
+		CYBB AAAA 0 A_SpawnItem("MuchBlood3", 0, 120);
+		CYBB ABCABCB 8 A_SpawnItem("MuchBlood", 0, 120);
+		EXPL A 0 Radius_Quake (6, 100, 0, 22, 0);
+		TNT1 AAAA 0 A_CustomMissile ("ExplosionSpawner", 90, 0, random (0, 360), 2, random (0, 180));
+		TNT1 AAAAAA 0 A_CustomMissile ("ExplosionSpawner", 90, 0, random (0, 360), 2, random (0, 180));
+		TNT1 AAAA 0 A_CustomMissile ("UltraGoreSPawner", 90, 0, random (0, 360), 2, random (0, 180));
+		TNT1 AAAAAA 0 A_CustomMissile ("UltraGoreSpawner", 90, 0, random (0, 360), 2, random (0, 180));
+		TNT1 A 0 A_CustomMissile ("CyberXDeath", 0, 0, random (0, 360), 2, random (0, 160));
+		CYBR I 0 A_Fall();
+		CYBR JKL 0;
+		CYBR M 0 A_NoBlocking();
+		CYBR NOP 0;
+		CYBR P 120;
+		CYBR P -1 A_BossDeath();
+		Stop;
+	Crush:
+		TNT1 A 0;
+		TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 AAAA 0 A_SpawnItemEx ("BodyRemovalThing",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 1 A_XScream();
+		Stop;
+	Pain.Taunt:
+		TNT1 A 0;
+		TNT1 A 0 HealThing(1);
+		TNT1 A 0 A_JumpIfInventory("Enraged", 1, "SpecialAttack");
+		SPOS B 0 A_Pain();
+		TNT1 A 0 A_ChangeFlag("FASTER", 1);
+		TNT1 A 0 A_ChangeFlag("MISSILEMORE", 1);
+		TNT1 A 0 A_ChangeFlag("MISSILEEVENMORE", 1);
+		TNT1 A 0 A_ChangeFlag("NOPAIN", 1);
+		TNT1 A 0 A_PlaySound("demon/pain");
+		CYBT A 1 A_FaceTarget();
+		CYBT ABCCBADE 4;
+		TNT1 A 0 A_PlaySound("CYBTAT", 1);
+		CYBT FGHGFGHGFGHGFGHG 3;
+		CYBT EDA 4;
+		TNT1 A 0 A_GiveInventory("Enraged", 1);
+		Goto Missile;
+	Pain.Killme:
+		TNT1 A 0;
+		TNT1 A 0 HealThing(1);
+		Goto Missile;
+	SpecialAttack:
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR E 6 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR F 4 BRIGHT A_CustomMissile("CyberBalls",60,-25,0,0);
+		TNT1 A 0 A_JumpIfCloser(180, "Stomp");
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR EE 4 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR F 4 BRIGHT A_CustomMissile("CyberBalls",60,-25,-7,0);
+		TNT1 A 0 A_JumpIfCloser(180, "Stomp");
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR EE 4 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR F 4 BRIGHT A_CustomMissile("CyberBalls",60,-25,7,0);
+		TNT1 A 0 A_JumpIfCloser(180, "Stomp");
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR EE 4 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR F 4 BRIGHT A_CustomMissile("CyberBalls",60,-25,0,0);
+		TNT1 A 0 A_JumpIfCloser(180, "Stomp");
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR EE 4 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR F 4 BRIGHT A_CustomMissile("CyberBalls",60,-25,0,0);
+		CYBR EE 4 A_FaceTarget();
+		TNT1 A 0 A_SpawnItem("CybersHitBox", 0, 106);
+		CYBR F 4 BRIGHT A_CustomMissile("CyberBalls",60,-25,0,0);
+		Goto See;
+	Death.Deletus:
+		TNT1 A 0;
+		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
+		TNT1 A 0 A_NoBlocking();
+		Stop;
+	Death.Fatality:
+		TNT1 A 0;
+		TNT1 A 0 A_Pain();
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_JumpIfIntargetInventory("IsPlayer", 1, 1);
+		Goto Death;
+		TNT1 A 0;
+		TNT1 A 0 A_FaceTarget();
+		TNT1 AAAAAA 0 A_SpawnItemEx("HealthPlusFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
+		TNT1 AAAAAA 0 A_SpawnItemEx("ArmorShardFatalityBonus", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
+		TNT1 A 0 A_Jump(128, "Death.Fatality2");
+		TNT1 A 0 A_GiveToTarget("GoFatality", 1);
+		TNT1 A 0 A_GiveToTarget("CyberdemonFatality", 1);
+		TNT1 A 500;
+		TNT1 A 0 A_BossDeath();
+		Stop;
+	Death.Fatality2:
+		TNT1 A 0;
+		TNT1 A 0 A_GiveToTarget("GoFatality", 1);
+		TNT1 A 0 A_GiveToTarget("CyberdemonFatality", 1);
+		TNT1 A 500;
+		TNT1 A 0 A_BossDeath();
+		Stop;
+	Death.Ice:
+	Death.Freeze:
+	Death.Frost:
+		TNT1 A 0;
+		TNT1 A 0 A_noblocking();
+		TNT1 A 0 A_scream();
+		TNT1 A 0 A_SpawnItem("FrozenCyberdemon");
+		TNT1 A 500;
+		TNT1 A 0 A_BossDeath();
+		Stop;
+	}
+}
+
+class cyberfireup1 : Actor
+{
+	Default
+	{
+		Radius 6;
+		Height 8;
+		Speed 35;
+		Damage 0;
+		Projectile;
+		+RANDOMIZE;
+		RenderStyle "Add";
+		Alpha 1;
+		Scale 1.7;
+		SeeSound "DSCANFIR";
+		DamageType "fire";
+		Species "Cyberdemon";
+		+thruspecies
+		+mthruspecies
+		+dontharmspecies
+		+thruactors
+		-bounceonwalls
+		-Bounceonceilings
+		+skyexplode
+		Deathsound "none";
+	}
+	States
+	{
+	Spawn:
+		//TNT1 A 1
+		TNT1 A 0 A_PlaySound("weapons/rocklf", 1);
+		//TNT1 A 0 ThrustThingZ(0,150,0,1)
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		//TNT1 A 0 A_JumpIfInventory("lowgraphicsmode", 1, "SpawnCheap")
+		Stop;
+	Death:
+	xdeath:
+		TNT1 A 0;
+		Stop;
+	}
+}
+
+
+
+class cyberfireup1player : cyberfireup1
+{
+	Default
+	{
+		-nogravity
+		gravity -5.0;
+		Speed 65;
+		SeeSound "NONE";
+	}
+States
+{
+	Spawn:
+		//TNT1 A 1
+		TNT1 A 0 A_PlaySound("weapons/rocklf", 1);
+		//TNT1 A 0 ThrustThingZ(0,150,0,1)
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		TNT1 A 0 A_spawnprojectile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-70, -110));
+		WYVB G 1 Bright A_SpawnItem("RedFlareSmall22",0,0);
+		//TNT1 A 0 A_JumpIfInventory("lowgraphicsmode", 1, "SpawnCheap")
+		Stop;
+	}
+}
+/*
+Actor Cyberfireup2
+{
+PROJECTILE
+Height 10
+Radius 10
++DropOff
+-NoGravity
++FloorHugger
++seekermissile
++bounceonwalls
+Damage 0
+Species "cyberdemons"
+Speed 30
+//maxslopesteepness 0
+maxstepheight 666
+maxdropoffheight 666
+States
+{
+Spawn:
+TNT1 A 1 A_seekermissile(360,360)
+Loop
+
+Death:
+TNT1 A 0 a_spawnitemex("cyberpentagram",0,0,0)
+TNT1 A 0 A_spawnitemex("cyberballsupspawn",0,0,10,0,0,50)
+Stop
+
+
+}
+}
+
+
+Actor Cyberfireup2Player : Cyberfireup2
+{
+Speed 60
+States
+{
+Spawn:
+TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 1 A_seekermissile(360,360,SMF_LOOK ,150)
+
+
+
+Death:
+TNT1 A 0 a_spawnitemex("cyberpentagram",0,0,0)
+TNT1 A 0 A_spawnitemex("cyberballsupspawnplayer",0,0,10,0,0,50)
+Stop
+}
+
+}
+*/
+
+class cyberballsupspawn : Actor
+{
+	Default
+	{
+		PROJECTILE;
+		+noclip
+		+skyexplode
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 18;
+	Death:
+	Xdeath:
+		TNT1 A 0 A_spawnitemex("cyberballsdown",0,0,0);
+		Stop;
+	}
+}
+
+
+class cyberballsupspawnplayer : cyberballsupspawn
+{
+	States
+	{
+	Spawn:
+		TNT1 A 8;
+	Death:
+	Xdeath:
+		TNT1 A 0 A_spawnitemex("cyberballsdownplayer",0,0,0);
+		Stop;
+	}
+}
+
+
+class cyberpentagram : Actor
+{
+	Default
+	{
+		+NOBLOCKMAP
+		+NOTELEPORT
+		+DONTSPLASH
+		+FORCEXYBILLBOARD
+		+CLIENTSIDEONLY
+		+NOCLIP
+		-NOGRAVITY
+		RenderStyle "Translucent";
+		XScale 0.4;
+		YScale 0.1;
+		Alpha 0.0;
+		Gravity 1;
+		Radius 1;
+		Height 1;
+		//SeeSound "CyberPentagramSpawn"
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0 NODELAY A_playSound("CyberPentagramSpawn");
+		PNTG BBBBBBBBB 1 A_fadein(0.1);
+		PNTG B 64;
+		TNT1 A 0 A_SpawnItemEx ("RocketExplosioncyberDown",0,0,13,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		PNTG BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB 1 BRIGHT A_fadeout(0.05);
+		Stop;
+	}
+}
+
+class CyberdemonLegsFatality : Actor
+{
+	Default
+	{
+		Health 200;
+		Radius 16;
+		Height 56;
+		Mass 500;
+		Speed 12;
+		PainChance 0;
+		+BOSS
+		+FLOORCLIP
+		+DONTMORPH
+		+BOSSDEATH
+		+SOLID
+		+SHOOTABLE
+		+THRUACTORS
+		DeathSound "world/barrelx";
+		Obituary "$OB_CYBORG";
+		Tag "Cyberdemon's roaming legs";
+	}
+	States
+	{
+	Spawn:
+		PATA AABBCCDD 3 A_Wander();
+		TNT1 A 0 A_ChangeFlag("THRUACTORS", 0);
+	See:
+		PATA AABBCCDD 3 A_Wander();
+		Loop;
+	Death:
+		PATA H 10 ;
+		TNT1 AA 0 A_SpawnItem("MeatDeath", 0, 32);
+		TNT1 AA 0 A_SpawnItem("RipGuts", 0, 32);
+		TNT1 A 0 A_SpawnItem("MuchBlood2", 0, 42);
+		PATA I 3;
+		PATA JKL 3 A_Scream();
+		PATA M 3 A_NoBlocking();
+		PATA NO 3;
+		PATA P 3;
+		PATA P -1 A_BossDeath();
+		Stop;
+	}
+}
+
+class CyberStomp : Actor
+{
+	Default
+	{
+		Radius 12;
+		Height 8;
+		+MISSILE
+		Speed 15;
+		Damage 50;
+		renderstyle "translucent";
+		alpha 0.9;
+		DamageType "Stomp";
+		Gravity 1.0;
+		Decal "Cracks";
+		-NOGRAVITY
+		+EXTREMEDEATH
+		+NOTELEPORT
+		+THRUACTORS
+		Obituary "%o was stepped by a Cyberdemon.";
+		HitObituary "%o was stepped by a Cyberdemon.";
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 1;
+		TNT1 A 0 ThrustThingZ(0, -35, 0, 0);
+		TNT1 A 10;
+		Stop;
+	Death:
+		MARN A 0 A_SpawnItemEx("FootStepStrong", 0, 0, 8, 0, 0);
+		TNT1 A 0 A_PlaySound("CLAP", 1);
+		EXPL AAAA 0 A_CustomMissile ("ExplosionSmoke", 0, 0, random (0, 360), 2, random (10, 12));
+		TNT1 A 0 Radius_Quake(4, 15, 0, 25, 0);
+		TNT1 A 0 Radius_Quake(2, 15, 0, 45, 0);
+		EXPL A 0 A_Explode();
+		SM8K BDFHJLNPRTVXZ 1;
+		Stop;
+	}
+}
+
+class CyberStompBig : Cyberstomp
+{
+	Default
+	{
+		Scale 2.0;
+	}
+	States
+	{
+	Death:
+		MARN A 0 A_SpawnItemEx("FootStepStrong", 0, 0, 8, 0, 0);
+		TNT1 A 0 A_PlaySound("CLAP", 1);
+		EXPL AAAA 0 A_CustomMissile ("ExplosionSmoke", 0, 0, random (0, 360), 2, random (10, 12));
+		TNT1 A 0 Radius_Quake(4, 15, 0, 25, 0);
+		TNT1 A 0 Radius_Quake(2, 15, 0, 45, 0);
+		EXPL A 0 A_Explode(300, 300);
+		SM8K ABCDEFGHIJKLMNOPQRSTUWVXYZ 1;
+		Stop;
+	}
+}
+
+class spiderStompBig : Cyberstomp
+{
+	Default
+	{
+		Scale 2.0;
+	}
+	States
+	{
+	Death:
+		MARN A 0 A_SpawnItemEx("FootStepStrong", 0, 0, 8, 0, 0);
+		TNT1 A 0 A_PlaySound("CLAP", 1);
+		EXPL AAAA 0 A_CustomMissile ("ExplosionSmoke", 0, 0, random (0, 360), 2, random (10, 12));
+		TNT1 A 0 Radius_Quake(4, 15, 0, 25, 0);
+		TNT1 A 0 Radius_Quake(2, 15, 0, 45, 0);
+		EXPL A 0 A_Explode(300, 300,0);
+		SM8K ABCDEFGHIJKLMNOPQRSTUWVXYZ 1;
+		Stop;
+	}
+}
+
+CLASS CyberFireUp2 : Actor
+	{
+	Default
+		{
+		Obituary "$OB_CYBORG";
+		+noblockmap;
+		}
+	Vector3 MasterSpawn2;
+	States
+		{
+		Spawn:
+			TNT1 A 0 NODELAY
+			{
+				If(master && master.target)
+				{
+					master.target.A_startsound("CYBWARN",669);
+				}
+			}
+			TNT1 A 15;
+			TNT1 A 0
+				{
+				If(master && master.target)
+					{
+						masterspawn2 = master.target.pos;
+						masterspawn2.z = (masterspawn2.z += 600);
+						master.spawn("cyberpentagram",master.target.pos);
+						//master.target.a_spawnitemex("cyberpentagram",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION);
+						//master.target.A_spawnitemex("cyberballsupspawn",0,0,10,0,0,50,0,SXF_NOCHECKPOSITION);
+					}
+				}
+			TNT1 A 35;
+			TNT1 A 0
+				{
+					If(master)
+					{
+						let ballsdown = spawn("cyberballsdown",masterspawn2);
+						If(ballsdown)
+						{
+							ballsdown.target = master;
+						}
+					}
+				}
+			Stop;
+		
+		}
+	
+	}
+	
+	
+	
+CLASS CyberFireUp2Player : Actor
+	{
+	Default
+		{
+		Obituary "$OB_CYBORG";
+		+noblockmap;
+		}
+	States
+		{
+		Spawn:
+			TNT1 A 25 NODELAY;
+			TNT1 A 0
+				{
+				bool foundtracer;
+					If(master)
+						{
+							//A_SpawnItemEx("BFGTrailParticle", Random(-13, 13), Random(-13, 13), Random(0, 18), Random(1, 3), 0, (0.1)*Random(-10, 10), Random(-20, 20), 128);
+			//bool bfounddest;
+				BlockThingsIterator CheckFortracers = BlockThingsIterator.create(Self,1000); //256 can be whatever range around the actor.
+				Actor CurrentActor;
+				
+				While (CheckFortracers.Next())
+					{
+						CurrentActor = CheckFortracers.Thing;
+						
+						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
+						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
+						If (CurrentActor && CurrentActor.bismonster && currentactor.health > 0 && !currentactor.bfriendly && !currentactor.findinventory("cyberdemonsmissilelauncher") && !foundtracer && master.checksight(currentactor))
+							{
+								Tracer = currentactor;
+								
+								
+								foundtracer = true;
+								vector3 tracerspawn2 = tracer.pos;
+								tracerspawn2.x = (tracerspawn2.x + frandom(-40,40));
+								tracerspawn2.y = (tracerspawn2.y + frandom(-40,40));
+								master.spawn("cyberpentagram",tracerspawn2);
+						tracerspawn2.z = (tracerspawn2.z + 10);
+						
+						let ballspawn = master.spawn("cyberballsupspawnplayer",tracerspawn2);
+						If(ballspawn)
+							{
+								Ballspawn.vel.z = 50;
+							}
+			
+							}
+					}
+						
+						}
+						If(!foundtracer)
+						{
+						return resolvestate("spawn");
+						}
+						Else
+						{
+						return resolvestate("null");
+						}
+				}
+			Stop;
+		
+		}
+	
+	}

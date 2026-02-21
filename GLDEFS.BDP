@@ -142,51 +142,51 @@ flickerlight2 ZOMBIEATK
 }
 
 
-object RifleZombie
+object BDPZombieman
 {
     frame POSRF { light ZOMBIEATK }
 	frame ZRO1Z { light ZOMBIEATK }
 }
 
-object HelmetRifleZombie
+object BDPZombiemanHelmet
 {
     frame ZMV1F { light ZOMBIEATK }
 	frame ZRO2[ { light ZOMBIEATK }
 }
 
-object PistolZombie
+object BDPPistolZombieman
 {
     frame PSPOF { light ZOMBIEATK }
 }
 
-object PistolZombieHelmet
+object BDPPistolZombiemanHelmet
 {
     frame 9OS2F { light ZOMBIEATK }
 }
 
-object ShotgunGuy1
+object BDPShotgunGuy
 {
     frame SPOSF { light ZOMBIEATK }
 	frame ZRO1] { light ZOMBIEATK }
 }
 
-object ShotgunGuyHelmet
+object BDPShotgunGuyHelmet
 {
     frame SP1SF { light ZOMBIEATK }
 	frame ZRO3[ { light ZOMBIEATK }
 }
 
-object SMGGuy
+object BDPSubmachineGunGuy
 {
     frame PSS3F { light ZOMBIEATK }
 	frame ZRO1] { light ZOMBIEATK }
 }
-object DualPistolZombie
+object BDPDualPistolZombieman
 {
     frame DSPOF { light ZOMBIEATK }
 	frame DSPOH { light ZOMBIEATK }
 }
-object DualPistolZombieHelmet
+object BDPDualPistolZombiemanHelmet
 {
     frame DPZHF { light ZOMBIEATK }
     frame DPZHH { light ZOMBIEATK }

@@ -50,6 +50,13 @@ DoomEdNums
 	3134 = BDPBattleRifle
 	5462 = BDPTurret
 	25869 = EnergyArmor
+	
+	25943 = BDPZombieguy
+	25942 = BDPNightmareSpectre
+	2542 = BDPAncientArachnotron
+	2543 = BDPVolcabus
+	2548 = BDPMotherDemon
+	
 }
 	
 	

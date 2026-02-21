@@ -1,10 +1,10 @@
-CLASS BrutalZombie : Actor
+CLASS BDPBaseZombie : Actor abstract
 {
 	float VoicePitch;
 	Property VoicePitch : VoicePitch;
 	Default
 	{
-		BrutalZombie.VoicePitch 1.0;
+		BDPBaseZombie.VoicePitch 1.0;
 	}
 	Int VoiceTimer;
 	Int TargetTimer;
@@ -26,7 +26,7 @@ CLASS BrutalZombie : Actor
 						
 						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
 						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
-						If (CurrentActor && CurrentActor is "BrutalZombie")
+						If (CurrentActor && CurrentActor is "BDPBaseZombie")
 							{
 								currentactor.giveinventory("ResetIdleTimer",1);
 							}
@@ -92,7 +92,7 @@ CLASS BrutalZombie : Actor
 						
 						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
 						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
-						If (CurrentActor && CurrentActor is "BrutalZombie" && currentactor.health > 0)
+						If (CurrentActor && CurrentActor is "BDPBaseZombie" && currentactor.health > 0)
 							{
 								Idletimermax = idletimermax + 1;
 							}
