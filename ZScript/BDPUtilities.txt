@@ -520,11 +520,11 @@
 		}
 		if(e.replacee == Checkpotentialactor('labguy'))
 		{
-			e.Replacement = "zombieguy";
+			e.Replacement = "BDPZombieguy";
 		}
 		if(e.replacee == Checkpotentialactor('BDmummy'))
 		{
-			e.Replacement = "zombieguy";
+			e.Replacement = "BDPZombieguy";
 		}
 
 	}
@@ -781,14 +781,6 @@
 		if(owner is "commanderkeen")
 		{
 		owner.a_keendie();
-		}
-		If(owner is "cyberdemonboss" || owner is "supermastermind")
-		{
-		If(owner is "greatcyberdemon")
-		{
-		return;
-		}
-		owner.a_braindie();
 		}
 		If(!owner.player)
 		{
