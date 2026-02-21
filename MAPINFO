@@ -71,111 +71,9 @@ episode EDAY01
 	name = "Extermination Day"
 }
 
-/*
-episode BDM01
-{
-	name = "Brutal Deathmatch"
-}
-*/
-
 map TITLEMAP "Title"
 {
 	music = D_DM2TTL	
-}
-
-
-map BDM01 "Re-Entryway"
-{
-	next = "BDM02"
-	secretnext = "BDM02"
-	sky1 = "SKYEAR1", 0.1
-	music = D_RUNNIN
-	cluster = 1
-}
-
-map BDM02 "Dead Simpler"
-{
-	next = "BDM03"
-	secretnext = "BDM03"
-	sky1 = "SKYEAR1", 0.1
-	music = D_SHAWN
-	cluster = 1
-}
-
-map BDM03 "Nuclear Ashes"
-{
-	next = "BDM04"
-	secretnext = "BDM04"
-	sky1 = "SKYCIT1"
-	music = D_ADRIAN
-	cluster = 1
-}
-
-
-map BDM04 "Hangarmageddon"
-{
-	next = "BDM05"
-	secretnext = "BDM05"
-	sky1 = "SKYPHO"
-	music = D_E1M1
-	cluster = 1
-}
-
-
-map BDM05 "Sandstorm"
-{
-	next = "BDM06"
-	secretnext = "BDM06"
-	sky1 = "SKYEAR1", 0.1
-	music = D_DM05
-	cluster = 1
-}
-
-
-map BDM06 "Another One Bites De Dust"
-{
-	next = "BDM07"
-	secretnext = "BDM07"
-	sky1 = "SKYEAR1", 0.1
-	music = D_DM06
-	cluster = 1
-}
-
-map BDM07 "Pyramid"
-{
-	next = "BDM09"
-	secretnext = "BDM09"
-	sky1 = "SKYEAR1", 0.1
-	music = D_DM07
-	cluster = 1
-}
-
-
-map BDM08 "Storage Center"
-{
-	next = "BDM09"
-	secretnext = "BDM09"
-	sky1 = "SKYEAR1"
-	music = D_DM08
-	cluster = 1
-}
-
-map BDM09 "Cathedral"
-{
-	next = "BDM10"
-	secretnext = "BDM10"
-	sky1 = "SKYDEI"
-	music = D_DM09
-	cluster = 1
-}
-
-map BDM10 "Tower of Babel"
-{
-	next = "BDM01"
-	secretnext = "BDM01"
-	sky1 = "SKYDEI"
-	music = D_dM10
-	cluster = 1
 }
 
 map TEST "UAC Testing Center"
@@ -186,6 +84,50 @@ map TEST "UAC Testing Center"
 	cluster = 1
 	//par = 60
 	music = D_ORB
+}
+
+map PSMAP16 "Hellgate"
+{
+	next = "PSMAP17"
+	secretnext = "PSMAP57"
+	//sky1 = "SKYCIT1"
+	sky1 = "SKYHELF"
+	cluster = 8
+	//par = 60
+	music = d_dead	
+}
+
+map PSMAP17 "Blood Citadel"
+{
+	next = "MAP21"
+	secretnext = "MAP21"
+	//sky1 = "SKYCIT1"
+	sky1 = "SKYHELF"
+	cluster = 8
+	//par = 60
+	music = d_doom	
+}
+
+map PSMAP29 "Twilight Descends"
+{
+	next = "MAP14"
+	secretnext = "PSMAP57"
+	//sky1 = "SKYCIT1"
+	sky1 = "SKYEAR3"
+	cluster = 13
+	//par = 60
+	music = d_in_cit	
+}
+
+map PSMAP57 "The Marshes"
+{
+	next = "MAP14"
+	secretnext = "MAP14"
+	//sky1 = "SKYCIT1"
+	sky1 = "SKYEAR3"
+	cluster = 14
+	//par = 60
+	music = d_shawn	
 }
 
 map PSMAP58 "The Mansion"
@@ -206,29 +148,6 @@ map PSMAP59 "Club Doom"
 	cluster = 15
 	par = 60
 	music = D_STALKS
-}
-
-map PSMAP29 "Twilight Descends"
-{
-	next = "MAP14"
-	secretnext = "PSMAP57"
-	//sky1 = "SKYCIT1"
-	sky1 = "SKYEAR3"
-	cluster = 13
-	//par = 60
-	music = d_in_cit	
-}
-
-
-map PSMAP57 "The Marshes"
-{
-	next = "MAP14"
-	secretnext = "MAP14"
-	//sky1 = "SKYCIT1"
-	sky1 = "SKYEAR3"
-	cluster = 14
-	//par = 60
-	music = d_shawn	
 }
 
 // Twilight Descends
@@ -260,33 +179,6 @@ cluster 16
 {
 	entertext = "Welcome to Club Doom.", "You can clock out any time you like", "But you can never leave!"
 }
-
-map PSMAP16 "Hellgate"
-{
-	next = "PSMAP17"
-	secretnext = "PSMAP57"
-	//sky1 = "SKYCIT1"
-	sky1 = "SKYHELF"
-	cluster = 8
-	//par = 60
-	music = d_dead	
-}
-
-
-map PSMAP17 "Blood Citadel"
-{
-	next = "MAP21"
-	secretnext = "MAP21"
-	//sky1 = "SKYCIT1"
-	sky1 = "SKYHELF"
-	cluster = 8
-	//par = 60
-	music = d_doom	
-}
-
-
-
-
 
 clearskills
 
