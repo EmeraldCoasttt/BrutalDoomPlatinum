@@ -63,7 +63,7 @@ class BDPGrabber : BDPWeaponBase
 	Default
 	{
 		Weapon.SlotNumber 1;
-		Weapon.SlotPriority 3;
+		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 3000;
 		Inventory.PickupSound "BFGREADY";
 		Tag "Grabber";

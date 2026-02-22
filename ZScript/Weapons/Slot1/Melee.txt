@@ -20,7 +20,7 @@ class BDPFist : BDPWeaponBase replaces Fist
 	Default
 	{
 		Weapon.SlotNumber 1;
-		Weapon.SlotPriority 1;
+		Weapon.SlotPriority 2;
 		Weapon.SelectionOrder 1;
 		Weapon.Kickback 100;
 		Obituary "%o was Ripped and Teared by 	%k";

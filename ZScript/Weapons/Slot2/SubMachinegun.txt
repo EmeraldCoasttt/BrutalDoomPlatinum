@@ -7,7 +7,7 @@ class BDPSubmachineGun : BDPWeaponBase
 		BDPWeaponBase.MagCapacity 40;
 		Obituary "%o was shot down by %k's SMG.";
 		Weapon.SlotNumber 2;
-		Weapon.SlotPriority 2;
+		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 1800;
 		Inventory.PickupSound "CLIPIN";
 		Inventory.Pickupmessage "You got the Submachine Gun! (Slot 2)";

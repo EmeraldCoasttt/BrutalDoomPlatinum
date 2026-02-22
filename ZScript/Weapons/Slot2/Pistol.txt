@@ -16,7 +16,7 @@ class BDPPistol : BDPWeaponBase replaces Pistol
 		Weapon.AmmoType "BDPClip1";
 		BDPWeaponBase.MagCapacity 15;
 		Weapon.SlotNumber 2;
-		Weapon.SlotPriority 1;
+		Weapon.SlotPriority 3;
 		weapon.selectionorder 3800;
 		Obituary "%o was shot down by %k's pistol.";
 		Inventory.PickupSound "CLIPIN";

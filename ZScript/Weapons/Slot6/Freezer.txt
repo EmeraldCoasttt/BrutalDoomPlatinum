@@ -10,7 +10,7 @@ class BDPFreezerBeam : BDPWeaponBase
 		Inventory.Pickupmessage "You got the Freezer Beam! (Slot 6)";
 		damagetype "Ice";
 		Weapon.SlotNumber 6;
-		Weapon.SlotPriority 3;
+		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 1550;
 		Inventory.AltHUDIcon "FRZRA0";
 		Tag "$BDPFREEZER";

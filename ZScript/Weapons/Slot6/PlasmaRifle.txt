@@ -53,7 +53,7 @@ class BDPPlasmaRifle : BDPWeaponBase
 	Default
 	{
 		Weapon.SlotNumber 6;
-		Weapon.SlotPriority 1;
+		Weapon.SlotPriority 3;
 		Weapon.SelectionOrder 100;
 		Weapon.AmmoGive 40;
 		Inventory.PickupSound "PLSDRAW";

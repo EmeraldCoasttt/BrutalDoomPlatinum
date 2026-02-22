@@ -5,7 +5,7 @@ CLASS BDPRocketLauncher : BDPWeaponBase
 		Speed 20;
 		Damage 20;
 		Weapon.SlotNumber 5;
-		Weapon.SlotPriority 1;
+		Weapon.SlotPriority 3;
 		Weapon.SelectionOrder 2500;
 		Weapon.AmmoGive 2;
 		Weapon.AmmoType "BDPRocketAmmo";

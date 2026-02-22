@@ -27,7 +27,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 	{
 		Weapon.AmmoGive 8;
 		Weapon.SlotNumber 3;
-		Weapon.SlotPriority 3;
+		Weapon.SlotPriority 2;
 		Weapon.SelectionOrder 1200;
 		Weapon.AmmoType "BDPShell";
 		Weapon.AmmoType2 "ASGShield";

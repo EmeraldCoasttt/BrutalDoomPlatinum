@@ -6,7 +6,7 @@ class BDPUnmaker : BDPWeaponBase
 	{
 		Height 20;
 		Weapon.SlotNumber 7;
-		Weapon.SlotPriority 3;
+		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 2800;
 		Weapon.AmmoGive 40;
 		Weapon.AmmoType1 "BDPCell";

@@ -4,7 +4,7 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 	{
 		Weapon.Kickback 50;
 		Weapon.SlotNumber 3;
-		Weapon.SlotPriority 2;
+		Weapon.SlotPriority 3;
 		Weapon.SelectionOrder 400;
 		Weapon.AmmoGive 8;
 		Weapon.AmmoType "BDPShell";
@@ -100,7 +100,7 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 		Stop;
 	Ready:
 		TNT1 A 0 {if(!(invoker.CheckSprint() || player.FindPSprite(49))) A_HookOverlay("ReadyHook");}
-		SHTZ A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		SHTZ A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,forcereload:true);
 		Loop;
 	ReadyHook:
 		MHTZ A 1;

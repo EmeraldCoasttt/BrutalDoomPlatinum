@@ -17,7 +17,7 @@ class BDPChainsaw : BDPWeaponBase
 	Default
 	{
 		Weapon.SlotNumber 1;
-		Weapon.SlotPriority 2;
+		Weapon.SlotPriority 3;
 		weapon.selectionorder 2200;
 		weapon.readysound "weapons/chainsaw/idle";
 		+WEAPON.AXEBLOOD
