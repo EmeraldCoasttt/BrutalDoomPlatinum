@@ -7,20 +7,6 @@ class BDPAssaultRifle : BDPWeaponBase
 		grenade = true;
 		Super.beginplay();
 	}
-	override void DoEffect() 
-	{
-		super.DoEffect();
-		
-		If(grenade)
-		{
-			ChangeAmmoIcon2("ROCKA0");
-		}
-		Else
-		{
-			ChangeAmmoIcon2("NOGREN");
-		}
-	}
-	
 	
 	Default
 	{
@@ -91,7 +77,19 @@ class BDPAssaultRifle : BDPWeaponBase
 		TNT1 A 0 A_Lower();
 		Wait;
 	Select:
-		TNT1 A 1 {A_SetCrosshairDX("RIFLRet", 1000); A_GunSlingerMag(1);}
+		TNT1 A 1
+		{
+			A_SetCrosshairDX("RIFLRet", 1000);
+			A_GunSlingerMag(1);
+			if(invoker.grenade)
+			{
+				ChangeAmmoIcon2("ROCKA0");
+			}
+			else
+			{
+				ChangeAmmoIcon2("NOGREN");
+			}
+		}
 		TNT1 A 0 A_StartSound("CLIPIN");
 		RIFG IHGF 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
@@ -139,6 +137,7 @@ class BDPAssaultRifle : BDPWeaponBase
 			A_QuadSound();
 			A_GunLight();
 			invoker.grenade = false;
+			ChangeAmmoIcon2("NOGREN");
 		}
 		TNT1 A 0 A_ZoomFactor(1.0);
 		RIFF FGHI 1;
@@ -153,7 +152,7 @@ class BDPAssaultRifle : BDPWeaponBase
 		TNT1 A 0 A_SpawnItemEX("GrenadeCasing",2,0,40,0,0,-4,0);
 		RIGL IJJJJKLMNOPPPPQRSTUUVVV 1;
 		HBUS A 0 A_StartSound("Weapons/GrenadeLoad", 5);
-		TNT1 A 0 {invoker.grenade = true; TakeInventory("BDPRocketAmmo",1);}
+		TNT1 A 0 {invoker.grenade = true; ChangeAmmoIcon2("ROCKA0"); TakeInventory("BDPRocketAmmo",1);}
 		RIGL WXYYYYZZ 1;
 		RIG2 ABCDEE 1;
 		HBUS A 0 A_StartSound("Rifle/Grenade2", 5);
@@ -165,7 +164,7 @@ class BDPAssaultRifle : BDPWeaponBase
 		TNT1 A 0 A_SpawnItemEX("GrenadeCasing",2,0,40,0,0,-4,0);
 		RIGL IJJLNPPQSUVV 1;
 		HBUS A 0 A_StartSound("Weapons/GrenadeLoad", 5);
-		TNT1 A 0 {invoker.grenade = true;}
+		TNT1 A 0 {invoker.grenade = true; ChangeAmmoIcon2("ROCKA0");}
 		RIGL XYYZ 1;
 		RIG2 BDE 1;
 		HBUS A 0 A_StartSound("Rifle/Grenade2", 5);
@@ -174,7 +173,7 @@ class BDPAssaultRifle : BDPWeaponBase
 	NoAmmo:
 		TNT1 A 0 A_StartSound("weapons/empty", 3);
 		TNT1 A 0 A_AutoReloadMag();
-		TNT1 A 0 A_JumpIf(!invoker.grenade && CountInv("BDPROcketAmmo") > 0, "ReloadGrenade");
+		TNT1 A 0 A_JumpIf(!invoker.grenade && (CountInv("BDPROcketAmmo") > 0 || FindInventory("PowerSpeed2")), "ReloadGrenade");
 		Goto Ready;
 	DoReload:
 		TNT1 A 0 A_StartSound("Relo1", 6);

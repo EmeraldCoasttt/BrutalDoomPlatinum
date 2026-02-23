@@ -1104,15 +1104,18 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 	}
 	action void ChangeAmmoIcon1(String AmmoIcon)
 	{
-		(findInventory(invoker.ammo1.GetClassName())).icon = texman.CheckForTexture(AmmoIcon, TexMan.Type_Any);
+		if(findInventory(invoker.ammo1.GetClassName()))
+			(findInventory(invoker.ammo1.GetClassName())).icon = texman.CheckForTexture(AmmoIcon, TexMan.Type_Any);
 	}
 	action void ChangeAmmoIcon2(String AmmoIcon)
 	{
-		(findInventory(invoker.ammo2.GetClassName())).icon = texman.CheckForTexture(AmmoIcon, TexMan.Type_Any);
+		if(findInventory(invoker.ammo2.GetClassName()))
+			(findInventory(invoker.ammo2.GetClassName())).icon = texman.CheckForTexture(AmmoIcon, TexMan.Type_Any);
 	}
 	action void ChangeAmmoIcon3(String AmmoIcon)
 	{
-		(findInventory(invoker.AmmoType3)).icon = texman.CheckForTexture(AmmoIcon, TexMan.Type_Any);
+		if(findInventory(invoker.AmmoType3))
+			(findInventory(invoker.AmmoType3)).icon = texman.CheckForTexture(AmmoIcon, TexMan.Type_Any);
 	}
 	
 	action void LedgeReach(float HeightDecrease)

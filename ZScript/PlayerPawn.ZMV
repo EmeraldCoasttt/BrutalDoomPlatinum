@@ -1159,6 +1159,10 @@ class BDPPlayerPawn : PlayerPawn
 				invtimer -= 0.04;
 				PPShader.SetUniform1f("tempinv","intensity",invtimer);
 			}
+			else
+			{
+				PPShader.SetEnabled("tempinv", false);
+			}
 		if (findinventory("PowerIronFeet"))
 			{
 				PPShader.SetEnabled("radsuit", true);
@@ -1169,6 +1173,10 @@ class BDPPlayerPawn : PlayerPawn
 			{
 				radsuittimer -= 0.01;
 				PPShader.SetUniform1f("radsuit","intensity",radsuittimer);
+			}
+			else
+			{
+				PPShader.SetEnabled("radsuit", false);
 			}
 		if (findinventory("PowerSpeed2"))
 			 {
@@ -1181,6 +1189,10 @@ class BDPPlayerPawn : PlayerPawn
 				hastetimer -= 0.01;
 				PPShader.SetUniform1f("haste","intensity",hastetimer);
 			}
+			else
+			{
+				PPShader.SetEnabled("haste", false);
+			}
 		if (findinventory("PowerRage"))
 			{
 				PPShader.SetEnabled("rage", true);
@@ -1192,6 +1204,10 @@ class BDPPlayerPawn : PlayerPawn
 				ragetimer -= 0.01;
 				PPShader.SetUniform1f("rage","intensity",ragetimer);
 			}
+			else
+			{
+				PPShader.SetEnabled("rage", false);
+			}
 		if (findinventory("PowerQuakeDamage"))
 			{
 				PPShader.SetEnabled("quad", true);
@@ -1202,6 +1218,10 @@ class BDPPlayerPawn : PlayerPawn
 			{
 				quadtimer -= 0.01;
 				PPShader.SetUniform1f("quad","intensity",quadtimer);
+			}
+			else
+			{
+				PPShader.SetEnabled("quad", false);
 			}
 		
 		
