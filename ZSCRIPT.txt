@@ -116,6 +116,9 @@ version "4.14.0"
 #include "Zscript/Monsters/SpiderMastermind.txt"
 #include "Zscript/Monsters/Cyberdemon.txt"
 #include "Zscript/Monsters/BossBrain.txt"
+#include "Zscript/Monsters/Frozen.txt"
+#include "Zscript/Monsters/DyingGuys.txt"
+#include "Zscript/Monsters/LastStandMonsters.txt"
 
 //BDP monsters
 #include "Zscript/Monsters/BDP/BrutalFriend.txt"
