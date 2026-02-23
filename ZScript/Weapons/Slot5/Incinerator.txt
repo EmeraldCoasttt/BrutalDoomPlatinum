@@ -95,7 +95,7 @@ CLASS BDPIncinerator : BDPWeaponBase
 		Stop;
 	SpecialAction:
 		FLMG A 0 A_JumpIf(waterlevel > 1, "NoAmmo");
-		FLMG A 0 A_CheckIfMag(5,"NoAmmoAlt");
+		FLMG A 0 A_CheckIfMag(5);
 	SmokeFireball:	
 		NULL A 0 A_StartSound("weapons/firegrenade");
 		TNT1 A 0 a_alertmonstersDX();
@@ -120,7 +120,7 @@ CLASS BDPIncinerator : BDPWeaponBase
 		FLMT CABC 1;
 		Goto Ready;
 	AltFire:
-		FLMG A 0 A_CheckIfMag(20,"NoAmmoAlt");
+		FLMG A 0 A_CheckIfMag(20);
 	SmokeFireball:	
 		NULL A 0 A_StartSound("weapons/firegrenade");
 		TNT1 A 0 a_alertmonstersDX();
@@ -152,17 +152,6 @@ CLASS BDPIncinerator : BDPWeaponBase
 		FLMT T 1 {A_ReloadMag(); A_Startsound("FLMRLOAD");}
 		FLMT TZZTSSSSSSSSSTUVWXYK 1;
 		Goto Ready;
-		
-	NoAmmoAlt:
-		TNT1 A 0
-		{
-			A_StartSound("Weapons/Empty",3);
-			If(invoker.mag < 20 && countinv(invoker.ammotype1) >= invoker.magConversion.y)
-			Return Resolvestate("Reload");
-			Return Resolvestate(Null);
-		}
-		Goto Ready;
-		
 	}
 }
 

@@ -2152,8 +2152,9 @@ class BDPPlayerPawn : PlayerPawn
 	}
 	
 			
-		void StopHook()
+		void StopHook(bool severed = false)
 	{
+		if(severed) vel += GrappleVel;
 		Rope = GrappleVel = (0, 0, 0);
 		PendulumLength = 0;
 		GrappledMonster = Null;
@@ -2943,9 +2944,13 @@ Class Hook : Actor
 			setorigin(monster.pos+(0,0,monster.height*0.5),TRUE);
 			}
 			
-			if(!HookOwner || !HookOwner.GrappleVel.Length() || !Monster || Monster.health <=0)
+			if(!HookOwner || !Monster || Monster.health <=0)
 			{
 				return resolvestate("despawnhook");
+			}
+			if(!HookOwner.GrappleVel.Length())
+			{
+				return resolvestate("Death");
 			}
 			
 			
@@ -2991,7 +2996,7 @@ Class Hook : Actor
 			if(HookOwner)
 			{
 			//	HookOwner.a_giveinventory("canfiremeathook",1);
-				HookOwner.StopHook();
+				//HookOwner.StopHook();
 			//	HookOwner.a_giveinventory("meathook",1);
 				//HookOwner.a_startsound("weapons/empty",194,CHANF_DEFAULT,1,ATTN_NONE);
 			}
@@ -3007,7 +3012,7 @@ Class Hook : Actor
 			Let HookOwner = BDPPlayerPawn(Target);
 			if(HookOwner)
 			{
-				HookOwner.StopHook();
+				HookOwner.StopHook(true);
 			//	HookOwner.a_giveinventory("canfiremeathook",1);
 			//	HookOwner.a_giveinventory("meathook",1);
 				HookOwner.a_startsound("MHKSTP",194,CHANF_DEFAULT,1,ATTN_NONE);

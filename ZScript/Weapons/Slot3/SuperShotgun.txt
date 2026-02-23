@@ -189,7 +189,7 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 				A_StartSound("SSHFIRE", 1); 
 				A_StartSound("FARSSG", 6);
 				A_AlertMonstersDX();
-				A_ZoomFactor(0.4);
+				A_ZoomFactor(0.9);
 				A_QuadSound();
 				A_Gunlight(500,8);
 				A_TakeMag(2,true);
