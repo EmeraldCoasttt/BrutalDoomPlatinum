@@ -650,7 +650,7 @@
 	
 		Override void worldthingdied(worldevent e)
 		{
-			If(e.thing && e.thing.target && e.thing.bismonster && (e.thing.target is "BDPPlayerPawn" || e.thing.target is "demonplayer"))
+			If(e.thing && e.thing.target && e.thing.bismonster && e.thing.target is "BDPPlayerPawn")
 			{
 				e.thing.target.giveinventory("PausePowerup",105);
 			}

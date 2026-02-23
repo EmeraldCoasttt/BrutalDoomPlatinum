@@ -47,8 +47,7 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		-BOSSDEATH
 		MaxStepHeight 24;
 		MaxDropOffHeight 32;
-		BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood";
-		BloodColor "2f 63 23";
+		BloodColor "DarkGreen";
 		//DropItem "DemonStrengthRune" 5
 		Obituary "%o was slain by a Hell Knight.";
 		DamageType "HKF";
@@ -74,12 +73,9 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 	States
 	{
 	Melee:
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 18, 56,0);
 		BOS2 E 6 A_FaceTarget();
 		TNT1 A 0 A_PlaySound("weapons/gswing");
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 18, 56,0);
 		BOS2 F 6 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 18, 56,0);
 		BOS2 G 6 A_CustomMissile("KnightAttack",10,0,0,0);
 		TNT1 A 0 A_JumpIfInventory("Curbstomp_Marine", 1, "CurbstompMarine");
 		Goto See2;
@@ -90,7 +86,6 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		TNT1 A 0 A_JumpIfInventory("Curbstomp_Marine", 1, "CurbstompMarine");
 	Stand:
 		TNT1 A 0 A_CheckSight("Stand2");
-		TNT1 A 0 A_SpawnItem("HeadshotTarget20b", 12, 56,0);
 		BOS2 BB 5 A_Look();
 		Loop;
 	Stand2:
@@ -110,33 +105,21 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		//TNT1 A 0 A_SpawnItemEx("FootSep", 0, 0, 20, 0, 0)
 		TNT1 A 0 A_JumpIfInventory("EnemyMemory", 20, "ForgetTarget");
 		TNT1 A 0 A_GiveInventory("EnemyMemory", 1);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6b", 18, 56,0);
 		BOS2 AAA 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6b", 18, 56,0);
 		BOS2 BBb 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6b", 18, 56,0);
 		BOS2 CCc 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6b", 18, 56,0);
 		BOS2 DDD 2 A_Chase();
 		TNT1 A 0 A_JumpIfInTargetInventory("IsInvisible", 1, "ForgetTarget");
 		Loop;
 	SeeNeverSeen:
 		//TNT1 A 0 A_SpawnItemEx("FootSep", 0, 0, 20, 0, 0)
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4b", 18, 56,0);
 		BOS2 AA 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4b", 18, 56,0);
 		BOS2 AA 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4b", 18, 56,0);
 		BOS2 BB 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4b", 18, 56,0);
 		BOS2 BB 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4b", 18, 56,0);
 		BOS2 CC 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4b", 18, 56,0);
 		BOS2 CC 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4b", 18, 56,0);
 		BOS2 DD 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4b", 18, 56,0);
 		BOS2 DD 2 A_Chase();
 		TNT1 A 0 A_JumpIfInTargetInventory("IsInvisible", 1, "ForgetTarget");
 		Loop;
@@ -156,60 +139,43 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 	Idle:
 	LookingForPlayer:
 		TNT1 A 0 A_GiveInventory("SKImp", 1);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget10b", 18, 56,0);
 		BOS2 B 10 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget10b", 18, 56,0);
 		BOS2 B 10 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget10b", 18, 56,0);
 		BOS2 B 10 A_Look();
 		TNT1 A 0 A_SetAngle(angle - 40);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget10b", 18, 56,0);
 		BOS2 B 10 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget10b", 18, 56,0);
 		BOS2 B 10 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget10b", 18, 56,0);
 		BOS2 B 10 A_Look();
 		TNT1 A 0 A_SetAngle(angle + 40);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget10b", 18, 56,0);
 		BOS2 B 10 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget10b", 18, 56,0);
 		BOS2 B 10 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget10b", 18, 56,0);
 		BOS2 B 10 A_Look();
 		BOS2 A 0 A_Wander();
 		BOS2 AA 2 A_Look();
 		TNT1 A 0 A_Recoil(-2);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6b", 18, 56,0);
 		BOS2 B 0 A_Wander();
 		BOS2 BB 2 A_Look();
 		TNT1 A 0 A_Recoil(-2);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6b", 18, 56,0);
 		BOS2 C 0 A_Wander();
 		BOS2 CC 2 A_Look();
 		TNT1 A 0 A_Recoil(-2);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6b", 18, 56,0);
 		
 		BOS2 D 0 A_Wander();
 		BOS2 DD 2 A_Look();
 		TNT1 A 0 A_Recoil(-2);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6b", 18, 56,0);
 		TNT1 A 0 A_jump(128, "LookingForPlayer");
 		BOS2 A 0 A_Wander();
 		BOS2 AA 2 A_Look();
 		TNT1 A 0 A_Recoil(-2);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6b", 18, 56,0);
 		BOS2 B 0 A_Wander();
 		BOS2 BB 2 A_Look();
 		TNT1 A 0 A_Recoil(-2);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6b", 18, 56,0);
 		BOS2 C 0 A_Wander();
 		BOS2 CC 2 A_Look();
 		TNT1 A 0 A_Recoil(-2);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6b", 18, 56,0);
 		BOS2 D 0 A_Wander();
 		BOS2 DD 2 A_Look();
 		TNT1 A 0 A_Recoil(-2);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6b", 18, 56,0);
 		Goto LookingForPlayer;
 	ForgetTarget:
 		TNT1 A 0 A_ClearTarget();
@@ -234,7 +200,6 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 	PleaseDontCrashTheGame:
 		TNT1 A 0 A_JumpIfInventory("StopKickingMyBallsMotherFucker", 1, "MissileInRage");
 		TNT1 A 0 A_FaceTarget();
-		TNT1 A 0 A_SpawnItemEx("HeadshotTarget8b", 18, 4, 56);
 		//TNT1 A 0 A_JumpIfInTargetInventory("IsPlayer", 0, 5)
 		//TNT1 A 0 A_TakeInventory("CantFire", 1)
 		//TNT1 A 0 A_CustomMissile("MonsterTargetCheck", 34, 0, 0, 0) 
@@ -251,7 +216,6 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		TNT1 A 0 bright A_CustomMissile ("SmallGreenFlameTrails", 64, 30, random (0, 360), 2, random (70, 110));
 		TNT1 A 0 A_CustomMissile ("BallGettingReadyGreen", 64, 30, random (0, 140), 2, random (0, 160));
 		BOS2 I 2 A_FaceTarget();
-		TNT1 A 0 A_SpawnItemEx("HeadshotTarget8b", 18, 4, 56);
 		TNT1 A 0 bright A_CustomMissile ("SmallGreenFlameTrails", 64, 30, random (0, 360), 2, random (70, 110));
 		TNT1 A 0 A_CustomMissile ("BallGettingReadyGreen", 64, 30, random (0, 140), 2, random (0, 160));
 		BOS2 I 2 A_FaceTarget();
@@ -262,9 +226,7 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		TNT1 A 0 A_CustomMissile ("BallGettingReadyGreen", 64, 30, random (0, 140), 2, random (0, 160));
 		BOS2 I 2;
 		
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 18, 56,0);
 		BOS2 J 8 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 18, 56,0);
 		BOS2 G 8 A_CustomMissile("BaronBall", 36, 0, 0, 1);
 		Goto See2;
 		
@@ -303,7 +265,6 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		BSPC D 25;
 		Goto seecontinue;
 	MissileInRage:	
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 18, 56,0);
 		TNT1 A 0 A_TakeInventory("CantFire", 1);
 		TNT1 A 0 A_CustomMissile("MonsterTargetCheck", 34, 0, 0, 0);
 		TNT1 A 0 A_CustomMissile("MonsterTargetCheckFaster", 34, 0, 0, 0);
@@ -312,27 +273,19 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		TNT1 A 0 bright A_CustomMissile ("SmallGreenFlameTrails", 64, 30, random (0, 360), 2, random (70, 110));
 		TNT1 A 0 A_CustomMissile ("BallGettingReadyGreen", 64, 30, random (0, 140), 2, random (0, 160));
 		BOS2 I 3 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 18, 56,0);
 		BOS2 J 6 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 18, 56,0);
 		BOS2 G 6 A_CustomMissile("BaronBall", 36, 0, 0, 1);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 18, 56,0);
 		BAS2 E 3 A_FaceTarget();
 		TNT1 A 0 bright A_CustomMissile ("SmallGreenFlameTrails", 64, -30, random (0, 360), 2, random (70, 110));
 		TNT1 A 0 A_CustomMissile ("BallGettingReadyGreen", 64, -30, random (0, 140), 2, random (0, 160));
 		BAS2 H 3 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 18, 56,0);
 		BAS2 I 6 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 18, 56,0);
 		BAS2 G 6 A_CustomMissile("BaronBall", 36, 0, 0, 1);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 18, 56,0);
 		BOS2 E 3 A_FaceTarget();
 		TNT1 A 0 bright A_CustomMissile ("SmallGreenFlameTrails", 64, 30, random (0, 360), 2, random (70, 110));
 		TNT1 A 0 A_CustomMissile ("BallGettingReadyGreen", 64, 30, random (0, 140), 2, random (0, 160));
 		BOS2 I 3 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 18, 56,0);
 		BOS2 J 6 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 18, 56,0);
 		BOS2 G 6 A_CustomMissile("BaronBall", 36, 0, 0, 1);
 		Goto See2;
 	CheckRetreat:
@@ -343,31 +296,21 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		TNT1 A 0;
 		//TNT1 A 0 A_SpawnItemEx("FootSep", 0, 0)
 		TNT1 A 0 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 0, 66,0);
 		BOS2 DD 2 A_Recoil(2);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 0, 66,0);
 		BOS2 DD 2 A_Recoil(2);
 		TNT1 A 0 A_FaceTarget();
 		
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 0, 66,0);
 		BOS2 CC 2 A_Recoil(1);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 0, 66,0);
 		BOS2 CC 2 A_Recoil(1);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 0, 66,0);
 		BOS2 BB 2 A_Recoil(1);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 0, 66,0);
 		BOS2 BB 2 A_Recoil(1);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 0, 66,0);
 		BOS2 AA 2 A_Recoil(1);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget8b", 0, 66,0);
 		BOS2 AA 2 A_Recoil(1);
 		Goto Missile+5;
 	Pain:
 		TNT1 A 0 A_JumpIfInventory("Curbstomp_Marine", 1, "CurbstompMarine");
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4b", 18, 56,0);
 		TNT1 A 0 A_TakeInventory("StopKickingMyBallsMotherFucker", 1);
 		BOS2 H 3;
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4b", 18, 56,0);
 		BOS2 H 3 A_Pain();
 		Goto See2;
 	pain.shotgun:
@@ -376,13 +319,9 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		NULL AAA 0;
 	pain.Railgun:
 	pain.SSG:
-		TNT1 A 0 A_CustomMissile ("XDeath1Green", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath2bGreen", 65, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath3bGreen", 65, 0, random (0, 360), 2, random (0, 160));
 		Goto pain;
 	Pain.Explosive:
 		TNT1 A 0;
-		TNT1 A 0 A_SpawnItemEx("MuchBlood2Green", 0, 0, 60);
 		TNT1 A 0 ThrustThingZ(0,10,0,1);
 		Goto Pain;
 	Pain.Extremepunches:
@@ -393,7 +332,6 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		TNT1 A 0 ThrustThingZ(0,30,0,1);
 		TNT1 A 0 A_Recoil(8);
 		BOS2 H 3;
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4b", 18, 56,0);
 		BOS2 H 3 A_Pain();
 		TNT1 A 0 A_ChangeFLag("NOPAIN", 0);
 		Goto See2;
@@ -431,8 +369,6 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		TNT1 A -1;
 		Stop;
 	Death.Arm:
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightArm", 55, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("muchblood2Green", 55, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_Fall();
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_SpawnItem("DyingHellKnight1");
@@ -469,24 +405,14 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 	Death.Railgun:
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_CustomMissile ("muchblood2Green", 55, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAA 0 A_CustomMissile ("XDeath1Green", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAA 0 A_CustomMissile ("Green_FlyingBlood", 15, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("XDeath2bGreen", 65, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("XDeath3bGreen", 65, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAA 0 A_CustomMissile ("GreenGuts", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAA 0 A_CustomMissile ("GreenBrainPiece", 60, 0, random (0, 360), 2, random (0, 160));
 		BOS2 PQRSTU 6;
-		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool");
-		BOS2 VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV 1 A_CustomMissile ("Green_LiquidBlood", 20, 0, random (0, 360), 2, random (30, 110));
+		BOS2 VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV 1;
 		TNT1 A 0 A_SpawnItem ("AltDeadKnight", 1);
 		TNT1 A -1;
 		Stop;
 	XDeath:
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("SquishMegreen",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
-		TNT1 A 0 A_CustomMissile ("KnightXDeath", 0, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A -1;
 		Stop;
 	Death.Minigun:
@@ -496,15 +422,9 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 	Death.Crush:	
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("MuchBlood2Green");
-		TNT1 AAAAAA 0 A_CustomMissile ("XDeath1Green", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAA 0 A_CustomMissile ("Green_FlyingBlood", 15, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAA 0 A_CustomMissile ("GreenGuts", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathHalfHK", 24, 0, random (0, 360), 2, random (0, 160));
-		BBO1 AAAAAAAAAABBBBBCCCCC 2 A_CustomMissile ("Green_LiquidBlood", 30, 0, random (0, 360), 2, random (30, 110));
-		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool");
+		BBO1 AAAAAAAAAABBBBBCCCCC 2;
 		TNT1 A 0 A_SpawnItem ("DeadKnightHalfDown", 1);
-		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1 A_CustomMissile ("Green_LiquidBlood", 10, 0, random (0, 360), 2, random (30, 110));
+		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1;
 		TNT1 A -1;
 		Stop;
 	Death.head:
@@ -514,13 +434,11 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		TNT1 A 0 A_JumpIfInTargetInventory("HasPlasmaWeapon", 1, "Death.Plasma");
 		TNT1 A 0 A_JumpIfInTargetInventory("HasCutingWeapon", 1, "Death.decaptate");
 		TNT1 A 0 A_JumpIfHealthLower(-80, "Death.HeadExplode");
-		TNT1 A 0 A_SpawnItem("HellKnightHeadExplodeHalf", 0, 62);
 		TNT1 A 0 A_SpawnItem("DyingHellknight2");
 		TNT1 A -1;
 		Stop;
 	Death.headExplode:
 		TNT1 A 0 A_JumpIfInTargetInventory("HasPlasmaWeapon", 1, "Death.Plasma");
-		TNT1 A 0 A_SpawnItem("HellKnightHeadExplode", 0, 62);
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_SpawnItem ("DyingHellKnightNoHead");
@@ -528,16 +446,12 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		TNT1 A -1;
 		Stop;
 	Death.decaptate:
-		TNT1 AAAAA 0 A_CustomMissile ("XDeath1Green", 62, 0, random (0, 360), 2, random (50, 130));
-		TNT1 A 0 A_SpawnItem("MuchBlood2Green", 0, 62);
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightHead", 62, 0, random (0, 360), 2, random (50, 130));
-		BTN2 AAAAAAAAAAA 2 A_CustomMissile ("Green_LiquidBlood", 62, 0, random (0, 360), 2, random (30, 110));
-		BTN2 BBBBB 2 A_CustomMissile ("Green_LiquidBlood", 50, 0, random (0, 360), 2, random (30, 110));
+		BTN2 AAAAAAAAAAA 2;
+		BTN2 BBBBB 2;
 		TNT1 A 0 A_NoBlocking();
-		BTN2 CCCCC 2 A_CustomMissile ("Green_LiquidBlood", 30, 0, random (0, 360), 2, random (30, 110));
-		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool");
+		BTN2 CCCCC 2;
 		TNT1 A 0 A_SpawnItem("DeadKnightNoHead");
-		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 2 A_CustomMissile ("Green_LiquidBlood", 10, 0, random (0, 360), 2, random (30, 110));
+		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 2;
 		TNT1 A -1;
 		Stop;
 	Death.SuperPlasma:
@@ -548,7 +462,6 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_NoBlocking();
 		TNT1 AAAA 0 A_CustomMissile ("BluePlasmaFireNonStatic", 42, 0, random (0, 360), 2, random (0, 180));
-		TNT1 AAA 0 A_CustomMissile ("Blood", 32, 0, random (0, 360), 2, random (0, 180));
 		TNT1 A 0 A_SpawnItemEx ("DetectFloorCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn");
 		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15));
@@ -558,27 +471,18 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		TNT1 AAAAA 0 A_CustomMissile ("PlasmaParticleX", 48, 0, random (0, 360), 2, random (0, 360));
 		TNT1 AAA 0 A_CustomMissile ("BigPlasmaParticleX", 42, 0, random (0, 360), 2, random (0, 360));
 		BOSB D 7 A_CustomMissile ("PlasmaSmoke", 14, 0, random (0, 180), 2, random (0, 180));
-		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool");
 		BOSB E -1;
 		Stop;
 	Death.GreenFire:
 		TNT1 A 0;
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_Blood", 30, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("XDeathBurnedMeat", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("XDeathBurnedMeat2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("XDeathBurnedMeat3", 32, 0, random (0, 360), 2, random (0, 160));
 		EXPL AAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("GreenFlameTrails", 50, 0, random (0, 360), 2, random (0, 360));
 		XBRN AAAA 2 BRIGHT A_SpawnItem("GreenFlare",0,43);
 		Stop;
 	Death.ExplosiveImpact:
 		TNT1 A 0;
 		TNT1 A 0 ThrustThingZ(0,35,0,1);
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightArm", 62, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightLeg", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAA 0 A_CustomMissile ("XDeath1Green", 62, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAA 0 A_CustomMissile ("muchbloodGreen", 62, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_Jump(255, "Death.ExplosiveImpact1", "Death.ExplosiveImpact2");
 	Death.ExplosiveImpact1:
 		BAH3 A 8 A_Scream();
@@ -627,13 +531,6 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		KTFP MGGGGG 3;
 		KTFP H 2;
 		EXPL A 0 Radius_Quake (2, 24, 0, 15, 0);
-		TNT1 AAA 0 A_CustomMissile ("Brains1", 11, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains2", 11, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains3", 11, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains4", 11, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains5", 11, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAA 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAA 0 A_CustomMissile ("MuchBlood2", 1, 0, random (0, 360), 2, random (0, 160));
 		KTFP IJ 2;
 		KTFP KLLLLL 4;
 		TNT1 A 0 A_TakeInventory("Curbstomp_Marine",1);
@@ -679,21 +576,12 @@ class BDPHellKnight : HellKnight Replaces HellKnight
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_NoBlocking();
 		BOS2 JKL 2;
-		TNT1 AA 0 A_SpawnItem("MeatDeathSmall");
-		TNT1 AAA 0 bright A_CustomMissile ("SuperGoreSpawner", 5, 0, random (0, 360), 2, random (30, 180));
-		TNT1 AAAA 0 bright A_CustomMissile ("XDeath1Green", 5, 0, random (0, 360), 2, random (30, 180));
-		TNT1 AA 0 bright A_CustomMissile ("XDeath2bGreen", 55, 0, random (0, 360), 2, random (30, 180));
-		TNT1 AA 0 bright A_CustomMissile ("XDeath3bGreen", 55, 0, random (0, 360), 2, random (30, 180));
-		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool");
 		TNT1 A 0 A_SpawnItem ("CrushedRemains");
 		TNT1 A 1;
 		TNT1 A 1 A_XScream();
 		Stop;
 	Crush:
 		TNT1 A 0;
-		//TNT1 A 0 A_spawnitemex("greensquishygibs")
-		TNT1 A 0 A_spawnitemex("SquishMeGreen",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
-		TNT1 AAAAAA 0 A_SpawnItemEx ("BodyRemovalThing",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		TNT1 A 1 A_XScream();
 		Stop;
 	}
@@ -858,9 +746,7 @@ class DeadKnight : CurbstompedMarine
 		damagefactor "Crusher", 50.0;
 		Mass 5000;
 		Health 500;
-		damagefactor "Blood", 0.0;
 		damagefactor "Trample", 0.0;
-		BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood";
 		BloodColor "DarkGreen";
 	}
 	States
@@ -872,71 +758,27 @@ class DeadKnight : CurbstompedMarine
 	Death:
 		GIBS Y 0;
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_CustomMissile ("XDeath1Green", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath2bGreen", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath3bGreen", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 16, 0, random (0, 360), 2, random (30, 90));
-		TNT1 AA 0 A_CustomMissile ("XDeathHellKnightLeg", 32, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_SpawnItem("DeadKnightHalfUp");
 		Stop;
 	XDeath:
 		GIBS Y 0;
 		TNT1 A 0 A_NoBlocking();
-		TNT1 AA 0 A_CustomMissile ("XDeath1Green", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("XDeath2bGreen", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("XDeath3bGreen", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAA 0 A_SpawnItem("MuchBlood2Green", 0, 25);
-		TNT1 AAAA 0 A_CustomMissile ("GreenBloodMistBig", 16, 00, random (0, 360), 2, random (30, 90));
-		TNT1 A 0 A_SpawnItem("MuchBlood3Green", 0, 25);
 		GIBS Y 1;
 		GIBS Y -1;
 		Stop;
 	Death.CrushedBodies:
-		TNT1 A 0 A_SetAngle(0);
-		TNT1 A 0 bright A_CustomMissile ("GreenSuperGoreSpawner", 1, -40, random (0, 360), 2, random (25, 45));
-		TNT1 A 0 bright A_CustomMissile ("GreenSuperGoreSpawner", 1, 40, random (0, 360), 2, random (25, 45));
-		TNT1 A 0 A_CustomMissile ("XDeath1Green", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath2bGreen", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath3bGreen", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, -40, random (0, 360), 2, random (30, 90));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, 40, random (0, 360), 2, random (30, 90));
-		TNT1 A 0 A_SetAngle(90);
-		TNT1 A 0 bright A_CustomMissile ("GreenSuperGoreSpawner", 1, -40, random (0, 360), 2, random (25, 45));
-		TNT1 A 0 bright A_CustomMissile ("GreenSuperGoreSpawner", 1, 40, random (0, 360), 2, random (25, 45));
-		TNT1 A 0 A_CustomMissile ("XDeath1Green", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath2bGreen", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath3bGreen", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, -40, random (0, 360), 2, random (30, 90));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, 40, random (0, 360), 2, random (30, 90));
 		TNT1 A 0 A_NoBlocking();
 		GIBS Y 1;
 		GIBS Y -1;
 		Stop;
 	Death.crush:
-		TNT1 A 0 A_SetAngle(0);
-		// TNT1 A 0 A_spawnitemex("greensquishygibs")
-		TNT1 A 0 bright A_CustomMissile ("GreenSuperGoreSpawner", 1, -40, random (0, 360), 2, random (25, 45));
-		TNT1 A 0 bright A_CustomMissile ("GreenSuperGoreSpawner", 1, 40, random (0, 360), 2, random (25, 45));
-		TNT1 A 0 A_CustomMissile ("XDeath1Green", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath2bGreen", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath3bGreen", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, -40, random (0, 360), 2, random (30, 90));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, 40, random (0, 360), 2, random (30, 90));
-		TNT1 A 0 A_SetAngle(90);
-		TNT1 A 0 bright A_CustomMissile ("GreenSuperGoreSpawner", 1, -40, random (0, 360), 2, random (25, 45));
-		TNT1 A 0 bright A_CustomMissile ("GreenSuperGoreSpawner", 1, 40, random (0, 360), 2, random (25, 45));
-		TNT1 A 0 A_CustomMissile ("XDeath1Green", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath2bGreen", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath3bGreen", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, -40, random (0, 360), 2, random (30, 90));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, 40, random (0, 360), 2, random (30, 90));
 		TNT1 A 0 A_NoBlocking();
 		GIBS Y 1;
 		GIBS Y -1;
 		STOP;
 	}
 }
-		
+
 class DeadKnightClassic : DeadKnight
 {
 	States
@@ -971,8 +813,6 @@ class DeadKnightBTN5F : DeadKnight
 	Death:
 		GIBS Y 0;
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightArm", 15, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_SpawnItem("HellKnightHeadExplode", 0, 10);
 		TNT1 A 0 A_SpawnItem("DeadHellKnightNoArmNoHead");
 		Stop;
 	}
@@ -988,12 +828,6 @@ class DeadKnightHalfDown : DeadKnight
 	Death:
 		GIBS Y 0;
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_CustomMissile ("XDeath1Green", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath2bGreen", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath3bGreen", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, -40, random (0, 360), 2, random (30, 90));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, 40, random (0, 360), 2, random (30, 90));
-		TNT1 AA 0 A_CustomMissile ("XDeathHellKnightLeg", 15, 0, random (0, 360), 2, random (0, 160));
 		Stop;
 	}
 }
@@ -1008,15 +842,6 @@ class DeadKnightHalfUp : DeadKnight
 	Death:
 		GIBS Y 0;
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_CustomMissile ("XDeath1Green", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath2bGreen", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath3bGreen", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, -40, random (0, 360), 2, random (30, 90));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, 40, random (0, 360), 2, random (30, 90));
-		TNT1 AAA 0 A_CustomMissile ("GreenGuts", 1, 40, random (0, 360), 2, random (30, 90));
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightArm", 15, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightTorso", 15, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightHead", 15, 0, random (0, 360), 2, random (0, 160));
 		Stop;
 	}
 }
@@ -1031,8 +856,6 @@ class DeadKnightNoHead : DeadKnightBTN5F
 	Death:
 		GIBS Y 0;
 		TNT1 A 0 A_NoBlocking();
-		TNT1 AAAA 0 A_CustomMissile ("GreenBloodMistBig", 1, 0, random (0, 360), 2, random (30, 90));
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightArm", 15, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_SpawnItem("DeadHellKnightNoArmNoHead");
 		Stop;
 	}
@@ -1048,7 +871,6 @@ class AltDeadKnight : DeadKnight
 	Death:
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_CustomMissile ("KnightXDeath", 0, 0, random (0, 360), 2, random (0, 160));
 		Stop;
 	}
 }
@@ -1068,15 +890,6 @@ class DeadKnightExplosiveImpact2 : DeadKnight
 	Death:
 		GIBS Y 0;
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_CustomMissile ("XDeath1Green", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath2bGreen", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath3bGreen", 25, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, -40, random (0, 360), 2, random (30, 90));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, 40, random (0, 360), 2, random (30, 90));
-		TNT1 AAA 0 A_CustomMissile ("GreenGuts", 1, 40, random (0, 360), 2, random (30, 90));
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightTorso", 15, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightHead", 15, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightLEg", 15, 0, random (0, 360), 2, random (0, 160));
 		Stop;
 	}
 }
@@ -1127,7 +940,6 @@ class DeadHellKnightNoArm : DeadKnight
 	Death:
 		GIBS Y 0;
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("HellKnightHeadExplode", 0, 10);
 		TNT1 A 0 A_SpawnItem("DeadHellKnightNoArmNoHead");
 		Stop;
 	}
@@ -1144,13 +956,6 @@ class DeadHellKnightNoArmNoHead : DeadKnight
 	Death:
 		GIBS Y 0;
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_CustomMissile ("XDeath1Green", 5, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath2bGreen", 5, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath3bGreen", 5, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, -40, random (0, 360), 2, random (30, 90));
-		TNT1 AA 0 A_CustomMissile ("GreenBloodMistBig", 1, 40, random (0, 360), 2, random (30, 90));
-		TNT1 AAA 0 A_CustomMissile ("GreenGuts", 5, 40, random (0, 360), 2, random (30, 90));
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightTorso", 15, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_SpawnItem("DeadKnightHalfDown");
 		Stop;
 	}
@@ -1179,7 +984,7 @@ class XDeathHalfHK : Actor
 	Spawn:
 		Goto Death;
 	Death:
-		BTO1 AABBCC 4 A_CustomMissile("Green_Blood",0,0,180,2);
+		BTO1 AABBCC 4;
 		//TNT1 A 0 A_Jump(128, "Crawl")
 		HPLA A 0 A_SpawnItem("DeadKnightHalfUp",0,0,0,1);
 		Stop;
@@ -1202,7 +1007,6 @@ class DyingHellKnight1 : Actor
 		damagefactor "SSG", 10.0;
 		damagefactor "KillMe", 0.0;
 		damagefactor "Minigun", 0.6;
-		BloodType "Green_Blood", "GreenSawBlood", "GreenSawBlood";
 		BloodColor "DarkGreen";
 		Mass 999999;
 		-SOLID
@@ -1217,45 +1021,25 @@ class DyingHellKnight1 : Actor
 	{
 	Spawn:
 		TNT1 A 0 A_FaceTarget();
-		KSA1 ABCB 6 A_SpawnItem("HeadshotTarget4b", 0, 50,0);
-		TNT1 A 0 A_SpawnItem("GreenBloodDying", 0, 50);
 		TNT1 A 0 A_PlaySound ("PSXDPN");
-		KSA1 ABCB 6 A_SpawnItem("HeadshotTarget4b", 0, 50,0);
-		TNT1 A 0 A_SpawnItem("GreenBloodDying", 0, 50);
 		TNT1 A 0 A_PlaySound ("PSXDPN");
-		KSA1 ABCB 6 A_SpawnItem("HeadshotTarget4b", 0, 50,0);
-		TNT1 A 0 A_SpawnItem("GreenBloodDying", 0, 50);
 		TNT1 A 0 A_PlaySound ("PSXDPN");
-		KSA1 ABCB 6 A_SpawnItem("HeadshotTarget4b", 0, 50,0);
-		TNT1 A 0 A_SpawnItem("GreenBloodDying", 0, 50);
 		TNT1 A 0 A_PlaySound ("PSXDPN");
-		KSA1 ABCB 6 A_SpawnItem("HeadshotTarget4b", 0, 50,0);
-		TNT1 A 0 A_SpawnItem("GreenBloodDying", 0, 50);
 		TNT1 A 0 A_PlaySound ("PSXDPN");
-		KSA1 ABCB 6 A_SpawnItem("HeadshotTarget4b", 0, 50,0);
-		TNT1 A 0 A_SpawnItem("GreenBloodDying", 0, 50);
 		TNT1 A 0 A_PlaySound ("PSXDPN");
-		KSA1 ABCB 6 A_SpawnItem("HeadshotTarget4b", 0, 50,0);
-		TNT1 A 0 A_SpawnItem("GreenBloodDying", 0, 50);
 		TNT1 A 0 A_PlaySound ("PSXDPN");
-		KSA1 ABCB 6 A_SpawnItem("HeadshotTarget4b", 0, 50,0);
-		TNT1 A 0 A_SpawnItem("GreenBloodDying", 0, 50);
 		TNT1 A 0 A_PlaySound ("PSXDPN");
-		KSA1 ABCB 6 A_SpawnItem("HeadshotTarget4b", 0, 50,0);
-		TNT1 A 0 A_SpawnItem("GreenBloodDying", 0, 50);
 		TNT1 A 0 A_PlaySound ("PSXDPN");
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_Fall();
 		TNT1 A 0 A_ChangeFLag("SHOOTABLE", 0);
 		TNT1 A 0 A_PlaySound("knight/death");
 		BTN3 ABCD 6;
-		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool");
 		TNT1 A 0 A_SpawnItem("DeadHellKnightNoArm");
 		Stop;
 	Death.Head:
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_Fall();
-		TNT1 A 0 A_SpawnItem("HellKnightHeadExplode", 0, 62);
 		TNT1 A 0 A_SpawnItem ("ArmorShardFatalityBonus");
 		TNT1 A 0 A_SpawnItem("DyingHellKnightNoHeadNoArm");
 		Stop;
@@ -1266,31 +1050,18 @@ class DyingHellKnight1 : Actor
 	Death:
 		TNT1 A 0 A_SpawnItem ("ArmorShardFatalityBonus");
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("MuchBlood2Green");
-		TNT1 AAAAAA 0 A_CustomMissile ("XDeath1Green", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAA 0 A_CustomMissile ("Green_FlyingBlood", 15, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAA 0 A_CustomMissile ("GreenGuts", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightTorso", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_SpawnItem("HellKnightHeadExplode", 0, 62);
-		BBO1 AAAAAAAAAABBBBBCCCCC 2 A_CustomMissile ("Green_LiquidBlood", 30, 0, random (0, 360), 2, random (30, 110));
-		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool");
+		BBO1 AAAAAAAAAABBBBBCCCCC 2;
 		TNT1 A 0 A_SpawnItem ("DeadKnightHalfDown", 1);
-		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1 A_CustomMissile ("Green_LiquidBlood", 10, 0, random (0, 360), 2, random (30, 110));
+		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1;
 		TNT1 A -1;
 		Stop;
 	Death.Cut:
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_SpawnItem ("ArmorShardFatalityBonus");
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("MuchBlood2Green");
-		TNT1 AAAAAA 0 A_CustomMissile ("XDeath1Green", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAA 0 A_CustomMissile ("Green_FlyingBlood", 15, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAA 0 A_CustomMissile ("GreenGuts", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathHalfHK", 24, 0, random (0, 360), 2, random (0, 160));
-		BBO1 AAAAAAAAAABBBBBCCCCC 2 A_CustomMissile ("Green_LiquidBlood", 30, 0, random (0, 360), 2, random (30, 110));
-		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool");
+		BBO1 AAAAAAAAAABBBBBCCCCC 2;
 		TNT1 A 0 A_SpawnItem ("DeadKnightHalfDown", 1);
-		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1 A_CustomMissile ("Green_LiquidBlood", 10, 0, random (0, 360), 2, random (30, 110));
+		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1;
 		TNT1 A -1;
 		Stop;
 	}
@@ -1306,32 +1077,26 @@ class DyingHellKnight2 : DyingHellKnight1
 	{
 	Spawn:
 		TNT1 A 0;
-		TNT1 A 0 A_SpawnItem("HeadshotTarget20b", 0, 50,0);
-		BTN5 AABBAACC 2 A_CustomMissile ("Green_LiquidBlood", 62, 0, random (0, 360), 2, random (30, 110));
+		BTN5 AABBAACC 2;
 		TNT1 A 0 A_Pain();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget20b", 0, 50,0);
-		BTN5 AAABBBAAACCC 2 A_CustomMissile ("Green_LiquidBlood", 62, 0, random (0, 360), 2, random (30, 110));
+		BTN5 AAABBBAAACCC 2;
 		TNT1 A 0 A_Pain();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget20b", 0, 50,0);
-		BTN5 AAABBBAAACCC 2 A_CustomMissile ("Green_LiquidBlood", 62, 0, random (0, 360), 2, random (30, 110));
+		BTN5 AAABBBAAACCC 2;
 		TNT1 A 0 A_Pain();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget20b", 0, 50,0);
-		BTN5 AAABBBAAACCC 2 A_CustomMissile ("Green_LiquidBlood", 62, 0, random (0, 360), 2, random (30, 110));
+		BTN5 AAABBBAAACCC 2;
 	Death:
 		TNT1 A 0 A_Scream();
-		BTN5 DDD 2 A_CustomMissile ("Green_LiquidBlood", 50, 0, random (0, 360), 2, random (30, 110));
+		BTN5 DDD 2;
 		TNT1 A 0 A_NoBlocking();
-		BTN5 EEE 2 A_CustomMissile ("Green_LiquidBlood", 30, 0, random (0, 360), 2, random (30, 110));
-		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool");
+		BTN5 EEE 2;
 		TNT1 A 0 A_SPawnItem ("DeadKnightBTN5F");
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
-		TNT1 FFFFFFFFFFFFFFFFFFFFFFFFFFFFF 2 A_CustomMissile ("Green_LiquidBlood", 10, 0, random (0, 360), 2, random (30, 110));
+		TNT1 FFFFFFFFFFFFFFFFFFFFFFFFFFFFF 2;
 		Stop;
 	Death.Head:
 		TNT1 A 0;
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_SpawnItem ("ArmorShardFatalityBonus");
-		TNT1 A 0 A_SpawnItem("HellKnightHeadExplode", 0, 62);
 		TNT1 A 0 A_SpawnItem ("DyingHellKnightNoHead");
 		Stop;
 	}
@@ -1346,14 +1111,13 @@ class DyingHellKnightNoHead : DyingHellKnight1
 	States
 	{
 	Spawn:
-		BTN2 AAAAAAAAAAAAAAAAA 2 A_CustomMissile ("Green_LiquidBlood", 62, 0, random (0, 360), 2, random (30, 110));
-		BTN2 BBBBB 2 A_CustomMissile ("Green_LiquidBlood", 50, 0, random (0, 360), 2, random (30, 110));
+		BTN2 AAAAAAAAAAAAAAAAA 2;
+		BTN2 BBBBB 2;
 		TNT1 A 0 A_NoBlocking();
-		BTN2 CCCCC 2 A_CustomMissile ("Green_LiquidBlood", 30, 0, random (0, 360), 2, random (30, 110));
-		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool");
+		BTN2 CCCCC 2;
 		TNT1 A 0 A_SpawnItem("DeadKnightNoHead");
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
-		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 2 A_CustomMissile ("Green_LiquidBlood", 10, 0, random (0, 360), 2, random (30, 110));
+		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 2;
 		TNT1 A -1;
 		Stop;
 	Death:
@@ -1361,8 +1125,6 @@ class DyingHellKnightNoHead : DyingHellKnight1
 		TNT1 A 0;
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_SpawnItem ("ArmorShardFatalityBonus");
-		TNT1 AAAA 0 A_CustomMissile ("GreenBloodMistBig", 42, 0, random (0, 360), 2, random (30, 90));
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightArm", 32, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_SpawnItem ("DyingHellKnightNoHeadNoArm");
 		Stop;
 	Death.SSG:
@@ -1371,15 +1133,9 @@ class DyingHellKnightNoHead : DyingHellKnight1
 	Death.Railgun:
 		TNT1 A 0 A_SpawnItem ("ArmorShardFatalityBonus");
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("MuchBlood2Green");
-		TNT1 AAAAAA 0 A_CustomMissile ("XDeath1Green", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAA 0 A_CustomMissile ("Green_FlyingBlood", 15, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAA 0 A_CustomMissile ("GreenGuts", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightTorso", 32, 0, random (0, 360), 2, random (0, 160));
-		BBO1 AAAAAAAAAABBBBBCCCCC 2 A_CustomMissile ("Green_LiquidBlood", 30, 0, random (0, 360), 2, random (30, 110));
-		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool");
+		BBO1 AAAAAAAAAABBBBBCCCCC 2;
 		TNT1 A 0 A_SpawnItem ("DeadKnightHalfDown", 1);
-		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1 A_CustomMissile ("Green_LiquidBlood", 10, 0, random (0, 360), 2, random (30, 110));
+		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1;
 		TNT1 A -1;
 		Stop;
 	}
@@ -1394,15 +1150,13 @@ class DyingHellKnightNoHeadNoArm: DyingHellKnight1
 	States
 	{
 	Spawn:
-		BTN4 AAAAAAAAAAAAAAA 2 A_CustomMissile ("Green_LiquidBlood", 62, 0, random (0, 360), 2, random (30, 90));
-		BTN4 BBBB 2 A_CustomMissile ("Green_LiquidBlood", 52, 0, random (0, 360), 2, random (30, 90));
-		BTN4 CCCC 2 A_CustomMissile ("Green_LiquidBlood", 32, 0, random (0, 360), 2, random (30, 90));
-		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool");
-		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool");
+		BTN4 AAAAAAAAAAAAAAA 2;
+		BTN4 BBBB 2;
+		BTN4 CCCC 2;
 		TNT1 A 0 A_SpawnItem("DeadHellKnightNoArmNoHead");
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
-		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 2 A_CustomMissile ("Green_LiquidBlood", 10, 0, random (0, 360), 2, random (30, 110));
+		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 2;
 		TNT1 A -1;
 		Stop;
 	Death.SSG:
@@ -1413,15 +1167,9 @@ class DyingHellKnightNoHeadNoArm: DyingHellKnight1
 	Death:
 		TNT1 A 0 A_SpawnItem ("ArmorShardFatalityBonus");
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("MuchBlood2Green");
-		TNT1 AAAAAA 0 A_CustomMissile ("XDeath1Green", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAA 0 A_CustomMissile ("Green_FlyingBlood", 15, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAA 0 A_CustomMissile ("GreenGuts", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathHellKnightArm", 32, 0, random (0, 360), 2, random (0, 160));
-		BBO1 AAAAAAAAAABBBBBCCCCC 2 A_CustomMissile ("Green_LiquidBlood", 30, 0, random (0, 360), 2, random (30, 110));
-		TNT1 A 0 A_SpawnItem ("GreenGrowingBloodPool");
+		BBO1 AAAAAAAAAABBBBBCCCCC 2;
 		TNT1 A 0 A_SpawnItem ("DeadKnightHalfDown", 1);
-		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1 A_CustomMissile ("Green_LiquidBlood", 10, 0, random (0, 360), 2, random (30, 110));
+		TNT1 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1;
 		TNT1 A -1;
 		Stop;
 	}
@@ -1440,6 +1188,7 @@ class CrawlingHellKnight : Actor
 		damagefactor "Kick", 0.1;
 		damagefactor "Crush", 2.0;
 		damagefactor "Fatality", 20.1;
+		BloodColor "DarkGreen";
 		PainChance "Kick", 255;
 		+SHOOTABLE
 		+FLOORCLIP
@@ -1453,9 +1202,6 @@ class CrawlingHellKnight : Actor
 	States
 	{
 	Pain.Kick:
-		TNT1 A 0 A_CustomMissile ("Teeth", 30, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Green_Blood", 30, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("TeethNoBounce", 30, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_SpawnItem("ArmorShardFatalityBonus");
 		TNT1 A 0 A_Pain();
 		TNT1 A 0 A_FaceTarget();
@@ -1473,13 +1219,9 @@ class CrawlingHellKnight : Actor
 		Loop;
 	See:
 		BTC1 ABC 10 A_Chase();
-		TNT1 A 0 A_SpawnItemEx("Green_FlyingBlood", 0, 0, 10, 0, 0);
 		BTC1 D 10 A_Pain();
-		TNT1 A 0 A_SpawnItemEx("Green_FlyingBlood", 0, 0, 10, 0, 0);
 		BTC1 ABC 10 A_Chase();
-		TNT1 A 0 A_SpawnItemEx("Green_FlyingBlood", 0, 0, 10, 0, 0);
 		BTC1 D 10 A_Pain();
-		TNT1 A 0 A_SpawnItemEx("GreenGuts", 0, 0, 5, 0, 0);
 		TNT1 A 0 A_GiveInventory("DeathTimer1", 1);
 		TNT1 A 0 A_JumpIfInventory("DeathTimer1", 8, "GotoDeath");
 		Loop;
@@ -1495,10 +1237,6 @@ class CrawlingHellKnight : Actor
 	Death.Stomp:
 	Death.SSG:
 	XDeath:
-		TNT1 AAAAAA 0 bright A_CustomMissile ("SuperGoreSpawner", 5, 0, random (0, 360), 2, random (30, 180));
-		TNT1 AAAAAA 0 bright A_CustomMissile ("XDeath1Green", 5, 0, random (0, 360), 2, random (30, 180));
-		TNT1 AA 0 bright A_CustomMissile ("XDeath2Green", 55, 0, random (0, 360), 2, random (30, 180));
-		TNT1 AA 0 bright A_CustomMissile ("XDeath3Green", 55, 0, random (0, 360), 2, random (30, 180));
 		TNT1 A 0 A_SpawnItem ("CrushedRemains");
 		TNT1 A 1;
 		TNT1 A 1 A_XScream();

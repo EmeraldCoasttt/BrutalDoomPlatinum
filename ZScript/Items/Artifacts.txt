@@ -1035,9 +1035,6 @@ CLASS BerserkPack : CustomInventory Replaces Berserk
 	Spawn4:
 		MEDK D 14;
 		Goto Spawn3;
-	Spawn5:
-	TNT1 A 0 A_spawnitemex("demonrunespawner");
-	STOP;
 	Pickup:
 		TNT1 A 0 A_GiveInventory("PowerStrength");
 		TNT1 A 0 HealThing(100, 0);

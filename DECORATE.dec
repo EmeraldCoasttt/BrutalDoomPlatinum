@@ -52,7 +52,7 @@ damage 0
 
 //ITEMS
 #include DECORATE/ITEMS/AMMO.txt
-#include DECORATE/ITEMS/ARTIFACT.txt
+//#include DECORATE/ITEMS/ARTIFACT.txt
 #include DECORATE/ITEMS/HEALTH2.txt
 #include DECORATE/ITEMS/KEYS.txt
 

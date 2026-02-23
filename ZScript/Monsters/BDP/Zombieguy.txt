@@ -46,7 +46,6 @@ class BDPZombieguy : Actor
 		Stop;
 	Death.head:
 		TNT1 A 0 A_XScream();
-		TNT1 A 0 A_SpawnItem("ZombieguyHeadExplode", 0, 50);
 		TNT1 A 0 A_NoBlocking();
 		ZFDX A 7;
 		ZFDX B 7;

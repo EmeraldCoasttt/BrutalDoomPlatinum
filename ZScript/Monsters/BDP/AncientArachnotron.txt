@@ -20,7 +20,6 @@ class BDPAncientArachnotron : Actor
 		DeathSound "baby/death";
 		ActiveSound "baby/active";
 		Obituary "$OB_BABY";
-		BloodType "ArachnotronBlood", "ArachnotronSawBlood", "ArachnotronBlood";
 		MaxStepHeight 24;
 		DropItem "Berserker", 5;
 		MaxDropOffHeight 24;
@@ -73,30 +72,16 @@ class BDPAncientArachnotron : Actor
 		TNT1 A 0 A_Jump(101, "RareDeath");
 		TNT1 A 0 A_Jump(128, "Death2");
 		ARAC J 8 A_Scream();
-		TNT1 AAAAAAAAA 0 A_CustomMissile ("CeilBloodLauncherLong", 0, 0, random (0, 360), 2, random (50, 130));
-		TNT1 AAAA 0 A_CustomMissile ("Guts", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAA 0 A_CustomMissile ("SmallBrainPiece", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAAAA 0 A_CustomMissile ("BloodMist", 50, 0, random (0, 360), 2, random (60, 90));
-		TNT1 AAA 0 A_CustomMissile ("XDeathSpiderNew1", 42, 0, random (0, 360), 2, random (60, 90));
-		TNT1 AA 0 A_CustomMissile ("XDeathSpiderNew2", 42, 0, random (0, 360), 2, random (60, 90));
 		ARAC K 6 A_NoBlocking();
 		ARAC LMNO 8;
 		ARAC P 1 A_BossDeath();
-		TNT1 A 0 A_SpawnItem ("GrowingBloodPool");
 		TNT1 A 0 A_SpawnItem ("DeadSpiderDark", 1);
 		Stop;
 	Death2:
 		AR4C J 8 A_Scream();
-		TNT1 AAAAAAAAA 0 A_CustomMissile ("CeilBloodLauncherLong", 0, 0, random (0, 360), 2, random (50, 130));
-		TNT1 AAAA 0 A_CustomMissile ("Guts", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAA 0 A_CustomMissile ("SmallBrainPiece", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAAAA 0 A_CustomMissile ("BloodMist", 50, 0, random (0, 360), 2, random (60, 90));
-		TNT1 AAA 0 A_CustomMissile ("XDeathSpiderNew1", 42, 0, random (0, 360), 2, random (60, 90));
-		TNT1 AA 0 A_CustomMissile ("XDeathSpiderNew2", 42, 0, random (0, 360), 2, random (60, 90));
 		AR4C K 6 A_NoBlocking();
 		AR4C LMNO 8;
 		AR4C P 1 A_BossDeath();
-		TNT1 A 0 A_SpawnItem ("GrowingBloodPool");
 		TNT1 A 0 A_SpawnItem ("DeadSpiderDark3", 1);
 		Stop;
 	RareDeath:
@@ -104,40 +89,18 @@ class BDPAncientArachnotron : Actor
 		ARAC Q 5;
 		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		TNT1 A 0 A_SpawnItemEx ("BarrelKaboom",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
-		TNT1 AAAAA 0 A_CustomMissile ("SuperGoreSpawner", 10, 0, random (0, 360), 2, random (0, 180));
-		TNT1 AAAAAAAAAA 0 A_CustomMissile ("SuperGoreSpawner", 0, 0, random (0, 180), 2, random (0, 180));
-		TNT1 AA 0 A_CustomMissile ("SpiderLeg2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAAA 0 A_CustomMissile ("CeilBloodLauncherLong", 0, 0, random (0, 360), 2, random (50, 130));
-		TNT1 AAAA 0 A_CustomMissile ("Guts", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAAAA 0 A_CustomMissile ("SmallBrainPiece", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAA 0 A_CustomMissile ("SpiderPart1", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("SpiderPart2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAA 0 A_CustomMissile ("PEPart2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 32, 0, random (0, 360), 2, random (0, 160));
 		ARAC R 6 A_NoBlocking();
 		ARAC STUV 6;
 		ARAC W 2 A_BossDeath();
-		TNT1 A 0 A_SpawnItem ("GrowingBloodPool");
 		TNT1 A 0 A_SpawnItem ("DeadSpiderDark2", 1);
 		Goto XBurns;
 	RareDeath2:
 		AR4C Q 5;
 		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		TNT1 A 0 A_SpawnItemEx ("BarrelKaboom",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
-		TNT1 AAAAA 0 A_CustomMissile ("SuperGoreSpawner", 10, 0, random (0, 360), 2, random (0, 180));
-		TNT1 AAAAAAAAAA 0 A_CustomMissile ("SuperGoreSpawner", 0, 0, random (0, 180), 2, random (0, 180));
-		TNT1 AA 0 A_CustomMissile ("SpiderLeg2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAAA 0 A_CustomMissile ("CeilBloodLauncherLong", 0, 0, random (0, 360), 2, random (50, 130));
-		TNT1 AAAA 0 A_CustomMissile ("Guts", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAAAA 0 A_CustomMissile ("SmallBrainPiece", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAA 0 A_CustomMissile ("SpiderPart1", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("SpiderPart2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAA 0 A_CustomMissile ("PEPart2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 32, 0, random (0, 360), 2, random (0, 160));
 		AR4C R 6 A_NoBlocking();
 		AR4C STUV 6;
 		AR4C W 2 A_BossDeath();
-		TNT1 A 0 A_SpawnItem ("GrowingBloodPool");
 		TNT1 A 0 A_SpawnItem ("DeadSpiderDark4", 1);
 		Goto XBurns;
 	Death.Cutless:
@@ -150,8 +113,6 @@ class BDPAncientArachnotron : Actor
 		TNT1 A 0 A_BossDeath();
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 AAA 0 A_CustomMissile ("Brutal_FlyingBlood", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("XDeathBurnedMeat3", 32, 0, random (0, 360), 2, random (0, 160));
 		EXPL AAAAAA 0 A_CustomMissile ("ExplosionSmoke", 32, 0, random (0, 360), 2, random (0, 360));
 		CARB QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ 7 A_CustomMissile ("PlasmaSmoke", 15, 0, random (0, 360), 2, random (70, 110));
 		CARB Q -1;
@@ -161,7 +122,6 @@ class BDPAncientArachnotron : Actor
 		TNT1 A 0 A_BossDeath();
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 AAA 0 A_CustomMissile ("PEPart2", 32, 0, random (0, 360), 2, random (0, 160));
 		ARAC LLLL 2 A_CustomMissile ("FlameTrails", 45, 0, random (0, 360), 2, random (50, 130));
 		ARAC MMMM 2 A_CustomMissile ("FlameTrails", 30, 0, random (0, 360), 2, random (50, 130));
 		ARAC NNNN 2 A_CustomMissile ("FlameTrails", 25, 0, random (0, 360), 2, random (50, 130));
@@ -208,12 +168,6 @@ class BDPAncientArachnotron : Actor
 		Stop;
 	Death.Saw:
 	Death.Tear:
-		TNT1 AAAAA 0 A_CustomMissile ("Guts2", 14, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAA 0 A_CustomMissile ("CeilBloodLauncher", 40, 0, random (0, 360), 2, random (50, 130));
-		TNT1 AAAAA 0 A_CustomMissile ("XDeath1", 10, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAA 0 A_CustomMissile ("XDeath2", 10, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("PlayerFlyingBlood", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathArachnotronHead2", 50, 0, random (0, 360), 2, random (40, 130));
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_NoBlocking();
 		ARAC X 16;
@@ -233,20 +187,9 @@ class BDPAncientArachnotron : Actor
 		TNT1 A 0 A_SpawnItemEx ("BarrelKaboom",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		
 		TNT1 A 0 A_Jump(64, "XDeathRare");
-		TNT1 AAAAA 0 A_CustomMissile ("SuperGoreSpawner", 10, 0, random (0, 360), 2, random (0, 180));
-		TNT1 AAAAAAAAAA 0 A_CustomMissile ("SuperGoreSpawner", 0, 0, random (0, 180), 2, random (0, 180));
-		TNT1 AA 0 A_CustomMissile ("SpiderLeg2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAAA 0 A_CustomMissile ("CeilBloodLauncherLong", 0, 0, random (0, 360), 2, random (50, 130));
-		TNT1 AAAA 0 A_CustomMissile ("Guts", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAAAA 0 A_CustomMissile ("SmallBrainPiece", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAA 0 A_CustomMissile ("SpiderPart1", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("SpiderPart2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAA 0 A_CustomMissile ("PEPart2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 32, 0, random (0, 360), 2, random (0, 160));
 		ARAC Q 6 A_NoBlocking();
 		ARAC RSTUV 6;
 		ARAC W 1 A_BossDeath();
-		TNT1 A 0 A_SpawnItem ("GrowingBloodPool");
 		TNT1 A 0 A_SpawnItem ("XDeadSpider2", 1);
 		Goto XBurns;
 	XBurns:
@@ -273,13 +216,9 @@ class BDPAncientArachnotron : Actor
 		ARAC ONMLKJ 5;
 		Goto See+1;
 	XDeathRare:
-		TNT1 A 0 A_CustomMissile ("XDeathArachnotronHead2", 50, 0, random (0, 360), 2, random (40, 130));
-		TNT1 AA 0 A_CustomMissile ("SpiderLeg2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAAAAAAA 0 A_CustomMissile ("CeilBloodLauncherLong", 0, 0, random (0, 360), 2, random (50, 130));
 		ARAC Q 6 A_NoBlocking();
 		ARAC RSTUV 6;
 		ARAC W 1 A_BossDeath();
-		TNT1 A 0 A_SpawnItem ("GrowingBloodPool");
 		TNT1 A 0 A_SpawnItem ("XDeadSpider2", 1);
 		Goto XBurns;
 	Raise:
@@ -350,14 +289,6 @@ class DeadSpiderDark : CurbstompedMarine
 	Death:
 		TNT1 A 0 A_SpawnItemEx ("GibsZ",-3,-3);
 		TNT1 A 0 A_SpawnItemEx ("GibsZ",3,3);
-		TNT1 AAA 0 A_CustomMissile ("SpiderPart1", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAA 0 A_CustomMissile ("SpiderPart2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("XDeathSpiderNew1", 32, 0, random (0, 360), 2, random (60, 90));
-		TNT1 AAA 0 A_CustomMissile ("SpiderLeg2", 32, 0, random (0, 360), 2, random (0, 160));
-			TNT1 AAA 0 A_CustomMissile ("XDeath1", 5, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAA 0 A_CustomMissile ("XDeath2", 5, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAA 0 A_CustomMissile ("XDeath3", 5, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAA 0 A_CustomMissile ("XDeath4", 5, 0, random (0, 360), 2, random (0, 160));
 		Stop;
 	}
 }
@@ -635,8 +566,6 @@ class XDeathArachnotronHead2 : Actor
 		NAHB ABCDEFGH 4;
 		Loop;
 	Death:
-		TNT1 AAAAAAAAAAAA 0 A_CustomMissile ("SmallBrainPiece", 10, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAA 0 A_CustomMissile ("XDeath1", 10, 0, random (0, 360), 2, random (0, 160));
 		NAHD IJKLMN 5;
 		NAHD N -5;
 		Stop;

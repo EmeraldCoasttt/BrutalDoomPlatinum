@@ -56,7 +56,6 @@ class BDPShotgunGuy: BDPBaseZombie
 		DeathHeight 4;
 		BurnHeight 0;
 		Species "Zombies";
-		BloodType "NashGoreDefaultBlood";
 		Obituary "%o got his face splattered on the wall by a Zombie Shotgunner.";
 		MaxStepHeight 24;
 		MaxDropOffHeight 32;
@@ -140,22 +139,15 @@ class BDPShotgunGuy: BDPBaseZombie
 	MissileCrouched:
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_TakeInventory("EnemyMemory", 10);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
 		TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1);
 		TNT1 A 0 A_SetSize(-1,30);
 		ZRO1 \ 3 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		TNT1 A 0 A_GiveInventory("SergeantAmmo", 1);
 		ZRO1 \ 3 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 20,0);
 		ZRO1 \ 4 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 20,0);
 		ZRO1 \ 4 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 20,0);
 		ZRO1 \ 4 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 20,0);
 		//TNT1 A 0 A_SetPitch(random (-8, 8); + pitch);
 		TNT1 AAAAA 0 A_CustomMissile("ShotgunguyTracer", 28, 0, random(-7, 7), 1, random(-4, 4));
 		TNT1 A 0 A_CustomMissile("DistantFireSoundShotgun", 28, 0, 0, 1, 0);
@@ -164,8 +156,6 @@ class BDPShotgunGuy: BDPBaseZombie
 		ZRO1 ] 5 BRIGHT; //A_CustomBulletAttack(8, 8, 10, 3, "HitPuff");
 		TNT1 A 0 A_Recoil(1);
 		ZRO1 \ 5;
-		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 20,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		ZRO1 \ 3;
 		TNT1 A 0 A_SetSize(-1,40);
 		ZRO2 Y 4 A_FaceTarget();
@@ -187,7 +177,6 @@ class BDPShotgunGuy: BDPBaseZombie
 	Stand:
 		TNT1 A 0;
 		TNT1 A 0 A_CheckSight("Stand2");
-		TNT1 AA 0 A_SpawnItem ("HeadshotTarget20", 4, 44,0);
 		SHID AB 11 A_Look();
 		Loop;
 	Stand2:
@@ -196,37 +185,23 @@ class BDPShotgunGuy: BDPBaseZombie
 		Goto Stand;
 	Pain.GAvoid:
 		TNT1 A 0 A_JumpIfHealthLower(1, "Death");
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget4", 10);
 		SPOS DDCC 2 A_Recoil(3);
 		TNT1 A 0 A_JumpIfHealthLower(1, "Death");
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget4", 10);
 		SPOS BBAA 2 A_Recoil(3);
 	FallBack:
 		TNT1 A 0 A_CheckSight("Advance");
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 1);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -5, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget4", 10);
 		SPOS D 2 A_FaceTarget();
 		TNT1 A 0 A_Jump(100, "Missile", "Pain.Avoid");
 		SPOS D 2 A_Recoil(5);
 		TNT1 A 0;
 		TNT1 A 0 A_Jump(64, "Missile");
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -5, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget4", 10);
 		SPOS C 2 A_FaceTarget();
 		SPOS C 2 A_Recoil(5);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -5, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget4", 10);
 		SPOS B 2 A_FaceTarget();
 		SPOS B 2 A_Recoil(5);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -5, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget4", 10);
 		SPOS A 2 A_FaceTarget();
 		SPOS A 2 A_Recoil(5);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", -5, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget4", 10);
 		SPOS D 2 A_FaceTarget();
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
 		Goto Missile;
@@ -235,45 +210,27 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_ClearTarget();
 		TNT1 A 0 A_TakeInventory("EnemyMemory", 30);
 		TNT1 A 0 A_GiveInventory("SKShotgunGUy", 1);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 5, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SHID A 10 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 5, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SHID C 10 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 5, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SHID A 10 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 5, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SHID D 10 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget10", 5, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SHID A 10 A_Look();
 		SPOS A 4 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
 		TNT1 A 0 A_Wander();
 		SPOS B 4 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
 		TNT1 A 0 A_Wander();
 		SPOS C 4 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
 		TNT1 A 0 A_Wander();
 		SPOS D 4 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
 		TNT1 A 0 A_Wander();
 		TNT1 A 0 A_Jump(128, "Idle");
 		SPOS A 4 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
 		TNT1 A 0 A_Wander();
 		SPOS B 4 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
 		TNT1 A 0 A_Wander();
 		SPOS C 4 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
 		TNT1 A 0 A_Wander();
 		SPOS D 4 A_Look();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 5, 40,0);
 		TNT1 A 0 A_Wander();
 		Loop;
 	See:
@@ -292,19 +249,11 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_GiveInventory("EnemyMemory", 1);
 		//TNT1 A 0 A_SpawnItemEx("FootSep", 0, 0, 20, 0, 0);
 		TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SPOS AAA 2 A_Chase();
 		TNT1 A 0 A_Jump(16, "Pain.Avoid");
 		TNT1 A 0;
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SPOS BBB 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SPOS CCC 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SPOS DDD 2 A_Chase();
 		TNT1 A 0 A_JumpIfInTargetInventory("IsInvisible", 1, "Idle");
 		Loop;
@@ -313,43 +262,27 @@ class BDPShotgunGuy: BDPBaseZombie
 	Advance:
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
 		//TNT1 A 0 A_SpawnItemEx("FootSep", 0, 0, 10, 0, 0);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SPOS AAA 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SPOS BBB 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SPOS CCC 2 A_Chase();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget6", 10, 44,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SPOS DDD 2 A_Chase();
 		Loop;
 	Missile:
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_TakeInventory("EnemyMemory", 10);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
 		TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1);
 		TNT1 A 0 A_Jump(16, "Pain.Avoid");
 		TNT1 A 0;
 		SPOS D 3 A_FaceTarget();
 		//TNT1 A 0 A_JumpIfInventory("CantFire",1, "Advance");
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		TNT1 A 0 A_GiveInventory("SergeantAmmo", 1);
 		SPOS D 3 A_FaceTarget();
 		TNT1 A 0 A_Jump(32, "MissileCrouched");
-		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SPOS E 10 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0);
 		SPOS E 4 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0);
 		SPOS E 4 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0);
 		SPOS E 4 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
 		//TNT1 A 0 A_SetPitch(random (-8, 8); + pitch);
 		TNT1 AAAAA 0 A_CustomMissile("ShotgunguyTracer", 36, 0, random(-7, 7), 1, random(-4, 4));
 		TNT1 A 0 A_CustomMissile("DistantFireSoundShotgun", 32, 0, 0, 1, 0);
@@ -358,68 +291,40 @@ class BDPShotgunGuy: BDPBaseZombie
 		SPOS F 5 BRIGHT; //A_CustomBulletAttack(8, 8, 10, 3, "HitPuff");
 		TNT1 A 0 A_Recoil(1);
 		SPSR C 6;
-		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SPOS E 7 A_FaceTarget();
 	ContinueMissile:
-		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SPSR A 7;
 		TNT1 A 0 A_PlaySound("weapons/sgpump");
-		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SPSR B 7 A_SpawnItem ("ShotCaseSpawn", 0, 30,0);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTargetBase", 10);
 		SPSR A 7;
 		TNT1 A 0 A_JumpIfInventory("SergeantAmmo", 6, "Reload");
 		TNT1 A 0 A_JumpIfInTargetInventory("IsInvisible", 1, "SearchForPlayer");
 		Goto SeeContinue;
 	Reload:
 		TNT1 A 0;
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
 		SPSR A 15;
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
 		ID12 EFG 5;
 		TNT1 A 0 A_PlaySound("insertshell");
 		TNT1 A 0 A_TakeInventory("SergeantAmmo", 1);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
 		ID12 EFG 5;
 		TNT1 A 0 A_PlaySound("insertshell");
 		TNT1 A 0 A_TakeInventory("SergeantAmmo", 1);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
 		ID12 EFG 5;
 		TNT1 A 0 A_PlaySound("insertshell");
 		TNT1 A 0 A_TakeInventory("SergeantAmmo", 1);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
 		ID12 EFG 5;
 		TNT1 A 0 A_PlaySound("insertshell");
 		TNT1 A 0 A_TakeInventory("SergeantAmmo", 1);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
 		ID12 EFG 5;
 		TNT1 A 0 A_PlaySound("insertshell");
 		TNT1 A 0 A_TakeInventory("SergeantAmmo", 1);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
 		ID12 EFG 5;
 		TNT1 A 0 A_PlaySound("insertshell");
 		TNT1 A 0 A_TakeInventory("SergeantAmmo", 1);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 0, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
 		SPSR A 10;
 		TNT1 A 0 A_PlaySound("weapons/sgpump");
-		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
-		TNT1 A 0 A_SpawnItem ("LegTarget20", 10);
 		SPSR B 10;
-		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
 		SPSR A 10;
-		TNT1 A 0 A_SpawnItem("HeadshotTarget10", 0, 40,0);
 		Goto SeeContinue;
 	Pain.Cut:
 	Pain.Saw:
@@ -451,12 +356,9 @@ class BDPShotgunGuy: BDPBaseZombie
 	Pain.Shrapnel:	
 		TNT1 A 0 A_SetSize(-1,40);
 		TNT1 A 0 A_TakeInventory("SKShotgunguy", 1);
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget4", 0, 40,0);
 		POSH K 5 A_Pain();
 		TNT1 A 0 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 4, 35,0);
 		POSH L 20;
-		TNT1 A 0 A_SpawnItem ("HeadshotTarget20", 4, 35,0);
 		POSH L 20;
 		Goto SeeContinue;
 	Pain.Melee:
@@ -464,9 +366,7 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_SetSize(-1,40);
 		//TNT1 A 0 A_JumpIfInventory ("SKShotgunGuy", 1, "GotoStealthKill");
 		TNT1 A 0 A_JumpIfInventory ("IsDown", 1, 6);
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0);
 		SPOS G 4;
-		TNT1 A 0 A_SpawnItem("HeadshotTarget4", 0, 40,0);
 		SPOS G 4 A_Pain();
 		Goto SeeContinue;
 		TNT1 AAAAA 0;
@@ -614,7 +514,6 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_Stop();
-		TNT1 AAAA 0 A_CustomMissile ("XDeath1", 32, 0, random (0, 360), 2, random (50, 130));
 		ID11 EF 2;
 		TNT1 A 0 A_SpawnItem("DeadShotgunGuy1");
 		ID11 F 2;
@@ -633,8 +532,6 @@ class BDPShotgunGuy: BDPBaseZombie
 	Death.Shotgun:
 	//Death.Revolver:
 		SPOS J 1 A_FaceTarget();
-		TNT1 A 0 A_SpawnItem("MuchBlood", 0, 40);
-		TNT1 A 0 A_CustomMissile ("SuperWallRedBlood", 42, 0, random (170, 190), 2, random (0, 20));
 		TNT1 A 0 A_Jump(42, "Death.Shotgunontheface");
 		TNT1 A 0 A_JumpIfCloser(100, "Death.bLAST");
 		TNT1 A 0 A_JumpIfCloser(320, "Death.Shotgunontheface");
@@ -655,14 +552,12 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_Recoil(13);
 		TNT1 A 0 ThrustThingZ(0,20,0,1);
 		TNT1 A 0 A_Scream();
-		TNT1 AA 0 A_CustomMissile ("XDeath1", 35, 0, random (0, 360), 2, random (0, 160));
 		SPO4 ABCD 4;
 		SPO4 EFGHIJ 4 A_JumpIf((vel.y == 0), "DSFStop");
 		Goto DSFStop+1;
 	DSFStop:
 		TNT1 A 0 A_SpawnItem("Ploft3");
 		TNT1 A 0 A_Stop();
-		TNT1 A 0 A_CustomMissile ("SuperWallRedBlood", 2, 0, random (170, 190), 2, random (0, 0));
 		TNT1 A 0 A_SpawnItem("DeadShotgunguySPO4J");
 		TNT1 A -1;
 		Stop;
@@ -674,14 +569,12 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_Recoil(13);
 		TNT1 A 0 ThrustThingZ(0,20,0,1);
-		TNT1 AA 0 A_CustomMissile ("XDeath1", 35, 0, random (0, 360), 2, random (0, 160));
 		SPO4 KLMN 4;
 		SPO4 OPQRST 4 A_JumpIf((vel.y == 0), "DSFStop2");
 		Goto DSFStop2+1;
 	DSFStop2:
 		TNT1 A 0 A_SpawnItem("Ploft3");
 		TNT1 A 0 A_Stop();
-		TNT1 A 0 A_CustomMissile ("SuperWallRedBlood", 2, 0, random (170, 190), 2, random (0, 0));
 		TNT1 A 0 A_SpawnItem("DeadShotgunguySPO4T");
 		TNT1 A -1;
 		Stop;
@@ -693,20 +586,19 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_FaceTarget();
 		TNT1 A 0 A_Recoil (6);
-		SPO4 Z 5 A_CustomMissile ("Brutal_LiquidBlood3", 15, 0, random (0, 360), 2, random (0, 40));
+		SPO4 Z 5;
 		TNT1 A 0 A_JumpIf((vel.y == 0), "TakeASit");
-		SPO4 Z 5 A_CustomMissile ("Brutal_LiquidBlood3", 15, 0, random (0, 360), 2, random (0, 40));
+		SPO4 Z 5;
 		TNT1 A 0 A_JumpIf((vel.y == 0), "TakeASit");
-		SPO4 [ 5 A_CustomMissile ("Brutal_LiquidBlood3", 15, 0, random (0, 360), 2, random (0, 40));
+		SPO4 [ 5;
 		TNT1 A 0 A_JumpIf((vel.y == 0), "TakeASit");
-		SPO4 W 5 A_CustomMissile ("Brutal_LiquidBlood3", 15, 0, random (0, 360), 2, random (0, 40));
-		SPO4 X 5 A_CustomMissile ("Brutal_LiquidBlood3", 15, 0, random (0, 360), 2, random (0, 40));
-		SPO4 Y 5 A_CustomMissile ("Brutal_LiquidBlood3", 15, 0, random (0, 360), 2, random (0, 40));
+		SPO4 W 5;
+		SPO4 X 5;
+		SPO4 Y 5;
 		TNT1 A 0 A_SpawnItem("DeadShotgunGuy1");
 		TNT1 A -1;
 		Stop;
 	TakeASit:
-		TNT1 AA 0 A_CustomMissile ("SuperWallRedBlood", 6, 0, random (170, 190), 2, random (0, 40));
 		SPO4 U 5;
 		TNT1 A 0 A_SpawnItemEx("DeadShotgunguy_Slumped", 10);
 		Stop;
@@ -720,23 +612,10 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0;
 		TNT1 A 0 A_Jump(128, "Death.Arm");
 		TNT1 A 0 ThrustThingZ(0,40,0,1);
-		TNT1 A 0 A_CustomMissile ("XDeathArm1", 35, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("MuchBlood", 35, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_NoBlocking();
 		ID11 OP 15;
 		TNT1 A 0 A_SpawnItem ("DeadShotgunGuy_NoArm");
-		Stop;
-	GotoStealthKill:
-		TNT1 A 1;
-		//TNT1 A 0 A_JumpIfInTargetInventory("PowerStrength", 1, "BecomeMeatShield");
-		TNT1 A 0 A_Explode(100, 1, 1);
-		TNT1 A 1;
-		Goto SeeContinue;
-	BecomeMeatShield:
-		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_GiveToTarget("HasZManShield", 1);
-		TNT1 A 0 A_GiveToTarget("GotMeatShield", 1);
 		Stop;
 	Death.Melee:
 		TNT1 A 0 A_JumpIfInventory ("IsDown", 1, "Death.Down");
@@ -771,7 +650,6 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0;
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 AAA 0 A_CustomMissile ("XDeath1", 2, 0, random (0, 360), 2, random (0, 40));
 		ID11 H 12;
 		TNT1 A 0 A_SpawnItem("DeadShotgunGuy1");
 		TNT1 A -1;
@@ -779,8 +657,7 @@ class BDPShotgunGuy: BDPBaseZombie
 	Death.Leg:
 	LegRemove:
 		TNT1 A 0 A_JumpIfInTargetInventory("HasFreezerWeapon", 1, "Death.Freeze");
-		TNT1 A 0 A_CustomMissile ("XDeathSargeLeg1", 35, 0, random (0, 360), 2, random (0, 160));
-		SPO3 A 9 A_CustomMissile ("MuchBlood", 10, 0, random (0, 360), 2, random (0, 160));
+		SPO3 A 9;
 		TNT1 A 0 A_Playsound ("grunt/death");
 		SPO3 B 3;
 		SPO3 C 3 A_NoBlocking();
@@ -795,8 +672,7 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_JumpIfInTargetInventory("HasFreezerWeapon", 1, "Death.Freeze");
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_CustomMissile ("XDeathArm2", 35, 0, random (0, 360), 2, random (0, 160));
-		SPO5 A 9 A_CustomMissile ("XDeath1", 40, 0, random (0, 360), 2, random (0, 160));
+		SPO5 A 9;
 		TNT1 A 0 A_SpawnItemEx ("DyingSergeant",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		Stop;
 	HeadExploder:
@@ -815,17 +691,11 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_FaceTarget();
 		TNT1 A 0 A_PlaySound("misc/xdeath4");
 		TNT1 A 0 A_Jump(96, "Death.MinorHeadLong");
-		TNT1 A 0 A_CustomMissile ("BloodMist", 50, 0, random (0, 360), 2, random (30, 90));
-		TNT1 AA 0 A_CustomMissile ("SmallBrainPiece", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath1", 40, 0, random (100, 130), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains3", 50, 0, random (90, 110), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains5", 50, 0, random (100, 130), 2, random (0, 160));
 		TNT1 A 0 A_Scream();
-		SPOS TTTTUU 2 A_CustomMissile ("Brutal_LiquidBlood", 40, 0, 120, 2, random (0, 60));
-		SPOS VVV 2 A_CustomMissile ("Brutal_LiquidBlood2", 30, 0, 120, 2, random (60, 120));
+		SPOS TTTTUU 2;
+		SPOS VVV 2;
 		TNT1 A 0 A_NoBlocking(); 
-		SPOS XXXYYY 2 A_CustomMissile ("Brutal_LiquidBlood2", 20, 0, random (0, 360), 2, random (60, 120));
-		TNT1 A 0 A_CustomMissile ("ArterialBloodSPray", 10, 10, -45, 2, random (0, 60));
+		SPOS XXXYYY 2;
 		TNT1 A 0 A_SpawnItem("DeadShotgunguySPOSZ");
 		TNT1 A -1;
 		Stop;
@@ -839,16 +709,10 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0;
 		TNT1 A 0 A_Pain();
 		TNT1 A 0 A_FaceTarget();
-		TNT1 A 0 A_CustomMissile ("Brains4", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10));
-		TNT1 AA 0 A_CustomMissile ("SmallBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10));
-		TNT1 A 0 A_CustomMissile ("SmallBrainPiece", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("SuperWallRedBlood", 46, 0, random (170, 190), 2, random (0, 40));
-		TNT1 A 0 A_CustomMissile ("BloodMist", 50, 0, random (0, 360), 2, random (30, 90));
 		13DG J 6;
 		13DG KL 8;
 		TNT1 A 0 A_Scream();
 		13DG M 6 A_NoBlocking();
-		TNT1 A 0 A_CustomMissile ("ArterialBloodSPray", 10, -10, 45, 2, random (0, 60));
 		TNT1 A 0 A_SpawnItem("DeadShotgunGuy13DGN");
 		TNT1 A -1;
 		Stop;
@@ -856,9 +720,8 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0;
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_JumpIfInTargetInventory("HeavyStrikeUpward", 1, "HeavyHead");
-		TNT1 A 0 A_SpawnItem("ShotgunguyHeadExplode", 0, 50);
 		TNT1 A 0 A_NoBlocking();
-		SPDH AAAAA 2 A_CustomMissile ("Brutal_LiquidBlood2", 40, 0, random (0, 360), 2, random (60, 120));
+		SPDH AAAAA 2;
 		TNT1 A 0 A_FaceTarget();
 		TNT1 A 0 A_SpawnItemEx("DeadShotgunguyNoHeadContinue",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		Stop;
@@ -868,30 +731,18 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_FaceTarget();
 		TNT1 A 0 A_Recoil(10);
 		TNT1 A 0 ThrustThingZ(0,35,0,1);
-		TNT1 A 0 A_CustomMissile ("MuchBlood2", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains2", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains3", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains5", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("BrainsSergeantHeadPiece", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAA 0 A_CustomMissile ("SmallBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10));
-		TNT1 AAAAA 0 A_CustomMissile ("SmallBrainPiece", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("SuperWallRedBlood", 46, 0, random (170, 190), 2, random (0, 40));
 		ZMAD B 0 A_XScream();
 		ZMAD C 0 A_NoBlocking();
 		SOSL GHIJK 6;
-		TNT1 A 0 A_CustomMissile ("ArterialBloodSPray", 10, 10, -45, 2, random (0, 60));
 		SOSL L -1;
 		Stop;
 	Death.decaptate:
-		TNT1 AAAAAAA 0 A_CustomMissile ("Blood", 50, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_PlaySound("misc/xdeath4");
-		TNT1 A 0 A_CustomMissile ("XDeathSergeantHeadBeheaded", 50, 0, random (0, 360), 2, random (40, 90));
-		TNT1 A 0 A_CustomMissile ("MuchBlood2", 40, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_NoBlocking();
-		SPDH AAAAABBBBBBBBBBCCCCC 2 A_CustomMissile ("Brutal_LiquidBlood2", 30, 0, random (0, 360), 2, random (60, 120));
-		SPDH DDDDDDEEEEE 2 A_CustomMissile ("Brutal_LiquidBlood2", 10, 0, random (0, 360), 2, random (60, 120));
-		SPDH EEEEEEEEEEEE 2 A_CustomMissile ("Brutal_LiquidBlood2", 5, 0, random (0, 360), 2, random (10, 40));
+		SPDH AAAAABBBBBBBBBBCCCCC 2;
+		SPDH DDDDDDEEEEE 2;
+		SPDH EEEEEEEEEEEE 2;
 		TNT1 A 0 A_SpawnItem("DeadShotgunguySPDHE");
 		TNT1 A -1;
 		Stop;
@@ -911,12 +762,9 @@ class BDPShotgunGuy: BDPBaseZombie
 	Death.Tear:
 		TNT1 A 0;
 		TNT1 A 0 A_Jump(32, "Death.ARm");
-		TNT1 A 0 A_CustomMissile ("MuchBlood", 1, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_Scream();
 		TNT1 O 0 A_NoBlocking();
 		SP2X AA 8;
-		TNT1 A 0 A_CustomMissile ("XDeath4", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("RipSergeant", 0, 0, random (0, 360), 2, random (0, 160));
 		SP2X BBCD 8;
 		TNT1 A 0 A_SpawnItem("DeadShotgunguySP2XE");
 		TNT1 A -1;
@@ -943,15 +791,6 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_Jump(128, "Death.Blast2");
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_Scream();
-		TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (150, 210), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("XDeath1", 32, 0, random (150, 210), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("Xdeath3", 16, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBloodFaster", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBloodMuchFaster", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AA 0 A_CustomMissile ("SuperWallRedBlood", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AA 0 A_CustomMissile ("BloodMistBig", 40, 0, random (0, 360), 2, random (30, 90));
-		TNT1 AAA 0 A_CustomMissile ("BloodMistBig", 40, 0, random (0, 360), 2, random (30, 90));
 		ZXZ7 A 6 A_Stop();
 		TNT1 A 0 A_SpawnItem ("SergeantFallingHoleOnStomach");
 		TNT1 A -1;
@@ -959,17 +798,6 @@ class BDPShotgunGuy: BDPBaseZombie
 	Death.Blast2:
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_CustomMissile ("XDeathArm1", 42, 0, random (0, 360), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (150, 210), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("XDeath1", 32, 0, random (150, 210), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("Xdeath3", 16, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AA 0 A_CustomMissile ("Xdeath2", 16, 0, random (130, 210), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBloodFaster", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBloodMuchFaster", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AA 0 A_CustomMissile ("SuperWallRedBlood", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("BloodMistBig", 40, 0, random (0, 360), 2, random (30, 90));
-		TNT1 AAA 0 A_CustomMissile ("BloodMist", 40, 0, random (0, 360), 2, random (40, 90));
 		ZXZ6 A 6 A_Stop();
 		TNT1 A 0 A_SpawnItem("SergeantFallingSplattered");
 		TNT1 A -1;
@@ -979,14 +807,7 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0;
 		TNT1 A 0 A_Stop();
 		SZD1 E 1 A_Pain();
-		TNT1 A 0 A_SpawnItem("Muchblood2", 0, 40);
 		SZD1 E 1 A_FaceTarget();
-		TNT1 AAA 0 bright A_CustomMissile ("SuperGoreSpawner", 35, 0, random (170, 190), 2, random (0, 40));
-		TNT1 A 0 A_CustomMissile ("XDeath2", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 A 0 A_CustomMissile ("XDeath3", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (150, 210), 2, random (0, 40));
-		TNT1 AA 0 A_CustomMissile ("XDeathArm1", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 A 0 A_CustomMissile ("XDeathSergeantHead", 32, 0, random (170, 190), 2, random (0, 40));
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_NoBlocking();
 		SZD1 EEFFGH 6;
@@ -997,10 +818,7 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0;
 		TNT1 A 0 A_Stop();
 		SZD1 E 1 A_Pain();
-		TNT1 A 0 A_SpawnItem("Muchblood2", 0, 40);
 		SZD1 E 1 A_FaceTarget();
-		TNT1 A 0 A_CustomMissile ("RipGuts", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 A 0 A_CustomMissile ("XDeathHalfSergeant2", 32, 0, random (0, 360), 2, random (60, 70));
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_NoBlocking();
 		SZD1 EEFFGH 6;
@@ -1011,13 +829,6 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0;
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_Blood", 30, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedArm", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedLeg", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedSkull", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedMeat", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedMeat2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedMeat3", 32, 0, random (0, 360), 2, random (0, 160));
 		EXPL AAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("GreenFlameTrails", 50, 0, random (0, 360), 2, random (0, 360));
 		XBRN AAAA 2 BRIGHT A_SpawnItem("GreenFlare",0,43);
 		Stop;
@@ -1027,9 +838,6 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_Stop();
 		PBR1 A 6 A_XScream();
 		TNT1 AAAA 0 A_CustomMissile ("BluePlasmaFireNonStatic", 42, 0, random (0, 360), 2, random (0, 180));
-		TNT1 AAA 0 A_CustomMissile ("Blood", 32, 0, random (0, 360), 2, random (0, 180));
-		TNT1 AAA 0 A_CustomMissile ("BloodMistSmall", 32, 0, random (0, 360), 2, random (0, 180));
-		TNT1 AAA 0 A_CustomMissile ("Brutal_FlyingBlood", 32, 0, random (0, 360), 2, random (0, 180));
 		PBR1 B 6 A_NoBlocking();
 		TNT1 A 0 A_SpawnItemEx ("DetectFloorCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn");
@@ -1067,15 +875,7 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_NoBlocking();
 		XBRN AA 2 BRIGHT A_SpawnItem("BlueFlare",0,43);
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_Blood", 30, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedArm", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedLeg", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedSkull", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedMeat", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedMeat2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedMeat3", 32, 0, random (0, 360), 2, random (0, 160));
 		XBRN BB 2 BRIGHT A_SpawnItem("BlueFlare",0,43);
-		TNT1 A 0 A_CustomMissile ("Brutal_Blood", 30, 0, random (0, 360), 2, random (0, 160));
 		XBRN CC 2 BRIGHT A_SpawnItem("BlueFlare",0,43);
 		TNT1 AAAAA 0 A_CustomMissile ("PlasmaParticleX", 48, 0, random (0, 360), 2, random (0, 360));
 		TNT1 AAA 0 A_CustomMissile ("BigPlasmaParticleX", 42, 0, random (0, 360), 2, random (0, 360));
@@ -1141,12 +941,6 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_FaceTarget();
-		TNT1 AAA 0 A_CustomMissile ("XDeath1", 42, 0, random (0, 190), 2, random (10, 60));
-		TNT1 AAA 0 A_CustomMissile ("XDeath3", 42, 0, random (0, 190), 2, random (10, 60));
-		TNT1 A 0 A_CustomMissile ("XDeath2", 42, 0, random (0, 190), 2, random (10, 60));
-		TNT1 A 0 A_CustomMissile ("XDeath4", 42, 0, random (0, 190), 2, random (10, 60));
-		TNT1 A 0 A_CustomMissile ("SargeXDeath", 0, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		Stop;
 	Death.Desintegrate:
 		TNT1 A 0 A_XScream();
@@ -1160,11 +954,6 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_NoBlocking();
 		SPOS IJK 2;
-		TNT1 AA 0 A_SpawnItem("MeatDeathSmall");
-		TNT1 AAA 0 bright A_CustomMissile ("SuperGoreSpawner", 5, 0, random (0, 360), 2, random (30, 180));
-		TNT1 AAAA 0 bright A_CustomMissile ("XDeath1", 5, 0, random (0, 360), 2, random (30, 180));
-		TNT1 AA 0 bright A_CustomMissile ("XDeath2b", 55, 0, random (0, 360), 2, random (30, 180));
-		TNT1 AA 0 bright A_CustomMissile ("XDeath3b", 55, 0, random (0, 360), 2, random (30, 180));
 		TNT1 A 0 A_SpawnItem ("CrushedRemains");
 		TNT1 A 1;
 		TNT1 A 1 A_XScream();
@@ -1172,17 +961,12 @@ class BDPShotgunGuy: BDPBaseZombie
 	Crush:
 		TNT1 A 0;
 		TNT1 A 0;
-		TNT1 A 0 A_spawnitemex("SquishMeRed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
-		//TNT1 A 0 A_spawnitemex("BDPGoreRealGibs");
-		TNT1 AAAA 0 A_SpawnItemEx ("BodyRemovalThing",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
-		TNT1 AAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail8", 0, 0, random (0, 360), 2, random (0, 360));
 		TNT1 A 1 A_XScream();
 		Stop;
 	Death.ExplosiveImpact:
 		TNT1 A 0;
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItemEx("MuchBlood2", 0, 0, 40);
 		TNT1 A 0 ThrustThingZ(0,30,0,1);
 		TNT1 A 0 A_FaceTarget();
 		TNT1 A 1;
@@ -1201,17 +985,7 @@ class BDPShotgunGuy: BDPBaseZombie
 		Goto LegRemove;
 		TNT1 A 0 A_Jump(96, "Death.LandMine");
 		TNT1 A 0;
-		TNT1 A 0 A_CustomMissile ("XDeath2", 32, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1);
-		TNT1 A 0 A_CustomMissile ("Brains2", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains3", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains4", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains5", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAA 0 A_CustomMissile ("SmallBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10));
-		TNT1 AAAA 0 A_CustomMissile ("SmallBrainPiece", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathArm1", 35, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath3", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathZombieLeg", 32, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 ThrustThingZ(0,10,0,1);
 		TNT1 A 0 A_XScream();
 		SXSX GHIJKLM 3;
@@ -1229,17 +1003,7 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_JumpIfHealthLower(-15, 1);
 		Goto Death.Arm;
 		TNT1 A 0 A_Jump(96, "Death.Hammered");
-		TNT1 A 0 A_CustomMissile ("XDeath2", 32, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1);
-		TNT1 A 0 A_CustomMissile ("Brains2", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains3", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains4", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains5", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAA 0 A_CustomMissile ("SmallBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10));
-		TNT1 AAAA 0 A_CustomMissile ("SmallBrainPiece", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathArm1", 35, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath3", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathZombieLeg", 32, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 ThrustThingZ(0,15,0,1);
 		TNT1 A 0 A_XScream();
 		SXS2 GHIJKLM 3;
@@ -1254,37 +1018,19 @@ class BDPShotgunGuy: BDPBaseZombie
 	Death.Hammered:
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
 		TNT1 A 0;
-		TNT1 A 0 A_CustomMissile ("XDeath1", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath2", 32, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_ChangeFlag("NOBLOCKMONST", 1);
 		TNT1 A 0;
 		TNT1 A 0 A_Jump(96,"Death.LandMine");
-		TNT1 AAAA 0 A_CustomMissile ("Brains1", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains2", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains3", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains4", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("Brains5", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AAAA 0 A_CustomMissile ("SmallBrainPieceFast", random (45, 55), random (5, -5), random (170, 190), 2, random (-10, 10));
-		TNT1 AAAA 0 A_CustomMissile ("SmallBrainPiece", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 AA 0 A_CustomMissile ("SuperWallRedBlood", 46, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAAAAAAAAA 0 A_CustomMissile ("BrainBlood", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathArm1", 35, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeath3", 40, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathSargeLeg2", 32, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 ThrustThingZ(0,30,0,1);
 		ID14 AB 5;
 		ID14 CDEF 5 A_CheckFloor ("Dead.ExplosiveImpact");
 		ID14 FFFFFF 5 A_CheckFloor ("Dead.ExplosiveImpact");
-		TNT1 A 0 A_SpawnItem ("VeryFuckedUpBrutalizedSergeantLeg");
 		TNT1 A -1;
 		Stop;
 	Dead.ExplosiveImpact:
-		TNT1 A 0 A_SpawnItem ("VeryFuckedUpBrutalizedSergeantLeg");
 		TNT1 A 0 A_SpawnItem ("Ploft");
-		TNT1 A 0 A_SpawnItem ("MuchBlood");
 		Stop;
 	Death.LandMine:
-		TNT1 A 0 A_CustomMissile ("XDeathSargeLeg1", 32, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 ThrustThingZ(0,25,0,1);
 		ID16 A 1 A_Scream();
 		ID16 A 9;
@@ -1295,7 +1041,6 @@ class BDPShotgunGuy: BDPBaseZombie
 	Dead.Landmine:
 		TNT1 A 0 A_SpawnItem ("DeadShotgunguy_NoLeg", 1);
 		TNT1 A 0 A_SpawnItem ("Ploft");
-		TNT1 A 0 A_SpawnItem ("MuchBlood");
 		Stop;
 	Raise:
 		SPOS L 5;
@@ -1343,10 +1088,6 @@ class BDPShotgunGuy: BDPBaseZombie
 		ZZD1 E 0 A_FaceTarget();
 		TNT1 A 0 A_CustomMissile ("NailedShotgunguyOnlyTorso", 8, 0, 180, 2, random (5, 10));
 		ZZD1 E 0 A_XScream();
-		TNT1 AA 0 A_CustomMissile ("XDeath2", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AA 0 A_CustomMissile ("XDeath3", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 A 0 A_SpawnItem("Muchblood2", 0, 40);
-		TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (150, 210), 2, random (0, 40));
 		TNT1 A 0 A_NoBlocking();
 		SZD1 EEFFGH 6;
 		ZZD1 H 0;
@@ -1356,15 +1097,6 @@ class BDPShotgunGuy: BDPBaseZombie
 	Death.NailAlternative:
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_Scream();
-		TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (150, 210), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("XDeath1", 32, 0, random (150, 210), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("Xdeath3", 16, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBloodFaster", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBloodMuchFaster", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AA 0 A_CustomMissile ("SuperWallRedBlood", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AA 0 A_CustomMissile ("BloodMistBig", 40, 0, random (0, 360), 2, random (30, 90));
-		TNT1 AAA 0 A_CustomMissile ("BloodMistBig", 40, 0, random (0, 360), 2, random (30, 90));
 		ZXZ7 A 6 A_Stop();
 		TNT1 A 0 A_SpawnItem ("SergeantFallingHoleOnStomach");
 		TNT1 A -1;
@@ -1437,8 +1169,6 @@ class DeadShotgunGuy1 : CurbstompedMarine //Replaces DeadShotgunguy
 		SPOS L -1;
 		Stop;
 	Death:
-		TNT1 A 0 A_CustomMissile ("XDeathSargeLeg1", 5, 0, random (0, 360), 2, random (0, 160));
-		SPOS A 0 A_CustomMissile ("MeatDeathSmall", 5, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 1 A_SpawnItem ("DeadShotgunGuy_NoLeg", 5);
 		Stop;
 	Death.Plasma:
@@ -1446,10 +1176,6 @@ class DeadShotgunGuy1 : CurbstompedMarine //Replaces DeadShotgunguy
 		TNT1 A 0;
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 AAA 0 A_CustomMissile ("Brutal_FlyingBlood", 50, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedMeat", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedMeat2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathBurnedMeat3", 32, 0, random (0, 360), 2, random (0, 160));
 		EXPL AAA 0 A_CustomMissile ("ExplosionSmoke", 32, 0, random (0, 360), 2, random (0, 360));
 		TNT1 A 0;
 		Stop;
@@ -1484,8 +1210,6 @@ class DeadShotgunGuy_NoLeg : DeadShotgunGuy1
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_CustomMissile ("XDeathSargeLeg1", 5, 0, random (0, 360), 2, random (0, 160));
-		SPOS A 0 A_CustomMissile ("MeatDeathSmall", 5, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 1 A_SpawnItem ("DeadShotgunGuy_NoLegBoth", 5);
 		Stop;
 	}
@@ -1504,8 +1228,6 @@ class DeadShotgunGuy_NoLegBoth : DeadShotgunGuy1
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		SPOS A 0 A_CustomMissile ("MeatDeathSmall", 5, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathArm1", 5, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_SpawnItem("RipSergeant");
 		Stop;
 	}
@@ -1524,7 +1246,6 @@ class DeadShotgunGuy_NoBrain : DeadShotgunGuy1
 		Stop;
 	Death:
 		TNT1 A 0 A_PlaySound("misc/xdeath4");
-		TNT1 A 0 A_SpawnItem("ShotgunguyHeadExplode");
 		TNT1 A 0 A_SpawnItem ("DeadShotgunguy_NoHead", 1);
 		Stop;
 	}
@@ -1543,8 +1264,6 @@ class DeadShotgunGuy_NoHead : DeadShotgunGuy1
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		SPOS A 0 A_CustomMissile ("MeatDeathSmall", 5, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathArm1", 5, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_SpawnItem("DeadShotgunGuy_NoHeadNoArm");
 		Stop;
 	}
@@ -1563,8 +1282,6 @@ class DeadShotgunGuy_NoHeadNoArm : DeadShotgunGuy1
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		SPOS A 0 A_CustomMissile ("MeatDeathSmall", 5, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathArm1", 5, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_SpawnItem("DeadShotgunguySZD3C");
 		Stop;
 	}
@@ -1583,8 +1300,6 @@ class DeadShotgunGuy_Half : DeadShotgunGuy1
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		SPOS A 0 A_CustomMissile ("MeatDeathSmall", 5, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathArm1", 5, 0, random (0, 360), 2, random (0, 160));
 		TNT1 A 0 A_SpawnItem("DeadShotgunguySZD1H");
 		Stop;
 	}
@@ -1621,7 +1336,6 @@ class DeadShotgunguy_Slumped : ZombiemanTorso
 		TNT1 A 0 A_JumpIf(vel.y < 0, "LayDown");
 		TNT1 A 0 A_JumpIf(vel.x > 0, "LayDown");
 		TNT1 A 0 A_JumpIf(vel.y > 0, "LayDown");
-		TNT1 A 0 A_SpawnItemEx("HeadshotTarget20", 0, 0, 22,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		BR93 A 16;
 		Loop;
 	LayDown:
@@ -1632,26 +1346,13 @@ class DeadShotgunguy_Slumped : ZombiemanTorso
 	Death.Explosives:
 	Death.ExplosiveImpact:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("SargeXDeath");
 		Stop;
 	Death.Head:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItemEx("ShotgunguyHeadExplode", 0, 0, 22);
 		TNT1 A 0 A_SpawnItem("DeadShotgunguy_Slumped_NoHead");
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (150, 210), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("XDeath1", 32, 0, random (150, 210), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("Xdeath3", 16, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBloodFaster", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBloodMuchFaster", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AA 0 A_CustomMissile ("SuperWallRedBlood", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("BloodMistBig", 40, 0, random (0, 360), 2, random (30, 90));
-		TNT1 AA 0 A_CustomMissile ("XDeathArm1", 40, 0, random (0, 360), 2, random (30, 90));
-		TNT1 A 0 A_SpawnItemEx("ShotgunguyHeadExplode", 0, 0, 22);
-		//TNT1 A 0 A_SpawnItem("DeadShotgunguyJustLegsAreLeft");
 		Stop;
 	}
 }
@@ -1674,20 +1375,9 @@ class DeadShotgunguy_Slumped_NoHead : ZombiemanTorso
 	Death.Explosives:
 	Death.ExplosiveImpact:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("SargeXDeath");
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 AAA 0 A_CustomMissile ("Guts", 32, 0, random (150, 210), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("XDeath1", 32, 0, random (150, 210), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("Xdeath3", 16, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBloodFaster", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBloodMuchFaster", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AA 0 A_CustomMissile ("SuperWallRedBlood", 32, 0, random (170, 190), 2, random (0, 40));
-		TNT1 AAA 0 A_CustomMissile ("BloodMistBig", 40, 0, random (0, 360), 2, random (30, 90));
-		TNT1 AA 0 A_CustomMissile ("XDeathArm1", 40, 0, random (0, 360), 2, random (30, 90));
-		//TNT1 A 0 A_SpawnItem("DeadShotgunguyJustLegsAreLeft");
 		Stop;
 	}
 }
@@ -1701,10 +1391,6 @@ class DeadSergeantSXSXO : DeadShotgunGuy1
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("MeatDeathSmall");
-		TNT1 A 0 A_SpawnItem("RipGuts");
-		TNT1 A 0 A_CustomMissile ("XDeathSargeLeg2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathaRM1", 32, 0, random (0, 360), 2, random (0, 160));
 		Stop;
 	}
 }
@@ -1718,11 +1404,6 @@ class DeadSergeantSXS2O : DeadShotgunGuy1
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("MeatDeathSmall");
-		TNT1 A 0 A_SpawnItem("RipGuts");
-		TNT1 A 0 A_CustomMissile ("XDeathSargeLeg2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathaRM1", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("ShotgunguyHeadExplode", 32, 0, random (0, 360), 2, random (0, 160));
 		Stop;
 	}
 }
@@ -1735,8 +1416,6 @@ class DeadShotgunguySPO4J : DeadShotgunGuy1
 		SPO4 J -1;
 		Stop;
 	Death:
-		TNT1 A 0 A_SpawnItem("MeatDeathSmall");
-		TNT1 A 0 A_SpawnItem("RipSergeant");
 		TNT1 A 0 A_SpawnItem("DeadShotgunguy_Half");
 		Stop;
 	}
@@ -1802,10 +1481,7 @@ class DeadShotgunguyZXZ7E : DeadShotgunGuy1
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("MeatDeathSmall");
 		TNT1 A 0 A_SpawnItem("DeadShotgunguySZD3C");
-		TNT1 AA 0 A_CustomMissile ("XDeathArm1", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_SpawnItem("ShotgunguyHeadExplode");
 		Stop;
 	}
 }
@@ -1819,10 +1495,7 @@ class DeadShotgunguyZXZ6E : DeadShotgunGuy1
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("MeatDeathSmall");
 		TNT1 A 0 A_SpawnItem("DeadShotgunguySZD3F");
-		TNT1 A 0 A_CustomMissile ("XDeathArm1", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_SpawnItem("ShotgunguyHeadExplode");
 		Stop;
 	}
 }
@@ -1836,9 +1509,6 @@ class DeadShotgunguySZD3C : DeadShotgunGuy1
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("MeatDeathSmall");
-		TNT1 A 0 A_SpawnItem("RipGuts");
-		TNT1 AA 0 A_CustomMissile ("XDeathSargeLeg2", 32, 0, random (0, 360), 2, random (0, 160));
 		Stop;
 	}
 }
@@ -1862,9 +1532,6 @@ class DeadShotgunguySZD1H: DeadShotgunGuy1
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("MeatDeathSmall");
-		TNT1 A 0 A_CustomMissile ("XDeathSargeLeg2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("GibSargeBoot", 32, 0, random (0, 360), 2, random (0, 160));
 		Stop;
 	}
 }
@@ -1878,10 +1545,6 @@ class DeadShotgunguySZD4D : DeadShotgunGuy1
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("MeatDeathSmall");
-		TNT1 A 0 A_SpawnItem("RipGuts");
-		TNT1 AA 0 A_CustomMissile ("XDeathSargeLeg2", 32, 0, random (0, 360), 2, random (0, 160));
-		TNT1 A 0 A_CustomMissile ("XDeathaRM1", 32, 0, random (0, 360), 2, random (0, 160));
 		Stop;
 	}
 }

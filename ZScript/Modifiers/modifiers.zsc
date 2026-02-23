@@ -497,17 +497,6 @@ class Modifier_ManAndAHalf : BDPModifier
 			dplr.spawnberserked = true;
 		}
 	}
-	
-	Override void worldthingspawned(Worldevent e)
-	{
-		If(e.thing && e.thing is "BerserkPack")
-		{
-			Actor.spawn("DemonRuneSpawner",e.thing.pos);
-			E.thing.destroy();
-		}
-		
-	}
-	
 }
 
 class Modifier_Gluttony : BDPModifier

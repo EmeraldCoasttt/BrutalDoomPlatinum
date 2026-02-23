@@ -290,7 +290,7 @@ CLASS CACOHEADSHOT : BASEHEADSHOT
 	{
 		baseheadshot.offsetz 32;
 		baseheadshot.offsetx 24;
-		bloodcolor "blue";
+		bloodcolor "darkblue";
 		radius 14;
 		height 14;
 		+dontrip;

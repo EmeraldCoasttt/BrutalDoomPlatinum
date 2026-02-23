@@ -40,7 +40,6 @@ class BDPSpiderMastermind : BDPActor Replaces SpiderMastermind
 		+SOLID
 		+SHOOTABLE
 		MissileChanceMult 0.0625;
-		Bloodtype "MastermindBlood";
 		//DropItem "DemonRunespawner", 25
 	//DropItem "Demonstrengthrune", 25
 		SeeSound "spider/sight";
