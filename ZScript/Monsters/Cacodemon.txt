@@ -172,13 +172,13 @@ class BDPCacodemon : Cacodemon Replaces Cacodemon
 		HEAD B 4 A_FaceTarget();
 		Missile2:
 		HEAD C 4 A_FaceTarget();
-		HEAD M 3 BRIGHT A_CustomMissile("CacodemonBall", 34, 0, 0, 0);
+		HEAD D 3 BRIGHT A_CustomMissile("CacodemonBall", 34, 0, 0, 0);
 		HEAD D 1 BRIGHT;
 		TNT1 A 0 A_jump(150,"missile2");
 		Goto See;
 	AltMissile:
 		HEAD C 4 A_FaceTarget();
-		HEAD M 3 BRIGHT A_CustomMissile("CacodemonBall", 34, random(-3,3), 0, 0);
+		HEAD D 3 BRIGHT A_CustomMissile("CacodemonBall", 34, random(-3,3), 0, 0);
 		HEAD D 1 BRIGHT;
 		TNT1 A 0 cacomeleecheck();
 		Goto See;
@@ -236,7 +236,7 @@ class BDPCacodemon : Cacodemon Replaces Cacodemon
 		HEAD A 6 A_FastChase();
 		HEAD B 5 A_FaceTarget();
 		HEAD C 5 A_FaceTarget();
-		HEAD M 3 BRIGHT A_HeadAttack();
+		HEAD D 3 BRIGHT A_HeadAttack();
 		HEAD D 2 BRIGHT;
 		Goto See;
 	Death.Shotgun:
@@ -265,14 +265,6 @@ class BDPCacodemon : Cacodemon Replaces Cacodemon
 		CCD3 D 3 A_NoBlocking();
 		CCD3 EFG 4;
 		TNT1 A 0 A_SpawnItem ("DeadCacoDemon1Variation1", 1);
-		TNT1 A -1;
-		Stop;
-	Deathlulz:
-		H3D2 A 6 A_Scream();
-		H3D2 B 6 A_NoBlocking();
-		H3D2 CD 6;
-		H3D2 E 6;
-		TNT1 A 0 A_SpawnItem ("DeadCacoDemon1", 1);
 		TNT1 A -1;
 		Stop;
 	Death.Fatality:
