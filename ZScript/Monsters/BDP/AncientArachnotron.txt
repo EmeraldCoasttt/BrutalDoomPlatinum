@@ -11,8 +11,8 @@ class BDPAncientArachnotron : Actor
 		+FLOORCLIP
 		+BOSSDEATH
 		GibHealth 20;
-		Radius 45;
-		Height 74;
+		Radius 36;
+		Height 64;
 		damagefactor "Crush", 10.0;
 		damagefactor "Avoid", 0.0;
 		SeeSound "baby/sight";
@@ -21,7 +21,6 @@ class BDPAncientArachnotron : Actor
 		ActiveSound "baby/active";
 		Obituary "$OB_BABY";
 		MaxStepHeight 24;
-		DropItem "Berserker", 5;
 		MaxDropOffHeight 24;
 		PainChance "Kick", 255;
 		Damage 25;
@@ -33,8 +32,8 @@ class BDPAncientArachnotron : Actor
 		Tag "Arachnotron";
 		+ROLLSPRITE
 		+ROLLCENTER
+		+STRETCHPIXELS
 		//$category "BD Monsters"
-		Scale 1.4;
 		Health 1250;
 		Obituary "%o was killed by an Ancient Arachnotron.";
 		Tag "Ancient Arachnotron";
@@ -258,7 +257,6 @@ class DeadSpiderDark : CurbstompedMarine
 	{
 	Radius 20;
 	Height 12;
-	Scale 1.3;
 	+SHOOTABLE
 	+NOTELEPORT
 	+MOVEWITHSECTOR
@@ -341,7 +339,6 @@ class ArachnoTurretFrame2 : Actor
 		Radius 32;
 		Height 60;
 		Health 20;
-		Scale 1.3;
 		DamageFactor "Fatality", 2.0;
 		+SHOOTABLE
 		-SOLID
@@ -394,7 +391,6 @@ class FatalizedArachnotron2 : DeadSpider
 {
 	Default
 	{
-		Scale 1.0; //sprite already scaled
 		Health 200;
 	}
 	States

@@ -2,7 +2,6 @@ class BDPMancubus : Fatso Replaces Fatso
 {
 	Default
 	{
-		Scale 1.1;
 		MaxStepHeight 16;
 		MaxDropOffHeight 24;
 		damagefactor "Crush", 10.0;
@@ -575,7 +574,6 @@ class NoGutsFatso : CurbstompedMarine
 		Radius 24;
 		Mass 10000;
 		Health 500;
-		Scale 1.1;
 	}
 	States
 	{
@@ -626,7 +624,6 @@ class DeadFat : NoGutsFatso
 	{
 		Radius 16;
 		Height 18;
-		Scale 1.1;
 		Mass 10000;
 		Health 500;
 	}
@@ -805,7 +802,6 @@ class FatalizedFatso : NoGutsFatso
 {
 	Default
 	{
-		Scale 1.0;
 		Health 500;
 	}
 	States
@@ -830,7 +826,6 @@ class DyingFatso01 : NoGutsFatso
 {
 	Default
 	{
-		Scale 1.0;
 		Health 100;
 		Radius 28;
 		Height 56;
@@ -867,7 +862,6 @@ class DyingFatso02 : DyingFatso01
 {
 	Default
 	{
-		Scale 1.0;
 		Health 100;
 	}
 	States
@@ -890,7 +884,6 @@ class DyingFatso03 : DyingFatso02
 {
 	Default
 	{
-		Scale 1.0;
 		Health 100;
 	}
 	States

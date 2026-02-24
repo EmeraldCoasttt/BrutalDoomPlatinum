@@ -22,7 +22,6 @@ class BDPSpiderMastermind : BDPActor Replaces SpiderMastermind
 		Radius 60;
 		Height 100;
 		damagefactor "Crush", 30.0;
-		Scale 1.1;
 		Mass 6000;
 		Speed 20;
 		PainChance 30;
@@ -402,7 +401,6 @@ class XSpiderMastermindCuttedBrain : Actor
 		Radius 8;
 		Height 8;
 		Speed 10;
-		Scale 1.2;
 		Mass 1;
 		+NOBLOCKMAP
 		+MISSILE
@@ -489,7 +487,6 @@ class MastermindLeg : Actor
 		Radius 8;
 		Height 8;
 		Speed 24;
-		Scale 1.3;
 		Gravity 0.8;
 		Mass 1;
 		+NOBLOCKMAP
@@ -541,7 +538,6 @@ class StompedMastermind : Actor
 	{
 		Radius 56;
 		Height 32;
-		Scale 1.0;
 		+SHOOTABLE
 		+NOBLOOD
 		DamageFactor "Trample", 0.0;

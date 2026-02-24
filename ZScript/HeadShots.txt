@@ -229,29 +229,14 @@ CLASS VILEHEADSHOT : BASEHEADSHOT
 
 CLASS FATSOHEADSHOT : BASEHEADSHOT
 {
-
 	Default
 	{
-		baseheadshot.offsetz 52;
+		baseheadshot.offsetz 46;
 		baseheadshot.offsetx 16;
 		radius 12;
 		height 16;
 	}
-
 }
-
-CLASS VOLCABUSHEADSHOT : BASEHEADSHOT
-{
-
-	Default
-	{
-		baseheadshot.offsetz 78;
-		radius 18;
-		height 22;
-	}
-
-}
-
 
 CLASS KNIGHTHEADSHOT : BASEHEADSHOT
 {
@@ -273,11 +258,11 @@ CLASS BARONHEADSHOT : BASEHEADSHOT
 
 	Default
 	{
-		baseheadshot.offsetz 60;
+		baseheadshot.offsetz 55;
 		baseheadshot.offsetx 8;
-		radius 12;
-		height 18;
-		bloodcolor "darkgreen";
+		radius 10;
+		height 16;
+		BloodColor "DarkGreen";
 		Species "nobles";
 	}
 

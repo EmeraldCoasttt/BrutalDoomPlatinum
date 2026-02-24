@@ -801,10 +801,6 @@ class DeadKnightVariation1 : DeadKnight
 
 class DeadKnightBTN5F : DeadKnight
 {
-	Default
-	{
-		Scale 1.2;
-	}
 	States
 	{
 	Spawn:
@@ -878,10 +874,6 @@ class AltDeadKnight : DeadKnight
 
 class DeadKnightExplosiveImpact2 : DeadKnight
 {
-	Default
-	{
-		Scale 1.2;
-	}
 	States
 	{
 	Spawn:
@@ -896,10 +888,6 @@ class DeadKnightExplosiveImpact2 : DeadKnight
 
 class DeadKnightExplosiveImpact1 : DeadKnightExplosiveImpact2
 {
-	Default
-	{
-		Scale 1.2;
-	}
 	States
 	{
 	Spawn:
@@ -1014,7 +1002,6 @@ class DyingHellKnight1 : Actor
 		+FLOORCLIP
 		+NOPAIN
 		+DONTSPLASH
-		Scale 1.0;
 		PainSound "PSXDPN";
 	}
 	States
@@ -1069,10 +1056,6 @@ class DyingHellKnight1 : Actor
 
 class DyingHellKnight2 : DyingHellKnight1
 {
-	Default
-	{
-		Scale 1.2;
-	}
 	States
 	{
 	Spawn:

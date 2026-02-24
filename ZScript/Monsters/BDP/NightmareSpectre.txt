@@ -5,7 +5,6 @@ class BDPNightmareSpectre : Demon
 		GibHealth 35;
 		//Radius 30
 		Health 200;
-		Scale 1.1;
 		Height 56;
 		Radius 20;
 		Mass 400;
@@ -709,7 +708,6 @@ class BlueDeadDemon1 : CurbstompedMarine //Replaces BlueDeadDemon
 	{
 		Radius 18;
 		Height 12;
-		Scale 1.1;
 		+SHOOTABLE
 		+NOTELEPORT
 		+MOVEWITHSECTOR
@@ -933,7 +931,6 @@ class PoorBluePinkyLostHisArm : Demon
 		+NOPAIN
 		-COUNTKILL
 		+SHOOTABLE
-		Scale 1.1;
 		Renderstyle "Subtract";
 		Alpha 0.9;
 		bloodcolor "Blue";
@@ -1202,7 +1199,6 @@ class GibDemonHandBlue : Actor //TinyGib
 {
 	Default
 	{
-		Scale 0.9;
 		Renderstyle "Subtract";
 		Alpha 0.9;
 		bloodtype "Blue_Blood", "BlueSawBlood", "BlueSawBlood";
@@ -1229,7 +1225,6 @@ class XDeathBullLeg12Blue : XDeathArm1
 {
 	Default
 	{
-		Scale 1.1;
 		Speed 8;
 		Gravity 0.4;
 		BounceFactor 0.4;
@@ -1256,7 +1251,6 @@ class Gib_DemonLegBlue : Actor //LimbBase
 {
 	Default
 	{
-		Scale 1.1;
 		Renderstyle "Subtract";
 		Alpha 0.9;
 		bloodtype "Blue_Blood", "BlueSawBlood", "BlueSawBlood";
@@ -1310,7 +1304,6 @@ class GibDemonLegPartBlue : Actor //TinyGib
 {
 	Default
 	{
-		Scale 1.1;
 		Renderstyle "Subtract";
 		Alpha 0.9;
 		bloodtype "Blue_Blood", "BlueSawBlood", "BlueSawBlood";
@@ -1335,7 +1328,6 @@ class GibDemonPawBlue : Actor //TinyGib
 {
 	Default
 	{
-		Scale 1.1;
 		Renderstyle "Subtract";
 		Alpha 0.9;
 		bloodtype "Blue_Blood", "BlueSawBlood", "BlueSawBlood";
@@ -1393,7 +1385,6 @@ class XDeathPinkyDemonHeadBlue : XDeathBullArm1Blue
 	{
 		-CLIENTSIDEONLY
 		Speed 10;
-		Scale 1.3;
 		Renderstyle "Subtract";
 		Alpha 0.9;
 		bloodtype "Blue_Blood", "BlueSawBlood", "BlueSawBlood";
@@ -1426,7 +1417,6 @@ class PinkyDemonHeadBlue : Actor //ZombiemanHead
 		Radius 10;
 		Mass 60;
 		Health 60;
-		Scale 1.5;
 		Renderstyle "Subtract";
 		Alpha 0.9;
 		bloodtype "Blue_Blood", "BlueSawBlood", "BlueSawBlood";
@@ -1493,7 +1483,6 @@ class XDeathPinkyDemonHeadKickedBlue : XDeathPinkyDemonHeadBlue
 		-BOUNCEONACTORS
 		Damage 4;
 		Speed 13;
-		Scale 1.3;
 		BounceFactor 0.4;
 	}
 }
@@ -1583,7 +1572,6 @@ class PinkyJawBlue : Actor //BaronHeadPiece
 		Alpha 0.9;
 		bloodtype "Blue_Blood", "BlueSawBlood", "BlueSawBlood";
 		bloodcolor "Blue";
-		Scale 1.2;
 	}
 	States
 	{

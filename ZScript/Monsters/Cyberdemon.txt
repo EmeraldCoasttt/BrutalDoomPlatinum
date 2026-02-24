@@ -12,7 +12,6 @@ class BDPCyberdemon : Cyberdemon Replaces Cyberdemon
 		PainSound "CYBPAIN";
 		MaxStepHeight 24;
 		MaxDropOffHeight 32;
-		Scale 1.2;
 		//Radius 45
 		//Height 94
 		Radius 40;

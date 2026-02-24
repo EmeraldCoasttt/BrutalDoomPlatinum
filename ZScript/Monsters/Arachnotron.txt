@@ -2,8 +2,8 @@ class BDPArachnotron : BDPActor replaces Arachnotron
 {
 	Default
 	{
-		Health 500;
-		Radius 64;
+		Health 750;
+		Radius 36;
 		Height 64;
 		Mass 600;
 		Speed 12;
@@ -19,7 +19,6 @@ class BDPArachnotron : BDPActor replaces Arachnotron
 		Tag "$FN_ARACH";
 		Monster;
 		GibHealth 20;
-		Radius 36;
 		damagefactor "Crush", 10.0;
 		damagefactor "Avoid", 0.0;
 		SeeSound "baby/sight";
@@ -28,15 +27,12 @@ class BDPArachnotron : BDPActor replaces Arachnotron
 		ActiveSound "baby/active";
 		Obituary "$OB_BABY";
 		MaxStepHeight 24;
-		DropItem "Berserker", 5;
 		MaxDropOffHeight 24;
 		PainChance "Kick", 255;
 		Damage 25;
 		Speed 8;
 		Species "Spider";
 		+DONTHARMSPECIES
-		Scale 1.1;
-		Health 750;
 		DeathHeight 4;
 		BurnHeight 0;
 		Tag "Arachnotron";
@@ -502,7 +498,6 @@ class DeadSpider : CurbstompedMarine
 {
 	Default
 	{
-		Scale 1.1;
 		damagefactor "Crusher", 50.0;
 		Mass 1000;
 		Radius 32;
@@ -533,7 +528,6 @@ class XDeadSpider : DeadSpider
 {
 	Default
 	{
-		Scale 1.1;
 		Health 200;
 	}
 	States
@@ -549,7 +543,6 @@ class FatalizedArachnotron : DeadSpider
 {
 	Default
 	{
-		Scale 1.0;
 		Health 200;
 	}
 	States
@@ -570,7 +563,6 @@ class NoLegsSpider : DeadSpider
 {
 	Default
 	{
-		Scale 1.0;
 		+NOBLOOD;
 		Health 999999999999;
 	}
@@ -590,7 +582,6 @@ class SpiderPart1 : Actor
 		Radius 1;
 		Height 8;
 		Speed 12;
-		Scale 1.3;
 		Mass 1;
 		+NOBLOCKMAP
 		+MISSILE
@@ -628,7 +619,6 @@ class SpiderPart2 : Actor
 		Radius 1;
 		Height 8;
 		Speed 12;
-		Scale 2.0;
 		Mass 1;
 		+NOBLOCKMAP
 		+MISSILE

@@ -2,7 +2,6 @@ class BDPBaronofHell : BaronofHell Replaces BaronofHell
 {
 	Default
 	{
-		Scale 1.1;
 		damagefactor "Crush", 10.0;
 		GibHealth 25;
 		Health 1200;
@@ -25,6 +24,7 @@ class BDPBaronofHell : BaronofHell Replaces BaronofHell
 		MaxDropOffHeight 32;
 		+DONTHARMSPECIES
 		DeathHeight 0;
+		Height 56;
 		Radius 16;
 		BurnHeight 0;
 		Speed 10;
@@ -789,7 +789,6 @@ class DeadBaron: CurbstompedMarine
 	{
 		Radius 12;
 		Height 12;
-		Scale 1.2;
 		+SHOOTABLE
 		+NOTELEPORT
 		+MOVEWITHSECTOR
@@ -989,7 +988,6 @@ class DyingBaron1 : Actor
 		+FLOORCLIP
 		+DONTSPLASH
 		+NOPAIN
-		Scale 1.2;
 	}
 	States
 	{
