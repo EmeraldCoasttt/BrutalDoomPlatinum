@@ -1081,7 +1081,6 @@ class FrozenCyberDemon : FrozenZombieman
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_spawnitemex("frozengorespawnerredXL");
-		TNT1 A 0 A_CustomMissile("CyberXDeath", 0, 0, random(0, 360), 2, random(0, 160));
 		CYFZ C -1;
 		CYFZ CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -1139,7 +1138,6 @@ class FrozenMastermind : FrozenZombieman
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_spawnitemex("frozengorespawnerredXL");
-		TNT1 A 0 A_CustomMissile("CyberXDeath", 0, 0, random(0, 360), 2, random(0, 160));
 		SPFZ C -1;
 		SPFZ CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;

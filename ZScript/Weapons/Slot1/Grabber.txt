@@ -45,7 +45,7 @@ class BDPGrabber : BDPWeaponBase
 				continue;
 			if(mo.bshootable || mo.bmissile)
 			{
-				if(mo.bspawnceiling || mo.health < 1 || mo is "headkicking" || mo is "BDECGRASS" || mo is "Brutal_Bloodspot")
+				if(mo.bspawnceiling || mo.health < 1 || mo is "headkicking" || mo is "BDECGRASS")
 				{
 					continue;
 				}

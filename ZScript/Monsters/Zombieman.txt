@@ -1327,7 +1327,7 @@ class BDPZombieman : BDPBaseZombie
 		POSS JIH 5;
 		TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
 		Goto See;
-	Death.Nail:
+	/*Death.Nail:
 		//TNT1 A 0 A_RadiusGive("MakeTheNailDissapear", 32, RGF_MISSILES, 1);
 		// TNT1 A 0 A_Jump(256, "Death.NailAlternative");
 		TNT1 A 0 A_Jump(64, "Death.NailRipLegs");
@@ -1356,7 +1356,7 @@ class BDPZombieman : BDPBaseZombie
 		//TNT1 A 0 A_SpawnItem("ZombiemanFallingHoleOnStomach");
 		TNT1 A 0 A_SpawnItemEx("ZombiemanFallingHoleOnStomach", 0, 0, 0, 0, 0, 0,0,SXF_NOCHECKPOSITION,40);
 		TNT1 A -1;
-		Stop;
+		Stop;*/
 	}
 }
 
@@ -1558,7 +1558,6 @@ class DeadZombieMan_NoLegBoth : DeadZombieMan_NoArm
 		Stop;
 	Death:
 			TNT1 A 0 A_NoBlocking();
-			TNT1 A 0 A_SpawnItem("RipZombieman", 0, 10);
 			Stop;
 	}
 }
@@ -1974,7 +1973,6 @@ class DeadZombiemanPXS2O: ZombiemanTorso
 		Stop; 
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 1 A_SpawnItem("GibsZ");
 		Stop;
 	}
 }

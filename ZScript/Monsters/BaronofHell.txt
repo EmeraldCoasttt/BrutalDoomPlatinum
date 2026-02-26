@@ -1127,3 +1127,69 @@ class CallingTheBaronAFaggot : BaronBall
 		Stop;
 	}
 }
+
+class BaronHoldingBarrel : Actor
+{
+	Default
+	{
+		+NOTARGET
+		damagefactor "Head", 0.0;
+		damagefactor "MinorHead", 0.0;
+		damagefactor "KillMe", 0.0;
+		damagefactor "Control", 0.0;
+		damagefactor "Trample", 0.0;
+		damagefactor "Melee", 0.3;
+		damagefactor "Alert", 0.0;
+		damagefactor "SSG", 10.0;
+		//MONSTER
+		-COUNTKILL
+		+NOBLOOD
+		Health 25;
+		Radius 32;
+		Height 24;
+		DamageType "Extreme";
+		PainChance 255;
+		+NOGRAVITY
+		+SHOOTABLE
+		+NOTELEPORT
+		+FORCERADIUSDMG
+		-SOLID
+		+NODAMAGETHRUST
+		+THRUGHOST
+		+NORADIUSDMG
+		+GHOST
+		+SERVERSIDEONLY
+		-COUNTKILL
+		damagefactor "Trample", 0;
+	}
+	States
+	{
+	Spawn:
+		XXXX A 32;
+		XXXX A 1 A_NoBlocking();
+		Stop;
+	Death:
+		TNT1 A 0;
+		TNT1 A 0 A_Explode(5000, 30);
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_Fall();
+		TNT1 A 0 A_SpawnItemEx ("ExplosionSplashSpawner", 0, 0, -20);
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("BarrelExplosion",0,0,30,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("BarrelKaboom",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 AAAAAAA 0 A_CustomMissile ("ExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180));
+		TNT1 AAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180));
+		EXPL A 0 Radius_Quake (2, 24, 0, 15, 0);
+		BEXP B 0 BRIGHT A_Scream();
+		TNT1 AA 0 A_CustomMissile ("MetalShard1", 5, 0, random (0, 360), 2, random (30, 160));
+		TNT1 AA 0 A_CustomMissile ("MetalShard2", 5, 0, random (0, 360), 2, random (30, 160));
+		TNT1 AA 0 A_CustomMissile ("MetalShard3", 5, 0, random (0, 360), 2, random (30, 160));
+		TNT1 A 0 A_PlaySound("FAREXPL", 3);
+		TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn");
+		TNT1 AAAAA 8 A_CustomMissile ("ExplosionSmoke", 1, 0, random (0, 360), 2, random (50, 130));
+		Stop;
+	}
+}

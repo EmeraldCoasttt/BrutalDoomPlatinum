@@ -230,7 +230,6 @@ class BDPGoreRealGibs : RealGibs
 			//Destroy();
 		}
 		  POL5 A 0;
-	POL5 A 0 A_SpawnItemEX("MediumBloodSpot");
     POL5 A -1;
     Stop;
 	}
@@ -558,7 +557,6 @@ class CurbstompedMarine : BDPCorpse
 		Goto Death	
 		*/
     Death:
-  	     TNT1 A 0 A_SpawnItem("Gibz");
 	     TNT1 A 0 A_NoBlocking();
 		 TNT1 A 1;
 		 Stop;
@@ -568,67 +566,20 @@ class CurbstompedMarine : BDPCorpse
 		TNT1 A 0 A_NoBlocking();
         TNT1 A 0 A_XScream();
         TNT1 A 0 A_NoBlocking();
-        TNT1 A 0 A_CustomMissile ("XDeathBurnedMeat", 32, 0, random (0, 360), 2, random (0, 160));
-	    TNT1 A 0 A_CustomMissile ("XDeathBurnedMeat3", 32, 0, random (0, 360), 2, random (0, 160));
 		EXPL AAA 0 A_CustomMissile ("ExplosionSmoke", 32, 0, random (0, 360), 2, random (0, 360));
         TNT1 A 0;
         Stop;
-	Death.TeleportRemover:
-	Death.GibRemoving:
-	    TNT1 A 0;
-		TNT1 A 0 A_Scream();
-		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_ChangeFlag("NOCLIP", 1);
-		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
-		TNT1 A 0 A_ChangeFlag("NOBLOCKMAP", 1);
-		Stop;
-		
-
-  	     TNT1 AAAAA 0 A_CustomMissile ("XDeath1", 5, 0, random (0, 360), 2, random (0, 30));
-		 TNT1 AA 0 A_CustomMissile ("XDeath2b", 5, 0, random (0, 360), 2, random (0, 30));
-		 TNT1 AAAA 0 A_CustomMissile ("BloodMist", 5, 0, random (0, 360), 2, random (0, 30));
-		 TNT1 AAAAAAA 0 A_CustomMissile ("XDeathSkinPiece2", 5, 0, random (0, 360), 2, random (10, 30));
-		 TNT1 AAAA 0 A_CustomMissile ("XDeathSkinPiece1", 5, 0, random (0, 360), 2, random (10, 130));
-		 TNT1 AAAA 0 A_CustomMissile ("SmallSuperGore", 10, 0, random (0, 360), 2, random (10, 30));
-		 TNT1 A 0 A_SpawnItem("SplatteredSmall");
-		 XME2 L 1;
-		 XME2 L -1;
-		 Stop;
-		 
 	Death.Desintegrate:
 		 TNT1 A 0;
-		 TNT1 AAAA 0 A_CustomMissile ("Brutal_FlyingBloodFake", 0, 0, random (0, 360), 2, random (0, 90));
-         TNT1 A 0 A_CustomMissile ("Brutal_FlyingBlood", 7, 0, random (0, 360), 2, random (30, 60));
-		 TNT1 AA 0 A_CustomMissile ("BloodMistSmall", 7, 0, random (0, 360), 2, random (30, 60));
-		 TNT1 A 0 A_SpawnItem("Gibz");
-		 TNT1 A 0 A_SpawnItem("MeatDeathSmall");
 		 Stop;
-		 
-		 
 	Death.Crush:
 	Crush:
 	Death.CrushedBodies:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 AA 0 A_SpawnItem("MeatDeathSmall");
-		
 		TNT1 A 0 A_SetAngle(0);
-		TNT1 A 0 bright A_CustomMissile ("SuperGoreSpawner2", 1, -40, random (0, 360), 2, random (25, 45));
-		TNT1 A 0 bright A_CustomMissile ("SuperGoreSpawner2", 1, 40, random (0, 360), 2, random (25, 45));
-		 TNT1 A 0 A_CustomMissile ("XDeath1", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		 TNT1 A 0 A_CustomMissile ("XDeath2b", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		 TNT1 A 0 A_CustomMissile ("XDeath3b", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		 TNT1 AA 0 A_CustomMissile ("BloodMistBig", 1, -40, random (0, 360), 2, random (30, 90));
-		 TNT1 AA 0 A_CustomMissile ("BloodMistBig", 1, 40, random (0, 360), 2, random (30, 90));
-		 TNT1 A 0 A_SetAngle(90);
-		 TNT1 A 0 bright A_CustomMissile ("SuperGoreSpawner2", 1, -40, random (0, 360), 2, random (25, 45));
-		 TNT1 A 0 bright A_CustomMissile ("SuperGoreSpawner2", 1, 40, random (0, 360), 2, random (25, 45));
-		 TNT1 A 0 A_CustomMissile ("XDeath1", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		 TNT1 A 0 A_CustomMissile ("XDeath2b", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		 TNT1 A 0 A_CustomMissile ("XDeath3b", 1, random (-30, 30), random (0, 360), 2, random (0, 160));
-		 TNT1 AA 0 A_CustomMissile ("BloodMistBig", 1, -40, random (0, 360), 2, random (30, 90));
-		 TNT1 AA 0 A_CustomMissile ("BloodMistBig", 1, 40, random (0, 360), 2, random (30, 90));
 		TNT1 A 0 A_SpawnItem ("CrushedRemains");
 		TNT1 A 1;
 		TNT1 A 1 A_XScream();
 		Stop ;
-		}}
+	}
+}

@@ -233,10 +233,7 @@ class BDPArchVile: Archvile Replaces Archvile
 		Goto Pain;
 		NULL AAA 0;
 	pain.SSG:
-		//TNT1 A 0 A_CustomMissile ("XDeath3", 0, 0, random (0, 360), 2, random (0, 160))
-		TNT1 A 0 A_CustomMissile ("XDeath1", 0, 0, random (0, 360), 2, random (0, 160));
 	Pain:
-		//DIAB Q 3
 		TNT1 A 0 A_KillChildren();
 		TNT1 A 0 A_jump(250,"teleportaway");
 	PainAnyways:

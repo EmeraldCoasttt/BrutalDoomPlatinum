@@ -285,8 +285,7 @@ class DeadSpiderDark : CurbstompedMarine
 	Death.Cut:
 	Death.Cutless:
 	Death:
-		TNT1 A 0 A_SpawnItemEx ("GibsZ",-3,-3);
-		TNT1 A 0 A_SpawnItemEx ("GibsZ",3,3);
+		TNT1 A 0;
 		Stop;
 	}
 }

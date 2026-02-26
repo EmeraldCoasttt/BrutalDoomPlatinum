@@ -826,3 +826,104 @@ class RailgunProjectile : Actor
 		Stop;
 	}
 }
+
+
+class NailgunGib1 : Actor
+{
+	int lifetime;
+	
+	override void PostBeginPlay()
+	{
+		lifetime = 140;
+		super.PostBeginPlay();
+	}
+	
+	Default
+	{
+		Projectile;
+		Gravity 1;
+		damage 0;
+		BounceType "Doom";
+		BounceFactor 0.6;
+		WallBounceFactor 0.6;
+		Radius 4;
+		Height 4;
+		Speed 6;
+		scale 0.6;
+		SeeSound "NAILBOUN";
+		BounceSound "NAILBOUN";
+		+FORCEXYBILLBOARD
+		-NOGRAVITY
+		+BOUNCEONACTORS
+		+ROLLSPRITE
+		+ROLLCENTER
+	}
+	States
+	{
+	Spawn:
+		NAIL B 1 {
+			A_SetRoll(roll + 6, SPF_INTERPOLATE);
+			lifetime--;
+			if(lifetime <= 0)
+				return resolvestate("Death");
+			else
+				return resolvestate(null);
+		}
+		Loop;
+	Death:
+		NAIL B 70;
+		NAIL BBBBBBBBBBBBBBBBBBBB 1 A_FadeOut(0.05);
+		stop;
+	Bounce:
+		TNT1 A 0;
+		Goto Spawn;
+	}
+}
+
+class NailgunGib2 : NailgunGib1
+{
+	Default
+	{
+		Speed 4;
+	}
+	States
+	{
+	Spawn:
+		NAIL C 1 {
+			A_SetRoll(roll + 6, SPF_INTERPOLATE);
+			lifetime--;
+			if(lifetime <= 0)
+				return resolvestate("Death");
+			else
+				return resolvestate(null);
+		}
+	Death:
+		NAIL C 70;
+		NAIL CCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.05);
+		stop;
+	}
+}
+
+class NailgunGib3: NailgunGib1
+{
+	Default
+	{
+		Speed 7;
+	}
+	States
+	{
+	Spawn:
+		NAIL D 1 {
+			A_SetRoll(roll + 6, SPF_INTERPOLATE);
+			lifetime--;
+			if(lifetime <= 0)
+				return resolvestate("Death");
+			else
+				return resolvestate(null);
+		}
+	Death:
+		NAIL D 70;
+		NAIL DDDDDDDDDDDDDDDDDDDD 1 A_FadeOut(0.05);
+		stop;
+	}
+}

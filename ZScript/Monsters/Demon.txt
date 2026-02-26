@@ -335,7 +335,7 @@ class BDPDemon : Demon Replaces Demon
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_Jump(128, "Death.Cut2");
 		SARC AAABBBCCCDDD 3;
-		SARC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 2 A_CustomMissile ("Brutal_LiquidBlood", 15, 0, random (0, 360), 2, random (30, 110));
+		SARC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 2;
 		SARC D 0 A_SpawnItem("DeadDemonHalf23");
 		TNT1 A -1;
 		Stop;
@@ -557,13 +557,11 @@ class BDPDemon : Demon Replaces Demon
 	FatalityZombieman:
 		SARK DEDEDEDEDE 10;
 	EndFatalityZombieman:
-		TNT1 A 0 A_CustomMissile ("XDeathHalfZombieManDown", 20, 0, random(0, 360), 2, random (0, 160));
 		TNT1 A 0 A_TakeInventory("ZombiemanFatality",1);
 		Goto See;
 	FatalitySergeant:
 		SARK FGFGFGFGFG 10;
 	EndFatalitySergeant:
-		TNT1 A 0 A_CustomMissile ("XDeathHalfZombieManDown", 20, 0, random(0, 360), 2, random (0, 160));
 		TNT1 A 0 A_TakeInventory("SergeantFatality",1);
 		Goto See;
 	FatalityComando:
@@ -585,7 +583,6 @@ class BDPDemon : Demon Replaces Demon
 		SARK A 10 A_Look();
 		SARK B 10 A_Look();
 		SARK A 10 A_Look();
-		TNT1 AAA 0 A_CustomMissile ("XDeath1", 15, 0, random (0, 360), 2, random (0, 180));
 		SARK B 10 A_Look();
 		SARK A 10 A_Look();
 		SARK B 10 A_Look();
@@ -600,7 +597,6 @@ class BDPDemon : Demon Replaces Demon
 		SARK A 10 A_Look();
 		SARK B 10 A_Look();
 		SARK A 10 A_Look();
-		TNT1 AAA 0 A_CustomMissile ("XDeath1", 15, 0, random (0, 360), 2, random (0, 180));
 		SARK B 10 A_Look();
 		SARK A 10 A_Look();
 		SARK B 10 A_Look();
@@ -962,7 +958,6 @@ class DeadDemonSRRDJ : DeadDemon1
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 AA 0 A_SpawnItem("MeatDeathSmall", 0, 20);
 		Stop;
 	}
 }	
@@ -976,7 +971,6 @@ class DeadDemonSRRDE : DeadDemon1
 		Stop;
 	Death:
 		TNT1 A 0 A_NoBlocking();
-		TNT1 AA 0 A_SpawnItem("MeatDeathSmall", 0, 20);
 		Stop;
 	}
 }	

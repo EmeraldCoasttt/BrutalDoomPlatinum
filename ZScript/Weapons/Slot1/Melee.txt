@@ -727,7 +727,7 @@ CLASS MeleeAttack : Actor
 						Continue;
 				If(mo.bmissile && mo.target != target && mo.damage)
 				{
-					If(mo.bspawnceiling || mo.health < 1 || mo is "headkicking" || mo is "BDECGRASS" || mo is "Brutal_Bloodspot" || mo is "BaseHeadShot")
+					If(mo.bspawnceiling || mo.health < 1 || mo is "headkicking" || mo is "BDECGRASS" || mo is "BaseHeadShot")
 					{
 						Continue;
 					}

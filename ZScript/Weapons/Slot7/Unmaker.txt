@@ -180,7 +180,7 @@ class UnmakerLaserTrail : Actor
 	stop;
   Death:
 	LPUF A 1 bright;
-	LEYS R 0 A_spawnitem("Muchblood");
+	LEYS R 0 A_spawnitem("Blood");
 	stop;
   }
 }
