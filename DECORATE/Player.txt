@@ -3,15 +3,11 @@ ACTOR IsNOTAMenuDummy: Inventory {Inventory.MaxAmount 1}
 
 ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPlayer
 {
-	var int user_sghorizontalspread;
-	var int user_sgverticalspread;
-	var int user_playerangleexec;
-	//Speed 1.0
 	Health 100
 	Radius 16
 	Height 56
 	Mass 130
-    player.viewheight	44
+    player.viewheight 44
     player.attackzoffset 17
     GibHealth 20
 	PainChance 255
@@ -77,8 +73,6 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
 	Player.DamageScreenColor 39 00 39, 2.0, "BlackHole"
 	States 
 	{
-	
-	
     Spawn:
 		MARN A 0 NoDelay A_overlay(-602,"kickcheck")
 		MARN A 0 A_GiveInventory("IsNOTAMenuDummy",1)
@@ -86,28 +80,18 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
 		TNT1 A 0 A_Changeflag("NOPAIN", 1)
 		MARN A 0 A_TakeInventory("ChainguyguyContinue", 1)
 		MARN A 0 A_TakeInventory("PlayerIsDead", 1)
-	//	TNT1 A 0 A_CustomMissile("Headkicking", 0, 0, 0, 2)
-		//TNT1 A 0 A_SpawnItemEx ("Headkicking", 0, 0, 0, velx, vely, velz, angle, SXF_SETMASTER | SXF_ABSOLUTEANGLE)
-		PLAY A 0 ACS_ExecuteAlways(853, 0, 0, 0, 0)//Makes player slower if is tactical class.
-		MARN A 0 ACS_ExecuteAlways(289, 0, 0, 0, 0)//Check if playing in realism mode.
 		MARN A 0 ACS_NamedExecuteAlways("BDStopCamera", 0, 0, 0, 0)//Disable Camera.
 		TNT1 A 0 ACS_NamedExecuteAlways("ScreenEffects")
 		TNT1 A 0 ACS_NamedExecuteAlways("BloodSplashTrail")
-		
 		MARN D 2
-		
-		MARN A 0 ACS_NamedExecuteAlways("BDStopCamera", 0, 0, 0, 0)//Disable Camera.
 		NULL A 0 A_ChangeFlag ("NOPAIN", 0)
 		TNT1 A 0 A_GiveInventory("ImpactMovesSling", 1)
 		Goto StandStill
-
-		
 	StandStill:
 		MARN A 0 A_Changeflag("NOPAIN", 0)
 		MARN D 0 A_Changeflag("THRUSPECIES", 0)
 		MARN D 2 A_JumpIf (momZ !=0, "IsJumpin")
 		Loop
-		
 		MenuLoop:
 		MARN ABCB 4 A_SetTranslation("RED2")
 		loop
@@ -121,49 +105,32 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
 		MARN B 0 A_TakeInventory("IsStandingStill", 1)
 		MARN B 0 A_TakeInventory("ChainguyguyContinue", 1)
 		NULL A 0 A_JumpIfInventory("ADSMode", 1, "ADSMove")
-		
 		MARN AAA 1 A_JumpIf (momZ != 0, "IsJumpin")
-		
 		MARN BBB 1 A_JumpIf (momZ != 0, "IsJumpin")
-		MARN B 0 A_SpawnItemEx("FootStep6", 0, 0, 8, 0, 0, 0, 0, SXF_SETMASTER )
 		MARN CCC 1 A_JumpIf (momZ != 0, "IsJumpin")
-		
 		MARN BBB 1 A_JumpIf (momZ != 0, "IsJumpin")
-		//MARN B 0 A_SpawnItemEx("FootStep6", 0, 0, 8, 0, 0, 0, 0, SXF_SETMASTER )//extra
-		
 		MARN B 0 A_Changeflag("THRUSPECIES", 0)
-		MARN A 0 A_JumpIfInventory("BootsSmearedWithRedBlood", 1, "SeeSmearedWithRedBlood")
-		MARN A 0 A_JumpIfInventory("BootsSmearedWithBlueBlood", 1, "SeeSmearedWithBlueBlood")
-		MARN A 0 A_JumpIfInventory("BootsSmearedWithGreenBlood", 1, "SeeSmearedWithGreenBlood")
-		//MARN A 0 A_JumpIfHealthLower(25, "HeavyWounds")
 		MARN A 0 A_GiveInventory("IsStandingStill", 1)
-		
 		Goto StandStill
-		
    IsJumpin:
         MARN A 3
 		TNT1 A 0 A_GiveInventory("IsFloating", 1)
 		MARN A 1 A_JumpIf (momZ != 0, "InAir")
 		Goto StandStill
-		
 	InAir:	
 		MARJ A 5
 		TNT1 A 0 SetPlayerProperty(0,0,0)
 		TNT1 A 0 A_JumpIf (momZ == 0, "Land")
 		Loop
-	
 	Land:
         TNT1 A 0
 		TNT1 A 0 A_TakeInventory("IsFloating", 100)
-		//MARN A 0 A_SpawnItemEx("FootStepStrong", 0, 0, 8, 0, 0)
 		TNT1 A 0 A_GiveInventory("ImpactMovesSling", 1)
 		MARN A 1 A_JumpIf (momZ != 0, "InAir")
 		//TNT1 A 0 ThrustTHingZ(0, 50, 1, 1)
 		Goto StandStill
-		
 	ADSStand:
 		MAR2 A 1
-		MAR2 A 0 A_JumpIf (momy !=0, "ADSMove")
 		MAR2 A 0 A_JumpIf (momx !=0, "ADSMove")
 		MARN D 0 A_JumpIf (momZ !=0, "IsJumpin")
 		MARN D 0 A_TakeInventory("dummystamina", 3)
@@ -176,8 +143,6 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
 		MAR2 AB 3 A_JumpIfInventory("Kicking", 1, "Kick")
 		MARN D 0 A_JumpIf (momZ !=0, "IsJumpin")
 		MAR2 CB 3 A_JumpIfInventory("Kicking", 1, "Kick")
-		MAR2 A 0 A_SpawnItemEx("FootStep6", 0, 0, 8, 0, 0, 0, 0, SXF_SETMASTER )
-		
 		MARN D 0 A_TakeInventory("dummystamina", 1)
 		//MARN A 0 A_JumpIfHealthLower(25, "HeavyWounds")
 		
@@ -370,13 +335,11 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
 	Death:
 		TNT1 A 0
 		TNT1 A 0 A_JumpIfInventory("IsDown", 1, "Death.Trample")
-        NULL A 0 A_Takeinventory("Kicking",1)
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		TNT1 A 0 A_JumpIfInTargetInventory("EnemyIsArchvile", 1, "Death.ArchvileExplode")
 		NULL A 0 A_Jump (64, "Death.Arm")
 			MARN A 0 A_Givetotarget("KilledPlayer",1)
        // NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)//Start Camera
-		NULL A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
 		PLAY H 10
 		PLAY I 10 A_PlayerScream
 		PLAY J 10 A_NoBlocking
@@ -387,10 +350,8 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
 	Death.Falling:
 		TNT1 A 0
 		TNT1 A 0 A_Stop
-        NULL A 0 A_Takeinventory("Kicking",1)
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
-		NULL A 0 A_CustomMissile ("MuchBlood2", 0, 0, random (0, 360), 2, random (0, 160))
 		NULL A 0 A_SpawnItem ("SplatteredLarge")
 		PLAY H 1
 		PLAY I 1 A_XScream
@@ -405,17 +366,11 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
 	Death.Shotgun:
 	Death.EnemyShotgun:
     Death.Eat:
-        NULL A 0 A_Takeinventory("Kicking",1)
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 	
 		NULL A 0 A_GiveToTarget("EatMe",1)
 		NULL A 0 A_Jump (64, "Death.Arm")
-			MARN A 0 A_Givetotarget("KilledPlayer",1)
-        //NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)//Start Camera
-		NULL A 0 A_CustomMissile ("XDeath1", 50, 0, random (0, 360), 2, random (40, 90))
-		NULL AA 0 A_CustomMissile ("XDeath2b", 50, 0, random (0, 360), 2, random (40, 90))
-		NULL AA 0 A_CustomMissile ("XDeath3b", 50, 0, random (0, 360), 2, random (40, 90))
-		NULL A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+		MARN A 0 A_Givetotarget("KilledPlayer",1)
         TNT1 A 0 A_XScream
 		TNT1 A 0 A_NoBlocking
 		XPL1 A 10 
@@ -430,25 +385,12 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
 	Death.Saw:
 		TNT1 A 0
 		TNT1 A 0 A_JumpIfInTargetInventory("ChainsawSelected", 1, "Death.Minigun")
-        NULL A 0 A_Takeinventory("Kicking",1)
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
-      //  NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)//Start Camera
-		
-		NULL A 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
-		NULL A 0 A_CustomMissile ("XDeath2", 1, 0, random (0, 360), 2, random (0, 160))
-		NULL A 0 A_CustomMissile ("XDeath3", 1, 0, random (0, 360), 2, random (0, 160))
-		NULL A 0 A_CustomMissile ("XDeath4", 1, 0, random (0, 360), 2, random (0, 160))
-        NULL A 0 A_CustomMissile ("RipGuts", 50, 0, random (0, 360), 2, random (0, 160))
-        NULL A 0 A_CustomMissile ("XDeathHalfMarine", 50, 0, random (0, 360), 2, random (0, 160))
-        NULL AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
         XPL2 A 10 A_XScream
-        NULL AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
         XPL2 B 20 A_NoBlocking
-        NULL AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL2 C 10 A_CustomMissile ("MuchBlood", 40, 0, random (0, 360), 2, random (0, 160))
-        NULL AA 0 A_CustomMissile ("MuchBlood", 30, 0, random (0, 360), 2, random (0, 160))
-        XPL2 DE 10 A_CustomMissile ("MuchBlood", 20, 0, random (0, 360), 2, random (0, 160))
+        XPL2 C 10
+        XPL2 DE 10
         XPL2 E -1
         Stop
 
@@ -456,7 +398,6 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
         NULL A 0 A_PlaySound("BIGSCRE")
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
-        NULL A 0 A_Takeinventory("Kicking",1)
         NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)//Start Camera
         PMET AABBCCDDEEFFGGHHIIIII 5 A_CustomMissile ("PlasmaSmoke", 25, 0, random (0, 180), 2, random (0, 180))
         PMET IIIIIJJJJJKKKKKLLLLLL 3 A_CustomMissile ("PlasmaSmoke", 25, 0, random (0, 180), 2, random (0, 180))
@@ -486,20 +427,16 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
 		 Stop
 
     Death.Rip:
-        NULL A 0 A_Takeinventory("Kicking",1)
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
         //NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)//Start Camera
-        NULL AAAAAAAAAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
         XPL3 A 10 A_XScream
-        NULL AAAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
         XPL3 B 20 A_NoBlocking
-        XPL3 C 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL3 D 10 A_CustomMissile ("MuchBlood", 40, 0, random (0, 360), 2, random (0, 160))
-        XPL3 E 10 A_CustomMissile ("MuchBlood", 30, 0, random (0, 360), 2, random (0, 160))
-        XPL3 F 10 A_CustomMissile ("MuchBlood", 20, 0, random (0, 360), 2, random (0, 160))
-        NULL A 0 A_CustomMissile ("MuchBlood", 10, 0, random (0, 360), 2, random (0, 160))
-        XPL3 F 10 A_CustomMissile ("MuchBlood", 0, 0, random (0, 360), 2, random (0, 160))
+        XPL3 C 10
+        XPL3 D 10
+        XPL3 E 10
+        XPL3 F 10
+        XPL3 F 10
         XPL3 F -1
         Stop
 		
@@ -513,39 +450,21 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
     Death.Explosive:
 	Death.Explosives:
 		XDMG E 1
-        NULL A 0 A_Takeinventory("Kicking",1)
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
 		TNT1 A 0 A_JumpIfInTargetInventory("EnemyIsArchvile", 1, "Death.ArchvileExplode")
 		NULL A 0 ThrustThingZ(0,60,0,1)
-		PPOD A 0 A_SpawnItemEx("BasicMarineGib1", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
-		PPOD A 0 A_SpawnItemEx("BasicMarineGib2", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
-		PPOD A 0 A_SpawnItemEx("BasicMarineGib3", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
-		PPOD A 0 A_SpawnItemEx("BasicMarineGib4", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
-		NULL A 0 A_CustomMissile ("MuchMeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
 		NULL A 0 ACS_NamedExecuteAlways("ScreenBlood0", 0, 0, 0, 0) //ACS 580 to 585 is the blood driping on screen
 		NULL A 0 ACS_NamedExecuteAlways("ScreenBlood1", 0, 0, 0, 0)
         MHEA A 0 A_XScream
         MHEA B 0 A_NoBlocking
         MHEA CD 0
-        //MHEA E -1
-		NULL A 0 A_CustomMissile ("XDeathArm1", 32, 0, random (0, 360), 2, random (0, 90))
-		NULL A 0 A_SpawnItem ("BigBloodSpot")
-		NULL AAAAA 0 A_CustomMissile ("Guts", 32, 0, random (0, 360), 2, random (0, 160))
 		XDMG E 1
-		NULL AAAAAAAAAAAAAAA 0 A_CustomMissile ("SuperWallRedBlood", 40, 0, random (0, 360), 2, random (-5, 5))
-	    NULL AAAAAA 0 bright A_CustomMissile ("SuperGoreSpawner", 5, 0, random (0, 360), 2, random (30, 180))
 		XDMG E -1
 		Stop
 		
 	Death.ArchvileExplode:
 		TNT1 A 0
-		PPOD A 0 A_SpawnItemEx("BasicMarineGib1", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
-		PPOD A 0 A_SpawnItemEx("BasicMarineGib2", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
-		PPOD A 0 A_SpawnItemEx("BasicMarineGib3", 0, 0, 0, 0, 0, 0, 0, SXF_TRANSFERTRANSLATION)
-		NULL A 0 A_CustomMissile ("XDeathBurnedMeat", 32, 0, random (0, 360), 2, random (0, 160))
-	    NULL A 0 A_CustomMissile ("XDeathBurnedMeat2", 32, 0, random (0, 360), 2, random (0, 160))
-	    NULL A 0 A_CustomMissile ("XDeathBurnedMeat3", 32, 0, random (0, 360), 2, random (0, 160))
 		TNT1 AA 0 A_CustomMissile ("FlyingBurningFuel", 4, 0, random (0, 360), 2, random (30, 80))
 		TNT1 A 0 A_CustomMissile ("FlyingBurningFuel2", 4, 0, random (0, 360), 2, random (30, 80))
 		TNT1 A 0 A_CustomMissile ("FlyingBurningFuel3", 4, 0, random (0, 360), 2, random (30, 80))
@@ -557,84 +476,30 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
 		TNT1 AAA 0 A_CustomMissile ("ExplosionFlames", 30, 0, random (0, 360), 2, random (0, 360))
         TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180))
         TNT1 AAAAAA 0 A_CustomMissile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, 180))
-		NULL A 0 A_CustomMissile ("MuchMeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
 		NULL A 0 ACS_NamedExecuteAlways("ScreenBlood0", 0, 0, 0, 0) //ACS 580 to 585 is the blood driping on screen
 		NULL A 0 ACS_NamedExecuteAlways("ScreenBlood1", 0, 0, 0, 0)
 		TNT1 AAAA 0 A_CustomMissile ("FireworkSFXType2", 64, 0, random (0, 360), 2, random (30, 60))
         MHEA A 0 A_XScream
         MHEA B 0 A_NoBlocking
         MHEA CD 0
-        //MHEA E -1
-		NULL A 0 A_CustomMissile ("XDeathArm1", 32, 0, random (0, 360), 2, random (0, 90))
-		NULL A 0 A_SpawnItem ("BigBloodSpot")
-		NULL AAAAA 0 A_CustomMissile ("Guts", 32, 0, random (0, 360), 2, random (0, 160))
 		XDMG E 1
-		NULL AAAAAAAAAAAAAAA 0 A_CustomMissile ("SuperWallRedBlood", 40, 0, random (0, 360), 2, random (-5, 5))
-	    NULL AAAAAA 0 bright A_CustomMissile ("SuperGoreSpawner", 5, 0, random (0, 360), 2, random (30, 180))
 		XDMG E -1
 		Stop
-
 	Death.SuperPunch:
     Death.Blast:
 	Death.SSG:
-        NULL A 0 A_Takeinventory("Kicking",1)
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
       //  NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)//Start Camera
 	    POSS Q 2 A_FaceTarget
-        //NULL A 0 A_CustomMissile ("MeatDeath", 0, 0, random (0, 360), 2, random (0, 160))
-		NULL AAAA 0 A_CustomMissile ("XDeath1", 32, 0, random (170, 190), 2, random (0, 40))
-		NULL AAAA 0 A_CustomMissile ("XDeath2", 32, 0, random (170, 190), 2, random (0, 40))
-		NULL AAAA 0 A_CustomMissile ("XDeath3", 32, 0, random (170, 190), 2, random (0, 40))
-		NULL AAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 32, 0, random (170, 190), 2, random (0, 40))
-		NULL AAAA 0 A_CustomMissile ("Brutal_FlyingBloodFaster", 32, 0, random (170, 190), 2, random (0, 40))
-		NULL AAAA 0 A_CustomMissile ("Brutal_FlyingBloodMuchFaster", 32, 0, random (170, 190), 2, random (0, 40))
-		NULL AAAA 0 A_CustomMissile ("SuperWallRedBlood", 32, 0, random (170, 190), 2, random (0, 40))
-		NULL AAAA 0 A_CustomMissile ("SuperWallRedBlood", 46, 0, random (170, 190), 2, random (0, 40))
-		NULL A 0 A_CustomMissile ("XDeathArm1", 32, 0, random (170, 190), 2, random (0, 40))
-		NULL AAAA 0 A_CustomMissile ("SuperGoreSpawner", 22, 0, random (170, 190), 2, random (0, 15))
         XPL2 A 10 A_XScream
-        NULL AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
         XPL2 B 20 A_NoBlocking
-        NULL AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL2 C 10 A_CustomMissile ("MuchBlood", 40, 0, random (0, 360), 2, random (0, 160))
-        NULL AA 0 A_CustomMissile ("MuchBlood", 30, 0, random (0, 360), 2, random (0, 160))
-        XPL2 DE 10 A_CustomMissile ("MuchBlood", 20, 0, random (0, 360), 2, random (0, 160))
+        XPL2 C 10
+        XPL2 DE 10
         XPL2 E -1
         Stop
-
-    Death.Rape:
-        NULL A 0 A_Takeinventory("Kicking",1)
-		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
-		MARN A 0 A_Givetotarget("KilledPlayer",1)
-		NULL A 0 A_Jump (160, 3)
-        Goto Death.Arm
-        NULL AAA 0
-      //  NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)//Start Camera
-		NULL AAAAAAAAAAAAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL4 A 20 A_XScream
-		NULL A 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
-		NULL A 0 A_CustomMissile ("XDeath2", 1, 0, random (0, 360), 2, random (0, 160))
-		NULL A 0 A_CustomMissile ("XDeath3", 1, 0, random (0, 360), 2, random (0, 160))
-		NULL A 0 A_CustomMissile ("XDeath4", 1, 0, random (0, 360), 2, random (0, 160))
-        NULL AAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL4 B 20 A_NoBlocking
-        NULL AAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL4 C 20
-        NULL AAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL4 D 20
-        NULL AAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL4 E 20
-        NULL AAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL4 F 20
-        NULL AAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL4 F -1
-        Stop
-		
-		
 	Death.Arm:
 	    TNT1 A 0 A_Jump(128,"Death.Leg")
-        NULL A 0 A_Takeinventory("Kicking",1)
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		NULL A 0 A_Scream
         XPL5 A 10
@@ -645,13 +510,8 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
         XPL5 E -1
         Stop
-		
 	Death.Leg:
-        NULL A 0 A_Takeinventory("Kicking",1)
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
-     //   NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)//Start Camera
-		NULL A 0 A_CustomMissile ("XDeathMarineLeg", 50, 0, random (0, 360), 2, random (0, 160))
-		NULL AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
 		NULL A 0 A_Scream
         XPL5 G 10
 		NULL A 0 A_NoBlocking
@@ -661,15 +521,10 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
         XPL5 L -1
         Stop
-
-		
-		
 	Death.ExtremePunches:
 	Death.ExplosiveImpact:
-        NULL A 0 A_Takeinventory("Kicking",1)
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
-     //   NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)//Start Camera
 		NULL A 0 ThrustThingZ(0,30,0,1)
 		NULL A 0 A_XScream
         XPL6 A 5
@@ -677,13 +532,11 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
         XPL6 BCDE 5
         XPL6 F -1
         Stop
-	
-		
-Death.Plasma: Death.Plasma2:
+	Death.Plasma:
+	Death.Plasma2:
 		NULL A 0
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
-	//	NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)//Start Camera
 		PBR1 A 6 A_Scream
 		NULL AAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("Ashes1", 32, 0, random (0, 360), 2, random (0, 180))
 		NULL AAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("Ashes2", 32, 0, random (0, 360), 2, random (0, 180))
@@ -693,7 +546,6 @@ Death.Plasma: Death.Plasma2:
 		PBR1 HHHHHHHHHHHHHHHHHHHHHH 8 A_CustomMissile ("PlasmaSmoke", 10, 0, random (0, 360), 2, random (0, 160))
 		PBR1 H -1
 		Stop
-	
     Death.superplasma:
         NULL A 0
         NULL A 0 A_XScream
@@ -704,11 +556,9 @@ Death.Plasma: Death.Plasma2:
         NULL A 1
         NULL A -1
         Stop
-
     Death.burn:
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
-        NULL A 0 A_Takeinventory("Kicking",1)
         NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)//Start Camera
 		PBUR A 1
 		PBUR A 1 A_PlayerScream
@@ -722,30 +572,25 @@ Death.Plasma: Death.Plasma2:
 		PBUR EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 4 A_CustomMissile ("SmallFlameTrails", 8, 0, random (0, 180), 2, random (0, 180))
         PBUR E -1
         Stop
-		
-		
 	Death.GreenFire:
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
-        NULL A 0 A_Takeinventory("Kicking",1)
         NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)//Start Camera
 		PBUR A 1
 		PBUR A 1 A_PlayerScream
 		PBUR A 1 A_NoBlocking
 		PBUR AAAABBBBCCCC 2 A_CustomMissile ("GreenFlameTrailsbIG", 32, 0, random (0, 180), 2, random (0, 180))
 	    PBUR DDEE 4 A_CustomMissile ("GreenFlameTrailsbIG", 16, 0, random (0, 180), 2, random (0, 180))
-		 TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn")
+		TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn")
         PBUR EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 4 A_CustomMissile ("GreenFlameTrailsbIG", 8, random (-10, 10), random (0, 180), 2, random (20, 90))
         PBUR E -1
-        Stop	
-
+        Stop
 	Death.Fire:
     Death.flames:
         NULL A 0
 		TNT1 A 0 A_JumpIfInTargetInventory("EnemyIsArchvile", 1, "Death.ArchvileExplode")
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
-        NULL A 0 A_Takeinventory("Kicking",1)
         NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)//Start Camera
         NULL A 0 A_Scream
         NULL A 0 A_NoBlocking
@@ -754,7 +599,6 @@ Death.Plasma: Death.Plasma2:
         NULL A 1
         NULL A -1
 		Stop
-		
    Death.Desintegrate:
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
@@ -766,7 +610,6 @@ Death.Plasma: Death.Plasma2:
 		NULL A 1
         NULL A -1
         Stop
-	  
     Death.Stomp:
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
@@ -777,15 +620,12 @@ Death.Plasma: Death.Plasma2:
 		NULL A 1 A_NoBlocking
 		NULL A -1
 		Stop
-	
     Crush:
         NULL A 0 A_PlaySound("misc/xdeath4")
         CRS1 A 5
         CRS1 A -1
         Stop
 // Monsters that can perform fatality on player:
-
-
 // Baron and Hell Knight:
     Death.HKFT:
 	Death.BHFT:
@@ -815,102 +655,6 @@ ACTOR PowerNearDeath : PowerUp
 	//Inventory.Icon "DANGER"
 	Powerup.Color 70,0,0,0.2
 }
-
-actor Player_Blood : Brutal_Blood
- {
-  Scale 0.3
-  States
-
-	{
-	Spawn:
-		BLHT A 0
-		MARN A 0 ACS_NamedExecuteAlways("CheckIfDM", 0, 0, 0, 0)//Check if Coop
-		BLHT A 2
-		TNT1 A 0 A_CustomMissile ("Brutal_FlyingBlood", 7, 0, random (0, 360), 2, random (30, 60))
-		TNT1 A 0 A_JumpIfInventory("DmGAme", 1, "DM")
-		BLHT BCDEFG 1
-	    BLHT HHHHHHHHHHH 1 A_FadeOut(0.1)
-	    Stop
-		
-	DM:	
-		TNT1 A 0
-		TNT1 A 0 A_SetScale(0.6)
-		TNT1 A 0 A_CustomMissile ("Brutal_FlyingBlood", 7, 0, random (0, 360), 2, random (30, 60))
-		TNT1 AAAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 90))
-		TNT1 A 0 A_FadeIn(0.4)
-		BLHT BCDEFG 1 BRIGHT
-	    BLHT HHHHHHHHHHHHHHHHH 1 A_FadeOut(0.05)
-	    Stop
-		}
-}
-
-
-
-actor Player_BloodSaw : Brutal_Blood
- {
-  Gravity 0.5
-  Alpha 0.4
-  -NOGRAVITY
-  Scale 0.25
-  States
-
-	{
-	Spawn:
-		BLHT A 0
-		MARN A 0 ACS_NamedExecuteAlways("CheckIfDM", 0, 0, 0, 0)//Check if Coop
-		TNT1 A 0 A_Stop
-		BLHT A 2
-		TNT1 A 0 A_JumpIfInventory("DmGAme", 1, "DM")
-		BLHT BCDEFG 1
-	    BLHT GGGGGGGGGGGGGGGGGG 1 A_FadeOut(0.05)
-	    Stop
-		
-	DM:	
-		TNT1 A 0
-		TNT1 A 0 A_SetScale(0.6)
-		TNT1 A 0 A_RadiusGive("ChainsawHitRed", 200, RGF_PLAYERS | RGF_MONSTERS , 1)
-		TNT1 A 0 A_RadiusGive("PowerBloodOnVisor", 200, RGF_PLAYERS | RGF_MONSTERS , 1)
-		TNT1 A 0 A_CustomMissile ("Brutal_FlyingBlood", 7, 0, random (0, 360), 2, random (30, 60))
-		TNT1 AAAAA 0 A_CustomMissile ("Brutal_FlyingBloodTrail", 0, 0, random (0, 360), 2, random (0, 90))
-		TNT1 A 0 A_FadeIn(0.4)
-		BLHT AAABCDEFG 1 BRIGHT
-	    BLHT GGGGGGGGGGGGGGGGGG 1 A_FadeOut(0.05)
-	    Stop
-		}
-}
-
-
-ACTOR PlayerFlyingBlood
-{
- game Doom
- scale 0.75
- speed 7
- health 1
- radius 8
- height 1
-	Decal BloodSuper
-   +MISSILE
-   +CLIENTSIDEONLY
-   +NOTELEPORT
-   +NOBLOCKMAP
-   +FORCEXYBILLBOARD
-        +EXPLODEONWATER
-    States
-    {
-     Spawn:
-       NULL A 0 A_JumpIf(waterlevel > 1, "Splash")
-        XDT1 ABCD 4 A_SpawnItem("Brutal_FlyingBloodTrail",0,0,0,1)
-        loop
-	Splash:
-        BLOD A 0
-        stop
-     Death:
-       NULL A 1 A_SpawnItem("Brutal_BloodSpot",0,0,0,1)
-        XDT1 EFGHIJKL 3
-        stop
-    }
-}
-
 
 ACTOR BloodOnVisor : PowerupGiver 2408
 {
@@ -1028,80 +772,6 @@ MONSTER
 NULL A 0
 NULL A 0 A_CHangeFlag("THRUACTORS", 0)
 NULL A 0 A_GiveInventory("ComeEatMeDemon")
-NULL A 0 A_SpawnItem ("GrowingBloodPool")
 XPL1 EEE 6 A_SpawnItem("KillMe")	
 XPL1 E -1
        Loop    }}
-	   
-	   
-	   
-
-
-
-ACTOR PROLSpriteA
-{
- +NOINTERACTION
- +THRUACTORS
- +CLIENTSIDEONLY
- +NOTIMEFREEZE
- States
-    {
-
-	 Spawn:
-		BFUG A 0
-		PROL A 1
-		Stop
-    }
-}
-
-
-ACTOR PROLSpriteB: PROLSpriteA
-{
- States
-    {
-
-	 Spawn:
-		BFUG A 0
-		PROL B 1
-		Stop
-    }
-}
-
-
-ACTOR PROLSpriteC: PROLSpriteA
-{
- States
-    {
-
-	 Spawn:
-		BFUG A 0
-		PROL C 1
-		Stop
-    }
-}
-
-
-ACTOR PROLSpriteD: PROLSpriteA
-{
- States
-    {
-
-	 Spawn:
-		BFUG A 0
-		PROL D 1
-		Stop
-    }
-}
-
-
-ACTOR PROLSpriteE: PROLSpriteA
-{
- States
-    {
-
-	 Spawn:
-		BFUG A 0
-		PROL E 1
-		Stop
-    }
-}

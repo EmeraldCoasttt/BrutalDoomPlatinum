@@ -1014,7 +1014,11 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 			if(dxflags & WRF_ALLOWRELOAD)
 			{
 				invoker.fidgetState = fidgetstate;
-				player.WeaponState |= WF_WEAPONRELOADOK;
+				if((invoker.mag < invoker.magCapacity || invoker.bDUALWEAPON && DualMag() < invoker.magCapacity) && CountInv(invoker.ammotype1) >= invoker.magConversion.y ||
+				resolvestate(invoker.fidgetState) && invoker.aimMode == 0 && (invoker.fidgetState != "Fidget" && player.cmd.buttons & BT_RELOAD || LastPressed(BT_RELOAD,7,true)))
+				{
+					player.WeaponState |= WF_WEAPONRELOADOK;
+				}
 			}
 			if(!dplr.blockSpecial)
 				player.WeaponState |= WF_USER3OK;
@@ -1462,23 +1466,7 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 				player.WeaponState |= SPF_INTERPOLATE;
 				}
 			}
-  
-  //Hacky fix for weapon timers
-			If(owner.countinv("cyberdemonrockets") == 1 || owner.countinv("spiderchainguntimer") == 1)
-			{
-				guntimertics = (guntimertics + 1);
-		
-				If(guntimertics > 35)
-				{
-					owner.takeinventory("cyberdemonrockets",666);
-					owner.takeinventory("spiderchainguntimer",666);
-				}
-			}
-			Else
-			{
-				guntimertics = 0;
-			}
-	
+			
 			//No more death overlaysssss
 			If(owner.health < 1)
 			{
@@ -1678,16 +1666,12 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 	Reload:
 		#### # 1
 		{
-			if((invoker.mag < invoker.magCapacity || invoker.bDUALWEAPON && DualMag() < invoker.magCapacity) && CountInv(invoker.ammotype1) >= invoker.magConversion.y)
-			{
-				A_ClearOverlays(49,50);
-				return resolvestate("DoReload");
-			}
-			else if(resolvestate(invoker.fidgetState) && invoker.aimMode == 0 && (invoker.fidgetState != "Fidget" || LastPressed(BT_RELOAD,7,true)))
+			A_ClearOverlays(49,50);
+			if(resolvestate(invoker.fidgetState) && invoker.aimMode == 0 && (invoker.fidgetState != "Fidget" && player.cmd.buttons & BT_RELOAD || LastPressed(BT_RELOAD,7,true)))
 			{
 				return resolvestate(invoker.fidgetState);
 			}
-			return resolvestate(null);
+			return resolvestate("DoReload");
 		}
 		TNT1 A 0 A_JumpIf(invoker.aimMode > 0,"Aim");
 		Goto Ready;
@@ -1925,7 +1909,7 @@ CLASS TemporaryWeapon : BDPWeaponBase
 		GunExplodes:
 		TNT1 A 0 A_overlay(5,"GunExplodeOverlay");
 		TNT1 A 6;
-		NULL A 0 A_FireProjectile("TempGunExplosionSpawner", 0, 0, 0, 0, -2);
+		//NULL A 0 A_FireProjectile("TempGunExplosionSpawner", 0, 0, 0, 0, -2);
 		NULL A 0 A_WeaponOffset(0,32);
 		
 		//CYBF X 70

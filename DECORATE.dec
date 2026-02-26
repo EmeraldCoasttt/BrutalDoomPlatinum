@@ -23,25 +23,17 @@ damage 0
 
 #include DECORATE/TOKENS.txt
 //Gore N' Blood
-#include DECORATE/GORE/GOREGROUPS.txt
-#include DECORATE/GORE/BLOOD.txt
 #include DECORATE/GORE/MEAT.txt
-#include DECORATE/GORE/LIMBS.txt
-#include DECORATE/GORE/GREENGORE.txt
-#include DECORATE/GORE/BLUEGORE.txt
 #Include DECORATE/GORE/nukageblood.txt
 #include DECORATE/GORE/BLOODSPLASH.txt
 #include DECORATE/GORE/BURN.txt
 #include DECORATE/GORE/DEAD.txt
 
 #include DECORATE/Junk.txt
-#include DECORATE/GORE/Leg.txt
-//#include DECORATE/GORE/Frozen.txt
 
 #include DECORATE/EXECUTIONS.txt
 
 //MISC
-#include DECORATE/GORE/HEAD_SYS.txt
 #include DECORATE/EFFECTS/PARTICLES.txt
 #include DECORATE/EFFECTS/SMOKE.txt
 #include DECORATE/EFFECTS/CASING.txt
@@ -52,13 +44,8 @@ damage 0
 
 //ITEMS
 #include DECORATE/ITEMS/AMMO.txt
-//#include DECORATE/ITEMS/ARTIFACT.txt
 #include DECORATE/ITEMS/HEALTH2.txt
 #include DECORATE/ITEMS/KEYS.txt
-
-//i have to load these first otherwise it spits out errors lol
-//#include DECORATE/MONSTERS/MANCUBUS.txt
-//#include DECORATE/MONSTERS/REVENANT.txt
 
 //Guns Guns Guns
 #include DECORATE/EFFECTS/TRACERS.txt
@@ -71,58 +58,7 @@ damage 0
 //#Include DECORATE/WEAPONS/Slot8/DualFlameCannon.txt
 
 #include DECORATE/WEAPONS/Slot8/HellishMissile.txt
-//TEMPORARY
-#include DECORATE/WEAPONS/Temporary/CyberdemonsMissileLauncher.txt
-#include DECORATE/WEAPONS/Temporary/MastermindChaingun.txt
-
-//Enemies
-//#include DECORATE/MONSTERS/ZOMBIEMEN.txt
-//#include DECORATE/MONSTERS/ZOMBIEMENVARIATIONS.txt
-//#include DECORATE/MONSTERS/ZOMBIEMANVARIATION2.txt
-//#include DECORATE/MONSTERS/PistolHelmetZombie.txt
-//#Include DECORATE/MONSTERS/HelmetRifleZombie.txt
-//#include DECORATE/MONSTERS/DualPistolZombie.txt
-//#Include DECORATE/MONSTERS/DualPistolHelmetZombie.txt
-//#include DECORATE/MONSTERS/MUMMY.txt
-//#include DECORATE/MONSTERS/SERGEANTS.txt
-//#include DECORATE/MONSTERS/ShotgunGuyHelmet.txt
-//#include DECORATE/MONSTERS/RiotSergeant.txt
-//#include DECORATE/MONSTERS/COMANDO.txt
-//#include DECORATE/MONSTERS/LABGUY.txt
-//#include DECORATE/MONSTERS/ZOMBIEGUY.txt
-//#include DECORATE/MONSTERS/IMPS.txt
-//#include DECORATE/MONSTERS/DEMONS.txt
-//#include DECORATE/MONSTERS/SPECTRE.txt
-//#include DECORATE/MONSTERS/NIGHTMAREDEMONS.txt
-//#include DECORATE/MONSTERS/KNIGHT.txt
-//#include DECORATE/MONSTERS/BARON.txt
-//#include DECORATE/MONSTERS/LOSTSOUL.txt
-//#include DECORATE/MONSTERS/SPIDERS.txt
-//#include DECORATE/MONSTERS/SPIDERS2.txt
-//#include DECORATE/MONSTERS/REVENANT.txt
-//#include DECORATE/MONSTERS/MANCUBUS.txt
-//#include DECORATE/MONSTERS/VOLCABUS.txt
-//#include DECORATE/MONSTERS/CACODEMO.txt
-//#include DECORATE/MONSTERS/PAINELEMENTAL.txt
-//#include DECORATE/MONSTERS/ARCHVILE.txt
-//#include DECORATE/MONSTERS/CYBERDEMON.txt
-//#include DECORATE/MONSTERS/MASTERMIND.txt
-//#include DECORATE/MONSTERS/ICONOFSIN.txt
-//ST Monsters
-//#include DECORATE/MONSTERS/BELPHEGOR.txt
-//#include DECORATE/MONSTERS/JUGGERNAUT.txt
-//Bosses
-//#include DECORATE/MONSTERS/MOTHERDEMON.txt
-//#include DECORATE/MONSTERS/NAZIS.txt
-//#include DECORATE/MONSTERS/UBERSOLDAT.txt
 #include DECORATE/MONSTERS/EEEVILLL.txt
-//MISC
-//#include DECORATE/MONSTERS/UnderwaterMonsters.txt
-//#include DECORATE/MONSTERS/StealthMonsters.txt
-//#include DECORATE/MONSTERS/BossBrain.txt
-//#include DECORATE/MONSTERS/VanillaMonsters.txt
-//#include DECORATE/MONSTERS/DyingGuys.txt
-//#include DECORATE/MONSTERS/LastStandMonsters.txt
 
 //DECORATIONS
 #include DECORATE/DECORATIONS/FURNITURE.txt
@@ -185,16 +121,16 @@ damage 0
 #include DECORATE/MES/Epic2Stuff.txt
 
 //VEHICLES
-#include DECORATE/VEHICLES/Tank.txt
-#include DECORATE/VEHICLES/ArtilleryTank.txt
-#include DECORATE/VEHICLES/Mech.txt
-#include DECORATE/VEHICLES/Helicopter.txt
+//#include DECORATE/VEHICLES/Tank.txt
+//#include DECORATE/VEHICLES/ArtilleryTank.txt
+//#include DECORATE/VEHICLES/Mech.txt
+//#include DECORATE/VEHICLES/Helicopter.txt
 #include DECORATE/VEHICLES/HeavyMachinegun.txt
 #include DECORATE/VEHICLES/VehicleCrashes.txt
 #include DECORATE/VEHICLES/Repairs.txt
 //#include DECORATE/VEHICLES/EnemyTanks.txt
 #include DECORATE/VEHICLES/Critters.txt
-#include DECORATE/VEHICLES/BIKE.txt
+//#include DECORATE/VEHICLES/BIKE.txt
 
 
 Actor DoStrengthRuneAnim : Inventory
@@ -312,7 +248,7 @@ Actor RememberDualMP40 : Inventory {inventory.maxamount 1}
 Actor RememberDualRifle : Inventory {inventory.maxamount 1}
 Actor RememberDualPlasma : Inventory {inventory.maxamount 1}
 
-ACTOR XDeathMarineLeg: XDeathArm1
+/*ACTOR XDeathMarineLeg: XDeathArm1
 {
 	States
 	{
@@ -343,7 +279,7 @@ actor Gib_MarineLeg: LimbBase
 		TNT1 A 0
 		Stop
 }
-}
+}*/
 
 ACTOR Soap: CustomInventory
 {

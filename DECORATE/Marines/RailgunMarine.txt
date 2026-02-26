@@ -559,7 +559,6 @@ translation "Blue2"
 
 	Death:
 	Death.Bullet:
-		TNT1 A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_ChangeFlag("FRIENDLY", 0)
 		TNT1 A 0 A_ChangeFlag("USESPECIAL", 0)
 		PLAY H 10 A_PlayerScream
@@ -578,7 +577,6 @@ translation "Blue2"
         TNT1 A 0 A_GiveToTarget("EatMe",1)
 		TNT1 A 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_CustomMissile ("XDeath4", 1, 0, random (0, 360), 2, random (0, 160))
-		TNT1 A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 ACS_NamedExecute("RemoveMarineRailgun")
         XPL1 A 10 A_XScream
         XPL1 B 20 A_NoBlocking
@@ -598,15 +596,11 @@ translation "Blue2"
 		TNT1 A 0 A_CustomMissile ("XDeath4", 1, 0, random (0, 360), 2, random (0, 160))
         TNT1 A 0 A_CustomMissile ("RipGuts", 50, 0, random (0, 360), 2, random (0, 160))
         TNT1 A 0 A_CustomMissile ("XDeathHalfMarine", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
         XPL2 A 10 A_XScream
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
         XPL2 B 20 A_NoBlocking
 		TNT1 A 0 ACS_NamedExecute("RemoveMarineRailgun")
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL2 C 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL2 DE 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        XPL2 C 10
+        XPL2 DE 10
 		TNT1 A 0 A_SpawnItem ("MediumBloodSpot")
         XPL2 E -1
         Stop
@@ -636,15 +630,11 @@ translation "Blue2"
 		TNT1 A 0 A_CustomMissile ("XDeath4", 1, 0, random (0, 360), 2, random (0, 160))
         TNT1 A 0 A_CustomMissile ("RipGuts", 50, 0, random (0, 360), 2, random (0, 160))
         TNT1 A 0 A_CustomMissile ("XDeathHalfMarine", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
         XPL2 A 10 A_XScream
 		TNT1 A 0 ACS_NamedExecute("RemoveMarineRailgun")
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
         XPL2 B 20 A_NoBlocking
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL2 C 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL2 DE 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        XPL2 C 10
+        XPL2 DE 10
 		TNT1 A 0 A_SpawnItem ("MediumBloodSpot")
         XPL2 E -1
         Stop
@@ -653,21 +643,21 @@ translation "Blue2"
 		TNT1 A 0
 		TNT1 A 0 A_ChangeFlag("FRIENDLY", 0)
 		TNT1 A 0 A_ChangeFlag("USESPECIAL", 0)
-        TNT1 AAAAAAAAAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAAAAAAAAAA 0
         XPL3 A 10 A_XScream
-        TNT1 AAAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAAAA 0
         XPL3 B 20 A_NoBlocking
 		TNT1 A 0 ACS_NamedExecute("RemoveMarineRailgun")
-        TNT1 A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL3 C 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL3 D 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL3 E 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL3 F 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL3 F 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 A 0
+        XPL3 C 10
+        TNT1 A 0
+        XPL3 D 10
+        TNT1 A 0
+        XPL3 E 10
+        TNT1 A 0
+        XPL3 F 10
+        TNT1 A 0
+        XPL3 F 10
 		TNT1 A 0 A_SpawnItem ("MediumBloodSpot")
         XPL3 F -1
         Stop
@@ -735,24 +725,24 @@ translation "Blue2"
 		TNT1 A 0
 		TNT1 A 0 A_ChangeFlag("FRIENDLY", 0)
 		TNT1 A 0 A_ChangeFlag("USESPECIAL", 0)
-		TNT1 AAAAAAAAAAAAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AAAAAAAAAAAAAA 0
 		XPL4 A 20 A_XScream
 		 TNT1 A 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
 		 TNT1 A 0 A_CustomMissile ("XDeath2", 1, 0, random (0, 360), 2, random (0, 160))
 		 TNT1 A 0 A_CustomMissile ("XDeath3", 1, 0, random (0, 360), 2, random (0, 160))
 		 TNT1 A 0 A_CustomMissile ("XDeath4", 1, 0, random (0, 360), 2, random (0, 160))
-        TNT1 AAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAAA 0
         XPL4 B 20 A_NoBlocking
 		TNT1 A 0 ACS_NamedExecute("RemoveMarineRailgun")
-        TNT1 AAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAA 0
         XPL4 C 20
-        TNT1 AAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAA 0
         XPL4 D 20
-        TNT1 AAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAAA 0
         XPL4 E 20
-        TNT1 AAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAA 0
         XPL4 F 20
-        TNT1 AAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAAA 0
 		TNT1 A 0 A_SpawnItem ("MediumBloodSpot")
         XPL4 F -1
         Stop
@@ -1725,7 +1715,6 @@ translation "Blue2black"
 
 	Death:
 	Death.Bullet:
-		TNT1 A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_ChangeFlag("FRIENDLY", 0)
 		TNT1 A 0 A_ChangeFlag("USESPECIAL", 0)
 		PLAY H 10 A_PlayerScream
@@ -1744,7 +1733,6 @@ translation "Blue2black"
         TNT1 A 0 A_GiveToTarget("EatMe",1)
 		TNT1 A 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_CustomMissile ("XDeath4", 1, 0, random (0, 360), 2, random (0, 160))
-		TNT1 A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 ACS_NamedExecute("BlackRemoveMarineRailgun")
         XPL1 A 10 A_XScream
         XPL1 B 20 A_NoBlocking
@@ -1764,15 +1752,11 @@ translation "Blue2black"
 		TNT1 A 0 A_CustomMissile ("XDeath4", 1, 0, random (0, 360), 2, random (0, 160))
         TNT1 A 0 A_CustomMissile ("RipGuts", 50, 0, random (0, 360), 2, random (0, 160))
         TNT1 A 0 A_CustomMissile ("XDeathHalfMarine", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
         XPL2 A 10 A_XScream
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
         XPL2 B 20 A_NoBlocking
 		TNT1 A 0 ACS_NamedExecute("BlackRemoveMarineRailgun")
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL2 C 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL2 DE 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        XPL2 C 10
+        XPL2 DE 10
 		TNT1 A 0 A_SpawnItem ("MediumBloodSpot")
         XPL2 E -1
         Stop
@@ -1802,15 +1786,11 @@ translation "Blue2black"
 		TNT1 A 0 A_CustomMissile ("XDeath4", 1, 0, random (0, 360), 2, random (0, 160))
         TNT1 A 0 A_CustomMissile ("RipGuts", 50, 0, random (0, 360), 2, random (0, 160))
         TNT1 A 0 A_CustomMissile ("XDeathHalfMarine", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
         XPL2 A 10 A_XScream
 		TNT1 A 0 ACS_NamedExecute("BlackRemoveMarineRailgun")
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
         XPL2 B 20 A_NoBlocking
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL2 C 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 AA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL2 DE 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        XPL2 C 10
+        XPL2 DE 10
 		TNT1 A 0 A_SpawnItem ("MediumBloodSpot")
         XPL2 E -1
         Stop
@@ -1819,21 +1799,21 @@ translation "Blue2black"
 		TNT1 A 0
 		TNT1 A 0 A_ChangeFlag("FRIENDLY", 0)
 		TNT1 A 0 A_ChangeFlag("USESPECIAL", 0)
-        TNT1 AAAAAAAAAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAAAAAAAAAA 0
         XPL3 A 10 A_XScream
-        TNT1 AAAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAAAA 0
         XPL3 B 20 A_NoBlocking
 		TNT1 A 0 ACS_NamedExecute("BlackRemoveMarineRailgun")
-        TNT1 A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL3 C 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL3 D 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL3 E 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL3 F 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        TNT1 A 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
-        XPL3 F 10 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 A 0
+        XPL3 C 10
+        TNT1 A 0
+        XPL3 D 10
+        TNT1 A 0
+        XPL3 E 10
+        TNT1 A 0
+        XPL3 F 10
+        TNT1 A 0
+        XPL3 F 10
 		TNT1 A 0 A_SpawnItem ("MediumBloodSpot")
         XPL3 F -1
         Stop
@@ -1901,24 +1881,24 @@ translation "Blue2black"
 		TNT1 A 0
 		TNT1 A 0 A_ChangeFlag("FRIENDLY", 0)
 		TNT1 A 0 A_ChangeFlag("USESPECIAL", 0)
-		TNT1 AAAAAAAAAAAAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+		TNT1 AAAAAAAAAAAAAA 0
 		XPL4 A 20 A_XScream
 		 TNT1 A 0 A_CustomMissile ("XDeath1", 1, 0, random (0, 360), 2, random (0, 160))
 		 TNT1 A 0 A_CustomMissile ("XDeath2", 1, 0, random (0, 360), 2, random (0, 160))
 		 TNT1 A 0 A_CustomMissile ("XDeath3", 1, 0, random (0, 360), 2, random (0, 160))
 		 TNT1 A 0 A_CustomMissile ("XDeath4", 1, 0, random (0, 360), 2, random (0, 160))
-        TNT1 AAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAAA 0
         XPL4 B 20 A_NoBlocking
 		TNT1 A 0 ACS_NamedExecute("BlackRemoveMarineRailgun")
-        TNT1 AAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAA 0
         XPL4 C 20
-        TNT1 AAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAA 0
         XPL4 D 20
-        TNT1 AAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAAA 0
         XPL4 E 20
-        TNT1 AAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAA 0
         XPL4 F 20
-        TNT1 AAAA 0 A_CustomMissile ("MuchBlood", 50, 0, random (0, 360), 2, random (0, 160))
+        TNT1 AAAA 0
 		TNT1 A 0 A_SpawnItem ("MediumBloodSpot")
         XPL4 F -1
         Stop
