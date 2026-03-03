@@ -1022,7 +1022,7 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 			}
 			if(!dplr.blockSpecial)
 				player.WeaponState |= WF_USER3OK;
-			if(player.cmd.buttons & BT_SPEED && player.crouchdir != -1)
+			if(kicksprint && player.cmd.buttons & BT_SPEED && player.crouchdir != -1)
 				A_Overlay(50,"Sprint",true);
 			else if(player.FindPSprite(50))
 			{
