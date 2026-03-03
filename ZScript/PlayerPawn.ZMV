@@ -245,6 +245,7 @@ class BDPPlayerPawn : PlayerPawn
 	bool blockAltfire;
 	bool blockSpecial;
 	bool blockKick;
+	bool blockSlide;
 	bool blockTaunt;
 	int oldInputs[35];
 	
@@ -398,8 +399,9 @@ class BDPPlayerPawn : PlayerPawn
 	KickCheck:
 		TNT1 A 1
 		{
+			bool canSlide = player.cmd.forwardmove > 0 && Player.CrouchFactor != 1 && (player.cmd.buttons & BT_SPEED || Vel.XY dot Angle.ToVector() > 40) && (!(player.oldbuttons & BT_CROUCH) || pos.z > floorz) && player.crouchdir != 1 && !blockSlide && !exhausted && pos.z <= (floorz + 16);
 			A_OverlayFlags(-602, PSPF_ADDBOB, false);
-			if((player.cmd.buttons & BT_USER1 || player.cmd.forwardmove > 0 && Player.CrouchFactor != 1 && player.cmd.buttons & BT_SPEED && !(player.oldbuttons & BT_CROUCH) && player.crouchdir != 1) && !blockKick && CountInv("veh_manager") < 1)
+			if((player.cmd.buttons & BT_USER1 && !blockKick || canSlide) && CountInv("veh_manager") < 1)
 			{
 				BDPWeaponBase weap = BDPWeaponBase(player.ReadyWeapon);
 				bool kickflash = (weap.readyLeft && weap.readyRight || !weap.bDUALWEAPON) && player.WeaponState & WF_USER1OK;
@@ -407,7 +409,7 @@ class BDPPlayerPawn : PlayerPawn
 				statelabel st = "Kick";
 				statelabel ac = "KickAction";
 				statelabel tr = "KickTranslatable";
-				if(player.cmd.forwardmove > 0 && Player.CrouchFactor != 1 && player.cmd.buttons & BT_SPEED && !(player.oldbuttons & BT_CROUCH && player.crouchdir != 1) && !exhausted)
+				if(canSlide)
 				{
 					st = "SlideKick";
 					ac = "SlideKickAction";
@@ -456,7 +458,7 @@ class BDPPlayerPawn : PlayerPawn
 		KIC9 NOPQRRSTUVWXYZ 1;
 		Stop;
 	SlideKickAction:
-		TNT1 A 0 {A_Recoil (-6); A_StartSound("SlideKickStart", 71);}
+		TNT1 A 0 {A_Recoil (-6); A_StartSound("SlideKickStart", 71); blockSlide = true;}
 		SLID ABC 1
 		{
 			viewbob -= 0.1;
@@ -466,8 +468,10 @@ class BDPPlayerPawn : PlayerPawn
 		SLID DDEEEEEEEEEEE 1
 		{
 			double spd = Vel.XY dot Angle.ToVector();
-			If(spd < 40)
-				A_Recoil (-3);
+			if(spd < 40)
+				A_Recoil(-3);
+			else
+				A_Recoil(-1);
 			A_SlidePitch();
 			player.crouching = -1;
 			double curpitch = pitch;
@@ -2268,8 +2272,10 @@ class BDPPlayerPawn : PlayerPawn
 			blockAltfire = false;
 		if(blockSpecial && !(player.cmd.buttons & BT_USER3))
 			blockSpecial = false;
-		if(blockKick && !(player.cmd.buttons & BT_USER1) && !(player.cmd.buttons & BT_CROUCH) && player.crouchFactor == 1)
+		if(blockKick && !(player.cmd.buttons & BT_USER1))
 			blockKick = false;
+		if(blockSlide && !(player.cmd.buttons & BT_CROUCH) && player.crouchFactor == 1)
+			blockSlide = false;
 		if(blockTaunt && !(player.cmd.buttons & BT_USER4))
 			blockTaunt = false;
 		oldInputs[0] = player.oldbuttons;
