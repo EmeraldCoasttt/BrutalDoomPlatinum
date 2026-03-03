@@ -400,7 +400,7 @@ class BDPPlayerPawn : PlayerPawn
 		TNT1 A 1
 		{
 			console.printf ("%f %f",vel.z,Vel.XY dot Angle.ToVector());
-			bool canSlide = player.cmd.forwardmove > 0 && Player.CrouchFactor != 1 && (player.cmd.buttons & BT_SPEED || Vel.XY dot Angle.ToVector() > 40 || vel.z < -20) && (!(player.oldbuttons & BT_CROUCH) || pos.z > floorz) && player.crouchdir != 1 && !blockSlide && !exhausted && pos.z <= (floorz + 16);
+			bool canSlide = player.cmd.forwardmove > 0 && Player.CrouchFactor != 1 && (player.cmd.buttons & BT_SPEED || Vel.XY dot Angle.ToVector() > 40 || vel.z < -20) && !(player.oldbuttons & BT_CROUCH) && player.crouchdir != 1 && !blockSlide && !exhausted && pos.z <= (floorz + 16);
 			A_OverlayFlags(-602, PSPF_ADDBOB, false);
 			if((player.cmd.buttons & BT_USER1 && !blockKick || canSlide) && CountInv("veh_manager") < 1)
 			{
