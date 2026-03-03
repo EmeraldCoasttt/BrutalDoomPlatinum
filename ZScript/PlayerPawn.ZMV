@@ -479,7 +479,7 @@ class BDPPlayerPawn : PlayerPawn
 				A_Recoil(slidespeed);
 			else
 				A_Recoil(slidespeed / 2);
-			if(player.onground) slidespeed *= 1.15;
+			if(player.onground || vel.z < 0) slidespeed *= 1.15;
 			else slidespeed = 0.5;
 			A_SlidePitch();
 			player.crouching = -1;
