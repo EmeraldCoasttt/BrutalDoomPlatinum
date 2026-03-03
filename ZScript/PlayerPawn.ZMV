@@ -249,6 +249,8 @@ class BDPPlayerPawn : PlayerPawn
 	bool blockTaunt;
 	int oldInputs[35];
 	
+	double slideSpeed;
+	
 	Vector2 recoil;
 	Vector2 antiRecoil;
 	Vector2 recoilSpeed;
@@ -461,18 +463,24 @@ class BDPPlayerPawn : PlayerPawn
 		TNT1 A 0 {A_Recoil (-6); A_StartSound("SlideKickStart", 71); blockSlide = true;}
 		SLID ABC 1
 		{
+			slideSpeed = -1.0;
 			viewbob -= 0.1;
 			A_SlidePitch();
 			player.crouching = -1;
+		}
+		TNT1 A 0
+		{
 			bNOFRICTION = true;
 		}
 		SLID DDEEEEEEEEEEE 1
 		{
 			double spd = Vel.XY dot Angle.ToVector();
 			if(spd < 40)
-				A_Recoil(-3);
+				A_Recoil(slidespeed);
 			else
-				A_Recoil(-1);
+				A_Recoil(slidespeed / 2);
+			if(player.onground) slidespeed *= 1.15;
+			else slidespeed = 0.5;
 			A_SlidePitch();
 			player.crouching = -1;
 			double curpitch = pitch;
@@ -501,6 +509,7 @@ class BDPPlayerPawn : PlayerPawn
 			}
 			player.MaxPitch = 90;
 			player.crouching = 0;
+			if(player.onground) bNOFRICTION = false;
 		}
 		PISG HIJ 1
 		{
@@ -514,7 +523,6 @@ class BDPPlayerPawn : PlayerPawn
 		{
 			A_OverlayOffset(-602,0,0);
 			viewbob = 1.0;
-			bNOFRICTION = false;
 			blockKick = true;
 		}
 		Goto KickCheck;
@@ -1688,7 +1696,7 @@ class BDPPlayerPawn : PlayerPawn
 				Groundedtics++;
 				
 			}
-			Else
+			Else if(!blockSlide)
 			{
 				bNOfriction = false;
 			}
