@@ -1714,7 +1714,7 @@ class FireBall_ : BrutalProjectile Replaces DoomImpBall
 		Height 10;
 		Speed 16;
 		FastSpeed 24;
-		Damage 20;
+		Damagefunction 20;
 		PROJECTILE;
 		+THRUGHOST
 		+FORCEXYBILLBOARD
