@@ -389,240 +389,86 @@ brightmap sprite GL2FF0 { map "brightmaps/doom/Weapons/GrenadeLauncher/GLAFF0.pn
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Plasma rifle
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-brightmap sprite PLSNA0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-brightmap sprite PLSNB0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-brightmap sprite PLSNC0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
+brightmap sprite DUPLA0 { map "brightmaps/Weapons/Plasmagun/DUPRA0.png" disablefullbright}
+brightmap sprite DUPLB0 { map "brightmaps/Weapons/Plasmagun/DUPRD0.png" disablefullbright}
+brightmap sprite DUPLC0 { map "brightmaps/Weapons/Plasmagun/DUPRD0.png" disablefullbright}
+brightmap sprite DUPLD0 { map "brightmaps/Weapons/Plasmagun/DUPRE0.png" disablefullbright}
+brightmap sprite DUPLE0 { map "brightmaps/Weapons/Plasmagun/DUPRE0.png" disablefullbright}
+brightmap sprite DUPLF0 { map "brightmaps/Weapons/Plasmagun/DUPRF0.png" disablefullbright}
+brightmap sprite DUPLG0 { map "brightmaps/Weapons/Plasmagun/DUPRG0.png" disablefullbright}
+brightmap sprite DUPLH0 { map "brightmaps/Weapons/Plasmagun/DUPRH0.png" disablefullbright}
+brightmap sprite DUPLI0 { map "brightmaps/Weapons/Plasmagun/DUPRI0.png" disablefullbright}
+brightmap sprite DUPLJ0 { map "brightmaps/Weapons/Plasmagun/DUPRJ0.png" disablefullbright}
+brightmap sprite DUPLK0 { map "brightmaps/Weapons/Plasmagun/DUPRK0.png" disablefullbright}
+brightmap sprite DUPLL0 { map "brightmaps/Weapons/Plasmagun/DUPRL0.png" disablefullbright}
+brightmap sprite DUPLM0 { map "brightmaps/Weapons/Plasmagun/DUPRM0.png" disablefullbright}
+brightmap sprite DUPLN0 { map "brightmaps/Weapons/Plasmagun/DUPRN0.png" disablefullbright}
 
-brightmap sprite PLSNM0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-brightmap sprite PLSNN0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-brightmap sprite PLSNR0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-brightmap sprite PLSNS0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-brightmap sprite PLSNU0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-brightmap sprite PLSNV0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-brightmap sprite PLSNW0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-brightmap sprite PLSNX0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
+brightmap sprite DUPRA0 { map "brightmaps/Weapons/Plasmagun/DUPRA0.png" disablefullbright}
+brightmap sprite DUPRB0 { map "brightmaps/Weapons/Plasmagun/DUPRB0.png" disablefullbright}
+brightmap sprite DUPRC0 { map "brightmaps/Weapons/Plasmagun/DUPRB0.png" disablefullbright}
+brightmap sprite DUPRD0 { map "brightmaps/Weapons/Plasmagun/DUPRC0.png" disablefullbright}
+brightmap sprite DUPRE0 { map "brightmaps/Weapons/Plasmagun/DUPRD0.png" disablefullbright}
+brightmap sprite DUPRF0 { map "brightmaps/Weapons/Plasmagun/DUPRF0.png" disablefullbright}
+brightmap sprite DUPRG0 { map "brightmaps/Weapons/Plasmagun/DUPRG0.png" disablefullbright}
+brightmap sprite DUPRH0 { map "brightmaps/Weapons/Plasmagun/DUPRH0.png" disablefullbright}
+brightmap sprite DUPRI0 { map "brightmaps/Weapons/Plasmagun/DUPRI0.png" disablefullbright}
+brightmap sprite DUPRJ0 { map "brightmaps/Weapons/Plasmagun/DUPRJ0.png" disablefullbright}
+brightmap sprite DUPRK0 { map "brightmaps/Weapons/Plasmagun/DUPRK0.png" disablefullbright}
+brightmap sprite DUPRL0 { map "brightmaps/Weapons/Plasmagun/DUPRL0.png" disablefullbright}
+brightmap sprite DUPRM0 { map "brightmaps/Weapons/Plasmagun/DUPRM0.png" disablefullbright}
+brightmap sprite DUPRN0 { map "brightmaps/Weapons/Plasmagun/DUPRN0.png" disablefullbright}
 
+brightmap sprite PRR2K0 { map "brightmaps/Weapons/Plasmagun/PRR2K0.png" disablefullbright}
+brightmap sprite PRR2L0 { map "brightmaps/Weapons/Plasmagun/PRR2L0.png" disablefullbright}
+brightmap sprite PRR2M0 { map "brightmaps/Weapons/Plasmagun/PRR2M0.png" disablefullbright}
+brightmap sprite PRR2N0 { map "brightmaps/Weapons/Plasmagun/PRR2N0.png" disablefullbright}
+brightmap sprite PRR2O0 { map "brightmaps/Weapons/Plasmagun/PRR2O0.png" disablefullbright}
+brightmap sprite PRR2P0 { map "brightmaps/Weapons/Plasmagun/PRR2P0.png" disablefullbright}
 
-brightmap sprite PLSTA0 { map "brightmaps/doom/Weapons/Plasmagun/PLSTA0.png" disablefullbright }
-brightmap sprite PLSTB0 { map "brightmaps/doom/Weapons/Plasmagun/PLSTB0.png" disablefullbright }
-brightmap sprite PLSTC0 { map "brightmaps/doom/Weapons/Plasmagun/PLSTC0.png" disablefullbright }
-brightmap sprite PLSTD0 { map "brightmaps/doom/Weapons/Plasmagun/PLSTD0.png" disablefullbright }
+brightmap sprite PRsAA0 { map "brightmaps/Weapons/Plasmagun/PRsAA0.png" disablefullbright}
+brightmap sprite PRsAB0 { map "brightmaps/Weapons/Plasmagun/PRsAB0.png" disablefullbright}
+brightmap sprite PRsAC0 { map "brightmaps/Weapons/Plasmagun/PRsAC0.png" disablefullbright}
+brightmap sprite PRsAD0 { map "brightmaps/Weapons/Plasmagun/PRsAD0.png" disablefullbright}
+brightmap sprite PRsAE0 { map "brightmaps/Weapons/Plasmagun/PRsAE0.png" disablefullbright}
+brightmap sprite PRsAF0 { map "brightmaps/Weapons/Plasmagun/PRsAF0.png" disablefullbright}
+brightmap sprite PRsAG0 { map "brightmaps/Weapons/Plasmagun/PRsAG0.png" disablefullbright}
+brightmap sprite PRsAH0 { map "brightmaps/Weapons/Plasmagun/PRsAH0.png" disablefullbright}
+brightmap sprite PRsAI0 { map "brightmaps/Weapons/Plasmagun/PRsAI0.png" disablefullbright}
 
+brightmap sprite PRSGA0 { map "brightmaps/Weapons/Plasmagun/PRSGA0.png" disablefullbright}
+brightmap sprite PRSGB0 { map "brightmaps/Weapons/Plasmagun/PRSGB0.png" disablefullbright}
+brightmap sprite PRSGC0 { map "brightmaps/Weapons/Plasmagun/PRSGB0.png" disablefullbright}
+brightmap sprite PRSGD0 { map "brightmaps/Weapons/Plasmagun/PRSGD0.png" disablefullbright}
+brightmap sprite PRSGE0 { map "brightmaps/Weapons/Plasmagun/PRSGE0.png" disablefullbright}
 
+brightmap sprite PRSGG0 { map "brightmaps/Weapons/Plasmagun/PRSGA0.png" disablefullbright}
+brightmap sprite PRSGH0 { map "brightmaps/Weapons/Plasmagun/PRSGA0.png" disablefullbright}
+brightmap sprite PRSGI0 { map "brightmaps/Weapons/Plasmagun/PRSGA0.png" disablefullbright}
+brightmap sprite PRSGJ0 { map "brightmaps/Weapons/Plasmagun/PRSGJ0.png" disablefullbright}
+brightmap sprite PRSGK0 { map "brightmaps/Weapons/Plasmagun/PRSGK0.png" disablefullbright}
+brightmap sprite PRSGL0 { map "brightmaps/Weapons/Plasmagun/PRSGL0.png" disablefullbright}
+brightmap sprite PRSGM0 { map "brightmaps/Weapons/Plasmagun/PRSGM0.png" disablefullbright}
+brightmap sprite PRSGN0 { map "brightmaps/Weapons/Plasmagun/PRSGN0.png" disablefullbright}
+brightmap sprite PRSGO0 { map "brightmaps/Weapons/Plasmagun/PRSGO0.png" disablefullbright}
 
-brightmap sprite PLSRJ0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRJ0.png" disablefullbright }
-brightmap sprite PLSRK0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRK0.png" disablefullbright }
-brightmap sprite PLSRL0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRL0.png" disablefullbright }
-brightmap sprite PLSRM0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRM0.png" disablefullbright }
-brightmap sprite PLSRN0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRN0.png" disablefullbright }
-brightmap sprite PLSRO0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRO0.png" disablefullbright }
-brightmap sprite PLSRP0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRP0.png" disablefullbright }
+brightmap sprite PRSKA0 { map "brightmaps/Weapons/Plasmagun/PRSGA0.png" }
+brightmap sprite PRSKB0 { map "brightmaps/Weapons/Plasmagun/PRSGA0.png" }
+brightmap sprite PRSKC0 { map "brightmaps/Weapons/Plasmagun/PRSKC0.png" }
+brightmap sprite PRSKD0 { map "brightmaps/Weapons/Plasmagun/PRSKD0.png" }
+brightmap sprite PRSKE0 { map "brightmaps/Weapons/Plasmagun/PRSKD0.png" }
+brightmap sprite PRSKF0 { map "brightmaps/Weapons/Plasmagun/PRSGA0.png" }
+brightmap sprite PRSKG0 { map "brightmaps/Weapons/Plasmagun/PRSGA0.png" }
+brightmap sprite PRSKH0 { map "brightmaps/Weapons/Plasmagun/PRSKH0.png" }
+brightmap sprite PRSKI0 { map "brightmaps/Weapons/Plasmagun/PRSKD0.png" }
+brightmap sprite PRSKJ0 { map "brightmaps/Weapons/Plasmagun/PRSKD0.png"}
 
-brightmap sprite P2SRJ0 { map "brightmaps/doom/Weapons/Plasmagun/P2SRJ0.png" disablefullbright }
-brightmap sprite P2SRK0 { map "brightmaps/doom/Weapons/Plasmagun/P2SRK0.png" disablefullbright }
-brightmap sprite P2SRL0 { map "brightmaps/doom/Weapons/Plasmagun/P2SRL0.png" disablefullbright }
-brightmap sprite P2SRM0 { map "brightmaps/doom/Weapons/Plasmagun/P2SRM0.png" disablefullbright }
-brightmap sprite P2SRN0 { map "brightmaps/doom/Weapons/Plasmagun/P2SRN0.png" disablefullbright }
-brightmap sprite P2SRO0 { map "brightmaps/doom/Weapons/Plasmagun/P2SRO0.png" disablefullbright }
-brightmap sprite P2SRP0 { map "brightmaps/doom/Weapons/Plasmagun/P2SRP0.png" disablefullbright }
-*/
-
-
-//Inspect
-brightmap sprite PLSIA0 { map "brightmaps/doom/Weapons/Plasmagun/PLSIA0.png" disablefullbright }
-brightmap sprite PLSIB0 { map "brightmaps/doom/Weapons/Plasmagun/PLSIB0.png" disablefullbright }
-brightmap sprite PLSIC0 { map "brightmaps/doom/Weapons/Plasmagun/PLSIC0.png" disablefullbright }
-brightmap sprite PLSID0 { map "brightmaps/doom/Weapons/Plasmagun/PLSID0.png" disablefullbright }
-brightmap sprite PLSIE0 { map "brightmaps/doom/Weapons/Plasmagun/PLSIE0.png" disablefullbright }
-
-brightmap sprite 2LSIA0 { map "brightmaps/doom/Weapons/Plasmagun/PLSIA0.png" disablefullbright }
-brightmap sprite 2LSIB0 { map "brightmaps/doom/Weapons/Plasmagun/PLSIB0.png" disablefullbright }
-brightmap sprite 2LSIC0 { map "brightmaps/doom/Weapons/Plasmagun/PLSIC0.png" disablefullbright }
-brightmap sprite 2LSID0 { map "brightmaps/doom/Weapons/Plasmagun/PLSID0.png" disablefullbright }
-brightmap sprite 2LSIE0 { map "brightmaps/doom/Weapons/Plasmagun/PLSIE0.png" disablefullbright }
-
-//idle
-brightmap sprite PLSNA0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-brightmap sprite PLSNB0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-brightmap sprite PLSNC0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-//Cool down
-brightmap sprite PLSNE0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNE0.png" disablefullbright }
-brightmap sprite PLSNF0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNF0.png" disablefullbright }
-brightmap sprite PLSNG0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNG0.png" disablefullbright }
-brightmap sprite PLSNH0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNH0.png" disablefullbright }
-brightmap sprite PLSNI0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNI0.png" disablefullbright }
-brightmap sprite PLSNJ0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNJ0.png" disablefullbright }
-//Kick
-brightmap sprite PLSNK0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-brightmap sprite PLSNL0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNL0.png" disablefullbright }
-brightmap sprite PLSNM0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNM0.png" disablefullbright }
-brightmap sprite PLSNN0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNN0.png" disablefullbright }
-brightmap sprite PLSNO0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNO0.png" disablefullbright }
-	brightmap sprite 2LSNK0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-	brightmap sprite 2LSNL0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNL0.png" disablefullbright }
-	brightmap sprite 2LSNM0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNM0.png" disablefullbright }
-	brightmap sprite 2LSNN0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNN0.png" disablefullbright }
-	brightmap sprite 2LSNO0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNO0.png" disablefullbright }
-		brightmap sprite 4LSNK0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-		brightmap sprite 4LSNL0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNL0.png" disablefullbright }
-		brightmap sprite 4LSNM0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNM0.png" disablefullbright }
-		brightmap sprite 4LSNN0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNN0.png" disablefullbright }
-		brightmap sprite 4LSNO0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNO0.png" disablefullbright }
-//select
-brightmap sprite PLSNP0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-brightmap sprite PLSNQ0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNQ0.png" disablefullbright }
-brightmap sprite PLSNR0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNR0.png" disablefullbright }
-brightmap sprite PLSNS0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNS0.png" disablefullbright }
-brightmap sprite PLSNT0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNT0.png" disablefullbright }
-	brightmap sprite 2LSNP0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNA0.png" disablefullbright }
-	brightmap sprite 2LSNQ0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNQ0.png" disablefullbright }
-	brightmap sprite 2LSNR0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNR0.png" disablefullbright }
-	brightmap sprite 2LSNS0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNS0.png" disablefullbright }
-	brightmap sprite 2LSNT0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNT0.png" disablefullbright }
-//OTHERS
-brightmap sprite PLSNU0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNJ0.png" disablefullbright }
-brightmap sprite PLSNV0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNJ0.png" disablefullbright }
-brightmap sprite PLSNW0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNJ0.png" disablefullbright }
-brightmap sprite PLSNX0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNJ0.png" disablefullbright }
-
-brightmap sprite PLSFW0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNE0.png" disablefullbright }
-brightmap sprite PLSFX0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNF0.png" disablefullbright }
-brightmap sprite PLSFY0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNG0.png" disablefullbright }
-brightmap sprite PLSFZ0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNH0.png" disablefullbright }
-brightmap sprite PLSF[0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNI0.png" disablefullbright }
-	brightmap sprite 2LSFW0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNE0.png" disablefullbright }
-	brightmap sprite 2LSFX0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNF0.png" disablefullbright }
-	brightmap sprite 2LSFY0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNG0.png" disablefullbright }
-	brightmap sprite 2LSFZ0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNH0.png" disablefullbright }
-	brightmap sprite 2LSF[0 { map "brightmaps/doom/Weapons/Plasmagun/PLSNI0.png" disablefullbright }
-
-
-
-//fire
-brightmap sprite PLSFA0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFA0.png" disablefullbright }
-brightmap sprite PLSFB0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFB0.png" disablefullbright }
-brightmap sprite PLSFC0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFC0.png" disablefullbright }
-brightmap sprite PLSFD0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFD0.png" disablefullbright }
-brightmap sprite PLSFE0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFA0.png" disablefullbright }
-brightmap sprite PLSFF0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFB0.png" disablefullbright }
-brightmap sprite PLSFG0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFC0.png" disablefullbright }
-brightmap sprite PLSFH0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFD0.png" disablefullbright }
-brightmap sprite PLSFI0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFI0.png" disablefullbright }
-brightmap sprite PLSFJ0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFJ0.png" disablefullbright }
-brightmap sprite PLSFK0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFK0.png" disablefullbright }
-brightmap sprite PLSFL0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFL0.png" disablefullbright }
-brightmap sprite PLSFM0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFM0.png" disablefullbright }
-brightmap sprite PLSFN0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFN0.png" disablefullbright }
-brightmap sprite PLSFO0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFO0.png" disablefullbright }
-brightmap sprite PLSFP0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFP0.png" disablefullbright }
-brightmap sprite PLSFQ0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFQ0.png" disablefullbright }
-brightmap sprite PLSFR0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFR0.png" disablefullbright }
-brightmap sprite PLSFS0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFS0.png" disablefullbright }
-brightmap sprite PLSFT0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFT0.png" disablefullbright }
-brightmap sprite PLSFU0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFU0.png" disablefullbright }
-brightmap sprite PLSFV0 { map "brightmaps/doom/Weapons/Plasmagun/PLSFV0.png" disablefullbright }
-
-
-//RELOAD
-brightmap sprite 2LSRA0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRA0.png" disablefullbright }
-brightmap sprite 2LSRB0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRB0.png" disablefullbright }
-brightmap sprite PLSRA0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRA0.png" disablefullbright }
-brightmap sprite PLSRB0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRB0.png" disablefullbright }
-
-brightmap sprite PLSRH0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRH0.png" disablefullbright }
-//brightmap sprite PLSRI0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRI0.png" disablefullbright }
-brightmap sprite PLSRJ0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRJ0.png" disablefullbright }
-brightmap sprite PLSRK0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRK0.png" disablefullbright }
-brightmap sprite PLSRL0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRL0.png" disablefullbright }
-brightmap sprite PLSRM0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRM0.png" disablefullbright }
-brightmap sprite PLSRN0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRN0.png" disablefullbright }
-brightmap sprite PLSRO0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRO0.png" disablefullbright }
-brightmap sprite PLSRP0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRP0.png" disablefullbright }
-brightmap sprite PLSRQ0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRQ0.png" disablefullbright }
-brightmap sprite PLSRR0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRR0.png" disablefullbright }
-brightmap sprite PLSRS0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRS0.png" disablefullbright }
-brightmap sprite PLSRT0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRT0.png" disablefullbright }
-brightmap sprite PLSRU0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRU0.png" disablefullbright }
-brightmap sprite PLSRV0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRV0.png" disablefullbright }
-brightmap sprite PLSRW0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRW0.png" disablefullbright }
-brightmap sprite PLSRX0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRX0.png" disablefullbright }
-brightmap sprite PLSRY0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRY0.png" disablefullbright }
-brightmap sprite PLSRZ0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRZ0.png" disablefullbright }
-brightmap sprite PLSR[0 { map "brightmaps/doom/Weapons/Plasmagun/PLSR[0.png" disablefullbright }
-brightmap sprite PLSR\0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRbackslash0.png" disablefullbright }
-brightmap sprite PLSR]0 { map "brightmaps/doom/Weapons/Plasmagun/PLSR]0.png" disablefullbright }
-
-brightmap sprite 2LSRY0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRY0.png" disablefullbright }
-brightmap sprite 2LSRZ0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRZ0.png" disablefullbright }
-brightmap sprite 2LSR[0 { map "brightmaps/doom/Weapons/Plasmagun/PLSR[0.png" disablefullbright }
-brightmap sprite 2LSR\0 { map "brightmaps/doom/Weapons/Plasmagun/PLSRbackslash0.png" disablefullbright }
-
-brightmap sprite DUPLA0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLA0.png" disablefullbright }
-brightmap sprite DUPLB0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLB0.png" disablefullbright }
-brightmap sprite DUPLC0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLC0.png" disablefullbright }
-brightmap sprite DUPLD0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLD0.png" disablefullbright }
-brightmap sprite DUPLE0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLE0.png" disablefullbright }
-brightmap sprite DUPLF0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLF0.png" disablefullbright }
-brightmap sprite DUPLG0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLG0.png" disablefullbright }
-brightmap sprite DUPLH0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLH0.png" disablefullbright }
-brightmap sprite DUPLI0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLI0.png" disablefullbright }
-brightmap sprite DUPLJ0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLJ0.png" disablefullbright }
-brightmap sprite DUPLK0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLK0.png" disablefullbright }
-brightmap sprite DUPLL0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLL0.png" disablefullbright }
-brightmap sprite DUPLM0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLM0.png" disablefullbright }
-brightmap sprite DUPLN0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLN0.png" disablefullbright }
-brightmap sprite DUPLO0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLO0.png" disablefullbright }
-brightmap sprite DUPLP0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLP0.png" disablefullbright }
-brightmap sprite DUPLQ0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLQ0.png" disablefullbright }
-brightmap sprite DUPLR0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLR0.png" disablefullbright }
-brightmap sprite DUPLS0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLS0.png" disablefullbright }
-brightmap sprite DUPLT0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLT0.png" disablefullbright }
-
-
-brightmap sprite 2UPLA0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLA0.png" disablefullbright }
-brightmap sprite 2UPLB0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLB0.png" disablefullbright }
-brightmap sprite 2UPLC0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLC0.png" disablefullbright }
-brightmap sprite 2UPLD0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLD0.png" disablefullbright }
-brightmap sprite 2UPLE0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLE0.png" disablefullbright }
-brightmap sprite 2UPLF0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLF0.png" disablefullbright }
-brightmap sprite 2UPLG0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLG0.png" disablefullbright }
-brightmap sprite 2UPLH0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLH0.png" disablefullbright }
-brightmap sprite 2UPLI0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLI0.png" disablefullbright }
-brightmap sprite 2UPLJ0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLJ0.png" disablefullbright }
-brightmap sprite 2UPLK0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLK0.png" disablefullbright }
-brightmap sprite 2UPLL0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLL0.png" disablefullbright }
-brightmap sprite 2UPLM0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLM0.png" disablefullbright }
-brightmap sprite 2UPLN0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLN0.png" disablefullbright }
-brightmap sprite 2UPLO0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLO0.png" disablefullbright }
-brightmap sprite 2UPLP0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLP0.png" disablefullbright }
-brightmap sprite 2UPLQ0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLQ0.png" disablefullbright }
-brightmap sprite 2UPLR0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLR0.png" disablefullbright }
-brightmap sprite 2UPLS0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLS0.png" disablefullbright }
-brightmap sprite 2UPLT0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLT0.png" disablefullbright }
-
-brightmap sprite 4UPLA0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLA0.png" disablefullbright }
-brightmap sprite 4UPLB0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLB0.png" disablefullbright }
-brightmap sprite 4UPLC0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLC0.png" disablefullbright }
-brightmap sprite 4UPLD0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLD0.png" disablefullbright }
-brightmap sprite 4UPLE0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLE0.png" disablefullbright }
-brightmap sprite 4UPLF0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLF0.png" disablefullbright }
-brightmap sprite 4UPLG0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLG0.png" disablefullbright }
-brightmap sprite 4UPLH0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLH0.png" disablefullbright }
-brightmap sprite 4UPLI0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLI0.png" disablefullbright }
-brightmap sprite 4UPLJ0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLJ0.png" disablefullbright }
-brightmap sprite 4UPLK0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLK0.png" disablefullbright }
-brightmap sprite 4UPLL0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLL0.png" disablefullbright }
-brightmap sprite 4UPLM0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLM0.png" disablefullbright }
-brightmap sprite 4UPLN0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLN0.png" disablefullbright }
-brightmap sprite 4UPLO0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLO0.png" disablefullbright }
-brightmap sprite 4UPLP0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLP0.png" disablefullbright }
-brightmap sprite 4UPLQ0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLQ0.png" disablefullbright }
-brightmap sprite 4UPLR0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLR0.png" disablefullbright }
-brightmap sprite 4UPLS0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLS0.png" disablefullbright }
-brightmap sprite 4UPLT0 { map "brightmaps/doom/Weapons/Plasmagun/DUPLT0.png" disablefullbright }
-
-
+brightmap sprite PRSRK0 { map "brightmaps/Weapons/Plasmagun/PRSRK0.png"}
+brightmap sprite PRSRL0 { map "brightmaps/Weapons/Plasmagun/PRSRL0.png"}
+brightmap sprite PRSRM0 { map "brightmaps/Weapons/Plasmagun/PRSRM0.png"}
+brightmap sprite PRSRN0 { map "brightmaps/Weapons/Plasmagun/PRSRN0.png"}
+brightmap sprite PRSRO0 { map "brightmaps/Weapons/Plasmagun/PRSRO0.png"}
+brightmap sprite PRSRP0 { map "brightmaps/Weapons/Plasmagun/PRSRP0.png"}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // oh boy...
