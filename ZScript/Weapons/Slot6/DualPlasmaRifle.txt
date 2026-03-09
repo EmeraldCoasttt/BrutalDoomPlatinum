@@ -1,12 +1,11 @@
-class PlasmaCooldowncounter2 : Inventory {Default {Inventory.MaxAmount 15;}} //Check which gun will fire next
 class BDPDualPlasmaRifle : BDPWeaponBase
 {
-	action state A_LowSprites(string nosprite, string medsprite, string highsprite, statelabel lowstate = null)
+	action state A_LowSprites(string nosprite, string medsprite, string highsprite, statelabel lowstate = null, bool dual = false)
 	{
 		let psp = player.FindPSprite(OverlayID());
 		let weap = BDPWeaponBase(FindInventory(invoker.DualWeapon));
 		BDPWeaponBase target;
-		if(OverlayID() == 2)
+		if(dual)
 			target = weap;
 		else
 			target = invoker;
@@ -24,12 +23,12 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		return resolvestate(null);
 	}
 	
-	action state A_LowFrame(int noframe, int medframe, int highframe, statelabel lowstate = null)
+	action state A_LowFrame(int noframe, int medframe, int highframe, statelabel lowstate = null, bool dual = false)
 	{
 		let psp = player.FindPSprite(OverlayID());
 		let weap = BDPWeaponBase(FindInventory(invoker.DualWeapon));
 		BDPWeaponBase target;
-		if(OverlayID() == 2)
+		if(dual)
 			target = weap;
 		else
 			target = invoker;
@@ -47,6 +46,8 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		return resolvestate(null);
 	}
 	
+	int heat;
+	
 	Default
 	{
 		Weapon.AmmoType "BDPCell";
@@ -55,7 +56,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		+WEAPON.POWERED_UP
 		+BDPWeaponBase.DUALWEAPON
 		Tag "$BDPPLASMA";
-		Inventory.AltHUDIcon "PLASB0";
+		Inventory.AltHUDIcon "PRASB0";
 		BDPWeaponBase.handedness 2;
 		BDPWeaponBase.voiceacted 0;
 		BDPWeaponBase.DualWeapon "BDPPlasmaRifle";
@@ -63,227 +64,274 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 	States
 	{
 	CacheSprites:
-		3UPL ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
-		2UPL ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
+		3UPL A 0;
+		2UPL A 0;
+		3UPR A 0;
+		2UPR A 0;
 		Stop;
 	Grenade: //30
-		TNT1 A 4 A_DrawDualOverlays("DeselectOverlay","DeselectOverlay",true);
+		TNT1 A 4 A_DrawDualOverlays("KickLeft", "KickRight");
 		TNT1 A 22;
-		TNT1 A 4 A_DrawDualOverlays("SelectOverlay","SelectOverlay",true);
+		TNT1 A 4 A_DrawDualOverlays("KickLeftEnd", "KickRightEnd");
 		Goto Ready;
 	Kick: //18
-		TNT1 A 4 A_DrawDualOverlays("KickOverlay","KickOverlay",true);
+		TNT1 A 4 A_DrawDualOverlays("KickLeft", "KickRight");
 		TNT1 A 10;
-		TNT1 A 4 A_DrawDualOverlays("KickOverlayEnd","KickOverlayEnd",true);
+		TNT1 A 4 A_DrawDualOverlays("KickLeftEnd", "KickRightEnd");
 		Goto Ready;
 	SlideKick: //25
-		TNT1 A 4 A_DrawDualOverlays("KickOverlay","KickOverlay",true);
+		TNT1 A 4 A_DrawDualOverlays("KickLeft", "KickRight");
 		TNT1 A 17;
-		TNT1 A 4 A_DrawDualOverlays("KickOverlayEnd","KickOverlayEnd",true);
+		TNT1 A 4 A_DrawDualOverlays("KickLeftEnd", "KickRightEnd");
 		Goto Ready;
 	Sprint:
-		TNT1 A 0 A_DrawDualOverlays("SprintOverlay","SprintOverlay",true);
+		TNT1 A 0 A_DrawDualOverlays("SprintLeft", "SprintRight");
 		TNT1 A 4;
 	SprintLoop:
-		TNT1 A 1 A_DrawDualOverlays("SprintOverlay","SprintOverlay",true,true);
+		TNT1 A 1;
 		Loop;
 	SprintEnd:
-		TNT1 A 0 A_DrawDualOverlays("SprintOverlayEnd","SprintOverlayEnd",true);
+		TNT1 A 0 A_DrawDualOverlays("SprintLeftEnd", "SprintRightEnd");
 		TNT1 A 4;
 		Stop;
-	SprintOverlay:
-		TNT1 A 0 A_LowSprites("3UPL","2UPL","DUPL","SprintOverlayLowAmmo");
-		DUPL KLMN 1  {A_HandleDualFiring("Fire",null,true); A_LowSprites("3UPL","2UPL","DUPL");}
-	SprintOverlayLoop:
-		DUPL O 1  {A_HandleDualFiring("Fire",null,true); A_LowSprites("3UPL","2UPL","DUPL");}
+	KickLeft:
+		DUPL MNOP 1 A_LowSprites("3UPL","2UPL","DUPL");
+		DUPL Q 1 A_LowSprites("3UPL","2UPL","DUPL");
+		Wait;
+	KickLeftEnd:
+		DUPL PONM 1 A_LowSprites("3UPL","2UPL","DUPL");
+		Goto ReadyLeft;
+	KickRight:
+		DUPR MNOP 1 A_LowSprites("3UPR","2UPR","DUPR");
+		DUPR Q 1 A_LowSprites("3UPR","2UPR","DUPR");
+		Wait;
+	KickRightEnd:
+		DUPR PONM 1 A_LowSprites("3UPR","2UPR","DUPR");
+		Goto ReadyRight;
+	SprintLeft:
+		DUPL MNOP 1
+		{
+			A_HandleDualFiring("FireLeft", sprinting:true);
+			A_LowSprites("3UPL","2UPL","DUPL");
+		}
+	SprintLeftLoop:
+		DUPL Q 1
+		{
+			A_HandleDualFiring("FireLeft", sprinting:true);
+			A_LowSprites("3UPL","2UPL","DUPL");
+		}
 		Loop;
-	SprintOverlayEnd:
-		TNT1 A 0  A_LowSprites("3UPL","2UPL","DUPL","SprintOverlayEndLowAmmo");
-		DUPL NMLK 1 {A_HandleDualFiring("Fire",null,true); A_LowSprites("3UPL","2UPL","DUPL");}
-		Goto ReadyOverlay;
-	SprintOverlayLowAmmo:
-		3UPL KLMNOO 1 A_HandleDualFiring("Fire",null,true);
-	SprintOverlayLoopLowAmmo:
-		PLSN A 0 A_StartSound("BEP",4,0,0.3);
-		4UPL OOOOOO 1 A_HandleDualFiring("Fire",null,true);
-		3UPL OOOOOO 1 A_HandleDualFiring("Fire",null,true);
+	SprintLeftEnd:
+		DUPL PONM 1
+		{
+			A_HandleDualFiring("FireLeft", sprinting:true);
+			A_LowSprites("3UPL","2UPL","DUPL");
+		}
+		Goto ReadyLeft;
+	SprintRight:
+		DUPR MNOP 1
+		{
+			A_HandleDualFiring("FireRight", sprinting:true);
+			A_LowSprites("3UPR","2UPR","DUPR");
+		}
+	SprintRightLoop:
+		DUPR Q 1
+		{
+			A_HandleDualFiring("FireRight", sprinting:true);
+			A_LowSprites("3UPR","2UPR","DUPR");
+		}
 		Loop;
-	SprintOverlayEndLowAmmo:
-		4UPL OONMLK 1 A_HandleDualFiring("Fire",null,true);
-		Goto ReadyOverlay;
-	KickOverlay:
-		DUPL KLMN 1 A_LowSprites("3UPL","2UPL","DUPL","KickOverlayLowAmmo");
-	KickOverlayLoop:
-		DUPL O 1 A_LowSprites("3UPL","2UPL","DUPL");
-		Loop;
-	KickOverlayEnd:
-		DUPL NMLK 1 A_LowSprites("3UPL","2UPL","DUPL");
-		Goto ReadyOverlay;
-	KickOverlayLowAmmo:
-		3UPL KLMNOO 1;
-	KickOverlayLoopLowAmmo:
-		PLSN A 0 A_StartSound("BEP",4,0,0.3);
-		4UPL OOOOOO 1;
-		3UPL OOOOOO 1;
-		Loop;
-	KickOverlayEndLowAmmo:
-		4UPL OONMLK 1;
-		Goto ReadyOverlay;
+	SprintRightEnd:
+		DUPR PONM 1
+		{
+			A_HandleDualFiring("FireRight", sprinting:true);
+			A_LowSprites("3UPR","2UPR","DUPR");
+		}
+		Goto ReadyRight;
 	Ready:
 		TNT1 A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD|WRF_NOFIRE);
 		Loop;
-	ReadyOverlay:
-		TNT1 A 0 A_HandleDualFiring("Fire");
-		DUPL A 1 A_LowSprites("3UPL","2UPL","DUPL","ReadyOverlayLowAmmo");
+	ReadyLeft:
+		TNT1 A 0 A_HandleDualFiring("FireLeft");
+		DUPL A 1 A_LowSprites("3UPL", "2UPL", "DUPL", "ReadyLeftLowAmmo");
 		Loop;
-	ReadyOverlayLowAmmo:
-		TNT1 A 0 A_StartSound("BEP",4,0,0.3);
-		4UPL AAAAAA 1 A_HandleDualFiring("Fire");
-		3UPL AAAAAA 1 A_HandleDualFiring("Fire");
+	ReadyRight:
+		TNT1 A 0 A_HandleDualFiring("FireRight");
+		DUPR A 1 A_LowSprites("3UPR", "2UPR", "DUPR", "ReadyRightLowAmmo", true);
+		Loop;
+	ReadyLeftLowAmmo:
+		TNT1 A 0 A_StartSound("BEP", 4, 0, 0.3);
+		4UPL AAAAAA 1 A_HandleDualFiring("FireLeft");
+		3UPL AAAAAA 1 A_HandleDualFiring("FireLeft");
+		Loop;
+	ReadyRightLowAmmo:
+		TNT1 A 0 A_StartSound("BEP", 4, 0, 0.3);
+		4UPR AAAAAA 1 A_HandleDualFiring("FireRight");
+		3UPR AAAAAA 1 A_HandleDualFiring("FireRight");
 		Loop;
 	SpecialAction:
 		TNT1 A 0 A_EndDual();
 		Goto Ready;
 	Deselect:
-		TNT1 A 6 A_DrawDualOverlays("DeselectOverlay","DeselectOverlay",true);
-		TNT1 A 0 A_Lower;
+		TNT1 A 7 A_DrawDualOverlays("DeselectLeft", "DeselectRight");
+		TNT1 A 0 A_Lower();
 		Wait;
-	DeselectOverlay:
-		DUPL BCDEF 1 A_LowSprites("3UPL","2UPL","DUPL");
+	DeselectLeft:
+		3UPL A 2 A_LowSprites("3UPL", "2UPL", "DUPL");
+		DUPL IJKL 1;
+		Stop;
+	DeselectRight:
+		DUPR IJKL 1;
 		Stop;
 	Select:
-		TNT1 A 1 {A_SetCrosshairDX("DPLSRet", 500); A_GunslingerMag;}
+		TNT1 A 1
+		{
+			A_SetCrosshairDX("DPLSRet", 500);
+			A_GunslingerMag();
+		}
 		DUPL A 0 A_StartSound("PLSDRAW");
-		TNT1 A 0 A_DrawDualOverlays("SelectOverlay","SelectOverlay",true);
+		TNT1 A 0 A_DrawDualOverlays("SelectLeft", "SelectRight");
 		TNT1 A 6;
 		Goto Ready;
-	SelectOverlay:
-		DUPL FEDCB 1 A_LowSprites("3UPL","2UPL","DUPL","SelectOverlayLowAmmo");
-		Goto ReadyOverlay;
+	SelectLeft:
+		TNT1 A 2;
+		DUPL LKJI 1;
+		Goto ReadyLeft;
+	SelectRight:
+		DUPR LKJI 1;
+		DUPR A 3 A_LowSprites("3UPR", "2UPR", "DUPR");
+		Goto ReadyRight;
+	SelectFromDualLeft:
+		TNT1 A 4;
+		TNT1 A 0 A_StartSound("PLSDRAW"); 
+		DUPL VWXY 1;
+		Goto ReadyLeft;
+	SelectFromDualRight:
+		DUPR RSTUVWXY 1;
+		Goto ReadyRight;
 	SelectFromDual:
-		TNT1 A 0 {A_SetCrosshairDX("DPLSRet", 500); A_StartSound("foley/PlasmaInspectMisc",10);}
-		DUPL PQRST 1 A_LowSprites("3UPL","2UPL","DUPL");
-		TNT1 A 0 A_StartSound("PLSDRAW");
-		TNT1 A 0 A_DrawDualOverlays("SelectOverlay",null);
-		DUPL TTTTT 1 A_LowSprites("3UPL","2UPL","DUPL");
-		TNT1 A 0 A_DrawDualOverlays("ReadyOverlay","ReadyOverlay",true);
+		TNT1 A 0 {A_SetCrosshairDX("DPLSRet", 500); A_StartSound("foley/PlasmaInspectMisc", 10);}
+		TNT1 A 0 A_DrawDualOverlays("SelectFromDualLeft", "SelectFromDualRight");
+		TNT1 A 8;
 		Goto Ready;
 	MuzzleFlash:
 		DUPM AB 1 Bright;
 		Stop;
-	Fire:
-		TNT1 A 0
+	FireLeft:
+		TNT1 A 0 A_CheckIfMag(label:"NoAmmoLeft");
+		DUPL B 1 Bright
 		{
-			if(OverlayID() == 3)
-				return A_CheckIfDualMag();
-			else
-				return A_CheckIfMag();
-		}
-		DUPL G 1 Bright
-		{
-			if(OverlayID() == 3)
-			{
-				A_FireProjectileDX("Plasma_Ball",random(-4, 4),random(-4,4),-8,0,-8,false);
-				A_TakeDualMag();
-				A_FlashOverlay();
-			}
-			else
-			{
-				A_FireProjectileDX("Plasma_Ball",random(-4, 4),random(-4,4),8,0,-8,false);
-				A_TakeMag();
-				A_FlashOverlay(-2);
-				A_OverlayFlags(-2,PSPF_FLIP|PSPF_MIRROR,true);
-			}
+			A_FireProjectileDX("Plasma_Ball", random(-4, 4), random(-4, 4), -8, 0, -8, false);
+			A_TakeMag();
+			A_FlashOverlay(-2);
+			A_OverlayFlags(-2, PSPF_FLIP|PSPF_MIRROR, true);
 			A_FirePitchDown("PLSM9", 1, 30);
-			a_alertmonstersDX();
+			A_AlertmonstersDX();
 			A_QuadSound();
-			A_GunLight(500,2,0,128,255);
+			A_GunLight(500, 2, 0, 128, 255);
 			A_ZoomFactor(0.98);
-			A_WeaponRecoil(0.7,frandom(-0.7,0.7),4);
-			A_GiveInventory("PlasmaCooldowncounter",1);
+			A_WeaponRecoil(0.7, frandom(-0.7, 0.7), 4);
+			invoker.heat++;
 		}
-		DUPL H 1 Bright A_ZoomFactor(1.0);
 		TNT1 A 0
 		{
 			let dplr = BDPPlayerPawn(invoker.owner);
 			dplr.blockFire = false;
 		}
-		DUPL IJ 1;
-		TNT1 A 0 A_RefireDX("FireOverlay");
-		TNT1 A 0 A_JumpIfInventory("PlasmaCooldowncounter",5,"Cooldown");
-		TNT1 A 0 A_TakeInventory("PlasmaCooldowncounter",15);
-		Goto ReadyOverlay;
-	Cooldown:
-		DUPL Z 1 ;
-		DUPL [\] 1;
-		CHAG A 0 A_FireProjectile("SmokeSpawner11",0,0,-18,10);
-		DUPL VVVWWWWWXXYY 1;
-		DUPL NMLK 1 A_LowSprites("3UPL","2UPL","DUPL");
-		TNT1 A 0 A_TakeInventory("PlasmaCooldowncounter",15);
-		Goto ReadyOverlay;
-	ReloadOverlay:
-		TNT1 A 2;
-		2LSR \ 1;
-		2LSR CDEFF 1;
-		PLSR G 5;
-		PLSR HHIJKLL 1;
-		PLSR M 4;
-		PLSR NNO 1;
-		PLSR PPPQRSSTTTUUVWX 1;
-		2LSR YZ 1;
-		2LSR [ 1;
-		2LSR \ 1;
-		2LSR ] 1;
-		stop;
+		DUPL C 1 Bright A_ZoomFactor(1.0);
+		DUPL DE 1;
+		TNT1 A 0 A_RefireDX("FireLeft");
+		TNT1 A 0 A_JumpIf(invoker.heat >= 10, "CooldownLeft");
+		TNT1 A 0 {invoker.heat = 0;}
+		Goto ReadyLeft;
+	FireRight:
+		TNT1 A 0 A_CheckIfDualMag(label:"NoAmmoRight");
+		DUPR B 1 Bright
+		{
+			A_FireProjectileDX("Plasma_Ball", random(-4, 4), random(-4, 4), 8, 0, -8, false);
+			A_TakeDualMag();
+			A_FlashOverlay();
+			A_DualFirePitchDown("PLSM9", 1, 30);
+			A_AlertmonstersDX();
+			A_QuadSound();
+			A_GunLight(500, 2, 0, 128, 255);
+			A_ZoomFactor(0.98);
+			A_WeaponRecoil(0.7, frandom(-0.7, 0.7), 4);
+			invoker.heat++;
+		}
+		TNT1 A 0
+		{
+			let dplr = BDPPlayerPawn(invoker.owner);
+			dplr.blockFire = false;
+		}
+		DUPR C 1 Bright A_ZoomFactor(1.0);
+		DUPR DE 1;
+		TNT1 A 0 A_RefireDX("FireRight");
+		TNT1 A 0 A_JumpIf(invoker.heat >= 10, "CooldownRight");
+		TNT1 A 0 {invoker.heat = 0;}
+		Goto ReadyRight;
+	CooldownLeft:
+		TNT1 A 0 A_StartSound("PLSCOOL", 3);
+		2RSL CDEFGH 1;
+		2RSL I 5 A_FireProjectile("SmokeSpawner11",0,0,-24,16);
+		2RSL HGFEDD 1;
+		TNT1 A 0 {invoker.heat = 0;}
+		Goto ReadyLeft;
+	CooldownRight:
+		TNT1 A 0 A_StartSound("PLSCOOL", 3);
+		2RSR CDEFGH 1;
+		2RSR I 5 A_FireProjectile("SmokeSpawner11",0,0,24,16);
+		2RSR HGFEDD 1;
+		TNT1 A 0 {invoker.heat = 0;}
+		Goto ReadyRight;
 	DoReload:
-		TNT1 A 0 {invoker.sideFired = false;}
-		TNT1 A 6 A_DrawDualOverlays("DeselectOverlay","DeselectOverlay",true);
-		TNT1 A 0 A_Overlay(6,"ReloadOverlay");
-		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB,True);
-		PLSN A 0 A_StartSound("PLREADY");
-		 TNT1 AAB 1;
-		 #### A 0 A_DiscardMag();
-		PLSN A 0 A_FireProjectile("PlasmaCaseSpawn",-225,0,25,-15,-14);
-		TNT1 CDEFF 1;
-		TNT1 G 5;
-		TNT1 HHIJKLL 1;
-		TNT1 M 4;
-		TNT1 NNO 1;
-		TNT1 PPPQRSSTTTUUVWX 1;
-		TNT1 A 0 A_StartSound("foley/PlasmaInspectMisc",10);
+		TNT1 A 0
+		{
+			A_ClearOverlays(2,3);
+			invoker.sideFired = false;
+		}
+		TNT1 A 6 A_DrawDualOverlays("DeselectLeft", "DeselectRight");
+		TNT1 A 8;
+		TNT1 A 0
+		{
+			A_DiscardDualMag();
+			if(DualMag() == 0)
+				A_FireProjectile("PlasmaCaseSpawn", -210, spawnofs_xy:20, spawnheight:-20);
+			A_PlaySound("Plasma/Reload1", 5);
+		}
+		PRR1 ABCDE 1;
+		PRSR GHH 1;
+		PRSR I 10;
+		PRSR JKLMNNO 1;
+		TNT1 A 0 A_PlaySound("Plasma/Reload2", 5);
+		PRSR OOOO 1;
 		TNT1 A 0 A_ReloadDualMag();
-		TNT1 YZ 1;
-		TNT1 [ 1;
-		TNT1 \ 1;
-		TNT1 ] 1;
-		
-		TNT1 A 4;
-		
-		TNT1 A 0 A_Overlay(6,"ReloadOverlay");
-		TNT1 A 0 A_OverlayFlags(6,PSPF_ADDWEAPON|PSPF_ADDBOB|PSPF_FLIP|PSPF_MIRROR,True);
-		PLSN A 0 A_StartSound("PLREADY");
-		 TNT1 AAB 1;
-		PLSN A 0 A_FireProjectile("PlasmaCaseSpawn",-225,0,25,-15,-14);
-		TNT1 CDEFF 1;
-		TNT1 G 5;
-		TNT1 HHIJKLL 1;
-		TNT1 M 4;
-		TNT1 NNO 1;
-		TNT1 PPPQRSSTTTUUVWX 1;
-		TNT1 A 0 A_StartSound("foley/PlasmaInspectMisc",10);
+		PRSR PQRSTTTTUV 1;
+		PRR1 FGHBA 1;
+		TNT1 A 8;
+		TNT1 A 0
+		{
+			A_DiscardMag();
+			if(invoker.mag == 0)
+				A_FireProjectile("PlasmaCaseSpawn", -210, spawnofs_xy:-20, spawnheight:-20);
+			A_PlaySound("Plasma/Reload1", 5);
+		}
+		PRR2 BCDEFGHH 1;
+		PRR2 I 10;
+		PRR2 JKLMNNO 1;
+		TNT1 A 0 A_PlaySound("Plasma/Reload2", 5);
+		PRR2 OOOO 1;
 		TNT1 A 0 A_ReloadMag();
-		TNT1 YZ 1;
-		TNT1 [ 1;
-		TNT1 \ 1;
-		TNT1 ] 1;
-		
-		TNT1 A 4;
-		
-		TNT1 A 5 A_DrawDualOverlays("SelectOverlay","SelectOverlay",true);
+		PRR2 PQRSTTTTUVWXY 1;
+		PRR2 CB 1;
+		TNT1 A 8;
+		TNT1 A 6 A_DrawDualOverlays("SelectLeft", "SelectRight");
 		Goto Ready;
-	NoAmmo:
-		TNT1 A 0 A_StartSound("BEP");
-		TNT1 A 0 A_AutoReloadMag();
-		Goto ReadyOverlay;
+	NoAmmoLeft:
+		TNT1 A 0 A_DryFire("BEP");
+		Goto ReadyLeft;
+	NoAmmoRight:
+		TNT1 A 0 A_DryFire("BEP");
+		Goto ReadyRight;
 	}
 }

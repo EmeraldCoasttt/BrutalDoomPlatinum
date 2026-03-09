@@ -352,7 +352,7 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 		}
 	}
 	
-	action void A_FirePitchDown(sound soundname = "PLSM9", int soundchannel = 1, double ammocount = 8, name ammotype = "PlasmaAmmo")
+	action void A_FirePitchDown(sound soundname = "PLSM9", int soundchannel = 1, double ammocount = 8)
 	{
 		If(invoker.mag > ammocount)
 		{
@@ -560,6 +560,22 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 		double max = weap.magCapacity / 4;
 		if(current <= max && CVar.GetCVar("bd_maggoclicky",player).GetBool() == true)
 			A_StartSound(sound,3);
+	}
+	
+	action void A_DualFirePitchDown(sound soundname = "PLSM9", int soundchannel = 1, double ammocount = 8)
+	{
+		If(DualMag() > ammocount)
+		{
+			invoker.owner.a_startsound(soundname,soundchannel);
+		}
+		Else
+		{
+			float soundpitch;
+			soundpitch = (DualMag() / (ammocount * 5));
+			soundpitch = (0.8 + soundpitch);
+			
+			invoker.owner.a_startsound(soundname,soundchannel, PITCH: soundpitch);
+		}
 	}
 	
 	action void A_gunslingermag(int chamber = 0)
@@ -1022,7 +1038,7 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 			}
 			if(!dplr.blockSpecial)
 				player.WeaponState |= WF_USER3OK;
-			if(kicksprint && player.cmd.buttons & BT_SPEED && player.crouchdir != -1)
+			if(kicksprint && invoker.aimMode == 0 && player.cmd.buttons & BT_SPEED && player.crouchdir != -1 && (player.cmd.forwardmove != 0 || player.cmd.sidemove != 0))
 				A_Overlay(50,"Sprint",true);
 			else if(player.FindPSprite(50))
 			{
@@ -1431,31 +1447,20 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 					}
 					
 				}
-				if(aimMode > 0)
-				{
-					BobRangeX = 0.3;
-					BobRangeY = 0.4;
-				}
-				else
-				{
-					BobRangeX = 0.6;
-					BobRangeY = 0.8;
-				}
-				BobSpeed = 2.9;
+				BobRangeX = default.BobRangeX * 3;
+				BobRangeY = default.BobRangeY * 2;
+				BobSpeed = default.BobSpeed * 1.4;
 			}
 			else
 			{
-				if(aimMode > 0)
-				{
-					BobRangeX = 0.1;
-					BobRangeY = 0.2;
-				}
-				else
-				{
-					BobRangeX = 0.2;
-					BobRangeY = 0.4;
-				}
-				BobSpeed = 2.1;
+				BobRangeX = default.BobRangeX;
+				BobRangeY = default.BobRangeY;
+				BobSpeed = default.BobSpeed;
+			}
+			if(aimMode > 0)
+			{
+				BobRangeX /= 2.0;
+				BobRangeY /= 2.0;
 			}
   
  
