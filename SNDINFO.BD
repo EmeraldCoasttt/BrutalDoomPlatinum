@@ -321,6 +321,8 @@ weapons/plasmarifle PLASMA
 $limit weapons/plasmarifle 0
 $volume weapons/plasmarifle 0.9 
 
+Plasma/Reload1 PLSREL1
+Plasma/Reload2 PLSREL2
 
 $random RAILHIT      {  RAILHIT1 RAILHIT2 }
 
