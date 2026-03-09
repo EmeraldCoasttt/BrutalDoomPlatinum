@@ -73,23 +73,23 @@ class BDPGrabber : BDPWeaponBase
 	States
 	{
 	Grenade: //30
-		BFGS BCDE 1;
+		BFGS EFGH 1;
 		TNT1 A 22;
-		BFGS EDCB 1;
+		BFGS ABCD 1;
 		Goto Ready;
 	Kick: //18
 		BFGN BCDE 1;
-		BFGN F 10;
+		BFGN E 10;
 		BFGN EDCB 1;
 		Goto Ready;
 	SlideKick: //25
 		BFGN BCDE 1;
-		BFGN F 17;
+		BFGN E 17;
 		BFGN EDCB 1;
 		Goto Ready;
 	Taunt: //30
 		BFGN BCDE 1;
-		BFGN F 22;
+		BFGN E 22;
 		BFGN EDCB 1;
 		Goto Ready;
 	Ready:
@@ -98,20 +98,20 @@ class BDPGrabber : BDPWeaponBase
 	Sprint:
 		BFGN BCDE 1 A_SetSprites("TNT1A0",1);
 	SprintLoop:
-		BFGN F 1 A_SetSprites("TNT1A0",1);
+		BFGN E 1 A_SetSprites("TNT1A0",1);
 		Loop;
 	SprintEnd:
 		BFGN EDCB 1 A_SetSprites("TNT1A0",1);
 		Stop;
 	Deselect:
-		BFGS ABCDE 1;
+		BFGS EFGH 1;
 		TNT1 A 1;
 		TNT1 A 0 A_Lower();
 		Wait;
 	Select:
 		TNT1 A 1 A_SetCrosshairDX("PLASRet", 200,1.0);
 		BFGN A 0 A_startSound("BFGREADY");
-		BFGS EDCBA 1 A_WeaponReady(WRF_NOFIRE);
+		BFGS ABCD 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
 	Fire:
 		TNT1 A 0
@@ -214,14 +214,13 @@ class BDPGrabber : BDPWeaponBase
 			}
 		}
 		BFGA A 1 BRIGHT A_ZoomFactor(0.96);
-		BFGA B 1 BRIGHT A_FireProjectile("GreenFlareSpawn",0,0,0,0);
-		TNT1 A 0 A_SetPitch(Pitch-8, SPF_INTERPOLATE);
-		BFGA C 1 BRIGHT;
+		BFGA A 1 BRIGHT A_FireProjectile("GreenFlareSpawn",0,0,0,0);
+		TNT1 A 0 A_weaponrecoil(8,0,4,0.50);
 		BFGN A 0 A_ZoomFactor(0.98);
-		BFGA DE 1 BRIGHT;
+		BFGA BC 1 BRIGHT A_GunLight(500,2,0,255,0);
 		BFGN A 0 A_ZoomFactor(1.0);
-		BFGA F 1;
-		BFGA FFFFGGHIJK 1 A_SetPitch(Pitch+0.8, SPF_INTERPOLATE);
+		BFGA D 1 BRIGHT A_GunLight(500,2,0,255,0);
+		BFGA EFGHHIJJKL 1;
 		Goto Ready;
 	MuzzleFlash:
 		BFGM JKL 1 Bright;

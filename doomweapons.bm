@@ -736,40 +736,42 @@ brightmap sprite 7AIRZ0 { map "brightmaps/doom/Weapons/Railgun/7AIRZ0.png" disab
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //BFG 9000
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-brightmap sprite BFGNA0 { map "brightmaps/doom/Weapons/BFG/BFGNA0.png" disablefullbright }
+brightmap sprite BFGNA0 { map "brightmaps/Weapons/BFG/BFGNA0.png" disablefullbright }
+brightmap sprite BFGNB0 { map "brightmaps/Weapons/BFG/BFGNB0.png" disablefullbright }
+brightmap sprite BFGNC0 { map "brightmaps/Weapons/BFG/BFGNC0.png" disablefullbright }
+brightmap sprite BFGND0 { map "brightmaps/Weapons/BFG/BFGND0.png" disablefullbright }
+brightmap sprite BFGNE0 { map "brightmaps/Weapons/BFG/BFGNE0.png" disablefullbright }
+brightmap sprite BFGNF0 { map "brightmaps/Weapons/BFG/BFGNF0.png" disablefullbright }
+brightmap sprite BFGNG0 { map "brightmaps/Weapons/BFG/BFGNG0.png" disablefullbright }
+brightmap sprite BFGNH0 { map "brightmaps/Weapons/BFG/BFGNH0.png" disablefullbright }
+brightmap sprite BFGNI0 { map "brightmaps/Weapons/BFG/BFGNI0.png" disablefullbright }
+brightmap sprite BFGNJ0 { map "brightmaps/Weapons/BFG/BFGNJ0.png" disablefullbright }
+brightmap sprite BFGNK0 { map "brightmaps/Weapons/BFG/BFGNK0.png" disablefullbright }
+brightmap sprite BFGNL0 { map "brightmaps/Weapons/BFG/BFGNL0.png" disablefullbright }
+brightmap sprite BFGNM0 { map "brightmaps/Weapons/BFG/BFGNM0.png" disablefullbright }
+brightmap sprite BFGNN0 { map "brightmaps/Weapons/BFG/BFGNN0.png" disablefullbright }
+brightmap sprite BFGNO0 { map "brightmaps/Weapons/BFG/BFGNO0.png" disablefullbright }
+brightmap sprite BFGNP0 { map "brightmaps/Weapons/BFG/BFGNP0.png" disablefullbright }
+brightmap sprite BFGNQ0 { map "brightmaps/Weapons/BFG/BFGNQ0.png" disablefullbright }
+brightmap sprite BFGNR0 { map "brightmaps/Weapons/BFG/BFGNR0.png" disablefullbright }
 
-brightmap sprite BFGSA0 { map "brightmaps/doom/Weapons/BFG/BFGSAB.png" disablefullbright }
-brightmap sprite BFGSB0 { map "brightmaps/doom/Weapons/BFG/BFGSBB.png" disablefullbright }
-brightmap sprite BFGSC0 { map "brightmaps/doom/Weapons/BFG/BFGSCB.png" disablefullbright }
-brightmap sprite BFGSD0 { map "brightmaps/doom/Weapons/BFG/BFGSDB.png" disablefullbright }
-brightmap sprite BFGSE0 { map "brightmaps/doom/Weapons/BFG/BFGSEB.png" disablefullbright }
+brightmap sprite BFGAA0 { map "brightmaps/Weapons/BFG/BFGAA0.png" disablefullbright }
+brightmap sprite BFGAB0 { map "brightmaps/Weapons/BFG/BFGAB0.png" disablefullbright }
+brightmap sprite BFGAC0 { map "brightmaps/Weapons/BFG/BFGAC0.png" disablefullbright }
+brightmap sprite BFGAD0 { map "brightmaps/Weapons/BFG/BFGAD0.png" disablefullbright }
 
-brightmap sprite BFGCA0 { map "brightmaps/doom/Weapons/BFG/BFGCAB.png" disablefullbright }
-brightmap sprite BFGCB0 { map "brightmaps/doom/Weapons/BFG/BFGCBB.png" disablefullbright }
-brightmap sprite BFGCC0 { map "brightmaps/doom/Weapons/BFG/BFGCCB.png" disablefullbright }
-brightmap sprite BFGCD0 { map "brightmaps/doom/Weapons/BFG/BFGCDB.png" disablefullbright }
+brightmap sprite BFGAK0 { map "brightmaps/Weapons/BFG/BFGAK0.png" disablefullbright }
+brightmap sprite BFGAL0 { map "brightmaps/Weapons/BFG/BFGAL0.png" disablefullbright }
 
-brightmap sprite BFGAF0 { map "brightmaps/doom/Weapons/BFG/BFGAFB.png" disablefullbright }
-brightmap sprite BFGAG0 { map "brightmaps/doom/Weapons/BFG/BFGAGB.png" disablefullbright }
-brightmap sprite BFGAH0 { map "brightmaps/doom/Weapons/BFG/BFGAHB.png" disablefullbright }
-brightmap sprite BFGAI0 { map "brightmaps/doom/Weapons/BFG/BFGAIB.png" disablefullbright }
-brightmap sprite BFGAJ0 { map "brightmaps/doom/Weapons/BFG/BFGAJB.png" disablefullbright }
-brightmap sprite BFGAK0 { map "brightmaps/doom/Weapons/BFG/BFGAKB.png" disablefullbright }
-brightmap sprite BFGAL0 { map "brightmaps/doom/Weapons/BFG/BFGALB.png" disablefullbright }
+brightmap sprite BFGSA0 { map "brightmaps/Weapons/BFG/BFGSA0.png" disablefullbright }
+brightmap sprite BFGSB0 { map "brightmaps/Weapons/BFG/BFGSB0.png" disablefullbright }
+brightmap sprite BFGSC0 { map "brightmaps/Weapons/BFG/BFGSC0.png" disablefullbright }
+brightmap sprite BFGSD0 { map "brightmaps/Weapons/BFG/BFGSD0.png" disablefullbright }
+brightmap sprite BFGSE0 { map "brightmaps/Weapons/BFG/BFGSE0.png" disablefullbright }
+brightmap sprite BFGSF0 { map "brightmaps/Weapons/BFG/BFGSF0.png" disablefullbright }
+brightmap sprite BFGSG0 { map "brightmaps/Weapons/BFG/BFGSG0.png" disablefullbright }
+brightmap sprite BFGSH0 { map "brightmaps/Weapons/BFG/BFGSH0.png" disablefullbright }
 
-brightmap sprite BFGNB0 { map "brightmaps/doom/Weapons/BFG/BFGNA0.png" disablefullbright }
-brightmap sprite BFGNC0 { map "brightmaps/doom/Weapons/BFG/BFGNA0.png" disablefullbright }
-brightmap sprite BFGND0 { map "brightmaps/doom/Weapons/BFG/BFGNA0.png" disablefullbright }
-brightmap sprite BFGNE0 { map "brightmaps/doom/Weapons/BFG/BFGNEB.png" disablefullbright }
-brightmap sprite BFGNF0 { map "brightmaps/doom/Weapons/BFG/BFGNFB.png" disablefullbright }
-
-brightmap sprite BFSPA0 { map "brightmaps/doom/Weapons/BFG/BFSPA0.png" disablefullbright }
-
-//christmas BFG
-brightmap sprite BFG2G0 { map "brightmaps/doom/Weapons/BFG/BFG2G0.png" disablefullbright }
-brightmap sprite BFG2H0 { map "brightmaps/doom/Weapons/BFG/BFG2H0.png" disablefullbright }
-brightmap sprite BFG2I0 { map "brightmaps/doom/Weapons/BFG/BFG2I0.png" disablefullbright }
-brightmap sprite BFG2J0 { map "brightmaps/doom/Weapons/BFG/BFG2J0.png" disablefullbright }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 //BFG10k
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
