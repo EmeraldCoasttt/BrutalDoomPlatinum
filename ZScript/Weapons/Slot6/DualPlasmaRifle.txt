@@ -160,12 +160,12 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		DUPR A 1 A_LowSprites("3UPR", "2UPR", "DUPR", "ReadyRightLowAmmo", true);
 		Loop;
 	ReadyLeftLowAmmo:
-		TNT1 A 0 A_StartSound("BEP", 4, 0, 0.3);
+		TNT1 A 0;
 		4UPL AAAAAA 1 A_HandleDualFiring("FireLeft");
 		3UPL AAAAAA 1 A_HandleDualFiring("FireLeft");
 		Loop;
 	ReadyRightLowAmmo:
-		TNT1 A 0 A_StartSound("BEP", 4, 0, 0.3);
+		TNT1 A 0;
 		4UPR AAAAAA 1 A_HandleDualFiring("FireRight");
 		3UPR AAAAAA 1 A_HandleDualFiring("FireRight");
 		Loop;
