@@ -115,14 +115,12 @@ class BDPPlasmaRifle : BDPWeaponBase
 		PRSK ABCD 1
 		{
 			A_SetSprites("TNT1A0",1);
-			A_StopSound(4);
 			A_LowFrame();
 		}
 	SprintLoop:
 		PRSK E 1
 		{
 			A_SetSprites("TNT1A0",1);
-			A_StopSound(4);
 			A_LowFrame();
 		}
 		Loop;
@@ -130,7 +128,6 @@ class BDPPlasmaRifle : BDPWeaponBase
 		PRSK DCBA 1
 		{
 			A_SetSprites("TNT1A0",1);
-			A_StopSound(4);
 			A_LowFrame();
 		}
 		Stop;
@@ -200,7 +197,7 @@ class BDPPlasmaRifle : BDPWeaponBase
 		TNT1 A 0 {invoker.heat = 0;}
 		TNT1 A 0 A_StartSound("PLSCOOL", 3);
 		PRSA CDEFGH 1;
-		PRSA I 15 A_FireProjectile("SmokeSpawner11",0,0,-10,16);
+		PRSA III 5 A_FireProjectile("SmokeSpawner11",0,0,-10,16);
 		PRSA HGFEDD 1;
 		Goto Ready;
 // Charging up secondary ------------------------------------------------------------

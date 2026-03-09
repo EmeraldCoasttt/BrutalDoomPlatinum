@@ -160,12 +160,10 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		DUPR A 1 A_LowSprites("3UPR", "2UPR", "DUPR", "ReadyRightLowAmmo", true);
 		Loop;
 	ReadyLeftLowAmmo:
-		TNT1 A 0;
 		4UPL AAAAAA 1 A_HandleDualFiring("FireLeft");
 		3UPL AAAAAA 1 A_HandleDualFiring("FireLeft");
 		Loop;
 	ReadyRightLowAmmo:
-		TNT1 A 0;
 		4UPR AAAAAA 1 A_HandleDualFiring("FireRight");
 		3UPR AAAAAA 1 A_HandleDualFiring("FireRight");
 		Loop;
@@ -273,14 +271,14 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 	CooldownLeft:
 		TNT1 A 0 A_StartSound("PLSCOOL", 3);
 		2RSL CDEFGH 1;
-		2RSL I 15 A_FireProjectile("SmokeSpawner11",0,0,-24,16);
+		2RSL III 5 A_FireProjectile("SmokeSpawner11",0,0,-28,16);
 		2RSL HGFEDD 1;
 		TNT1 A 0 {invoker.heat = 0;}
 		Goto ReadyLeft;
 	CooldownRight:
 		TNT1 A 0 A_StartSound("PLSCOOL", 3);
 		2RSR CDEFGH 1;
-		2RSR I 15 A_FireProjectile("SmokeSpawner11",0,0,24,16);
+		2RSR III 5 A_FireProjectile("SmokeSpawner11",0,0,28,16);
 		2RSR HGFEDD 1;
 		TNT1 A 0 {invoker.heat = 0;}
 		Goto ReadyRight;
