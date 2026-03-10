@@ -391,7 +391,6 @@ brightmap sprite GL2FF0 { map "brightmaps/doom/Weapons/GrenadeLauncher/GLAFF0.pn
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 brightmap sprite DUPLA0 { map "brightmaps/Weapons/Plasmagun/DUPRA0.png" disablefullbright}
 brightmap sprite DUPLB0 { map "brightmaps/Weapons/Plasmagun/DUPRD0.png" disablefullbright}
-brightmap sprite DUPLC0 { map "brightmaps/Weapons/Plasmagun/DUPRD0.png" disablefullbright}
 brightmap sprite DUPLD0 { map "brightmaps/Weapons/Plasmagun/DUPRE0.png" disablefullbright}
 brightmap sprite DUPLE0 { map "brightmaps/Weapons/Plasmagun/DUPRE0.png" disablefullbright}
 brightmap sprite DUPLF0 { map "brightmaps/Weapons/Plasmagun/DUPRF0.png" disablefullbright}
@@ -406,7 +405,6 @@ brightmap sprite DUPLN0 { map "brightmaps/Weapons/Plasmagun/DUPRN0.png" disablef
 
 brightmap sprite DUPRA0 { map "brightmaps/Weapons/Plasmagun/DUPRA0.png" disablefullbright}
 brightmap sprite DUPRB0 { map "brightmaps/Weapons/Plasmagun/DUPRB0.png" disablefullbright}
-brightmap sprite DUPRC0 { map "brightmaps/Weapons/Plasmagun/DUPRB0.png" disablefullbright}
 brightmap sprite DUPRD0 { map "brightmaps/Weapons/Plasmagun/DUPRC0.png" disablefullbright}
 brightmap sprite DUPRE0 { map "brightmaps/Weapons/Plasmagun/DUPRD0.png" disablefullbright}
 brightmap sprite DUPRF0 { map "brightmaps/Weapons/Plasmagun/DUPRF0.png" disablefullbright}
@@ -438,9 +436,8 @@ brightmap sprite PRsAI0 { map "brightmaps/Weapons/Plasmagun/PRsAI0.png" disablef
 
 brightmap sprite PRSGA0 { map "brightmaps/Weapons/Plasmagun/PRSGA0.png" disablefullbright}
 brightmap sprite PRSGB0 { map "brightmaps/Weapons/Plasmagun/PRSGB0.png" disablefullbright}
-brightmap sprite PRSGC0 { map "brightmaps/Weapons/Plasmagun/PRSGB0.png" disablefullbright}
-brightmap sprite PRSGD0 { map "brightmaps/Weapons/Plasmagun/PRSGD0.png" disablefullbright}
-brightmap sprite PRSGE0 { map "brightmaps/Weapons/Plasmagun/PRSGE0.png" disablefullbright}
+brightmap sprite PRSGC0 { map "brightmaps/Weapons/Plasmagun/PRSGD0.png" disablefullbright}
+brightmap sprite PRSGD0 { map "brightmaps/Weapons/Plasmagun/PRSGE0.png" disablefullbright}
 
 brightmap sprite PRSGG0 { map "brightmaps/Weapons/Plasmagun/PRSGA0.png" disablefullbright}
 brightmap sprite PRSGH0 { map "brightmaps/Weapons/Plasmagun/PRSGA0.png" disablefullbright}

@@ -121,8 +121,8 @@ class BDPDualRevolver : BDPWeaponBase
 				A_WeaponRecoil(15.0,-4,2,0.75);
 				A_FireParticles(5,12,-5);
 				A_TakeMag();
-				A_FlashOverlay(-2);
-				A_OverlayFlags(-2,PSPF_FLIP|PSPF_MIRROR,true);
+				A_FlashOverlay(-3);
+				A_OverlayFlags(-3,PSPF_FLIP|PSPF_MIRROR,true);
 			}
 			let dplr = BDPPlayerPawn(invoker.owner);
 			dplr.blockFire = true;
@@ -163,8 +163,8 @@ class BDPDualRevolver : BDPWeaponBase
 				A_WeaponRecoil(15.0,-5,2,0.75);
 				A_FireParticles(5,12,-5);
 				A_TakeMag();
-				A_FlashOverlay(-2);
-				A_OverlayFlags(-2,PSPF_FLIP|PSPF_MIRROR,true);
+				A_FlashOverlay(-3);
+				A_OverlayFlags(-3,PSPF_FLIP|PSPF_MIRROR,true);
 			}
 			A_FireParticles(5,12,-5);
 			A_StartSound("REVFIRE2", 1);

@@ -107,7 +107,7 @@ class BDPDualSMG : BDPWeaponBase
 		LSMF A 1 Bright
 		{
 			A_FireBullets (6, 6, -1, 8, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-6,-10);
-			A_FlashOverlay(-2, "MuzzleFlashLeft");
+			A_FlashOverlay(-3, "MuzzleFlashLeft");
 			A_FireParticles(1,8,-5);
 			A_StartSound("SMGFIRE", 2);
 			A_StartSound("FARSMG", 7);

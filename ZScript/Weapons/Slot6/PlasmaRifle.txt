@@ -1,65 +1,26 @@
 class BDPPlasmaRifle : BDPWeaponBase
 {
-	action state A_LowSprites(string nosprite, string medsprite, string highsprite, statelabel lowstate = null)
-	{
-		let psp = player.FindPSprite(OverlayID());
-		if(psp)
-		{
-			if(invoker.mag < 1 || invoker.mag < 11 && !lowstate)
-			{
-				psp.sprite = GetSpriteIndex(nosprite);
-			}
-			else if(invoker.mag < 11 && lowstate)
-			{
-				return resolvestate(lowstate);
-			}
-			else if(invoker.mag < 31)
-			{
-				psp.sprite = GetSpriteIndex(medsprite);
-			}
-			else
-			{
-				psp.sprite = GetSpriteIndex(highsprite);
-			}
-		}
-		return resolvestate(null);
-	}
-	
-	action state A_LowFrame(int noframe = -1, int medframe = -1, int highframe = -1, statelabel lowstate = null)
+	action void A_LowFrame(int noframe = -1, int lowframe = -1, int medframe = -1, int highframe = -1)
 	{
 		let psp = player.FindPSprite(OverlayID());
 		if(psp)
 		{
 			if(noframe == -1)
-			{
 				noframe = psp.frame + 10;
-			}
 			if(medframe == -1)
-			{
 				medframe = psp.frame + 5;
-			}
 			if(highframe == -1)
-			{
 				highframe = psp.frame;
-			}
-			if(invoker.mag < 1 || invoker.mag < 11 && !lowstate)
-			{
+			
+			if(invoker.mag < 1 || invoker.mag < 11 && (lowframe == -1 || level.time % 8 < 4))
 				psp.frame = noframe;
-			}
-			else if(invoker.mag < 11 && lowstate)
-			{
-				return resolvestate(lowstate);
-			}
+			else if(invoker.mag < 11)
+				psp.frame = lowframe;
 			else if(invoker.mag < 31)
-			{
 				psp.frame = medframe;
-			}
 			else
-			{
 				psp.frame = highframe;
-			}
 		}
-		return resolvestate(null);
 	}
 	
 	int heat;
@@ -81,16 +42,6 @@ class BDPPlasmaRifle : BDPWeaponBase
 	}
 	States
 	{
-	CacheSprites:
-		PLSN ABCDE 0;
-		2LSN KLMNOPQRST 0;
-		2LSI ABCDE 0;
-		3LSN KLMNOPQRST 0;
-		3LSI ABCDE 0;
-		4LSN KLMNOPQRST 0;
-		4LSI ABCDE 0;
-		3LSR AB 0;
-		Stop;
 	Grenade: //30
 		PRSG PQRS 1;
 		TNT1 A 22;
@@ -132,15 +83,13 @@ class BDPPlasmaRifle : BDPWeaponBase
 		}
 		Stop;
 	Ready:
-		TNT1 A 0 {
-			A_ClearOverlays(6,6);
+		PRSG A 1
+		{
+			A_ClearOverlays(6, 6);
 			invoker.heat = 0;
-			return A_LowFrame(5,7,0,"ReadyLowAmmo");
+			A_LowFrame(4, 5, 6, 0);
+			return A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		}
-		PRSG # 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		Loop;
-	ReadyLowAmmo:
-		PRSG GGGGGGFFFFFF 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		Loop;
 	Deselect:
 		PRSG PQRS 1;
@@ -162,7 +111,7 @@ class BDPPlasmaRifle : BDPWeaponBase
 		DUPR YXWVUTSR 1;
 		Goto Ready;
 	MuzzleFlash:
-		PLSM AB 1 Bright;
+		PRSM A 1 Bright A_SetFrame(random(0,1));
 		Stop;
 	Fire:
 		PLSN A 0 A_CheckIfMag();
@@ -180,50 +129,60 @@ class BDPPlasmaRifle : BDPWeaponBase
 			A_GunLight(500,2,0,128,255);
 			A_TakeMag();
 		}
-		PRSG D 1 Bright
+		PRSG C 1
 		{
-			A_GunLight(500,2,0,128,255);
+			A_WeaponOffset(random(-1, 1), random(32, 33));
 			invoker.heat++;
 			A_ZoomFactor(1.0);
 		}
-		PRSG E 1 A_WeaponOffset(random(-1,1),32+random(0,1));
-		PRSG F 1;
-		TNT1 A 0 A_WeaponOffset(0,32);
+		PRSG D 1 A_WeaponOffset(0,32);
 		TNT1 A 0 A_RefireDX();
+		PRSG E 1;
 		TNT1 A 0 A_JumpIf(invoker.heat >= 5,"Cooldown");
 		TNT1 A 0 {invoker.heat = 0;}
 		Goto Ready;
 	Cooldown:
-		TNT1 A 0 {invoker.heat = 0;}
-		TNT1 A 0 A_StartSound("PLSCOOL", 3);
+		TNT1 A 0
+		{
+			invoker.heat = 0;
+			A_StartSound("PLSCOOL", 3);
+		}
 		PRSA CDEFGH 1;
-		PRSA III 5 A_FireProjectile("SmokeSpawner11",0,0,-10,16);
+		PRSA IIII 4 A_FireProjectile("SmokeSpawner11",0,0,-10,16);
 		PRSA HGFEDD 1;
+		TNT1 A 0 A_ReFireDX();
 		Goto Ready;
 // Charging up secondary ------------------------------------------------------------
 	AltFlash:
-		PLSM IJKL 1 Bright;
+		PRSM AB 1 Bright;
+		Stop;
+	ChargeFlash:
+		PRSM CDCD 1 Bright;
+		Stop;
+	ChargeFlash2:
+		PRSM EFGH 1 Bright;
 		Stop;
 	AltFire:
 		PLSN A 0 A_CheckIfMag(10);
 		TNT1 A 0 A_SetCrosshairDX("PLS2Ret", 500);
 		PLSN A 0 A_StartSound("PLSCHARG",1);
-		PRSG II 4
+		PRSG HH 4
 		{
 			A_TakeMag();
 			invoker.heat++;
 		}
 	AltFireLoop:
-		TNT1 A 0 A_JumpIf(invoker.heat >= 5,"AltLoop2");
+		TNT1 A 0 A_JumpIf(invoker.heat >= 10, "ContinueAlt");
 		TNT1 A 0
 		{
-			A_FlashOverlay(state:"AltFlash");
+			if(invoker.heat > 7)
+				A_FlashOverlay(state:"ChargeFlash2");
+			else
+				A_FlashOverlay(state:"ChargeFlash");
 			A_TakeMag();
 			invoker.heat++;
-			return A_JumpIf(invoker.heat >= 10,"ContinueAlt");
 		}
-		PRSG JKJK 1 Bright A_GunLight(200,2,0,128,255);
-		TNT1 A 0
+		PRSG IIII 1 Bright
 		{
 			if(player.cmd.buttons & BT_RELOAD)
 			{
@@ -231,6 +190,10 @@ class BDPPlasmaRifle : BDPWeaponBase
 			}
 			else
 			{
+				if(invoker.heat > 7)
+					A_WeaponOffset(random(-1, 1), random(32, 34));
+				A_SetFrame(clamp(invoker.heat, 0, 6) + (level.time % 2 == 0 ? 6 : 7));
+				A_GunLight(200,2,0,128,255);
 				return resolvestate(null);
 			}
 		}
@@ -243,7 +206,7 @@ class BDPPlasmaRifle : BDPWeaponBase
 		}
 	CancelAltLoop:
 		TNT1 A 0 A_JumpIf(invoker.heat == 0,"EndAlt");
-		PRSG I 2
+		PRSG H 2
 		{
 			A_TakeMag(-1);
 			invoker.heat--;
@@ -252,31 +215,21 @@ class BDPPlasmaRifle : BDPWeaponBase
 	EndAlt:
 		TNT1 A 0 A_SetCrosshairDX("PLASRet", 1000);
 		Goto Ready;
-
-// Holding Charge ------------------------------------------------------------
-	HoldAltFlash:
-		PLSM MNOP 1 Bright;
-		Stop;
 	ContinueAlt:
 		TNT1 A 0 {
-			A_FlashOverlay(state:"HoldAltFlash");
+			A_FlashOverlay(state:"ChargeFlash2");
 			A_StartSound("PLSFULL", 6, CHANF_LOOPING, 1, 0.8);
 		}
-		PRSG LMNO 1
+		PRSG MNMN 1
 		{
 			A_GunLight(300,2,0,128,255);
+			A_WeaponOffset(random(-1, 1), random(32, 34));
 			if(player.cmd.buttons & BT_RELOAD)
-			{
 				return resolvestate("CancelAltfire");
-			}
 			else if(!(player.cmd.buttons & BT_ALTATTACK))
-			{
 				return resolvestate("AltBlast");
-			}
 			else
-			{
 				return resolvestate(null);
-			}
 		}
 		Loop;
 	
@@ -292,6 +245,7 @@ class BDPPlasmaRifle : BDPWeaponBase
 			A_StopSound(6);
 			A_ZoomFactor(0.9);
 			A_ClearOverlays(6,6);
+			A_WeaponOffset(0, 32);
 			A_Recoil(3*cos(pitch));
 			if(vel.z != 0)
 				ThrustThingZ(0,pitch/2,0,1);
@@ -304,22 +258,27 @@ class BDPPlasmaRifle : BDPWeaponBase
 			A_WeaponRecoil(8);
 			A_GunLight(500,2,0,128,255);
 		}
-		PRSG C 1 {
+		PRSG B 1 {
+			A_WeaponOffset(random(-1, 1), random(33, 34));
 			A_GunLight(500,2,0,128,255);
 			A_ZoomFactor(1.0);
 		}
-		PRSA AB 1;
+		PRSA A 1 A_WeaponOffset(0, 32);
+		PRSA B 1;
 		TNT1 A 0 A_StartSound("PLSCOOL", 3);
 		PRSA CDEFGH 1;
 		PRSA IIIIII 4 A_FireProjectile("SmokeSpawner11",0,0,-10,16);
 		PRSA HGFEDD 1;
 		TNT1 A 0 A_SetCrosshairDX("PLASRet", 1000);
+		TNT1 A 0 A_ReFireDX();
 		Goto Ready;
 	Spawn:
 		PRAS A -1;
 		Stop;
 	NoAmmo:
 		TNT1 A 0 A_Dryfire("BEPBEP");
+		PRSG FEFE 2;
+		TNT1 A 0 A_RefireDX("NoAmmo");
 		Goto Ready;
 	DoReload:
 		TNT1 A 0
@@ -341,7 +300,7 @@ class BDPPlasmaRifle : BDPWeaponBase
 		TNT1 A 0 A_ReloadMag();
 		PRSR PQRSTTTTUVWXY 1;
 		PRSR CZAA 1;
-		PRSG IFI 2;
+		PRSG HEH 2;
 		Goto Ready;
 	SpecialAction:
 		TNT1 A 0 A_DualWield();

@@ -1,6 +1,6 @@
 class BDPDualPlasmaRifle : BDPWeaponBase
 {
-	action state A_LowSprites(string nosprite, string medsprite, string highsprite, statelabel lowstate = null, bool dual = false)
+	action state A_LowSprites(string nosprite, string lowsprite, string medsprite, string highsprite, bool dual = false)
 	{
 		let psp = player.FindPSprite(OverlayID());
 		let weap = BDPWeaponBase(FindInventory(invoker.DualWeapon));
@@ -11,10 +11,10 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 			target = invoker;
 		if(psp)
 		{
-			if(target.mag < 1 || target.mag < 11 && !lowstate)
+			if(target.mag < 1 || target.mag < 11 && level.time % 8 < 4)
 				psp.sprite = GetSpriteIndex(nosprite);
-			else if(target.mag < 11 && lowstate)
-				return resolvestate(lowstate);
+			else if(target.mag < 11)
+				psp.sprite = GetSpriteIndex(lowsprite);
 			else if(target.mag < 31)
 				psp.sprite = GetSpriteIndex(medsprite);
 			else
@@ -23,30 +23,8 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		return resolvestate(null);
 	}
 	
-	action state A_LowFrame(int noframe, int medframe, int highframe, statelabel lowstate = null, bool dual = false)
-	{
-		let psp = player.FindPSprite(OverlayID());
-		let weap = BDPWeaponBase(FindInventory(invoker.DualWeapon));
-		BDPWeaponBase target;
-		if(dual)
-			target = weap;
-		else
-			target = invoker;
-		if(psp)
-		{
-			if(target.mag < 1 || target.mag < 11 && !lowstate)
-				psp.frame = noframe;
-			else if(target.mag < 11 && lowstate)
-				return resolvestate(lowstate);
-			else if(target.mag < 31)
-				psp.frame = medframe;
-			else
-				psp.frame = highframe;
-		}
-		return resolvestate(null);
-	}
-	
-	int heat;
+	int leftHeat;
+	int rightHeat;
 	
 	Default
 	{
@@ -64,15 +42,17 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 	States
 	{
 	CacheSprites:
+		4UPL A 0;
 		3UPL A 0;
 		2UPL A 0;
+		4UPR A 0;
 		3UPR A 0;
 		2UPR A 0;
 		Stop;
 	Grenade: //30
-		TNT1 A 4 A_DrawDualOverlays("KickLeft", "KickRight");
-		TNT1 A 22;
-		TNT1 A 4 A_DrawDualOverlays("KickLeftEnd", "KickRightEnd");
+		TNT1 A 6 A_DrawDualOverlays("DeselectLeft", "DeselectRight");
+		TNT1 A 20;
+		TNT1 A 6 A_DrawDualOverlays("SelectLeft", "SelectRight");
 		Goto Ready;
 	Kick: //18
 		TNT1 A 4 A_DrawDualOverlays("KickLeft", "KickRight");
@@ -95,57 +75,57 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		TNT1 A 4;
 		Stop;
 	KickLeft:
-		DUPL MNOP 1 A_LowSprites("3UPL","2UPL","DUPL");
-		DUPL Q 1 A_LowSprites("3UPL","2UPL","DUPL");
+		DUPL MNOP 1 A_LowSprites("3UPL", "3UPL", "2UPL", "DUPL");
+		DUPL Q 1 A_LowSprites("3UPL", "3UPL", "2UPL", "DUPL");
 		Wait;
 	KickLeftEnd:
-		DUPL PONM 1 A_LowSprites("3UPL","2UPL","DUPL");
+		DUPL PONM 1 A_LowSprites("3UPL", "3UPL", "2UPL", "DUPL");
 		Goto ReadyLeft;
 	KickRight:
-		DUPR MNOP 1 A_LowSprites("3UPR","2UPR","DUPR");
-		DUPR Q 1 A_LowSprites("3UPR","2UPR","DUPR");
+		DUPR MNOP 1 A_LowSprites("3UPR", "3UPR", "2UPR", "DUPR", true);
+		DUPR Q 1 A_LowSprites("3UPR", "3UPR", "2UPR", "DUPR", true);
 		Wait;
 	KickRightEnd:
-		DUPR PONM 1 A_LowSprites("3UPR","2UPR","DUPR");
+		DUPR PONM 1 A_LowSprites("3UPR", "3UPR", "2UPR", "DUPR", true);
 		Goto ReadyRight;
 	SprintLeft:
 		DUPL MNOP 1
 		{
 			A_HandleDualFiring("FireLeft", sprinting:true);
-			A_LowSprites("3UPL","2UPL","DUPL");
+			A_LowSprites("3UPL", "3UPL", "2UPL", "DUPL");
 		}
 	SprintLeftLoop:
 		DUPL Q 1
 		{
 			A_HandleDualFiring("FireLeft", sprinting:true);
-			A_LowSprites("3UPL","2UPL","DUPL");
+			A_LowSprites("3UPL", "3UPL", "2UPL", "DUPL");
 		}
 		Loop;
 	SprintLeftEnd:
 		DUPL PONM 1
 		{
 			A_HandleDualFiring("FireLeft", sprinting:true);
-			A_LowSprites("3UPL","2UPL","DUPL");
+			A_LowSprites("3UPL", "3UPL", "2UPL", "DUPL");
 		}
 		Goto ReadyLeft;
 	SprintRight:
 		DUPR MNOP 1
 		{
 			A_HandleDualFiring("FireRight", sprinting:true);
-			A_LowSprites("3UPR","2UPR","DUPR");
+			A_LowSprites("3UPR", "3UPR", "2UPR", "DUPR", true);
 		}
 	SprintRightLoop:
 		DUPR Q 1
 		{
 			A_HandleDualFiring("FireRight", sprinting:true);
-			A_LowSprites("3UPR","2UPR","DUPR");
+			A_LowSprites("3UPR", "3UPR", "2UPR", "DUPR", true);
 		}
 		Loop;
 	SprintRightEnd:
 		DUPR PONM 1
 		{
 			A_HandleDualFiring("FireRight", sprinting:true);
-			A_LowSprites("3UPR","2UPR","DUPR");
+			A_LowSprites("3UPR", "3UPR", "2UPR", "DUPR", true);
 		}
 		Goto ReadyRight;
 	Ready:
@@ -153,19 +133,11 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		Loop;
 	ReadyLeft:
 		TNT1 A 0 A_HandleDualFiring("FireLeft");
-		DUPL A 1 A_LowSprites("3UPL", "2UPL", "DUPL", "ReadyLeftLowAmmo");
+		DUPL A 1 A_LowSprites("3UPL", "4UPL", "2UPL", "DUPL");
 		Loop;
 	ReadyRight:
 		TNT1 A 0 A_HandleDualFiring("FireRight");
-		DUPR A 1 A_LowSprites("3UPR", "2UPR", "DUPR", "ReadyRightLowAmmo", true);
-		Loop;
-	ReadyLeftLowAmmo:
-		4UPL AAAAAA 1 A_HandleDualFiring("FireLeft");
-		3UPL AAAAAA 1 A_HandleDualFiring("FireLeft");
-		Loop;
-	ReadyRightLowAmmo:
-		4UPR AAAAAA 1 A_HandleDualFiring("FireRight");
-		3UPR AAAAAA 1 A_HandleDualFiring("FireRight");
+		DUPR A 1 A_LowSprites("3UPR", "4UPR", "2UPR", "DUPR", true);
 		Loop;
 	SpecialAction:
 		TNT1 A 0 A_EndDual();
@@ -175,7 +147,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		TNT1 A 0 A_Lower();
 		Wait;
 	DeselectLeft:
-		3UPL A 2 A_LowSprites("3UPL", "2UPL", "DUPL");
+		3UPL A 2 A_LowSprites("3UPL", "3UPL", "2UPL", "DUPL");
 		DUPL IJKL 1;
 		Stop;
 	DeselectRight:
@@ -197,7 +169,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		Goto ReadyLeft;
 	SelectRight:
 		DUPR LKJI 1;
-		DUPR A 3 A_LowSprites("3UPR", "2UPR", "DUPR");
+		DUPR A 2 A_LowSprites("3UPR", "3UPR", "2UPR", "DUPR");
 		Goto ReadyRight;
 	SelectFromDualLeft:
 		TNT1 A 4;
@@ -212,8 +184,11 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		TNT1 A 0 A_DrawDualOverlays("SelectFromDualLeft", "SelectFromDualRight");
 		TNT1 A 8;
 		Goto Ready;
-	MuzzleFlash:
-		DUPM AB 1 Bright;
+	MuzzleFlashLeft:
+		DUPM A 1 Bright A_SetFrame(random(0, 1));
+		Stop;
+	MuzzleFlashRight:
+		DUPM C 1 Bright A_SetFrame(random(2, 3));
 		Stop;
 	FireLeft:
 		TNT1 A 0 A_CheckIfMag(label:"NoAmmoLeft");
@@ -221,26 +196,26 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		{
 			A_FireProjectileDX("Plasma_Ball", random(-4, 4), random(-4, 4), -8, 0, -8, false);
 			A_TakeMag();
-			A_FlashOverlay(-2);
-			A_OverlayFlags(-2, PSPF_FLIP|PSPF_MIRROR, true);
+			A_FlashOverlay(-3, "MuzzleFlashLeft");
 			A_FirePitchDown("PLSM9", 1, 30);
 			A_AlertmonstersDX();
 			A_QuadSound();
 			A_GunLight(500, 2, 0, 128, 255);
 			A_ZoomFactor(0.98);
 			A_WeaponRecoil(0.7, frandom(-0.7, 0.7), 4);
-			invoker.heat++;
+			invoker.leftHeat++;
 		}
 		TNT1 A 0
 		{
 			let dplr = BDPPlayerPawn(invoker.owner);
 			dplr.blockFire = false;
 		}
-		DUPL C 1 Bright A_ZoomFactor(1.0);
-		DUPL DE 1;
+		DUPL D 1 A_ZoomFactor(1.0);
+		DUPL E 1;
 		TNT1 A 0 A_RefireDX("FireLeft");
-		TNT1 A 0 A_JumpIf(invoker.heat >= 10, "CooldownLeft");
-		TNT1 A 0 {invoker.heat = 0;}
+		3UPL A 1;
+		TNT1 A 0 A_JumpIf(invoker.leftHeat >= 5, "CooldownLeft");
+		TNT1 A 0 {invoker.leftHeat = 0;}
 		Goto ReadyLeft;
 	FireRight:
 		TNT1 A 0 A_CheckIfDualMag(label:"NoAmmoRight");
@@ -248,39 +223,46 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		{
 			A_FireProjectileDX("Plasma_Ball", random(-4, 4), random(-4, 4), 8, 0, -8, false);
 			A_TakeDualMag();
-			A_FlashOverlay();
+			A_FlashOverlay(state:"MuzzleFlashRight");
 			A_DualFirePitchDown("PLSM9", 1, 30);
 			A_AlertmonstersDX();
 			A_QuadSound();
 			A_GunLight(500, 2, 0, 128, 255);
 			A_ZoomFactor(0.98);
 			A_WeaponRecoil(0.7, frandom(-0.7, 0.7), 4);
-			invoker.heat++;
+			invoker.rightHeat++;
 		}
 		TNT1 A 0
 		{
 			let dplr = BDPPlayerPawn(invoker.owner);
 			dplr.blockFire = false;
 		}
-		DUPR C 1 Bright A_ZoomFactor(1.0);
-		DUPR DE 1;
+		DUPR D 1 A_ZoomFactor(1.0);
+		DUPR E 1;
 		TNT1 A 0 A_RefireDX("FireRight");
-		TNT1 A 0 A_JumpIf(invoker.heat >= 10, "CooldownRight");
-		TNT1 A 0 {invoker.heat = 0;}
+		3UPR A 1;
+		TNT1 A 0 A_JumpIf(invoker.rightHeat >= 5, "CooldownRight");
+		TNT1 A 0 {invoker.rightHeat = 0;}
 		Goto ReadyRight;
 	CooldownLeft:
-		TNT1 A 0 A_StartSound("PLSCOOL", 3);
+		TNT1 A 0
+		{
+			invoker.leftHeat = 0;
+			A_StartSound("PLSCOOL", 3);
+		}
 		2RSL CDEFGH 1;
-		2RSL III 5 A_FireProjectile("SmokeSpawner11",0,0,-28,16);
+		2RSL IIII 4 A_FireProjectile("SmokeSpawner11",0,0,-28,16);
 		2RSL HGFEDD 1;
-		TNT1 A 0 {invoker.heat = 0;}
 		Goto ReadyLeft;
 	CooldownRight:
-		TNT1 A 0 A_StartSound("PLSCOOL", 3);
+		TNT1 A 0
+		{
+			invoker.rightHeat = 0;
+			A_StartSound("PLSCOOL", 3);
+		}
 		2RSR CDEFGH 1;
-		2RSR III 5 A_FireProjectile("SmokeSpawner11",0,0,28,16);
+		2RSR IIII 4 A_FireProjectile("SmokeSpawner11",0,0,28,16);
 		2RSR HGFEDD 1;
-		TNT1 A 0 {invoker.heat = 0;}
 		Goto ReadyRight;
 	DoReload:
 		TNT1 A 0
@@ -290,6 +272,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		}
 		TNT1 A 6 A_DrawDualOverlays("DeselectLeft", "DeselectRight");
 		TNT1 A 8;
+		TNT1 A 0 A_JumpIf(DualMag() == 50, "ReloadLeft");
 		TNT1 A 0
 		{
 			A_DiscardDualMag();
@@ -308,6 +291,8 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		PRSR PQRSTTTTUV 1;
 		PRR1 FGHBA 1;
 		TNT1 A 8;
+		TNT1 A 0 A_JumpIf(invoker.mag == 50 || CountInv("BDPCell") == 0, "FinishReload");
+	ReloadLeft:
 		TNT1 A 0
 		{
 			A_DiscardMag();
@@ -325,13 +310,34 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		PRR2 PQRSTTTTUVWXY 1;
 		PRR2 CB 1;
 		TNT1 A 8;
+	FinishReload:
 		TNT1 A 6 A_DrawDualOverlays("SelectLeft", "SelectRight");
 		Goto Ready;
 	NoAmmoLeft:
-		TNT1 A 0 A_DryFire("BEP");
+		TNT1 A 0 A_DryFire("BEPBEP");
+		4UPL A 2;
+		3UPL A 2;
+		TNT1 A 0
+		{
+			let dplr = BDPPlayerPawn(invoker.owner);
+			dplr.blockFire = false;
+		}
+		4UPL A 2;
+		3UPL A 2;
+		TNT1 A 0 A_RefireDX("NoAmmoLeft");
 		Goto ReadyLeft;
 	NoAmmoRight:
-		TNT1 A 0 A_DryFire("BEP");
+		TNT1 A 0 A_DryFire("BEPBEP");
+		4UPR A 2;
+		3UPR A 2;
+		TNT1 A 0
+		{
+			let dplr = BDPPlayerPawn(invoker.owner);
+			dplr.blockFire = false;
+		}
+		4UPR A 2;
+		3UPR A 2;
+		TNT1 A 0 A_RefireDX("NoAmmoRight");
 		Goto ReadyRight;
 	}
 }

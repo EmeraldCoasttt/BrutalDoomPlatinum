@@ -245,7 +245,7 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 	/*override Vector2 ModifyBobLayer(Vector2 Bob, int layer, double ticfrac)
 	{
 		let dplr = PlayerPawn(owner);
-		if(layer == 2 || layer == -2 && owner.player && dplr)
+		if(layer == 2 || layer == -3 && owner.player && dplr)
 		{
 			if (self.bDontBob || owner.player.GetWBobSpeed() == 0)
 			{
@@ -522,11 +522,11 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 	action void A_ReloadDualMag(int chamber = 0, bool additive = false, bool free = false)
 	{
 		let weap = BDPWeaponBase(FindInventory(invoker.DualWeapon));
-		if(CountInv(invoker.ammotype1) < weap.magCapacity) {
-			int touse = CountInv(invoker.ammotype1) / 2;
-			TakeInventory(invoker.ammotype1,touse);
+			int touse = floor(CountInv(invoker.ammotype1) / 2);
+		if(CountInv(weap.ammotype1) < weap.magCapacity + invoker.magCapacity && touse > 0) {
+			TakeInventory(weap.ammotype1,touse);
 			weap.A_ReloadMag(chamber,additive,free);
-			GiveInventory(invoker.ammotype1,touse);
+			GiveInventory(weap.ammotype1,touse);
 		}
 		else
 			weap.A_ReloadMag(chamber,additive,free);
@@ -1232,7 +1232,7 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 		}
 	}
 	
-	action void A_FlashOverlay(int layer = -1, statelabel state = "MuzzleFlash")
+	action void A_FlashOverlay(int layer = -2, statelabel state = "MuzzleFlash")
 	{
 		A_Overlay(layer,state);
 		A_OverlayFlags(layer,PSPF_RENDERSTYLE|PSPF_FORCESTYLE,true);
