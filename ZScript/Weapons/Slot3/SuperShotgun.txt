@@ -96,7 +96,7 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 		TNT1 A 0 A_Lower();
 		Wait;
 	Select:
-		TNT1 A 1 {A_SetCrosshairDX("SSGRet", 400); A_SetTargeterCrosshair("SGUNRet",1600,0.5); A_GunSlingerMag();}
+		TNT1 A 1 {A_SetCrosshairDX("SSGRet", 400); A_SetTargeterCrosshair("MEATRet",1600,1.0); A_GunSlingerMag();}
 		TNT1 A 0 A_StartSound("weapons/sshotc");
 		SHT5 DCBA 1 A_WeaponReadyDX(WRF_NOFIRE);
 		Goto Ready;

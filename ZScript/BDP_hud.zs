@@ -965,7 +965,7 @@ class BDP_HUD : DoomStatusBar
 		Else if(hinttimer < 150)
 		{
 			hinttimer++;
-			randomhint = random(0,33);
+			randomhint = random(0,40);
 		}
 		Else if(hintfade < 1.0)
 		{
@@ -1129,34 +1129,33 @@ class BDP_OverlayUI : EventHandler
 			DrawKeys(e);
 		}
 		
-		If(BDPplr && BDPplr.health > 0)
+		If(BDPplr && BDPplr.health > 0 && BDPplr.findinventory("Meathook"))
 		{
 			Actor aimAct = bdpplr.aimActor2; 
 			bool hostileAim = aimAct && aimAct.isHostile(bdpplr) && aimAct.bISMONSTER && !(aimAct is "BDPVehicle") && !aimAct.bSHADOW;
-			if(aimAct)
-			{
+			double trans = CVar.GetCVAR("bdp_crosshair_trans",BDPplr.player).GetFloat();
+			string crosshair = bdpplr.targetercrosshair;
+			vector2 retsize = bdpplr.targetercrosshairscale;
 				// Project KeyNAV
 				HLViewProjection viewproj = HLSBS.GetEventViewerProj(e);
 				bool infront;
 				vector2 apos;
+				if(aimAct)
+				{
 				[infront, apos] = HLSBS.GetActorHUDPos (
 					viewproj,
 					aimAct, 0, 0, aimAct.height / 2
 				);
-				string crosshair = bdpplr.targetercrosshair;
-				vector2 retsize = bdpplr.targetercrosshairscale;
+				}
+				else
+				{
+				infront = true;
+				apos = (Screen.GetWidth(), Screen.GetHeight() * 1.095) / 2;
+				}
 				if(infront && crosshair)
 				{
-					double dist = e.Camera.Distance3D(aimAct);
-					vector2 distscale = (1,1);
-					distscale *= dist/200.;
-					distscale.x = clamp(distscale.x, 2.0, 2.0);
-					distscale.y = clamp(distscale.y, 2.0, 2.0);
-					double trans = CVar.GetCVAR("bdp_crosshair_trans",BDPplr.player).GetFloat();
-					
 					HLSBS.DrawImage(crosshair..0, apos, 0, trans, scale:retsize / 1.33, absolute:true);
 				}
-			}
 		}
 		
 		// Keep track of time, always.

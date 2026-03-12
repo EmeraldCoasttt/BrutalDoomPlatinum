@@ -180,7 +180,7 @@ DHINT24 = "You take less damage while using the Super Shotgun's Meathook.";
 DHINT25 = "You are dead. Dead. Dead.";
 DHINT26 = "Collect new modifiers by killing every demon in a level!";
 DHINT27 = "Each slot has 3 weapons.";
-DHINT28 = "Crouch and kick for a powerful slide attack!";
+DHINT28 = "Sprint and crouch for a powerful slide attack!";
 DHINT29 = "When the unmaker runs out of cells, it will drain your health instead.";
 DHINT30 = "Railgun headshots are explosive.";
 DHINT31 = "Remember to drink plenty of water.";
@@ -192,7 +192,8 @@ DHINT35 = "Your geiger counter activates in damaging sectors.";
 DHINT36 = "Chaos Field Grenades don't deal damage, but cause infighting.";
 DHINT37 = "The assault rifle is perfect for grenade jumping.";
 DHINT38 = "Jumping as soon as you land preserves your momentum.";
-DHINT39 = "The revolver is perfectly accurate, if you can manage it's recoil.";
+DHINT39 = "The revolver is perfectly accurate, if you can manage its recoil.";
+DHINT40 = "Slidejumping is more effective the closer to the end of the slide you are.";
 
 //nashgore
 OPTMNU_NASHGORE = "Customize NashGore NEXT";
