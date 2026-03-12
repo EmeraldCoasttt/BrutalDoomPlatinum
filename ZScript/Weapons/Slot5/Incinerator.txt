@@ -19,9 +19,9 @@ CLASS BDPIncinerator : BDPWeaponBase
 	States
 	{
 	Grenade: //30
-		FLRS BCDE 1;
+		FLMS EFGH 1;
 		TNT1 A 22;
-		FLRS EDCB 1;
+		FLMS ABCD 1;
 		Goto Ready;
 	Kick: //18
 		FLMK ABCD 1;
@@ -54,14 +54,14 @@ CLASS BDPIncinerator : BDPWeaponBase
 			A_ClearOverlays(-1,-1);
 			A_StopSound(CHAN_WEAPON);
 		}
-		FLRS ABCDE 1;
+		FLMS EFGH 1;
 		TNT1 A 1;
 		TNT1 A 0 A_Lower();
 		Wait;
 	Select:
 		TNT1 A 1 {A_SetCrosshairDX("FLAMRet", 800); A_GunSlingerMag();}
 		TNT1 A 0 A_StartSound("FLMRDRAW");
-		FLRS EDCBA 1 A_WeaponReady(WRF_NOFIRE);
+		FLMS ABCD 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
 	Spawn:
 		FLMT F 1;
@@ -147,9 +147,18 @@ CLASS BDPIncinerator : BDPWeaponBase
 	DoReload:	
 		FLMT K 1 A_Startsound("FLMRUNLD",2);
 		FLMT OPQRSS 1;
-		FLMT T 1 {A_DiscardMag(); A_FireProjectileDX("emptyflamercan",3,-30,30,0,-10);}
+		FLMT T 1
+		{
+			A_DiscardMag();
+			if(invoker.mag == 0)
+				A_FireProjectileDX("emptyflamercan",3,-30,30,0,-10);
+		}
 		FLMT ZZTSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 1;
-		FLMT T 1 {A_ReloadMag(); A_Startsound("FLMRLOAD");}
+		FLMT T 1
+		{
+			A_ReloadMag();
+			A_Startsound("FLMRLOAD");
+		}
 		FLMT TZZTSSSSSSSSSTUVWXYK 1;
 		Goto Ready;
 	}
@@ -325,6 +334,7 @@ CLASS FireGrenade : actor
   //  +BLOODSPLATTER
 	Gravity 0.3;
 	Damagefunction 0;
+	Scale 0.75;
 	+MISSILE;
 	+FORCEXYBILLBOARD;
 	+rollsprite;
@@ -400,7 +410,7 @@ BounceSound "Weapons/GrenadeBounce";
 	States
 	{
 	Spawn:
-		GBPJ AAABBBCCCDDDEEEFFFGGGHHH 1
+		BS2X ABCD 1
 		{
 		A_startsound("THRMT",4,CHANF_LOOPING);
 		//savedheight = floorz;
@@ -432,7 +442,7 @@ BounceSound "Weapons/GrenadeBounce";
 		}
 		}
 		Stuck:
-		GBPJ A 1 
+		BS2X A 1 
 		{
 		
 		If(!tracer || tracer.health < 1)
@@ -486,7 +496,7 @@ BounceSound "Weapons/GrenadeBounce";
 		bnogravity = true;
 		}
 		StayDead:
-		GBPJ A 1;
+		BS2X A 1;
 		LOOP;
 		
 

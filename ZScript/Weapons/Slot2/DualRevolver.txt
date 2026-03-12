@@ -69,10 +69,10 @@ class BDPDualRevolver : BDPWeaponBase
 		Wait;
 	DeselectLeft:
 		RFDF C 2;
-		REVS DEFG 1;
+		RE2S DEFG 1;
 		Stop;
 	DeselectRight:
-		REVS DEFG 1;
+		RE2S DEFG 1;
 		Stop;
 	Select:
 		TNT1 A 1 {A_SetCrosshairDX("REVORet",2000); A_GunslingerMag();}
@@ -82,15 +82,15 @@ class BDPDualRevolver : BDPWeaponBase
 		Goto Ready;
 	SelectLeft:
 		TNT1 A 2;
-		REVS GFED 1;
+		RE2S GFED 1;
 		Goto ReadyOverlay;
 	SelectRight:
-		REVS GFED 1;
+		RE2S GFED 1;
 		RFDF C 2;
 		Goto ReadyOverlay;
 	SelectFromDual:
 		TNT1 A 0 A_StartSound("REVCOCK");
-		REVS LMNO 1;
+		RE2S LMNO 1;
 		TNT1 A 0 A_DrawDualOverlays("ReadyOverlay","ReadyOverlay",true);
 		Goto Ready;
 	MuzzleFlash:

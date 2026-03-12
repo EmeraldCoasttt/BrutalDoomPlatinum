@@ -84,16 +84,9 @@ Class BrutalProjectile : Actor
 	
 	Action Void A_GuidedRocket()
 	{
-		let it = ThinkerIterator.Create("Actor", STAT_DEFAULT);
-						Actor mo;
-					while (mo = Actor(it.Next()))
-			{
-				If(mo is "GuidedLaserNEO")
-				{
-				invoker.tracer = mo;
-				//console.printf("Gottem");
-				//Break;
-				}
+		let laun = BDPRocketLauncher(target.player.ReadyWeapon);
+			if(laun && laun.laser) {
+				invoker.tracer = laun.laser;
 			}
 			If(invoker.tracer)
 			{

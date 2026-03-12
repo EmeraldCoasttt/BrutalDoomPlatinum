@@ -173,10 +173,14 @@ class BDPDualSMG : BDPWeaponBase
 		TNT1 A 4;
 		3MGR BCDE 1;
 		SMGR FGGHHH 1;
-		TNT1 A 0 A_DiscardDualMag(1);
 		TNT1 A 0 A_StartSound("SMGREL1", 5);
 		SMGR IJKLMNO 1;
-		SMGR O 1 A_FireProjectileDX("EmptySMGMag",random(75,85),random(15,25),0,20,-20);
+		SMGR O 1
+		{
+			A_DiscardDualMag(1);
+			if(DualMag() <= 1)
+				A_FireProjectileDX("EmptySMGMag",random(75,85),random(15,25),0,20,-20);
+		}
 		SMGR PPPQRSTUUUUV 1;
 		TNT1 A 0 A_StartSound("SMGREL2", 5);
 		TNT1 A 0 A_ReloadDualMag(1);
@@ -187,8 +191,12 @@ class BDPDualSMG : BDPWeaponBase
 		4MGR BCDEFGGHHH 1;
 		TNT1 A 0 A_StartSound("SMGREL1", 5);
 		4MGR IJKLMNO 1;
-		TNT1 A 0 A_DiscardMag(1);
-		4MGR O 1 A_FireProjectileDX("EmptySMGMag",random(-95,-105),random(15,25),0,20,-20);
+		4MGR O 1
+		{
+			A_DiscardMag(1);
+			if(invoker.mag <= 1)
+				A_FireProjectileDX("EmptySMGMag",random(-95,-105),random(15,25),0,20,-20);
+		}
 		4MGR PPPQRSTUUUUV 1;
 		TNT1 A 0 A_StartSound("SMGREL2", 5);
 		TNT1 A 0 A_ReloadMag(1);

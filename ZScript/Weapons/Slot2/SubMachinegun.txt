@@ -21,7 +21,7 @@ class BDPSubmachineGun : BDPWeaponBase
 	{
 	Grenade: //30
 		TNT1 A 0 A_EndAim();
-		SMGS EFGH 1;
+		SMGS ABCD 1;
 		TNT1 A 22;
 		SMGS HGFE 1;
 		Goto Ready;
@@ -51,7 +51,7 @@ class BDPSubmachineGun : BDPWeaponBase
 		Stop;
 	Deselect:
 		TNT1 A 0 A_EndAim();
-		SMGS EFGH 1;
+		SMGS ABCD 1;
 		TNT1 A 1;
 		TNT1 A 0 A_Lower;
 		Wait;
@@ -80,8 +80,8 @@ class BDPSubmachineGun : BDPWeaponBase
 			A_FireBullets (3, 3, 1, 12, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-14);
 			A_WeaponRecoil(0.4,0);
 			A_FireParticles(1,8);
-			A_StartSound("SMGFIRE", 1);
-			A_StartSound("FARSMG", 6);
+			A_StartSound("SMGFIRE", 1, pitch:frandom(0.95,1.05));
+			A_StartSound("FARSMG", 6, pitch:frandom(0.95,1.05));
 			A_AlertMonstersDX();
 			A_ZoomFactor(0.99);
 			A_QuadSound();
@@ -109,8 +109,8 @@ class BDPSubmachineGun : BDPWeaponBase
 			A_FlashOverlay(state:"MuzzleFlashAim");
 			A_WeaponRecoil(0.2);
 			A_FireParticles(1,8);
-			A_StartSound("SMGFIRE", 1);
-			A_StartSound("FARSMG", 6);
+			A_StartSound("SMGFIRE", 1, pitch:frandom(0.95,1.05));
+			A_StartSound("FARSMG", 6, pitch:frandom(0.95,1.05));
 			A_AlertMonstersDX();
 			A_ZoomFactor(1.29);
 			A_QuadSound();

@@ -127,9 +127,9 @@ class BDPAssaultShotgun : BDPWeaponBase
 	States
 	{
 	Grenade: //30
-		A12S BCDE 1;
+		A12S EFGH 1;
 		TNT1 A 22;
-		A12S EDCB 1;
+		A12S DCBA 1;
 		Goto Ready;
 	Kick: //18
 		A12G BCDE 1;
@@ -159,7 +159,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 		A12G A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD|WRF_NOSECONDARY);
 		Loop;
 	Deselect:
-		A12S ABCDE 1;
+		A12S EFGH 1;
 		TNT1 A 1;
 		TNT1 A 0 ChangeAmmoIcon1("SHELA0");
 		TNT1 A 0 A_Lower();
@@ -181,7 +181,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 			invoker.burstCount = 0;
 		}
 		TNT1 A 0 A_StartSound("ASGSEL");
-		A12S EDCBA 1 A_WeaponReady(WRF_NOFIRE);
+		A12S DCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
 	ASGShieldBash:
 		PSHL E 0 A_FireProjectile("ShieldBash");
@@ -323,10 +323,14 @@ class BDPAssaultShotgun : BDPWeaponBase
 		"####" G 1 offset(0,33);
 		"####" A 0 A_StartSound("ASGREL1", 1);
 		"####" A 0 A_StartSound("foley/ASGDrumOut", 10,0,0.7);
-		"####" A 0 A_DiscardMag();
+		"####" A 0
+		{
+			A_DiscardMag();
+			if(invoker.mag <= 1)
+				A_FireProjectile("EmptyASGDrumSpawn",180,0,-4,-10);
+		}
 		"####" H 1 offset(0,32);
 		A1R1 IJ 1;
-		TNT1 A 0 A_FireProjectile("EmptyASGDrumSpawn",180,0,-4,-10);
 		A12R G 3;
 		TNT1 A 0 A_StartSound("foley/ShotgunReloadRaise", 10);
 	ContinueReload:
@@ -462,11 +466,31 @@ class BDPAssaultShotgun : BDPWeaponBase
 		TNT1 A 0 A_StartSound("foley/ShotgunReloadRaise", 10);
 		Goto ContinueReload;
 	Spawn:
-		TNT1 A 0 NoDelay A_Jump(80,"Spawn2");
+		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5", "Spawn6");
+		Loop;
+	Spawn1:
+		A12P B 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn2:
+		A12P C 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn3:
+		A12P D 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	SpawnNoAmmo:
 		A12P A -1;
 		Stop;
-	Spawn2:
-		A12P B -1;
+	Spawn4:
+		A12P F 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo2");
+		Loop;
+	Spawn5:
+		A12P G 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo2");
+		Loop;
+	Spawn6:
+		A12P H 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo2");
+		Loop;
+	SpawnNoAmmo2:
+		A12P E -1;
 		Stop;
 	 /*Fire2: //Aiming DOwn the Sights
 		A12A E 1 Bright A_AlertMonstersDX

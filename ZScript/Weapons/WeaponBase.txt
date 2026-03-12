@@ -630,29 +630,20 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 		}
 	}
 	
-	action void a_SpawnLaser(class<Actor> Spawntype)
+	action Actor a_SpawnLaser(class<Actor> Spawntype)
 	{
 		FLineTraceData lasersight;
 		invoker.owner.LineTrace(invoker.owner.angle, 4096, invoker.owner.pitch, TRF_SOLIDACTORS|TRF_THRUHITSCAN, offsetz: invoker.owner.player.viewz - invoker.owner.pos.z, data: lasersight);
-		vector3 targetpos = lasersight.HitLocation;
-		if (lasersight.HitLine)
-		{
-			vector2 wallnormal = (-lasersight.HitLine.delta.y,lasersight.HitLine.delta.x).unit();
-			if (!lasersight.LineSide)
-			wallnormal *= -1;
-			targetpos += (wallnormal * 18);
-		}
-		/*
-		if (lasersight.hittype == trace_hitceiling)
-				{
-					targetpos.z -= 2;
-				}
-		if (lasersight.hittype == trace_hitfloor)
-				{
-					targetpos.z += 2;
-				}
-				*/
-		Spawn(spawntype,targetpos);
+		vector3 targetpos = lasersight.HitLocation - (lasersight.HitDir * 4);
+		return Spawn(spawntype,targetpos);
+	}
+	
+	action void A_LaserTrack(Actor toMove)
+	{
+		FLineTraceData lasersight;
+		invoker.owner.LineTrace(invoker.owner.angle, 4096, invoker.owner.pitch, TRF_SOLIDACTORS|TRF_THRUHITSCAN, offsetz: invoker.owner.player.viewz - invoker.owner.pos.z, data: lasersight);
+		vector3 targetpos = lasersight.HitLocation - (lasersight.HitDir * 4);
+		toMove.SetOrigin(targetpos,true);
 	
 	}
 	

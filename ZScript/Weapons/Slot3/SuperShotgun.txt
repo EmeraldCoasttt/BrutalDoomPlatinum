@@ -44,9 +44,9 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 	States
 	{
 	Grenade: //30
-		SHT5 BCDE 1;
+		SHT5 EFGH 1;
 		TNT1 A 22;
-		SHT5 EDCB 1;
+		SHT5 DCBA 1;
 		Goto Ready;
 	Kick: //18
 		SH69 PQRS 1;
@@ -91,14 +91,14 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 		SH69 SRQP 1 A_SetSprites("TNT1A0",1);
 		Stop;
 	Deselect:
-		SHT5 ABCDE 1;
+		SHT5 EFGH 1;
 		TNT1 A 1;
 		TNT1 A 0 A_Lower();
 		Wait;
 	Select:
 		TNT1 A 1 {A_SetCrosshairDX("SSGRet", 400); A_SetTargeterCrosshair("SGUNRet",1600,0.5); A_GunSlingerMag();}
 		TNT1 A 0 A_StartSound("weapons/sshotc");
-		SHT5 EDCBA 1 A_WeaponReadyDX(WRF_NOFIRE);
+		SHT5 DCBA 1 A_WeaponReadyDX(WRF_NOFIRE);
 		Goto Ready;
 	MuzzleFlash:
 		SHOM AB 1 Bright;
@@ -195,11 +195,19 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 		SHTZ A 1;
 		Goto Ready;
 	Spawn:
-		TNT1 A 0 NoDelay A_jump(80,"Spawn2");
-		SGN2 A -1;
-		Stop;
+		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
+		Loop;
+	Spawn1:
+		SGN2 B 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
 	Spawn2:
-		MGN2 A -1;
+		SGN2 C 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn3:
+		SGN2 D 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	SpawnNoAmmo:
+		SGN2 A -1;
 		Stop;
 	AltFire:
 		TNT1 A 0 A_trymeathook(1600);
@@ -447,7 +455,7 @@ class DragonsBreathSparkle : Actor
 	}
 	Override void Tick()
 	{
-		if(GetAge() > 1 && GetAge() < 10)
+		if(GetAge() > 1 && GetAge() < 20)
 		{
 			FSpawnParticleParams dbtrail;
 			dbtrail.texture = TexMan.CheckForTexture("SPRKA0");

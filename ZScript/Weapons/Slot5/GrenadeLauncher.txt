@@ -24,9 +24,9 @@ class BDPGrenadeLauncher : BDPWeaponBase
 	States
 	{
 	Grenade: //30
-		GLSA BCDE 1;
+		GLSA EFGH 1;
 		TNT1 A 22;
-		GLSA EDCB 1;
+		GLSA DCBA 1;
 		Goto ReverseStrapIdle;
 	Kick: //18
 		GLAN BCDE 1;
@@ -64,7 +64,7 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		GLAN A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,forcereload:true);
 		Goto Ready;
 	Deselect:
-		GLSA ABCDE 1;
+		GLSA EFGH 1;
 		TNT1 A 1;
 		TNT1 A 0 ChangeAmmoIcon1("ROCKA0");
 		TNT1 A 0 A_Lower();
@@ -78,7 +78,7 @@ class BDPGrenadeLauncher : BDPWeaponBase
 				ChangeAmmoIcon1("ROCKE0");
 		}
 		TNT1 A 0 A_StartSound("ROCKPKUP");
-		GLSA EDCBA 1 A_WeaponReady(WRF_NOFIRE);
+		GLSA DCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto StrapIdle;
 	MuzzleFlash:
 		GLAM AB 1 Bright;
@@ -145,13 +145,12 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		"####" QRSTUU 1;
 		"####" W 1 {A_ReloadMag(); A_StartSound("Weapons/GrenadeLoad");}
 		GLR1 XYZ 1;
-		GLR2 A 1 A_GiveInventory("QuickSwitchSSG",1);
+		GLR2 A 1;
 		TNT1 A 2 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_StartSound("foley/GLUpwardsToClose",10);
-		GLSA E 1 A_TakeInventory("QuickSwitchSSG",1);
+		TNT1 A 1 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_StartSound("Weapons/GrenadeClose");
-		GLSA EDCB 1 A_WeaponReady(WRF_NOFIRE);
-		GLR3 M 1 A_WeaponReady(WRF_NOFIRE);
+		GLSA DCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto StrapIdle;
 	ReloadHaste:
 		GLR1 ACEGG 1;
@@ -175,10 +174,9 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		GLR2 A 1 A_GiveInventory("QuickSwitchSSG",1);
 		TNT1 A 1 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_StartSound("foley/GLUpwardsToClose",10);
-		GLSA E 1 A_TakeInventory("QuickSwitchSSG",1);
+		TNT1 A 1 A_TakeInventory("QuickSwitchSSG",1);
 		TNT1 A 0 A_StartSound("Weapons/GrenadeClose");
-		GLSA DB 1 A_WeaponReady(WRF_NOFIRE);
-		GLR3 M 1 A_WeaponReady(WRF_NOFIRE);
+		GLSA DBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto StrapIdle;
 	SpecialAction:
 		TNT1 A 0 A_JumpIfInventory("PowerSpeed2",1,"SpecialActionHaste");
@@ -210,10 +208,9 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		GLR2 A 1;
 		TNT1 A 2;
 		TNT1 A 0 A_StartSound("foley/GLUpwardsToClose",10);
-		GLSA E 1;
+		TNT1 A 1;
 		TNT1 A 0 A_StartSound("Weapons/GrenadeClose");
-		GLSA EDCB 1;
-		GLR3 M 1;
+		GLSA DCBA 1;
 		Goto StrapIdle;
 	SpecialActionHaste:
 		GLR1 ACEGG 1;
@@ -244,10 +241,9 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		GLR2 A 1;
 		TNT1 A 1;
 		TNT1 A 0 A_StartSound("foley/GLUpwardsToClose",10);
-		GLSA E 1;
+		TNT1 A 1;
 		TNT1 A 0 A_StartSound("Weapons/GrenadeClose");
-		GLSA DB 1;
-		GLR3 M 1;
+		GLSA DBA 1;
 		Goto StrapIdle;
 	Fidget:
 		GLR1 ABCDEFGGGG 1 A_WeaponReadyDX(0,false);
@@ -265,10 +261,9 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		GLR2 S 1 A_WeaponReadyDX(0,false);
 		TNT1 A 2 A_WeaponReadyDX(0,false);
 		TNT1 A 0 A_StartSound("foley/GLUpwardsToClose",10);
-		GLSA E 1 A_WeaponReadyDX(0,false);
+		TNT1 A 1 A_WeaponReadyDX(0,false);
 		TNT1 A 0 A_StartSound("Weapons/GrenadeClose");
-		GLSA EDCB 1 A_WeaponReadyDX(0,false);
-		GLR3 M 1 A_WeaponReadyDX(0,false);
+		GLSA DCBA 1 A_WeaponReadyDX(0,false);
 		Goto StrapIdle;
 	Spawn:
 		GLAP A -1;

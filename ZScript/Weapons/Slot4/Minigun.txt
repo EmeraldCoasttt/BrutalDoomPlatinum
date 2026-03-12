@@ -30,7 +30,7 @@ class BDPMinigun : BDPWeaponBase
 	Grenade: //30
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
-		#### XWVU 1;
+		#### ][ZY 1;
 		TNT1 A 22;
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
@@ -147,7 +147,7 @@ class BDPMinigun : BDPWeaponBase
 		}
 		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
 		CHAE A 0;
-		#### XWVU 1;
+		#### ][ZY 1;
 		TNT1 A 1;
 		TNT1 A 0 A_Lower();
 		Wait;
