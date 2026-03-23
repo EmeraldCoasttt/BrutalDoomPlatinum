@@ -503,41 +503,68 @@ class BDP_HUD : DoomStatusBar
 		}
 		
 		// Armor:
-		iconPos.x += iconSpacing;
-		let armor = BasicArmor(CPlayer.mo.FindInventory("BasicArmor"));
-		if (armor && armor.amount > 0)
+		if (CPlayer.mo.CountInv("PowerShield") || CPlayer.mo.CountInv("PowerShield2"))
 		{
-			// armor icon
-			//Should always show as energy armor if equipped
-			If(CPlayer.mo.FindInventory("PowerShield"))
-			{
-				DrawImage("ARM2G0",iconpos,iconflags);
-			}
-			else
-			{
-				DrawInventoryIcon(armor, iconPos, iconflags); 
-			}
-			// power shield icon
+			iconPos.x += iconSpacing;
+			DrawImage("ARM2G0",iconpos,iconflags);
+			let armor = BasicArmor(CPlayer.mo.FindInventory("BasicArmor"));
 			
-			// armor amount
-			DrawString(
-				mSmallFont,
-				String.Format("%d", armor.amount), 
-				iconPos + numOfs, 
-				numFlags, 
-				translation: GetArmorAmountColor(armor.amount)
-			);
-			// armor absorption
-			DrawString(
-				mconfont,
-				String.Format("%d%", Clamp(armor.savepercent * 100, 0, 99)),
-				iconPos + (7, -5),
-				numFlags,
-				translation: GetArmorAbsorbColor(armor),
-				scale:(0.8, 0.8)
-			);
+				// armor amount
+				DrawString(
+					mSmallFont,
+					String.Format("%d", armor.amount), 
+					iconPos + numOfs, 
+					numFlags, 
+					translation: GetArmorAmountColor(armor.amount)
+				);
+				// armor absorption
+				DrawString(
+					mconfont,
+					String.Format("%d%", Cplayer.mo.countinv("PowerShieldCharge")),
+					iconPos + (7, -5),
+					numFlags,
+					translation: GetArmorAbsorbColor(armor),
+					scale:(0.8, 0.8)
+				);
+			
 		}
-		
+		Else
+		{
+			iconPos.x += iconSpacing;
+			let armor = BasicArmor(CPlayer.mo.FindInventory("BasicArmor"));
+			if (armor && armor.amount > 0)
+			{
+				// armor icon
+				//Should always show as energy armor if equipped
+				If(CPlayer.mo.FindInventory("PowerShield"))
+				{
+					DrawImage("ARM2G0",iconpos,iconflags);
+				}
+				else
+				{
+					DrawInventoryIcon(armor, iconPos, iconflags); 
+				}
+				// power shield icon
+				
+				// armor amount
+				DrawString(
+					mSmallFont,
+					String.Format("%d", armor.amount), 
+					iconPos + numOfs, 
+					numFlags, 
+					translation: GetArmorAmountColor(armor.amount)
+				);
+				// armor absorption
+				DrawString(
+					mconfont,
+					String.Format("%d%", Clamp(armor.savepercent * 100, 0, 99)),
+					iconPos + (7, -5),
+					numFlags,
+					translation: GetArmorAbsorbColor(armor),
+					scale:(0.8, 0.8)
+				);
+			}
+		}
 		// Selected item:
 		iconPos.x += iconSpacing;
 		DrawSelectedInventory(iconPos, iconflags);

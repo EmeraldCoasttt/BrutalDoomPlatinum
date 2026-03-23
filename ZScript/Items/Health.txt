@@ -172,6 +172,7 @@ Class EnergyArmor : CustomInventory
 	{
 	If( Super.trypickup(Toucher))
 		{
+			toucher.giveinventory("PowerShieldCharge",3);
 			toucher.Score += 500;
 			return true;
 		}

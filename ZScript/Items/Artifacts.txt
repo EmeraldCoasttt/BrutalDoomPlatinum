@@ -58,12 +58,21 @@ CLASS allthemap : powerupgiver
 		}
 }
 
-
+Class PowerShieldCharge : Inventory
+{
+	Default
+	{
+		Inventory.maxamount 3;
+	}
+}
 
 class PowerShield : Powerup
 {
 	bool bhasplayedsound;
 	int damagetimer;
+	bool firstcharge;
+	bool takencharge;
+	bool chargedwhilezero;
 	Default
 	{
 		Powerup.Duration 1;
@@ -115,7 +124,10 @@ class PowerShield : Powerup
 	{
 	
 		
-		
+		If(owner.countinv("powershieldcharge") > 0)
+		{
+			chargedwhilezero = false;
+		}
 		damagetimer = (damagetimer - 1);
 		If(owner.countinv("basicarmor") < 21 && owner.countinv("basicarmor") > 0)
 		{
@@ -123,25 +135,38 @@ class PowerShield : Powerup
 		}
 		else if(owner.countinv("basicarmor") < 1)
 		{
-		owner.a_startsound("mjoln2",126,CHANF_LOOPING);
+			owner.a_startsound("mjoln2",126,CHANF_LOOPING);
+			If(!takencharge && firstcharge)
+			{
+				owner.takeinventory("powershieldcharge",1);
+				takencharge = true;
+			}
 		}
 		else
 		{
 		owner.a_stopsound(126);
 		}
 		
+		
+		
 		If(damagetimer < 1 && owner && owner.countinv("basicarmor") < 50)
 		{
-			If(level.time % 1 == 0)
-			{
-			owner.giveinventory("mjolnirarmor", 1);
-			}
+			
 			If(!bhasplayedsound)
 			{
-			//owner.a_startsound("mjoln",125,CHANF_NOSTOP);
-			owner.a_startsound("mjoln",125,CHANF_NOSTOP,1.0,ATTN_NORM,0.0,(owner.countinv("basicarmor") / 50.0 ));
-			bhasplayedsound = true;
+				//owner.a_startsound("mjoln",125,CHANF_NOSTOP);
+				firstcharge = true;
+				takencharge = false;
+				owner.a_startsound("mjoln",125,CHANF_NOSTOP,1.0,ATTN_NORM,0.0,(owner.countinv("basicarmor") / 50.0 ));
+				bhasplayedsound = true;
+				If(owner.countinv("powershieldcharge") < 1)
+				{
+					chargedwhilezero = true;
+				}
 			}
+			
+			owner.giveinventory("mjolnirarmor", 1);
+			
 		}
 		//Else
 		//{
@@ -162,7 +187,11 @@ class PowerShield : Powerup
 		{
 		owner.bnoblood = false;
 		}
-		
+		If(owner && owner.countinv("powershieldcharge") < 1 && owner.countinv("basicarmor") < 1 && chargedwhilezero)
+		{
+			owner.A_stopsound(126);
+			depleteordestroy();
+		}
 		Super.doeffect();
 	}
 
