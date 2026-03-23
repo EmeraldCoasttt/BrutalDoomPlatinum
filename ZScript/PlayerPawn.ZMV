@@ -1510,11 +1510,12 @@ class BDPPlayerPawn : PlayerPawn
 		If(spawnwitharmor && !findinventory("powershield",TRUE) && health > 0)
 		{
 			GiveInventory("PowerShield2",1);
-			If(countinv("basicarmor") < 50)
-			{
-				takeinventory("basicarmor",50);
-				GiveInventory("mjolnirarmor",50);
-			}
+			giveinventory("powershieldcharge",3);
+			
+		}
+		If(spawnwitharmor)
+		{
+			giveinventory("powershieldcharge",3);
 		}
 		
 		If(spawnberserked && !findinventory("powerstrength",TRUE) && health > 0)
