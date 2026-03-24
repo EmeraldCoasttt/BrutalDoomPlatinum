@@ -680,7 +680,7 @@ class BDPPlayerPawn : PlayerPawn
 			// to decide what should and shouldn't be counted:
 			if (weap &&
 				!weap.bPOWERED_UP && //skip sisterweapons
-				!weap.bMELEEWEAPON && //skip Fist
+				!(weap is "BDPFist") && //skip Fist
 				countedWeapons.Find(weap) == countedWeapons.Size() //skip already counted
 				)
 			{
