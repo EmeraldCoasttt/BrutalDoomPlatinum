@@ -363,7 +363,7 @@ CLASS MiniGunTurret : BDPNotMonster
 		+noblood;
 		+solid;
 		+Shootable;
-		health 100;
+		health 150;
 		
 		Monster;
 		-Countkill;
@@ -397,17 +397,17 @@ CLASS MiniGunTurret : BDPNotMonster
 			{
 				If(tracer && tracer.findinventory("PowerSpeed2"))
 					{
-						giveinventory("BDPClip2",100);
+						giveinventory("BDPClip2",600);
 					}
 				Else If(tracer && tracer.countinv("BDPClip2") < 100)
 					{
-						Giveinventory("BDPClip2",(tracer.countinv("BDPClip2")));
+						Giveinventory("BDPClip2",(tracer.countinv("BDPClip2") * 2));
 						tracer.takeinventory("BDPClip2",100);
 					}
 				Else if (tracer)
 					{
 						tracer.takeinventory("BDPClip2",100);
-						giveinventory("BDPClip2",100);
+						giveinventory("BDPClip2",200);
 					}
 				A_cleartracer();
 				A_startsound("bepbep",24);
