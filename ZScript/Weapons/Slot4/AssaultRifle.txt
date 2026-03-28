@@ -73,7 +73,8 @@ class BDPAssaultRifle : BDPWeaponBase
 		Loop;
 	Deselect:
 		RIFG EDCB 1;
-		TNT1 A 1;
+		//Cleans up rocket icon for other weapons
+		TNT1 A 0 ChangeAmmoIcon2("ROCKA0");
 		TNT1 A 0 A_Lower();
 		Wait;
 	Select:
