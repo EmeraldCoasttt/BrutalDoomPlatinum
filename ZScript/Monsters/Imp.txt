@@ -794,11 +794,11 @@ class BDPImp : BDPActor replaces DoomImp
 		TNT1 A 0 A_TakeInventory ("ImpOnCeiling");
 		TNT1 A 0 A_ChangeFlag("NOGRAVITY", 0);//CEILINGHUGGER
 		TNT1 A 0 A_ChangeFlag("CEILINGHUGGER", 0);
+		TROO H 3;
+		TROH H 3 A_Pain();
 		TNT1 A 0 A_giveinventory("KillHeadSHotTargets",1);
-		// TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER)
-		TNT1 A 0 A_TakeInventory("SKImp", 1);
 		TNT1 A 0 A_FaceTarget();
-		TROH Q 3 A_Pain();
+		TROH Q 3;
 		TROH R 3 A_FaceTarget();
 		TROH S 20;
 		TROH S 20;
