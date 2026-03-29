@@ -218,7 +218,7 @@ class BDPFreezerBeam : BDPWeaponBase
 		FRRL G 1 offset(0,32);
 		FRRL H 1 A_StartSound("RAILMAG2",1);
 		FRRL IJKLLLMNOPP 1;
-		FRRL Q 4
+		FRRL Q 20
 		{
 			A_DiscardMag();
 			if(invoker.mag == 0)

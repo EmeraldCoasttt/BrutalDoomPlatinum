@@ -283,7 +283,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		PRR1 ABCDE 1;
 		PRSR GHH 1;
 		TNT1 A 0 A_StartSound("foley/PlasmaInspectMisc", 10);
-		PRSR I 10;
+		PRSR I 20;
 		PRSR JKLMNNO 1;
 		TNT1 A 0 A_PlaySound("Plasma/Reload2", 5);
 		PRSR OOOO 1;
@@ -302,7 +302,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		}
 		PRR2 BCDEFGHH 1;
 		TNT1 A 0 A_StartSound("foley/PlasmaInspectMisc", 10);
-		PRR2 I 10;
+		PRR2 I 20;
 		PRR2 JKLMNNO 1;
 		TNT1 A 0 A_PlaySound("Plasma/Reload2", 5);
 		PRR2 OOOO 1;

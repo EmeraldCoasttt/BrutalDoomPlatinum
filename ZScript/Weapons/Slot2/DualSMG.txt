@@ -181,7 +181,7 @@ class BDPDualSMG : BDPWeaponBase
 			if(DualMag() <= 1)
 				A_FireProjectileDX("EmptySMGMag",random(75,85),random(15,25),0,20,-20);
 		}
-		SMGR PPPQRSTUUUUV 1;
+		SMGR PPPPPPPPPPPPPPPPPPPPPQRSTUUUUV 1;
 		TNT1 A 0 A_StartSound("SMGREL2", 5);
 		TNT1 A 0 A_ReloadDualMag(1);
 		SMGR XWXYZZ 1;
@@ -197,7 +197,7 @@ class BDPDualSMG : BDPWeaponBase
 			if(invoker.mag <= 1)
 				A_FireProjectileDX("EmptySMGMag",random(-95,-105),random(15,25),0,20,-20);
 		}
-		4MGR PPPQRSTUUUUV 1;
+		4MGR PPPPPPPPPPPPPPPPPPPPPQRSTUUUUV 1;
 		TNT1 A 0 A_StartSound("SMGREL2", 5);
 		TNT1 A 0 A_ReloadMag(1);
 		4MGR XWXYZZ 1;

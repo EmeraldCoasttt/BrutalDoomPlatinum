@@ -292,7 +292,7 @@ class BDPPlasmaRifle : BDPWeaponBase
 			}
 		}
 		PRSR AAZBCDEFGHH 1;
-		PRSR I 10;
+		PRSR I 20;
 		TNT1 A 0 A_StartSound("foley/PlasmaInspectMisc", 10);
 		PRSR JKLMNNO 1;
 		TNT1 A 0 A_StartSound("Plasma/Reload2", 5);

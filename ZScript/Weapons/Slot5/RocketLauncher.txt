@@ -492,7 +492,7 @@ CLASS BDPRocketLauncher : BDPWeaponBase
 		}
 		MISR FGH 1;
 		MISR IJKLMM 1;
-		MISR N 3;
+		MISR N 22;
 		MISR OPQRSSTTTT 1;
 		TNT1 A 0 A_StartSound("ROCKREL2");
 		TNT1 A 0 A_ReloadMag();
