@@ -1699,7 +1699,10 @@ ACTOR HighExplosiveFlamesSmall: FlameTrails
 	}
 }
 
-
+actor UraniumExplosion : HighExplosiveFlamesSmall
+{
+	Scale 0.3
+}
 
 
 ACTOR HighExplosiveFlamesBig: HighExplosiveFlamesSmall

@@ -16,33 +16,14 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 		Tag "$BDPSSG";
 		Inventory.AltHUDIcon "SGN2A0";
 	}
-	Float theoverlayalpha; //Keeping track of fade-in
 	
-	//Sets the transparency for the meathook layer. Bool determines whether to fade in the meathook when available
-	Action void A_HookFlags(bool hookfadein = false)
-	{
-		A_overlayflags(9,PSPF_ALPHA | PSPF_RENDERSTYLE,TRUE);
-	A_OverlayRenderstyle(9,STYLE_Translucent);
-	//Is the meathook currently attached to a monster or deselected?
-	If(invoker.owner.countinv("meathook") < 1 || invoker.owner.countinv("meathookextended") < 1)
-		{
-			A_overlayAlpha(9,0.0);
-			invoker.theoverlayalpha = 0;
-			if(invoker.owner.findinventory("BDPBlur"))
-			{
-				A_overlay(9,"donothing");
-			}
-		}
-	//If meathook is available, fade them in
-	Else if(hookfadein)
-		{
-			Invoker.theoverlayalpha = (invoker.theoverlayalpha + 0.10);
-			A_overlayAlpha(9,invoker.theoverlayalpha);
-		}
+	bool uraniumShells;
 	
-	}
 	States
 	{
+	CacheSprites:
+		SHO4 A 0;
+		Stop;
 	Grenade: //30
 		SHT5 EFGH 1;
 		TNT1 A 22;
@@ -69,15 +50,41 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 	Fidget:
 		SHO3 ABCD 1 A_WeaponReadyDX(0,false);
 		SHO3 E 3 A_WeaponReadyDX(0,false);
-		SHO3 FGHI 1 A_WeaponReadyDX(0,false);
+		SHO3 FGH 1 A_WeaponReadyDX(0,false);
+		SHO3 I 1
+		{
+			if(invoker.uraniumshells)
+				A_SetSprites("SHO4");
+			return A_WeaponReadyDX(0,false);
+		}
 		TNT1 A 0 A_StartSound("weapons/sshoto");
-		SHO3 JKL 1 A_WeaponReadyDX(0,false);
-		SHO3 M 15 A_WeaponReadyDX(0,false);
+		SHO3 JKL 1
+		{
+			if(invoker.uraniumshells)
+				A_SetSprites("SHO4");
+			return A_WeaponReadyDX(0,false);
+		}
+		SHO3 M 15
+		{
+			if(invoker.uraniumshells)
+				A_SetSprites("SHO4");
+			return A_WeaponReadyDX(0,false);
+		}
 	FidgetLoop:
-		SHO3 M 1 A_WeaponReadyDX(0,false);
+		SHO3 M 1
+		{
+			if(invoker.uraniumshells)
+				A_SetSprites("SHO4");
+			return A_WeaponReadyDX(0,false);
+		}
 		TNT1 A 0 A_PressingReload("FidgetLoop");
 		SHTZ A 0 A_StartSound("foley/SSGraiseAfterClose",10);
-		SHO3 NOP 1 A_WeaponReadyDX(0,false);
+		SHO3 NOP 1
+		{
+			if(invoker.uraniumshells)
+				A_SetSprites("SHO4");
+			return A_WeaponReadyDX(0,false);
+		}
 		SHTZ A 0 A_StartSound("weapons/sshotc");
 		SHO3 QRS 1 A_WeaponReadyDX(0,false);
 		SHTZ A 0 A_TakeInventory("Reloading",1);
@@ -93,10 +100,18 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 	Deselect:
 		SHT5 EFGH 1;
 		TNT1 A 1;
+		TNT1 A 0 ChangeAmmoIcon1("SHELA0");
 		TNT1 A 0 A_Lower();
 		Wait;
 	Select:
-		TNT1 A 1 {A_SetCrosshairDX("SSGRet", 400); A_SetTargeterCrosshair("MEATRet",1600,1.0); A_GunSlingerMag();}
+		TNT1 A 1
+		{
+			A_SetCrosshairDX("SSGRet", 400);
+			A_SetTargeterCrosshair("MEATRet",1600,1.0);
+			if(invoker.uraniumShells)
+				ChangeAmmoIcon1("SHEL]0");
+			A_GunSlingerMag();
+		}
 		TNT1 A 0 A_StartSound("weapons/sshotc");
 		SHT5 DCBA 1 A_WeaponReadyDX(WRF_NOFIRE);
 		Goto Ready;
@@ -107,9 +122,18 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 		TNT1 A 0 A_CheckIfMag(2,force:true);
 		SHOF A 1 Bright
 		{
-			A_FireBullets (0,0,1,40,"shotpuff",FBF_NORANDOM,300);
-			A_FireBullets (10, 1, 9, 13, "ShotgunPuff", FBF_NORANDOM,400,"decorativetracer",-4);
-			A_FireBullets (6, 3, 9, 13, "ShotgunPuff", FBF_NORANDOM,8192,"decorativetracer",-4);
+			if(invoker.uraniumShells)
+			{
+				for(int i = 0; i < 14; i++)
+				{
+					A_FirePiercingBullet(3, "UraniumPuff", 10, 3, 0, -4);
+				}
+			}
+			else
+			{
+				A_FireBullets(0, 0, 1, 40, "shotpuff", FBF_NORANDOM, 300);
+				A_FireBullets(10, 3, 18, 13, "ShotgunPuff", FBF_NORANDOM, 8192, "decorativetracer", -4);
+			}
 			A_FlashOverlay();
 			A_WeaponRecoil(12);
 			A_FireParticles(20,19);
@@ -150,6 +174,7 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 		Goto Ready;
 	DoReload:
 		TNT1 A 0 A_CheckIfAmmo("BDPShell",2,"Ready");
+		TNT1 A 0 A_JumpIf(invoker.uraniumShells, "ReloadUraniumShells");
 		TNT1 A 0 A_JumpIfInventory("PowerSpeed2",1,"ReloadHaste");
 		SHTZ BCDEFGHIII 1;
 		TNT1 A 0 A_StartSound("foley/SSGlowerBeforeOpen",10);
@@ -157,12 +182,24 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 		SHTZ A 0 A_StartSound("weapons/sshoto");
 		NULL A 0 { A_Overlay(2,"ReloadSmokeLeft"); A_Overlay(3,"ReloadSmokeRight"); }
 		SHTZ Q 1;
-		TNT1 A 0 A_StartSound("foley/SSGshellEject",10,0,0.5);
-		TNT1 A 0 A_fireprojectile("SSGCaseSpawner",0,0,-6, -14);
-		TNT1 A 0 A_fireprojectile("SSGCaseSpawner",0,0,-4, -13);
+		TNT1 A 0 {
+			A_StartSound("foley/SSGshellEject",10,0,0.5);
+			A_FireProjectileDX("BDPSpentSSGShell", random(80, 100), random(-50, -70), -4, 25, -14);
+			A_FireProjectileDX("BDPSpentSSGShell", random(80, 100), random(-50, -70), -2, 25, -13);
+		}
+	ContinueReload:
 		SHTZ RRSSSTUVWX 1;
-		TNT1 A 0 A_StartSound("weapons/sshotl");
-		TNT1 A 0 A_ReloadMag();
+		TNT1 A 0
+		{
+			A_StartSound("weapons/sshotl");
+			A_ReloadMag();
+			if(invoker.uraniumShells)
+			{
+				invoker.uraniumShells = false;
+				ChangeAmmoIcon1("SHELA0");
+				invoker.magConversion = (2, 2);
+			}
+		}
 		SHTZ YZ 1;
 		SH69 ABCL 1;
 		SHTZ A 0 A_StartSound("foley/SSGraiseAfterClose",10);
@@ -184,7 +221,7 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 		TNT1 A 0 A_fireprojectile("SSGCaseSpawner",0,0,-4, -13);
 		SHTZ RSTVX 1;
 		TNT1 A 0 A_StartSound("weapons/sshotl");
-		TNT1 A 0 A_ReloadMag(0,false,true);
+		TNT1 A 0 A_ReloadMag(free:true);
 		SHTZ Z 1;
 		SH69 BL 1;
 		SHTZ A 0 A_StartSound("foley/SSGraiseAfterClose",10);
@@ -194,8 +231,51 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 		SHTZ A 0 A_ReFire();
 		SHTZ A 1;
 		Goto Ready;
+	ReloadUraniumShells:
+		SHTZ BCDEFGHIII 1;
+		TNT1 A 0 A_StartSound("foley/SSGlowerBeforeOpen",10);
+		SHTZ JLMNO[ 1;
+		SHTZ A 0 A_StartSound("weapons/sshoto");
+		NULL A 0 { A_Overlay(2,"ReloadSmokeLeft"); A_Overlay(3,"ReloadSmokeRight"); }
+		SHTZ \ 1;
+		TNT1 A 0 {
+			A_StartSound("foley/SSGshellEject",10,0,0.5);
+			A_FireProjectileDX("BDPSpentUraniumShell", random(80, 100), random(-50, -70), -4, 25, -14);
+			A_FireProjectileDX("BDPSpentUraniumShell", random(80, 100), random(-50, -70), -2, 25, -13);
+		}
+	ContinueReloadUraniumShells:
+		SHTZ RR 1;
+		SHTZ S 2;
+		SSGD ABCDEEFGH 1;
+		SHTZ A 0
+		{
+			A_StartSound("weapons/sshotl");
+			if(invoker.mag < 1)
+				A_ReloadMag(additive:true);
+			if(!invoker.uraniumShells)
+			{
+				invoker.uraniumShells = true;
+				ChangeAmmoIcon1("SHEL]0");
+				invoker.magConversion = (1, 1);
+			}
+		}
+		SSGD IJKLMNOOPQRS 1;
+		SHTZ A 0
+		{
+			A_StartSound("weapons/sshotl");
+			if(invoker.mag < 2)
+				A_ReloadMag(additive:true);
+		}
+		SSGD TUVWX 1;
+		SHTZ A 0 A_StartSound("foley/SSGraiseAfterClose",10);
+		SH69 UV 1;
+		SHTZ A 0 A_StartSound("weapons/sshotc");
+		SH69 EFGHHIJK 1;
+		SHTZ A 0 A_ReFire();
+		SHTZ A 1;
+		goto Ready;
 	Spawn:
-		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
+		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5", "Spawn6");
 		Loop;
 	Spawn1:
 		SGN2 B 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
@@ -206,224 +286,45 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 	Spawn3:
 		SGN2 D 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
 		Loop;
+	Spawn4:
+		SGN2 E 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn5:
+		SGN2 F 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn6:
+		SGN2 G 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
 	SpawnNoAmmo:
 		SGN2 A -1;
 		Stop;
 	AltFire:
 		TNT1 A 0 A_trymeathook(1600);
 		Goto Ready;
-	/*FireDragonBreath:
-		FLMT AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
+	SpecialAction:
+		TNT1 A 0
 		{
-			A_FireProjectile("DragonsBreathSparkle",frandom(-6,6),false,0,-4,0,frandom(-3,3));
+			if(invoker.uraniumShells)
+				A_Print("\cgBuckshot", 1);
+			else
+				A_Print("\cdUranium Shells", 1);
 		}
-		"####" A 0 A_QuadSound();
-		
-		Goto ContinueRecoil;
-	ReloadDragonBreath:		
-		tnt1 a 0 A_HookOverlay("ReloadDragonBreathHook");
-		SHTZ \ 1;
-		SHTZ A 0 A_StartSound("foley/SSGshellEject",10,0,0.5);
-		SHTZ A 0 A_JumpIfInventory("HasUnloaded",1,"ReloadDragonBreath2");
-		
-		TNT1 A 0 A_fireprojectile("SSGDragonBreathCaseSpawner",0,0,-6, -14);
-		TNT1 A 0 A_fireprojectile("SSGDragonBreathCaseSpawner",0,0,-4, -13);
-		ReloadDragonBreath2:
-		SHTZ RR 1;
-		SHTZ S 2;
-		SSGD ABCDEEFGH 1;
-		SHTZ A 0 A_StartSound("weapons/sshotl");
-		SHTZ A 0 A_TakeInventory("BDPShell", 1);
-		SHTZ A 0 A_GiveInventory("SSGAmmo", 1);
-		SSGD IJKLMNOOPQRS 1;
-		SHTZ A 0 A_StartSound("weapons/sshotl");
-		SHTZ A 0 A_TakeInventory("BDPShell", 1);
-		SHTZ A 0 A_GiveInventory("SSGAmmo", 1);
-		SHTZ A 0 A_TakeInventory("SSGAlt",1);
-		SHTZ A 0 A_TakeInventory("HasUnloaded",1);
-		SSGD TTUVW 1;
-		NULL A 0 A_GiveInventory("QuickSwitchSSG2",1);
-		SSGD X 1 A_WeaponReadyDX(WRF_NOFIRE | WRF_NOBOB);
-		NULL A 0 A_TakeInventory("QuickSwitchSSG2",1);
-		goto FinishRegularReload;
-	ReloadDragonBreathHook:
-		MHTZ \ 1;
-		MHTZ RR 1;		
-		MHTZ S 2;
-		MSGD ABCDEEFGH 1;
-		MSGD TTUVW 1;
-		MSGD X 1;
-		stop;
-	AltFireDragonBreath:		
-		FLMT AAAAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
-		{
-			A_FireProjectile("DragonsBreathSparkle",frandom(-3,3),false,4,-4,0,frandom(-3,3));
-		}
-		"####" A 0 A_QuadSound();
-		Goto ContinueAlt1;
-
-
-	AltFireDragonBreath2:
-		FLMT AAAAAAAAAAAAAAAAAAAAA 0 BRIGHT 
-		{
-			A_FireProjectile("DragonsBreathSparkle",frandom(-3,3),false,-4,-4,0,frandom(-3,3));
-		}
-		"####" A 0 A_QuadSound();
-		Goto ContinueAlt2;
-		AltDragonBreathReload:
-		TNT1 A 0 A_HookOverlay("AltDragonBreathReloadHook");
-		SHTZ "]" 1;
-		SHTZ A 0 A_StartSound("foley/SSGshellEject",10,0,0.5);
-		TNT1 A 0 A_fireprojectile("SSGDragonBreathCaseSpawner",0,0,-4, -14)	;
-		SH69 M 3;
-		
-		SSGD YZ 1;
-		SSGD [ 1;
-		SSGD \ 1;
-		SSGD ] 1;
-		SSGD PPQRS 1;
-		SHTZ A 0 A_StartSound("weapons/sshotl");
-		SHTZ A 0 A_ReloadMag();
-		SSGD TTUVW 1;
-		NULL A 0 A_GiveInventory("QuickSwitchSSG2",1);
-		SSGD X 1 A_WeaponReadyDX(WRF_NOFIRE | WRF_NOBOB);
-		NULL A 0 A_TakeInventory("QuickSwitchSSG2",1);
-		goto FinishRegularReload;
-		
-	AltDragonBreathReloadHook:
-		MHTZ ] 1;
-		MH69 M 3;
-		MSGD YZ 1;
-		MSGD [ 1;
-		MSGD \ 1;
-		MSGD ] 1;
-		MSGD PPQRS 1;
-		MSGD TTUVW 1;
-		MSGD X 1 A_WeaponReadyDX(WRF_NOFIRE | WRF_NOBOB);
-		Stop;
-	SpecialAction:	
-		RIFG A 0 A_Takeinventory("StartDualWield",1);
-		NULL A 0 A_JumpIfInventory("UsingDragonBreath",1,"BackToBuckshot");
-		//NULL A 0 A_ChangeFlag("WEAPON.NOAUTOFIRE",1);
-		TNT1 A 0 A_GiveInventory("UsingDragonBreath",1);
-		TNT1 A 0 A_Print("\ciSwitching to dragon breath.",1);
-		TNT1 A 0 ChangeAmmoIcon1("SHEL[0");
-		
-		
-		SHTZ A 0 A_JumpIfInventory("SSGAlt", 1, "Reload2");//Check if still has a shell on left barrel
-		
-		SHTZ A 0 A_JumpIfInventory("SSGAmmo", 2, "ContinueSwitchToDB");//Checks if the gun is already loaded
-		
-		TNT1 A 0 A_JumpIf(CountInv("BDPShell")==0,"ContinueSwitchToDB");//No ammo to reload? Continue the non-reloading anim.
-		
-		TNT1 A 0 A_JumpIf(CountInv("BDPShell")==1,"Reload2");//Got only one shell? Reload just one barrel.
-		
-		Goto Reload;
-	ContinueSwitchToDB:
-		TNT1 A 0 A_HookOverlay("SwitchToDBHook");
-		SHTZ BCDEFGH 1;
-		SHTZ I 1;
-		XXXX X 0 A_StartSound("foley/SSGlowerBeforeOpen",10);
+		SHTZ BCDEFGHIII 1;
+		TNT1 A 0 A_StartSound("foley/SSGlowerBeforeOpen",10);
 		SHTZ JLMNOP 1;
-		SHTZ A 0 A_StartSound("weapons/sshoto");
-		SHOF J 1;
-		SHTZ RR 1;
-		SHTZ S 1	;
-		
-		SSGD ABCDEFGH 1;
-		SHTZ A 0 A_StartSound("weapons/sshotl");
-		SSGD IJKLMNOOPQRS 1;
-		SHTZ A 0 A_StartSound("weapons/sshotl");
-		SSGD TUVWX 1;
-		SHTZ A 0 A_StartSound("foley/SSGraiseAfterClose",10);
-		SH69 LD 1;
-		SHTZ A 0 A_StartSound("weapons/sshotc");
-		SH69 EF 1	;
-		SH69 G 1;
-		SH69 H 2;
-		SH69 IJK 1;
-		SHTZ A 0 A_ReFire();
-		SHTZ A 1;
-		
-		RIFG A 0 A_Takeinventory("StartDualWield",1);
-		Goto Ready;
-		
-	SwitchToDBHook:
-		MHTZ BCDEFGH 1;
-		MHTZ I 1;
-		MHTZ JLMNOP 1;
-		MHOF J 1;
-		MHTZ RR 1;
-		MHTZ S 1	;
-		MSGD ABCDEFGH 1;
-		MSGD IJKLMNOOPQRS 1;
-		MSGD TUVWX 1;
-		MH69 LD 1;
-		MH69 EF 1;	
-		MH69 G 1;
-		MH69 H 2;
-		MH69 IJK 1;
-		MHTZ A 1;
-		STOP;
-		
-		
-		
-	BackToBuckshot:
-		// NULL A 0 A_ChangeFlag("WEAPON.NOAUTOFIRE",0);
-		TNT1 A 0 A_TakeInventory("UsingDragonBreath",1);
-		TNT1 A 0 A_Print("\cgSwitching to buckshot.",1);
-		TNT1 A 0 ChangeAmmoIcon1("SHELA0");
-		
-		SHTZ A 0 A_JumpIfInventory("SSGAlt", 1, "Reload2");//Check if still has a shell on left barrel.
-		
-		SHTZ A 0 A_JumpIfInventory("SSGAmmo", 2, "ContinueSwitchToBuck");//Checks if the gun is already loaded.
-		
-		TNT1 A 0 A_JumpIf(CountInv("BDPShell")==0,"ContinueSwitchToBuck");//No ammo to reload? Continue the non-reloading anim.
-		
-		TNT1 A 0 A_JumpIf(CountInv("BDPShell")==1,"Reload2");//Got only one shell? Reload just one barrel.
-		
-		Goto Reload;
-	ContinueSwitchToBuck:
-		TNT1 A 0 A_HookOverlay("SwitchToBuckHook");
-		SHTZ BCDEFGH 1;
-		SHTZ I 1;
-		XXXX X 0 A_StartSound("foley/SSGlowerBeforeOpen",10);
-		SHTZ JLMNOP 1;
-		SHTZ A 0 A_StartSound("weapons/sshoto");
-		SHOF J 1;
-		SHTZ RR 1;
-		SHTZ S 1	;
-		SHTZ TUVWX 1;
-		SHTZ A 0 A_StartSound("weapons/sshotl");
-		SHTZ YZ 1;
-		SH69 ABCL 1;
-		SHTZ A 0 A_StartSound("foley/SSGraiseAfterClose",10);
-		SH69 LD 1;
-		SHTZ A 0 A_StartSound("weapons/sshotc");
-		SH69 EF 1	;
-		SH69 G 1;
-		SH69 H 1;
-		SH69 IJK 1;
-		RIFG A 0 A_Takeinventory("StartDualWield",1);
-		Goto Ready;
-		
-		
-	SwitchToBuckHook:
-		MHTZ BCDEFGH 1;
-		MHTZ I 1;
-		MHTZ JLMNOP 1;
-		MHOF J 1;
-		MHTZ RR 1;
-		MHTZ S 1	;
-		MHTZ TUVWX 1;
-		MHTZ YZ 1;
-		MH69 ABCL 1;
-		MH69 LD 1;
-		MH69 EF 1	;
-		MH69 G 1;
-		MH69 H 1;
-		MH69 IJK 1;
-		STOP;*/
+		TNT1 A 0 A_StartSound("weapons/sshoto");
+		SHTZ \ 1
+		{
+			if(!invoker.uraniumShells)
+				A_SetFrame(16);
+		}
+		TNT1 A 0 {
+			A_StartSound("foley/SSGshellEject",10,0,0.5);
+			A_FireProjectileDX(invoker.uraniumShells ? "BDPUnspentUraniumShell" : "BDPUnspentSSGShell", random(80, 100), random(-50, -70), -4, 25, -14);
+			A_FireProjectileDX(invoker.uraniumShells ? "BDPUnspentUraniumShell" : "BDPUnspentSSGShell", random(80, 100), random(-50, -70), -2, 25, -13);
+		}
+		TNT1 A 0 A_JumpIf(!invoker.uraniumShells, "ContinueReloadUraniumShells");
+		Goto ContinueReload;
 	}
 }
 
@@ -635,23 +536,6 @@ class FlamethrowerMissileProperFaster: FlamethrowerMissileFaster
 	}
 }
 
-/*class SSGDragonBreathCaseSpawner: SSGCaseSpawner 
-{
-translation 168:191=208:223 ;
-States
-	{
-	Spawn:
-		TNT1 A 0;
-		TNT1 A 0 Thing_ChangeTID(0,390);
-		TNT1 A 0;//1
-		Goto Death;
-	Death:
-		TNT1 A 0 A_CustomMissile("DBShotgunCasing",0,0,random(80,100),2,random(50,70));
-		Stop;
-	}
-}*/
-
-//class DBShotgunCasing: ShotgunCasing {Default {translation "168:191=208:223"; }}
 class QuickSwitchSSG: Inventory {Default {Inventory.MaxAmount 1;}}
 class QuickSwitchSSG2: Inventory {Default {Inventory.MaxAmount 1;}}
 
@@ -700,3 +584,72 @@ class SSGreloadSmoke: ExplosionSmoke
 		Stop;
 	}
 }*/
+
+class UraniumItem : Inventory
+{
+	int count;
+	
+	override void DoEffect()
+	{
+		Super.DoEffect();
+		while(owner && count >= 7)
+		{
+			owner.A_startsound("FAREXPL", 0);
+			owner.A_SpawnItemEx("WhiteShockwaveSmall", zofs:32);
+			owner.A_CustomMissile ("ExplosionSmoke", 32, 0, random (0, 360), 2, random (0, 360));
+			owner.A_SpawnItemEx ("UnderwaterExplosion", zofs:32);
+			for(int i = 0; i < 4; i++)
+			{
+				owner.A_SpawnItemEx("UraniumExplosion", random(-32, 32), random(-32, 32), random(16, 48));
+				owner.A_SpawnItemEx("VehicleSmoke", random(-32, 32), random(-32, 32), random(16, 48));
+			}
+			owner.TriggerPainChance("Normal", true);
+			owner.RadiusAttack(self, 100, 64);
+			count -= 7;
+		}
+		if(owner)
+			owner.SetInventory("UraniumItem", 0);
+	}
+}
+
+class UraniumPuff : Actor
+{
+	Default
+	{
+		renderstyle "Add";
+		alpha 0.3;
+		Scale 0.8;
+		radius 0;
+		height 0;
+		+NOBLOCKMAP
+		+NOGRAVITY
+		+NOEXTREMEDEATH
+		+FORCEXYBILLBOARD
+		+DONTSPLASH
+		-EXPLODEONWATER
+		Gravity 0.01;
+		DamageType "Shotgun";
+		Decal "BulletDecalNew1";
+		Species "Marines";
+		DamageType "Shotgun";
+		+THRUSPECIES
+		+MTHRUSPECIES
+		+FORCEPAIN
+	}
+	
+	override int DoSpecialDamage(Actor victim, int damage, Name damagetype)
+	{
+		victim.SetInventory("UraniumItem", 1);
+		let u = UraniumItem(victim.FindInventory("UraniumItem"));
+		if(u)
+			u.count++;
+		return damage;
+	}
+	
+	states
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_SpawnItemEx ("RicoChet",0,0,-5,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		Stop;
+	}
+}
