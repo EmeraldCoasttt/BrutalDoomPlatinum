@@ -4,7 +4,7 @@ class RailgunTrail : VisualThinker
 	{
 		Super.PostBeginPlay();
 		texture = TexMan.CheckForTexture('SPKOB0');
-		scale = (0.3,0.3);
+		scale = (0.6,0.6);
 		alpha = 1.0;
 		flags = SPF_FULLBRIGHT;
 		SetRenderStyle(STYLE_Add);
@@ -12,7 +12,7 @@ class RailgunTrail : VisualThinker
 	
 	override void Tick()
 	{
-		scale -= (0.01,0.01);
+		scale -= (0.02,0.02);
 		Super.Tick();
 		if(scale.x <= 0)
 		{
@@ -106,7 +106,7 @@ class BDPRailgun : BDPWeaponBase
 				
 				Vector3 trailpos = (pos.x - railspawn.HitLocation.x, pos.y - railspawn.HitLocation.y, pos.z + player.viewz - player.mo.pos.z - 5 - railspawn.HitLocation.z);
 				FSpawnParticleParams trail;
-				for(int i = railspawn.distance; i > 0; i -= 2)
+				for(int i = railspawn.distance; i > 0; i -= 4)
 				{
 					let trail = Level.SpawnVisualThinker("RailgunTrail");
 					trail.pos = railspawn.HitLocation + trailpos * (i/railspawn.distance);
