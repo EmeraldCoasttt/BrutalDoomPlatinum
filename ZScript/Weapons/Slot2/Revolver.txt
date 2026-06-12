@@ -2,7 +2,7 @@ class BDPRevolver : BDPWeaponBase
 {
 	Default
 	{
-		Weapon.AmmoGive 15;
+		Weapon.AmmoGive 6;
 		Weapon.AmmoType "BDPClip1";
 		BDPWeaponBase.MagCapacity 6;
 		Weapon.SlotNumber 2;

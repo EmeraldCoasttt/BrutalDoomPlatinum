@@ -122,7 +122,7 @@ class BDPSmallBulletBox : BDPMultiAmmo replaces Clip
 	{
 		BDPMultiAmmo.ammotype1 "BDPClip1";
 		BDPMultiAmmo.ammotype2 "BDPClip2";
-		BDPMultiAmmo.ammoamount1 15;
+		BDPMultiAmmo.ammoamount1 10;
 		BDPMultiAmmo.ammoamount2 30;
 		Inventory.PickupMessage "Picked up a small box of bullets.";
 		Inventory.PickupSound "CLIPICK2";
@@ -162,7 +162,7 @@ class BDPLargeBulletBox : BDPSmallBulletBox replaces ClipBox
 {
 	Default
 	{
-		BDPMultiAmmo.ammoamount1 40;
+		BDPMultiAmmo.ammoamount1 30;
 		BDPMultiAmmo.ammoamount2 80;
 		Inventory.PickupMessage "Picked up a large box of bullets.";
 		Inventory.PickupSound "CBOXPICK";
@@ -206,9 +206,9 @@ class BDPClip1 : BDPAmmo
 	{
 		Inventory.PickupMessage "Picked up pistol ammo.";
 		Inventory.Amount 15;
-		Inventory.MaxAmount 200;
+		Inventory.MaxAmount 100;
 		Ammo.BackpackAmount 15;
-		Ammo.BackpackMaxAmount 400;
+		Ammo.BackpackMaxAmount 200;
 		Inventory.Icon "CLP1H0";
 		Inventory.PickupSound "CLIPICK";
 	}

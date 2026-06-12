@@ -34,15 +34,16 @@ version "4.14.0"
 #include "Zscript/Weapons/Slot2/Pistol.txt"
 #include "Zscript/Weapons/Slot2/Revolver.txt"
 #include "Zscript/Weapons/Slot2/DualRevolver.txt"
-#include "Zscript/Weapons/Slot2/DualSMG.txt"
-#include "Zscript/Weapons/Slot2/SubmachineGun.txt"
+#include "Zscript/Weapons/Slot2/BattleRifle.txt"
+
 //Slot 3
 #include "Zscript/Weapons/Slot3/Shotgun.txt"
 #include "Zscript/Weapons/Slot3/SuperShotgun.txt"
 #include "Zscript/Weapons/Slot3/AssaultShotgun.txt"
 //Slot 4
+#include "Zscript/Weapons/Slot4/DualSMG.txt"
+#include "Zscript/Weapons/Slot4/SubmachineGun.txt"
 #include "Zscript/Weapons/Slot4/AssaultRifle.txt"
-#include "Zscript/Weapons/Slot4/BattleRifle.txt"
 #include "Zscript/Weapons/Slot4/Minigun.txt"
 //Slot 5
 #include "Zscript/Weapons/Slot5/StickyGrenade.txt"
