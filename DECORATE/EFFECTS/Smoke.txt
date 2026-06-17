@@ -259,7 +259,7 @@ Actor OldschoolRocketSmokeTrail2: AltSmoke
 	Alpha 0.7
 Speed 1
 +CLIENTSIDEONLY
-Scale 0.2
+Scale 0.1
 States
     {
     Spawn:  
