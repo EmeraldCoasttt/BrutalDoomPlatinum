@@ -1,4 +1,4 @@
-class BDPZombieguy : Actor
+class BDPZombieguy : BDPActor
 {
 	Default
 	{
@@ -45,8 +45,13 @@ class BDPZombieguy : Actor
 		ZFOD M -1;
 		Stop;
 	Death.head:
-		TNT1 A 0 A_XScream();
-		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0
+		{
+			A_XScream();
+			A_NoBlocking();
+			A_FaceTarget();
+			A_SpawnGore("ZombieHeadExplosion",5);
+		}
 		ZFDX A 7;
 		ZFDX B 7;
 		ZFDX C 5;

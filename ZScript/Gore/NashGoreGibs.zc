@@ -130,7 +130,7 @@ class NashGoreGibs : Actor
 		}
 
 		// unboing sprite scale
-		if (Scale.X > 1.0)
+		if (Scale.X > Default.Scale.X)
 			Scale.X *= 0.935;
 
 		if (WaterLevel >= 3)

@@ -705,7 +705,6 @@ class BDPBaronofHell : BaronofHell Replaces BaronofHell
 		//TNT1 A 0 A_spawnitemex("greensquishygibs")
 		TNT1 AAAA 0 A_SpawnItemEx ("BodyRemovalThing",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		TNT1 A 1 A_XScream();
-		TNT1 A 0 A_spawnitemex("SquishMeGreen",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		Stop;
 	CurbstompMarine:
 		TNT1 A 0 A_ChangeFlag("NOPAIN", 1);
