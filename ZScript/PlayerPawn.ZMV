@@ -418,7 +418,7 @@ class BDPPlayerPawn : PlayerPawn
 					ac = "SlideKickAction";
 					tr = "SlideKickTranslatable";
 				}
-				else if(vel.Z != 0 || bsprinting)
+				else if(vel.Z != 0 || player.crouchFactor != 1)
 				{
 					ac = "AirKickAction";
 					tr = "AirKickTranslatable";
@@ -448,9 +448,9 @@ class BDPPlayerPawn : PlayerPawn
 		KICK NOPQ 1 A_BDPMeleeStart(400);
 		TNT1 A 0
 		{
-			double spd = Vel.XY dot Angle.ToVector();
-			If(spd < 40 && vel.Z != 0)
-				A_Recoil(-6);
+			//double spd = Vel.XY dot Angle.ToVector();
+			//If(spd < 40 && vel.Z != 0)
+			//	A_Recoil(-6);
 			SpawnPlayerMissile("MeleeAttackAir",1e37,0,-31);
 			A_BDPMelee(200,"meleeattackair",-31);
 		}
