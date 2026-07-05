@@ -14,7 +14,7 @@ CLASS BDPIncinerator : BDPWeaponBase
 		+WEAPON.EXPLOSIVE
 		Inventory.PickupMessage "You got the Incinerator! (Slot 5)";
 		Tag "$BDPFLAMER";
-		Inventory.AltHUDIcon "FLMTF0";
+		Inventory.AltHUDIcon "FLMGA0";
 	}
 	States
 	{
@@ -64,8 +64,20 @@ CLASS BDPIncinerator : BDPWeaponBase
 		FLMS ABCD 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
 	Spawn:
-		FLMT F 1;
+		FLMG A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
 		Loop;
+	Spawn1:
+		FLMG B 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn2:
+		FLMG C 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn3:
+		FLMG D 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	SpawnNoAmmo:
+		FLMG A -1;
+		Stop;
 	MuzzleFlash:
 		FLMM AB 1 Bright;
 		Stop;
