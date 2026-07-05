@@ -1377,3 +1377,17 @@ Class RageSphere : PowerupGiver
 	}
 }
 
+class BDPBarrelBonus : RandomSpawner
+{
+    Default
+    {
+        DropItem "HealthPlus", 255, 10;
+        DropItem "ArmorShard", 255, 10;
+        DropItem "stimpack", 255, 10;
+        DropItem "BDPSmallBulletBox", 255, 10;
+		DropItem "BDPShell", 255, 10;
+		DropItem "BDPRocketAmmo", 255, 10;
+		DropItem "BDPRevolver", 255, 1;
+		DropItem "BDPSubMachineGun", 255, 1;
+    }
+}

@@ -3825,11 +3825,7 @@ Actor BDECBarrel: BDECChairSimple 15855
 Health 30
 Mass 99999
 -PUSHABLE
-DropItem "HealthPlus" 128
-DropItem "ArmorShard" 128
-DropItem "Stimpack" 128
-//DropItem "Clips" 128
-DropItem "CLIP1Drop" 128
+DropItem "BDPBarrelBonus"
 //DropItem "Shells" 128
 damagefactor "Melee", 3.0
 Damagefactor "kick", 3.0
