@@ -646,8 +646,7 @@ class BDP_HUD : DoomStatusBar
 			DrawTeleBar(iconPos + (-32, -29), iconflags);
 		}
 		
-		int MagAmt;
-		int ammo3Amt;
+		int MagAmt, dualMagAmt, ammo3Amt;
 		Class<Inventory> Ammo3;
 		let weap = BDPWeaponBase(CPlayer.mo.player.ReadyWeapon);
 		if (weap)
@@ -660,12 +659,9 @@ class BDP_HUD : DoomStatusBar
 			if(weap.bDUALWEAPON)
 			{
 				let dualweap = BDPWeaponBase(CPlayer.mo.FindInventory(weap.DualWeapon));
-				MagAmt = Weap.mag + DualWeap.mag;
+				dualMagAmt = DualWeap.mag;
 			}
-			else
-			{
-				MagAmt = Weap.mag;
-			}
+			MagAmt = Weap.mag;
 		}
 		
 		
@@ -676,7 +672,6 @@ class BDP_HUD : DoomStatusBar
 		Ammo ammo1, ammo2;
 		int ammo1amt, ammo2amt;
 		[ammo1, ammo2, ammo1amt, ammo2amt] = GetCurrentAmmo();
-		
 		
 		if (ammo3)
 		{
@@ -716,6 +711,21 @@ class BDP_HUD : DoomStatusBar
 				Font.CR_White
 			);
 		}
+		
+		if(weap.bDUALWEAPON)
+		{
+			iconPos.x += iconSpacing;
+			let dualweap = BDPWeaponBase(CPlayer.mo.FindInventory(weap.DualWeapon));
+			DrawInventoryIcon(dualweap, iconPos, iconFlags);
+			DrawString(
+				mHudfont, 
+				String.Format("%d", dualMagAmt), 
+				iconPos + numOfs,
+				numFlags,
+				Font.CR_White
+			);
+		}
+		
 		if (weap && weap.magcapacity)
 		{
 			iconPos.x += iconSpacing;

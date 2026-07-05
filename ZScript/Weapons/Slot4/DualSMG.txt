@@ -9,7 +9,7 @@ class BDPDualSMG : BDPWeaponBase
 		+WEAPON.POWERED_UP
 		+BDPWeaponBase.DUALWEAPON
 		Tag "$BDPSMG";
-		Inventory.AltHUDIcon "SMGZB0";
+		Inventory.AltHUDIcon "SMGZA0";
 		BDPWeaponBase.handedness 2;
 		BDPWeaponBase.voiceacted 0;
 		BDPWeaponBase.DualWeapon "BDPSubmachineGun";

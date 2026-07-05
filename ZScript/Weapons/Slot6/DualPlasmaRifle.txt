@@ -34,7 +34,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		+WEAPON.POWERED_UP
 		+BDPWeaponBase.DUALWEAPON
 		Tag "$BDPPLASMA";
-		Inventory.AltHUDIcon "PRASB0";
+		Inventory.AltHUDIcon "PRASA0";
 		BDPWeaponBase.handedness 2;
 		BDPWeaponBase.voiceacted 0;
 		BDPWeaponBase.DualWeapon "BDPPlasmaRifle";

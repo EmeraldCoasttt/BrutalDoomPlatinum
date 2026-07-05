@@ -12,7 +12,7 @@ class BDPRevolver : BDPWeaponBase
 		Inventory.PickupSound "REVDRY";
 		Inventory.Pickupmessage "You got the Revolver! Yee-haw! (slot 2)";
 		Tag "$BDPREVOLVER";
-		Inventory.AltHUDIcon "REVOQ0";
+		Inventory.AltHUDIcon "REVGA0";
 		Inventory.MaxAmount 2;
 		BDPWeaponBase.Handedness 1;
 		BDPWeaponBase.DualWeapon "BDPDualRevolver";

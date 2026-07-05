@@ -12,7 +12,7 @@ class BDPDualRevolver : BDPWeaponBase
 		BDPWeaponBase.handedness 2;
 		BDPWeaponBase.voiceacted 0;
 		BDPWeaponBase.DualWeapon "BDPRevolver";
-		Inventory.AltHUDIcon "REVOT0";
+		Inventory.AltHUDIcon "REVGA0";
 	}
 	States
 	{
