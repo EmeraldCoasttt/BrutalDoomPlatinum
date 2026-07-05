@@ -2,7 +2,7 @@ class BDPRevolver : BDPWeaponBase
 {
 	Default
 	{
-		Weapon.AmmoGive 15;
+		Weapon.AmmoGive 6;
 		Weapon.AmmoType "BDPClip1";
 		BDPWeaponBase.MagCapacity 6;
 		Weapon.SlotNumber 2;
@@ -81,6 +81,7 @@ class BDPRevolver : BDPWeaponBase
 			A_QuadSound();
 			A_GunLight();
 			A_TakeMag();
+			A_AlertMonstersDX();
 		}
 		REVO B 1 BRIGHT A_WeaponRecoil(10.0,0,2,0.75);
 		REVO A 0 A_ZoomFactor(1.0);
@@ -112,6 +113,7 @@ class BDPRevolver : BDPWeaponBase
 			A_QuadSound();
 			A_GunLight();
 			A_TakeMag();
+			A_AlertMonstersDX();
 		}
 		RE2F E 1 A_WeaponRecoil(10.0,frandom(-4,4),2,0.75);
 		TNT1 A 0 A_ZoomFactor(1.0);

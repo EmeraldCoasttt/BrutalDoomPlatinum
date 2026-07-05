@@ -3,10 +3,10 @@ class BDPSubmachineGun : BDPWeaponBase
 	Default
 	{
 		Weapon.AmmoGive 15;
-		Weapon.AmmoType "BDPClip1";
+		Weapon.AmmoType "BDPClip2";
 		BDPWeaponBase.MagCapacity 40;
 		Obituary "%o was shot down by %k's SMG.";
-		Weapon.SlotNumber 2;
+		Weapon.SlotNumber 4;
 		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 1800;
 		Inventory.PickupSound "CLIPIN";
@@ -77,7 +77,7 @@ class BDPSubmachineGun : BDPWeaponBase
 		SMGF A 1 Bright
 		{
 			A_FlashOverlay();
-			A_FireBullets (3, 3, 1, 12, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-14);
+			A_FireBullets (3, 3, 1, 8, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-14);
 			A_WeaponRecoil(0.4,0);
 			A_FireParticles(1,8);
 			A_StartSound("SMGFIRE", 1, pitch:frandom(0.95,1.05));
@@ -105,7 +105,7 @@ class BDPSubmachineGun : BDPWeaponBase
 		TNT1 A 0 A_CheckIfMag();
 		SMGZ G 1 Bright
 		{
-			A_FireBullets (1.5, 1.5, -1, 12, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-6);
+			A_FireBullets (1.5, 1.5, -1, 8, "WeakPuff", FBF_NORANDOM,8192,"decorativetracer",-6);
 			A_FlashOverlay(state:"MuzzleFlashAim");
 			A_WeaponRecoil(0.2);
 			A_FireParticles(1,8);

@@ -598,11 +598,11 @@ CLASS Rocket2 : BrutalProjectile
 		Radius 4;
 		Height 2;
 		Projectile;
-		Speed 50;
+		Speed 20;
 		Damagefunction (300);
 		DamageType "Explosive";
 		MeleeDamage 0;
-		Scale 0.5;
+		//Scale 0.5;
 		Decal "Scorch";
 		Projectile;
 		+MISSILE;
