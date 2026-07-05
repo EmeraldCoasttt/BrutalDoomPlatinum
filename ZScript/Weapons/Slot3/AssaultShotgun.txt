@@ -255,7 +255,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 			A_GunLight();
 			A_TakeMag();
 		}
-		A12F C 1 {A_FireProjectile("ShotCaseSpawn",5,0,6,-14); A_ZoomFactor(1.0);}
+		A12F C 1 {A_FireProjectileDX("BDP_SpentShell", random(-75, -95), random(-40, -60), 0, 20, -24); A_ZoomFactor(1.0);}
 		A12F CDEFG 1;
 		A12G A 1 A_WeaponOffset(0,32);
 		TNT1 A 0 A_RefireDX();
@@ -284,7 +284,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 				A_SemiFlag();
 			}
 		}
-		A12F C 1 {A_FireProjectile("DragonShotCaseSpawn",5,0,6,-14); A_ZoomFactor(1.0);}
+		A12F C 1 {A_FireProjectileDX("BDP_SpentDragonsBreathShell", random(-75, -95), random(-40, -60), 0, 20, -24); A_ZoomFactor(1.0);}
 		A12F CDEFG 1;
 		TNT1 A 0 A_JumpIf(invoker.burstCount < 3, "Fire");
 		A12G A 1 {invoker.burstCount = 0; A_WeaponOffset(0,32);}
@@ -323,14 +323,22 @@ class BDPAssaultShotgun : BDPWeaponBase
 		"####" G 1 offset(0,33);
 		"####" A 0 A_StartSound("ASGREL1", 1);
 		"####" A 0 A_StartSound("foley/ASGDrumOut", 10,0,0.7);
-		"####" A 0
-		{
-			A_DiscardMag();
-			if(invoker.mag <= 1)
-				A_FireProjectile("EmptyASGDrumSpawn",180,0,-4,-10);
-		}
 		"####" H 1 offset(0,32);
 		A1R1 IJ 1;
+		"####" A 0
+		{
+			//if(invoker.mag <= 1)
+				//A_FireProjectile("EmptyASGDrumSpawn",180,0,-4,-10);
+			int curmag = invoker.mag;
+			let droppedmag = BDP_SpentASGMag(A_FireProjectileDX("BDP_SpentASGMag", random(-80, -100), random(25, 45), 0, 35, -35));
+			if(droppedmag)
+			{
+				droppedmag.ammo = curmag;
+				if(CountInv("PlasmaShellSelected") == 1)
+					droppedmag.dbreath = true;
+			}
+			A_DiscardMag();
+		}
 		A12R G 3;
 		TNT1 A 0 A_StartSound("foley/ShotgunReloadRaise", 10);
 	ContinueReload:
@@ -351,7 +359,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 			if(Countinv("PlasmaShellSelected")==1)
 			{
 				ChangeAmmoIcon1("SHEL[0");
-				ChangeWeaponIcon("A12PB0");
+				ChangeWeaponIcon("A12PE0");
 				A_SetCrosshairDX("ASGRet",650);
 			}
 			else
@@ -375,7 +383,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 			if(Countinv("PlasmaShellSelected")==1)
 			{
 				ChangeAmmoIcon1("SHEL[0");
-				ChangeWeaponIcon("A12PB0");
+				ChangeWeaponIcon("A12PE0");
 				A_SetCrosshairDX("ASGRet",650);
 			}
 			else
@@ -395,7 +403,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 		A12G A 0 A_PlaySound("ASGPUMP1", 1);
 		A1R1 K 1;
 		A1R1 M 1 offset(0,33);
-		A1R1 M 10 offset(0,32);
+		A1R1 M 8 offset(0,32);
 		A1R1 L 1;
 		A12G A 1 offset(0,33);
 		A12G A 3 offset(0,32);
@@ -428,7 +436,7 @@ class BDPAssaultShotgun : BDPWeaponBase
 			if(Countinv("PlasmaShellSelected")==1)
 			{
 				ChangeAmmoIcon1("SHEL[0");
-				ChangeWeaponIcon("A12PB0");
+				ChangeWeaponIcon("A12PE0");
 				A_SetCrosshairDX("ASGRet",650);
 			}
 			else
@@ -441,8 +449,23 @@ class BDPAssaultShotgun : BDPWeaponBase
 		A12R UWWX 1;
 		A12R Y 1 A_StartSound("foley/ASGBuckshot", 11);
 		A12R Z 3;
-		TNT1 A 0 A_StartSound("foley/ASGPump", 10);
-		A12R "[\]CBA" 1;
+		TNT1 A 0 A_PlaySound("foley/ASGPump", 10);
+		A12R "[\]" 1;
+		A12R CBA 1;
+		A12G A 3;
+		A12G A 0 A_PlaySound("ASGPUMP1", 1);
+		A1R1 K 1;
+		A1R1 M 1 offset(0,33)
+		{
+			if(Countinv("PlasmaShellSelected")==1)
+				A_FireProjectileDX("BDP_UnspentShell", random(-75, -95), random(-40, -60), 0, 24, -20);
+			else
+				A_FireProjectileDX("BDP_UnspentDragonsBreathShell", random(-75, -95), random(-40, -60), 0, 24, -20);
+		}
+		A1R1 M 8 offset(0,32);
+		A1R1 L 1;
+		A12G A 1 offset(0,33);
+		A12G A 3 offset(0,32);
 		Goto Ready;
 	ReloadSwapAmmo:
 		A12G A 1;
@@ -461,7 +484,17 @@ class BDPAssaultShotgun : BDPWeaponBase
 		"####" A 0 A_DiscardMag();
 		"####" H 1 offset(0,32);
 		A1R1 IJ 1;
-		TNT1 A 0 A_FireProjectile("EmptyASGDrumSpawn",180,0,-4,-10);
+		TNT1 A 0
+		{
+			int curmag = invoker.mag;
+			let droppedmag = BDP_SpentASGMag(A_FireProjectileDX("BDP_SpentASGMag", random(-80, -100), random(25, 45), 0, 35, -35));
+			if(droppedmag)
+			{
+				droppedmag.ammo = curmag;
+				if(CountInv("PlasmaShellSelected") == 1)
+					droppedmag.dbreath = true;
+			}
+		}
 		A12R G 3;
 		TNT1 A 0 A_StartSound("foley/ShotgunReloadRaise", 10);
 		Goto ContinueReload;

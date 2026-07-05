@@ -273,6 +273,18 @@ class BDPPlasmaRifle : BDPWeaponBase
 		TNT1 A 0 A_ReFireDX();
 		Goto Ready;
 	Spawn:
+		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
+		Loop;
+	Spawn1:
+		PRAS C 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn2:
+		PRAS D 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn3:
+		PRAS E 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	SpawnNoAmmo:
 		PRAS A -1;
 		Stop;
 	NoAmmo:
@@ -285,11 +297,10 @@ class BDPPlasmaRifle : BDPWeaponBase
 		{
 			A_ClearReFire();
 			A_StartSound("Plasma/Reload1", 5);
+			let spentmag = BDP_SpentMag(A_FireProjectileDX("BDP_SpentCell", random(75, 85), random(35, 55), 0, 25, -20));
+			if(spentmag)
+				spentmag.ammo = invoker.mag;
 			A_DiscardMag();
-			if(invoker.mag == 0)
-			{
-				A_FireProjectile("PlasmaCaseSpawn",-225,0,25,-15,-14);
-			}
 		}
 		PRSR AAZBCDEFGHH 1;
 		PRSR I 20;

@@ -303,6 +303,10 @@ class BDPShell : BDPAmmo replaces Shell
 		Inventory.Icon "SHELA0";
 		Inventory.Pickupsound "SHELPK1";
 	}
+	override string PickupMessage()
+	{
+		return string.format(amount > 1 ? "Picked up %d shotgun shells" : "Picked up a shotgun shell",amount);
+	}
 	States
 	{
 	Spawn:

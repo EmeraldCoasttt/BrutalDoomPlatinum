@@ -171,6 +171,7 @@ version "4.14.0"
 
 #include "ZScript/effects/ricochet.txt"
 #include "ZScript/effects/footstep.txt"
+#include "ZScript/effects/casings.txt"
 #include "ZScript/effects/flares.txt"
 
 const UNIT_METER = 8.f;

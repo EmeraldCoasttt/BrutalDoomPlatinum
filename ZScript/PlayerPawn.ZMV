@@ -847,14 +847,14 @@ class BDPPlayerPawn : PlayerPawn
 					// source of ammo):
 					if (i == 1)
 					{
-						weap.ammoGive1 -= amtToGive;
+						weap.ammoGive1 = 0;
 						
 						weap.giveinventory("AmmoTaken",1);
 						
 					}
 					else
 					{
-						weap.ammoGive2 -= amtToGive;
+						weap.ammoGive2 = 0;
 					}
 				}
 			}

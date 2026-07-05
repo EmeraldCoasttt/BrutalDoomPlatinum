@@ -66,7 +66,7 @@ Class Needle : actor
 				rwidth = frandom(-0.89,0.89);
 				rheight = frandom(0.1,0.89);
 				savedpitch = frandom(-70,70);
-				If(victim.findinventory("combine") && victim.countinv("needlecount") < 12)
+				If(victim.findinventory("combine") && victim.countinv("needlecount") < 30)
 				{
 				victim.takeinventory("combine",1);
 				}
@@ -140,7 +140,7 @@ Class Needle : actor
 				}
 			}
 			Else {setstatelabel("explode");}
-			If(tracer.countinv("needlecount") > 8 || tracer.findinventory("combine"))
+			If(tracer.countinv("needlecount") > 26 || tracer.findinventory("combine"))
 				{
 				//Tracer.bfrightened = false;
 				tracer.giveinventory("combine",1);

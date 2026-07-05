@@ -1,0 +1,624 @@
+class BDP_SpentCasing : Actor
+{
+	Default
+	{
+		Height 2;
+		Radius 2;
+		Speed 6;
+		Scale 0.15;
+		BounceType "Doom";
+		+WINDTHRUST
+		+CLIENTSIDEONLY
+		+MOVEWITHSECTOR
+		+MISSILE
+		+NOBLOCKMAP
+		+NOTELEPORT
+		+FORCEXYBILLBOARD
+		+ROLLSPRITE
+		+ROLLCENTER
+		Mass 0;
+		BounceFactor 0.4;
+		BounceSound "weapons/casing";
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+	Fly:
+		#### A 1 A_SetRoll(roll+22.5);
+		Loop;
+	Death:
+		#### A 0
+		{
+			bXFLIP = random(0,1);
+			A_SetRoll(0);
+		}
+		#### A 0 A_Jump(256, "Rest1", "Rest2", "Rest3");
+		Goto Rest1;
+	Rest1:
+		#### B 400;
+		Goto Fadeout;
+	Rest2:
+		#### C 400;
+		Goto Fadeout;
+	Rest3:
+		#### D 400;
+		Goto Fadeout;
+	FadeOut:
+		#### # 1 A_FadeOut(0.02);
+		Loop;
+	}
+}
+
+class BDP_SpentPistolCasing : BDP_SpentCasing
+{
+	Default
+	{
+		Scale 0.1;
+	}
+	States
+	{
+	Spawn:
+		C4S1 A 0;
+		Goto Fly;
+	}
+}
+
+class BDP_SpentRevolverCasing : BDP_SpentCasing
+{
+	Default
+	{
+		Scale 0.1;
+	}
+	States
+	{
+	Spawn:
+		C4S2 A 0;
+		Goto Fly;
+	}
+}
+
+class BDP_SpentRifleCasing : BDP_SpentCasing
+{
+	States
+	{
+	Spawn:
+		C4S3 A 0;
+		Goto Fly;
+	}
+}
+
+class BDP_SpentBeltLink : BDP_SpentCasing
+{
+	Default
+	{
+		Scale 0.25;
+		BounceSound "weapons/shell";
+	}
+	States
+	{
+	Spawn:
+		CLIN A 0;
+		Goto Fly;
+	Death:
+		#### A 0
+		{
+			bXFLIP = random(0,1);
+			A_SetRoll(0);
+		}
+		Goto Rest1;
+	}
+}
+
+class BDP_SpentShell : BDP_SpentCasing
+{
+	Default
+	{
+		Scale 0.25;
+		BounceSound "weapons/shell";
+	}
+	States
+	{
+	Spawn:
+		SH31 A 3;
+		Goto Fly;
+	Death:
+		#### A 0
+		{
+			A_SpawnItemEx("MicroSmokeColumn");
+			bXFLIP = random(0,1);
+			A_SetRoll(0);
+		}
+		#### A 0 A_Jump(256, "Rest1", "Rest2", "Rest3");
+		Goto Rest1;
+	}
+}
+
+class BDP_SpentGlassShell : BDP_SpentShell
+{
+	States
+	{
+	Spawn:
+		SH32 A 3;
+		Goto Fly;
+	}
+}
+
+class BDP_SpentDragonsBreathShell : BDP_SpentShell
+{
+	States
+	{
+	Spawn:
+		SH33 A 3;
+		Goto Fly;
+	}
+}
+
+class BDP_SpentSSGShell : BDP_SpentShell
+{
+	States
+	{
+	Spawn:
+		SH31 A 3 NoDelay A_SetRoll(-135);
+		Goto Fly;
+	}
+}
+
+class BDP_SpentUraniumShell : BDP_SpentShell
+{
+	States
+	{
+	Spawn:
+		SH34 A 3 NoDelay A_SetRoll(-135);
+		Goto Fly;
+	}
+}
+
+class BDP_UnspentShell : BDP_SpentCasing
+{
+	Default
+	{
+		Scale 0.25;
+		BounceSound "weapons/shell";
+	}
+	States
+	{
+	Spawn:
+		SH35 A 3;
+		Goto Fly;
+	}
+}
+
+class BDP_UnspentGlassShell : BDP_UnspentShell
+{
+	States
+	{
+	Spawn:
+		SH36 A 3;
+		Goto Fly;
+	}
+}
+
+class BDP_UnspentDragonsBreathShell : BDP_UnspentShell
+{
+	States
+	{
+	Spawn:
+		SH37 A 3;
+		Goto Fly;
+	}
+}
+
+class BDP_UnspentSSGShell : BDP_UnspentShell
+{
+	States
+	{
+	Spawn:
+		SH35 A 3 NoDelay A_SetRoll(-135);
+		Goto Fly;
+	}
+}
+
+class BDP_UnspentUraniumShell : BDP_UnspentShell
+{
+	States
+	{
+	Spawn:
+		SH38 A 3 NoDelay A_SetRoll(-135);
+		Goto Fly;
+	}
+}
+
+class BDP_SpentGrenade : BDP_SpentCasing
+{
+	Default
+	{
+		Scale 0.8;
+		BounceFactor 0.4;
+		BounceSound "GrenadeCasingBounce";
+		DeathSound "GrenadeCasingBounce";
+	}
+	States
+	{
+	Spawn:
+		N4D1 A 3 NoDelay A_SetRoll(-135);
+		Goto Fly;
+	Death:
+		#### A 0
+		{
+			bXFLIP = random(0,1);
+			A_SetRoll(random(-1, 1) * 90);
+		}
+		Goto Rest1;
+	}
+}
+
+class BDP_SpentChaosGrenade : BDP_SpentGrenade
+{
+	States
+	{
+	Spawn:
+		N4D2 A 3 NoDelay A_SetRoll(-135);
+		Goto Fly;
+	}
+}
+
+class BDP_SpentRifleGrenade : BDP_SpentGrenade
+{
+	Default
+	{
+		Scale 0.5;
+	}
+}
+
+class BDP_SpentMag : Actor abstract
+{
+	Default
+	{
+		+WINDTHRUST
+		+CLIENTSIDEONLY
+		+MOVEWITHSECTOR
+		+MISSILE
+		+NOBLOCKMAP
+		+NOTELEPORT
+		+FORCEXYBILLBOARD
+		+ROLLSPRITE
+		+ROLLCENTER
+		Height 2;
+		Radius 2;
+		Speed 4;
+		Mass 1;
+		BounceType "Doom";
+		DeathSound "weapons/largemagdrop";
+		BounceSound "weapons/largemagdrop";
+	}
+	
+	int ammo;
+	
+	override void PostBeginPlay()
+	{
+		Super.PostBeginplay();
+		SetSprites();
+	}
+	
+	virtual void SetSprites()
+	{
+		console.printf("you shouldn't be seeing this");
+	}
+	
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+	Fly:
+		#### # 1 A_SetRoll(roll+11.25);
+		Loop;
+	Death:
+		#### # 350
+		{
+			if(random(0, 1) == 1)
+			{
+				A_ChangeFlag("XFLIP",1);
+			}
+			A_SetRoll(0);
+		}
+	FadeOut:
+		#### # 1 A_FadeOut(0.02);
+		Loop;
+	}
+}
+
+class BDP_SpentPistolMag : BDP_SpentMag
+{
+	Default
+	{
+		DeathSound "weapons/smallmagdrop";
+		BounceSound "weapons/smallmagdrop";
+	}
+	
+	override void SetSprites()
+	{
+		if(ammo < 1)
+			frame = 0;
+	}
+	
+	States
+	{
+	Spawn:
+		ECL3 C 4 NoDelay A_SetRoll(-45);
+		Goto Fly;
+	Death:
+		ECL3 D 0
+		{
+			if(ammo < 1)
+				frame = 1;
+		}
+		Goto Super::Death;
+	}
+}
+
+class BDP_SpentSMGMag : BDP_SpentMag
+{
+	Default
+	{
+		DeathSound "weapons/smallmagdrop";
+		BounceSound "weapons/smallmagdrop";
+	}
+	
+	override void SetSprites()
+	{
+		if(ammo < 1)
+			frame = 0;
+	}
+	
+	States
+	{
+	Spawn:
+		ECL4 C 4 NoDelay A_SetRoll(-45);
+		Goto Fly;
+	Death:
+		ECL4 D 0
+		{
+			if(ammo < 1)
+				frame = 1;
+		}
+		Goto Super::Death;
+	}
+}
+
+
+class BDP_SpentBattleRifleClip : BDP_SpentMag
+{
+	Default
+	{
+		BounceFactor 0.6;
+		Scale 0.2;
+		Speed 6;
+		DeathSound "BR45BOUNCE";
+		BounceSound "BR45BOUNCE";
+		+thruactors
+	}
+	
+	override void SetSprites()
+	{
+		frame = ammo / 2;
+		A_StartSound("BR45PING");
+	}
+	
+	States
+	{
+	Spawn:
+		ECL2 A 4;
+		Goto Fly;
+	Death:
+		ECL2 # 350
+		{
+			if(random(0, 1) == 1)
+			{
+				A_ChangeFlag("XFLIP",1);
+				A_SetRoll(90);
+			}
+			else
+			{
+				A_SetRoll(-90);
+			}
+		}
+		Goto FadeOut;
+	}
+}
+
+class BDP_SpentASGMag : BDP_SpentMag
+{
+	bool dbreath;
+	
+	override void SetSprites()
+	{
+		if(ammo < 8)
+			frame = ammo;
+		if(dbreath) sprite = GetSpriteIndex("ACS2");
+	}
+	
+	States
+	{
+	CacheSprites:
+		ACS2 A 0;
+	Spawn:
+		ACSE H 4 NoDelay A_SetRoll(-45);
+		Goto Fly;
+	}
+}
+
+class BDP_SpentRifleMag : BDP_SpentMag
+{
+	override void SetSprites()
+	{
+		if(ammo < 1)
+			frame = 0;
+	}
+	
+	States
+	{
+	Spawn:
+		ECL1 C 4 NoDelay A_SetRoll(-45);
+		Goto Fly;
+	Death:
+		ECL1 D 0
+		{
+			if(ammo < 1)
+				frame = 1;
+		}
+		Goto Super::Death;
+	}
+}
+
+class BDP_SpentRocketDrum : BDP_SpentMag
+{
+	Default
+	{
+		Scale 1.0;
+		BounceFactor 0.4;
+		DeathSound "weapons/barrelpain";
+		BounceSound "weapons/barrelpain";
+	}
+	
+	override void SetSprites()
+	{
+		if(ammo < 3)
+			frame = ammo;
+	}
+	
+	States
+	{
+	Spawn:
+		RCSE D 4 NoDelay A_SetRoll(-11.25);
+		Goto Fly;
+	Death:
+		RCSE # 350
+		{
+			if(random(0, 1) == 1)
+			{
+				A_ChangeFlag("XFLIP",1);
+			}
+			A_SetRoll(0);
+			frame = frame + 4;
+		}
+		Goto FadeOut;
+	}
+}
+
+class BDP_SpentFlamethrowerTank : BDP_SpentMag
+{
+	Default
+	{
+		Scale 1.0;
+		BounceFactor 0.5;
+		Gravity 0.5;
+		DeathSound "FLMRCAN";
+		BounceSound "FLMRCAN";
+	}
+	
+	override void SetSprites()
+	{
+		return;
+	}
+	
+	States
+	{
+	Spawn:
+		FLRS F 4 NoDelay A_SetRoll(-11.25);
+		Goto Fly;
+	Death:
+		FLRS F 350
+		{
+			if(random(0, 1) == 1)
+			{
+				A_ChangeFlag("XFLIP",1);
+			}
+			A_SetRoll(0);
+		}
+		Goto FadeOut;
+	}
+}
+
+
+class BDP_SpentCell : BDP_SpentMag
+{
+	Default
+	{
+		Scale 0.7;
+		BounceFactor 0.5;
+	}
+	
+	override void SetSprites()
+	{
+		if(ammo < 1)
+			frame = 0;
+		return;
+	}
+	
+	States {
+	Spawn:
+		C3LL B 4;
+		Goto Fly;
+	}
+}
+
+class BDP_SpentFreezerCell : BDP_SpentMag
+{
+	Default
+	{
+		Scale 0.4;
+		BounceFactor 0.5;
+		DeathSound "weapons/smallmagdrop";
+		BounceSound "weapons/smallmagdrop";
+	}
+	
+	override void SetSprites()
+	{
+		return;
+	}
+	
+	States {
+	Spawn:
+		ECLF A 4;
+		Goto Fly;
+	}
+}
+
+class BDP_SpentRailgunShell : BDP_SpentMag
+{
+	Default
+	{
+		Scale 0.3;
+		BounceFactor 0.7;
+	}
+	
+	override void SetSprites()
+	{
+		return;
+	}
+	
+	States
+	{
+	Spawn:
+		RCLI A 0;
+		Goto Fly;
+	Fly:
+		#### # 1 A_SetRoll(roll+11.25);
+		Loop;
+	Death:
+		RCLI A 350
+		{
+			if(random(0, 1) == 1)
+			{
+				A_ChangeFlag("XFLIP",1);
+				A_SetRoll(90);
+			}
+			else
+			{
+				A_SetRoll(-90);
+			}
+		}
+		Goto FadeOut;
+	}
+}

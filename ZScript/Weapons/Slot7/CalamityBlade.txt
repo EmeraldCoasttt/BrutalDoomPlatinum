@@ -54,8 +54,20 @@ class BDPCalamityBlade : BDPWeaponBase
 
 	States {
 	Spawn:
+		CBLD A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
+		Loop;
+	Spawn1:
+		CBLD B 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn2:
+		CBLD C 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn3:
+		CBLD D 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	SpawnNoAmmo:
 		CBLD A -1;
-		stop;
+		Stop;
 	Grenade: //30
 		HETS EFGH 1;
 		TNT1 A 22;

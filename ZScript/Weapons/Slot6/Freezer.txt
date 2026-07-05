@@ -220,9 +220,8 @@ class BDPFreezerBeam : BDPWeaponBase
 		FRRL IJKLLLMNOPP 1;
 		FRRL Q 20
 		{
+			A_FireProjectileDX("BDP_SpentFreezerCell", random(-75, -85), random(70, 90), 10, 25, -20);
 			A_DiscardMag();
-			if(invoker.mag == 0)
-				A_FireProjectile("EmptyFreezerMagSpawn",160,0,10,-8);
 		}
 		FRRL RRSTUV 1;
 		FRRL W 1 {A_StartSound("RAILINSR"); A_ReloadMag();}
@@ -234,7 +233,18 @@ class BDPFreezerBeam : BDPWeaponBase
 		FR1D D 1 A_StartSound("RAILON", 2);
 		Goto Ready;
 	Spawn:
-		FRZR ABC 2;
+		FRZR A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
+	SpawnNoAmmo:
+		FRZR AABCB 2;
+		Loop;
+	Spawn1:
+		FRZ1 AAAABBCCBB 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn2:
+		FRZ2 AAAABBCCBB 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn3:
+		FRZ3 AAAABBCCBB 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
 		Loop;
 	SpecialAction:
 		TNT1 A 0
@@ -322,23 +332,6 @@ Class IceShotProjectile : Actor
 		
 	}
 
-}
-
-class EmptyFreezerMagSpawn : Actor
-{
-	Default
-	{
-		Speed 20;
-		PROJECTILE;
-		+NOCLIP
-	}
-	States
-	{
-	Spawn:
-		TNT1 A 0;
-		TNT1 A 1 A_CustomMissile("EmptyFreezerMag",1,-2,random(105,115),2,1);
-		Stop;
-	}
 }
 
 class Freezebot : BrutalFriend

@@ -151,8 +151,7 @@ CLASS BDPIncinerator : BDPWeaponBase
 		FLMT T 1
 		{
 			A_DiscardMag();
-			if(invoker.mag == 0)
-				A_FireProjectileDX("emptyflamercan",3,-30,30,0,-10);
+			A_FireProjectileDX("BDP_SpentFlamethrowerTank",3,-30,30,0,-10);
 		}
 		FLMT ZZTSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 1;
 		FLMT T 1

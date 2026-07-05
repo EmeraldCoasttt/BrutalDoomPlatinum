@@ -309,7 +309,7 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 	
 	}
 	
-	action void A_DiscardMag(int chamber = 0)
+	action bool A_DiscardMag(int chamber = 0)
 	{
 		let dplr = BDPPlayerPawn(invoker.owner);
 		if(dplr && dplr.gluttony)
@@ -318,7 +318,9 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 			{
 				invoker.mag--;
 			}
+			return true;
 		}
+		return false;
 	}
 	
 	action void A_SetCrosshairDX(string crosshairname, int crosshairrange = 5000, double crosshairscale = 1.0)

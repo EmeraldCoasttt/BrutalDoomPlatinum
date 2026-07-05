@@ -122,7 +122,7 @@ class BDPDualSMG : BDPWeaponBase
 		LSMF B 1
 		{
 			A_ZoomFactor(1.0);
-			A_FireProjectileDX("PistolCasing",random(-85,-95),random(-40,-60),-12,30,-5);
+			A_FireProjectileDX("BDP_SpentPistolCasing",random(-85,-95),random(-40,-60),-12,30,-5);
 		}
 		LSMF C 1;
 		Goto ReadyLeft;
@@ -149,7 +149,7 @@ class BDPDualSMG : BDPWeaponBase
 		RSMF B 1
 		{
 			A_ZoomFactor(1.0);
-			A_FireProjectileDX("PistolCasing",random(-85,-95),random(-40,-60),16,30,-5);
+			A_FireProjectileDX("BDP_SpentPistolCasing",random(-85,-95),random(-40,-60),16,30,-5);
 		}
 		RSMF C 1;
 		Goto ReadyRight;
@@ -175,9 +175,10 @@ class BDPDualSMG : BDPWeaponBase
 		SMGR IJKLMNO 1;
 		SMGR O 1
 		{
+			let spentmag = BDP_SpentMag(A_FireProjectileDX("BDP_SpentSMGMag",random(75,85),random(15,25),0,20,-20));
+			if(spentmag)
+				spentmag.ammo = DualMag();
 			A_DiscardDualMag(1);
-			if(DualMag() <= 1)
-				A_FireProjectileDX("EmptySMGMag",random(75,85),random(15,25),0,20,-20);
 		}
 		SMGR PPPPPPPPPPPPPPPPPPPPPQRSTUUUUV 1;
 		TNT1 A 0 A_StartSound("SMGREL2", 5);
@@ -191,9 +192,10 @@ class BDPDualSMG : BDPWeaponBase
 		4MGR IJKLMNO 1;
 		4MGR O 1
 		{
+			let spentmag = BDP_SpentMag(A_FireProjectileDX("BDP_SpentSMGMag",random(-95,-105),random(15,25),0,20,-20));
+			if(spentmag)
+				spentmag.ammo = DualMag();
 			A_DiscardMag(1);
-			if(invoker.mag <= 1)
-				A_FireProjectileDX("EmptySMGMag",random(-95,-105),random(15,25),0,20,-20);
 		}
 		4MGR PPPPPPPPPPPPPPPPPPPPPQRSTUUUUV 1;
 		TNT1 A 0 A_StartSound("SMGREL2", 5);

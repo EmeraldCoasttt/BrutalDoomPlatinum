@@ -275,9 +275,10 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		TNT1 A 0 A_JumpIf(DualMag() == 50, "ReloadLeft");
 		TNT1 A 0
 		{
+			let spentmag = BDP_SpentMag(A_FireProjectileDX("BDP_SpentCell", random(75, 85), random(35, 55), 0, 25, -20));
+			if(spentmag)
+				spentmag.ammo = DualMag();
 			A_DiscardDualMag();
-			if(DualMag() == 0)
-				A_FireProjectile("PlasmaCaseSpawn", -210, spawnofs_xy:20, spawnheight:-20);
 			A_PlaySound("Plasma/Reload1", 5);
 		}
 		PRR1 ABCDE 1;
@@ -295,9 +296,10 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 	ReloadLeft:
 		TNT1 A 0
 		{
+			let spentmag = BDP_SpentMag(A_FireProjectileDX("BDP_SpentCell", random(-75, -85), random(35, 55), 0, 25, -20));
+			if(spentmag)
+				spentmag.ammo = invoker.mag;
 			A_DiscardMag();
-			if(invoker.mag == 0)
-				A_FireProjectile("PlasmaCaseSpawn", -210, spawnofs_xy:-20, spawnheight:-20);
 			A_PlaySound("Plasma/Reload1", 5);
 		}
 		PRR2 BCDEFGHH 1;

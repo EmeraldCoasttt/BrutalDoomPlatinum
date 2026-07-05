@@ -62,9 +62,21 @@ class BDPUnmaker : BDPWeaponBase
 		TNT1 A 0 A_StartSound("UNMAKSEL");
 		UNHS DCBA 1;
 		Goto Ready;
-    Spawn:
-        UNHW A 1;
-        Loop;
+	Spawn:
+		UNHW A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
+		Loop;
+	Spawn1:
+		UNHW B 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn2:
+		UNHW C 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn3:
+		UNHW D 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	SpawnNoAmmo:
+		UNHW A -1;
+		Stop;
 	MuzzleFlash:
 		UNHM BC 1 Bright;
 		Stop;

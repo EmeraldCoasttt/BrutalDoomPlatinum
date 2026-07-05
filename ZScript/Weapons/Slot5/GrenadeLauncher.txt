@@ -133,7 +133,7 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		GLR1 L 1 A_Overlay(2,"ReloadSmoke");
 		TNT1 A 0
 		{
-			A_FireProjectile(invoker.chaosGrenades ? "GrenadeCasingSpawner2" : "GrenadeCasingSpawner",0,0,-4, -14);
+			A_FireProjectileDX(invoker.chaosGrenades ? "BDP_SpentChaosGrenade" : "BDP_SpentGrenade", random(80, 100), random(-50, -70), 2, 35, -16);
 			A_StartSound("foley/GLEjectShell",11);
 			A_StartSound("Weapons/GrenadeOpen");
 		}
@@ -266,6 +266,18 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		GLSA DCBA 1 A_WeaponReadyDX(0,false);
 		Goto StrapIdle;
 	Spawn:
+		GLAP A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
+		Loop;
+	Spawn1:
+		GLAP B 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn2:
+		GLAP C 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	Spawn3:
+		GLAP D 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");
+		Loop;
+	SpawnNoAmmo:
 		GLAP A -1;
 		Stop;
 	/*FireSticky:
