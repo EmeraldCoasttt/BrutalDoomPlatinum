@@ -43,8 +43,9 @@ class ModifierButton : MenuButton
 		string icon = btnmod.graphic;
 		
 		Color frameColor = Color(255,80,80,80);
-		if(hovered) frameColor = Color(64,255,0,0);
-		if(toggled) frameColor = Color(255,255,0,0);
+		if(hovered) frameColor = Color(255,128,128,128);
+		if(toggled) frameColor = Color(255,191,0,0);
+		if(hovered && toggled) frameColor = Color(255,255,0,0);
 		if(disabled) frameColor = Color(255,0,0,0);
 		
 		BDPDrawer.DrawFrame(pos, size, frameColor);
@@ -74,6 +75,7 @@ class TextButton : MenuButton
 		if(pressed) fontColor = Font.CR_BLACK;
 		
 		BDPDrawer.DrawString("BigFont", tag, pos, translation:fontColor, scale:(2.0,2.0) * scale);
+		if(hovered) BDPDrawer.DrawImage("M_SKULL1", (pos.x - 48, pos.y + 8), scale:(4.0, 4.0) * scale);
 	}
 }
 
@@ -187,7 +189,7 @@ class ModifierDescriptor : MenuElement
 		);
 		BDPDrawer.DrawFrame(iconFramePos, iconFrameSize);
 		BDPDrawer.Fill(0xFF000000, iconFramePos.x,iconFramePos.y, iconFrameSize.x,iconFrameSize.y, alpha:alpha+0.25);
-		vector2 desc_pos = descOffs + (10,80);
+		vector2 desc_pos = descOffs + (7,80);
 					
 		// Iterate through ModifierButtons and draw
 		// a description for the one being hovered over.
@@ -202,7 +204,7 @@ class ModifierDescriptor : MenuElement
 			string icon = mod.graphic;
 			
 			string mdDesc = StringTable.Localize(mod.description);
-			mdDesc = formatLnBreaks(mdDesc, 30);
+			mdDesc = formatLnBreaks(mdDesc, 37);
 			
 			// Draw modifier Icon
 			btn.DrawIcon(iconFramePos, iconFrameSize);
@@ -255,10 +257,10 @@ class BDP_ModifierMenu : BDP_ComponentMenu
 		AddElement("ModifierDescriptor", "descriptor", (1000,200), (700,500), 0.65);
 		
 		// Modifier Buttons
-		double rows = 4;
+		double rows = 5;
 		int curRow = 0;
 		vector2 size = (96,108);
-		vector2 btnPos = (360, 232);
+		vector2 btnPos = (322, 222);
 		vector2 btnOffs = (0,0);
 		for(int i = 0; i < modifiers.Size(); i++)
 		{
@@ -277,14 +279,14 @@ class BDP_ModifierMenu : BDP_ComponentMenu
 			}
 			else
 			{
-				btnOffs.x += (size.y * 1.2);
+				btnOffs.x += (size.x * 1.2);
 			}
 		}
 
 		// Text Buttons
-		AddElement("btn_AllMods", "Enable All", (1000,750), (556, 32));
-		AddElement("btn_NoMods", "Disable All", (1000,800), (556, 32));
-		AddElement("btn_Confirm", "CONFIRM", (1000,880), (556, 32));
+		AddElement("btn_AllMods", "Enable All", (1000,750), (556, 46));
+		AddElement("btn_NoMods", "Disable All", (1000,810), (556, 46));
+		AddElement("btn_Confirm", "CONFIRM", (1000,870), (556, 46));
 		
 		// Populate buttons array
 		GetElementsOfClass(buttons, "ModifierButton", true);
