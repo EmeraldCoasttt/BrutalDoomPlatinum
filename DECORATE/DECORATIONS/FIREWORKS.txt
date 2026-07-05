@@ -590,6 +590,26 @@ ACTOR BarrelShrapnel4: BarrelShrapnel1
  Scale 1.2
 }
 
+ACTOR BarrelShrapnel1Slow : BarrelShrapnel1
+{
+	Speed 5
+}
+ACTOR BarrelShrapnel2Slow : BarrelShrapnel2
+{
+	Speed 5
+}
+
+ACTOR BarrelShrapnel3Slow : BarrelShrapnel3
+{
+	Speed 5
+}
+
+ACTOR BarrelShrapnel4Slow : BarrelShrapnel4
+{
+	Speed 5
+}
+
+
 Actor BarrelShrapnel2Tiny: BarrelShrapnel1Tiny
 {
 	Scale 0.2

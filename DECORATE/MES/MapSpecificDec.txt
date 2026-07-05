@@ -3822,9 +3822,8 @@ States
 
 Actor BDECBarrel: BDECChairSimple 15855
 {
-Health 100
+Health 30
 Mass 99999
-Scale 0.6
 -PUSHABLE
 DropItem "HealthPlus" 128
 DropItem "ArmorShard" 128
@@ -3832,20 +3831,28 @@ DropItem "Stimpack" 128
 //DropItem "Clips" 128
 DropItem "CLIP1Drop" 128
 //DropItem "Shells" 128
+damagefactor "Melee", 3.0
+Damagefactor "kick", 3.0
 states
 	{
 	Spawn:
+		tnt1 a 0
+		TNT1 A 0 A_Jump(50,"Spawn2")
 	    SPDF G 1
 		SPDF G -1
 		Stop
+	Spawn2:
+		SPDF H -1
+		STOP
 	Death:
-		TNT1 AAA 0 A_CustomMissile ("MetalShard1", 5, 0, random (0, 360), 2, random (30, 160))
-		TNT1 AAA 0 A_CustomMissile ("MetalShard2", 25, 0, random (0, 360), 2, random (30, 160))
-		TNT1 AAA 0 A_CustomMissile ("MetalShard3", 35, 0, random (0, 360), 2, random (30, 160))
+		TNT1 AA 0 A_CustomMissile ("BarrelShrapnel1Slow", 25, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("BarrelShrapnel2Slow", 15, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("BarrelShrapnel3Slow", 5, 0, random (0, 360), 2, random (0, 160))
+		TNT1 A 0 A_CustomMissile ("BarrelShrapnel4Slow", 5, 0, random (0, 360), 2, random (0, 160))
 		TNT1 A 0 A_PlaySound("DSBRK2")
 		TNT1 A 0 A_NoBlocking
 		TNT1 A 0 A_Scream
-		SPDF H -1
+		TNT1 A 35
 		Stop
 	}
 }
