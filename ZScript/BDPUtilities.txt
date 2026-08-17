@@ -163,6 +163,52 @@
 	bool mercilessgranted;
 	actor IconOfSin;
 	
+	//low-res shader from vanilla essence by pixel eater: https://forum.zdoom.org/viewtopic.php?t=59412
+	override void UiTick()
+	{
+		PlayerInfo plr = players[ consoleplayer ];
+		if(plr)
+		{
+			if(CVar.GetCVar("bdp_ve_lowres", plr).GetBool())
+			{
+			double height = max( CVar.GetCvar("bdp_ve_resolution", plr).GetInt(), 48 );
+			double width = screen.getwidth();
+			if(CVar.GetCvar("bdp_ve_quantize", plr).GetBool())
+			{
+				height = screen.getheight() / int( screen.getheight() / height );
+				width = screen.getwidth() / int( screen.getwidth() / width );
+			}
+			double stdaspect = 4. / 3;
+			double pxlaspect = 42. / CVar.GetCvar("bdp_ve_par", plr).GetInt();
+			double stdwidth	= screen.getheight() * stdaspect ;
+			double addwidth	= screen.getwidth() / stdwidth ;
+			width = height * stdaspect * addwidth * pxlaspect ;
+			
+			if( CVar.GetCvar("bdp_ve_lowres_psp", plr).GetBool() )
+			{
+				Shader.SetUniform2f( plr, "VanResPSP", "upres", ( width, height ));
+				Shader.SetUniform2f( plr, "VanResPSP", "dnres", ( 1. / max( width, .25 ), 1. / height ));
+				Shader.SetUniform1f( plr, "VanResPSP", "smoothing", CVar.GetCvar("bdp_ve_smooth", plr).GetFloat() * .01 );
+				Shader.SetEnabled( plr, "VanResPSP", true );
+				Shader.SetEnabled( plr, "VanRes", false );
+			}
+			else
+			{
+				Shader.SetUniform2f( plr, "VanRes", "upres", ( width, height ));
+				Shader.SetUniform2f( plr, "VanRes", "dnres", ( 1. / max( width, .25 ), 1. / height ));
+				Shader.SetUniform1f( plr, "VanRes", "smoothing", CVar.GetCvar("bdp_ve_smooth", plr).GetFloat() * .01 );
+				Shader.SetEnabled( plr, "VanRes", true );
+				Shader.SetEnabled( plr, "VanResPSP", false );
+			}
+			}
+			else
+			{
+				Shader.SetEnabled( plr, "VanRes", false );
+				Shader.SetEnabled( plr, "VanResPSP", false );
+			}
+		}
+	}
+	
 	override void NetworkProcess(ConsoleEvent e)
 	{
 		PlayerInfo src = players[e.Player];

@@ -199,6 +199,12 @@ OptionMenu "DoxGameplayOptions"
 	BDPOption "Magazine clicks on low ammo", "Adds an audio indicator when your mag's ammo is low.", "BD_MagGoClicky", "YesNo" 
 	BDPOption "Weapons auto-reload", "Weapons will automatically reload if they run out of ammo. The Grenade Launcher and SSG will always auto-reload.", "bdp_autoreload", "YesNo"
 	Slider "Crosshair Opacity", "bdp_crosshair_trans", 0.0, 1.0, 0.05, 2
+	BDPOption "Low-resolution shader", "Decrease game-world resolution without affecting user interface. Incompatible with the GLES renderer and Delta Touch.", "bdp_ve_lowres", "YesNo"
+	BDPOption "Low-resolution weapon sprites", "Toggle whether weapon sprites are affected by the shader.", "bdp_ve_lowres_psp", "YesNo"
+	Slider "Shader Resolution (Vertical)", "bdp_ve_resolution", 200, 1080, 40, 0, "bdp_ve_lowres"
+	BDPOption "Quantize resolution", "If low-resolution weapon sprites are on this should always be enabled.", "bdp_ve_quantize", "YesNo"
+	BDPOption "Pixel Aspect Ratio", "Pixel aspect ratio. 5:6 is identical to vanilla Doom.", "bdp_ve_par", "VE_PAR"
+	Slider "Pixel Smoothing", "bdp_ve_smooth", 0, 100, 5, 0
 	StaticText ""
 	StaticText "-------------------------------------------------------", "black"
 	StaticText "CHEATS", "fire"
@@ -207,6 +213,12 @@ OptionMenu "DoxGameplayOptions"
 	BDPOption "All Modifiers Unlocked", "Modifiers are unlocked without needing to find them in levels", "BDP_MODIFIERS_ALLUNLOCKED", "YesNo"
 }
 
+OptionValue "VE_PAR"
+{
+	35, "5:6 (PC)"
+	42, "1:1 (Jag/N64/GBA/NeXT)"
+	48, "8:7 (PSX)"
+}
 
 
 
@@ -378,6 +390,9 @@ OptionMenu "DoxCreditsGraphics"
 	StaticText ""
 	StaticText "Lemony Lepid", "LightBlue"
 	StaticText "ASG Shield sprites"
+	StaticText ""
+	StaticText "Pixel Eater", "LightBlue"
+	StaticText "Vanilla Essence low-res shader"
 }
 
 OptionMenu "DoxCreditsCode"

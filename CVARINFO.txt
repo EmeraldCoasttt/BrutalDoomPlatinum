@@ -76,6 +76,13 @@ server bool Dox_SimplePickups = false;
 
 server int bd_testmapsky = 0;
 
+user bool bdp_ve_lowres = true;
+user bool bdp_ve_lowres_psp = true;
+user bool bdp_ve_quantize = true;
+user int bdp_ve_resolution = 200;
+user int bdp_ve_par = 35;
+user float bdp_ve_smooth = 0;
+
 //WEAPONS
 user int bd_Aim = 0;
 

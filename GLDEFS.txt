@@ -2049,3 +2049,21 @@ HardwareShader PostProcess BeforeBloom
 	Name "quantum"
 	Shader "shaders/pp/dish_quantum.fp" 330
 }
+
+HardwareShader PostProcess beforebloom
+{
+	Shader "shaders/pp/lowres.fp" 330
+	Name "VanRes"
+	Uniform vec2 upres
+	Uniform vec2 dnres
+	Uniform float smoothing
+}
+
+HardwareShader PostProcess scene
+{
+	Shader "shaders/pp/lowres.fp" 330
+	Name "VanResPSP"
+	Uniform vec2 upres
+	Uniform vec2 dnres
+	Uniform float smoothing
+}
