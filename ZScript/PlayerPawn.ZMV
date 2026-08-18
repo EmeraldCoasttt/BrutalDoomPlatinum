@@ -1115,7 +1115,7 @@ class BDPPlayerPawn : PlayerPawn
 			BDPAssaultShotgun weap = BDPAssaultShotgun(player.ReadyWeapon);
 			If(weap && weap.ASGSHieldActive)
 			{
-				TakeInventory("ASGShield",damage * 2);
+				TakeInventory("ASGShield",damage * 1.5);
 				//console.printf("Shield active wooo");
 				a_startsound("StickyGrenade/Hit",125);
 				damage = 0;
