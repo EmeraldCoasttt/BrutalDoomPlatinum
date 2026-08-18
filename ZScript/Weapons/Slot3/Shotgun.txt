@@ -10,7 +10,7 @@ class BDPShotgun : BDPWeaponBase
 		Weapon.SelectionOrder 1300;
 		Weapon.AmmoGive 8;
 		Weapon.AmmoType "BDPShell";
-		BDPWeaponBase.MagCapacity 6;
+		BDPWeaponBase.MagCapacity 7;
 		Inventory.PickupMessage "You got the Shotgun! (Slot 3)";
 		Inventory.PickupSound "weapons/sgpump";
 		Obituary "$OB_MPSHOTGUN";
@@ -183,7 +183,6 @@ class BDPShotgun : BDPWeaponBase
 		SHTN ABCDEFG 1;
 		TNT1 A 0 A_AutoReloadMag(1,"ReloadFromPumping");
 	Pump1Part2:
-		TNT1 A 0 A_PressingReload("ReloadFromPumping");
 		TNT1 A 0 A_WeaponReady(WRF_NOFIRE| WRF_NOBOB);//Allows quick switch
 		TNT1 A 0 A_StartSound("foley/ShotgunPumpIn", 11);
 		SHTN H 1 A_StartSound("weapons/sgpump", 3);
@@ -362,9 +361,9 @@ class BDPShotgun : BDPWeaponBase
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_ATTACK,"FireAim");
 		Goto Aim;
 	ReloadFromPumping:
-		SHTN A 0 A_CheckIfMag(6,"RFP2");
+		SHTN A 0 A_CheckIfMag(7,"RFP2");
 		SHTN A 0 A_JumpIfInventory("BDPShell", 1, 1);
-		Goto Pump2+38;
+		Goto FinishPump;
 		SHTN ST 1;
 		Goto InsertShellAnimation;
 	DoReload:
@@ -385,7 +384,7 @@ class BDPShotgun : BDPWeaponBase
 		SHTN YZ 1 A_WeaponReady(WRF_NOBOB|WRF_NOSECONDARY);
 		SHTN "[]" 1 A_WeaponReady(WRF_NOBOB|WRF_NOSECONDARY);
 		SHTN A 0 A_JumpIf(invoker.emptyChamber,"Pump2");
-		SHTN A 0 A_CheckIfMag(6,"InsertShellAnimation");
+		SHTN A 0 A_CheckIfMag(7,"InsertShellAnimation");
 		TNT1 A 0 A_StartSound("foley/ShotgunReloadLower", 10);
 		SHTN TS 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
 		SHTN FEDCB 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
