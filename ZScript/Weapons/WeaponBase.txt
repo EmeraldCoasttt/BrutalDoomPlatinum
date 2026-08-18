@@ -553,7 +553,10 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 	action void A_TakeDualMag(int ammoamount = 1, bool take = true, bool force = false)
 	{
 		let weap = BDPWeaponBase(FindInventory(invoker.DualWeapon));
-		weap.A_TakeMag(ammoamount,force);
+		if(!findinventory("powerspeed2") || force)
+		{
+			weap.A_TakeMag(ammoamount,force);
+		}
 	}
 	
 	action state A_CheckIfDualMag(int ammoamount = 1, statelabel label = "NoAmmo", bool force = false)
@@ -570,7 +573,7 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 		let weap = BDPWeaponBase(FindInventory(invoker.DualWeapon));
 		double current = weap.mag;
 		double max = weap.magCapacity / 4;
-		if(current <= max && CVar.GetCVar("bd_maggoclicky",player).GetBool() == true)
+		if(!findinventory("powerspeed2") && current <= max && CVar.GetCVar("bd_maggoclicky",player).GetBool() == true)
 			A_StartSound(sound,3);
 	}
 	
@@ -1041,7 +1044,7 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 	{
 		double current = invoker.mag;
 		double max = invoker.magCapacity / 4;
-		if(current <= max && CVar.GetCVar("bd_maggoclicky",player).GetBool() == true)
+		if(!findinventory("powerspeed2") && current <= max && CVar.GetCVar("bd_maggoclicky",player).GetBool() == true)
 			A_StartSound(sound,3);
 	}
 	
