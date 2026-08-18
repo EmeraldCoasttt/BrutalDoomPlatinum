@@ -124,6 +124,15 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 	vector2 magConversion;
 	Property MagConversion : magConversion;
 	
+	int AltMag;
+	int AltMagCapacity;
+	Property AltMagCapacity : AltMagCapacity;
+	
+	name AltAmmoType;
+	Property AltAmmoType : AltAmmoType;
+	
+	bool AltSelected;
+	
 	bool newweapon;
 	
 	int bloodStain;
@@ -153,6 +162,7 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 	override void beginplay()
 	{
 		mag = magcapacity;
+		altmag = altmagcapacity;
 		if(magConversion == (0,0))
 		{
 			magConversion = (1,1);
@@ -665,6 +675,14 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 		}
 	}
 	
+	action void A_TakeAltMag(int ammoamount = 1, bool force = false)
+	{
+		if(!findinventory("powerspeed2") || force)
+		{
+			invoker.altmag -= ammoamount;
+		}
+	}
+	
 	action void A_StartAim(double zoomfactor, string insound = "ADSIN")
 	{
 		A_StartSound(insound);
@@ -892,6 +910,18 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 		}
 	}
 	
+	action state A_CheckIfAltMag(int ammoamount = 1, statelabel label = "NoAmmo", bool force = false)
+	{
+		If(invoker.AltMag >= ammoamount || (findinventory("PowerSpeed2") && !force))
+		{
+		Return ResolveState(null);
+		}
+		Else
+		{
+		Return resolvestate(label);
+		}
+	}
+	
 	action void A_trymeathook(int meathookrange = 256)
 	{
 		let dplr = BDPPlayerPawn(invoker.owner);
@@ -989,6 +1019,14 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 	{
 		//FORCE flag is intended for single shot weapons
 		If(invoker.magCapacity > 0 && invoker.mag < minammo && countinv(invoker.ammotype1) >= invoker.magConversion.y && (invoker.owner.getcvar("bdp_autoreload") == true || force == true) && (invoker.readyLeft && invoker.readyRight || !invoker.bDUALWEAPON))
+			Return Resolvestate(Label);
+		Return Resolvestate(Null);
+	}
+	
+	Action state A_AutoReloadAltMag(int minammo = 1, statelabel label = "Reload", bool force = false)
+	{
+		//FORCE flag is intended for single shot weapons
+		If(invoker.AltmagCapacity > 0 && invoker.altmag < minammo && countinv(invoker.altammotype) >= 1 && (invoker.owner.getcvar("bdp_autoreload") == true || force == true) && (invoker.readyLeft && invoker.readyRight || !invoker.bDUALWEAPON))
 			Return Resolvestate(Label);
 		Return Resolvestate(Null);
 	}

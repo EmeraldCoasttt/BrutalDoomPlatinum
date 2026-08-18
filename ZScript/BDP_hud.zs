@@ -646,8 +646,10 @@ class BDP_HUD : DoomStatusBar
 			DrawTeleBar(iconPos + (-32, -29), iconflags);
 		}
 		
-		int MagAmt, dualMagAmt, ammo3Amt;
+		int MagAmt, dualMagAmt, AltMagAmt, ammo3Amt, AltAmmoAmt;
 		Class<Inventory> Ammo3;
+		Class<Inventory> AltAmmo;
+		bool altselected;
 		let weap = BDPWeaponBase(CPlayer.mo.player.ReadyWeapon);
 		if (weap)
 		{
@@ -662,6 +664,16 @@ class BDP_HUD : DoomStatusBar
 				dualMagAmt = DualWeap.mag;
 			}
 			MagAmt = Weap.mag;
+			AltMagAmt = Weap.AltMag;
+			If(weap.altselected)
+			{
+				altselected = true;
+				AltAmmo = Weap.AltAmmoType;
+				If(AltAmmo)
+				{
+					AltAmmoAmt = CPlayer.mo.countinv(AltAmmo);
+				}
+			}
 		}
 		
 		
@@ -672,7 +684,18 @@ class BDP_HUD : DoomStatusBar
 		Ammo ammo1, ammo2;
 		int ammo1amt, ammo2amt;
 		[ammo1, ammo2, ammo1amt, ammo2amt] = GetCurrentAmmo();
-		
+		if (AltAmmo)
+		{
+			iconPos.x += iconSpacing;
+			DrawInventoryIcon(CPlayer.mo.findinventory(AltAmmo), iconPos, iconFlags);
+			DrawString(
+				mHudfont, 
+				String.Format("%d", AltAmmoAmt), 
+				iconPos + numOfs,
+				numFlags,
+				Font.CR_White
+			);
+		}
 		if (ammo3)
 		{
 			iconPos.x += iconSpacing;
@@ -697,7 +720,7 @@ class BDP_HUD : DoomStatusBar
 				Font.CR_White
 			);
 		}
-		if (ammo1)
+		if (ammo1 && !altselected)
 		{
 			iconPos.x += iconSpacing;
 			
@@ -717,6 +740,7 @@ class BDP_HUD : DoomStatusBar
 			iconPos.x += iconSpacing;
 			let dualweap = BDPWeaponBase(CPlayer.mo.FindInventory(weap.DualWeapon));
 			DrawInventoryIcon(dualweap, iconPos, iconFlags);
+			
 			DrawString(
 				mHudfont, 
 				String.Format("%d", dualMagAmt), 
@@ -730,9 +754,15 @@ class BDP_HUD : DoomStatusBar
 		{
 			iconPos.x += iconSpacing;
 			DrawInventoryIcon(weap, iconPos, iconFlags);
+			int CurrentMagAmt = MagAmt;
+			If(altselected)
+			{
+				CurrentMagAmt = AltMagAmt;
+			}
+	
 			DrawString(
 				mHudfont, 
-				String.Format("%d", MagAmt), 
+				String.Format("%d", CurrentMagAmt), 
 				iconPos + numOfs,
 				numFlags,
 				Font.CR_White
