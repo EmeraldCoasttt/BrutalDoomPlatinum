@@ -205,11 +205,8 @@ class BDPMinigun : BDPWeaponBase
 		TNT1 A 0 A_CheckIfAmmo("BDPClip2",1,"NoAmmoHoldWasFiring");
 		CHAF G 1 Bright
 		{
-<<<<<<< HEAD
+
 			A_FireBullets(5, 5, -1, 8, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
-=======
-			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
->>>>>>> parent of 0ea6c00c (Minigun no longer fudges ammo)
 			A_FlashOverlay(state:"MuzzleFlash4");
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_WeaponRecoil(1.5,frandom(-0.6,0.6));
@@ -224,11 +221,8 @@ class BDPMinigun : BDPWeaponBase
 		}
 		CHAF B 1
 		{
-<<<<<<< HEAD
+
 			A_FireBullets(5, 5, -1, 8, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
-=======
-			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
->>>>>>> parent of 0ea6c00c (Minigun no longer fudges ammo)
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_FireProjectileDX("BDP_SpentRifleCasing", random(-80, -90), random(-40, -50), 0, 20, -14);
 			A_FireParticles();
@@ -240,11 +234,8 @@ class BDPMinigun : BDPWeaponBase
 		TNT1 A 0 A_CheckIfAmmo("BDPClip2",1,"NoAmmoHoldWasFiring");
 		CHAF E 1 Bright
 		{
-<<<<<<< HEAD
+
 			A_FireBullets(5, 5, -1, 8, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
-=======
-			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
->>>>>>> parent of 0ea6c00c (Minigun no longer fudges ammo)
 			A_FlashOverlay(state:"MuzzleFlash3");
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_WeaponRecoil(1.5,frandom(-0.6,0.6));
@@ -260,11 +251,8 @@ class BDPMinigun : BDPWeaponBase
 		}
 		CHAF D 1
 		{
-<<<<<<< HEAD
-			A_FireBullets(5, 5, -1, 8, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);;
-=======
-			A_FireBullets(5, 5, -1, 12, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);;
->>>>>>> parent of 0ea6c00c (Minigun no longer fudges ammo)
+
+			A_FireBullets(5, 5, -1, 8, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_FireProjectileDX("BDP_SpentRifleCasing", random(-80, -90), random(-40, -50), 0, 20, -14);
 			A_FireParticles();
