@@ -294,6 +294,14 @@ class BDPPlayerPawn : PlayerPawn
 		PainChance 255;
 	}
 	
+	//from project brutality
+	action void A_UseLine(int range = 64) {
+		FLineTraceData useline;
+		LineTrace(angle, range, pitch, offsetz:player.viewheight, data:useline);
+		if (useline.HitLine && useline.LineSide == line.front)
+			useline.HitLine.Activate(player.mo, useline.LineSide, SPAC_Use);
+	}
+	
 	action Actor A_BDPMelee(double range = 200, name projectile = "MeleeAttack", double spawnheight = -7, bool doHitThrust = true)
 	{
 		Actor Victim;
@@ -437,7 +445,10 @@ class BDPPlayerPawn : PlayerPawn
 		Loop;
 	KickAction:
 		KICK ABC 1 A_BDPMeleeStart();
-		TNT1 A 0 A_BDPMelee();
+		TNT1 A 0 {
+			A_BDPMelee();
+			A_UseLine();
+		}
 		KICK DEEEEFGHIJKLM 1;
 		TNT1 A 4 {blockKick = true;}
 		Goto KickCheck;
@@ -453,6 +464,7 @@ class BDPPlayerPawn : PlayerPawn
 			//	A_Recoil(-6);
 			SpawnPlayerMissile("MeleeAttackAir",1e37,0,-31);
 			A_BDPMelee(200,"meleeattackair",-31);
+			A_UseLine();
 		}
 		KICK RRSTUVWXYZ[] 1;
 		TNT1 A 4 {blockKick = true;}
