@@ -408,7 +408,7 @@ Class GrenadeDetonates : Actor
 	+BOUNCEONWALLS;
 	+BOUNCEONCEILINGS;
 	+bounceonactors;
-	+EXPLODEONWATER;
+	+CANBOUNCEWATER;
 	+THRUSPECIES;
 	+BOUNCEAUTOOFFFLOORONLY;
 	+usebouncestate;
