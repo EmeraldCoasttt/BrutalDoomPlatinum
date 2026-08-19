@@ -1034,10 +1034,10 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 		Return Resolvestate(Null);
 	}
 	
-	action void A_Dryfire(string sound = "weapons/empty", bool force = false)
+	action state A_Dryfire(string sound = "weapons/empty", bool force = false)
 	{
 		A_StartSound(sound,3);
-		A_AutoReloadMag(1,"Reload",force);
+		return A_AutoReloadMag(1,"Reload",force);
 	}
 	
 	action void A_MagClick(string sound = "weapons/empty")
