@@ -910,7 +910,7 @@ class BDPPlayerPawn : PlayerPawn
 			return false;
 		}
 		Bindings.GetAllKeysForCommand(usekeys,"+use");
-		string keystr = "\cl\cg"..Bindings.NameAllKeys(usekkeys, false).."\cl"; //get buttons and colorize
+		string keystr = "\cl\cg"..Bindings.NameAllKeys(usekeys, false).."\cl"; //get buttons and colorize
 		keystr.Replace(", ","\cl/\cg"); //clean up the separators
 		// Otherwise update prompt text and weapon pointer:
 		focusWeaponPrompt =  "Press "..keystr..PICKUPSTR_PICK; //base prompt
