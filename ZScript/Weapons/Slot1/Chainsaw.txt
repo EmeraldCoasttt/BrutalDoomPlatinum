@@ -162,6 +162,7 @@ class BDPChainsaw : BDPWeaponBase
 		TNT1 A 0 A_SemiRefire("Fire2NoStartup");
 	FireEnd:
 		SAWG MLK 1 A_WeaponReadyDX();
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_ALTATTACK, "AltFire");
 		Goto Ready;
 	Fire2:
 		SAWG KLM 1;
@@ -186,6 +187,7 @@ class BDPChainsaw : BDPWeaponBase
 		TNT1 A 0 A_SemiRefire("FireNoStartup");
 	Fire2End:
 		SAWG JIH 1 A_WeaponReadyDX();
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_ALTATTACK, "AltFire");
 		Goto Ready;
 	AltFire:
 		SAWG NOPPQ 1;
@@ -194,7 +196,7 @@ class BDPChainsaw : BDPWeaponBase
 		TNT1 A 0 A_QuadSound();
 		SAWG RSTU 1 A_Saw("", "", 1, "SSawPuff2", 0, 100, 32);
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_ALTATTACK,"FireLoop");
-		SAWG VWON 1;
+		SAWG VWON 1 A_WeaponReadyDX();
 		Goto Ready;
 	SpecialAction:
 		SAWG HIJ 1;
