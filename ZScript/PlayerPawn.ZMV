@@ -324,7 +324,7 @@ class BDPPlayerPawn : PlayerPawn
 		
 			
 		
-		if(victim && victim.bSHOOTABLE) 
+		if(victim && victim.bSHOOTABLE && victim.bISMONSTER) 
 		{
 			
 			vector3 victimAngles = level.sphericalCoords(victim.pos, self.pos, (victim.angle, victim.pitch));
@@ -355,7 +355,7 @@ class BDPPlayerPawn : PlayerPawn
 	//if(A_CheckMeleeRange(skipWalls:true) < range) A_Recoil3D(-20); 
 		FLineTraceData lt;
 			LineTrace(angle, range, pitch, 0, player.viewheight, data:lt);
-			If(lt.hitactor && lt.hitactor.bsolid)
+			If(lt.hitactor && lt.hitactor.bsolid && lt.hitactor.bismonster)
 			{
 				A_face(lt.hitactor,0,0,0,0,FAF_MIDDLE);
 				A_Recoil3D(-20);
