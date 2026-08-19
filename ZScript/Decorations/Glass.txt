@@ -1,0 +1,148 @@
+class BDPBreakableWindow : Actor
+{
+	Default
+	{
+		+NOBLOCKMAP
+		-SOLID
+		XScale 0.74;
+		YScale 3.0;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay
+		{
+			A_SpawnItemEx("BDPWindowGlass", flags:SXF_SETMASTER);
+			A_SpawnItemEx("BDPWindowGlass", angle:180, SXF_SETMASTER);
+			A_SpawnItemEx("BDPUnbreakableWindowCollider", yofs:-30);
+			A_SpawnItemEx("BDPUnbreakableWindowCollider", yofs:30);
+			for(int i = -3; i < 4; i++)
+				A_SpawnItemEx("BDPWindowCollider", yofs:i * 8, flags:SXF_SETMASTER);
+		}
+		XXX1 A -1;
+		Stop;
+	}
+}
+
+class BDPWindowCollider : Actor
+{
+	Default
+	{
+		+SOLID
+		+SHOOTABLE
+		+DONTTHRUST
+		+NOBLOOD
+		Health 1;
+		Radius 4;
+		Height 216;
+		DamageFactor "Avoid", 0.0;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A -1;
+		Stop;
+	Death:
+		TNT1 A 0
+		{
+			master.A_KillChildren();
+		}
+		Stop;
+	}
+}
+
+class BDPWindowGlass : BDPWindowCollider
+{
+	Default
+	{
+		XScale 0.74;
+		YScale 3.0;
+		Renderstyle "Translucent";
+		Alpha 0.65;
+	}
+	States
+	{
+	Spawn:
+		BRGL A -1;
+		Stop;
+	Death:
+		TNT1 A 0
+		{
+			master.A_KillChildren();
+			A_NoBlocking();
+			A_StartSound("WINBREA");
+			for(int i = 0; i < 16; i++)
+			{
+				string actor = "LargeGlassParticle"..random(1, 4);
+				A_SpawnProjectile(actor, random(5, 200), random(-25, 25), random(-45, 45), CMF_AIMDIRECTION, random(-20, -70));
+			}
+		}
+		XXX1 B -1;
+		Stop;
+	}
+}
+
+class BDPUnbreakableWindowCollider : BDPWindowCollider
+{
+	Default
+	{
+		+NODAMAGE
+		Radius 2;
+	}
+}
+
+class BDPBreakableWindowWide : BDPBreakableWindow
+{
+	Default
+	{
+		XScale 1.2;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay
+		{
+			A_SpawnItemEx("BDPWindowGlassWide", flags:SXF_SETMASTER);
+			A_SpawnItemEx("BDPWindowGlassWide", angle:180, SXF_SETMASTER);
+			A_SpawnItemEx("BDPUnbreakableWindowColliderWide", yofs:-48);
+			A_SpawnItemEx("BDPUnbreakableWindowColliderWide", yofs:48);
+			for(int i = -5; i < 6; i++)
+				A_SpawnItemEx("BDPWindowCollider", yofs:i * 8, flags:SXF_SETMASTER);
+		}
+		XXX1 A -1;
+		Stop;
+	}
+}
+
+class BDPWindowGlassWide : BDPWindowGlass
+{
+	Default
+	{
+		XScale 1.2;
+	}
+	States
+	{
+	Death:
+		TNT1 A 0
+		{
+			master.A_KillChildren();
+			A_NoBlocking();
+			A_StartSound("WINBREA");
+			for(int i = 0; i < 16; i++)
+			{
+				string actor = "LargeGlassParticle"..random(1, 4);
+				A_SpawnProjectile(actor, random(5, 200), random(-41, 41), random(-45, 45), CMF_AIMDIRECTION, random(-20, -70));
+			}
+		}
+		XXX1 B -1;
+		Stop;
+	}
+}
+
+class BDPUnbreakableWindowColliderWide : BDPUnbreakableWindowCollider
+{
+	Default
+	{
+		Radius 4;
+	}
+}

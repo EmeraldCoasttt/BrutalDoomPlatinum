@@ -56,6 +56,8 @@ DoomEdNums
 	2542 = BDPAncientArachnotron
 	2543 = BDPVolcabus
 	2548 = BDPMotherDemon
+	15845 = BDPBreakableWindow
+	15846 = BDPBreakableWindowWide
 	
 }
 	

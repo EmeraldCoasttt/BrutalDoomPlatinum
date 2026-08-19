@@ -173,8 +173,7 @@ Model BDECExitHoleMap13     // Name of actor in DECORATE
    FrameIndex SPDF F 0 0         // The sprite lump, sprite frame, model index, frame number
 }
 
-
-Model BDECWIndowFrame1     // Name of actor in DECORATE
+Model BDPBreakableWindow     // Name of actor in DECORATE
 {
    Path "models/decoration"    // Path to model in PK3
    Model 0 "glass.md2"    // Model index, model file
@@ -185,7 +184,7 @@ Model BDECWIndowFrame1     // Name of actor in DECORATE
 }
 
 
-Model BDECWIndowGlass1     // Name of actor in DECORATE
+Model BDPWindowGlass     // Name of actor in DECORATE
 {
    Path "models/decoration"    // Path to model in PK3
    Model 0 "glass.md2"    // Model index, model file
@@ -195,7 +194,7 @@ Model BDECWIndowGlass1     // Name of actor in DECORATE
    FrameIndex BRGL A 0 0         // The sprite lump, sprite frame, model index, frame number
 }
 
-Model BDECWIndowGlass1     // Name of actor in DECORATE
+Model BDPWindowGlass     // Name of actor in DECORATE
 {
    Path "models/decoration"    // Path to model in PK3
    Model 0 "glass.md2"    // Model index, model file
@@ -206,8 +205,7 @@ Model BDECWIndowGlass1     // Name of actor in DECORATE
 }
 
 
-
-Model BDECWIndowFrame2     // Name of actor in DECORATE
+Model BDPBreakableWindowWide     // Name of actor in DECORATE
 {
    Path "models/decoration"    // Path to model in PK3
    Model 0 "glass.md2"    // Model index, model file
@@ -217,8 +215,7 @@ Model BDECWIndowFrame2     // Name of actor in DECORATE
    FrameIndex XXX1 A 0 0         // The sprite lump, sprite frame, model index, frame number
 }
 
-
-Model BDECWIndowGlass2     // Name of actor in DECORATE
+Model BDPWindowGlassWide     // Name of actor in DECORATE
 {
    Path "models/decoration"    // Path to model in PK3
    Model 0 "glass.md2"    // Model index, model file
@@ -228,7 +225,7 @@ Model BDECWIndowGlass2     // Name of actor in DECORATE
    FrameIndex BRGL A 0 0         // The sprite lump, sprite frame, model index, frame number
 }
 
-Model BDECWIndowGlass2     // Name of actor in DECORATE
+Model BDPWindowGlassWide     // Name of actor in DECORATE
 {
    Path "models/decoration"    // Path to model in PK3
    Model 0 "glass.md2"    // Model index, model file
