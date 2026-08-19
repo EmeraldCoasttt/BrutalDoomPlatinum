@@ -984,7 +984,7 @@ class BDP_HUD : DoomStatusBar
 			double trans = CVar.GetCVAR("bdp_crosshair_trans",Cplayer).GetFloat();
 			//if(Screen.GetHeight() >= 1440)
 			//{
-				HLSBS.DrawImage(crosshair..0, midpos, HLSBS.SS_SCREEN_CENTER, trans, scale:retsize / 1.33, tint:crossTint);
+				HLSBS.DrawImage(crosshair..0, midpos, HLSBS.SS_SCREEN_CENTER, trans, scale:retsize * 3.0, tint:crossTint);
 			/*}
 			else if(Screen.GetHeight() <= 720)
 			{
@@ -1221,7 +1221,7 @@ class BDP_OverlayUI : EventHandler
 				}
 				if(infront && crosshair)
 				{
-					HLSBS.DrawImage(crosshair..0, apos, 0, trans, scale:retsize / 1.33, absolute:true);
+					HLSBS.DrawImage(crosshair..0, apos, 0, trans, scale:retsize * 3.0, absolute:true);
 				}
 		}
 		
