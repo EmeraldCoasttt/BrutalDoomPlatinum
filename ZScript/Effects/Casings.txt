@@ -338,7 +338,7 @@ class BDP_SpentPistolMag : BDP_SpentMag
 	
 	override void SetSprites()
 	{
-		if(ammo < 1)
+		if(ammo < 2)
 			frame = 0;
 	}
 	
@@ -350,7 +350,7 @@ class BDP_SpentPistolMag : BDP_SpentMag
 	Death:
 		ECL3 D 0
 		{
-			if(ammo < 1)
+			if(ammo < 2)
 				frame = 1;
 		}
 		Goto Super::Death;
@@ -367,7 +367,7 @@ class BDP_SpentSMGMag : BDP_SpentMag
 	
 	override void SetSprites()
 	{
-		if(ammo < 1)
+		if(ammo < 2)
 			frame = 0;
 	}
 	
@@ -379,7 +379,7 @@ class BDP_SpentSMGMag : BDP_SpentMag
 	Death:
 		ECL4 D 0
 		{
-			if(ammo < 1)
+			if(ammo < 2)
 				frame = 1;
 		}
 		Goto Super::Death;
@@ -452,7 +452,7 @@ class BDP_SpentRifleMag : BDP_SpentMag
 {
 	override void SetSprites()
 	{
-		if(ammo < 1)
+		if(ammo < 2)
 			frame = 0;
 	}
 	
@@ -464,7 +464,7 @@ class BDP_SpentRifleMag : BDP_SpentMag
 	Death:
 		ECL1 D 0
 		{
-			if(ammo < 1)
+			if(ammo < 2)
 				frame = 1;
 		}
 		Goto Super::Death;
