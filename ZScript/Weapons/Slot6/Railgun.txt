@@ -180,7 +180,25 @@ class BDPRailgun : BDPWeaponBase
 			TNT1 A 0 A_Lower();
 			Wait;
 		Ready:
-			TNT1 A 0 A_SetCrosshairDX("RAILRet", 10000);
+			TNT1 A 0 
+			{
+				A_SetCrosshairDX("RAILRet", 10000);
+				let dplr = BDPPlayerPawn(invoker.owner);
+				if(player.cmd.buttons & BT_USER3 && !dplr.blockSpecial && !invoker.scopeZoom)
+				{
+					dplr.blockSpecial = true;
+					A_Print("\cjZoom 9x",1);
+					A_StartSound("bep");
+					invoker.scopeZoom = true;
+				}
+				else if(player.cmd.buttons & BT_USER3 && !dplr.blockSpecial && invoker.scopeZoom)
+				{
+					dplr.blockSpecial = true;
+					A_Print("\cjZoom 3x",1);
+					A_StartSound("bepbep");
+					invoker.scopeZoom = false;
+				}
+			}
 			RAIL A 1 A_weaponreadyDX(WRF_ALLOWRELOAD);
 			LOOP;
 
@@ -423,6 +441,7 @@ class BDPRailgun : BDPWeaponBase
 		RAIH RQPONN 1;
 		RAIH STUV 1;
 		STOP;
+		/*
 	SpecialAction:
 		TNT1 A 0 A_takeinventory("startdualwield",1);
 		RAIL A 4;
@@ -475,6 +494,7 @@ class BDPRailgun : BDPWeaponBase
 		RAIZ DCBA 1;
 		TNT1 A 0 A_takeinventory("startdualwield",1);
 		Goto Ready;
+		*/
 	Spawn:
 		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
 		Loop;
