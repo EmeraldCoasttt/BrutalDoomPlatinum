@@ -941,6 +941,12 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 		}
 	}
 
+	action void A_CutMeathook()
+	{
+		let dplr = BDPPlayerPawn(invoker.owner);
+		if(dplr) dplr.StopHook(true);
+	}
+	
 	//action void A_UnmakeLevel(int times=1){BDPWeaponBase.UnmakeLevel(times);}
 	action void A_UnmakeLevel(int times=1){
 	
