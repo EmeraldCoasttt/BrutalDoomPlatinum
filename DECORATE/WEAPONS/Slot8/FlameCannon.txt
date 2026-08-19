@@ -18,29 +18,6 @@ States
 }
 }
 
-Actor SmokeSpewer 
-{
-	Projectile
-	-nogravity
-	Gravity 0.3
-	+forcexybillboard
-	Speed 40
-	Scale 0.75
-	States
-	{
-	Spawn:
-		BS2X ABCD 2
-		LOOP
-	Death:
-		BS2X "#" 2  
-		{
-		A_SpawnProjectile("blockingsmoke",0,0,frandom(0,360),CMF_AIMDIRECTION,frandom(0,-75));
-		A_fadeout(0.004);
-		}
-		LOOP
-	}
-}
-
 ACTOR BlockingSmoke
 {
     +NOTELEPORT
