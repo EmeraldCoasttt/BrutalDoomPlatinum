@@ -163,6 +163,21 @@
 	bool mercilessgranted;
 	actor IconOfSin;
 	
+	//Enforces pistol starting unless modifier is active
+	
+	override void worldunloaded(worldevent e)
+	{
+		PlayerInfo plr = players[ consoleplayer ];
+		if(plr)
+		{
+			let bdplr = BDPPlayerPawn(plr.mo);
+			If(bdplr)
+			{
+				bdplr.A_PistolStart();
+			}
+		}
+	}
+	
 	//low-res shader from vanilla essence by pixel eater: https://forum.zdoom.org/viewtopic.php?t=59412
 	override void UiTick()
 	{

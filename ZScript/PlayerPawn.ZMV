@@ -294,6 +294,28 @@ class BDPPlayerPawn : PlayerPawn
 		PainChance 255;
 	}
 	
+	
+	//Called on level exit to enforce pistol starting
+	Action void A_PistolStart()
+    {
+        let p = player;
+        let me = p.mo;
+        if (p.playerstate != PST_DEAD)
+        {
+            p.health = me.health = me.SpawnHealth();
+        }
+
+        // Clears the entire inventory and gives back the defaults for starting a game
+        if (p.playerstate != PST_DEAD)
+        {
+            me.ClearInventory();
+            me.GiveDefaultInventory();
+        }
+		//A_SelectWeapon("BDPPistol");
+		//p.readyweapon.setstate(p.readyweapon.findstate("select"));
+		
+    }
+	
 	//from project brutality
 	action void A_UseLine(int range = 64) {
 		FLineTraceData useline;
