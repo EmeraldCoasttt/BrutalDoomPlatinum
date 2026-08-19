@@ -165,7 +165,7 @@ class BDPArchVile: Archvile Replaces Archvile
 		TNT1 A 0 ACS_NamedExecuteAlways("BDCHeckClassicMonsters", 0, 0, 0, 0);//Check if Vanilla Mode is activated
 		
 	Spawn2:	
-		DIAB B 20 A_Look();
+		DIAB B 10 A_Look();
 		Loop;
 	See:
 		DIAB AA 2 A_VileChase();

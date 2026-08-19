@@ -102,15 +102,8 @@ class BDPPistolZombiemanHelmet : BDPPistolZombieman
 		9OS2 A 1;
 		Goto Stand;
 	Stand:
-		TNT1 A 0 A_CheckSight("Stand2");
-		9OS2 A 12 A_Look();
-		9OS2 H 12 A_Look();
+		9OS2 AH 10 A_Look();
 		Loop;
-	Stand2:
-		9OS2 A 12 A_Look();
-		9OS2 H 12 A_Look();
-		TNT1 A 0 A_CheckSight("Stand2");
-		Goto Stand;
 	SearchForPlayer:
 	Idle:
 		TNT1 A 0 A_ClearTarget();

@@ -53,8 +53,7 @@ class BDPCyberdemon : Cyberdemon Replaces Cyberdemon
 		//TNT1 A 0 A_JumpIf(x == -1472, "ReplaceForBOSS")
 		TNT1 A 0 A_GiveInventory("TargetIsACyberdemon");
 	Stand:
-		CYBR Z 10 A_Look();
-		CYBR D 10 A_Look();
+		CYBR ZD 10 A_Look();
 		Loop;
 	See:
 		TNT1 A 0 A_SpawnItem("HeavyFootSteps32");

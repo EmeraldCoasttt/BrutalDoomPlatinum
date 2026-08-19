@@ -126,13 +126,8 @@ class BDPShotgunGuyHelmet : BDPShotgunGuy
 		SP1S C 1;
 		Goto Stand;
 	Stand:
-		TNT1 A 0 A_CheckSight("Stand2");
-		SP1S C 11 A_Look();
+		SP1S C 10 A_Look();
 		Loop;
-	Stand2:
-		SP1S C 11 A_Look();
-		TNT1 A 0 A_CheckSight("Stand2");
-		Goto Stand;
 	Pain.GAvoid:
 		TNT1 A 0 A_JumpIfHealthLower(1, "Death");
 		SP1S DDCC 2 A_Recoil(3);
