@@ -805,6 +805,8 @@ CLASS MeleeAttack : Actor
 					target.giveinventory("hasagib",1);
 				}
 			*/
+			if(!victim.bSHOOTABLE && !victim.bSOLID) return 1;
+			
 			If(target && target.findinventory("powerstrength"))
 				{
 					If(victim && victim is "ExplosiveBarrel1")

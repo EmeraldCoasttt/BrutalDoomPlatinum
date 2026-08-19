@@ -156,7 +156,6 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 	+WEAPON.NOAUTOAIM
 	+WEAPON.NOAUTOFIRE
 	+WEAPON.NOALERT
-	+NOBLOOD
 	}
 	
 	override void beginplay()
