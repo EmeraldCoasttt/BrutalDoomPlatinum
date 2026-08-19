@@ -29,7 +29,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 	Default
 	{
 		Weapon.AmmoType "BDPCell";
-		BDPWeaponBase.MagCapacity 50;
+		BDPWeaponBase.MagCapacity 40;
 		Weapon.SisterWeapon "BDPPlasmaRifle";
 		+WEAPON.POWERED_UP
 		+BDPWeaponBase.DUALWEAPON
@@ -272,7 +272,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		}
 		TNT1 A 6 A_DrawDualOverlays("DeselectLeft", "DeselectRight");
 		TNT1 A 8;
-		TNT1 A 0 A_JumpIf(DualMag() == 50, "ReloadLeft");
+		TNT1 A 0 A_JumpIf(DualMag() == 40, "ReloadLeft");
 		TNT1 A 0
 		{
 			let spentmag = BDP_SpentMag(A_FireProjectileDX("BDP_SpentCell", random(75, 85), random(35, 55), 0, 25, -20));
@@ -292,7 +292,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		PRSR PQRSTTTTUV 1;
 		PRR1 FGHBA 1;
 		TNT1 A 8;
-		TNT1 A 0 A_JumpIf(invoker.mag == 50 || CountInv("BDPCell") == 0, "FinishReload");
+		TNT1 A 0 A_JumpIf(invoker.mag == 40 || CountInv("BDPCell") == 0, "FinishReload");
 	ReloadLeft:
 		TNT1 A 0
 		{

@@ -33,7 +33,7 @@ class BDPPlasmaRifle : BDPWeaponBase
 		Weapon.AmmoGive 40;
 		Inventory.PickupSound "PLSDRAW";
 		Weapon.AmmoType "BDPCell";
-		BDPWeaponBase.MagCapacity 50;
+		BDPWeaponBase.MagCapacity 40;
 		Tag "$BDPPLASMA";
 		Inventory.PickupMessage "You got the Plasma Rifle! (Slot 6)";
 		inventory.althudicon "PRASA0";
