@@ -280,7 +280,7 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 		SHTZ A 1;
 		goto Ready;
 	Spawn:
-		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3", "Spawn4", "Spawn5", "Spawn6");
+		TNT1 A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
 		Loop;
 	Spawn1:
 		SGN2 B 1 A_JumpIfInventory("AmmoTaken", 1, "SpawnNoAmmo");

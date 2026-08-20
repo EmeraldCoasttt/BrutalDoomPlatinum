@@ -50,7 +50,7 @@ class BDPShotgun : BDPWeaponBase
 		SHTA UTSR 1 A_SetSprites("TNT1A0",1);
 		Stop;
 	Spawn:
-		TNT1 A 0 NoDelay A_jump(256,"spawn1","spawn2","spawn3","spawn4","spawn5","spawn6");
+		TNT1 A 0 NoDelay A_jump(256,"spawn1","spawn2","spawn3");
 		LOOP;
 	Spawn1:
 		SHTC B 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
