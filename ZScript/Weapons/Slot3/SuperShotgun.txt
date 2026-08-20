@@ -324,6 +324,7 @@ CLASS BDPSuperShotgun : BDPWeaponBase
 				A_SetFrame(16);
 		}
 		TNT1 A 0 {
+			A_TakeMag(2);
 			A_StartSound("foley/SSGshellEject",10,0,0.5);
 			A_FireProjectileDX(invoker.uraniumShells ? "BDP_UnspentUraniumShell" : "BDP_UnspentSSGShell", random(80, 100), random(-50, -70), -4, 25, -14);
 			A_FireProjectileDX(invoker.uraniumShells ? "BDP_UnspentUraniumShell" : "BDP_UnspentSSGShell", random(80, 100), random(-50, -70), -2, 25, -13);
