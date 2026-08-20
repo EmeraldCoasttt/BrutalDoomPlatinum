@@ -50,7 +50,7 @@ class BDPShotgun : BDPWeaponBase
 		SHTA UTSR 1 A_SetSprites("TNT1A0",1);
 		Stop;
 	Spawn:
-		TNT1 A 0 NoDelay A_jump(256,"spawn1","spawn2","spawn3","spawn4","spawn5","spawn6");
+		TNT1 A 0 NoDelay A_jump(256,"spawn1","spawn2","spawn3");
 		LOOP;
 	Spawn1:
 		SHTC B 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
@@ -243,13 +243,14 @@ class BDPShotgun : BDPWeaponBase
 		SHTN H 1 A_StartSound("weapons/sgpump", 3);
 		TNT1 A 0
 		{
+			A_TakeMag();
 			if(invoker.glassSlugs)
 			{
-				A_FireProjectileDX("BDP_SpentShell", random(-85, -95), random(-20, -40), -10, 30, -15);
+				A_FireProjectileDX("BDP_UnSpentShell", random(-85, -95), random(-20, -40), -10, 30, -15);
 			}
 			else
 			{
-				A_FireProjectileDX("BDP_SpentGlassShell", random(-85, -95), random(-20, -40), -10, 30, -15);
+				A_FireProjectileDX("BDP_UnSpentGlassShell", random(-85, -95), random(-20, -40), -10, 30, -15);
 			}
 			invoker.emptyChamber = false;
 		}

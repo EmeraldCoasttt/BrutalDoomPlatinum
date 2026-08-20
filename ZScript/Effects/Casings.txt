@@ -186,6 +186,9 @@ class BDP_UnspentShell : BDP_SpentCasing
 	Spawn:
 		SH35 A 3;
 		Goto Fly;
+	Death:
+		TNT1 A 0 A_SpawnItemEx("BDP_UnspentShellPickup");
+		Stop;
 	}
 }
 
@@ -196,6 +199,9 @@ class BDP_UnspentGlassShell : BDP_UnspentShell
 	Spawn:
 		SH36 A 3;
 		Goto Fly;
+	Death:
+		TNT1 A 0 A_SpawnItemEx("BDP_UnspentGlassShellPickup");
+		Stop;
 	}
 }
 
@@ -206,6 +212,9 @@ class BDP_UnspentDragonsBreathShell : BDP_UnspentShell
 	Spawn:
 		SH37 A 3;
 		Goto Fly;
+	Death:
+		TNT1 A 0 A_SpawnItemEx("BDP_UnspentDragonsBreathShellPickup");
+		Stop;
 	}
 }
 
@@ -226,6 +235,9 @@ class BDP_UnspentUraniumShell : BDP_UnspentShell
 	Spawn:
 		SH38 A 3 NoDelay A_SetRoll(-135);
 		Goto Fly;
+	Death:
+		TNT1 A 0 A_SpawnItemEx("BDP_UnspentUraniumShellPickup");
+		Stop;
 	}
 }
 

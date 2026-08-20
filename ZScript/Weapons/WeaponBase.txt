@@ -156,6 +156,7 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 	+WEAPON.NOAUTOAIM
 	+WEAPON.NOAUTOFIRE
 	+WEAPON.NOALERT
+	+forcexybillboard;
 	}
 	
 	override void beginplay()
@@ -1558,6 +1559,17 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 		Goto Ready;
 	NoAmmo:
 		TNT1 A 0 A_DryFire();
+		TNT1 A 0
+		{
+			if(invoker.aimMode > 0)
+			{
+				return resolvestate("Aim");
+			}
+			return resolvestate("Ready");
+		}
+		Goto Ready;
+	NoAmmoNoClick:
+		TNT1 A 0 A_DryFire("null",false);
 		TNT1 A 0
 		{
 			if(invoker.aimMode > 0)
