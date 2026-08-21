@@ -488,6 +488,9 @@ class BDP_HUD : DoomStatusBar
 		if (CPlayer.mo.CountInv("PowerShield") || CPlayer.mo.CountInv("PowerShield2"))
 			{
 				DrawImage("HASARMR", iconPos + smallIconOfs,DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
+				DrawImage(CPlayer.mo.CountInv("PowerShieldCharge") < 3 ? "ARMRCHR2" : "ARMRCHRG", iconPos + smallIconOfs + (6, 0), DI_ITEM_LEFT_TOP);
+				DrawImage(CPlayer.mo.CountInv("PowerShieldCharge") < 2 ? "ARMRCHR2" : "ARMRCHRG", iconPos + smallIconOfs + (6, 2), DI_ITEM_LEFT_TOP);
+				DrawImage(CPlayer.mo.CountInv("PowerShieldCharge") < 1 ? "ARMRCHR2" : "ARMRCHRG", iconPos + smallIconOfs + (6, 4), DI_ITEM_LEFT_TOP);
 			}
 		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(Cplayer.mo);
 		If(BDPplr && BDPplr.extralives > 0)
@@ -520,7 +523,7 @@ class BDP_HUD : DoomStatusBar
 				// armor absorption
 				DrawString(
 					mconfont,
-					String.Format("%d%", Cplayer.mo.countinv("PowerShieldCharge")),
+					"100%",
 					iconPos + (7, -5),
 					numFlags,
 					translation: GetArmorAbsorbColor(armor),
@@ -557,7 +560,7 @@ class BDP_HUD : DoomStatusBar
 				// armor absorption
 				DrawString(
 					mconfont,
-					String.Format("%d%", Clamp(armor.savepercent * 100, 0, 99)),
+					String.Format("%d%%", Clamp(armor.savepercent * 100, 0, 100)),
 					iconPos + (7, -5),
 					numFlags,
 					translation: GetArmorAbsorbColor(armor),
