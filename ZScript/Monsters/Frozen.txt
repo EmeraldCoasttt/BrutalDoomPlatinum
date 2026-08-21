@@ -1342,7 +1342,7 @@ class XIceChunk3 : XIceChunk1
 {
 	Default
 	{
-		-DOOMBOUNCE
+		BounceType "None";
 		Gravity 0.4;
 		Speed 6;
 	}

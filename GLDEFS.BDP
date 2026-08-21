@@ -313,11 +313,7 @@ object PlasmaBall75
     frame PLSS { light PLASMABALLSMALLer }
     frame PBAL { light PLASMABALLSMALLer }
 }
-object PlasmaBall99
-{
-    frame PLSS { light PLASMABALLSMALLer }
-    frame PBAL { light PLASMABALLSMALLer }
-}
+
 //
 flickerlight BFG10kLight
 {

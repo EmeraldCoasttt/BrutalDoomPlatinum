@@ -290,7 +290,7 @@ ACTOR EmptyPistolClipSpawn
 	{
 	Spawn:
 		TNT1 A 0
-		TNT1 A 1 A_CustomMissile("EmptyPistolMag",1,0,random(85,95),2,1)
+		TNT1 A 1 A_CustomMissile("BDP_SpentPistolMag",1,0,random(85,95),2,1)
 		Stop
 	}
 }
@@ -303,7 +303,7 @@ ACTOR EmptyClipSpawn
 	{
 	Spawn:
 		TNT1 A 0
-		TNT1 A 1 A_CustomMissile("EmptyClip",1,0,random(85,95),2,1)
+		TNT1 A 1 A_CustomMissile("BDP_SpentRifleMag",1,0,random(85,95),2,1)
 		Stop
 	}
 }
@@ -316,7 +316,7 @@ ACTOR EmptyASGDrumSpawn
 	{
 	Spawn:
 		TNT1 A 0
-		TNT1 A 1 A_CustomMissile("EmptypASGDrum",1,-2,random(105,115),2,1)
+		TNT1 A 1 A_CustomMissile("BDP_SpentASGMag",1,-2,random(105,115),2,1)
 		Stop
 	}
 }
@@ -330,7 +330,7 @@ ACTOR RocketCaseSpawn
 	{
 	Spawn:
 				TNT1 A 0
-		TNT1 A 1 A_CustomMissile("EmptyRocketChamber",0,0,random(-80,-100),2,random(40,60))
+		TNT1 A 1 A_CustomMissile("BDP_SpentRocketDrum",0,0,random(-80,-100),2,random(40,60))
 		Stop
 	}
 } 
@@ -345,7 +345,7 @@ ACTOR RocketCaseSpawn2
 	{
 	Spawn:
 				TNT1 A 0
-		TNT1 A 1 A_CustomMissile("RocketChamber",0,0,random(-80,-100),2,random(40,60))
+		TNT1 A 1 A_CustomMissile("BDP_SpentRocketDrum",0,0,random(-80,-100),2,random(40,60))
 		Stop
 	}
 } 
@@ -359,7 +359,7 @@ ACTOR RifleCaseSpawn
 	{
 	Spawn:
 				TNT1 A 0
-		TNT1 A 1 A_CustomMissile("BDPSpentRifleCasing",1,0,random(-80,-100),2,random(45,80))
+		TNT1 A 1 A_CustomMissile("BDP_SpentRifleCasing",1,0,random(-80,-100),2,random(45,80))
 		Stop
 	}
 }
@@ -371,7 +371,7 @@ ACTOR PlasmaCaseSpawn : RifleCaseSpawn
 	{
 	Spawn:
 				TNT1 A 0
-		TNT1 A 1 A_CustomMissile("EmptyCell",0,0,random(-80,-100),2,random(40,60))
+		TNT1 A 1 A_CustomMissile("BDP_SpentCell",0,0,random(-80,-100),2,random(40,60))
 		Stop
 	}
 } 
@@ -385,7 +385,7 @@ ACTOR MP40CaseSpawn : RifleCaseSpawn
 	{
 	Spawn:
 				TNT1 A 0
-		TNT1 A 1 A_CustomMissile("PistolCasing",0,0,random(80,100),2,random(15,30))
+		TNT1 A 1 A_CustomMissile("BDP_SpentPistolCasing",0,0,random(80,100),2,random(15,30))
 		Stop
 	}
 } 
@@ -402,7 +402,7 @@ ACTOR RifleCaseSpawnVersion2
 				TNT1 A 0
 		//TNT1 A 1 A_CustomMissile("EmptyBrass",1,0,random(-80,-100),2,random(45,80))
 		//TNT1 A 1 A_CustomMissile("EmptyBrass",1,0,random(-85,-95),2,random(25,40))
-		TNT1 A 1 A_CustomMissile("BDPSpentRifleCasing",6,-3,random(-80,-100),2,random(10,25))
+		TNT1 A 1 A_CustomMissile("BDP_SpentRifleCasing",6,-3,random(-80,-100),2,random(10,25))
 		Stop
 	}
 }
@@ -449,7 +449,7 @@ ACTOR ShotCaseSpawn : RifleCaseSpawn
 	{
 	Spawn:
 				TNT1 A 0
-		TNT1 A 1 A_CustomMissile("BDPSpentShell",0,0,random(-80,-100),2,random(40,60))
+		TNT1 A 1 A_CustomMissile("BDP_SpentShell",0,0,random(-80,-100),2,random(40,60))
 		Stop
 	}
 } 
@@ -460,7 +460,7 @@ ACTOR ShotCaseSpawn2 : RifleCaseSpawn
 	{
 	Spawn:
 				TNT1 A 0
-		TNT1 A 1 A_CustomMissile("BDPUnspentShell",0,0,random(-80,-100),2,random(40,60))
+		TNT1 A 1 A_CustomMissile("BDP_UnspentShell",0,0,random(-80,-100),2,random(40,60))
 		Stop
 	}
 } 
@@ -504,7 +504,7 @@ ACTOR PistolCaseSpawn : RifleCaseSpawn
 	{
 	Spawn:
 				TNT1 A 0
-		TNT1 A 1 A_CustomMissile("BDPSpentPistolCasing",0,0,random(-80,-100),2,random(40,60))
+		TNT1 A 1 A_CustomMissile("BDP_SpentPistolCasing",0,0,random(-80,-100),2,random(40,60))
 		Stop
 	}
 } 
@@ -527,7 +527,7 @@ ACTOR ShotCaseSpawnADS : RifleCaseSpawn
 	{
 	Spawn:
 				TNT1 A 0
-		TNT1 A 1 A_CustomMissile("BDPSpentShell",0,0,random(-80,-100),2,random(10,20))
+		TNT1 A 1 A_CustomMissile("BDP_SpentShell",0,0,random(-80,-100),2,random(10,20))
 		Stop
 	}
 } 
@@ -537,7 +537,7 @@ ACTOR ShotCaseSlugSpawn : RifleCaseSpawn
 	{
 	Spawn:
 				TNT1 A 0
-		TNT1 A 1 A_CustomMissile("BDPSpentGlassShell",0,0,random(-80,-100),2,random(40,60))
+		TNT1 A 1 A_CustomMissile("BDP_SpentGlassShell",0,0,random(-80,-100),2,random(40,60))
 		Stop
 	}
 } 
@@ -547,7 +547,7 @@ ACTOR ShotCaseSlugSpawn2 : RifleCaseSpawn
 	{
 	Spawn:
 				TNT1 A 0
-		TNT1 A 1 A_CustomMissile("BDPUnspentGlassShell",0,0,random(-80,-100),2,random(40,60))
+		TNT1 A 1 A_CustomMissile("BDP_UnspentGlassShell",0,0,random(-80,-100),2,random(40,60))
 		Stop
 	}
 } 
@@ -557,7 +557,7 @@ ACTOR ShotCaseSlugSpawnADS : RifleCaseSpawn
 	{
 	Spawn:
 				TNT1 A 0
-		TNT1 A 1 A_CustomMissile("BDPSpentGlassShell",0,0,random(-80,-100),2,random(10,20))
+		TNT1 A 1 A_CustomMissile("BDP_SpentGlassShell",0,0,random(-80,-100),2,random(10,20))
 		Stop
 	}
 } 
@@ -580,7 +580,7 @@ ACTOR DragonShotCaseSpawn : RifleCaseSpawn
 	{
 	Spawn:
 				TNT1 A 0
-		TNT1 A 1 A_CustomMissile("BDPSpentDragonsBreathShell",0,0,random(-80,-100),2,random(40,60))
+		TNT1 A 1 A_CustomMissile("BDP_SpentDragonsBreathShell",0,0,random(-80,-100),2,random(40,60))
 		Stop
 	}
 } 
@@ -591,7 +591,7 @@ ACTOR DragonShotCaseSpawn2 : RifleCaseSpawn
 	{
 	Spawn:
 				TNT1 A 0
-		TNT1 A 1 A_CustomMissile("BDPUnspentDragonsBreathShell",0,0,random(-80,-100),2,random(40,60))
+		TNT1 A 1 A_CustomMissile("BDP_UnspentDragonsBreathShell",0,0,random(-80,-100),2,random(40,60))
 		Stop
 	}
 } 
@@ -606,7 +606,7 @@ Actor SSGCaseSpawner : ShotcaseSpawn
 				TNT1 A 0//1
 				Goto Death
 		Death:
-				TNT1 A 0 A_CustomMissile("BDPSpentSSGShell",0,0,random(80,100),2,random(50,70))
+				TNT1 A 0 A_CustomMissile("BDP_SpentSSGShell",0,0,random(80,100),2,random(50,70))
 				Stop
 		}
 }
@@ -618,7 +618,7 @@ Actor SSGUraniumCaseSpawner: SSGCaseSpawner
 	Spawn:
 		TNT1 A 0
 	Death:
-		TNT1 A 0 A_CustomMissile("BDPSpentUraniumShell",0,0,random(80,100),2,random(50,70))
+		TNT1 A 0 A_CustomMissile("BDP_SpentUraniumShell",0,0,random(80,100),2,random(50,70))
 		Stop
 	}
 }
@@ -630,7 +630,7 @@ Actor SSGCaseSpawner2 : SSGCaseSpawner
 		Spawn:
 			TNT1 A 0
 		Death:
-			TNT1 A 0 A_CustomMissile("BDPUnspentSSGShell",0,0,random(80,100),2,random(50,70))
+			TNT1 A 0 A_CustomMissile("BDP_UnspentSSGShell",0,0,random(80,100),2,random(50,70))
 			Stop
 		}
 }
@@ -642,7 +642,7 @@ Actor SSGUraniumCaseSpawner2 : SSGCaseSpawner
 	Spawn:
 		TNT1 A 0
 	Death:
-		TNT1 A 0 A_CustomMissile("BDPUnspentUraniumShell",0,0,random(80,100),2,random(50,70))
+		TNT1 A 0 A_CustomMissile("BDP_UnspentUraniumShell",0,0,random(80,100),2,random(50,70))
 		Stop
 	}
 }
