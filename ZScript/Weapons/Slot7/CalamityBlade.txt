@@ -262,6 +262,7 @@ class BDPCalamityBlade : BDPWeaponBase
 		HETF CDEF 1;
 		BFGN A 0 A_startSound("DoomRR/heatwave/ready");
 		HETG HHHHGFEDCB 1;
+		TNT1 A 0 A_RefireDX();
 		Goto Ready;
 	}
 }

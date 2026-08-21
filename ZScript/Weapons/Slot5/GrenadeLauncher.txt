@@ -151,6 +151,7 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		TNT1 A 1 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_StartSound("Weapons/GrenadeClose");
 		GLSA DCBA 1 A_WeaponReady(WRF_NOFIRE);
+		TNT1 A 0 A_RefireDX();
 		Goto StrapIdle;
 	ReloadHaste:
 		GLR1 ACEGG 1;
