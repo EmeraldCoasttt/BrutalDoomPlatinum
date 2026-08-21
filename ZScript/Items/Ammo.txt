@@ -211,7 +211,7 @@ class BDPClip1 : BDPAmmo
 {
 	Default
 	{
-		Inventory.PickupMessage "Picked up pistol ammo.";
+		Inventory.PickupMessage "Picked up semi-auto ammo.";
 		Inventory.Amount 15;
 		Inventory.MaxAmount 100;
 		Ammo.BackpackAmount 15;
@@ -255,7 +255,7 @@ class BDPClip2 : BDPAmmo
 	
 	Default
 	{
-		Inventory.PickupMessage "Picked up rifle ammo.";
+		Inventory.PickupMessage "Picked up full-auto ammo.";
 		Inventory.Amount 30;
 		Inventory.MaxAmount 300;
 		Ammo.BackpackAmount 30;
@@ -312,7 +312,7 @@ class BDPShell : BDPAmmo replaces Shell
 	}
 	override string PickupMessage()
 	{
-		return string.format(amount > 1 ? "Picked up %d shotgun shells" : "Picked up a shotgun shell",amount);
+		return string.format(amount > 1 ? "Picked up %d shotgun shells." : "Picked up a shotgun shell.",amount);
 	}
 	States
 	{
@@ -475,6 +475,12 @@ class BDPRocketAmmo : BDPAmmo replaces RocketAmmo
 	Inventory.Pickupsound "RCKCLIP";
 	+SQUAREPIXELS
 	}
+	
+	override string PickupMessage()
+	{
+		return string.format(amount > 1 ? "Picked up %d rockets." : "Picked up a rocket.",amount);
+	}
+	
 	States
 	{
 	Spawn:
