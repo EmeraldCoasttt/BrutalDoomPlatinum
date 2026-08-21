@@ -632,7 +632,8 @@ class BDP_SpentRailgunShell : BDP_SpentMag
 {
 	Default
 	{
-		Scale 0.3;
+		Scale 0.2;
+		+STRETCHPIXELS
 		BounceFactor 0.7;
 	}
 	

@@ -266,7 +266,7 @@ class BDP_Railgun : BDP_Weapon
 				If(invoker.emptyChamber)
 				{
 					A_startsound("Railgun/Eject",2);
-					A_FireProjectile("BDP_SpentRailgunShell",0,0,0,0,0,0);
+					A_FireProjectileDX("BDP_SpentRailgunShell", random(-65, -85), random(-25, -45), 16, 20, -14);
 					if(invoker.mag < 1)
 					{
 						takeinventory("railchambered",1);
@@ -407,7 +407,7 @@ class BDP_Railgun : BDP_Weapon
 	FireAimCont:
 		TNT1 A 0 A_StartSound("RAILMAG2", 5);
 		SNIP CC 1 BRIGHT;
-		TNT1 A 0 {A_startsound("Railgun/Eject",2); A_FireProjectile("BDP_SpentRailgunShell",0,0,0,0,0,0);}
+		TNT1 A 0 {A_startsound("Railgun/Eject",2); A_FireProjectileDX("BDP_SpentRailgunShell", random(-65, -85), random(-25, -45), 24, 5);}
 		SNIP CCCCCCCCCCCCCCCCCCC 1 BRIGHT A_FireProjectileDX("Smallgunbarrelsmoke",frandom(-35,-45),frandom(-20,-30));
 		TNT1 A 0 {invoker.emptyChamber = false;}
 		SNIP CCCC 1 BRIGHT;
