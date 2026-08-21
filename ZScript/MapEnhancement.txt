@@ -1896,6 +1896,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(11010, (128, -3456, -999), 80);
 					AddThing(11010, (1536, -640, -999), 80);
 					AddThing(11010, (576, -1152, -999), 80);
+					AddThing(3134, (1296, 144, 128));
 				}
 				Break;
 
