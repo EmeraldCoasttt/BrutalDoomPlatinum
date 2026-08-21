@@ -16,7 +16,7 @@ class BDPPlasmaRifle : BDPWeaponBase
 				psp.frame = noframe;
 			else if(invoker.mag < 11)
 				psp.frame = lowframe;
-			else if(invoker.mag < 31)
+			else if(invoker.mag < 21)
 				psp.frame = medframe;
 			else
 				psp.frame = highframe;

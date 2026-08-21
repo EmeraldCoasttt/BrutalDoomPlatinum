@@ -15,7 +15,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 				psp.sprite = GetSpriteIndex(nosprite);
 			else if(target.mag < 11)
 				psp.sprite = GetSpriteIndex(lowsprite);
-			else if(target.mag < 31)
+			else if(target.mag < 21)
 				psp.sprite = GetSpriteIndex(medsprite);
 			else
 				psp.sprite = GetSpriteIndex(highsprite);
