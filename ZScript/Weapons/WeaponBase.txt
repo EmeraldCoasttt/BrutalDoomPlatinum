@@ -224,9 +224,12 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 	action void A_KeepSprinting(int flags = 0) {}
 	override state GetAtkState(bool hold)
 	{
-		let dplr = BDPPlayerPawn(owner);
-		dplr.blockSprint = true;
-		dplr.bSPRINTING = false;
+		if(!bMELEEWEAPON)
+		{
+			let dplr = BDPPlayerPawn(owner);
+			dplr.blockSprint = true;
+			dplr.bSPRINTING = false;
+		}
 		owner.player.SetPSprite(49,null);
 		owner.player.SetPSprite(50,null);
 		firing = true;
