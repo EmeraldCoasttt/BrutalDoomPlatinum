@@ -256,7 +256,7 @@ class BDP_SpentGrenade : BDP_SpentCasing
 		N4D1 A 3 NoDelay A_SetRoll(-135);
 		Goto Fly;
 	Death:
-		#### A 0
+		#### B 0
 		{
 			bXFLIP = random(0,1);
 			A_SetRoll(random(-1, 1) * 90);
@@ -272,6 +272,32 @@ class BDP_SpentChaosGrenade : BDP_SpentGrenade
 	Spawn:
 		N4D2 A 3 NoDelay A_SetRoll(-135);
 		Goto Fly;
+	}
+}
+
+class BDP_UnspentGrenade : BDP_SpentGrenade
+{
+	States
+	{
+	Spawn:
+		N4D3 A 3 NoDelay A_SetRoll(-135);
+		Goto Fly;
+	Death:
+		TNT1 A 0 A_SpawnItemEx("BDP_UnspentGrenadePickup");
+		Stop;
+	}
+}
+
+class BDP_UnspentChaosGrenade : BDP_SpentGrenade
+{
+	States
+	{
+	Spawn:
+		N4D4 A 3 NoDelay A_SetRoll(-135);
+		Goto Fly;
+	Death:
+		TNT1 A 0 A_SpawnItemEx("BDP_UnspentChaosGrenadePickup");
+		Stop;
 	}
 }
 

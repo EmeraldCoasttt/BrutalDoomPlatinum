@@ -184,7 +184,13 @@ class BDP_GrenadeLauncher : BDP_Weapon
 		GLR1 ABCDEFGGGG 1;
 		TNT1 A 0 A_StartSound("foley/GLDownwardsToOpen",10);
 		GLR1 FHIJKL 1;
-		TNT1 A 0 A_StartSound("Weapons/GrenadeOpen");
+		TNT1 A 0
+		{
+			A_FireProjectileDX(invoker.chaosGrenades ? "BDP_UnspentChaosGrenade" : "BDP_UnspentGrenade", random(80, 100), random(-50, -70), 2, 35, -26);
+			A_TakeMag(1);
+			A_StartSound("foley/GLEjectShell",11);
+			A_StartSound("Weapons/GrenadeOpen");
+		}
 		GLR1 MNOPP 1;
 		GLR1 A 0 A_jumpif(invoker.chaosGrenades, 2);
 		GLR4 A 0;
@@ -203,6 +209,7 @@ class BDP_GrenadeLauncher : BDP_Weapon
 				invoker.chaosGrenades = 1;
 				A_Print("\cdChaos Field Grenades",2);
 			}
+			A_ReloadMag();
 			A_StartSound("Weapons/GrenadeLoad");
 		}
 		GLR1 XYZ 1;
