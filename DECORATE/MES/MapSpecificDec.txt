@@ -135,15 +135,15 @@ ACTOR BDECDestroyedCar: BDdecorationBase 11004
  -THRUACTORS
  HEalth 50
  DamageFactor "Stomp", 999.0
- Radius 28
- Height 48
+ Radius 29
+ Height 40
  States
 	{
 		Spawn:
 		ELEC C 1
-		TNT1 A 0 A_SpawnItemEx("BDECCarColision", 40, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
-		TNT1 A 0 A_SpawnItemEx("BDECCarColision", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
-		TNT1 A 0 A_SpawnItemEx("BDECCarColision", -40, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_SpawnItemEx("BDECCarColision", 66, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_SpawnItemEx("BDECCarColision", 33, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
+		TNT1 A 0 A_SpawnItemEx("BDECCarColision", -43, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
 		ELEC C -1
 		Stop
 		
@@ -178,7 +178,7 @@ ACTOR BDECCarColision: BDdecorationBase
  +SHOOTABLE
  +NOBLOOD
  DamageFactor "Stomp", 9999.0
- Radius 32
+ Radius 29
  Height 28
  States
 	{
