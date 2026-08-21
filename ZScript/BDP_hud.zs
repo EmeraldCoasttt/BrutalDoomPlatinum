@@ -824,9 +824,9 @@ class BDP_HUD : DoomStatusBar
 					iconName = "SUITA0";
 					col = Font.CR_Green;
 				}
-				else if (item is "PowerInvulnerable")
+				else if (item is "BDP_PowerInvulnerable")
 				{
-					iconName = "BDP_PINVB0";
+					iconName = "PINVB0";
 					col = Font.CR_Black;
 				}
 				else if (item is "BDP_PowerInvisibility")
