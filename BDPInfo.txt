@@ -23,8 +23,8 @@ bdp_calamityblade,bfg,1
 bdp_unmaker,bfg,1
 bdp_revolver,secret,1
 bdp_battlerifle,secret,1
-energyarmor,secret,2
+bdp_energyarmor,secret,2
 quadsigil,secret,2
 hastesphere,secret,2
-boosterframe,secret,2
+bdp_boosterframe,secret,2
 ragesphere,secret,3
