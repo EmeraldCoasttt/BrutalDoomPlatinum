@@ -1,4 +1,4 @@
-class BDPVehCamera : VehCamera
+class BDP_VehicleCamera : VehCamera
 {
 	double dist_xy, dist_z;
 	double zmin, zmax;
@@ -32,10 +32,10 @@ class BDPVehCamera : VehCamera
 		followpos.z = clamp(followpos.z, zmin, zmax);
 		
 		vector3 topos = level.vec3offset(followact.pos, followpos + relposoffs);
-		vector3 curpos = BDPMath.Lerp3D(pos, topos, 0.65);
+		vector3 curpos = BDP_Math.Lerp3D(pos, topos, 0.65);
 		curpos.z += base.GetBobOffset();
 		
-		let BDPveh = BDPVehicle(base);
+		let BDPveh = BDP_Vehicle(base);
 		if(BDPveh)
 		{
 			FLineTraceData lt;
@@ -49,7 +49,7 @@ class BDPVehCamera : VehCamera
 	}
 }
 
-class BDPVehicle : VehBase
+class BDP_Vehicle : VehBase
 {
 	double veharmor;
 	Property Armored : veharmor;
@@ -93,9 +93,9 @@ class BDPVehicle : VehBase
 		}
 	}
 	
-	virtual BDPVehCamera SetupBDPCamera(class<BDPVehCamera> cam = "BDPVehCamera", double dist = 50, double offs_oz = 50, double zmin = 50, double zmax = 80, bool setcam = true)
+	virtual BDP_VehicleCamera SetupBDPCamera(class<BDP_VehicleCamera> cam = "BDP_VehicleCamera", double dist = 50, double offs_oz = 50, double zmin = 50, double zmax = 80, bool setcam = true)
 	{
-		let vehcam = BDPVehCamera(SetupCamera(camtype:cam, setcam:setcam));	
+		let vehcam = BDP_VehicleCamera(SetupCamera(camtype:cam, setcam:setcam));	
 		if(vehcam)
 		{
 			vehcam.dist_xy = dist;
@@ -130,7 +130,7 @@ class BDPVehicle : VehBase
 					if(abs(hitdiff.x) > 30) continue;
 					
 					vector2 hitdir = (cos(hitang), sin(hitang));
-					double force = BDPMath.GetInertia(roadkill.mass) * vel.length() * 1.5;
+					double force = BDP_Math.GetInertia(roadkill.mass) * vel.length() * 1.5;
 					double massmod = (mass/300.0);
 					
 					//vel.xy -= hitdir * vel.length() * knockback;
@@ -159,7 +159,7 @@ class BDPVehicle : VehBase
 						Actor mo;
 					while (mo = Actor(it.Next()))
 			{
-				If(mo is "BDPVEHICLE")
+				If(mo is "BDP_Vehicle")
 				potentialspecies++;
 			}
 		species = vehiclespecies[potentialspecies - 1];

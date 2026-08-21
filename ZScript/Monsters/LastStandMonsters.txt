@@ -17,7 +17,7 @@ class ZombiemanLastStand1 : ZombiemanGotHisLegBlowed
 	States
 	{
 	Spawn:
-		TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
+		TNT1 A 0 NODELAY A_spawnitemex("BDP_ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
 		ZBLS A 1 A_Look();
 		Goto See;
 	See:
@@ -104,7 +104,7 @@ class ZombiemanLastStand2 : DyingZombiemanNoArm
 	States
 	{
 	Spawn:
-		TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
+		TNT1 A 0 NODELAY A_spawnitemex("BDP_ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
 		ZBLS C 1 A_Look();
 		Goto See;
 	See:
@@ -187,7 +187,7 @@ class SergeantLastStand1 : sergeantgothislegblowed
 	States
 	{
 	Spawn:
-		TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
+		TNT1 A 0 NODELAY A_spawnitemex("BDP_ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
 		ZSLS A 1 A_Look();
 		Goto See;
 	See:
@@ -273,7 +273,7 @@ class SergeantLastStand2 : DyingSergeant
 	States
 	{
 	Spawn:
-		TNT1 A 0 NODELAY A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
+		TNT1 A 0 NODELAY A_spawnitemex("BDP_ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
 		ZSLS C 1 A_Look();
 		Goto See;
 	See:

@@ -4,7 +4,7 @@
 //
 //===========================================================================
 
-class BDPDemon : Demon Replaces Demon
+class BDP_Demon : Demon Replaces Demon
 {
 	Default
 	{
@@ -625,14 +625,14 @@ class BDPDemon : Demon Replaces Demon
 	Death.Frost:
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
-		TNT1 A 0 A_SpawnItem("FrozenDemon");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenDemon");
 		Stop;
 	Death.Massacre:
 		Goto Death;
 	}
 }
 
-class BDPDemonDamaged : BDPDemon
+class BDP_DemonDamaged : BDP_Demon
 {
 	Default
 	{
@@ -641,7 +641,7 @@ class BDPDemonDamaged : BDPDemon
 	}
 }
 
-class ArmlessDemon: BDPDemon
+class ArmlessDemon: BDP_Demon
 {
 	Default
 	{

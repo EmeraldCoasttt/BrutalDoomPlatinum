@@ -49,7 +49,7 @@ class MenuElement : Object abstract ui
 	
 	virtual void drawCollider()
 	{
-		BDPDrawer.DrawRect(pos, size);
+		BDP_Drawer.DrawRect(pos, size);
 	}
 	
 	virtual bool canCollide(MenuElement other)
@@ -177,8 +177,8 @@ class MenuCursor : MenuElement
 	override void Update(double dT)
 	{
 		// Convert mouse coords from absolute to relative.
-		double xRel = Screen.GetWidth() / BDPDrawer.getBaseWidth();
-		double yRel = Screen.GetHeight() / BDPDrawer.getBaseHeight();
+		double xRel = Screen.GetWidth() / BDP_Drawer.getBaseWidth();
+		double yRel = Screen.GetHeight() / BDP_Drawer.getBaseHeight();
 		
 		pos = (mouseCoords.x / xRel, mouseCoords.y / yRel);
 		
@@ -232,21 +232,21 @@ class MenuButton : MenuElement
 }
 
 // Debug drawing
-extend class BDPDrawer
+extend class BDP_Drawer
 {
 	static void DrawRect(vector2 pos, vector2 size, Color col = 0xFFFF00FF)
 	{
 		// Top
-		BDPDrawer.DrawThickLine(pos.x, pos.y, pos.x + size.x, pos.y, 2.0, col);
+		BDP_Drawer.DrawThickLine(pos.x, pos.y, pos.x + size.x, pos.y, 2.0, col);
 		// Bottom
-		BDPDrawer.DrawThickLine(pos.x, pos.y + size.y, pos.x + size.x, pos.y + size.y, 2.0, col); 
+		BDP_Drawer.DrawThickLine(pos.x, pos.y + size.y, pos.x + size.x, pos.y + size.y, 2.0, col); 
 		// Left
-		BDPDrawer.DrawThickLine(pos.x, pos.y, pos.x, pos.y + size.y, 2.0, col); 
+		BDP_Drawer.DrawThickLine(pos.x, pos.y, pos.x, pos.y + size.y, 2.0, col); 
 		// Right
-		BDPDrawer.DrawThickLine(pos.x + size.x, pos.y, pos.x + size.x, pos.y + size.y, 2.0, col); 
+		BDP_Drawer.DrawThickLine(pos.x + size.x, pos.y, pos.x + size.x, pos.y + size.y, 2.0, col); 
 	}
 	
-	static void DrawFrame(vector2 pos, vector2 size, Color frameColor = Color(255, 80, 80, 80), uint flags = BDPDrawer.SS_NOASPECTCORRECTION)
+	static void DrawFrame(vector2 pos, vector2 size, Color frameColor = Color(255, 80, 80, 80), uint flags = BDP_Drawer.SS_NOASPECTCORRECTION)
 	{
 		double sc_xres = Screen.getWidth()/bdp_statscr_base_width;
 		double sc_yres = Screen.getHeight()/bdp_statscr_base_height;		

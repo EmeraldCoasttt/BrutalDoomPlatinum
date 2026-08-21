@@ -320,7 +320,7 @@ Decal "ShotgunSlugDecal"
 }
 
 // Testmap - Demon Core
-ACTOR DemonCoreSpawner : RandomSpawner
+ACTOR BDP_DemonCoreSpawner : RandomSpawner
 {
 	DropItem "Zombieman", 255, 500
 	DropItem "ShotgunGuy", 255, 500
@@ -329,7 +329,7 @@ ACTOR DemonCoreSpawner : RandomSpawner
 	DropItem "LostSoul", 255, 300
 	DropItem "Demon", 255, 120
 	DropItem "Spectre", 255, 120
-	DropItem "BDPNightmareSpectre", 255, 80
+	DropItem "BDP_NightmareSpectre", 255, 80
 	DropItem "Cacodemon", 255, 80
 	DropItem "PainElemental", 255, 80
 	DropItem "HellKnight", 255, 70
@@ -338,9 +338,9 @@ ACTOR DemonCoreSpawner : RandomSpawner
 	DropItem "ArchVile", 255, 40
 //	DropItem "ZombieHelicopter", 255, 30
 	DropItem "BaronofHell", 255, 30
-	DropItem "BDPAncientArachnotron", 255, 20
+	DropItem "BDP_AncientArachnotron", 255, 20
 	//DropItem "Belphegor2", 255, 20
-	DropItem "BDPVolcabus", 255, 10
+	DropItem "BDP_Volcabus", 255, 10
 //	DropItem "ZombieMech", 255, 4
 	DropItem "SpiderMastermind", 255, 3
 //	DropItem "ZombieArtilleryTank", 255, 3

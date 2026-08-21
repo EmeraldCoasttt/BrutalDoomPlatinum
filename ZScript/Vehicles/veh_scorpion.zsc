@@ -1,7 +1,7 @@
-class Scorpion_TurretBase : VehPart
+class BDP_ScorpionTurretBase : VehPart
 {
-	Scorpion_TurretCannon cannon;
-	Scorpion_TurretGun gun;
+	BDP_ScorpionTurretCannon cannon;
+	BDP_ScorpionTurretGun gun;
 	Default
 	{
 		Radius 32;
@@ -12,8 +12,8 @@ class Scorpion_TurretBase : VehPart
 	
 	override void OnAttach()
 	{
-		cannon = Scorpion_TurretCannon( VehPart.Attach("Scorpion_TurretCannon", base,(30,0,12)) );
-		gun = Scorpion_TurretGun( VehPart.Attach("Scorpion_TurretGun", base,(0,13,23)) );
+		cannon = BDP_ScorpionTurretCannon( VehPart.Attach("BDP_ScorpionTurretCannon", base,(30,0,12)) );
+		gun = BDP_ScorpionTurretGun( VehPart.Attach("BDP_ScorpionTurretGun", base,(0,13,23)) );
 		cannon.turretbase = self;
 		gun.turretbase = self;
 	}
@@ -23,7 +23,7 @@ class Scorpion_TurretBase : VehPart
 		super.UpdatePos(moving);
 		if(!base || !base.driver) return;
 		
-		A_SetAngle(BDPMath.LerpAngle(angle % 360.0, base.driver.angle % 360.0, 0.15), SPF_INTERPOLATE);
+		A_SetAngle(BDP_Math.LerpAngle(angle % 360.0, base.driver.angle % 360.0, 0.15), SPF_INTERPOLATE);
 		//A_SetRoll(base.roll, SPF_INTERPOLATE);
 		//A_SetPitch(base.pitch, SPF_INTERPOLATE);
 	}
@@ -36,7 +36,7 @@ class Scorpion_TurretBase : VehPart
 	}
 }
 
-class Scorpion_TurretCannon : VehPart
+class BDP_ScorpionTurretCannon : VehPart
 {
 	uint cooldown;
 	uint cooldown_chaingun;
@@ -69,18 +69,18 @@ class Scorpion_TurretCannon : VehPart
 		aimpitch = clamp(aimpitch, -40, 5);
 		If(base.driver)
 		{
-			A_SetPitch(BDPMath.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
+			A_SetPitch(BDP_Math.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
 		}
 		else
 		{
-			A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+			A_SetPitch(BDP_Math.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
 		}
 		
 	}
 		
 	override void DoUpdate(VehCamera cam)
 	{
-		let tank = BDPTank(base);
+		let tank = BDP_Tank(base);
 		If(!tank) return;
 		
 		if(!cam) return;
@@ -94,7 +94,7 @@ class Scorpion_TurretCannon : VehPart
 		if(CheckButtons(BT_ATTACK, VehButtons.BTS_PRESSED) && !cooldown)
 		{
 			//let misl = TankRocket.Fire(self, (350, 0, 30));
-			let misl = BDPMath.FireProjectile("TankRocket", pos, angle, pitch, 0, 0, -10, 1, 0);
+			let misl = BDP_Math.FireProjectile("TankRocket", pos, angle, pitch, 0, 0, -10, 1, 0);
 			if(misl) 
 					{
 						misl.target = base.driver;
@@ -124,7 +124,7 @@ class Scorpion_TurretCannon : VehPart
 	}
 }
 
-class Scorpion_TurretGun : VehPart
+class BDP_ScorpionTurretGun : VehPart
 {
 	uint cooldown;
 	uint cooldown_chaingun;
@@ -158,18 +158,18 @@ class Scorpion_TurretGun : VehPart
 		aimpitch = clamp(aimpitch, -40, 10);
 		If(base.driver)
 		{
-			A_SetPitch(BDPMath.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
+			A_SetPitch(BDP_Math.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
 		}
 		else
 		{
-			A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+			A_SetPitch(BDP_Math.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
 		}
 		
 	}
 		
 	override void DoUpdate(VehCamera cam)
 	{
-		let tank = BDPTank(base);
+		let tank = BDP_Tank(base);
 		if(!tank) return;
 		if(!cam) return;
 	
@@ -187,7 +187,7 @@ class Scorpion_TurretGun : VehPart
 			double precoil = frandom(-rmax, rmax);
 			If(guncycle)
 			{
-				let proj = BDPMath.FireProjectile("TankMachineGunTracer", pos, angle + arecoil, pitch + precoil, 2, 30, 0, 1, 70);
+				let proj = BDP_Math.FireProjectile("TankMachineGunTracer", pos, angle + arecoil, pitch + precoil, 2, 30, 0, 1, 70);
 				guncycle = false;
 				// We need to set the target of this projectile if we want hitmarkers to show up
 				// for the person who shoots it.
@@ -196,7 +196,7 @@ class Scorpion_TurretGun : VehPart
 			}
 			Else
 			{
-				let proj = BDPMath.FireProjectile("TankMachineGunTracer", pos, angle + arecoil, pitch + precoil, -2, 30, 0, 1, 70);
+				let proj = BDP_Math.FireProjectile("TankMachineGunTracer", pos, angle + arecoil, pitch + precoil, -2, 30, 0, 1, 70);
 				guncycle = true;
 				// We need to set the target of this projectile if we want hitmarkers to show up
 				// for the person who shoots it.
@@ -219,7 +219,7 @@ class Scorpion_TurretGun : VehPart
 	}
 }
 
-class Scorpion_Tread : VehPart
+class BDP_ScorpionTread : VehPart
 {
 	double traction;
 	double rotation;
@@ -231,7 +231,7 @@ class Scorpion_Tread : VehPart
 		//Height 35;
 		//+SOLID;
 		
-		Scorpion_Tread.Traction 0.5;
+		BDP_ScorpionTread.Traction 0.5;
 	}
 	
 	override void Tick()
@@ -244,14 +244,14 @@ class Scorpion_Tread : VehPart
 		super.UpdatePos(moving);
 		if(!base) return;
 		
-		let tank = BDPTank(base);
+		let tank = BDP_Tank(base);
 		if(!tank) return;
 		
 		double tfric = ( 1.0-abs(rotation) ) * 0.05;
 		rotation *= (tank.friction + tfric);
 		rotation = clamp(rotation, -1.0, 1.0);
 		
-		double topitch = BDPMath.fmap(rotation, -1.0, 1.0, 0.5, 2.0); 
+		double topitch = BDP_Math.fmap(rotation, -1.0, 1.0, 0.5, 2.0); 
 		If (topitch < 1.25)
 		{
 			topitch = 1.25;
@@ -276,8 +276,8 @@ class Scorpion_Tread : VehPart
 		}
 		
 		// Apply angular velocity based on rotation.
-		int dir = BDPMath.sign(posoffs.y);
-		double spdmod = BDPMath.fmap(base.vel.xy.Length(), 0, 15, 1.0, 2.0); 
+		int dir = BDP_Math.sign(posoffs.y);
+		double spdmod = BDP_Math.fmap(base.vel.xy.Length(), 0, 15, 1.0, 2.0); 
 		double turnvel = (traction * rotation) * 0.5;
 		tank.angvel += turnvel * dir * spdmod;
 		base.vel.xy += AngleToVector(base.angle, turnvel * 16);
@@ -297,12 +297,12 @@ class Scorpion_Tread : VehPart
 	}
 }
 
-class Scorpion_TreadFR : Scorpion_Tread {}
-class Scorpion_TreadFL : Scorpion_Tread {}
-class Scorpion_TreadBL : Scorpion_Tread {}
-class Scorpion_TreadBR : Scorpion_Tread {}
+class BDP_ScorpionTreadFR : BDP_ScorpionTread {}
+class BDP_ScorpionTreadFL : BDP_ScorpionTread {}
+class BDP_ScorpionTreadBL : BDP_ScorpionTread {}
+class BDP_ScorpionTreadBR : BDP_ScorpionTread {}
 
-class ScorpionFlames1 : VehPart
+class BDP_ScorpionFlames1 : VehPart
 {
 
 	
@@ -315,7 +315,7 @@ class ScorpionFlames1 : VehPart
 	{
 		super.Tick();
 		
-		 BDPVehicle pBase = BDPVehicle(base);
+		 BDP_Vehicle pBase = BDP_Vehicle(base);
     if(!pBase) 
         return;
     
@@ -336,7 +336,7 @@ class ScorpionFlames1 : VehPart
 	}
 }
 
-class ScorpionFlames2 : VehPart
+class BDP_ScorpionFlames2 : VehPart
 {
 
 	
@@ -349,7 +349,7 @@ class ScorpionFlames2 : VehPart
 	{
 		super.Tick();
 		
-		 BDPVehicle pBase = BDPVehicle(base);
+		 BDP_Vehicle pBase = BDP_Vehicle(base);
     if(!pBase) 
         return;
     
@@ -371,10 +371,10 @@ class ScorpionFlames2 : VehPart
 }
 
 
-class BDPTank : BDPVehicle
+class BDP_Tank : BDP_Vehicle
 {
-	Scorpion_Tread TreadFL, TreadFR, TreadBL, TreadBR;
-	Scorpion_TurretBase turret;
+	BDP_ScorpionTread TreadFL, TreadFR, TreadBL, TreadBR;
+	BDP_ScorpionTurretBase turret;
 	double angvel;
 	double friction;
 	double throttle;
@@ -394,8 +394,8 @@ class BDPTank : BDPVehicle
 		Scale 2.0;
 		Mass 1600;
 		Health 2000;
-		BDPVehicle.Armored 4000;
-		BDPTank.TreadFriction 0.90;
+		BDP_Vehicle.Armored 4000;
+		BDP_Tank.TreadFriction 0.90;
 		MaxSlopeSteepness 0.4;
 		damagetype "stomp";
 		+vehbase.ALIGNTOPLANE;
@@ -406,13 +406,13 @@ class BDPTank : BDPVehicle
 	{
 		super.BeginPlay();
 		
-		TreadFL = Scorpion_Tread(VehPart.Attach("Scorpion_TreadFL", self, ( 0, -30,0)));
-		TreadFR = Scorpion_Tread(VehPart.Attach("Scorpion_TreadFR", self, (  30, 0,0)));
-	//	TreadBL = Scorpion_Tread(VehPart.Attach("Scorpion_TreadBL", self, (-105,-105,0)));
-	//	TreadBR = Scorpion_Tread(VehPart.Attach("Scorpion_TreadBR", self, (-105, 105,0)));
-		turret = Scorpion_TurretBase(VehPart.Attach("Scorpion_TurretBase", self, (0,0,52)));
-		VehPart.Attach("scorpionflames1",self,(random(-64,64),random(-64,64),42));
-		VehPart.Attach("scorpionflames2",self,(random(-64,64),random(-64,64),42));
+		TreadFL = BDP_ScorpionTread(VehPart.Attach("BDP_ScorpionTreadFL", self, ( 0, -30,0)));
+		TreadFR = BDP_ScorpionTread(VehPart.Attach("BDP_ScorpionTreadFR", self, (  30, 0,0)));
+	//	TreadBL = BDP_ScorpionTread(VehPart.Attach("BDP_ScorpionTreadBL", self, (-105,-105,0)));
+	//	TreadBR = BDP_ScorpionTread(VehPart.Attach("BDP_ScorpionTreadBR", self, (-105, 105,0)));
+		turret = BDP_ScorpionTurretBase(VehPart.Attach("BDP_ScorpionTurretBase", self, (0,0,52)));
+		VehPart.Attach("BDP_ScorpionFlames1",self,(random(-64,64),random(-64,64),42));
+		VehPart.Attach("BDP_ScorpionFlames2",self,(random(-64,64),random(-64,64),42));
 	}
 	
 
@@ -493,13 +493,13 @@ class BDPTank : BDPVehicle
 			vector2 movedir = (forwardmove, sidemove).Unit();
 			movedir.x *= movespd;
 			movedir.y *= turnspd;
-			movedir.y *= BDPMath.sign(movedir.x);
+			movedir.y *= BDP_Math.sign(movedir.x);
 			
 			// Forward and Back
 			AdjustTreads(movedir.x, movedir.x);
 			
 			// Left and Right
-			int dir = BDPMath.sign(movedir.y);
+			int dir = BDP_Math.sign(movedir.y);
 			double left  = dir < 0 ? 0.5 : 1.0;
 			double right = dir > 0 ? 0.5 : 1.0;
 			AdjustTreads(movedir.y * left, -movedir.y * right);

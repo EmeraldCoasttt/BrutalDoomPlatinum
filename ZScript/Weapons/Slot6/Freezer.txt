@@ -1,10 +1,10 @@
-class BDPFreezerBeam : BDPWeaponBase
+class BDP_FreezerBeam : BDP_Weapon
 {
 	Default
 	{
 		Weapon.AmmoGive 40;
-		Weapon.AmmoType "BDPCell";
-		BDPWeaponBase.MagCapacity 60;
+		Weapon.AmmoType "BDP_Cell";
+		BDP_Weapon.MagCapacity 60;
 		Obituary "%o was put on ice by %k's Freezer Beam.";
 		Inventory.PickupSound "PLSDRAW";
 		Inventory.Pickupmessage "You got the Freezer Beam! (Slot 6)";
@@ -334,7 +334,7 @@ Class IceShotProjectile : Actor
 
 }
 
-class Freezebot : BrutalFriend
+class Freezebot : BDP_Friend
 {
 	Default
 	{

@@ -1,8 +1,8 @@
-extend class BDPActor
+extend class BDP_Actor
 {
-	action void A_SpawnGore(class<BDPGoreGroup> group, double velocity, double xposmult = 1.0, double yposmult = 1.0, double zposmult = 1.0)
+	action void A_SpawnGore(class<BDP_GoreGroup> group, double velocity, double xposmult = 1.0, double yposmult = 1.0, double zposmult = 1.0)
 	{
-		BDPGoreGroup g = BDPGoreGroup.Create(group);
+		BDP_GoreGroup g = BDP_GoreGroup.Create(group);
 		for(int i = 0; i < g.actors.size(); i++)
 		{
 			let [result,actor] = A_SpawnItemEx(g.actors[i],g.xpos[i] * xposmult,g.ypos[i] * yposmult,g.zpos[i] * zposmult);
@@ -12,7 +12,7 @@ extend class BDPActor
 	}
 }
 
-class BDPGoreGroup
+class BDP_GoreGroup
 {
 	array<class<Actor> > actors;
 	array<double> xpos;
@@ -22,9 +22,9 @@ class BDPGoreGroup
 	array<double> pitch;
 	array<bool> flipsprite;
 	
-	static BDPGoreGroup Create(class<BDPGoreGroup> group)
+	static BDP_GoreGroup Create(class<BDP_GoreGroup> group)
 	{
-		BDPGoreGroup g = BDPGoreGroup(New(group));
+		BDP_GoreGroup g = BDP_GoreGroup(New(group));
 		if(g)
 		{
 			g.SetGoreGroups();
@@ -48,40 +48,40 @@ class BDPGoreGroup
 	}
 }
 
-class ZombieHeadExplosion : BDPGoreGroup
+class ZombieHeadExplosion : BDP_GoreGroup
 {
 	override void SetGoreGroups()
 	{
-		AddGoreActor("BDPBrainGib",0,0,48,random(0,359),random(0,-180));
-		AddGoreActor("BDPBrainGib",0,0,48,random(0,359),random(0,-180));
-		AddGoreActor("BDPEyeGib",0,0,48,random(0,359),random(0,-180));
+		AddGoreActor("BDP_BrainGib",0,0,48,random(0,359),random(0,-180));
+		AddGoreActor("BDP_BrainGib",0,0,48,random(0,359),random(0,-180));
+		AddGoreActor("BDP_EyeGib",0,0,48,random(0,359),random(0,-180));
 		for(int i = random(4,8); i > 0; i--)
 		{
-			AddGoreActor("BDPToothGib",0,0,48,random(0,359),random(0,-180));
+			AddGoreActor("BDP_ToothGib",0,0,48,random(0,359),random(0,-180));
 			AddGoreActor("Blood",0,0,48,random(0,359),random(0,-180));
 			AddGoreActor("NashGoreBloodSpurt",0,0,48,random(0,359),random(0,-180));
 		}
 	}
 }
 
-/*class TestGoreGroup : BDPGoreGroup
+/*class TestGoreGroup : BDP_GoreGroup
 {
 	override void SetGoreGroups()
 	{
-		AddGoreActor("BDPHumanArmGib",0,0,32,45,false);
-		AddGoreActor("BDPHumanArmGib",0,0,32,45,true);
-		AddGoreActor("BDPZombiemanLegGib",0,0,32,45,false);
-		AddGoreActor("BDPZombiemanLegGib",0,0,32,45,true);
+		AddGoreActor("BDP_HumanArmGib",0,0,32,45,false);
+		AddGoreActor("BDP_HumanArmGib",0,0,32,45,true);
+		AddGoreActor("BDP_ZombiemanLegGib",0,0,32,45,false);
+		AddGoreActor("BDP_ZombiemanLegGib",0,0,32,45,true);
 		for(int i = random(5,10); i > 0; i--)
 		{
-			AddGoreActor("BDPToothGib",0,0,32,90);
+			AddGoreActor("BDP_ToothGib",0,0,32,90);
 			AddGoreActor("NashGoreGibs",0,0,32,90);
 			AddGoreActor("Blood",0,0,32,180);
 		}
 	}
 }
 
-class GoreTest : BDPActor
+class GoreTest : BDP_Actor
 {
 	States
 	{
@@ -91,7 +91,7 @@ class GoreTest : BDPActor
 	}
 }*/
 
-class BDPBaseGib : NashGoreGibs
+class BDP_BaseGib : NashGoreGibs
 {
 	bool CanStretch;
 	bool BloodSplashes;
@@ -100,8 +100,8 @@ class BDPBaseGib : NashGoreGibs
 	
 	Default
 	{
-		BDPBaseGib.CanStretch false;
-		BDPBaseGib.BloodSplashes true;
+		BDP_BaseGib.CanStretch false;
+		BDP_BaseGib.BloodSplashes true;
 	}
 	States
 	{
@@ -169,7 +169,7 @@ class BDPBaseGib : NashGoreGibs
 	}
 }
 
-class BDPShootableGib : BDPBaseGib
+class BDP_ShootableGib : BDP_BaseGib
 {
 	Default
 	{
@@ -201,13 +201,13 @@ class BDPShootableGib : BDPBaseGib
 	}
 }
 
-class BDPBrainGib : BDPBaseGib
+class BDP_BrainGib : BDP_BaseGib
 {
 	Default
 	{
 		+STRETCHPIXELS
-		BDPBaseGib.CanStretch true;
-		BDPBaseGib.BloodSplashes false;
+		BDP_BaseGib.CanStretch true;
+		BDP_BaseGib.BloodSplashes false;
 	}
 	Default
 	{
@@ -221,12 +221,12 @@ class BDPBrainGib : BDPBaseGib
 	}
 }
 
-class BDPToothGib : BDPBaseGib
+class BDP_ToothGib : BDP_BaseGib
 {
 	Default
 	{
 		Scale 0.15;
-		BDPBaseGib.BloodSplashes false;
+		BDP_BaseGib.BloodSplashes false;
 		BounceSound "";
 	}
 	States
@@ -237,13 +237,13 @@ class BDPToothGib : BDPBaseGib
 	}
 }
 
-class BDPEyeGib : BDPBaseGib
+class BDP_EyeGib : BDP_BaseGib
 {
 	Default
 	{
 		+STRETCHPIXELS
 		Scale 0.6;
-		BDPBaseGib.BloodSplashes false;
+		BDP_BaseGib.BloodSplashes false;
 		BounceSound "";
 	}
 	States
@@ -254,7 +254,7 @@ class BDPEyeGib : BDPBaseGib
 	}
 }
 
-class BDPHumanArmGib : BDPShootableGib
+class BDP_HumanArmGib : BDP_ShootableGib
 {
 	States
 	{
@@ -266,14 +266,14 @@ class BDPHumanArmGib : BDPShootableGib
 		{
 			A_StartSound("misc/xdeath5");
 			A_FaceTarget();
-			A_SpawnSubGibs("BDPHumanHandGib",1,-2,2);
-			A_SpawnSubGibs("BDPHumanForearmGib",1,2,2);
+			A_SpawnSubGibs("BDP_HumanHandGib",1,-2,2);
+			A_SpawnSubGibs("BDP_HumanForearmGib",1,2,2);
 		}
 		Stop;
 	}
 }
 
-class BDPHumanForearmGib : BDPBaseGib
+class BDP_HumanForearmGib : BDP_BaseGib
 {
 	States
 	{
@@ -283,7 +283,7 @@ class BDPHumanForearmGib : BDPBaseGib
 	}
 }
 
-class BDPHumanHandGib : BDPBaseGib
+class BDP_HumanHandGib : BDP_BaseGib
 {
 	States
 	{
@@ -293,7 +293,7 @@ class BDPHumanHandGib : BDPBaseGib
 	}
 }
 
-class BDPZombiemanLegGib : BDPShootableGib
+class BDP_ZombiemanLegGib : BDP_ShootableGib
 {
 	States
 	{
@@ -305,14 +305,14 @@ class BDPZombiemanLegGib : BDPShootableGib
 		{
 			A_StartSound("misc/xdeath5");
 			A_FaceTarget();
-			A_SpawnSubGibs("BDPZombiemanFootGib",1,-2,2);
-			A_SpawnSubGibs("BDPZombiemanThighGib",1,2,2);
+			A_SpawnSubGibs("BDP_ZombiemanFootGib",1,-2,2);
+			A_SpawnSubGibs("BDP_ZombiemanThighGib",1,2,2);
 		}
 		Stop;
 	}
 }
 
-class BDPZombiemanThighGib : BDPBaseGib
+class BDP_ZombiemanThighGib : BDP_BaseGib
 {
 	States
 	{
@@ -322,7 +322,7 @@ class BDPZombiemanThighGib : BDPBaseGib
 	}
 }
 
-class BDPZombiemanFootGib : BDPBaseGib
+class BDP_ZombiemanFootGib : BDP_BaseGib
 {
 	States
 	{
@@ -332,7 +332,7 @@ class BDPZombiemanFootGib : BDPBaseGib
 	}
 }
 
-	Class BDPCorpseInventory : inventory
+	Class BDP_CorpseInventory : inventory
 	{
 
 		Default
@@ -360,23 +360,23 @@ class BDPZombiemanFootGib : BDPBaseGib
 		}
 	}
 	
-	Class BDPCorpse : Actor
+	Class BDP_Corpse : Actor
 	{
 	
 	
 		Override void tick()
 		{
 			
-			If(health >= 1 && !findinventory("BDPCorpseInventory") && bshootable)
+			If(health >= 1 && !findinventory("BDP_CorpseInventory") && bshootable)
 			{
-				Giveinventory("bdpcorpseinventory",1);
+				Giveinventory("BDP_CorpseInventory",1);
 			}
 			Super.tick();
 			
 		}
 	}
 
-class CurbstompedMarine : BDPCorpse
+class CurbstompedMarine : BDP_Corpse
 {
 	Default
 	{
@@ -401,7 +401,7 @@ class CurbstompedMarine : BDPCorpse
 	}
     States    {
     Spawn:
-	TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1);
+	TNT1 A 0 NODELAY A_giveinventory("BDP_CorpseInventory",1);
 	TNT1 A 0 A_noblocking();
 	TNT1 A 0 A_Jump(128,2);
 	TNT1 A 0 A_ChangeFlag("XFLIP",1);

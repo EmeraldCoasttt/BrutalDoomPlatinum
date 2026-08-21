@@ -3,15 +3,15 @@ class glasmaball : plasmaball replaces plasmaball
 	Default {+FORCEXYBILLBOARD}
 }
 
-class BDPGrenadeLauncher : BDPWeaponBase
+class BDP_GrenadeLauncher : BDP_Weapon
 {
 	bool chaosGrenades;
 	
 	Default
 	{
 		Weapon.AmmoGive 2;
-		Weapon.AmmoType "BDPRocketAmmo";
-		BDPWeaponBase.MagCapacity 1;
+		Weapon.AmmoType "BDP_RocketAmmo";
+		BDP_Weapon.MagCapacity 1;
 		Inventory.PickupSound "ROCKPKUP";
 		Weapon.SlotNumber 5;
 		Weapon.SlotPriority 2;
@@ -126,7 +126,7 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		SSGS MNOPQR 1;
 		stop;
 	DoReload:
-		TNT1 A 0 A_JumpIfInventory("PowerSpeed2",1,"ReloadHaste");
+		TNT1 A 0 A_JumpIfInventory("BDP_PowerSpeed",1,"ReloadHaste");
 		GLR1 ABCDEFGGGG 1;
 		TNT1 A 0 A_StartSound("foley/GLDownwardsToOpen",10);
 		GLR1 FHIJK 1;
@@ -180,7 +180,7 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		GLSA DBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto StrapIdle;
 	SpecialAction:
-		TNT1 A 0 A_JumpIfInventory("PowerSpeed2",1,"SpecialActionHaste");
+		TNT1 A 0 A_JumpIfInventory("BDP_PowerSpeed",1,"SpecialActionHaste");
 		GLR1 ABCDEFGGGG 1;
 		TNT1 A 0 A_StartSound("foley/GLDownwardsToOpen",10);
 		GLR1 FHIJKL 1;
@@ -313,7 +313,7 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		GL2F F 1 BRIGHT A_SetPitch(2 + pitch, SPF_INTERPOLATE)
 		GLAF EDCB 1 A_SetPitch(2 + pitch, SPF_INTERPOLATE)
 		GLR3 C 1
-		GLAN A 2 A_jumpIfInventory("PowerSPeed2",1,"ready")
+		GLAN A 2 A_jumpIfInventory("BDP_PowerSpeed",1,"ready")
 		Goto NoAmmo2
 		
 	AltFire:
@@ -358,7 +358,7 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		GLAF F 1 BRIGHT A_SetPitch(2 + pitch, SPF_INTERPOLATE)
 		GLAF EDCB 1 A_SetPitch(2 + pitch, SPF_INTERPOLATE)
 		GLR3 C 1
-		GLAN A 2 A_jumpIfInventory("PowerSPeed2",1,"ready")
+		GLAN A 2 A_jumpIfInventory("BDP_PowerSpeed",1,"ready")
 		Goto NoAmmo2
 		
 		AltFireSticky:
@@ -388,7 +388,7 @@ class BDPGrenadeLauncher : BDPWeaponBase
 		GL2F F 1 BRIGHT A_SetPitch(2 + pitch, SPF_INTERPOLATE)
 		GLAF EDCB 1 A_SetPitch(2 + pitch, SPF_INTERPOLATE)
 		GLR3 C 1
-		GLAN A 2 A_jumpIfInventory("PowerSPeed2",1,"ready")
+		GLAN A 2 A_jumpIfInventory("BDP_PowerSpeed",1,"ready")
 		Goto NoAmmo2
 		*/
 	}
@@ -483,7 +483,7 @@ Class GrenadeDetonates : Actor
 		TNT1 A 0 A_StartSound("Explosion", 1);
 		EXPL A 0 Radius_Quake (8, 8, 0, 128, 0);//(intensity, duration, damrad, tremrad, tid)
 		TNT1 A 0 A_SpawnItemEx ("GrenadeExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
-	   TNT1 A 0 A_spawnitemex("ricochetexplosion");
+	   TNT1 A 0 A_spawnitemex("BDP_RicochetExplosion");
 		TNT1 AAAAAAAAAA 0 A_spawnProjectile ("BDExplosionparticlesBig", 0, 0, random (0, 360), 2, random (0, 360));
 		TNT1 AAAAAAA 0 A_SpawnProjectile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (0, -90));
 	   	TNT1 AAAA 0 A_spawnProjectile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))  ;
@@ -574,7 +574,7 @@ Class ChaosInfighter : CustomInventory
 		TNT1 A 1
 		{
 			//Console.Printf("Chaos given to "..GetClassName());
-			bool isNotPlayer = !(target is "BDPPlayerPawn");
+			bool isNotPlayer = !(target is "BDP_PlayerPawn");
 			/*if(target!=null)
 			{
 				//Console.Printf("His target is "..target.GetClassName().." ("..(target is "Delta_PlayerPawn")..")");

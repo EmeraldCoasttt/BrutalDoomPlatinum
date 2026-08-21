@@ -1,11 +1,11 @@
-CLASS BDPBattleRifle : BDPWeaponBase
+CLASS BDP_BattleRifle : BDP_Weapon
 {
 	Default
 	
 	{
 	Weapon.AmmoGive 15;
-	Weapon.AmmoType "BDPClip1";
-	BDPWeaponBase.magcapacity 15;
+	Weapon.AmmoType "BDP_Clip1";
+	BDP_Weapon.magcapacity 15;
 	Obituary "%o was pierced by %k's Battle Rifle.";
 	Inventory.PickupSound "BR45PICK";
 	Inventory.Pickupmessage "You got the Battle Rifle! (Slot 4)";
@@ -48,19 +48,19 @@ CLASS BDPBattleRifle : BDPWeaponBase
 		{
 			hitnormal = ricochetdata.HitSector.CeilingPlane.normal;
 		}
-		Vector3 PlayerAngle = BDPMATH.AngletoVector3(1.0,invoker.owner.angle,invoker.owner.pitch);
+		Vector3 PlayerAngle = BDP_Math.AngletoVector3(1.0,invoker.owner.angle,invoker.owner.pitch);
 		
-		Vector3 BounceAngle = BDPMATH.BounceNormal(PlayerAngle,hitNormal);
+		Vector3 BounceAngle = BDP_Math.BounceNormal(PlayerAngle,hitNormal);
 		
 		Double NextShotAngle;
 		Double NextShotPitch;
 		
 		
 		
-		[NextShotAngle, NextShotPitch] = BDPMATH.Vector3toangles(BounceAngle);
+		[NextShotAngle, NextShotPitch] = BDP_Math.Vector3toangles(BounceAngle);
 
-		double anglediff = BDPMath.AngleDiff(invoker.owner.angle % 360.0,nextshotangle % 360.0);
-		double pitchdiff = BDPMath.AngleDiff(invoker.owner.pitch % 360.0,nextshotpitch % 360.0);
+		double anglediff = BDP_Math.AngleDiff(invoker.owner.angle % 360.0,nextshotangle % 360.0);
+		double pitchdiff = BDP_Math.AngleDiff(invoker.owner.pitch % 360.0,nextshotpitch % 360.0);
 		//Console.printf("%f",anglediff);
 		
 		
@@ -136,7 +136,7 @@ CLASS BDPBattleRifle : BDPWeaponBase
 			{
 				invoker.burstcount = 0;
 				A_SetCrosshairDX("BR45Ret",2000);
-				let dplr = BDPPlayerPawn(invoker.owner);
+				let dplr = BDP_PlayerPawn(invoker.owner);
 				if(player.cmd.buttons & BT_USER3 && !dplr.blockSpecial && !invoker.scopeZoom)
 				{
 					dplr.blockSpecial = true;

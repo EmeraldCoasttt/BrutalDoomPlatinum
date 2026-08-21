@@ -1,4 +1,4 @@
-class BDPGrabber : BDPWeaponBase
+class BDP_Grabber : BDP_Weapon
 {
 	bool previousgravity;
 	bool previousmissile;

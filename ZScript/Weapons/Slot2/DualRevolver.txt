@@ -1,17 +1,17 @@
-class BDPDualRevolver : BDPWeaponBase 
+class BDP_DualRevolver : BDP_Weapon 
 {
 	Default
 	{
-		Weapon.AmmoType "BDPClip1";
-		BDPWeaponBase.MagCapacity 6;
+		Weapon.AmmoType "BDP_Clip1";
+		BDP_Weapon.MagCapacity 6;
 		Obituary "%o was shot down by %k's revolver.";
-		Weapon.SisterWeapon "BDPRevolver";
+		Weapon.SisterWeapon "BDP_Revolver";
 		+WEAPON.POWERED_UP
-		+BDPWeaponBase.DUALWEAPON
+		+BDP_Weapon.DUALWEAPON
 		Tag "$BDPREVOLVER";
-		BDPWeaponBase.handedness 2;
-		BDPWeaponBase.voiceacted 0;
-		BDPWeaponBase.DualWeapon "BDPRevolver";
+		BDP_Weapon.handedness 2;
+		BDP_Weapon.voiceacted 0;
+		BDP_Weapon.DualWeapon "BDP_Revolver";
 		Inventory.AltHUDIcon "REVGA0";
 	}
 	States
@@ -124,7 +124,7 @@ class BDPDualRevolver : BDPWeaponBase
 				A_FlashOverlay(-3);
 				A_OverlayFlags(-3,PSPF_FLIP|PSPF_MIRROR,true);
 			}
-			let dplr = BDPPlayerPawn(invoker.owner);
+			let dplr = BDP_PlayerPawn(invoker.owner);
 			dplr.blockFire = true;
 			A_StartSound("REVFIRE2", 1);
 			A_StartSound("FARSHT", 6);
@@ -180,7 +180,7 @@ class BDPDualRevolver : BDPWeaponBase
 		RSDF D 1;
 		RSDF C 1
 		{
-			let dplr = BDPPlayerPawn(invoker.owner);
+			let dplr = BDP_PlayerPawn(invoker.owner);
 			dplr.blockAltfire = false;
 		}
 		RSDF BA 1;

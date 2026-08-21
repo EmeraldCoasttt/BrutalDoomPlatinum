@@ -1,4 +1,4 @@
-class BDPBike_Guns : VehPart
+class BDP_BikeGuns : VehPart
 {
 	uint cooldown;
 	
@@ -33,7 +33,7 @@ class BDPBike_Guns : VehPart
 			{
 				double arecoil = frandom(-rmax, rmax);
 				double precoil = frandom(-rmax, rmax)*0.5;
-				let pball = BDPMath.FireProjectile("PlasmaBall", level.vec3offset(pos, base.vel), angle + arecoil, pitch + precoil, 0, 0, 20, 1, 60);
+				let pball = BDP_Math.FireProjectile("PlasmaBall", level.vec3offset(pos, base.vel), angle + arecoil, pitch + precoil, 0, 0, 20, 1, 60);
 			}
 			A_StartSound("BDP/Bike/Fire", CHAN_BODY, CHANF_OVERLAP);
 			cam.Quake(1.25,1.25,0,0.5);
@@ -48,7 +48,7 @@ class BDPBike_Guns : VehPart
 	}
 }
 
-class Bike_Tire : VehPart
+class BDP_BikeTire : VehPart
 {
 	bool invert;
 	double trueturn;
@@ -64,7 +64,7 @@ class Bike_Tire : VehPart
 	double GetSteerAngle(bool behind = false)
 	{
 		double fromangle = behind ? base.driver.angle-180 : base.driver.angle;
-		return -BDPMath.AngleDiff(fromangle, base.angle);
+		return -BDP_Math.AngleDiff(fromangle, base.angle);
 	}
 	
 	override void UpdatePos(bool moving)
@@ -75,7 +75,7 @@ class Bike_Tire : VehPart
 		
 		if(!base.driver) return;
 		
-		let Bike = BDPBike(base);
+		let Bike = BDP_Bike(base);
 		
 		// Determine angle based on aim.
 		// Get angle of "steering wheel"
@@ -110,17 +110,17 @@ class Bike_Tire : VehPart
 		loop;
 	}
 }
-class Bike_BackTire : Bike_Tire 
+class BDP_BikeBackTire : BDP_BikeTire 
 {
 	Default
 	{
-		Bike_Tire.BackTires true;
+		BDP_BikeTire.BackTires true;
 	}
 }
 
-class BDPBike : BDPVehicle
+class BDP_Bike : BDP_Vehicle
 {
-	Bike_Tire Tire_T, Tire_B;
+	BDP_BikeTire Tire_T, Tire_B;
 	
 	double throttle; // Throttle
 	double accel;    // Tire rotation velocity.
@@ -138,7 +138,7 @@ class BDPBike : BDPVehicle
 		
 		Mass 300;
 		Health 1000;
-		BDPVehicle.Armored 0;
+		BDP_Vehicle.Armored 0;
 		Scale 1.0;
 		MaxSlopeSteepness 0.1;
 		damagetype "extremepunches";
@@ -159,8 +159,8 @@ class BDPBike : BDPVehicle
 	
 	override void BeginPlay()
 	{
-		Tire_T = Bike_Tire(VehPart.Attach("Bike_Tire", self, (65,0,0), (0,0)));
-		Tire_B = Bike_Tire(VehPart.Attach("Bike_BackTire", self, (-65,0,0), (0,0)));
+		Tire_T = BDP_BikeTire(VehPart.Attach("BDP_BikeTire", self, (65,0,0), (0,0)));
+		Tire_B = BDP_BikeTire(VehPart.Attach("BDP_BikeBackTire", self, (-65,0,0), (0,0)));
 		super.BeginPlay();
 	
 	}
@@ -227,14 +227,14 @@ class BDPBike : BDPVehicle
 		A_spawnprojectile ("BikePieces4", 32, 0, random (0, 360), 2, random (-20, -50));
 		Destroy();
 	}
-		vector2 GetTireDir(Bike_Tire tire)
+		vector2 GetTireDir(BDP_BikeTire tire)
 	{
 		return (cos(tire.trueturn), sin(tire.trueturn));
 	}
-	double GetTireVel(Bike_Tire tire, double velmod = 0.025)
+	double GetTireVel(BDP_BikeTire tire, double velmod = 0.025)
 	{
-		velmod *= BDPMath.fmap(vel.xy.length(), 0, 30, 0.05, 1.0); 
-		return BDPMath.AngleDiff(angle, Tire_T.angle) * velmod;
+		velmod *= BDP_Math.fmap(vel.xy.length(), 0, 30, 0.05, 1.0); 
+		return BDP_Math.AngleDiff(angle, Tire_T.angle) * velmod;
 	}
 	override void DoMove(float forwardmove, float sidemove)
 	{	
@@ -253,7 +253,7 @@ class BDPBike : BDPVehicle
 		{
 			A_StartSound("EBIKECLS", flags:CHANF_OVERLAP | CHANF_NOSTOP);
 			A_DoGroundFX();
-			double movepenalty = BDPMath.fmap(abs(vel.z), 0, 20, 1.20, 1.30);
+			double movepenalty = BDP_Math.fmap(abs(vel.z), 0, 20, 1.20, 1.30);
 			double bounce = clamp(abs(vel.z)/20.0, 0, 1.0) * 20;
 
 			vel.xy *= movepenalty;
@@ -275,7 +275,7 @@ class BDPBike : BDPVehicle
 
 		if(abs(accel) > 0.5)
 		{
-			double topitch = BDPMath.fmap(accel, -10.0, 10.0, 0.5, 1.0); 
+			double topitch = BDP_Math.fmap(accel, -10.0, 10.0, 0.5, 1.0); 
 			//A_StartSound("BIKE1A", CHAN_5, CHANF_LOOPING,0.5);
 			A_StartSound("Bike1A", CHAN_6, CHANF_LOOPING,0.5);
 			A_SoundPitch(CHAN_5, topitch);

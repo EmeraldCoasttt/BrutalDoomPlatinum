@@ -1,15 +1,15 @@
 //ARTIFACTS
-object InvulnerabilitySphere_
+object BDP_InvulnerabilitySphere
 {
     frame PINV { light INVULN }
 }
 
-object EnergySphere
+object BDP_Megasphere
 {
     frame MEGA { light MegaSphereLight }
 }
 
-object EnergySphereOneUp
+object BDP_MegasphereOneUp
 {
     frame MEGA { light MegaSphereLight }
 }
@@ -23,7 +23,7 @@ pulselight MegaSphereLight
     offset 0 16 0
 }
 
-object SuperBlurSphere
+object BDP_Blursphere
 {
     frame PINS { light BlurSphereLight }
 }
@@ -37,7 +37,7 @@ pulselight BlurSphereLight
     offset 0 16 0
 }
 
-object NightVision
+object BDP_NightVision
 {
 	frame SVISC { light NightVisionLight }
 	frame SVISB { light NightVisionLight }
@@ -142,51 +142,51 @@ flickerlight2 ZOMBIEATK
 }
 
 
-object BDPZombieman
+object BDP_Zombieman
 {
     frame POSRF { light ZOMBIEATK }
 	frame ZRO1Z { light ZOMBIEATK }
 }
 
-object BDPZombiemanHelmet
+object BDP_ZombiemanHelmet
 {
     frame ZMV1F { light ZOMBIEATK }
 	frame ZRO2[ { light ZOMBIEATK }
 }
 
-object BDPPistolZombieman
+object BDP_PistolZombieman
 {
     frame PSPOF { light ZOMBIEATK }
 }
 
-object BDPPistolZombiemanHelmet
+object BDP_PistolZombiemanHelmet
 {
     frame 9OS2F { light ZOMBIEATK }
 }
 
-object BDPShotgunGuy
+object BDP_ShotgunGuy
 {
     frame SPOSF { light ZOMBIEATK }
 	frame ZRO1] { light ZOMBIEATK }
 }
 
-object BDPShotgunGuyHelmet
+object BDP_ShotgunGuyHelmet
 {
     frame SP1SF { light ZOMBIEATK }
 	frame ZRO3[ { light ZOMBIEATK }
 }
 
-object BDPSubmachineGunGuy
+object BDP_SubmachineGunGuy
 {
     frame PSS3F { light ZOMBIEATK }
 	frame ZRO1] { light ZOMBIEATK }
 }
-object BDPDualPistolZombieman
+object BDP_DualPistolZombieman
 {
     frame DSPOF { light ZOMBIEATK }
 	frame DSPOH { light ZOMBIEATK }
 }
-object BDPDualPistolZombiemanHelmet
+object BDP_DualPistolZombiemanHelmet
 {
     frame DPZHF { light ZOMBIEATK }
     frame DPZHH { light ZOMBIEATK }
@@ -228,7 +228,7 @@ pulselight ArmorBonusGlow
 }
 
 
-object ArmorShard
+object BDP_ArmorBonus
 {
     frame BON2B { light ArmorBonusGlow  }
 	frame BON2C { light ArmorBonusGlow  }

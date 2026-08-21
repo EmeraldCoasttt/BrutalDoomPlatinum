@@ -1,6 +1,6 @@
 
 
-CLASS ChopperGear : Vehpart
+class BDP_ChopperGear : Vehpart
 {
 	Default
 	{
@@ -19,7 +19,7 @@ CLASS ChopperGear : Vehpart
 
 }
 
-CLASS ChopperLauncher : Vehpart
+class BDP_ChopperLauncher : Vehpart
 {
 	Default
 	{
@@ -29,7 +29,7 @@ CLASS ChopperLauncher : Vehpart
 	
 	override void DoUpdate(VehCamera cam)
 	{
-		let chopper = BDPChopper(base);
+		let chopper = BDP_Chopper(base);
 		if(!chopper) return;
 		if(!cam) return;
 	
@@ -44,7 +44,7 @@ CLASS ChopperLauncher : Vehpart
 			
 					
 				A_StartSound("DSRFIRE", CHAN_WEAPON,CHANF_OVERLAP,1.0);
-				let misl = BDPMath.FireProjectile("ChopperRocket", pos, angle + frandom(-2,2), pitch + frandom(-2,2));
+				let misl = BDP_Math.FireProjectile("ChopperRocket", pos, angle + frandom(-2,2), pitch + frandom(-2,2));
 				if(misl) 
 					{
 						misl.target = base.driver;
@@ -69,7 +69,7 @@ CLASS ChopperLauncher : Vehpart
 
 }
 
-CLASS ChopperGearSmall : ChopperGear
+class BDP_ChopperGearSmall : BDP_ChopperGear
 {
 
 	Default
@@ -80,7 +80,7 @@ CLASS ChopperGearSmall : ChopperGear
 }
 
 
-class Chopper_TurretCannon : VehPart
+class BDP_ChopperTurretCannon : VehPart
 {
 	uint cooldown;
 	uint cooldown_chaingun;
@@ -114,18 +114,18 @@ class Chopper_TurretCannon : VehPart
 		aimpitch = clamp(aimpitch, -50, 50);
 		If(base.driver)
 		{
-			A_SetPitch(BDPMath.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
+			A_SetPitch(BDP_Math.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
 		}
 		else
 		{
-			A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+			A_SetPitch(BDP_Math.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
 		}
 		
 	}
 		
 	override void DoUpdate(VehCamera cam)
 	{
-		let chopper = BDPChopper(base);
+		let chopper = BDP_Chopper(base);
 		if(!chopper) return;
 		if(!cam) return;
 	
@@ -143,7 +143,7 @@ class Chopper_TurretCannon : VehPart
 				If(guncycle)
 				{
 					
-					let misl = BDPMath.FireProjectile("MastermindTracertank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
+					let misl = BDP_Math.FireProjectile("MastermindTracertank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
 					if(misl) 
 					{
 						misl.target = base.driver;
@@ -156,7 +156,7 @@ class Chopper_TurretCannon : VehPart
 				Else
 				{
 					
-					let misl = BDPMath.FireProjectile("MastermindTracertank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
+					let misl = BDP_Math.FireProjectile("MastermindTracertank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
 					if(misl) 
 					{
 						misl.target = base.driver;
@@ -210,7 +210,7 @@ class Chopper_TurretCannon : VehPart
 }
 
 
-CLASS BDPCHOPPER : BDPVehicle
+CLASS BDP_Chopper : BDP_Vehicle
 {
 
 	Default
@@ -219,14 +219,14 @@ CLASS BDPCHOPPER : BDPVehicle
 		Height 100;
 		Mass 1600;
 		Health 800;
-		BDPVehicle.Armored 1200;
+		BDP_Vehicle.Armored 1200;
 		MaxSlopeSteepness 0.4;
 		damagetype "stomp";
 		-vehbase.fallingpitch;
 		+vehbase.movementpitch;
 	}
-	Chopper_TurretCannon leftgun;
-	Chopper_TurretCannon rightgun;
+	BDP_ChopperTurretCannon leftgun;
+	BDP_ChopperTurretCannon rightgun;
 	vehpart rightgear;
 	vehpart leftgear;
 	vehpart frontgear;
@@ -236,16 +236,16 @@ CLASS BDPCHOPPER : BDPVehicle
 	{
 		super.BeginPlay();
 
-		VehPart.Attach("ChopperBlades",self,(-17,0,140));
-		VehPart.Attach("Chopperlauncher",self,(-55,110,70));
-		VehPart.Attach("Chopperlauncher",self,(-55,-110,70));
-		VehPart.Attach("Chopperflames1",self,(random(150,-150),random(-50,50),random(40,80)));
-		VehPart.Attach("Chopperflames2",self,(random(150,-150),random(-50,50),random(40,80)));
-		frontgear = VehPart.Attach("ChopperGearSmall",self,(150,0,0));
-		leftgear = VehPart.Attach("ChopperGear",self,(-120,-25,0));
-		rightgear = VehPart.Attach("ChopperGear",self,(-120,25,0));
-		leftgun = Chopper_TurretCannon(VehPart.Attach("Chopper_TurretCannon", self, (125,-40,45)));
-		rightgun = Chopper_TurretCannon(VehPart.Attach("Chopper_TurretCannon", self, (125,40,45)));
+		VehPart.Attach("BDP_ChopperBlades",self,(-17,0,140));
+		VehPart.Attach("BDP_Chopperlauncher",self,(-55,110,70));
+		VehPart.Attach("BDP_Chopperlauncher",self,(-55,-110,70));
+		VehPart.Attach("BDP_Chopperflames1",self,(random(150,-150),random(-50,50),random(40,80)));
+		VehPart.Attach("BDP_Chopperflames2",self,(random(150,-150),random(-50,50),random(40,80)));
+		frontgear = VehPart.Attach("BDP_ChopperGearSmall",self,(150,0,0));
+		leftgear = VehPart.Attach("BDP_ChopperGear",self,(-120,-25,0));
+		rightgear = VehPart.Attach("BDP_ChopperGear",self,(-120,25,0));
+		leftgun = BDP_ChopperTurretCannon(VehPart.Attach("BDP_ChopperTurretCannon", self, (125,-40,45)));
+		rightgun = BDP_ChopperTurretCannon(VehPart.Attach("BDP_ChopperTurretCannon", self, (125,40,45)));
 		If(leftgun)
 		{
 			leftgun.setstatelabel("Spawn2");
@@ -364,11 +364,11 @@ CLASS BDPCHOPPER : BDPVehicle
 		// Rotation
 		double turnspd = 0.08;
 		double accel = 0.30;
-		double angdiff = BDPMath.AngleDiff(angle, driver.angle);
+		double angdiff = BDP_Math.AngleDiff(angle, driver.angle);
 		//Don't turn if touching floor
 		If(!onground)
 		{
-			A_SetAngle(BDPMath.Lerp(angle, angle+angdiff, turnspd), SPF_INTERPOLATE);
+			A_SetAngle(BDP_Math.Lerp(angle, angle+angdiff, turnspd), SPF_INTERPOLATE);
 		}
 		
 		
@@ -442,7 +442,7 @@ CLASS BDPCHOPPER : BDPVehicle
 }
 
 
-CLASS ChopperBlades : VehPart
+class BDP_ChopperBlades : VehPart
 {
 	Default
 	{
@@ -502,7 +502,7 @@ CLASS ChopperBlades : VehPart
 
 }
 
-class ChopperFlames1 : VehPart
+class BDP_ChopperFlames1 : VehPart
 {
 
 	
@@ -515,7 +515,7 @@ class ChopperFlames1 : VehPart
 	{
 		super.Tick();
 		
-		 BDPVehicle pBase = BDPVehicle(base);
+		 BDP_Vehicle pBase = BDP_Vehicle(base);
     if(!pBase) 
         return;
     
@@ -536,7 +536,7 @@ class ChopperFlames1 : VehPart
 	}
 }
 
-class ChopperFlames2 : VehPart
+class BDP_ChopperFlames2 : VehPart
 {
 
 	
@@ -549,7 +549,7 @@ class ChopperFlames2 : VehPart
 	{
 		super.Tick();
 		
-		 BDPVehicle pBase = BDPVehicle(base);
+		 BDP_Vehicle pBase = BDP_Vehicle(base);
     if(!pBase) 
         return;
     

@@ -1,5 +1,5 @@
 // Skulls are essentially mini event handlers
-class BDPModifier : Actor
+class BDP_Modifier : Actor
 {
 	bool enabled;
 	bool unlocked; 
@@ -16,7 +16,7 @@ class BDPModifier : Actor
 	Default
 	{
 		+NOINTERACTION;
-		BDPModifier.ScoreModifier 1.0;
+		BDP_Modifier.ScoreModifier 1.0;
 	}
 	
 	override void Tick() {}

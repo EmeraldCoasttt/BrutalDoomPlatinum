@@ -1,4 +1,4 @@
-	CLASS BrutalFriend : BDPNotMonster abstract
+	CLASS BDP_Friend : BDP_NotMonster abstract
 		{
 			Action void A_friendchase(int chance = 2, int heightoffset = 30, string fogtype = "null")
 			{

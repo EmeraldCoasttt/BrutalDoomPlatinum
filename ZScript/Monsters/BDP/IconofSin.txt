@@ -6,7 +6,7 @@ class HasSpotedThePlayerAlready : Inventory
 	}
 }
 
-class BDPIconofSin : Actor
+class BDP_IconofSin : Actor
 {
 	Default
 	{
@@ -332,7 +332,7 @@ class GateKeeperMeat3 : GateKeeperMeat1
 	}
 }
 
-class GateKeeper : BDPIconofSin
+class GateKeeper : BDP_IconofSin
 {
 	Default
 	{

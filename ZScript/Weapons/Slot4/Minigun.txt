@@ -1,4 +1,4 @@
-class BDPMinigun : BDPWeaponBase
+class BDP_Minigun : BDP_Weapon
 {
 	bool spinning;
 	bool altSpin;
@@ -17,7 +17,7 @@ class BDPMinigun : BDPWeaponBase
 		Weapon.SlotNumber 4;
 		Weapon.SlotPriority 3;
 		Weapon.SelectionOrder 700;
-		Weapon.AmmoType "BDPClip2";
+		Weapon.AmmoType "BDP_Clip2";
 		Weapon.AmmoGive 60;
 		Inventory.PickupSound "CBOXPKUP";
 		Inventory.PickupMessage "You got the Minigun! (Slot 4)";
@@ -28,16 +28,16 @@ class BDPMinigun : BDPWeaponBase
 	States
 	{
 	Grenade: //30
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### ][ZY 1;
 		TNT1 A 22;
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### UVWX 1;
 		Goto Ready;
 	Kick: //18
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### A 0 A_JumpIf(invoker.spinning,"SpinKick");
 		#### HIJK 1;
@@ -50,10 +50,10 @@ class BDPMinigun : BDPWeaponBase
 		#### QRSTQRSTQR 1;
 		#### A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
 		#### PONM 1;
-		TNT1 A 0 A_JumpIfInventory("BDPClip2",1,"Ready2");
+		TNT1 A 0 A_JumpIfInventory("BDP_Clip2",1,"Ready2");
 		Goto Ready2;
 	SlideKick: //25
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### A 0 A_JumpIf(invoker.spinning,"SpinSlideKick");
 		#### HIJK 1;
@@ -66,10 +66,10 @@ class BDPMinigun : BDPWeaponBase
 		#### QRSTQRSTQRSTQRSTQ 1;
 		#### A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
 		#### PONM 1;
-		TNT1 A 0 A_JumpIfInventory("BDPClip2",1,"Ready2");
+		TNT1 A 0 A_JumpIfInventory("BDP_Clip2",1,"Ready2");
 		Goto Ready2;
 	Taunt: //30
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### A 0 A_JumpIf(invoker.spinning,"SpinTaunt");
 		#### HIJK 1;
@@ -84,17 +84,17 @@ class BDPMinigun : BDPWeaponBase
 		#### PONM 1;
 		Goto Ready2;
 	Sprint: 
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### A 0 A_JumpIf(invoker.spinning,"SpinSprint");
 		#### HIJK 1 A_SetSprites("TNT1A0",1);
 	SprintLoop:
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### L 1 A_SetSprites("TNT1A0",1);
 		Loop;
 	SprintEnd:
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### A 0 A_JumpIf(invoker.spinning,"SpinSprintEnd");
 		#### KJIH 1 A_SetSprites("TNT1A0",1);
@@ -128,14 +128,14 @@ class BDPMinigun : BDPWeaponBase
 		Loop;
 	Ready:
 		TNT1 A 0 A_JumpIf(invoker.spinning,"Ready2");
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### A 1 A_MinigunReady();
 		Loop;
 	Ready2:
 		TNT1 A 0 A_AlertMonstersDX();
 		CHAG A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### ACDE 1 A_MinigunReady(CVar.GetCVar("bdp_hold_spin",player).GetBool() ? WRF_NOSECONDARY : 0);
 		Loop;
@@ -145,7 +145,7 @@ class BDPMinigun : BDPWeaponBase
 			If(invoker.spinning)
 				A_startsound("CHAINSTO",5,0,0.5);
 		}
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### ][ZY 1;
 		TNT1 A 1;
@@ -160,7 +160,7 @@ class BDPMinigun : BDPWeaponBase
 		}
 		TNT1 A 1 A_SetCrosshairDX("MGUNRet", 500);
 		TNT1 A 0 A_StartSound("CHGNPKUP");
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### UVWX 1;
 		Goto Ready;
@@ -188,7 +188,7 @@ class BDPMinigun : BDPWeaponBase
 			invoker.spinning = true;
 			A_startSound("CHAINSTA", 5,0,0.5);
 		}
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### A 0 A_JumpIf(invoker.spinSpeed == 3,"SpinFire");
 		#### A 0 A_JumpIf(invoker.spinSpeed == 2,"FireSpin2");
@@ -200,9 +200,9 @@ class BDPMinigun : BDPWeaponBase
 		#### A 0 {invoker.spinSpeed = 3;}
 		#### EF 1 A_MinigunReady(CVar.GetCVar("bdp_hold_spin",player).GetBool() ? WRF_NOSECONDARY : 0,1);
 	SpinFire:
-		TNT1 A 0 A_CheckIfAmmo("BDPClip2",1,"NoAmmoHold");
+		TNT1 A 0 A_CheckIfAmmo("BDP_Clip2",1,"NoAmmoHold");
 	SpinReFire:
-		TNT1 A 0 A_CheckIfAmmo("BDPClip2",1,"NoAmmoHoldWasFiring");
+		TNT1 A 0 A_CheckIfAmmo("BDP_Clip2",1,"NoAmmoHoldWasFiring");
 		CHAF G 1 Bright
 		{
 
@@ -217,7 +217,7 @@ class BDPMinigun : BDPWeaponBase
 			A_ZoomFactor(0.99);
 			A_QuadSound();
 			A_GunLight();
-			A_TakeAmmo("BDPClip2",1);
+			A_TakeAmmo("BDP_Clip2",1);
 		}
 		CHAF B 1
 		{
@@ -231,7 +231,7 @@ class BDPMinigun : BDPWeaponBase
 			A_QuadSound();
 			//A_GunLight();
 		}
-		TNT1 A 0 A_CheckIfAmmo("BDPClip2",1,"NoAmmoHoldWasFiring");
+		TNT1 A 0 A_CheckIfAmmo("BDP_Clip2",1,"NoAmmoHoldWasFiring");
 		CHAF E 1 Bright
 		{
 
@@ -247,7 +247,7 @@ class BDPMinigun : BDPWeaponBase
 			A_ZoomFactor(0.99);
 			A_QuadSound();
 			A_GunLight();
-			A_TakeAmmo("BDPClip2",1);
+			A_TakeAmmo("BDP_Clip2",1);
 		}
 		CHAF D 1
 		{
@@ -274,7 +274,7 @@ class BDPMinigun : BDPWeaponBase
 		TNT1 A 0 A_StartSound("CHAINSH2",1,0,0.5);
 	DoneHolding:
 		CHAG A 0 A_StartSound("CHAINSPI", 5,CHANF_LOOPING,0.5);
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### ACDEACDEACDEACDEACDE 1 A_MinigunReady(CVar.GetCVar("bdp_hold_spin",player).GetBool() ? WRF_NOSECONDARY : 0,2);
 		TNT1 A 0 A_JumpIf(!CVar.GetCVar("bdp_hold_spin",player).GetBool() && !invoker.altSpin,"StopAlt");
@@ -299,7 +299,7 @@ class BDPMinigun : BDPWeaponBase
 			invoker.altSpin = true;
 			A_startSound("CHAINSTA", 5,0,0.5);
 		}
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### A 0 A_JumpIf(invoker.spinSpeed == 2,"Spin2");
 		#### A 0 A_JumpIf(invoker.spinSpeed == 3,"Spin3");
@@ -321,7 +321,7 @@ class BDPMinigun : BDPWeaponBase
 			A_StopSound(5);
 			A_StopSound(1);
 		}
-		CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### A 0 A_JumpIf(invoker.spinSpeed == 2,"SpinDown2");
 		#### A 0 A_JumpIf(invoker.spinSpeed == 1,"SpinDown3");
@@ -337,10 +337,10 @@ class BDPMinigun : BDPWeaponBase
 		Goto Ready;
 		 SpecialAction:
 		 TNT1 A 0 A_takeinventory("StartDualWield",1);
-		 TNT1 A 0 A_jumpifinventory("BDPClip2",1,1);
+		 TNT1 A 0 A_jumpifinventory("BDP_Clip2",1,1);
 		 Goto ready;
 		 TNT1 A 0 ;
-		 CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+		 CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 			CHAE A 0;
 		#### "][" 1;
 		#### ZY 1;
@@ -348,13 +348,13 @@ class BDPMinigun : BDPWeaponBase
 		  {
 		  A_playsound("CBOXPKUP",6);
 		  A_spawnitemex("minigunturret",60,0,0,2,0,5,0,SXF_NOCHECKPOSITION | SXF_SETTRACER);
-		 // A_takeinventory("BDPClip2",100);
+		 // A_takeinventory("BDP_Clip2",100);
 		  A_takeinventory("miniguncount",1);
 		  }
 		  TNT1 A 10;
 		  
 		  Andbackagain:
-			CHAG A 0 A_JumpIfInventory("BDPClip2",1,2);
+			CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 			CHAE A 0;
 			#### UVWX 1;
 			RIFG A 0 A_Takeinventory("StartDualWield",1);
@@ -362,7 +362,7 @@ class BDPMinigun : BDPWeaponBase
 	}
 }
 
-CLASS MiniGunTurret : BDPNotMonster
+CLASS MiniGunTurret : BDP_NotMonster
 	{
 		Default
 		{
@@ -401,19 +401,19 @@ CLASS MiniGunTurret : BDPNotMonster
 		{
 			If(levellocals.ispointinlevel(pos))
 			{
-				If(tracer && tracer.findinventory("PowerSpeed2"))
+				If(tracer && tracer.findinventory("BDP_PowerSpeed"))
 					{
-						giveinventory("BDPClip2",600);
+						giveinventory("BDP_Clip2",600);
 					}
-				Else If(tracer && tracer.countinv("BDPClip2") < 100)
+				Else If(tracer && tracer.countinv("BDP_Clip2") < 100)
 					{
-						Giveinventory("BDPClip2",(tracer.countinv("BDPClip2") * 2));
-						tracer.takeinventory("BDPClip2",100);
+						Giveinventory("BDP_Clip2",(tracer.countinv("BDP_Clip2") * 2));
+						tracer.takeinventory("BDP_Clip2",100);
 					}
 				Else if (tracer)
 					{
-						tracer.takeinventory("BDPClip2",100);
-						giveinventory("BDPClip2",200);
+						tracer.takeinventory("BDP_Clip2",100);
+						giveinventory("BDP_Clip2",200);
 					}
 				A_cleartracer();
 				A_startsound("bepbep",24);
@@ -423,7 +423,7 @@ CLASS MiniGunTurret : BDPNotMonster
 				A_startsound("CBOXPKUP",1);
 				If(tracer)
 				{
-					tracer.giveinventory("BDPMinigun",1);
+					tracer.giveinventory("BDP_Minigun",1);
 					tracer.giveinventory("miniguncount",1);
 				}
 				Return resolvestate("Death.NotInLevel");
@@ -446,12 +446,12 @@ CLASS MiniGunTurret : BDPNotMonster
 		Goto Death;
 		
 		Missile:
-		TNT1 A 0 A_Jumpifinventory("BDPClip2",1,1);
+		TNT1 A 0 A_Jumpifinventory("BDP_Clip2",1,1);
 		Goto IHaveNoAmmo;
 			MGNT A 1 A_facetarget();
 			MGNT B 1
 			{
-			A_takeinventory("BDPClip2",1);
+			A_takeinventory("BDP_Clip2",1);
 			A_startSound("FARMGN", 6);
 			A_startSound("DSPISTOL", 5);
 			A_spawnprojectile("MonsterMinigunTracer", 30, 0, random(-2,2), CMF_OFFSETPITCH, random(-2,2));
@@ -462,7 +462,7 @@ CLASS MiniGunTurret : BDPNotMonster
 			MGNT A 1 A_FaceTarget();
 			MGNT C 1
 			{
-			//A_takeinventory("BDPClip2",1);
+			//A_takeinventory("BDP_Clip2",1);
 			A_startSound("FARMGN", 6);
 			A_startSound("DSPISTOL", 5);
 			A_spawnprojectile("MonsterMinigunTracer", 30, 0, random(-2,2), CMF_OFFSETPITCH, random(-2,2));
@@ -473,7 +473,7 @@ CLASS MiniGunTurret : BDPNotMonster
 			MGNT A 1 A_facetarget();
 			MGNT B 1
 			{
-			//A_takeinventory("BDPClip2",1);
+			//A_takeinventory("BDP_Clip2",1);
 			A_startSound("FARMGN", 6);
 			A_startSound("DSPISTOL", 5);
 			A_spawnprojectile("MonsterMinigunTracer", 30, 0, random(-2,2), CMF_OFFSETPITCH, random(-2,2));
@@ -484,7 +484,7 @@ CLASS MiniGunTurret : BDPNotMonster
 			MGNT A 1 A_FaceTarget();
 			MGNT C 1
 			{
-			//A_takeinventory("BDPClip2",1);
+			//A_takeinventory("BDP_Clip2",1);
 			A_startSound("FARMGN", 6);
 			A_startSound("DSPISTOL", 5);
 			A_spawnprojectile("MonsterMinigunTracer", 30, 0, random(-2,2), CMF_OFFSETPITCH, random(-2,2));
@@ -510,9 +510,9 @@ CLASS MiniGunTurret : BDPNotMonster
 		Death.stealth:
 			TNT1 A 1 
 			{
-			A_givetotarget("BDPClip2",(countinv("BDPClip2") / 4.0));
+			A_givetotarget("BDP_Clip2",(countinv("BDP_Clip2") / 4.0));
 			A_startsound("CBOXPKUP",1);
-			A_givetotarget("BDPMinigun",1);
+			A_givetotarget("BDP_Minigun",1);
 			A_givetotarget("miniguncount",1);
 			}
 			STOP;
@@ -543,7 +543,7 @@ CLASS MiniGunTurret : BDPNotMonster
 		{
 			If(tracer && tracer.countinv("ammocell") < 100)
 				{
-				Giveinventory("BDPClip2",(tracer.countinv("AmmoCell") * 2));
+				Giveinventory("BDP_Clip2",(tracer.countinv("AmmoCell") * 2));
 				tracer.takeinventory("AmmoCell",100);
 				}
 			Else if (tracer)

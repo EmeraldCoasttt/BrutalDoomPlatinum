@@ -1,13 +1,13 @@
-class BDPMenuSwitcher : StaticEventHandler
+class BDP_MenuSwitcher : StaticEventHandler
 {
-	BDPModifier_Events modifierEvents;
+	BDP_ModifierEvents modifierEvents;
 	ui int lastGS;
 	ui Name lastMenu;
 	
 	override void WorldTick()
 	{
 		if(!modifierEvents)
-			modifierEvents = BDPModifier_Events(EventHandler.Find("BDPModifier_Events"));
+			modifierEvents = BDP_ModifierEvents(EventHandler.Find("BDP_ModifierEvents"));
 	}
 	
 	override void UITick()

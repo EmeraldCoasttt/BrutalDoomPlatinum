@@ -1,5 +1,5 @@
 // Credits: https://gist.github.com/itsmrpeck/be41d72e9d4c72d2236de687f6f53974
-class BDPMath Abstract
+class BDP_Math Abstract
 {	
 	const PI = 3.14159265358;
 	const RAD = 180.0/PI;
@@ -682,7 +682,7 @@ class BDPMath Abstract
 		
 		uint notFound = tokens.Size();
 		if(tokens.Find("ALL") != notFound) return GT_ALL;
-		BDPMath.getGameTypes(gameTypes);
+		BDP_Math.getGameTypes(gameTypes);
 		
 		for(int i = 0; i < gameTypes.Size(); i++)
 		{

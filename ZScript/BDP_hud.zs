@@ -92,7 +92,7 @@ class BDP_HUD : DoomStatusBar
 	override void Tick()
 	{
 		super.Tick();
-		BDPPlayerPawn BDPplr = BDPPlayerPawn(cplayer.mo);
+		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(cplayer.mo);
 		int stamina;
 		If(BDPplr)
 		{
@@ -489,7 +489,7 @@ class BDP_HUD : DoomStatusBar
 			{
 				DrawImage("HASARMR", iconPos + smallIconOfs,DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
 			}
-		BDPPlayerPawn BDPplr = BDPPlayerPawn(Cplayer.mo);
+		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(Cplayer.mo);
 		If(BDPplr && BDPplr.extralives > 0)
 		{
 			DrawString(
@@ -578,7 +578,7 @@ class BDP_HUD : DoomStatusBar
 	
 	void DrawStaminaBar(vector2 pos, int flags = 0)
 	{		
-		BDPPlayerPawn BDPplr = BDPPlayerPawn(Cplayer.mo);
+		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(Cplayer.mo);
 		if (!BDPplr || !BDPplr.istactical)
 			return;
 		
@@ -650,7 +650,7 @@ class BDP_HUD : DoomStatusBar
 		Class<Inventory> Ammo3;
 		Class<Inventory> AltAmmo;
 		bool altselected;
-		let weap = BDPWeaponBase(CPlayer.mo.player.ReadyWeapon);
+		let weap = BDP_Weapon(CPlayer.mo.player.ReadyWeapon);
 		if (weap)
 		{
 			Ammo3 = Weap.Ammotype3;
@@ -660,7 +660,7 @@ class BDP_HUD : DoomStatusBar
 			}
 			if(weap.bDUALWEAPON)
 			{
-				let dualweap = BDPWeaponBase(CPlayer.mo.FindInventory(weap.DualWeapon));
+				let dualweap = BDP_Weapon(CPlayer.mo.FindInventory(weap.DualWeapon));
 				dualMagAmt = DualWeap.mag;
 			}
 			MagAmt = Weap.mag;
@@ -738,7 +738,7 @@ class BDP_HUD : DoomStatusBar
 		if(weap.bDUALWEAPON)
 		{
 			iconPos.x += iconSpacing;
-			let dualweap = BDPWeaponBase(CPlayer.mo.FindInventory(weap.DualWeapon));
+			let dualweap = BDP_Weapon(CPlayer.mo.FindInventory(weap.DualWeapon));
 			DrawInventoryIcon(dualweap, iconPos, iconFlags);
 			
 			DrawString(
@@ -772,7 +772,7 @@ class BDP_HUD : DoomStatusBar
 		iconPos += (iconSpacing * 1, 17);
 		DrawGrenadeIndicator(mIndexfnt, iconPos, iconFlags, (22,22));
 		
-		let plr = BDPPlayerPawn(CPlayer.mo);
+		let plr = BDP_PlayerPawn(CPlayer.mo);
 		if (plr && plr.focusWeapon && !automapactive)
 		{
 			textureID focusicon = geticon(plr.focusweapon,0);
@@ -823,30 +823,30 @@ class BDP_HUD : DoomStatusBar
 				}
 				else if (item is "PowerInvulnerable")
 				{
-					iconName = "PINVB0";
+					iconName = "BDP_PINVB0";
 					col = Font.CR_Black;
 				}
-				else if (item is "PowerInvisibility")
+				else if (item is "BDP_PowerInvisibility")
 				{
 					iconName = "PINSA0";
 					col = Font.CR_Blue;
 				}
-				else if (item is "PowerLightAmp")
+				else if (item is "BDP_PowerNightVision")
 				{
 					iconName = "SVISE0";
 					col = Font.CR_Cyan;
 				}
-				else if (item is "PowerquakeDamage")
+				else if (item is "BDP_PowerQuadDamage")
 				{
 					iconName = "SIG2A0";
 					col = Font.CR_Purple;
 				}
-				else if (item is "PowerSpeed2")
+				else if (item is "BDP_PowerSpeed")
 				{
 					iconName = "SIG4A0";
 					col = Font.CR_Yellow;
 				}
-				else if (item is "PowerRage")
+				else if (item is "BDP_PowerRage")
 				{
 					iconName = "DDMGA0";
 					col = Font.CR_RED;
@@ -907,7 +907,7 @@ class BDP_HUD : DoomStatusBar
 		int flags = DI_SCREEN_RIGHT_TOP|DI_TEXT_ALIGN_RIGHT;
 		vector2 pos = basePos;
 		double Ystep = fnt.mFont.GetHeight();
-		BDPPlayerPawn BDPplr = BDPPlayerPawn(Cplayer.mo);
+		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(Cplayer.mo);
 		If(BDPplr && BDPplr.scoremaster)
 		{
 			DrawString(
@@ -954,7 +954,7 @@ class BDP_HUD : DoomStatusBar
 	void DrawCrosshairs()
 	{		
 		// Get player
-		BDPPlayerPawn BDPplr = BDPPlayerPawn(Cplayer.mo);
+		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(Cplayer.mo);
 		If(BDPplr && BDPplr.health > 0)
 		{
 			let curvehicle = Veh_Manager(BDPplr.FindInventory("Veh_Manager"));
@@ -969,12 +969,12 @@ class BDP_HUD : DoomStatusBar
 			{
 				crosshair = curvehicle.crosshair;
 				retsize = curvehicle.crosshair_scale;
-				aimAct = BDPVehicle(curvehicle.veh).aimActor;
+				aimAct = BDP_Vehicle(curvehicle.veh).aimActor;
 			}
 			
-			bool hostileAim = aimAct && aimAct.isHostile(bdpplr) && aimAct.bISMONSTER && !(aimAct is "BDPVehicle") && !aimAct.bSHADOW;
+			bool hostileAim = aimAct && aimAct.isHostile(bdpplr) && aimAct.bISMONSTER && !(aimAct is "BDP_Vehicle") && !aimAct.bSHADOW;
 			
-			If(aimAct && aimAct is "BASEHEADSHOT")
+			If(aimAct && aimAct is "BDP_Headshot")
 			{
 				hostileAim = true;
 			}
@@ -1001,7 +1001,7 @@ class BDP_HUD : DoomStatusBar
 	void Drawkillstreak()
 	{		
 		// Get player
-		BDPPlayerPawn BDPplr = BDPPlayerPawn(Cplayer.mo);
+		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(Cplayer.mo);
 		
 		If(BDPplr && BDPplr.killstreak > 2)
 		{
@@ -1038,7 +1038,7 @@ class BDP_HUD : DoomStatusBar
 		{
 			hintfade += 0.02;
 		}
-		BDPPlayerPawn BDPplr = BDPPlayerPawn(cplayer.mo);
+		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(cplayer.mo);
 		bool nightmare = BDPplr.ultranightmare;
 		If(hinttimer >= 150 && !nightmare)
 		{
@@ -1143,31 +1143,31 @@ class BDP_OverlayUI : EventHandler
 	override void WorldThingSpawned(WorldEvent e)
 	{
 		if(e.Thing is "Key") AddNewKey(Key(e.Thing));
-		Else if(e.thing is "BDBlueCard")
+		Else if(e.thing is "BDP_BlueCard")
 		{
 			AddNewKey2(e.thing, "Blue");
 		}
-		Else if(e.thing is "BDRedCard")
+		Else if(e.thing is "BDP_RedCard")
 		{
 			AddNewKey2(e.thing, "Red");
 		}
-		Else if(e.thing is "BDYellowCard")
+		Else if(e.thing is "BDP_YellowCard")
 		{
 			AddNewKey2(e.thing, "Orange");
 		}
-		Else if(e.thing is "BDBlueSkull")
+		Else if(e.thing is "BDP_BlueSkull")
 		{
 			AddNewKey2(e.thing, "Blue");
 		}
-		Else if(e.thing is "BDRedSkull")
+		Else if(e.thing is "BDP_RedSkull")
 		{
 			AddNewKey2(e.thing, "Red");
 		}
-		Else if(e.thing is "BDYellowSkull")
+		Else if(e.thing is "BDP_YellowSkull")
 		{
 			AddNewKey2(e.thing, "Orange");
 		}
-		Else if(e.thing is "NewAllMap")
+		Else if(e.thing is "BDP_AllMap")
 		{
 			AddNewKey2(e.thing, "green");
 		}
@@ -1180,11 +1180,11 @@ class BDP_OverlayUI : EventHandler
 	override void RenderOverlay(RenderEvent e)
 	{	
 		// Get player
-		BDPPlayerPawn BDPplr = BDPPlayerPawn(e.Camera);
+		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(e.Camera);
 		if(!BDPplr)
 		{
-			let BDPcam = BDPVehCamera(e.Camera);
-			if(BDPcam) BDPplr = BDPPlayerPawn(BDPcam.source);
+			let BDPcam = BDP_VehicleCamera(e.Camera);
+			if(BDPcam) BDPplr = BDP_PlayerPawn(BDPcam.source);
 			if(!BDPplr) return;
 		}
 		
@@ -1199,7 +1199,7 @@ class BDP_OverlayUI : EventHandler
 		If(BDPplr && BDPplr.health > 0 && BDPplr.findinventory("Meathook"))
 		{
 			Actor aimAct = bdpplr.aimActor2; 
-			bool hostileAim = aimAct && aimAct.isHostile(bdpplr) && aimAct.bISMONSTER && !(aimAct is "BDPVehicle") && !aimAct.bSHADOW;
+			bool hostileAim = aimAct && aimAct.isHostile(bdpplr) && aimAct.bISMONSTER && !(aimAct is "BDP_Vehicle") && !aimAct.bSHADOW;
 			double trans = CVar.GetCVAR("bdp_crosshair_trans",BDPplr.player).GetFloat();
 			string crosshair = bdpplr.targetercrosshair;
 			vector2 retsize = bdpplr.targetercrosshairscale;

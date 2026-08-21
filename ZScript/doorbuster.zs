@@ -51,8 +51,8 @@ class BDP_DoorBuster : Thinker
 			// surface area. Smaller values mean MORE debris, but 0 means "do not
 			// spawn". Debris position is still randomized regardless of this.
 			double debrisDensity = 8.0, //= 1 piece per each 16x16 square
-			class<Actor> debrisType = "walldebris",
-			class<Actor> AfterdebrisType = "walldebris2",
+			class<Actor> debrisType = "BDP_WallDebris",
+			class<Actor> AfterdebrisType = "BDP_WallDebris2",
 			// spawnAfter: if true, a separate thinker will keep spawning some debris
 			// along the top line of the door, falling down, once it's been destroyed
 			bool spawnAfterDebris = true,

@@ -86,7 +86,7 @@ class Segment : Actor
 		vector3 localoffs = GetEndOffs();
 		if(flipped) localoffs.y *= -1;
 		
-		vector3 worldoffs = BDPMath.V3Offset(angle+angleoffs,pitch+pitchoffs - 90,roll, localoffs.x,localoffs.y,localoffs.z, 1.0);
+		vector3 worldoffs = BDP_Math.V3Offset(angle+angleoffs,pitch+pitchoffs - 90,roll, localoffs.x,localoffs.y,localoffs.z, 1.0);
 		endpos = level.vec3offset(pos, worldoffs); 
 	}
 	

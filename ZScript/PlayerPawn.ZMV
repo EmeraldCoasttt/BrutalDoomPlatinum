@@ -1,5 +1,5 @@
 
-class BDPPlayerPawn : PlayerPawn
+class BDP_PlayerPawn : PlayerPawn
 {
 	//=========================
 	//Common
@@ -354,13 +354,13 @@ class BDPPlayerPawn : PlayerPawn
 			
 
 			
-			double inertia = BDPMath.GetInertia(victim.mass);
+			double inertia = BDP_Math.GetInertia(victim.mass);
 			self.A_Quake(2,3,0,20,"");
 			self.A_face(victim);
 			if(doHitThrust && victim.bsolid)
 			{
 				self.vel *= 0;
-				self.vel += BDPMath.VecFromAngles(self.angle, self.pitch, -12);	
+				self.vel += BDP_Math.VecFromAngles(self.angle, self.pitch, -12);	
 			}
 						
 		}
@@ -403,7 +403,7 @@ class BDPPlayerPawn : PlayerPawn
 	
 	action void A_Recoil3D(double amt)
 	{
-		vel += BDPMath.VecFromAngles(angle, pitch, -amt);	
+		vel += BDP_Math.VecFromAngles(angle, pitch, -amt);	
 	}
 	
 	action void A_SlidePitch()
@@ -437,7 +437,7 @@ class BDPPlayerPawn : PlayerPawn
 			A_OverlayFlags(-602, PSPF_ADDBOB, false);
 			if((player.cmd.buttons & BT_USER1 && !blockKick || canSlide) && CountInv("veh_manager") < 1)
 			{
-				BDPWeaponBase weap = BDPWeaponBase(player.ReadyWeapon);
+				BDP_Weapon weap = BDP_Weapon(player.ReadyWeapon);
 				bool kickflash = (weap.readyLeft && weap.readyRight || !weap.bDUALWEAPON) && player.WeaponState & WF_USER1OK;
 				blockKick = true;
 				statelabel st = "Kick";
@@ -724,7 +724,7 @@ class BDPPlayerPawn : PlayerPawn
 			// to decide what should and shouldn't be counted:
 			if (weap &&
 				!weap.bPOWERED_UP && //skip sisterweapons
-				!(weap is "BDPFist") && //skip Fist
+				!(weap is "BDP_Fist") && //skip Fist
 				countedWeapons.Find(weap) == countedWeapons.Size() //skip already counted
 				)
 			{
@@ -790,13 +790,13 @@ class BDPPlayerPawn : PlayerPawn
 		bool canDualWield = IsDualWieldable(weap);
 		
 		bool isfists;
-		If(player.readyweapon && player.readyweapon is "BDPFist" && overcap && !isdualwieldable)
+		If(player.readyweapon && player.readyweapon is "BDP_Fist" && overcap && !isdualwieldable)
 		{
 			isfists = true;
 		}
 		
 		bool isbarrel;
-		If(player.readyweapon && !(player.readyweapon is "ExplosiveBarrelWeapon") && weap is "explosivebarrelweapon")
+		If(player.readyweapon && !(player.readyweapon is "BDP_BarrelWeapon") && weap is "BDP_BarrelWeapon")
 		{
 			isbarrel = true;
 		}
@@ -804,7 +804,7 @@ class BDPPlayerPawn : PlayerPawn
 		// Collision boxes not overlapping - this is being picked
 		// up elsewhere, by a voodoo doll. Let voodoo dolls pick up
 		// weapons directly:
-		if (distance3d(weap) > 128 && !(weap is "ExplosiveBarrelWeapon"))
+		if (distance3d(weap) > 128 && !(weap is "BDP_BarrelWeapon"))
 		{
 			weap.giveinventory("AmmoTaken",1);
 			AddToPickupList(weap);
@@ -945,7 +945,7 @@ class BDPPlayerPawn : PlayerPawn
 	// Called when an item is received:
 	override void HasReceived(Inventory item, class<Inventory> itemcls)
 	{
-		if (BDPHandler.IsVoodooDoll(self)) return;
+		if (BDP_Handler.IsVoodooDoll(self)) return;
 		
 		let weap = Weapon(item);
 		if (!weap) return;
@@ -1033,7 +1033,7 @@ class BDPPlayerPawn : PlayerPawn
 						seenmonstercount++;
 						//HACKY AS HELL!!!
 						currentactor.giveinventory("youveseenme",1);
-						if(currentactor is "Cacodemon" || currentactor is "BDPPainElemental")
+						if(currentactor is "Cacodemon" || currentactor is "BDP_PainElemental")
 						cacocount++;
 						if(currentactor is "Cyberdemon")
 						seencyber = true;
@@ -1065,51 +1065,51 @@ class BDPPlayerPawn : PlayerPawn
 			tauntcooldown = 105;
 			If(player.readyweapon)
 			{
-				If(player.readyweapon is "BDPChainsaw")
+				If(player.readyweapon is "BDP_Chainsaw")
 				{
 					A_startsound("DGCSAW",455);
 				}
-				else if(player.readyweapon is "BDPBFG9000")
+				else if(player.readyweapon is "BDP_BFG9000")
 				{
 					A_startsound("DGBFG",455);
 				}
-				else if(player.readyweapon is "BDPPlasmaRifle")
+				else if(player.readyweapon is "BDP_PlasmaRifle")
 				{
 					A_startsound("DGPLAS",455);
 				}
-				else if(player.readyweapon is "BDPMinigun")
+				else if(player.readyweapon is "BDP_Minigun")
 				{
 					A_startsound("DGCGUN",455);
 				}
-				else if(player.readyweapon is "BDPSubmachineGun")
+				else if(player.readyweapon is "BDP_SubmachineGun")
 				{
 					A_startsound("DGSMG",455);
 				}
-				else if(player.readyweapon is "BDPRevolver")
+				else if(player.readyweapon is "BDP_Revolver")
 				{
 					A_startsound("DGREV",455);
 				}
-				else if(player.readyweapon is "BDPUnmaker")
+				else if(player.readyweapon is "BDP_Unmaker")
 				{
 					A_startsound("DGUNM",455);
 				}
-				else if(player.readyweapon is "BDPRocketLauncher")
+				else if(player.readyweapon is "BDP_RocketLauncher")
 				{
 					A_startsound("DGROCK",455);
 				}
-				else if(player.readyweapon is "BDPAssaultShotgun")
+				else if(player.readyweapon is "BDP_AssaultShotgun")
 				{
 					A_startsound("DGAUTO",455);
 				}
-				else if(player.readyweapon is "BDPAssaultRifle")
+				else if(player.readyweapon is "BDP_AssaultRifle")
 				{
 					A_startsound("DGASS",455);
 				}
-				else if(player.readyweapon is "BDPIncinerator")
+				else if(player.readyweapon is "BDP_Incinerator")
 				{
 					A_startsound("DGFLAM",455);
 				}
-				else if(player.readyweapon is "BDPShotgun" || player.readyweapon is "BDPSuperShotgun")
+				else if(player.readyweapon is "BDP_Shotgun" || player.readyweapon is "BDP_SuperShotgun")
 				{
 					A_startsound("DGSGUN",455);
 				}
@@ -1133,7 +1133,7 @@ class BDPPlayerPawn : PlayerPawn
 			// Why should this number vary by gravity?
 			if (self.Vel.Z < -10)
 			{
-				let jumpland = spawn("BDPLANDED",pos);
+				let jumpland = spawn("BDP_Landed",pos);
 				
 				If(jumpland)
 				{
@@ -1149,10 +1149,10 @@ class BDPPlayerPawn : PlayerPawn
 		{
 		
 			//console.printf(player.readyweapon.getclassname());
-			BDPAssaultShotgun weap = BDPAssaultShotgun(player.ReadyWeapon);
+			BDP_AssaultShotgun weap = BDP_AssaultShotgun(player.ReadyWeapon);
 			If(weap && weap.ASGSHieldActive)
 			{
-				TakeInventory("ASGShield",damage * 1.5);
+				TakeInventory("BDP_ASGShield",damage * 1.5);
 				//console.printf("Shield active wooo");
 				a_startsound("StickyGrenade/Hit",125);
 				damage = 0;
@@ -1163,7 +1163,7 @@ class BDPPlayerPawn : PlayerPawn
 			}
 			
 			//console.printf(inflictor.getclassname());
-			If(source is "BDPBIKE" && !invehicle)
+			If(source is "BDP_Bike" && !invehicle)
 				{
 					damage = 0;
 					SetStateLabel("pain.bikelaunch");
@@ -1208,7 +1208,7 @@ class BDPPlayerPawn : PlayerPawn
 		
 		}
 		
-		if (findinventory("BDPInvuln"))
+		if (findinventory("BDP_PowerInvulnerable"))
 			{
 				PPShader.SetEnabled("tempinv", true);
 				invtimer = 1.0;
@@ -1238,7 +1238,7 @@ class BDPPlayerPawn : PlayerPawn
 			{
 				PPShader.SetEnabled("radsuit", false);
 			}
-		if (findinventory("PowerSpeed2"))
+		if (findinventory("BDP_PowerSpeed"))
 			 {
 				PPShader.SetEnabled("haste", true);
 				hastetimer = 0.30;
@@ -1253,7 +1253,7 @@ class BDPPlayerPawn : PlayerPawn
 			{
 				PPShader.SetEnabled("haste", false);
 			}
-		if (findinventory("PowerRage"))
+		if (findinventory("BDP_PowerRage"))
 			{
 				PPShader.SetEnabled("rage", true);
 				ragetimer = 0.30;
@@ -1268,7 +1268,7 @@ class BDPPlayerPawn : PlayerPawn
 			{
 				PPShader.SetEnabled("rage", false);
 			}
-		if (findinventory("PowerQuakeDamage"))
+		if (findinventory("BDP_PowerQuadDamage"))
 			{
 				PPShader.SetEnabled("quad", true);
 				quadtimer = 0.30;
@@ -1331,7 +1331,7 @@ class BDPPlayerPawn : PlayerPawn
 				flashtimer--;
 			}
 			
-			If(flashburnout > 0 && !findinventory("powernightvisneo"))
+			If(flashburnout > 0 && !findinventory("BDP_PowerNightVision"))
 			{
 				flashburnout--;
 			}
@@ -1342,7 +1342,7 @@ class BDPPlayerPawn : PlayerPawn
 				{
 					flashtimer = 20;
 					flashon = false;
-					If(!findinventory("powernightvisneo"))
+					If(!findinventory("BDP_PowerNightVision"))
 					{
 						A_startsound("FLASHOFF",5);
 					}
@@ -1361,7 +1361,7 @@ class BDPPlayerPawn : PlayerPawn
 					flashtimer = 20;
 					flashburnout = 700;
 					flashon = true;
-					If(!findinventory("powernightvisneo"))
+					If(!findinventory("BDP_PowerNightVision"))
 					{
 						A_startsound("FLASHON",5);
 						A_giveinventory("BDP_flashlight",1);
@@ -1386,7 +1386,7 @@ class BDPPlayerPawn : PlayerPawn
 					Takeinventory("switchflashlight",1);
 				}
 				
-			If(findinventory("powernightvisneo") && flashon)
+			If(findinventory("BDP_PowerNightVision") && flashon)
 				{
 					PPShader.SetEnabled("NiteVis",true);
 					giveinventory("VisorAmp",1);
@@ -1575,7 +1575,7 @@ class BDPPlayerPawn : PlayerPawn
 		
 		If(maximumoverdrive && !findinventory("powerboost",TRUE) && health > 0)
 		{
-			GiveInventory("boosterframe",1);
+			GiveInventory("BDP_BoosterFrame",1);
 		}
 		
 		If(sequencebreak && !findinventory("sequencebreaker"))
@@ -2196,7 +2196,7 @@ class BDPPlayerPawn : PlayerPawn
 	
 	void GrapplingMove()
 	{
-		/*if(!BDPPlayerPawn.OnGround) */{ Grappled = True; }
+		/*if(!BDP_PlayerPawn.OnGround) */{ Grappled = True; }
 		
 		//Fun is over kids, go home
 		if(bNOGRAVITY || Rope.Length() <= 4.f * Radius || !CheckMove(Pos.XY + Vel.XY) || (lasttickrope && rope.length() > (lasttickrope + 30)))
@@ -2346,11 +2346,11 @@ class BDPPlayerPawn : PlayerPawn
 		{
 			oldInputs[i] = oldinputs[i - 1];
 		}
-		if (focusWeapon && !BDPHandler.IsVoodooDoll(self))
+		if (focusWeapon && !BDP_Handler.IsVoodooDoll(self))
 		{
 			// Check if our and weapon's collision boxes no longer align.
 			// If so, flush the focusWeapon pointer:
-			if (!BDPHandler.IsAABBColliding(self, focusWeapon))
+			if (!BDP_Handler.IsAABBColliding(self, focusWeapon))
 			{
 				focusWeapon = null;
 				manualPickup = false;
@@ -2382,10 +2382,10 @@ class BDPPlayerPawn : PlayerPawn
 						CurrentActor = CheckForTargets.Thing;
 						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
 						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
-						If(CurrentActor && (CurrentActor.bIsMonster && currentactor.bshootable && !currentactor.bfriendly || currentactor is "BDPPlayerPawn") && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && currentactor != self)
+						If(CurrentActor && (CurrentActor.bIsMonster && currentactor.bshootable && !currentactor.bfriendly || currentactor is "BDP_PlayerPawn") && CheckSight(CurrentActor,SF_IGNOREWATERBOUNDARY) && currentactor != self)
 						{
 							vector3 targetpos = LevelLocals.SphericalCoords((pos.x,pos.y,player.viewz),currentactor.pos+(0,0,currentactor.default.height*0.5),(angle,pitch));
-							let tr = new("HookTracer");
+							let tr = new("BDP_HookTracer");
 							if(tr)
 							{
 								tr.Trace((pos.x,pos.y,player.viewz),cursector,(AngleToVector(angle - targetpos.x, cos(pitch - targetpos.y)), -sin(pitch - targetpos.y)),targetercrosshairrange,0,ignore:self);
@@ -2826,7 +2826,7 @@ Class Hook : Actor
 	Override void Tick()
 	{
 		//bool isflaming = false;
-		Let HookOwner = BDPPlayerPawn(Target);
+		Let HookOwner = BDP_PlayerPawn(Target);
 		if(HookOwner)
 		{
 			Vector3 WaistPos = (HookOwner.Pos.X, HookOwner.Pos.Y, HookOwner.Pos.Z + HookOwner.Height / 2.f); // player position
@@ -2858,7 +2858,7 @@ Class Hook : Actor
 	
 	void InitiateGrapple(Bool Monster)
 	{
-		Let HookOwner = BDPPlayerPawn(Target);
+		Let HookOwner = BDP_PlayerPawn(Target);
 		
 		Float	PushLength = 4 * 5.5;
 		Vector3 HookPush = SafeUnit3(HookToPlayer) * PushLength;
@@ -2893,7 +2893,7 @@ Class Hook : Actor
 			Monster.spawnblood(pos,angle,1);
 			}
 			monster.a_pain();
-			BDPPlayerPawn(Target).GrappledMonster = Monster;
+			BDP_PlayerPawn(Target).GrappledMonster = Monster;
 			SetMonsterSpeed(False);
 			A_StartSound("HookMeat", 7);
 		}
@@ -2946,7 +2946,7 @@ Class Hook : Actor
 	Spawn:
 		OCLW A 0 NoDelay
 		{
-			Let HookOwner = BDPPlayerPawn(Target);
+			Let HookOwner = BDP_PlayerPawn(Target);
 			A_AlertMonsters();
 			
 			 if (target && target.target)
@@ -2962,7 +2962,7 @@ Class Hook : Actor
 		OCLW A 1
 		{
 			//a_seekermissile(365,365,SMF_LOOK);
-			Let HookOwner = BDPPlayerPawn(Target);
+			Let HookOwner = BDP_PlayerPawn(Target);
 			//target.giveinventory("meathook",1);
 			//Despawn if no geometry was found
 			/*
@@ -2983,7 +2983,7 @@ Class Hook : Actor
 	TillDeathDoesUsApart:
 		OCLW A 1
 		{
-			Let HookOwner = BDPPlayerPawn(Target);
+			Let HookOwner = BDP_PlayerPawn(Target);
 			if(!HookOwner.GrappleVel.Length() || !HookOwner)
 			{
 				SetState(FindState("DespawnHook"));
@@ -3013,7 +3013,7 @@ Class Hook : Actor
 		{
 
 			
-			Let HookOwner = BDPPlayerPawn(Target);
+			Let HookOwner = BDP_PlayerPawn(Target);
 			//SpawnTrail();
 			Let Monster = Actor(Master);
 			
@@ -3026,7 +3026,7 @@ Class Hook : Actor
 	TillXDeathDoesUsApart:
 		OCLW A 1
 		{
-			Let HookOwner = BDPPlayerPawn(Target);
+			Let HookOwner = BDP_PlayerPawn(Target);
 			Let Monster = Actor(Master);
 			If (monster)
 			{
@@ -3081,7 +3081,7 @@ Class Hook : Actor
 	Death:
 	OCLW AAA 0
 		{
-			Let HookOwner = BDPPlayerPawn(Target);
+			Let HookOwner = BDP_PlayerPawn(Target);
 			if(HookOwner)
 			{
 			//	HookOwner.a_giveinventory("canfiremeathook",1);
@@ -3098,7 +3098,7 @@ Class Hook : Actor
 	DespawnHook:
 		OCLW A 0
 		{
-			Let HookOwner = BDPPlayerPawn(Target);
+			Let HookOwner = BDP_PlayerPawn(Target);
 			if(HookOwner)
 			{
 				HookOwner.StopHook(true);
@@ -3248,7 +3248,7 @@ class BDP_Flashlight : CustomInventory {
 					spillOuter = 60;
 					spillRadius = 384;
 					
-					If (owner.findinventory("powernightvisneo"))
+					If (owner.findinventory("BDP_PowerNightVision"))
 					{
 						Beamradius = 1500;
 						SpillRadius = 1200;
@@ -3370,7 +3370,7 @@ class BDP_Flashlight : CustomInventory {
 			if(SelfLight1) { SelfLight1.Destroy(); }
 			if(SelfLight2) { SelfLight2.Destroy(); }
 		}
-		if (level.time % 5 == 0 && !owner.findinventory("powernightvisneo"))
+		if (level.time % 5 == 0 && !owner.findinventory("BDP_PowerNightVision"))
 		{
 			FLineTraceData AlertTrace;
 			owner.LineTrace(Owner.Angle, 328, owner.pitch, TRF_SOLIDACTORS, owner.height * 0.5, data: AlertTrace);

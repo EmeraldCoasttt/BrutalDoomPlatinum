@@ -1,5 +1,5 @@
 
-class ExplosiveBarrelWeapon: BDPWeaponBase  Replaces ExplosiveBarrel
+class BDP_BarrelWeapon: BDP_Weapon  Replaces ExplosiveBarrel
 {
 
 
@@ -11,8 +11,8 @@ class ExplosiveBarrelWeapon: BDPWeaponBase  Replaces ExplosiveBarrel
 		Inventory.althudicon "BAR1E0";
 		+INVENTORY.UNDROPPABLE;
 		 Inventory.PickupSound "skeleton/swing";
-		 BDPWeaponBase.voiceacted 0;
-		BDPWeaponBase.forceselect TRUE;
+		 BDP_Weapon.voiceacted 0;
+		BDP_Weapon.forceselect TRUE;
 	}
 	bool spawnedtracer;
 	bool hasbeen;
@@ -162,10 +162,10 @@ States {
 		TNT1 A 0 A_Giveinventory("Punching",1);
 		TNT1 A 0 A_TakeInventory("HasBarrel",1);
 		TNT1 A 0 A_TakeInventory("HasAGib",1);
-		TNT1 A 0 A_SelectWeapon("BDPFist");
+		TNT1 A 0 A_SelectWeapon("BDP_Fist");
 		THRF ABCDEF 1;
 		Goingtoinstadeselect:
-		TNT1 A 0 A_SelectWeapon("BDPFist");
+		TNT1 A 0 A_SelectWeapon("BDP_Fist");
 		Goto instadeselect;
 		
 		

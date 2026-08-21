@@ -1,24 +1,24 @@
-class modifierspawner : randomspawner
+class BDP_ModifierSpawner : randomspawner
 {
 	Default
 	{
-		Dropitem "MjolnirPickup";
-		Dropitem "ShockFactorPickup";
-		Dropitem "PerfectHatredPickup";
-		Dropitem "ManAndAHalfPickup";
-		Dropitem "GunSlingerPickup";
-		Dropitem "OneUpmanshipPickup";
-		DropItem "UltraNightmarePickup";
-		DropItem "SequenceBreakPickup";
-		DropItem "MaximumOverdrivePickUp";
-		DropItem "SkullcrusherPickUp";
-		DropItem "ScoreMasterPickUp";
-		DropItem "RealismPickUp";
-		DropItem "GluttonyPickUp";
-		DropItem "KickintheHeadPickUp";
+		Dropitem "BDP_MjolnirPickup";
+		Dropitem "BDP_ShockFactorPickup";
+		Dropitem "BDP_PerfectHatredPickup";
+		Dropitem "BDP_ManAndAHalfPickup";
+		Dropitem "BDP_GunSlingerPickup";
+		Dropitem "BDP_OneUpmanshipPickup";
+		Dropitem "BDP_UltraNightmarePickup";
+		Dropitem "BDP_SequenceBreakPickup";
+		Dropitem "BDP_MaximumOverdrivePickUp";
+		Dropitem "BDP_SkullcrusherPickUp";
+		Dropitem "BDP_ScoreMasterPickUp";
+		Dropitem "BDP_RealismPickUp";
+		Dropitem "BDP_GluttonyPickUp";
+		Dropitem "BDP_KickintheHeadPickUp";
 	}
 }
-class BDPModifierpickup : Inventory
+class BDP_ModifierPickup : Inventory
 {
 	string modifierclass;
 	property modifierclass : modifierclass;
@@ -27,10 +27,10 @@ class BDPModifierpickup : Inventory
     Default
     {
         Inventory.MaxAmount 666;
-		BDPModifierpickup.modifierclass "Modifier_Example2";
+		BDP_ModifierPickup.modifierclass "Modifier_Example2";
 		Inventory.pickupsound "null";
 		Inventory.pickupmessage "You got a Modifier!";
-		BDPModifierpickup.modifiermessage "YOU SHOULDN'T BE SEEING THIS";
+		BDP_ModifierPickup.modifiermessage "YOU SHOULDN'T BE SEEING THIS";
 		+BRIGHT;
     }
 
@@ -63,187 +63,187 @@ class BDPModifierpickup : Inventory
     }
 }
 
-class MjolnirPickup : BDPModifierpickup
+class BDP_MjolnirPickup : BDP_ModifierPickup
 {
  Default
     {
         
-		BDPModifierpickup.modifierclass "Modifier_Mjolnir";
+		BDP_ModifierPickup.modifierclass "Modifier_Mjolnir";
 		translation "200:207=[0,215,215]:[0,47,47]","240:247=244:247";
-		BDPModifierpickup.modifiermessage "Mjolnir Unlocked!";
+		BDP_ModifierPickup.modifiermessage "Mjolnir Unlocked!";
 		+floatbob;
     }
 }
 
-class ShockFactorPickup : BDPModifierpickup
+class BDP_ShockFactorPickup : BDP_ModifierPickup
 {
  Default
     {
         
-		BDPModifierpickup.modifierclass "Modifier_ShockFactor";
+		BDP_ModifierPickup.modifierclass "Modifier_ShockFactor";
 		translation "200:207=[236,0,0]:[81,0,0]","240:247=244:247";
-		BDPModifierpickup.modifiermessage "Shock Factor Unlocked!";
+		BDP_ModifierPickup.modifiermessage "Shock Factor Unlocked!";
 		+floatbob;
     }
 }
 
-class PerfectHatredPickup : BDPModifierpickup
+class BDP_PerfectHatredPickup : BDP_ModifierPickup
 {
  Default
     {
         
-		BDPModifierpickup.modifierclass "Modifier_PerfectHatred";
+		BDP_ModifierPickup.modifierclass "Modifier_PerfectHatred";
 		translation "200:207=[130,0,0]:[60,0,0]","240:247=244:247";
-		BDPModifierpickup.modifiermessage "Perfect Hatred Unlocked!";
+		BDP_ModifierPickup.modifiermessage "Perfect Hatred Unlocked!";
 		+floatbob;
     }
 }
 
-class ManAndAHalfPickup : BDPModifierpickup
+class BDP_ManAndAHalfPickup : BDP_ModifierPickup
 {
  Default
     {
         
-		BDPModifierpickup.modifierclass "Modifier_ManAndAHalf";
+		BDP_ModifierPickup.modifierclass "Modifier_ManAndAHalf";
 		translation "200:207=[117,117,117]:[0,0,0]","240:247=244:247";
-		BDPModifierpickup.modifiermessage "Man And A Half Unlocked!";
+		BDP_ModifierPickup.modifiermessage "Man And A Half Unlocked!";
 		+floatbob;
     }
 }
 
-class GunSlingerPickup : BDPModifierpickup
+class BDP_GunSlingerPickup : BDP_ModifierPickup
 {
  Default
     {
         
-		BDPModifierpickup.modifierclass "Modifier_Gunslinger";
+		BDP_ModifierPickup.modifierclass "Modifier_Gunslinger";
 		translation "200:207=[79,149,0]:[0,77,81]","240:247=244:247";
-		BDPModifierpickup.modifiermessage "Gunslinger Unlocked!";
+		BDP_ModifierPickup.modifiermessage "Gunslinger Unlocked!";
 		+floatbob;
     }
 }
 
-class OneUpmanshipPickup : BDPModifierpickup
+class BDP_OneUpmanshipPickup : BDP_ModifierPickup
 {
  Default
     {
         
-		BDPModifierpickup.modifierclass "Modifier_OneUpmanship";
+		BDP_ModifierPickup.modifierclass "Modifier_OneUpmanship";
 		translation "200:207=[19,210,149]:[0,51,51]","240:247=244:247";
-		BDPModifierpickup.modifiermessage "One-Upmanship Unlocked!";
+		BDP_ModifierPickup.modifiermessage "One-Upmanship Unlocked!";
 		+floatbob;
     }
 }
 
-class UltranightmarePickup : BDPModifierpickup
+class BDP_UltranightmarePickup : BDP_ModifierPickup
 {
  Default
     {
         
-		BDPModifierpickup.modifierclass "Modifier_Ultranightmare";
+		BDP_ModifierPickup.modifierclass "Modifier_Ultranightmare";
 		translation "200:207=[19,210,149]:[0,51,51]","240:247=244:247";
-		BDPModifierpickup.modifiermessage "Ultra Nightmare Unlocked!";
+		BDP_ModifierPickup.modifiermessage "Ultra Nightmare Unlocked!";
 		+floatbob;
     }
 }
 
-class SequenceBreakPickup : BDPModifierpickup
+class BDP_SequenceBreakPickup : BDP_ModifierPickup
 {
  Default
     {
         
-		BDPModifierpickup.modifierclass "Modifier_SequenceBreak";
-		BDPModifierpickup.modifiermessage "Sequence Break Unlocked!";
+		BDP_ModifierPickup.modifierclass "Modifier_SequenceBreak";
+		BDP_ModifierPickup.modifiermessage "Sequence Break Unlocked!";
 		+floatbob;
     }
 }
-class MaximumOverdrivePickup : BDPModifierpickup
+class BDP_MaximumOverdrivePickup : BDP_ModifierPickup
 {
  Default
     {
         
-		BDPModifierpickup.modifierclass "Modifier_MaximumOverdrive";
-		BDPModifierpickup.modifiermessage "Maximum Overdrive Unlocked!";
-		+floatbob;
-    }
-}
-
-
-
-class ChatterboxPickup : BDPModifierpickup
-{
- Default
-    {
-        
-		BDPModifierpickup.modifierclass "Modifier_Chatterbox";
-		BDPModifierpickup.modifiermessage "Chatterbox Unlocked!";
-		+floatbob;
-    }
-}
-
-class TRIATHLONPickup : BDPModifierpickup
-{
- Default
-    {
-        
-		BDPModifierpickup.modifierclass "Modifier_Triathlon";
-		BDPModifierpickup.modifiermessage "Triathlon Unlocked!";
-		+floatbob;
-    }
-}
-
-class SkullcrusherPickup : BDPModifierpickup
-{
- Default
-    {
-        
-		BDPModifierpickup.modifierclass "Modifier_Skullcrusher";
-		BDPModifierpickup.modifiermessage "Skullcrusher Unlocked!";
-		+floatbob;
-    }
-}
-
-class ScoremasterPickup : BDPModifierpickup
-{
- Default
-    {
-        
-		BDPModifierpickup.modifierclass "Modifier_Scoremaster";
-		BDPModifierpickup.modifiermessage "Scoremaster Unlocked!";
-		+floatbob;
-    }
-}
-
-class RealismPickup : BDPModifierpickup
-{
- Default
-    {
-        
-		BDPModifierpickup.modifierclass "Modifier_Realism";
-		BDPModifierpickup.modifiermessage "Realism Unlocked!";
-		+floatbob;
-    }
-}
-
-class GluttonyPickup : BDPModifierpickup
-{
- Default
-    {
-        
-		BDPModifierpickup.modifierclass "Modifier_Gluttony";
-		BDPModifierpickup.modifiermessage "Gluttony Unlocked!";
+		BDP_ModifierPickup.modifierclass "Modifier_MaximumOverdrive";
+		BDP_ModifierPickup.modifiermessage "Maximum Overdrive Unlocked!";
 		+floatbob;
     }
 }
 
 
-class KickInTheHeadPickup : BDPModifierpickup
+
+class BDP_ChatterboxPickup : BDP_ModifierPickup
 {
  Default
     {
         
-		BDPModifierpickup.modifierclass "Modifier_KickintheHead";
-		BDPModifierpickup.modifiermessage "Kick In The Head Unlocked!";
+		BDP_ModifierPickup.modifierclass "Modifier_Chatterbox";
+		BDP_ModifierPickup.modifiermessage "Chatterbox Unlocked!";
+		+floatbob;
+    }
+}
+
+class BDP_TRIATHLONPickup : BDP_ModifierPickup
+{
+ Default
+    {
+        
+		BDP_ModifierPickup.modifierclass "Modifier_Triathlon";
+		BDP_ModifierPickup.modifiermessage "Triathlon Unlocked!";
+		+floatbob;
+    }
+}
+
+class BDP_SkullcrusherPickup : BDP_ModifierPickup
+{
+ Default
+    {
+        
+		BDP_ModifierPickup.modifierclass "Modifier_Skullcrusher";
+		BDP_ModifierPickup.modifiermessage "Skullcrusher Unlocked!";
+		+floatbob;
+    }
+}
+
+class BDP_ScoremasterPickup : BDP_ModifierPickup
+{
+ Default
+    {
+        
+		BDP_ModifierPickup.modifierclass "Modifier_Scoremaster";
+		BDP_ModifierPickup.modifiermessage "Scoremaster Unlocked!";
+		+floatbob;
+    }
+}
+
+class BDP_RealismPickup : BDP_ModifierPickup
+{
+ Default
+    {
+        
+		BDP_ModifierPickup.modifierclass "Modifier_Realism";
+		BDP_ModifierPickup.modifiermessage "Realism Unlocked!";
+		+floatbob;
+    }
+}
+
+class BDP_GluttonyPickup : BDP_ModifierPickup
+{
+ Default
+    {
+        
+		BDP_ModifierPickup.modifierclass "Modifier_Gluttony";
+		BDP_ModifierPickup.modifiermessage "Gluttony Unlocked!";
+		+floatbob;
+    }
+}
+
+
+class BDP_KickInTheHeadPickup : BDP_ModifierPickup
+{
+ Default
+    {
+        
+		BDP_ModifierPickup.modifierclass "Modifier_KickintheHead";
+		BDP_ModifierPickup.modifiermessage "Kick In The Head Unlocked!";
 		+floatbob;
     }
 }

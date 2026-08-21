@@ -2,7 +2,7 @@
 
 class ModifierButton : MenuButton
 {
-	BDPModifier btnmod; // This is the modifier assigned to this button.
+	BDP_Modifier btnmod; // This is the modifier assigned to this button.
 
 	void DrawIcon(vector2 iconPos, vector2 frameSize, bool keepAspect = true)
 	{
@@ -10,7 +10,7 @@ class ModifierButton : MenuButton
 		string icon = btnmod.graphic;
 		
 		// Automagically scale image to size of button
-		let imgSize = BDPDrawer.GetImageSize(icon);
+		let imgSize = BDP_Drawer.GetImageSize(icon);
 		vector2 iconScale = (
 			(frameSize.x * 0.8) / imgSize.x,
 			(frameSize.y * 0.8) / imgSize.y
@@ -23,7 +23,7 @@ class ModifierButton : MenuButton
 			iconScale.x /= aspectmod;
 		}
 		
-		BDPDrawer.DrawImage(
+		BDP_Drawer.DrawImage(
 			icon, 
 			iconPos + (frameSize.x * 0.5, frameSize.y * 0.5), 
 			alpha:alpha+0.15, scale:iconScale, 
@@ -48,8 +48,8 @@ class ModifierButton : MenuButton
 		if(hovered && toggled) frameColor = Color(255,255,0,0);
 		if(disabled) frameColor = Color(255,0,0,0);
 		
-		BDPDrawer.DrawFrame(pos, size, frameColor);
-		BDPDrawer.Fill(0xFF000000, pos.x,pos.y, size.x,size.y, alpha:alpha);
+		BDP_Drawer.DrawFrame(pos, size, frameColor);
+		BDP_Drawer.Fill(0xFF000000, pos.x,pos.y, size.x,size.y, alpha:alpha);
 		DrawIcon(pos, size);
 	}
 }
@@ -74,8 +74,8 @@ class TextButton : MenuButton
 		if(hovered) fontColor = Font.CR_BRICK;
 		if(pressed) fontColor = Font.CR_BLACK;
 		
-		BDPDrawer.DrawString("BigFont", tag, pos, translation:fontColor, scale:(2.0,2.0) * scale);
-		if(hovered) BDPDrawer.DrawImage("M_SKULL1", (pos.x - 48, pos.y + 8), scale:(4.0, 4.0) * scale);
+		BDP_Drawer.DrawString("BigFont", tag, pos, translation:fontColor, scale:(2.0,2.0) * scale);
+		if(hovered) BDP_Drawer.DrawImage("M_SKULL1", (pos.x - 48, pos.y + 8), scale:(4.0, 4.0) * scale);
 	}
 }
 
@@ -168,15 +168,15 @@ class ModifierDescriptor : MenuElement
 	{
 		if(!modmenu) return;
 
-		//  BDPDrawer.DrawString("NewConsoleFont", "Modifier Info", (descOffs.x + 20,descOffs.y + 10), 0, Font.CR_ORANGE, scale:txtScale*1.25);
+		//  BDP_Drawer.DrawString("NewConsoleFont", "Modifier Info", (descOffs.x + 20,descOffs.y + 10), 0, Font.CR_ORANGE, scale:txtScale*1.25);
 		
 		vector2 txtScale = (0.4,0.4);
 		txtScale *= min(size.x, size.y) / 200.;
 		
 		// Description Frame
 		vector2 descOffs = (pos.x+20, pos.y);
-		BDPDrawer.DrawFrame(pos, size);
-		BDPDrawer.Fill(0xFF000000, pos.x,pos.y, size.x,size.y, alpha:alpha);
+		BDP_Drawer.DrawFrame(pos, size);
+		BDP_Drawer.Fill(0xFF000000, pos.x,pos.y, size.x,size.y, alpha:alpha);
 		
 		// Icon Frame
 		vector2 iconFrameSize = (
@@ -187,8 +187,8 @@ class ModifierDescriptor : MenuElement
 			(pos.x + (size.x * 0.5)) - (iconFrameSize.x * 0.5),
 			pos.y + (size.y * 0.05)
 		);
-		BDPDrawer.DrawFrame(iconFramePos, iconFrameSize);
-		BDPDrawer.Fill(0xFF000000, iconFramePos.x,iconFramePos.y, iconFrameSize.x,iconFrameSize.y, alpha:alpha+0.25);
+		BDP_Drawer.DrawFrame(iconFramePos, iconFrameSize);
+		BDP_Drawer.Fill(0xFF000000, iconFramePos.x,iconFramePos.y, iconFrameSize.x,iconFrameSize.y, alpha:alpha+0.25);
 		vector2 desc_pos = descOffs + (7,80);
 					
 		// Iterate through ModifierButtons and draw
@@ -212,14 +212,14 @@ class ModifierDescriptor : MenuElement
 			if(btn.hovered)
 			{
 				// Draw skull name
-				BDPDrawer.DrawString(
+				BDP_Drawer.DrawString(
 					"SmallFont", mod.displayName, 
 					(pos.x + (size.x*0.5), iconFramePos.y + iconFrameSize.y + 20), 
-					BDPDrawer.SS_TEXT_CENTER, Font.CR_GOLD, scale:txtScale*1.4, linespacing:20
+					BDP_Drawer.SS_TEXT_CENTER, Font.CR_GOLD, scale:txtScale*1.4, linespacing:20
 				);
 				
 				// Draw skull description
-				BDPDrawer.DrawString("SmallFont", mdDesc, desc_pos + (0,200), 0, Font.CR_WHITE, scale:txtScale*1.2, linespacing:10);
+				BDP_Drawer.DrawString("SmallFont", mdDesc, desc_pos + (0,200), 0, Font.CR_WHITE, scale:txtScale*1.2, linespacing:10);
 			}
 			break; // Only draw one modifier in the description box.
 		}
@@ -232,7 +232,7 @@ class BDP_ModifierMenu : BDP_ComponentMenu
 	MenuCursor cursor;
 	Name prevMenu;
 	Array<MenuElement> buttons;
-	Array<BDPModifier> modifiers;
+	Array<BDP_Modifier> modifiers;
 	
 	bool isValidModifierIndex(int ind)
 	{
@@ -250,7 +250,7 @@ class BDP_ModifierMenu : BDP_ComponentMenu
 	override void InitElements()
 	{
 		EventHandler.SendNetworkEvent("flag_updatemodifierstatus");
-		let modifierEvents = BDPModifier_Events(EventHandler.Find("BDPModifier_Events"));
+		let modifierEvents = BDP_ModifierEvents(EventHandler.Find("BDP_ModifierEvents"));
 		if(modifierEvents) modifiers.Copy(modifierEvents.modifiers);
 	
 		cursor = MenuCursor(AddElement("MenuCursor", "cursor", (0,0), (4,4)));
@@ -307,13 +307,13 @@ class BDP_ModifierMenu : BDP_ComponentMenu
 		// Draw "container" for skull buttons
 		vector2 containerPos = (300,200);
 		vector2 containerSize = (600,800);
-		BDPDrawer.DrawFrame(containerPos, containerSize);
-		BDPDrawer.Fill(0xFF000000, containerPos.x,containerPos.y, containerSize.x,containerSize.y, alpha:0.65);
+		BDP_Drawer.DrawFrame(containerPos, containerSize);
+		BDP_Drawer.Fill(0xFF000000, containerPos.x,containerPos.y, containerSize.x,containerSize.y, alpha:0.65);
 		
 		super.Drawer();
-		uint strFlags = BDPDrawer.SS_SCREEN_TOP_CENTER | BDPDrawer.SS_TEXT_CENTER;	
+		uint strFlags = BDP_Drawer.SS_SCREEN_TOP_CENTER | BDP_Drawer.SS_TEXT_CENTER;	
 		
-		BDPDrawer.DrawString("BigFont", "MODIFIERS", (0,100), strFlags, Font.CR_RED, scale:(2.0,2.0));
+		BDP_Drawer.DrawString("BigFont", "MODIFIERS", (0,100), strFlags, Font.CR_RED, scale:(2.0,2.0));
 	}
 
 	override void OnMenuThink()

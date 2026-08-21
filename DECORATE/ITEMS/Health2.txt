@@ -7,12 +7,12 @@
 
 
 
-Actor HealthPlusNoCount : HealthPlus
+Actor HealthPlusNoCount : BDP_HealthBonus
 {
 	-COUNTITEM
 }
 
-Actor HealthPlusFatalityBonus : HealthPlus
+Actor HealthPlusFatalityBonus : BDP_HealthBonus
 {
 	Inventory.Amount 5
 	Inventory.MaxAmount 300
@@ -63,14 +63,14 @@ Actor ArmorBonusModifier : BasicArmorBonus
 }
 
 
-Actor ArmorShardNoCount: ArmorShard
+Actor ArmorShardNoCount: BDP_ArmorBonus
 {
 -COUNTITEM
 }
 
 
 
-Actor ArmorShardFatalityBonus : ArmorShard
+Actor ArmorShardFatalityBonus : BDP_ArmorBonus
 {
 	Armor.Saveamount 5
 	Inventory.Icon "BON2E0"
@@ -100,7 +100,7 @@ Actor ArmorShardFatalityBonus2 : ArmorShardFatalityBonus
 
 
 
-Actor Helmet1Armor: ArmorShard
+Actor Helmet1Armor: BDP_ArmorBonus
 {
 -COUNTITEM
 Armor.Saveamount 1
@@ -112,7 +112,7 @@ States
 	}
 }
 
-Actor Helmet1ArmorB: ArmorShard
+Actor Helmet1ArmorB: BDP_ArmorBonus
 {
 -COUNTITEM
 Armor.Saveamount 1

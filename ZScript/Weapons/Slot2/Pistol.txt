@@ -1,4 +1,4 @@
-class BDPPistol : BDPWeaponBase replaces Pistol
+class BDP_Pistol : BDP_Weapon replaces Pistol
 {
 	bool silenced;
 	
@@ -13,8 +13,8 @@ class BDPPistol : BDPWeaponBase replaces Pistol
 	Default
 	{
 		Weapon.AmmoGive 5;
-		Weapon.AmmoType "BDPClip1";
-		BDPWeaponBase.MagCapacity 15;
+		Weapon.AmmoType "BDP_Clip1";
+		BDP_Weapon.MagCapacity 15;
 		Weapon.SlotNumber 2;
 		Weapon.SlotPriority 1;
 		weapon.selectionorder 3800;
@@ -22,8 +22,8 @@ class BDPPistol : BDPWeaponBase replaces Pistol
 		Inventory.PickupSound "CLIPIN";
 		Inventory.Pickupmessage "You got the Pistol! (Slot 2)";
 		Tag "$BDPPISTOL";
-		BDPWeaponBase.Handedness 1;
-		BDPWeaponBase.VoiceActed 0;
+		BDP_Weapon.Handedness 1;
+		BDP_Weapon.VoiceActed 0;
 		Inventory.AltHUDIcon "PISTG0";
 	}
 	States

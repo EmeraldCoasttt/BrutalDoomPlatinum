@@ -2,7 +2,7 @@
 
 
 
-CLASS HellishMissileLauncher : BDPWeaponBase 
+CLASS HellishMissileLauncher : BDP_Weapon 
 {
 	Default
 	{
@@ -21,7 +21,7 @@ CLASS HellishMissileLauncher : BDPWeaponBase
 		Inventory.PickupMessage "You got the Hellish Missile Launcher! (Slot 8)";
 		Tag "Hellish Missile Launcher";
 		Inventory.AltHUDIcon "FATBD0";
-		BDPWeaponBase.ClearOverlays 0;
+		BDP_Weapon.ClearOverlays 0;
 		+WEAPON.CHEATNOTWEAPON;
 	}
 	

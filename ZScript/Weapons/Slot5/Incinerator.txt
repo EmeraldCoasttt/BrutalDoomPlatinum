@@ -1,4 +1,4 @@
-CLASS BDPIncinerator : BDPWeaponBase
+CLASS BDP_Incinerator : BDP_Weapon
 {
 	Default
 	{
@@ -7,9 +7,9 @@ CLASS BDPIncinerator : BDPWeaponBase
 		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 3100;
 		Weapon.AmmoGive 2;
-		Weapon.AmmoType "BDPRocketAmmo";
-		BDPWeaponBase.MagCapacity 60;
-		BDPWeaponBase.MagConversion (10,1);
+		Weapon.AmmoType "BDP_RocketAmmo";
+		BDP_Weapon.MagCapacity 60;
+		BDP_Weapon.MagConversion (10,1);
 		Inventory.PickupSound "FLMRPUP";
 		+WEAPON.EXPLOSIVE
 		Inventory.PickupMessage "You got the Incinerator! (Slot 5)";
@@ -230,7 +230,7 @@ class NewIncineratorFlame : Actor // Incinerator Flame
 	
 	Override int SpecialMissileHit(Actor victim) 
 		{
-			If(victim && target && victim != target && !(victim is "baseheadshot") && victim.bshootable)
+			If(victim && target && victim != target && !(victim is "BDP_Headshot") && victim.bshootable)
 			{
 				If(!Victim.findinventory("firetic"))
 				{

@@ -1,8 +1,8 @@
-class BDPSubmachineGunGuy : BDPShotgunGuy
+class BDP_SubmachineGunGuy : BDP_ShotgunGuy
 {
 	Default
 	{
-		DropItem "SMGDrop";
+		DropItem "BDP_SMGDrop";
 		Tag "SMG Zombie";
 		Obituary "%o got punctured by a SMG Zombie.";
 	}
@@ -123,13 +123,13 @@ class BDPSubmachineGunGuy : BDPShotgunGuy
 		Goto SeeContinue;
 	Spawn:
 		PSS3 A 0;
-		TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_spawnitemex("BDP_ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
 		TNT1 A 0 ACS_NamedExecuteAlways("BDCHeckClassicMonsters", 0, 0, 0, 0);//Check if Vanilla Mode is activated
 		TNT1 A 0 A_GiveInventory("SKShotgunGuy", 1);
 		TNT1 A 0 A_GiveInventory("TypeSergeant", 1);
 		TNT1 A 0 A_TakeInventory("SergeantAmmo", 6);
 		TNT1 A 0 A_GiveInventory("SergeantAmmo", random(0,5));
-		TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_spawnitemex("BDP_ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
 		PSS3 A 10;
 		Goto Stand;
 	Stand:
@@ -446,12 +446,12 @@ class BDPSubmachineGunGuy : BDPShotgunGuy
 	Death.Frost:
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
-		TNT1 A 0 A_SpawnItem("FrozenSMGGuy");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenSMGGuy");
 		Stop;
 		}
 }
 
-class BDPSubmachineGunGuyDamaged : BDPSubmachineGunGuy 
+class BDP_SubmachineGunGuyDamaged : BDP_SubmachineGunGuy 
 {
 	Default
 	{

@@ -1,7 +1,7 @@
 const bdp_statscr_base_width = 1920.0;
 const bdp_statscr_base_height = 1080.0;
 
-class BDPDrawer Abstract ui
+class BDP_Drawer Abstract ui
 {
 	enum AlignFlags
 	{

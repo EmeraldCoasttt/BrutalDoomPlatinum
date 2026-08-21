@@ -47,7 +47,7 @@ ACTOR Marine_Fist: Marine_Rifle
 	Health 200
 	MaxTargetRange 512
 	translation "112:127=[128,255,0]:[30,80,0]"
-	DropItem "BerserkPack"
+	DropItem "BDP_Berserk"
 	States
 	{
 	Active:

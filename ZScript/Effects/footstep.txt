@@ -1,4 +1,4 @@
-class BDPLanded : BDPACTOR
+class BDP_Landed : BDP_Actor
 {
 	Default
 	{

@@ -1,12 +1,12 @@
 
 /////////////////////////
-Actor BDBlueCard : BDBaseKey Replaces BlueCard
+Actor BDP_BlueCard : BDP_BaseKey Replaces BlueCard
 {
 	Tag "Blue Keycard"
 	SpawnID 85
 	Inventory.Pickupmessage "$GOTBLUECARD"
 	Inventory.Icon "STKEYS0"
-	BDBaseKey.keyid 0
+	BDP_BaseKey.keyid 0
 	States
 	{
 	Spawn:
@@ -40,13 +40,13 @@ Actor BDBlueCard : BDBaseKey Replaces BlueCard
 	}
 }
 
-Actor BDBlueSkull : BDBaseSkull Replaces BlueSkull
+Actor BDP_BlueSkull : BDP_BaseSkull Replaces BlueSkull
 {
 	Tag "Blue Skullkey"
 	SpawnID 90
 	Inventory.Pickupmessage "$GOTBLUESKUL"
 	Inventory.Icon "STKEYS3"
-	BDBaseKey.keyid 3
+	BDP_BaseKey.keyid 3
 	States
 	{
 	Spawn:
@@ -88,13 +88,13 @@ Actor BDBlueSkull : BDBaseSkull Replaces BlueSkull
 	}
 }
 
-Actor BDRedCard : BDBaseKey Replaces RedCard
+Actor BDP_RedCard : BDP_BaseKey Replaces RedCard
 {
 	Tag "Red Keycard"
 	SpawnID 86
 	Inventory.Pickupmessage "$GOTREDCARD"
 	Inventory.Icon "STKEYS2"
-	BDBaseKey.keyid 1
+	BDP_BaseKey.keyid 1
 	States
 	{
 	Spawn:
@@ -127,13 +127,13 @@ Actor BDRedCard : BDBaseKey Replaces RedCard
 	}
 }
 
-Actor BDRedSkull : BDBaseSkull Replaces RedSkull
+Actor BDP_RedSkull : BDP_BaseSkull Replaces RedSkull
 {
 	Tag "Red Skullkey"
 	SpawnID 89
 	Inventory.Pickupmessage "$GOTREDSKUL"
 	Inventory.Icon "STKEYS5"
-	BDBaseKey.keyid 4
+	BDP_BaseKey.keyid 4
 	States
 	{
 	Spawn:
@@ -173,13 +173,13 @@ Actor BDRedSkull : BDBaseSkull Replaces RedSkull
 	}
 }
 
-Actor BDYellowCard : BDBaseKey Replaces YellowCard
+Actor BDP_YellowCard : BDP_BaseKey Replaces YellowCard
 {
 	Tag "Yellow Keycard"
 	SpawnID 87
 	Inventory.Pickupmessage "$GOTYELWCARD"
 	Inventory.Icon "STKEYS1"
-	BDBaseKey.keyid 2
+	BDP_BaseKey.keyid 2
 	States
 	{
 	Spawn:
@@ -212,13 +212,13 @@ Actor BDYellowCard : BDBaseKey Replaces YellowCard
 	}
 }
 
-Actor BDYellowSkull : BDBaseSkull Replaces YellowSkull
+Actor BDP_YellowSkull : BDP_BaseSkull Replaces YellowSkull
 {
 	Tag "Yellow Skullkey"
 	SpawnID 88
 	Inventory.Pickupmessage "$GOTYELWSKUL"
 	Inventory.Icon "STKEYS4"
-	BDBaseKey.keyid 5
+	BDP_BaseKey.keyid 5
 	States
 	{
 	Spawn:

@@ -1,5 +1,5 @@
 
-class BDPTurretGun : VehPart
+class BDP_TurretGun : VehPart
 {
 	uint cooldown;
 	bool guncycle;
@@ -28,7 +28,7 @@ class BDPTurretGun : VehPart
 			aimpitch = base.driver ? base.driver.pitch  : 0;
 		}
 		aimpitch = clamp(aimpitch, -50, 50);
-		A_SetPitch(BDPMath.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
+		A_SetPitch(BDP_Math.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
 		
 	}
 	
@@ -36,7 +36,7 @@ class BDPTurretGun : VehPart
 	{
 		super.Tick();
 		
-		 BDPVehicle pBase = BDPVehicle(base);
+		 BDP_Vehicle pBase = BDP_Vehicle(base);
     if(!pBase) 
         return;
     
@@ -58,7 +58,7 @@ class BDPTurretGun : VehPart
 			double precoil = frandom(-rmax, rmax);
 			If(guncycle)
 			{
-				let proj = BDPMath.FireProjectile("TankMachineGunTracer", pos, angle + arecoil, base.driver.pitch + precoil, 5, 0, 0, 1, 70);
+				let proj = BDP_Math.FireProjectile("TankMachineGunTracer", pos, angle + arecoil, base.driver.pitch + precoil, 5, 0, 0, 1, 70);
 				guncycle = false;
 				// We need to set the target of this projectile if we want hitmarkers to show up
 				// for the person who shoots it.
@@ -68,7 +68,7 @@ class BDPTurretGun : VehPart
 			}
 			Else
 			{
-				let proj = BDPMath.FireProjectile("TankMachineGunTracer", pos, angle + arecoil, base.driver.pitch + precoil, -5, 0, 0, 1, 70);
+				let proj = BDP_Math.FireProjectile("TankMachineGunTracer", pos, angle + arecoil, base.driver.pitch + precoil, -5, 0, 0, 1, 70);
 				guncycle = true;
 				// We need to set the target of this projectile if we want hitmarkers to show up
 				// for the person who shoots it.
@@ -97,12 +97,12 @@ class BDPTurretGun : VehPart
 
 
 
-class BDPTurret : BDPVehicle
+class BDP_Turret : BDP_Vehicle
 {
 	
 	
 	
-	BDPTurretGun gun;
+	BDP_TurretGun gun;
 
 	Default
 	{
@@ -111,7 +111,7 @@ class BDPTurret : BDPVehicle
 		Scale 1.0;
 		Mass 300;
 		Health 200;
-		BDPVehicle.Armored 0;
+		BDP_Vehicle.Armored 0;
 		MaxSlopeSteepness 0.4;
 		damagetype "stomp";
 		+dontthrust;
@@ -120,7 +120,7 @@ class BDPTurret : BDPVehicle
 	override void BeginPlay()
 	{
 		super.BeginPlay();
-		gun = BDPTurretGun( VehPart.Attach("BDPTurretGun", self,(32,0,32)) );
+		gun = BDP_TurretGun( VehPart.Attach("BDP_TurretGun", self,(32,0,32)) );
 	}
 	
 

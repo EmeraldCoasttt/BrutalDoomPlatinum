@@ -1,4 +1,4 @@
-CLASS Tenderizer : BDPWeaponBase
+CLASS Tenderizer : BDP_Weapon
 {
 	Default
 	
@@ -14,7 +14,7 @@ CLASS Tenderizer : BDPWeaponBase
 	+WEAPON.NOAUTOAIM;
 	+WEAPON.NOALERT;
 	+WEAPON.EXPLOSIVE;
-	BDPWeaponBase.handedness 1;
+	BDP_Weapon.handedness 1;
 	Weapon.SelectionOrder 1550;
 	Inventory.AltHUDIcon "HAMPA0";
 	+WEAPON.CHEATNOTWEAPON;
@@ -155,7 +155,7 @@ CLASS Tenderizer : BDPWeaponBase
 						Continue;
 				If(mo.bshootable || mo.bmissile)
 				{
-					If(mo.bspawnceiling || mo.health < 1 || mo is "headkicking" || mo is "BDECGRASS" || mo is "BaseHeadShot")
+					If(mo.bspawnceiling || mo.health < 1 || mo is "headkicking" || mo is "BDECGRASS" || mo is "BDP_Headshot")
 					{
 						Continue;
 					}

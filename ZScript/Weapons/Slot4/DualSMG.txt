@@ -1,18 +1,18 @@
-class BDPDualSMG : BDPWeaponBase
+class BDP_DualSMG : BDP_Weapon
 {
 	Default
 	{
-		Weapon.AmmoType "BDPClip2";
-		BDPWeaponBase.MagCapacity 40;
-		Weapon.SisterWeapon "BDPSubmachineGun";
+		Weapon.AmmoType "BDP_Clip2";
+		BDP_Weapon.MagCapacity 40;
+		Weapon.SisterWeapon "BDP_SubmachineGun";
 		Obituary "%o was shot down by %k's SMG.";
 		+WEAPON.POWERED_UP
-		+BDPWeaponBase.DUALWEAPON
+		+BDP_Weapon.DUALWEAPON
 		Tag "$BDPSMG";
 		Inventory.AltHUDIcon "SMGZA0";
-		BDPWeaponBase.handedness 2;
-		BDPWeaponBase.voiceacted 0;
-		BDPWeaponBase.DualWeapon "BDPSubmachineGun";
+		BDP_Weapon.handedness 2;
+		BDP_Weapon.voiceacted 0;
+		BDP_Weapon.DualWeapon "BDP_SubmachineGun";
 	}
 	States
 	{

@@ -1,4 +1,4 @@
-class BDPMotherdemon : Actor
+class BDP_MotherDemon : Actor
 {
 	Default
 	{

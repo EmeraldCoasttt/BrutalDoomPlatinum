@@ -3,7 +3,7 @@
 ///		Frozen RifleZombieman / Base frozen actor			///
 ///															///
 //////////////////////////////////////////////////////////////
-class FrozenZombieman : Actor
+class BDP_FrozenZombieman : Actor
 {
 	Default
 	{
@@ -54,8 +54,8 @@ class FrozenZombieman : Actor
 	Death:	
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall");
-		TNT1 A 0 A_SpawnItem("RifleDrop");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerRedSmall");
+		TNT1 A 0 A_SpawnItem("BDP_RifleDrop");
 		ZFZD C -1;
 		ZFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -65,7 +65,7 @@ class FrozenZombieman : Actor
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenZombieman");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenZombieman");
 		Stop;
 	}
 }
@@ -75,7 +75,7 @@ class FrozenZombieman : Actor
 ///					Frozen PistolZombieman					///
 ///															///
 //////////////////////////////////////////////////////////////
-class FrozenPistolZombie : FrozenZombieman 
+class BDP_FrozenPistolZombie : BDP_FrozenZombieman 
 {
 	States
 	{
@@ -113,8 +113,8 @@ class FrozenPistolZombie : FrozenZombieman
 	Death:	
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall");
-		TNT1 A 0 A_SpawnItem("PistolDrop");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerRedSmall");
+		TNT1 A 0 A_SpawnItem("BDP_PistolDrop");
 		ZFZD C -1;
 		ZFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -124,7 +124,7 @@ class FrozenPistolZombie : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenPistolZombie");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenPistolZombie");
 		Stop;
 	}
 }
@@ -134,7 +134,7 @@ class FrozenPistolZombie : FrozenZombieman
 ///					Frozen Shotgun guy						///
 ///															///
 ///////////////////////////////////////////////////////////////
-class FrozenShotgunguy : FrozenZombieman
+class BDP_FrozenShotgunguy : BDP_FrozenZombieman
 {
 	States
 	{
@@ -173,8 +173,8 @@ class FrozenShotgunguy : FrozenZombieman
 	Death:	
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall");
-		TNT1 A 0 A_SpawnItem("ShotgunDrop");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerRedSmall");
+		TNT1 A 0 A_SpawnItem("BDP_ShotgunDrop");
 		SFZD C -1;
 		SFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -184,7 +184,7 @@ class FrozenShotgunguy : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenShotgunguy");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenShotgunguy");
 		Stop;
 	}
 }
@@ -194,7 +194,7 @@ class FrozenShotgunguy : FrozenZombieman
 ///						Frozen SMG guy						///
 ///															///
 ///////////////////////////////////////////////////////////////
-class FrozenSMGGuy : FrozenShotgunguy 
+class BDP_FrozenSMGGuy : BDP_FrozenShotgunguy 
 {
 	States
 	{
@@ -228,12 +228,12 @@ class FrozenSMGGuy : FrozenShotgunguy
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
 		TNT1 A 0 A_spawnitemex("unfrozengorespawnersmall");
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnItem("BDPSubmachineGunGuyDamaged");
+		TNT1 A 0 A_spawnItem("BDP_SubmachineGunGuyDamaged");
 		Stop;
 	Death:	
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerRedSmall");
 		TNT1 A 0 A_SpawnItem("Shotgun");
 		UFZD C -1;
 		UFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
@@ -244,7 +244,7 @@ class FrozenSMGGuy : FrozenShotgunguy
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenSMGGuy");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenSMGGuy");
 		Stop;
 	}
 }
@@ -253,7 +253,7 @@ class FrozenSMGGuy : FrozenShotgunguy
 ///					Frozen Chaingun guy						///
 ///															///
 ///////////////////////////////////////////////////////////////
-class FrozenChaingunguy : FrozenZombieman
+class BDP_FrozenChaingunguy : BDP_FrozenZombieman
 {
 	States
 	{
@@ -292,8 +292,8 @@ class FrozenChaingunguy : FrozenZombieman
 	Death:	
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall");
-		TNT1 A 0 A_SpawnItem("MiniGunDrop");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerRedSmall");
+		TNT1 A 0 A_SpawnItem("BDP_MinigunDrop");
 		XFZD C -1;
 		XFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -303,7 +303,7 @@ class FrozenChaingunguy : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenChaingunguy");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenChaingunguy");
 		Stop;
 	}
 }
@@ -313,7 +313,7 @@ class FrozenChaingunguy : FrozenZombieman
 ///					Frozen Imp								///
 ///															///
 //////////////////////////////////////////////////////////////
-class FrozenImp : FrozenZombieman
+class BDP_FrozenImp : BDP_FrozenZombieman
 {
 	States
 	{
@@ -352,7 +352,7 @@ class FrozenImp : FrozenZombieman
 	Death:	
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedSmall");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerRedSmall");
 		IFZD C -1;
 		IFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -362,7 +362,7 @@ class FrozenImp : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenImp");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenImp");
 		Stop;
 	}
 }
@@ -372,7 +372,7 @@ class FrozenImp : FrozenZombieman
 ///					Frozen Lostsoul							///
 ///															///
 //////////////////////////////////////////////////////////////
-class FrozenLostSoul : FrozenZombieman 
+class BDP_FrozenLostSoul : BDP_FrozenZombieman 
 {
 	States
 	{
@@ -404,14 +404,14 @@ class FrozenLostSoul : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
 		TNT1 A 0 A_PlaySound ("DSBOTTLE");
-		TNT1 A 0 A_spawnitemex("frozengorespawnerxs");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGorespawnerxs");
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnItem("BDPLostSoul");
+		TNT1 A 0 A_spawnItem("BDP_LostSoul");
 		Stop;
 	Death:	
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerXS");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerXS");
 		KFZD C -1;
 		KFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -421,7 +421,7 @@ class FrozenLostSoul : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenLostSoul");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenLostSoul");
 		Stop;
 	}
 }
@@ -431,7 +431,7 @@ class FrozenLostSoul : FrozenZombieman
 ///					Frozen Demon							///
 ///															///
 ///////////////////////////////////////////////////////////////
-class FrozenDemon : FrozenZombieman
+class BDP_FrozenDemon : BDP_FrozenZombieman
 {
 	Default
 	{
@@ -472,12 +472,12 @@ class FrozenDemon : FrozenZombieman
 		TNT1 A 0 A_PlaySound ("DSBOTTLE");
 		TNT1 A 0 A_spawnitemex("unfrozengorespawnermedium");
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnItem("BDPDemonDamaged");
+		TNT1 A 0 A_spawnItem("BDP_DemonDamaged");
 		Stop;
 	Death:	
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedMedium");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerRedMedium");
 		PFZD C -1;
 		PFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -487,12 +487,12 @@ class FrozenDemon : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenDemon");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenDemon");
 		Stop;
 	}
 }
 
-class FrozenNightmareDemon : FrozenDemon
+class BDP_FrozenNightmareDemon : BDP_FrozenDemon
 {
 	States
 	{
@@ -513,12 +513,12 @@ class FrozenNightmareDemon : FrozenDemon
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenNightmareDemon");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenNightmareDemon");
 		Stop;
 	Death:
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerMedium");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerMedium");
 		PFZD C -1;
 		PFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -530,7 +530,7 @@ class FrozenNightmareDemon : FrozenDemon
 ///					Frozen Mancubus							///
 ///															///
 ///////////////////////////////////////////////////////////////
-class FrozenMancubus: FrozenZombieman
+class BDP_FrozenMancubus: BDP_FrozenZombieman
 {
 	Default
 	{
@@ -575,7 +575,7 @@ class FrozenMancubus: FrozenZombieman
 	Death:
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedLarge");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerRedLarge");
 		MFZD C -1;
 		MFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -585,7 +585,7 @@ class FrozenMancubus: FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenMancubus");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenMancubus");
 		Stop;
 	}
 }
@@ -595,7 +595,7 @@ class FrozenMancubus: FrozenZombieman
 ///					Frozen Revenant							///
 ///															///
 ///////////////////////////////////////////////////////////////
-class FrozenRevenant : FrozenZombieman
+class BDP_FrozenRevenant : BDP_FrozenZombieman
 {
 	Default
 	{
@@ -640,7 +640,7 @@ class FrozenRevenant : FrozenZombieman
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_PlaySound ("DSBOTTLE");
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedMedium");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerRedMedium");
 		RFZD C -1;
 		RFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -650,7 +650,7 @@ class FrozenRevenant : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenRevenant");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenRevenant");
 		Stop;
 	}
 }
@@ -661,7 +661,7 @@ class FrozenRevenant : FrozenZombieman
 ///					Frozen HellKnight								///
 ///															///
 //////////////////////////////////////////////////////////////
-class FrozenHellKnight : FrozenZombieman
+class BDP_FrozenHellKnight : BDP_FrozenZombieman
 {
 	Default
 	{
@@ -705,7 +705,7 @@ class FrozenHellKnight : FrozenZombieman
 	Death:	
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerGreenMedium");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerGreenMedium");
 		BFZD C -1;
 		BFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -715,7 +715,7 @@ class FrozenHellKnight : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenHellKnight");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenHellKnight");
 		Stop;
 	}
 }
@@ -724,7 +724,7 @@ class FrozenHellKnight : FrozenZombieman
 ///					Frozen Baron of hell						///
 ///															///
 //////////////////////////////////////////////////////////////
-class FrozenBaronOfHell : FrozenZombieman
+class BDP_FrozenBaronOfHell : BDP_FrozenZombieman
 {
 	Default
 	{
@@ -768,7 +768,7 @@ States
 	Death:	
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerGreenMedium");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerGreenMedium");
 		BFZD C -1;
 		BFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -778,7 +778,7 @@ States
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenBaronOfHell");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenBaronOfHell");
 		Stop;
 	}
 }
@@ -788,7 +788,7 @@ States
 ///					Frozen Cacodemon								///
 ///															///
 //////////////////////////////////////////////////////////////
-class FrozenCacodemon : FrozenZombieman
+class BDP_FrozenCacodemon : BDP_FrozenZombieman
 {
 	Default
 	{
@@ -832,7 +832,7 @@ States
 	Death:
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerMedium");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerMedium");
 		Stop;
 	Death.Freeze:
 	Death.Ice:
@@ -840,7 +840,7 @@ States
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenCacodemon");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenCacodemon");
 		Stop;
 	}
 }
@@ -850,7 +850,7 @@ States
 ///					Frozen Arachnotron						///
 ///															///
 ///////////////////////////////////////////////////////////////
-class FrozenArachnotron : FrozenZombieman
+class BDP_FrozenArachnotron : BDP_FrozenZombieman
 {
 	Default
 	{
@@ -894,7 +894,7 @@ States
 	Death:	
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedMedium");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerRedMedium");
 		TFZD C -1;
 		TFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -904,7 +904,7 @@ States
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenArachnotron");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenArachnotron");
 		Stop;
 	}
 }
@@ -914,7 +914,7 @@ States
 ///					Frozen Pain elemental					///
 ///															///
 ///////////////////////////////////////////////////////////////
-class FrozenPainElemental : FrozenZombieman
+class BDP_FrozenPainElemental : BDP_FrozenZombieman
 {
 	Default
 	{
@@ -958,7 +958,7 @@ class FrozenPainElemental : FrozenZombieman
 	Death:	
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedLarge");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerRedLarge");
 		TNT1 A 0 A_SpawnItemEx("FreezenadeExplosion", 0, 0 ,2.5);
 		TNT1 A 0 A_Explode (220,220);
 		TNT1 A 0 BRIGHT A_PainDie();
@@ -969,7 +969,7 @@ class FrozenPainElemental : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenPainElemental");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenPainElemental");
 		Stop;
 	}
 }
@@ -979,7 +979,7 @@ class FrozenPainElemental : FrozenZombieman
 ///					Frozen Archvile							///
 ///															///
 ///////////////////////////////////////////////////////////////
-class Frozenarchvile : FrozenZombieman
+class BDP_Frozenarchvile : BDP_FrozenZombieman
 {
 	Default
 	{
@@ -1018,12 +1018,12 @@ class Frozenarchvile : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
 		TNT1 A 0 A_spawnitemex("unfrozengorespawnermedium");
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnItem("BDParchvileDamaged");
+		TNT1 A 0 A_spawnItem("BDP_archvileDamaged");
 		Stop;
 	Death:
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedMedium");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerRedMedium");
 		AFZD C -1;
 		AFZD CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -1033,7 +1033,7 @@ class Frozenarchvile : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("Frozenarchvile");
+		TNT1 A 0 A_SpawnItem("BDP_Frozenarchvile");
 		Stop;
 	}
 }
@@ -1043,7 +1043,7 @@ class Frozenarchvile : FrozenZombieman
 ///					Frozen CyberDemon						///
 ///															///
 ///////////////////////////////////////////////////////////////
-class FrozenCyberDemon : FrozenZombieman
+class BDP_FrozenCyberDemon : BDP_FrozenZombieman
 {
 	Default
 	{
@@ -1080,7 +1080,7 @@ class FrozenCyberDemon : FrozenZombieman
 	Death.Burn:
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("frozengorespawnerredXL");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGorespawnerredXL");
 		CYFZ C -1;
 		CYFZ CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -1090,7 +1090,7 @@ class FrozenCyberDemon : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenCyberDemon");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenCyberDemon");
 		Stop;
 	}
 }
@@ -1100,7 +1100,7 @@ class FrozenCyberDemon : FrozenZombieman
 ///					Frozen Mastermind						///
 ///															///
 ///////////////////////////////////////////////////////////////
-class FrozenMastermind : FrozenZombieman
+class BDP_FrozenMastermind : BDP_FrozenZombieman
 {
 	Default
 	{
@@ -1137,7 +1137,7 @@ class FrozenMastermind : FrozenZombieman
 	Death.Burn:
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("frozengorespawnerredXL");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGorespawnerredXL");
 		SPFZ C -1;
 		SPFZ CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC 1 A_FadeOut(0.01);
 		Stop;
@@ -1147,7 +1147,7 @@ class FrozenMastermind : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenMastermind");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenMastermind");
 		Stop;
 	}
 }
@@ -1158,7 +1158,7 @@ class FrozenMastermind : FrozenZombieman
 ///															///
 ///////////////////////////////////////////////////////////////
 
-class FrozenBarrel : FrozenZombieman 
+class BDP_FrozenBarrel : BDP_FrozenZombieman 
 {
 	Default
 	{
@@ -1217,12 +1217,12 @@ class FrozenBarrel : FrozenZombieman
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
 		TNT1 A 0 A_ChangeFlag("COUNTKILL", 0);
-		TNT1 A 0 A_SpawnItem("FrozenBarrel");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenBarrel");
 		Stop;
 	}
 }
 
-class Frozenspecimentank : frozenzombieman //Emerald was here >:3
+class BDP_Frozenspecimentank : BDP_Frozenzombieman //Emerald was here >:3
 {
 	Default
 	{
@@ -1247,7 +1247,7 @@ class Frozenspecimentank : frozenzombieman //Emerald was here >:3
 	Death:
 		TNT1 A 0 A_Stop();
 		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_spawnitemex("FrozenGoreSpawnerRedMediumNoGuts");
+		TNT1 A 0 A_spawnitemex("BDP_FrozenGoreSpawnerRedMediumNoGuts");
 		FDEC B -1;
 		Loop;
 	Death.ice:
@@ -1359,7 +1359,7 @@ class XIceChunk3 : XIceChunk1
 	}
 }
 
-class FrozenMeat1 : XIceChunk1
+class BDP_FrozenMeat1 : XIceChunk1
 {
 	Default
 	{
@@ -1379,7 +1379,7 @@ class FrozenMeat1 : XIceChunk1
 	}
 }
 
-class FrozenMeat2 : FrozenMeat1
+class BDP_FrozenMeat2 : BDP_FrozenMeat1
 {
 	States
 	{
@@ -1394,7 +1394,7 @@ class FrozenMeat2 : FrozenMeat1
 	}
 }
 
-class FrozenGreenMeat1 : FrozenMeat1
+class BDP_FrozenGreenMeat1 : BDP_FrozenMeat1
 {
 	States
 	{
@@ -1409,7 +1409,7 @@ class FrozenGreenMeat1 : FrozenMeat1
 	}
 }
 
-class FrozenGreenMeat2 : FrozenMeat1
+class BDP_FrozenGreenMeat2 : BDP_FrozenMeat1
 {
 	States
 	{
@@ -1499,7 +1499,7 @@ class UnFrozenGoreSpawnerXL : Actor
 	}
 }
 
-class FrozenGoreSpawnerXS : Actor
+class BDP_FrozenGoreSpawnerXS : Actor
 {
 	Default
 	{
@@ -1525,7 +1525,7 @@ class FrozenGoreSpawnerXS : Actor
 	}
 }
 
-class FrozenGoreSpawnerMedium : Actor
+class BDP_FrozenGoreSpawnerMedium : Actor
 {
 	Default
 	{
@@ -1551,7 +1551,7 @@ class FrozenGoreSpawnerMedium : Actor
 	}
 }
 
-class FrozenGoreSpawnerRedSmall : Actor
+class BDP_FrozenGoreSpawnerRedSmall : Actor
 {
 	Default
 	{
@@ -1576,7 +1576,7 @@ class FrozenGoreSpawnerRedSmall : Actor
 	}
 }
 
-class FrozenGoreSpawnerRedMedium : Actor
+class BDP_FrozenGoreSpawnerRedMedium : Actor
 {
 	Default
 	{
@@ -1602,7 +1602,7 @@ class FrozenGoreSpawnerRedMedium : Actor
 	}
 }
 
-class FrozenGoreSpawnerRedMediumNoGuts : Actor
+class BDP_FrozenGoreSpawnerRedMediumNoGuts : Actor
 {
 	Default
 	{
@@ -1628,7 +1628,7 @@ class FrozenGoreSpawnerRedMediumNoGuts : Actor
 	}
 }
 
-class FrozenGoreSpawnerRedLarge : Actor
+class BDP_FrozenGoreSpawnerRedLarge : Actor
 {
 	Default
 	{
@@ -1654,7 +1654,7 @@ class FrozenGoreSpawnerRedLarge : Actor
 	}
 }
 
-class FrozenGoreSpawnerRedXL : Actor
+class BDP_FrozenGoreSpawnerRedXL : Actor
 {
 	Default
 	{
@@ -1682,7 +1682,7 @@ class FrozenGoreSpawnerRedXL : Actor
 	}
 }
 
-class FrozenGoreSpawnerGreenMedium : Actor
+class BDP_FrozenGoreSpawnerGreenMedium : Actor
 {
 	Default
 	{

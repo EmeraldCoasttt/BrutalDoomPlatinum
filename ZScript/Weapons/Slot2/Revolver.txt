@@ -1,10 +1,10 @@
-class BDPRevolver : BDPWeaponBase
+class BDP_Revolver : BDP_Weapon
 {
 	Default
 	{
 		Weapon.AmmoGive 6;
-		Weapon.AmmoType "BDPClip1";
-		BDPWeaponBase.MagCapacity 6;
+		Weapon.AmmoType "BDP_Clip1";
+		BDP_Weapon.MagCapacity 6;
 		Weapon.SlotNumber 2;
 		Weapon.SlotPriority 2;
 		weapon.selectionorder 3800;
@@ -14,8 +14,8 @@ class BDPRevolver : BDPWeaponBase
 		Tag "$BDPREVOLVER";
 		Inventory.AltHUDIcon "REVGA0";
 		Inventory.MaxAmount 2;
-		BDPWeaponBase.Handedness 1;
-		BDPWeaponBase.DualWeapon "BDPDualRevolver";
+		BDP_Weapon.Handedness 1;
+		BDP_Weapon.DualWeapon "BDP_DualRevolver";
 	}
 	States
 	{

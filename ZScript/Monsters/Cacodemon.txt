@@ -1,4 +1,4 @@
-class BDPCacodemon : Cacodemon Replaces Cacodemon
+class BDP_Cacodemon : Cacodemon Replaces Cacodemon
 {
 	Default
 	{
@@ -428,14 +428,14 @@ class BDPCacodemon : Cacodemon Replaces Cacodemon
 	Death.Frost:
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
-		TNT1 A 0 A_SpawnItem("FrozenCacodemon");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenCacodemon");
 		Stop;
 	Death.Massacre:
 		Goto Death;
 	}
 }
 
-class CacodemonDamaged : BDPCacodemon
+class CacodemonDamaged : BDP_Cacodemon
 {
 	Default
 	{
@@ -444,7 +444,7 @@ class CacodemonDamaged : BDPCacodemon
 	}
 }
 
-class BlindCacodemon : BDPCacodemon
+class BlindCacodemon : BDP_Cacodemon
 {
 	Default
 	{
@@ -955,7 +955,7 @@ class DeadCacoDemon1 : CurbstompedMarine //Replaces DeadCacodemon
 	States
 	{
 	Spawn:
-		TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1);
+		TNT1 A 0 NODELAY A_giveinventory("BDP_CorpseInventory",1);
 		HEAD L -1;
 		Stop;
 	Death:

@@ -1,10 +1,10 @@
-CLASS BDPBaseZombie : BDPActor abstract
+CLASS BDP_BaseZombie : BDP_Actor abstract
 {
 	float VoicePitch;
 	Property VoicePitch : VoicePitch;
 	Default
 	{
-		BDPBaseZombie.VoicePitch 1.0;
+		BDP_BaseZombie.VoicePitch 1.0;
 	}
 	Int VoiceTimer;
 	Int TargetTimer;
@@ -26,7 +26,7 @@ CLASS BDPBaseZombie : BDPActor abstract
 						
 						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
 						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
-						If (CurrentActor && CurrentActor is "BDPBaseZombie")
+						If (CurrentActor && CurrentActor is "BDP_BaseZombie")
 							{
 								currentactor.giveinventory("ResetIdleTimer",1);
 							}
@@ -42,7 +42,7 @@ CLASS BDPBaseZombie : BDPActor abstract
 				
 				Return 2;
 			}
-		Else If(target && target is "BDPNotMonster" && checksight(target))
+		Else If(target && target is "BDP_NotMonster" && checksight(target))
 			{
 				
 				Return 2;
@@ -65,7 +65,7 @@ CLASS BDPBaseZombie : BDPActor abstract
 				
 				Return 2;
 			}
-		Else If(target && target is "BDPNotMonster")
+		Else If(target && target is "BDP_NotMonster")
 			{
 				
 				Return 2;
@@ -92,7 +92,7 @@ CLASS BDPBaseZombie : BDPActor abstract
 						
 						//If the actor is a monster, has none of the specified item, the caller has a line of sight to the actor, and the actor is within 512 MU, then jump to the see state.
 						//Itemname obviously has to be whatever item you want the actor to check that the possible target has none of, and the 512 map unit sight range can be changed to anything else.
-						If (CurrentActor && CurrentActor is "BDPBaseZombie" && currentactor.health > 0)
+						If (CurrentActor && CurrentActor is "BDP_BaseZombie" && currentactor.health > 0)
 							{
 								Idletimermax = idletimermax + 1;
 							}

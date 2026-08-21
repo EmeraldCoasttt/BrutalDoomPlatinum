@@ -1,11 +1,11 @@
-class BDPSpectre : BDPDemon Replaces Spectre
+class BDP_Spectre : BDP_Demon Replaces Spectre
 {
 	Default
 	{
 		Mass 400;
 		+SHADOW
 		//DropItem "DemonStrengthRune" 2
-		DropItem "SuperBlurSphere", 2;
+		DropItem "BDP_Blursphere", 2;
 		RenderStyle "ColorBlend";
 		speed 16;
 		fastspeed 8;

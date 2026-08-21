@@ -1,4 +1,4 @@
-class BDPBanshee : Actor
+class BDP_Banshee : Actor
 {
 	Default
 	{
@@ -36,7 +36,7 @@ class BDPBanshee : Actor
 		{
 			A_SpawnItemEX("FireballExplosionFlamesBanshee",0,0,32,frandom(0,-10),frandom(-0.5,0.5));
 			A_startsound("banshee/sight",4,CHANF_LOOPING);
-			If(target && checksight(target) && distance2d(Target) <  70 && !(target is "BDPBanshee"))
+			If(target && checksight(target) && distance2d(Target) <  70 && !(target is "BDP_Banshee"))
 			{
 				Return resolvestate("Death");
 			}

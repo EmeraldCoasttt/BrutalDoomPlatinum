@@ -1,4 +1,4 @@
-Class RicoChet : BDPActor
+Class BDP_Ricochet : BDP_Actor
 {
 	Default
 	{
@@ -469,101 +469,101 @@ Class RicoChet : BDPActor
 	SpawnTech:
 	TNT1 A 0 A_startsound("Sparks/Spawn",7);
 	SpawnTechSparks:
-	TNT1 A 0 A_SpawnProjectile ("Spark_Debris", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
+	TNT1 A 0 A_SpawnProjectile ("BDP_SparkDebris", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	TNT1 A 0 A_jump(75,"spawnMetal");
 	Loop;
 	
 	SpawnTechFloor:
 	TNT1 A 0 A_startsound("Sparks/Spawn",7);
 	SpawnTechSparksFloor:
-	TNT1 A 0 A_SpawnProjectile ("Spark_Debris", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_SparkDebris", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
 	TNT1 A 0 A_jump(75,"spawnMetalFloor");
 	Loop;
 	
 	SpawnTechCeiling:
 	TNT1 A 0 A_startsound("Sparks/Spawn",7);
 	SpawnTechSparksCeiling:
-	TNT1 A 0 A_SpawnProjectile ("Spark_Debris", 5, 0, random (0,360), CMF_AIMDIRECTION, random (2, 50));
+	TNT1 A 0 A_SpawnProjectile ("BDP_SparkDebris", 5, 0, random (0,360), CMF_AIMDIRECTION, random (2, 50));
 	TNT1 A 0 A_jump(75,"spawnMetalCeiling");
 	Loop;
 	
 	SpawnMetal:
 	TNT1 A 0;
-	TNT1 A 0 A_SpawnProjectile ("WallDebris", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
+	TNT1 A 0 A_SpawnProjectile ("BDP_WallDebris", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	TNT1 A 0 A_jump(128,"spark");
 	Loop;
 	
 	SpawnMetalFloor:
 	TNT1 A 0;
-	TNT1 A 0 A_SpawnProjectile ("WallDebris", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_WallDebris", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
 	TNT1 A 0 A_jump(128,"sparkFloor");
 	Loop;
 	
 	SpawnMetalCeiling:
 	TNT1 A 0;
-	TNT1 A 0 A_SpawnProjectile ("WallDebris", 5, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_WallDebris", 5, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
 	TNT1 A 0 A_jump(128,"sparkCeiling");
 	Loop;
 	
 	SpawnMetalGreen:
 	TNT1 A 0;
-	TNT1 A 0 A_SpawnProjectile ("WallDebrisGreen", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
+	TNT1 A 0 A_SpawnProjectile ("BDP_WallDebrisGreen", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	TNT1 A 0 A_jump(128,"spark");
 	Loop;
 	
 	SpawnMetalGreenFloor:
 	TNT1 A 0;
-	TNT1 A 0 A_SpawnProjectile ("WallDebrisGreen", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_WallDebrisGreen", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
 	TNT1 A 0 A_jump(128,"sparkFloor");
 	Loop;
 	
 	SpawnMetalGreenCeiling:
 	TNT1 A 0;
-	TNT1 A 0 A_SpawnProjectile ("WallDebrisGreen", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_WallDebrisGreen", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
 	TNT1 A 0 A_jump(128,"sparkCeiling");
 	Loop;
 	
 	SpawnMetalBrown:
 	TNT1 A 0;
-	TNT1 A 0 A_SpawnProjectile ("WallDebrisBrown", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
+	TNT1 A 0 A_SpawnProjectile ("BDP_WallDebrisBrown", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	TNT1 A 0 A_jump(128,"spark");
 	Loop;
 	
 	SpawnMetalBrownFloor:
 	TNT1 A 0;
-	TNT1 A 0 A_SpawnProjectile ("WallDebrisBrown", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_WallDebrisBrown", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
 	TNT1 A 0 A_jump(128,"sparkFloor");
 	Loop;
 	
 	SpawnMetalBrownCeiling:
 	TNT1 A 0;
-	TNT1 A 0 A_SpawnProjectile ("WallDebrisBrown", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_WallDebrisBrown", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
 	TNT1 A 0 A_jump(128,"sparkCeiling");
 	Loop;
 	
 	SpawnWood:
-	TNT1 A 0 A_startsound("wooddebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_WoodDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("BrownCloudSmall", 0, 0, random (-90,90 ), CMF_AIMDIRECTION, random (-70, 20));
 	Spawnwood2:
-	TNT1 A 0 A_SpawnProjectile ("WoodDebris", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
+	TNT1 A 0 A_SpawnProjectile ("BDP_WoodDebris", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	TNT1 A 0 A_jump(200,"spawnwood2");
 	TNT1 A 20;
 	Stop;
 	
 	SpawnWoodFloor:
-	TNT1 A 0 A_startsound("wooddebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_WoodDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("BrownCloudSmall", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
 	Spawnwood2Floor:
-	TNT1 A 0 A_SpawnProjectile ("WoodDebris", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_WoodDebris", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
 	TNT1 A 0 A_jump(200,"spawnwood2Floor");
 	TNT1 A 20;
 	Stop;
 	
 	SpawnWoodCeiling:
-	TNT1 A 0 A_startsound("wooddebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_WoodDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("BrownCloudSmall", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
 	Spawnwood2Ceiling:
-	TNT1 A 0 A_SpawnProjectile ("WoodDebris", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_WoodDebris", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
 	TNT1 A 0 A_jump(200,"spawnwood2Ceiling");
 	TNT1 A 20;
 	Stop;
@@ -593,55 +593,55 @@ Class RicoChet : BDPActor
 	Stop;
 	
 	SpawnStoneGreen:
-	TNT1 A 0 A_startsound("stonedebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_StoneDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("MarbleCloudSmall", 0, 0, random (-90,90 ), CMF_AIMDIRECTION, random (-70, 20));
 	SpawnStoneGreen2:
-	TNT1 A 0 A_SpawnProjectile ("StoneDebrisGreen", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
+	TNT1 A 0 A_SpawnProjectile ("BDP_StoneDebrisGreen", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	TNT1 A 0 A_jump(150,"spawnstonegreen2");
 	TNT1 A 20;
 	Stop;
 	
 	SpawnStoneGreenFloor:
-	TNT1 A 0 A_startsound("stonedebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_StoneDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("MarbleCloudSmall", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
 	SpawnStoneGreenFloor2:
-	TNT1 A 0 A_SpawnProjectile ("StoneDebrisGreen", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_StoneDebrisGreen", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
 	TNT1 A 0 A_jump(150,"spawnstonegreenFloor2");
 	TNT1 A 20;
 	Stop;
 	
 	SpawnStoneGreenCeiling:
-	TNT1 A 0 A_startsound("stonedebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_StoneDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("MarbleCloudSmall", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
 	SpawnStoneGreenCeiling2:
-	TNT1 A 0 A_SpawnProjectile ("StoneDebrisGreen", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_StoneDebrisGreen", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
 	TNT1 A 0 A_jump(150,"spawnstonegreenCeiling2");
 	TNT1 A 20;
 	Stop;
 	
 	SpawnStone:
-	TNT1 A 0 A_startsound("stonedebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_StoneDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("StoneCloudSmall", 0, 0, random (-90,90 ), CMF_AIMDIRECTION, random (-70, 20));
 	SpawnStone2:
-	TNT1 A 0 A_SpawnProjectile ("StoneDebris", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
+	TNT1 A 0 A_SpawnProjectile ("BDP_StoneDebris", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	TNT1 A 0 A_jump(150,"spawnstone2");
 	TNT1 A 20;
 	Stop;
 	
 	SpawnStoneFloor:
-	TNT1 A 0 A_startsound("stonedebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_StoneDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("StoneCloudSmall", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
 	SpawnStoneFloor2:
-	TNT1 A 0 A_SpawnProjectile ("StoneDebris", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_StoneDebris", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
 	TNT1 A 0 A_jump(150,"spawnstoneFloor2");
 	TNT1 A 20;
 	Stop;
 	
 	SpawnStoneCeiling:
-	TNT1 A 0 A_startsound("stonedebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_StoneDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("StoneCloudSmall", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
 	SpawnStoneCeiling2:
-	TNT1 A 0 A_SpawnProjectile ("StoneDebris", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_StoneDebris", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
 	TNT1 A 0 A_jump(150,"spawnstoneCeiling2");
 	TNT1 A 20;
 	Stop;
@@ -649,55 +649,55 @@ Class RicoChet : BDPActor
 	
 	
 	SpawnStoneBrown:
-	TNT1 A 0 A_startsound("stonedebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_StoneDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("BrownCloudSmall", 0, 0, random (-90,90 ), CMF_AIMDIRECTION, random (-70, 20));
 	SpawnStoneBrown2:
-	TNT1 A 0 A_SpawnProjectile ("StoneDebrisBrown", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
+	TNT1 A 0 A_SpawnProjectile ("BDP_StoneDebrisBrown", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	TNT1 A 0 A_jump(150,"spawnstoneBrown2");
 	TNT1 A 20;
 	Stop;
 	
 	SpawnStoneBrownFloor:
-	TNT1 A 0 A_startsound("stonedebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_StoneDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("BrownCloudSmall", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
 	SpawnStoneBrownFloor2:
-	TNT1 A 0 A_SpawnProjectile ("StoneDebrisBrown", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_StoneDebrisBrown", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
 	TNT1 A 0 A_jump(150,"spawnstoneBrownFloor2");
 	TNT1 A 20;
 	Stop;
 	
 	SpawnStoneBrownCeiling:
-	TNT1 A 0 A_startsound("stonedebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_StoneDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("BrownCloudSmall", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
 	SpawnStoneBrownCeiling2:
-	TNT1 A 0 A_SpawnProjectile ("StoneDebrisBrown", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_StoneDebrisBrown", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
 	TNT1 A 0 A_jump(150,"spawnstoneBrownCeiling2");
 	TNT1 A 20;
 	Stop;
 	
 	SpawnStoneRed:
-	TNT1 A 0 A_startsound("stonedebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_StoneDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("RedCloudSmall", 0, 0, random (-90,90 ), CMF_AIMDIRECTION, random (-70, 20));
 	SpawnStoneRed2:
-	TNT1 A 0 A_SpawnProjectile ("StoneDebrisRed", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
+	TNT1 A 0 A_SpawnProjectile ("BDP_StoneDebrisRed", 0, 0, random (-25,25 ), CMF_AIMDIRECTION, random (-25, 25));
 	TNT1 A 0 A_jump(150,"spawnstoneRed2");
 	TNT1 A 20;
 	Stop;
 	
 	SpawnStoneRedFloor:
-	TNT1 A 0 A_startsound("stonedebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_StoneDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("RedCloudSmall", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
 	SpawnStoneRedFloor2:
-	TNT1 A 0 A_SpawnProjectile ("StoneDebrisRed", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_StoneDebrisRed", 0, 0, random (0,360), CMF_AIMDIRECTION, random (-50, -90));
 	TNT1 A 0 A_jump(150,"spawnstoneRedFloor2");
 	TNT1 A 20;
 	Stop;
 	
 	SpawnStoneRedCeiling:
-	TNT1 A 0 A_startsound("stonedebris", VOLUME:0.7);
+	TNT1 A 0 A_startsound("BDP_StoneDebris", VOLUME:0.7);
 	TNT1 A 0 A_SpawnProjectile ("RedCloudSmall", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
 	SpawnStoneRedCeiling2:
-	TNT1 A 0 A_SpawnProjectile ("StoneDebrisRed", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
+	TNT1 A 0 A_SpawnProjectile ("BDP_StoneDebrisRed", 0, 0, random (0,360), CMF_AIMDIRECTION, random (50, 90));
 	TNT1 A 0 A_jump(150,"spawnstoneRedCeiling2");
 	TNT1 A 20;
 	Stop;
@@ -705,7 +705,7 @@ Class RicoChet : BDPActor
   }
 }
 
-Class RicochetNoSpark : Ricochet
+Class BDP_RicochetNoSpark : BDP_Ricochet
 {
 
 	States
@@ -720,7 +720,7 @@ Class RicochetNoSpark : Ricochet
 
 }
 
-Class AxeSparks : Ricochet
+Class BDP_AxeSparks : BDP_Ricochet
 {
 
 	States
@@ -741,7 +741,7 @@ Class AxeSparks : Ricochet
 
 }
 
-Class RicochetExplosion : Actor
+Class BDP_RicochetExplosion : Actor
 {
 	int LineCount; 
 	property LineCount : LineCount;
@@ -749,8 +749,8 @@ Class RicochetExplosion : Actor
 	property LineRange : LineRange;
 	Default
 	{
-		RicochetExplosion.LineCount 60;
-		RicochetExplosion.LineRange 200;
+		BDP_RicochetExplosion.LineCount 60;
+		BDP_RicochetExplosion.LineRange 200;
 	
 	}
 	States
@@ -784,7 +784,7 @@ Class RicochetExplosion : Actor
 					*/
 					if (lasersight.hittype == trace_hitceiling || lasersight.hittype == trace_hitfloor || lasersight.hittype == trace_hitwall)
 					{
-						let ricochetspawn = spawn("ricochetNoSpark",targetpos);
+						let ricochetspawn = spawn("BDP_RicochetNoSpark",targetpos);
 						If(ricochetspawn)
 						ricochetspawn.angle = (linetraceangle - 180);
 					}
@@ -798,17 +798,17 @@ Class RicochetExplosion : Actor
 	}
 }
 
-Class RicochetExplosionSmall : RicochetExplosion
+Class BDP_RicochetExplosionSmall : BDP_RicochetExplosion
 {
 	Default
 	{
-		RicochetExplosion.LineCount 30;
-		RicochetExplosion.LineRange 100;
+		BDP_RicochetExplosion.LineCount 30;
+		BDP_RicochetExplosion.LineRange 100;
 	
 	}
 }
 
-Class Spark_Debris : Actor
+Class BDP_SparkDebris : Actor
 {
 	Default
 	{
@@ -845,7 +845,7 @@ Class Spark_Debris : Actor
   }
 }
 
-Class walldebris : Actor
+Class BDP_WallDebris : Actor
 {
 	Default
 	{
@@ -913,7 +913,7 @@ Class walldebris : Actor
 
 }
 
-Class StoneDebris : walldebris
+Class BDP_StoneDebris : BDP_WallDebris
 {
 	States
 	{
@@ -964,7 +964,7 @@ Class StoneDebris : walldebris
 
 }
 
-Class StoneDebrisGreen : StoneDebris
+Class BDP_StoneDebrisGreen : BDP_StoneDebris
 {
 
 	Default
@@ -974,7 +974,7 @@ Class StoneDebrisGreen : StoneDebris
 	}
 }
 
-Class StoneDebrisBrown : StoneDebris
+Class BDP_StoneDebrisBrown : BDP_StoneDebris
 {
 
 	Default
@@ -984,7 +984,7 @@ Class StoneDebrisBrown : StoneDebris
 	}
 }
 
-Class StoneDebrisRed : StoneDebris
+Class BDP_StoneDebrisRed : BDP_StoneDebris
 {
 
 	Default
@@ -995,7 +995,7 @@ Class StoneDebrisRed : StoneDebris
 }
 
 
-Class wooddebris : Actor
+Class BDP_WoodDebris : Actor
 {
 	Default
 	{
@@ -1051,7 +1051,7 @@ Class wooddebris : Actor
 }
 
 
-CLASS walldebris2 : walldebris
+CLASS BDP_WallDebris2 : BDP_WallDebris
 {
 	Default
 	{
@@ -1077,7 +1077,7 @@ CLASS walldebris2 : walldebris
 
 }
 
-Class WalldebrisGreen : WallDebris
+Class BDP_WallDebrisGreen : BDP_WallDebris
 {
 	Default
 	{
@@ -1087,7 +1087,7 @@ Class WalldebrisGreen : WallDebris
 
 }
 
-Class WalldebrisBrown : WallDebris
+Class BDP_WallDebrisBrown : BDP_WallDebris
 {
 	Default
 	{
@@ -1097,7 +1097,7 @@ Class WalldebrisBrown : WallDebris
 
 }
 
-Class BloodDebris : Actor
+Class BDP_BloodDebris : Actor
 {
 	Default
 	{

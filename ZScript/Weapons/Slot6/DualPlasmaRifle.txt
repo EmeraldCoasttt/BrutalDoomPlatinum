@@ -1,10 +1,10 @@
-class BDPDualPlasmaRifle : BDPWeaponBase
+class BDP_DualPlasmaRifle : BDP_Weapon
 {
 	action state A_LowSprites(string nosprite, string lowsprite, string medsprite, string highsprite, bool dual = false)
 	{
 		let psp = player.FindPSprite(OverlayID());
-		let weap = BDPWeaponBase(FindInventory(invoker.DualWeapon));
-		BDPWeaponBase target;
+		let weap = BDP_Weapon(FindInventory(invoker.DualWeapon));
+		BDP_Weapon target;
 		if(dual)
 			target = weap;
 		else
@@ -28,16 +28,16 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 	
 	Default
 	{
-		Weapon.AmmoType "BDPCell";
-		BDPWeaponBase.MagCapacity 40;
-		Weapon.SisterWeapon "BDPPlasmaRifle";
+		Weapon.AmmoType "BDP_Cell";
+		BDP_Weapon.MagCapacity 40;
+		Weapon.SisterWeapon "BDP_PlasmaRifle";
 		+WEAPON.POWERED_UP
-		+BDPWeaponBase.DUALWEAPON
+		+BDP_Weapon.DUALWEAPON
 		Tag "$BDPPLASMA";
 		Inventory.AltHUDIcon "PRASA0";
-		BDPWeaponBase.handedness 2;
-		BDPWeaponBase.voiceacted 0;
-		BDPWeaponBase.DualWeapon "BDPPlasmaRifle";
+		BDP_Weapon.handedness 2;
+		BDP_Weapon.voiceacted 0;
+		BDP_Weapon.DualWeapon "BDP_PlasmaRifle";
 	}
 	States
 	{
@@ -207,7 +207,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		}
 		TNT1 A 0
 		{
-			let dplr = BDPPlayerPawn(invoker.owner);
+			let dplr = BDP_PlayerPawn(invoker.owner);
 			dplr.blockFire = false;
 		}
 		DUPL D 1 A_ZoomFactor(1.0);
@@ -234,7 +234,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		}
 		TNT1 A 0
 		{
-			let dplr = BDPPlayerPawn(invoker.owner);
+			let dplr = BDP_PlayerPawn(invoker.owner);
 			dplr.blockFire = false;
 		}
 		DUPR D 1 A_ZoomFactor(1.0);
@@ -292,7 +292,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		PRSR PQRSTTTTUV 1;
 		PRR1 FGHBA 1;
 		TNT1 A 8;
-		TNT1 A 0 A_JumpIf(invoker.mag == 40 || CountInv("BDPCell") == 0, "FinishReload");
+		TNT1 A 0 A_JumpIf(invoker.mag == 40 || CountInv("BDP_Cell") == 0, "FinishReload");
 	ReloadLeft:
 		TNT1 A 0
 		{
@@ -321,7 +321,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		3UPL A 2;
 		TNT1 A 0
 		{
-			let dplr = BDPPlayerPawn(invoker.owner);
+			let dplr = BDP_PlayerPawn(invoker.owner);
 			dplr.blockFire = false;
 		}
 		4UPL A 2;
@@ -334,7 +334,7 @@ class BDPDualPlasmaRifle : BDPWeaponBase
 		3UPR A 2;
 		TNT1 A 0
 		{
-			let dplr = BDPPlayerPawn(invoker.owner);
+			let dplr = BDP_PlayerPawn(invoker.owner);
 			dplr.blockFire = false;
 		}
 		4UPR A 2;

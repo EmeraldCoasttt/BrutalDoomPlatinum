@@ -1,6 +1,6 @@
 
 
-CLASS BASEHEADSHOT : ACTOR
+CLASS BDP_Headshot : ACTOR
 {
 	bool hasticked;
 	int damagetoactor;
@@ -31,11 +31,11 @@ CLASS BASEHEADSHOT : ACTOR
 		Radius 16;
 		Height 22;
 		+thruspecies;
-		baseheadshot.offsetx 0;
-		baseheadshot.offsety 0;
-		baseheadshot.offsetz 64;
-		baseheadshot.explodeydamage 80;
-		baseheadshot.damagetypex "HEAD";
+		BDP_Headshot.offsetx 0;
+		BDP_Headshot.offsety 0;
+		BDP_Headshot.offsetz 64;
+		BDP_Headshot.explodeydamage 80;
+		BDP_Headshot.damagetypex "HEAD";
 		//+nevertarget;
 		+noradiusdmg;
 		/*
@@ -142,12 +142,12 @@ CLASS BASEHEADSHOT : ACTOR
 
 
 
-CLASS CYBERHEADSHOT : BASEHEADSHOT
+CLASS BDP_CyberdemonHeadshot : BDP_Headshot
 {
 
 	Default
 	{
-		baseheadshot.offsetz 110;
+		BDP_Headshot.offsetz 110;
 		Species "cyberdemon";
 		+dontrip;
 	}
@@ -155,12 +155,12 @@ CLASS CYBERHEADSHOT : BASEHEADSHOT
 }
 
 
-CLASS ZOMBIEHEADSHOT : BASEHEADSHOT
+CLASS BDP_ZombieHeadshot : BDP_Headshot
 {
 
 	Default
 	{
-		baseheadshot.offsetz 40;
+		BDP_Headshot.offsetz 40;
 		radius 8;
 		height 16;
 	}
@@ -176,36 +176,36 @@ CLASS ZOMBIEHEADSHOT : BASEHEADSHOT
 
 }
 
-CLASS ZOMBIEGUYHEADSHOT : BASEHEADSHOT
+CLASS BDP_ZombieguyHeadshot : BDP_Headshot
 {
 
 	Default
 	{
-		baseheadshot.offsetz 36;
-		baseheadshot.offsetx 16;
+		BDP_Headshot.offsetz 36;
+		BDP_Headshot.offsetx 16;
 		radius 8;
 		height 16;
 	}
 }
 
-CLASS IMPHEADSHOT : BASEHEADSHOT
+CLASS BDP_ImpHeadshot : BDP_Headshot
 {
 
 	Default
 	{
-		baseheadshot.offsetz 36;
-		baseheadshot.offsetx 16;
+		BDP_Headshot.offsetz 36;
+		BDP_Headshot.offsetx 16;
 		radius 8;
 		height 16;
 	}
 }
 
-CLASS REVHEADSHOT : BASEHEADSHOT
+CLASS BDP_RevenantHeadshot : BDP_Headshot
 {
 
 	Default
 	{
-		baseheadshot.offsetz 60;
+		BDP_Headshot.offsetz 60;
 		radius 8;
 		height 16;
 		Species "boners";
@@ -213,38 +213,38 @@ CLASS REVHEADSHOT : BASEHEADSHOT
 
 }
 
-CLASS VILEHEADSHOT : BASEHEADSHOT
+CLASS BDP_ArchVileHeadshot : BDP_Headshot
 {
 
 	Default
 	{
 		Damagefactor "Railgun", 0.6;
-		baseheadshot.offsetz 56;
-		baseheadshot.offsetx 16;
+		BDP_Headshot.offsetz 56;
+		BDP_Headshot.offsetx 16;
 		radius 8;
 		height 16;
 	}
 
 }
 
-CLASS FATSOHEADSHOT : BASEHEADSHOT
+CLASS BDP_MancubusHeadshot : BDP_Headshot
 {
 	Default
 	{
-		baseheadshot.offsetz 46;
-		baseheadshot.offsetx 16;
+		BDP_Headshot.offsetz 46;
+		BDP_Headshot.offsetx 16;
 		radius 12;
 		height 16;
 	}
 }
 
-CLASS KNIGHTHEADSHOT : BASEHEADSHOT
+CLASS BDP_HellKnightHeadshot : BDP_Headshot
 {
 
 	Default
 	{
-		baseheadshot.offsetz 55;
-		baseheadshot.offsetx 8;
+		BDP_Headshot.offsetz 55;
+		BDP_Headshot.offsetx 8;
 		radius 10;
 		height 16;
 		BloodColor "DarkGreen";
@@ -253,13 +253,13 @@ CLASS KNIGHTHEADSHOT : BASEHEADSHOT
 
 }
 
-CLASS BARONHEADSHOT : BASEHEADSHOT
+CLASS BDP_BaronOfHellHeadshot : BDP_Headshot
 {
 
 	Default
 	{
-		baseheadshot.offsetz 55;
-		baseheadshot.offsetx 8;
+		BDP_Headshot.offsetz 55;
+		BDP_Headshot.offsetx 8;
 		radius 10;
 		height 16;
 		BloodColor "DarkGreen";
@@ -268,13 +268,13 @@ CLASS BARONHEADSHOT : BASEHEADSHOT
 
 }
 
-CLASS CACOHEADSHOT : BASEHEADSHOT
+CLASS BDP_CacodemonHeadshot : BDP_Headshot
 {
 
 	Default
 	{
-		baseheadshot.offsetz 32;
-		baseheadshot.offsetx 24;
+		BDP_Headshot.offsetz 32;
+		BDP_Headshot.offsetx 24;
 		bloodcolor "darkblue";
 		radius 14;
 		height 14;
@@ -286,15 +286,15 @@ CLASS CACOHEADSHOT : BASEHEADSHOT
 
 
 
-/*CLASS RIotShieldGuyShield : BASEHEADSHOT
+/*CLASS RIotShieldGuyShield : BDP_Headshot
 {
 	Default
 	{
 		
 		Radius 16;
 		Height 44;
-		baseheadshot.offsetz 0;
-		baseheadshot.offsetx 24;
+		BDP_Headshot.offsetz 0;
+		BDP_Headshot.offsetx 24;
 		Bloodtype "Hitpuff", "Hitpuff", "hitpuff";
 	
 	}

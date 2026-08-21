@@ -1,4 +1,4 @@
-class BDPNightmareSpectre : Demon
+class BDP_NightmareSpectre : Demon
 {
 	Default
 	{
@@ -346,7 +346,7 @@ class BDPNightmareSpectre : Demon
 		Death.Frost:
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
-		TNT1 A 0 A_SpawnItem("FrozenNightmareDemon");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenNightmareDemon");
 		Stop;
 	Death.Massacre:
 		Goto Death;
@@ -653,7 +653,7 @@ class BDPNightmareSpectre : Demon
 	}
 }
 
-class NightmarePinkyDamaged : BDPNightmareSpectre
+class NightmarePinkyDamaged : BDP_NightmareSpectre
 {
 	Default
 	{
@@ -689,7 +689,7 @@ class BlueDeadDemon1 : CurbstompedMarine //Replaces BlueDeadDemon
 	States
 	{
 	Spawn:
-		TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1);
+		TNT1 A 0 NODELAY A_giveinventory("BDP_CorpseInventory",1);
 		SARG N -1;
 		Stop;
 	Death:
@@ -937,7 +937,7 @@ class PoorBluePinkyLostHisArm : Demon
 	}
 }
 
-class NightmareArmlessDemon : BDPNightmareSpectre
+class NightmareArmlessDemon : BDP_NightmareSpectre
 {
 	Default
 	{

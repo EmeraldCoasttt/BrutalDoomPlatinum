@@ -1,12 +1,12 @@
 Gameinfo
 {
-	PlayerClasses = "BDPPlayer"
+	PlayerClasses = "BDP_Player"
 	StatusBarClass = "BDP_HUD"
-	AddEventHandlers = "WeaponSpawnHandler"
-	AddEventHandlers = "BDPHandler"
+	AddEventHandlers = "BDP_WeaponSpawnHandler"
+	AddEventHandlers = "BDP_Handler"
 	AddEventHandlers = "SalInvisHandler"
 	AddEventHandlers = "RollHandler"
-	AddEventHandlers = "BDPModifier_Events", "BDPMenuSwitcher"
+	AddEventHandlers = "BDP_ModifierEvents", "BDP_MenuSwitcher"
 	AddEventHandlers = "WeatherHandler"
 	AddEventHandlers = "BDP_OverlayUI"
 	AddEventHandlers = "NashGoreHandler"
@@ -28,36 +28,36 @@ Gameinfo
 
 DoomEdNums
 {
-	2552 = BDPRailgun
-	7261 = BDPTank
-	7262 = BDPChopper
-	7264 = BDPHoverTank
-	7265 = BDPBike
-	25871 = mjolnirpickup
+	2552 = BDP_Railgun
+	7261 = BDP_Tank
+	7262 = BDP_Chopper
+	7264 = BDP_HoverTank
+	7265 = BDP_Bike
+	25871 = BDP_MjolnirPickup
 	26012 = bleedingsky
-	26014 = bossbrain2
+	26014 = BDP_BossBrain
 	26015 = JungleRain
 	26018 = TitlePhobos
 	26019 = TitleMars
 	26020 = TNTShipSpawner
-	26022 = ShockFactorPickup
-	26023 = PerfectHatredPickup
-	26024 = ManAndAHalfPickup
-	26025 = GunSlingerPickup
-	26026 = OneUpmanshipPickup
-	26027 = UltranightmarePickup
+	26022 = BDP_ShockFactorPickup
+	26023 = BDP_PerfectHatredPickup
+	26024 = BDP_ManAndAHalfPickup
+	26025 = BDP_GunSlingerPickup
+	26026 = BDP_OneUpmanshipPickup
+	26027 = BDP_UltraNightmarePickup
 	26028 = HeavyRain
-	3134 = BDPBattleRifle
-	5462 = BDPTurret
-	25869 = EnergyArmor
+	3134 = BDP_BattleRifle
+	5462 = BDP_Turret
+	25869 = BDP_EnergyArmor
 	
-	25943 = BDPZombieguy
-	25942 = BDPNightmareSpectre
-	2542 = BDPAncientArachnotron
-	2543 = BDPVolcabus
-	2548 = BDPMotherDemon
-	15845 = BDPBreakableWindow
-	15846 = BDPBreakableWindowWide
+	25943 = BDP_Zombieguy
+	25942 = BDP_NightmareSpectre
+	2542 = BDP_AncientArachnotron
+	2543 = BDP_Volcabus
+	2548 = BDP_MotherDemon
+	15845 = BDP_BreakableWindow
+	15846 = BDP_BreakableWindowWide
 	
 }
 	

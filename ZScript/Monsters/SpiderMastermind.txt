@@ -4,7 +4,7 @@
 //
 //===========================================================================
 
-class BDPSpiderMastermind : BDPActor Replaces SpiderMastermind
+class BDP_SpiderMastermind : BDP_Actor Replaces SpiderMastermind
 {
 	Default
 	{
@@ -343,14 +343,14 @@ class BDPSpiderMastermind : BDPActor Replaces SpiderMastermind
 		TNT1 A 0;
 		TNT1 A 0 A_noblocking();
 		TNT1 A 0 A_scream();
-		TNT1 A 0 A_SpawnItem("FrozenMastermind");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenMastermind");
 		TNT1 A 500;
 		TNT1 A 0 A_BossDeath();
 		Stop;
 	}
 }
 
-class MastermindDamaged : BDPSpiderMastermind
+class MastermindDamaged : BDP_SpiderMastermind
 {
 	Default
 	{

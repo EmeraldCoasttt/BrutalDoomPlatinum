@@ -1,4 +1,4 @@
-class BDPPlasmaRifle : BDPWeaponBase
+class BDP_PlasmaRifle : BDP_Weapon
 {
 	action void A_LowFrame(int noframe = -1, int lowframe = -1, int medframe = -1, int highframe = -1)
 	{
@@ -32,13 +32,13 @@ class BDPPlasmaRifle : BDPWeaponBase
 		Weapon.SelectionOrder 100;
 		Weapon.AmmoGive 40;
 		Inventory.PickupSound "PLSDRAW";
-		Weapon.AmmoType "BDPCell";
-		BDPWeaponBase.MagCapacity 40;
+		Weapon.AmmoType "BDP_Cell";
+		BDP_Weapon.MagCapacity 40;
 		Tag "$BDPPLASMA";
 		Inventory.PickupMessage "You got the Plasma Rifle! (Slot 6)";
 		inventory.althudicon "PRASA0";
 		inventory.maxamount 2;
-		BDPWeaponBase.DualWeapon "BDPDualPlasmaRifle";
+		BDP_Weapon.DualWeapon "BDP_DualPlasmaRifle";
 	}
 	States
 	{

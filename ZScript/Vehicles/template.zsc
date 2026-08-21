@@ -27,7 +27,7 @@ class PartName : VehPart
 	}
 }
 
-class BDPVehName : BDPVehicle
+class BDPVehName : BDP_Vehicle
 {
 	Default
 	{
@@ -36,7 +36,7 @@ class BDPVehName : BDPVehicle
 	
 		Mass 800;
 		Health 1000;
-		BDPVehicle.Armored 500;
+		BDP_Vehicle.Armored 500;
 		MaxSlopeSteepness 0.4;
 	}
 	

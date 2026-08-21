@@ -1,4 +1,4 @@
-class BDPUnmaker : BDPWeaponBase
+class BDP_Unmaker : BDP_Weapon
 {
 	int LaserCount;
 	
@@ -9,7 +9,7 @@ class BDPUnmaker : BDPWeaponBase
 		Weapon.SlotPriority 1;
 		Weapon.SelectionOrder 2800;
 		Weapon.AmmoGive 40;
-		Weapon.AmmoType1 "BDPCell";
+		Weapon.AmmoType1 "BDP_Cell";
 		Inventory.PickupSound "BFGREADY";
 		+WEAPON.BFG
 		Inventory.PickupMessage "What the !@#%* is this!? (Slot 7)";
@@ -90,19 +90,19 @@ class BDPUnmaker : BDPWeaponBase
 			A_FlashOverlay();
 			A_AlertmonstersDX();
 			A_StartSound("UNMALT",1);
-			if(countinv("BDPCell") < 1 && !findinventory("powerspeed2"))
+			if(countinv("BDP_Cell") < 1 && !findinventory("BDP_PowerSpeed"))
 			{
 				A_damageself(3,"desintegrate");
 			}
-			A_TakeAmmo("BDPCell",3);
+			A_TakeAmmo("BDP_Cell",3);
 			A_QuadSound();
 			if(invoker.lasercount > 3)
 			{
 				Invoker.Lasercount = 0;
 			}
-			BDPMath.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle,invoker.owner.pitch,0,60);
-			BDPMath.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle + (3 + invoker.lasercount * 3),invoker.owner.pitch,0,60);
-			BDPMath.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle - (3 + invoker.lasercount * 3),invoker.owner.pitch,0,60);
+			BDP_Math.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle,invoker.owner.pitch,0,60);
+			BDP_Math.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle + (3 + invoker.lasercount * 3),invoker.owner.pitch,0,60);
+			BDP_Math.FireProjectile("UnmakerLaser",(invoker.owner.pos.x, invoker.owner.pos.y, invoker.owner.pos.z + 35),invoker.owner.angle - (3 + invoker.lasercount * 3),invoker.owner.pitch,0,60);
 			invoker.LaserCount++;
 			A_WeaponRecoil(1.2);
 		}

@@ -1,7 +1,7 @@
 
 
 	
-	class WeaponSpawnHandler : Staticeventhandler
+	class BDP_WeaponSpawnHandler : Staticeventhandler
 	{
 	 
 	Array<string >ShotGunCommon;

@@ -1,11 +1,11 @@
 
-class Modifier_StayFrosty : BDPModifier
+class BDP_ModifierStayFrosty : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "STFROST";
-		BDPModifier.DisplayName "Stay Frosty";
-		BDPModifier.Description "Athletic actions require Stamina";
+		BDP_Modifier.Icon "STFROST";
+		BDP_Modifier.DisplayName "Stay Frosty";
+		BDP_Modifier.Description "Athletic actions require Stamina";
 	}
 	
 	override void WorldTick()
@@ -16,7 +16,7 @@ class Modifier_StayFrosty : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.istactical = true;
@@ -25,13 +25,13 @@ class Modifier_StayFrosty : BDPModifier
 
 }
 
-class Modifier_Chatterbox : BDPModifier
+class BDP_ModifierChatterbox : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "STCHAT";
-		BDPModifier.DisplayName "Chatterbox";
-		BDPModifier.Description "Doomguy says one liners automatically";
+		BDP_Modifier.Icon "STCHAT";
+		BDP_Modifier.DisplayName "Chatterbox";
+		BDP_Modifier.Description "Doomguy says one liners automatically";
 	}
 	
 	override void WorldTick()
@@ -42,7 +42,7 @@ class Modifier_Chatterbox : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.ischatterbox = true;
@@ -51,11 +51,11 @@ class Modifier_Chatterbox : BDPModifier
 	
 	Override void worldthingdamaged(Worldevent e)
 	{
-		If(e.thing && e.thing.bisMonster && e.thing.health <= 0 && e.damagesource && e.damagesource is "BDPPlayerPawn")
+		If(e.thing && e.thing.bisMonster && e.thing.health <= 0 && e.damagesource && e.damagesource is "BDP_PlayerPawn")
 		{
 			//console.printf(e.damagetype);
 			//console.printf(e.damagesource.getclassname());
-			 BDPPlayerPawn BDPPlayer = BDPPlayerPawn(e.damagesource);
+			 BDP_PlayerPawn BDPPlayer = BDP_PlayerPawn(e.damagesource);
 			 If(e.damagetype == 'ExtremePunches')
 			 {
 				 If(BDPPlayer && !bdpplayer.tauntcooldown && random(1,3) > 1 )
@@ -76,13 +76,13 @@ class Modifier_Chatterbox : BDPModifier
 
 }
 
-class Modifier_Triathlon : BDPModifier
+class BDP_ModifierTriathlon : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "TRIST00";
-		BDPModifier.DisplayName "Triathlon";
-		BDPModifier.Description "You can only carry 3 weapons at a time";
+		BDP_Modifier.Icon "TRIST00";
+		BDP_Modifier.DisplayName "Triathlon";
+		BDP_Modifier.Description "You can only carry 3 weapons at a time";
 	}
 	override void WorldTick()
 	{
@@ -92,7 +92,7 @@ class Modifier_Triathlon : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.triathlon = true;
@@ -103,25 +103,25 @@ class Modifier_Triathlon : BDPModifier
 
 
 
-class Modifier_OneUpmanship : BDPModifier
+class BDP_ModifierOneUpmanship : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "BJBST00";
-		BDPModifier.DisplayName "One-Upmanship";
-		BDPModifier.Description "Soul Spheres grant extra lives";
+		BDP_Modifier.Icon "BJBST00";
+		BDP_Modifier.DisplayName "One-Upmanship";
+		BDP_Modifier.Description "Soul Spheres grant extra lives";
 	}
 	Override void worldthingspawned(Worldevent e)
 	{
-	If(e.thing && e.thing.getclassname() == "LifeSphere")
+	If(e.thing && e.thing.getclassname() == "BDP_Soulsphere")
 		{
-			Actor.spawn("LifeSphereOneUp",e.thing.pos);
+			Actor.spawn("BDP_SoulsphereOneUp",e.thing.pos);
 			E.thing.destroy();
 		}
 		
-	If(e.thing  && e.thing.getclassname() == "EnergySphere")
+	If(e.thing  && e.thing.getclassname() == "BDP_Megasphere")
 		{
-			Actor.spawn("EnergySphereOneUp",e.thing.pos);
+			Actor.spawn("BDP_MegasphereOneUp",e.thing.pos);
 			E.thing.destroy();
 		}
 	
@@ -134,7 +134,7 @@ class Modifier_OneUpmanship : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.oneupmanship = true;
@@ -143,13 +143,13 @@ class Modifier_OneUpmanship : BDPModifier
 
 }
 
-class Modifier_UltraNightmare : BDPModifier
+class BDP_ModifierUltraNightmare : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "STFXDTH4";
-		BDPModifier.DisplayName "Ultra Nightmare";
-		BDPModifier.Description "Death is permanent. Good luck!";
+		BDP_Modifier.Icon "STFXDTH4";
+		BDP_Modifier.DisplayName "Ultra Nightmare";
+		BDP_Modifier.Description "Death is permanent. Good luck!";
 	}
 	override void WorldTick()
 	{
@@ -159,7 +159,7 @@ class Modifier_UltraNightmare : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.ultranightmare = true;
@@ -168,23 +168,23 @@ class Modifier_UltraNightmare : BDPModifier
 
 }
 
-class Modifier_SkullCrusher : BDPModifier
+class BDP_ModifierSkullCrusher : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "D4RST01";
-		BDPModifier.DisplayName "Skullcrusher";
-		BDPModifier.Description "HUD shows killstreaks";
+		BDP_Modifier.Icon "D4RST01";
+		BDP_Modifier.DisplayName "Skullcrusher";
+		BDP_Modifier.Description "HUD shows killstreaks";
 	}
 	
 
 	Override void worldthingdamaged(Worldevent e)
 	{
-		If(e.thing && e.thing.bisMonster && e.thing.health <= 0 && e.damagesource && e.damagesource is "BDPPlayerPawn")
+		If(e.thing && e.thing.bisMonster && e.thing.health <= 0 && e.damagesource && e.damagesource is "BDP_PlayerPawn")
 		{
 			//console.printf(e.damagetype);
 			//console.printf(e.damagesource.getclassname());
-			 BDPPlayerPawn BDPPlayer = BDPPlayerPawn(e.damagesource);
+			 BDP_PlayerPawn BDPPlayer = BDP_PlayerPawn(e.damagesource);
 			If(BDPPLAYER)
 			{
 				BDPPlayer.killstreak ++;
@@ -200,13 +200,13 @@ class Modifier_SkullCrusher : BDPModifier
 }
 
 
-class Modifier_ScoreMaster : BDPModifier
+class BDP_ModifierScoreMaster : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "STNERD";
-		BDPModifier.DisplayName "Scoremaster";
-		BDPModifier.Description "Gain points by killing monsters and collecting items\n\n 50k points grants an extra life";
+		BDP_Modifier.Icon "STNERD";
+		BDP_Modifier.DisplayName "Scoremaster";
+		BDP_Modifier.Description "Gain points by killing monsters and collecting items\n\n 50k points grants an extra life";
 	}
 	
 
@@ -218,7 +218,7 @@ class Modifier_ScoreMaster : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.scoremaster = true;
@@ -227,11 +227,11 @@ class Modifier_ScoreMaster : BDPModifier
 	
 	Override void worldthingdamaged(Worldevent e)
 	{
-		If(e.thing && e.thing.bisMonster && e.thing.health <= 0 && e.damagesource && e.damagesource is "BDPPlayerPawn")
+		If(e.thing && e.thing.bisMonster && e.thing.health <= 0 && e.damagesource && e.damagesource is "BDP_PlayerPawn")
 		{
 			//console.printf(e.damagetype);
 			//console.printf(e.damagesource.getclassname());
-			 BDPPlayerPawn BDPPlayer = BDPPlayerPawn(e.damagesource);
+			 BDP_PlayerPawn BDPPlayer = BDP_PlayerPawn(e.damagesource);
 			If(BDPPLAYER)
 			{
 				If(BDPPlayer.killstreak > 1)
@@ -260,13 +260,13 @@ class Modifier_ScoreMaster : BDPModifier
 
 
 
-class Modifier_ShockFactor : BDPModifier
+class BDP_ModifierShockFactor : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "STSHOCK";
-		BDPModifier.DisplayName "Shock Factor";
-		BDPModifier.Description "Demons are hyper-aware of you";
+		BDP_Modifier.Icon "STSHOCK";
+		BDP_Modifier.DisplayName "Shock Factor";
+		BDP_Modifier.Description "Demons are hyper-aware of you";
 	}
 	
 	override void WorldTick()
@@ -277,7 +277,7 @@ class Modifier_ShockFactor : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.shockfactor = true;
@@ -295,13 +295,13 @@ class Modifier_ShockFactor : BDPModifier
 }
 
 
-class Modifier_PerfectHatred : BDPModifier
+class BDP_ModifierPerfectHatred : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "FC0OUCH4";
-		BDPModifier.DisplayName "Perfect Hatred";
-		BDPModifier.Description "Demons are permanently enraged";
+		BDP_Modifier.Icon "FC0OUCH4";
+		BDP_Modifier.DisplayName "Perfect Hatred";
+		BDP_Modifier.Description "Demons are permanently enraged";
 	}
 	
 	Override void worldthingspawned(Worldevent e)
@@ -320,13 +320,13 @@ class Modifier_PerfectHatred : BDPModifier
 	
 }
 
-class Modifier_Realism : BDPModifier
+class BDP_ModifierRealism : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "STREAL";
-		BDPModifier.DisplayName "Realism";
-		BDPModifier.Description "Player recieves 400% damage";
+		BDP_Modifier.Icon "STREAL";
+		BDP_Modifier.DisplayName "Realism";
+		BDP_Modifier.Description "Player recieves 400% damage";
 	}
 	
 	override void WorldTick()
@@ -337,7 +337,7 @@ class Modifier_Realism : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.realism = true;
@@ -350,13 +350,13 @@ class Modifier_Realism : BDPModifier
 
 
 
-class Modifier_Gunslinger : BDPModifier
+class BDP_ModifierGunslinger : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "CIGST10";
-		BDPModifier.DisplayName "Gunslinger";
-		BDPModifier.Description "Weapons deselected for 5 or more seconds instantly reload";
+		BDP_Modifier.Icon "CIGST10";
+		BDP_Modifier.DisplayName "Gunslinger";
+		BDP_Modifier.Description "Weapons deselected for 5 or more seconds instantly reload";
 	}
 	
 	override void WorldTick()
@@ -367,12 +367,12 @@ class Modifier_Gunslinger : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			for(let item = dplr.Inv; item.Inv; item = item.Inv)
 			{
-				let dweap = BDPWeaponBase(item);
+				let dweap = BDP_Weapon(item);
 				if(!dweap) continue;
 				dweap.gunslinger = true;
 			}
@@ -386,13 +386,13 @@ class Modifier_Gunslinger : BDPModifier
 
 
 
-class Modifier_SequenceBreak : BDPModifier
+class BDP_ModifierSequenceBreak : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "CYBST00";
-		BDPModifier.DisplayName "Sequence Break";
-		BDPModifier.Description "Doors can be kicked down whether you have the key or not.";
+		BDP_Modifier.Icon "CYBST00";
+		BDP_Modifier.DisplayName "Sequence Break";
+		BDP_Modifier.Description "Doors can be kicked down whether you have the key or not.";
 	}
 	override void WorldTick()
 	{
@@ -402,7 +402,7 @@ class Modifier_SequenceBreak : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.sequencebreak = true;
@@ -411,13 +411,13 @@ class Modifier_SequenceBreak : BDPModifier
 
 }
 
-class Modifier_MaximumOverdrive : BDPModifier
+class BDP_ModifierMaximumOverdrive : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "AUGHST0";
-		BDPModifier.DisplayName "Maximum Overdrive";
-		BDPModifier.Description "A Booster Frame is equipped at all times!";
+		BDP_Modifier.Icon "AUGHST0";
+		BDP_Modifier.DisplayName "Maximum Overdrive";
+		BDP_Modifier.Description "A Booster Frame is equipped at all times!";
 	}
 	override void WorldTick()
 	{
@@ -427,7 +427,7 @@ class Modifier_MaximumOverdrive : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.maximumoverdrive = true;
@@ -436,13 +436,13 @@ class Modifier_MaximumOverdrive : BDPModifier
 
 }
 
-class Modifier_Mjolnir : BDPModifier
+class BDP_ModifierMjolnir : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "HLMST00";
-		BDPModifier.DisplayName "Mjolnir";
-		BDPModifier.Description "Permanent Energy Armor powerup";
+		BDP_Modifier.Icon "HLMST00";
+		BDP_Modifier.DisplayName "Mjolnir";
+		BDP_Modifier.Description "Permanent Energy Armor powerup";
 	}
 	
 	override void WorldTick()
@@ -453,7 +453,7 @@ class Modifier_Mjolnir : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.spawnwitharmor = true;
@@ -462,9 +462,9 @@ class Modifier_Mjolnir : BDPModifier
 	
 	Override void worldthingspawned(Worldevent e)
 	{
-		If(e.thing && e.thing is "EnergyArmor")
+		If(e.thing && e.thing is "BDP_EnergyArmor")
 		{
-			Actor.spawn("SkullTagArmor",e.thing.pos);
+			Actor.spawn("BDP_DemonicArmor",e.thing.pos);
 			E.thing.destroy();
 		}
 		
@@ -474,13 +474,13 @@ class Modifier_Mjolnir : BDPModifier
 
 
 
-class Modifier_ManAndAHalf : BDPModifier
+class BDP_ModifierManAndAHalf : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "STMAN";
-		BDPModifier.DisplayName "Man And A Half";
-		BDPModifier.Description "Start every level berserked";
+		BDP_Modifier.Icon "STMAN";
+		BDP_Modifier.DisplayName "Man And A Half";
+		BDP_Modifier.Description "Start every level berserked";
 	}
 	
 	override void WorldTick()
@@ -491,7 +491,7 @@ class Modifier_ManAndAHalf : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.spawnberserked = true;
@@ -499,13 +499,13 @@ class Modifier_ManAndAHalf : BDPModifier
 	}
 }
 
-class Modifier_Gluttony : BDPModifier
+class BDP_ModifierGluttony : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "MANST01";
-		BDPModifier.DisplayName "Gluttony";
-		BDPModifier.Description "Reloading discards the contents of the current magazine";
+		BDP_Modifier.Icon "MANST01";
+		BDP_Modifier.DisplayName "Gluttony";
+		BDP_Modifier.Description "Reloading discards the contents of the current magazine";
 	}
 	
 	override void WorldTick()
@@ -516,7 +516,7 @@ class Modifier_Gluttony : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.gluttony = true;
@@ -525,13 +525,13 @@ class Modifier_Gluttony : BDPModifier
 
 }
 
-class Modifier_KickintheHead : BDPModifier
+class BDP_ModifierKickintheHead : BDP_Modifier
 {
 	Default
 	{
-		BDPModifier.Icon "STKICK";
-		BDPModifier.DisplayName "Kick In The Head";
-		BDPModifier.Description "Recoil is affected by movement and will not auto-correct";
+		BDP_Modifier.Icon "STKICK";
+		BDP_Modifier.DisplayName "Kick In The Head";
+		BDP_Modifier.Description "Recoil is affected by movement and will not auto-correct";
 	}
 	
 	override void WorldTick()
@@ -542,7 +542,7 @@ class Modifier_KickintheHead : BDPModifier
 			PlayerInfo plr = players[i];
 			if(!plr) continue;
 			
-			let dplr = BDPPlayerPawn(plr.mo);
+			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
 			dplr.advancedrecoil = true;

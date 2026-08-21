@@ -27,7 +27,7 @@ class Gibs_General : Actor
 // Lost Soul
 //
 //===========================================================================
-class BDPLostSoul : LostSoul Replaces LostSoul
+class BDP_LostSoul : LostSoul Replaces LostSoul
 {
 	Default
 	{
@@ -207,7 +207,7 @@ class BDPLostSoul : LostSoul Replaces LostSoul
 	Death.Frost:
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
-		TNT1 A 0 A_SpawnItem("FrozenLostSoul");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenLostSoul");
 		//TNT1 A 0 A_GiveToTarget("SoulAmmo", 10)
 		Stop;
 		

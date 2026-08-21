@@ -108,7 +108,7 @@ Actor Revolvertracer
 			Loop
 		Death:
 		XDeath:
-		TNT1 A 0 A_SpawnItemEx ("RicoChet",0,0,-5,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("BDP_Ricochet",0,0,-5,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 20
 		STOP
 		}
@@ -152,7 +152,7 @@ Actor LeadBursterTracer
 			LOOP
 		Death:
 		XDeath:
-		TNT1 A 0 A_SpawnItemEx ("RicoChet",0,0,-5,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("BDP_Ricochet",0,0,-5,0,0,0,0,SXF_NOCHECKPOSITION,0)
 		TNT1 A 20
 		STOP
 		}
@@ -168,7 +168,7 @@ Actor DecorativeTracer: Tracer
 }
 
 
-Actor MonsterTracer : BrutalProjectile
+Actor MonsterTracer : BDP_Projectile
 {
 Projectile
 	+RANDOMIZE
@@ -207,7 +207,7 @@ States
 		Loop	
 		
 Death:
-	TNT1 A 0 A_SpawnItemEx ("RicoChet",0,0,-5,0,0,0,180,SXF_NOCHECKPOSITION,0)
+	TNT1 A 0 A_SpawnItemEx ("BDP_Ricochet",0,0,-5,0,0,0,180,SXF_NOCHECKPOSITION,0)
 	//TNT1 A 0 A_SpawnItemEx ("MonsterPenetrator",cos(-pitch)*25,0,0+(sin(pitch)*25),cos(-pitch)*100,0,sin(pitch)*100,0,SXF_TRANSFERPITCH)
     TNT1 A 0
 	TNT1 A 0 //A_PlaySound("bulletwhistle")

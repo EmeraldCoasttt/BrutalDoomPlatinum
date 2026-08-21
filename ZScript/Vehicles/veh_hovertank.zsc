@@ -1,6 +1,6 @@
 
 
-CLASS HoverTank_Ball : Actor
+CLASS BDP_HoverTankBall : Actor
 {
 	Default
 	{
@@ -60,10 +60,10 @@ CLASS HoverTank_Ball : Actor
 }
 
 
-class HoverTank_TurretBase : VehPart
+class BDP_HoverTankTurretBase : VehPart
 {
 	
-	Scorpion_TurretCannon cannon;
+	BDP_ScorpionTurretCannon cannon;
 	Default
 	{
 		Radius 32;
@@ -74,7 +74,7 @@ class HoverTank_TurretBase : VehPart
 	
 	override void OnAttach()
 	{
-			//cannon = Scorpion_TurretCannon( VehPart.Attach("Scorpion_TurretCannon", base,(30,0,12)) );
+			//cannon = BDP_ScorpionTurretCannon( VehPart.Attach("BDP_ScorpionTurretCannon", base,(30,0,12)) );
 		//cannon.turretbase = self;
 	}
 	
@@ -97,7 +97,7 @@ class HoverTank_TurretBase : VehPart
 	}
 }
 
-class HoverTank_TurretCannon : VehPart
+class BDP_HoverTankTurretCannon : VehPart
 {
 	uint cooldown;
 	uint cooldown_chaingun;
@@ -132,18 +132,18 @@ class HoverTank_TurretCannon : VehPart
 		aimpitch = clamp(aimpitch, -50, 5);
 		If(base.driver)
 		{
-			A_SetPitch(BDPMath.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
+			A_SetPitch(BDP_Math.Lerp(pitch, aimpitch, 0.25), SPF_INTERPOLATE);
 		}
 		else
 		{
-			A_SetPitch(BDPMath.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
+			A_SetPitch(BDP_Math.Lerp(pitch, base.pitch + aimpitch, 0.25), SPF_INTERPOLATE);
 		}
 		
 	}
 		
 	override void DoUpdate(VehCamera cam)
 	{
-		let tank = BDPHoverTank(base);
+		let tank = BDP_HoverTank(base);
 		if(!tank) return;
 		if(!cam) return;
 	
@@ -161,7 +161,7 @@ class HoverTank_TurretCannon : VehPart
 				If(guncycle)
 				{
 					
-					let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
+					let misl = BDP_Math.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
 					if(misl) 
 					{
 						misl.target = base.driver;
@@ -174,7 +174,7 @@ class HoverTank_TurretCannon : VehPart
 				Else
 				{
 					
-					let misl = BDPMath.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
+					let misl = BDP_Math.FireProjectile("MastermindTracerTank", pos, angle + frandom(-2,2), pitch + frandom(-2,2), 0, 10, 0, 1, 0);
 					if(misl) 
 					{
 						misl.target = base.driver;
@@ -229,7 +229,7 @@ class HoverTank_TurretCannon : VehPart
 
 
 
-class HoverPod : VehPart
+class BDP_HoverPod : VehPart
 {
 	/*
 	Default
@@ -271,48 +271,48 @@ class HoverPod : VehPart
 }
 
 
-class HoverPodFR : HoverPod
+class BDP_HoverPodFR : BDP_HoverPod
 {
 	override void Tick()
 	{
 		super.Tick();	
-		BDPHoverTank pBase = BDPHoverTank(base);
+		BDP_HoverTank pBase = BDP_HoverTank(base);
 		if(!pBase) 
         return;	
 		pBase.HeightFR = GetPodHeight();
 	}
 }
 
-class HoverPodFL : HoverPod
+class BDP_HoverPodFL : BDP_HoverPod
 {
 	override void Tick()
 	{
 		super.Tick();	
-		BDPHoverTank pBase = BDPHoverTank(base);
+		BDP_HoverTank pBase = BDP_HoverTank(base);
 		if(!pBase) 
         return;	
 		pBase.HeightFL = GetPodHeight();
 	}
 }
 
-class HoverPodBR : HoverPod
+class BDP_HoverPodBR : BDP_HoverPod
 {
 	override void Tick()
 	{
 		super.Tick();	
-		BDPHoverTank pBase = BDPHoverTank(base);
+		BDP_HoverTank pBase = BDP_HoverTank(base);
 		if(!pBase) 
         return;	
 		pBase.HeightBR = GetPodHeight();
 	}
 }
 
-class HoverPodBL : HoverPod
+class BDP_HoverPodBL : BDP_HoverPod
 {
 	override void Tick()
 	{
 		super.Tick();	
-		BDPHoverTank pBase = BDPHoverTank(base);
+		BDP_HoverTank pBase = BDP_HoverTank(base);
 		if(!pBase) 
         return;	
 		pBase.HeightBL = GetPodHeight();
@@ -320,7 +320,7 @@ class HoverPodBL : HoverPod
 }
 
 
-class hovertank_buttrocket : VehPart
+class BDP_HoverTankButtRocket : VehPart
 {
 	Default
 	{
@@ -351,12 +351,12 @@ class hovertank_buttrocket : VehPart
 	{
 		super.Tick();
 		
-		 BDPHoverTank pBase = BDPHoverTank(base);
+		 BDP_HoverTank pBase = BDP_HoverTank(base);
     if(!pBase) 
         return;
 		If(pBase.boosting)
 		{
-			bdpmath.fireprojectile("jetpackflametrailsLarge",pos,angle + 180,-pitch,0,20,10);
+			BDP_Math.fireprojectile("jetpackflametrailsLarge",pos,angle + 180,-pitch,0,20,10);
 			wasboosting = true;
 			A_startsound("JETLOOP",CHAN_BODY,CHANF_LOOPING);;
 		}
@@ -370,12 +370,12 @@ class hovertank_buttrocket : VehPart
 }
 
 
-class BDPHoverTank : BDPVehicle
+class BDP_HoverTank : BDP_Vehicle
 {
-	HoverTank_TurretBase turret;
-	HoverTank_TurretCannon leftgun;
-	HoverTank_TurretCannon rightgun;
-	Scorpion_TurretCannon cannon;
+	BDP_HoverTankTurretBase turret;
+	BDP_HoverTankTurretCannon leftgun;
+	BDP_HoverTankTurretCannon rightgun;
+	BDP_ScorpionTurretCannon cannon;
 
 	
 	int enginetics;
@@ -399,7 +399,7 @@ class BDPHoverTank : BDPVehicle
 		Scale 2.0;
 		Mass 1600;
 		Health 2000;
-		BDPVehicle.Armored 4000;
+		BDP_Vehicle.Armored 4000;
 		MaxSlopeSteepness 0.4;
 		damagetype "stomp";
 		FloatBobStrength 0.125;
@@ -413,18 +413,18 @@ class BDPHoverTank : BDPVehicle
 	override void BeginPlay()
 	{
 		super.BeginPlay();
-		VehPart.Attach("Scorpionflames1",self,(random(-64,64),random(-64,64),24));
-		VehPart.Attach("Scorpionflames2",self,(random(-64,64),random(-64,64),24));
-		VehPart.Attach("HoverPodFR",self,(60,60,0));
-		VehPart.Attach("HoverPodFL",self,(-60,60,0));
-		VehPart.Attach("HoverPodBR",self,(60,-60,0));
-		VehPart.Attach("HoverPodBL",self,(-60,-60,0));
-		VehPart.Attach("Hovertank_buttrocket",self,(-65,-45,5));
-		VehPart.Attach("Hovertank_buttrocket",self,(-65, 45,5));
-		turret = HoverTank_TurretBase(VehPart.Attach("HoverTank_TurretBase", self, (0,0,34)));
+		VehPart.Attach("BDP_Scorpionflames1",self,(random(-64,64),random(-64,64),24));
+		VehPart.Attach("BDP_Scorpionflames2",self,(random(-64,64),random(-64,64),24));
+		VehPart.Attach("BDP_HoverPodFR",self,(60,60,0));
+		VehPart.Attach("BDP_HoverPodFL",self,(-60,60,0));
+		VehPart.Attach("BDP_HoverPodBR",self,(60,-60,0));
+		VehPart.Attach("BDP_HoverPodBL",self,(-60,-60,0));
+		VehPart.Attach("BDP_HoverTankButtRocket",self,(-65,-45,5));
+		VehPart.Attach("BDP_HoverTankButtRocket",self,(-65, 45,5));
+		turret = BDP_HoverTankTurretBase(VehPart.Attach("BDP_HoverTankTurretBase", self, (0,0,34)));
 		
-		leftgun = HoverTank_TurretCannon(VehPart.Attach("HoverTank_TurretCannon", self, (-15,-44,45)));
-		rightgun = HoverTank_TurretCannon(VehPart.Attach("HoverTank_TurretCannon", self, (-15,44,45)));
+		leftgun = BDP_HoverTankTurretCannon(VehPart.Attach("BDP_HoverTankTurretCannon", self, (-15,-44,45)));
+		rightgun = BDP_HoverTankTurretCannon(VehPart.Attach("BDP_HoverTankTurretCannon", self, (-15,44,45)));
 		If(leftgun)
 		{
 			leftgun.setstatelabel("Spawn2");
@@ -518,7 +518,7 @@ class BDPHoverTank : BDPVehicle
             }
         }
 		
-		//Float upwards if any hoverpod isn't far enough off the ground (but not below ground)
+		//Float upwards if any BDP_HoverPod isn't far enough off the ground (but not below ground)
 		if ((tankheight < 23 || heightFR < 23 && heightFR > -10 || heightFL < 23 && heightFL > -10 || heightBR < 23 && heightBR > -10 || heightBL < 23 && heightBL > -10) && vel.z < 1 && !boboffset)
 		{
 			vel.z = (vel.z + 0.20);
@@ -534,7 +534,7 @@ class BDPHoverTank : BDPVehicle
 		
 		A_StartSound("TANKENG2", CHAN_7, CHANF_LOOPING);
 		//Pitch based on movement speed
-			double topitch = BDPMath.fmap(vel.length(), 0, 15.0, 0.7, 3.0); 
+			double topitch = BDP_Math.fmap(vel.length(), 0, 15.0, 0.7, 3.0); 
 		
 		//Prevent idle warbling
 		//topitch = (topitch * 0.80);
@@ -560,8 +560,8 @@ class BDPHoverTank : BDPVehicle
 		// Rotation
 		double turnspd = 0.08;
 		double accel = 0.30;
-		double angdiff = BDPMath.AngleDiff(angle, driver.angle);
-		A_SetAngle(BDPMath.Lerp(angle, angle+angdiff, turnspd), SPF_INTERPOLATE);
+		double angdiff = BDP_Math.AngleDiff(angle, driver.angle);
+		A_SetAngle(BDP_Math.Lerp(angle, angle+angdiff, turnspd), SPF_INTERPOLATE);
 		
 		
 		// Boost
@@ -578,7 +578,7 @@ class BDPHoverTank : BDPVehicle
 			boostburn++;
 			// Boost particles
 			/*
-			let trail = Spawn("WraithPlasma_Trail", BDPMath.RelativeV3Offset(self, 180,0,0, 150,0,10, 1.));
+			let trail = Spawn("WraithPlasma_Trail", BDP_Math.RelativeV3Offset(self, 180,0,0, 150,0,10, 1.));
 			if(trail) trail.A_SetScale(0.4);
 			*/
 			if(boostburn >= 60) 

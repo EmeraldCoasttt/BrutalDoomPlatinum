@@ -1,10 +1,10 @@
 	
-	class BDPNotMonster : Actor
+	class BDP_NotMonster : Actor
 	{
 	
 	}
 	
-	Class BDPSecret : Actor
+	Class BDP_Secret : Actor
 	{
 		States
 		{
@@ -14,7 +14,7 @@
 		}
 	}
 	
-	class BDPSecretSpawner : Actor
+	class BDP_SecretSpawner : Actor
 	{
 		bool dud;
 		bool chanceinit;
@@ -46,7 +46,7 @@
 			}
 			int rings = 1;
 			bool spawned = false;
-			Array<bdpspawnspot> spots;
+			Array<BDP_SpawnSpot> spots;
 			spots.Clear();
 			for ( double j=0.; j<maxradius; j+=16. )
 			{
@@ -73,7 +73,7 @@
 						if ( tbox[3] < l.bbox[2] ) continue;
 						if ( tbox[0] < l.bbox[1] ) continue;
 						if ( tbox[1] > l.bbox[0] ) continue;
-						if ( BDPHandler.BoxOnLineSide(tbox[0],tbox[1],tbox[2],tbox[3],l) != -1 ) continue;
+						if ( BDP_Handler.BoxOnLineSide(tbox[0],tbox[1],tbox[2],tbox[3],l) != -1 ) continue;
 						blocked = true;
 						break;
 					}
@@ -110,7 +110,7 @@
 						}
 						if ( blockedff ) continue;
 						*/
-						let sp = new("bdpspawnspot");
+						let sp = new("BDP_SpawnSpot");
 						sp.pos = (testpos.x,testpos.y,fz);
 						sp.angle = k+180;
 						spots.Push(sp);
@@ -131,7 +131,7 @@
 					}
 					*/
 					//if ( blocked ) continue;
-					let sp = new("bdpspawnspot");
+					let sp = new("BDP_SpawnSpot");
 					sp.pos = testpos;
 					sp.angle = k+180;
 					spots.Push(sp);
@@ -139,8 +139,8 @@
 				rings += 3;
 			}
 			if ( spots.Size() < 10 ) continue;
-			int ws = Random[bdpspawnspot](0,spots.Size()-1);
-			let handler = WeaponSpawnHandler(StaticEventHandler.Find('WeaponSpawnHandler'));
+			int ws = Random[BDP_SpawnSpot](0,spots.Size()-1);
+			let handler = BDP_WeaponSpawnHandler(StaticEventHandler.Find('BDP_WeaponSpawnHandler'));
 
 			Handler.SpawnSecret(spots[ws].pos);
 			//console.printf("buttsex");
@@ -151,13 +151,13 @@
 		}
 	}
 	
-	Class bdpspawnspot
+	Class BDP_SpawnSpot
 	{
 		Vector3 pos;
 		double angle;
 	}
 	
-	class BDPHandler : EventHandler
+	class BDP_Handler : EventHandler
 	{
 	
 	bool mercilessgranted;
@@ -170,7 +170,7 @@
 		PlayerInfo plr = players[ consoleplayer ];
 		if(plr)
 		{
-			let bdplr = BDPPlayerPawn(plr.mo);
+			let bdplr = BDP_PlayerPawn(plr.mo);
 			If(bdplr)
 			{
 				bdplr.A_PistolStart();
@@ -228,7 +228,7 @@
 	{
 		PlayerInfo src = players[e.Player];
 		if(!src || !src.mo) return;
-		let bdplr = BDPPlayerPawn(src.mo);
+		let bdplr = BDP_PlayerPawn(src.mo);
 		
 		if(e.Name ~== "togglescanner" && bdplr)
 		{
@@ -239,7 +239,7 @@
 	override bool InputProcess(InputEvent e)
     {
 
-		let bdplr = BDPPlayerPawn(src.mo);
+		let bdplr = BDP_PlayerPawn(src.mo);
         if (bindings.GetBinding(e.KeyScan) ~== "+use" && bdplr && bdplr.ultranightmare && bdpplr.health <= 0)
         {
             Console.Printf("Pressed Use while dead");
@@ -321,7 +321,7 @@
 	{
 		If(level.getchecksum() != '3c9902e376cca1e9c3be8763bdc21df5')
 		{
-			BDPSecretSpawner.SpawnSecrets();
+			BDP_SecretSpawner.SpawnSecrets();
 		}
 		mercilessgranted = false;
 	
@@ -558,12 +558,12 @@
 		
 		if(e.replacee == Checkpotentialactor('HeavyMachineGun'))
 		{
-			e.Replacement = "BDPTurret";
+			e.Replacement = "BDP_Turret";
 		}
 		
 		if(e.replacee == Checkpotentialactor('attackhelicopter'))
 		{
-			e.Replacement = "BDPChopper";
+			e.Replacement = "BDP_Chopper";
 		}
 		
 		if(e.replacee == Checkpotentialactor('deh_actor_199'))
@@ -573,7 +573,7 @@
 		
 		if(e.replacee == Checkpotentialactor('deh_actor_151'))
 		{
-			e.Replacement = "BDPBanshee";
+			e.Replacement = "BDP_Banshee";
 		}
 		if(e.replacee == Checkpotentialactor('hellishmissilelauncher'))
 		{
@@ -581,11 +581,11 @@
 		}
 		if(e.replacee == Checkpotentialactor('labguy'))
 		{
-			e.Replacement = "BDPZombieguy";
+			e.Replacement = "BDP_Zombieguy";
 		}
 		if(e.replacee == Checkpotentialactor('BDmummy'))
 		{
-			e.Replacement = "BDPZombieguy";
+			e.Replacement = "BDP_Zombieguy";
 		}
 
 	}
@@ -626,7 +626,7 @@
 			{
 			e.thing.giveinventory("nottitlemap",1);
 			}
-		if(e.thing && e.thing is "bossbrain2")
+		if(e.thing && e.thing is "BDP_BossBrain")
 			{
 				IconOfSin = e.thing;
 			}
@@ -711,7 +711,7 @@
 	
 		Override void worldthingdied(worldevent e)
 		{
-			If(e.thing && e.thing.target && e.thing.bismonster && e.thing.target is "BDPPlayerPawn")
+			If(e.thing && e.thing.target && e.thing.bismonster && e.thing.target is "BDP_PlayerPawn")
 			{
 				e.thing.target.giveinventory("PausePowerup",105);
 			}
@@ -724,7 +724,7 @@
 			If(!mercilessgranted && currentkills > 5 && currentkills == (Level.Total_Monsters - 1) && e.thing && e.thing.bcountkill)
 			{
 				mercilessgranted = true;
-				let modspawn = Actor.spawn("modifierspawner",e.thing.pos);
+				let modspawn = Actor.spawn("BDP_ModifierSpawner",e.thing.pos);
 				If(modspawn)
 				{
 					modspawn.vel.z = 5;

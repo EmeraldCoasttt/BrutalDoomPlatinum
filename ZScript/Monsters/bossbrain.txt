@@ -1,4 +1,4 @@
-Class bossbrain2 : bossbrain
+Class BDP_BossBrain : bossbrain
 {
 	bool activatedhealthbar;
 Default
@@ -52,7 +52,7 @@ Default
 	}
 }
 
-extend class bossbrain2
+extend class BDP_BossBrain
 {
 	private static void BrainishExplosiondx(vector3 pos)
 	{

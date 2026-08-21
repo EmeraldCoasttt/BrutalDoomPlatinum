@@ -1,10 +1,10 @@
-CLASS BDBaseKey: CustomInventory
+CLASS BDP_BaseKey: CustomInventory
 {
 	int keyid; 
 	property keyid : keyid;
 	Default
 	{
-	BDBaseKey.keyid 0;
+	BDP_BaseKey.keyid 0;
 	Radius 20;
 	Height 16;
 	+NOTDMATCH;
@@ -28,7 +28,7 @@ CLASS BDBaseKey: CustomInventory
 	}
 }
 
-CLASS BDBaseSkull: BDBaseKey
+CLASS BDP_BaseSkull: BDP_BaseKey
 {
 	Default
 	{

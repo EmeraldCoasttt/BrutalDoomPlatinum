@@ -39,7 +39,7 @@ ACTOR DoubleRifleAmmo : Ammo
 
 
 
-ACTOR Clip1Drop : BDPClip1
+ACTOR Clip1Drop : BDP_Clip1
 {
 }
 
@@ -437,7 +437,7 @@ ACTOR PickyNuke : Nuke
 		TNT1 A 0
 		TNT1 A 0 //A_JumpIfInventory("BFG10k",1,"stay",AAPTR_PLAYER1)
 		nope:
-		 TNT1 A 0 A_SpawnItemEx ("BDPCellPack",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_TRANSFERSPECIAL|SXF_TRANSFERAMBUSHFLAG,0, tid)
+		 TNT1 A 0 A_SpawnItemEx ("BDP_CellPack",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_TRANSFERSPECIAL|SXF_TRANSFERAMBUSHFLAG,0, tid)
  		stop
 		Stay:
 		TNT1 A 0 A_JumpIfInventory("Nuke",1,"nope",AAPTR_PLAYER1)

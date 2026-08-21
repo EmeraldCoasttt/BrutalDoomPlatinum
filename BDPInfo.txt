@@ -5,24 +5,24 @@
 //value 3 is rarity, possible values are 1, 2, and 3
 //lower values are less rare
 
-bdpchainsaw,chainsaw,1
-bdprevolver,shotgun,1
-bdpshotgun,shotgun,1
-bdpbattlerifle,shotgun,1
-bdpsupershotgun,supershotgun,1
-bdpassaultshotgun,supershotgun,2
-bdpminigun,chaingun,1
-bdprocketlauncher,rocketlauncher,1
-bdpgrenadelauncher,rocketlauncher,1
-bdpincinerator,rocketlauncher,1
-bdpplasmarifle,plasmarifle,1
-bdprailgun,plasmarifle,1
-bdpfreezerbeam,plasmarifle,1
-bdpbfg9000,bfg,1
-bdpcalamityblade,bfg,1
-bdpunmaker,bfg,1
-bdprevolver,secret,1
-bdpbattlerifle,secret,1
+bdp_chainsaw,chainsaw,1
+bdp_revolver,shotgun,1
+bdp_shotgun,shotgun,1
+bdp_battlerifle,shotgun,1
+bdp_supershotgun,supershotgun,1
+bdp_assaultshotgun,supershotgun,2
+bdp_minigun,chaingun,1
+bdp_rocketlauncher,rocketlauncher,1
+bdp_grenadelauncher,rocketlauncher,1
+bdp_incinerator,rocketlauncher,1
+bdp_plasmarifle,plasmarifle,1
+bdp_railgun,plasmarifle,1
+bdp_freezerbeam,plasmarifle,1
+bdp_bfg9000,bfg,1
+bdp_calamityblade,bfg,1
+bdp_unmaker,bfg,1
+bdp_revolver,secret,1
+bdp_battlerifle,secret,1
 energyarmor,secret,2
 quadsigil,secret,2
 hastesphere,secret,2

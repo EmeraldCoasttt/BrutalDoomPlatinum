@@ -1,4 +1,4 @@
-Class HealthPlus : Health Replaces HealthBonus
+Class BDP_HealthBonus : Health Replaces HealthBonus
 {
 	Default
 	{
@@ -56,7 +56,7 @@ Class HealthPlus : Health Replaces HealthBonus
 	}
 }
 
-Class LightArmor : BasicArmorPickup Replaces GreenArmor
+Class BDP_LightArmor : BasicArmorPickup Replaces GreenArmor
 {
 	Default
 	{
@@ -133,19 +133,19 @@ Class LightArmor : BasicArmorPickup Replaces GreenArmor
 
 // Blue armor ---------------------------------------------------------------
 
-Class HeavyArmorSpawner: RandomSpawner Replaces BlueArmor
+Class BDP_HeavyArmorSpawner: RandomSpawner Replaces BlueArmor
 {
 	Default
 	{
-		DropItem "HeavyArmor", 255, 9;
+		DropItem "BDP_HeavyArmor", 255, 9;
 		//DropItem "EnergyArmor", 255, 4
-		DropItem "SkulltagArmor", 255, 2;
+		DropItem "BDP_DemonicArmor", 255, 2;
 	}
 }
 
 
 
-Class EnergyArmor : CustomInventory 
+Class BDP_EnergyArmor : CustomInventory 
 {
 	Default
 	{
@@ -183,7 +183,7 @@ Class EnergyArmor : CustomInventory
 	}
 }
 
-Class HeavyArmor : BasicArmorPickup //Replaces BlueArmor
+Class BDP_HeavyArmor : BasicArmorPickup //Replaces BlueArmor
 {
 	Default
 	{
@@ -258,7 +258,7 @@ Class HeavyArmor : BasicArmorPickup //Replaces BlueArmor
 
 // Skulltag armor ---------------------------------------------------------------
 
-CLASS SkulltagArmor : BasicArmorPickup
+CLASS BDP_DemonicArmor : BasicArmorPickup
 {
 	Default
 	{
@@ -360,7 +360,7 @@ Class CrueltyBonus5armor : BasicArmorBonus
 
 // Armor bonus --------------------------------------------------------------
 
-Class ArmorShard : BasicArmorBonus Replaces ArmorBonus
+Class BDP_ArmorBonus : BasicArmorBonus Replaces ArmorBonus
 {
 	Default
 	{
@@ -411,7 +411,7 @@ Class ArmorShard : BasicArmorBonus Replaces ArmorBonus
 	}
 }
 
-Class ArmorShardDroped : BasicArmorBonus
+Class BDP_ArmorBonusDroped : BasicArmorBonus
 {
 	Default
 	{
@@ -452,7 +452,7 @@ Class ArmorShardDroped : BasicArmorBonus
 }
 
 
-Class Stimpack2 : Health Replaces Stimpack
+Class BDP_Stimpack : Health Replaces Stimpack
 {
 	Default
 	{
@@ -496,7 +496,7 @@ Class Stimpack2 : Health Replaces Stimpack
 
 // Medikit -----------------------------------------------------------------
 
-Class Medikit2 : Health Replaces Medikit
+Class BDP_Medikit : Health Replaces Medikit
 {
 	Default
 	{

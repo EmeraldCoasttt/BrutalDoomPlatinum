@@ -1,4 +1,4 @@
-class BDPBackpack : BackpackItem replaces Backpack
+class BDP_Backpack : BackpackItem replaces Backpack
 {
 	Default
 	{
@@ -38,7 +38,7 @@ class BDPBackpack : BackpackItem replaces Backpack
 	}
 }
 
-class BDPAmmo : Ammo
+class BDP_Ammo : Ammo
 {
 	
 	int score;
@@ -64,7 +64,7 @@ class BDPAmmo : Ammo
 	{
 		class<Object> type = GetClass();
 		
-		while (type.GetParentClass() != "BDPAmmo" && type.GetParentClass() != null)
+		while (type.GetParentClass() != "BDP_Ammo" && type.GetParentClass() != null)
 		{
 			type = type.GetParentClass();
 		}
@@ -73,12 +73,12 @@ class BDPAmmo : Ammo
 	
 	Default
 	{
-		BDPAmmo.Score 50;
+		BDP_Ammo.Score 50;
 		+ForceXyBillboard;
 	}
 }
 
-class BDPMultiAmmo : Inventory
+class BDP_MultiAmmo : Inventory
 {
 	string ammotype1;
 	property ammotype1 : ammotype1;
@@ -123,14 +123,14 @@ class BDPMultiAmmo : Inventory
 }
 
 
-class BDPSmallBulletBox : BDPMultiAmmo replaces Clip
+class BDP_SmallBulletBox : BDP_MultiAmmo replaces Clip
 {
 	Default
 	{
-		BDPMultiAmmo.ammotype1 "BDPClip1";
-		BDPMultiAmmo.ammotype2 "BDPClip2";
-		BDPMultiAmmo.ammoamount1 10;
-		BDPMultiAmmo.ammoamount2 30;
+		BDP_MultiAmmo.ammotype1 "BDPClip1";
+		BDP_MultiAmmo.ammotype2 "BDPClip2";
+		BDP_MultiAmmo.ammoamount1 10;
+		BDP_MultiAmmo.ammoamount2 30;
 		Inventory.PickupMessage "Picked up a small box of bullets.";
 		Inventory.PickupSound "CLIPICK2";
 	}
@@ -165,12 +165,12 @@ class BDPSmallBulletBox : BDPMultiAmmo replaces Clip
 	}
 }
 
-class BDPLargeBulletBox : BDPSmallBulletBox replaces ClipBox
+class BDP_LargeBulletBox : BDP_SmallBulletBox replaces ClipBox
 {
 	Default
 	{
-		BDPMultiAmmo.ammoamount1 30;
-		BDPMultiAmmo.ammoamount2 80;
+		BDP_MultiAmmo.ammoamount1 30;
+		BDP_MultiAmmo.ammoamount2 80;
 		Inventory.PickupMessage "Picked up a large box of bullets.";
 		Inventory.PickupSound "CBOXPICK";
 		
@@ -207,7 +207,7 @@ class BDPLargeBulletBox : BDPSmallBulletBox replaces ClipBox
 }
 
 
-class BDPClip1 : BDPAmmo
+class BDP_Clip1 : BDP_Ammo
 {
 	Default
 	{
@@ -250,7 +250,7 @@ class BDPClip1 : BDPAmmo
 }
 
 
-class BDPClip2 : BDPAmmo
+class BDP_Clip2 : BDP_Ammo
 {
 	
 	Default
@@ -298,7 +298,7 @@ class BDPClip2 : BDPAmmo
 
 
 
-class BDPShell : BDPAmmo replaces Shell
+class BDP_Shell : BDP_Ammo replaces Shell
 {
 	Default
 	{
@@ -349,7 +349,7 @@ class BDPShell : BDPAmmo replaces Shell
 	}
 }
 
-class BDPShellBox : BDPShell replaces ShellBox
+class BDP_ShellBox : BDP_Shell replaces ShellBox
 {
 	Default
 	{
@@ -392,7 +392,7 @@ class BDPShellBox : BDPShell replaces ShellBox
 	}
 }
 
-class BDP_UnspentShellPickup : BDPShell
+class BDP_UnspentShellPickup : BDP_Shell
 {
 	Default
 	{
@@ -462,7 +462,7 @@ class BDP_UnspentUraniumShellPickup : BDP_UnspentShellPickup
 }
 
 
-class BDPRocketAmmo : BDPAmmo replaces RocketAmmo
+class BDP_RocketAmmo : BDP_Ammo replaces RocketAmmo
 {
 	Default
 	{
@@ -497,7 +497,7 @@ class BDPRocketAmmo : BDPAmmo replaces RocketAmmo
 	}
 }
 
-class BDPRocketBox : BDPRocketAmmo replaces RocketBox
+class BDP_RocketBox : BDP_RocketAmmo replaces RocketBox
 {
 	Default
 	{
@@ -531,7 +531,27 @@ class BDPRocketBox : BDPRocketAmmo replaces RocketBox
 	}
 }
 
-class BDPCell : BDPAmmo replaces Cell
+class BDP_UnspentGrenadePickup : BDP_RocketAmmo
+{
+	States
+	{
+	Spawn:
+		N4D3 B -1;
+		Stop;
+	}
+}
+
+class BDP_UnspentChaosGrenadePickup : BDP_RocketAmmo
+{
+	States
+	{
+	Spawn:
+		N4D4 B -1;
+		Stop;
+	}
+}
+
+class BDP_Cell : BDP_Ammo replaces Cell
 {
 	Default
 	{
@@ -542,7 +562,7 @@ class BDPCell : BDPAmmo replaces Cell
 		Ammo.BackpackMaxAmount 600;
 		Inventory.Pickupsound "PLAPICK1";
 		Inventory.Icon "CELLA0";
-		BDPAmmo.Score 100;
+		BDP_Ammo.Score 100;
 	}
 	States
 	{
@@ -564,14 +584,14 @@ class BDPCell : BDPAmmo replaces Cell
 	}
 }
 
-class BDPCellPack : BDPCell replaces CellPack
+class BDP_CellPack : BDP_Cell replaces CellPack
 {
 	Default
 	{
 		Inventory.PickupMessage "$GOTCELLBOX";
 		Inventory.Pickupsound "PLAPICK2";
 		Inventory.Amount 100;
-		BDPAmmo.Score 150;
+		BDP_Ammo.Score 150;
 	}
 	States
 	{

@@ -1,10 +1,10 @@
-class BDPSubmachineGun : BDPWeaponBase
+class BDP_SubmachineGun : BDP_Weapon
 {
 	Default
 	{
 		Weapon.AmmoGive 15;
-		Weapon.AmmoType "BDPClip2";
-		BDPWeaponBase.MagCapacity 40;
+		Weapon.AmmoType "BDP_Clip2";
+		BDP_Weapon.MagCapacity 40;
 		Obituary "%o was shot down by %k's SMG.";
 		Weapon.SlotNumber 4;
 		Weapon.SlotPriority 1;
@@ -14,8 +14,8 @@ class BDPSubmachineGun : BDPWeaponBase
 		Inventory.maxamount 2;
 		Tag "$BDPSMG";
 		Inventory.AltHUDIcon "SMGZA0";
-		BDPWeaponBase.handedness 1;
-		BDPWeaponBase.DualWeapon "BDPDualSMG";
+		BDP_Weapon.handedness 1;
+		BDP_Weapon.DualWeapon "BDP_DualSMG";
 	}
 	States
 	{

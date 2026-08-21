@@ -1,7 +1,7 @@
 const int acsFatality = 312;
 ACTOR IsNOTAMenuDummy: Inventory {Inventory.MaxAmount 1}
 
-ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPlayer
+ACTOR BDP_Player : BDP_PlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPlayer
 {
 	Health 100
 	Radius 16
@@ -48,12 +48,12 @@ ACTOR BDPPlayer : BDPPlayerPawn Replaces DoomPlayer //PlayerPawn Replaces DoomPl
 	//Speed 1.0
 	Player.RunHealth 999
 	Player.DisplayName "DOOM Marine"
-	Player.StartItem "BDPPistol"
-	Player.StartItem "BDPFist"
+	Player.StartItem "BDP_Pistol"
+	Player.StartItem "BDP_Fist"
 	Player.startitem "AmmoFragGrenade", 2
-	Player.StartItem "BDPClip1", 30
-	Player.startitem "ASGShield", 100
-	Player.startitem "BDPRocketAmmo", 1
+	Player.StartItem "BDP_Clip1", 30
+	Player.startitem "BDP_ASGShield", 100
+	Player.startitem "BDP_RocketAmmo", 1
 	Player.StartItem "IsPlayer", 1
 	Player.StartItem "NeverSelectedShotgun", 1
 	//Player.JumpZ 7.4

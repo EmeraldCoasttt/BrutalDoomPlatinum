@@ -1,17 +1,17 @@
 //CHANGES MADE:
 //new bloodless kick frames, better dropped shotgun
 
-class BDPShotgunGuySpawner : RandomSpawner replaces ShotgunGuy
+class BDP_ShotgunGuySpawner : RandomSpawner replaces ShotgunGuy
 {
 	Default
 	{
-		DropItem "BDPShotgunGuy", 255, 3;
-		DropItem "BDPShotgunGuyHelmet", 255, 3;
-		DropItem "BDPSubmachineGunGuy", 255, 2;
+		DropItem "BDP_ShotgunGuy", 255, 3;
+		DropItem "BDP_ShotgunGuyHelmet", 255, 3;
+		DropItem "BDP_SubmachineGunGuy", 255, 2;
 	}
 }
 
-class BDPShotgunGuy: BDPBaseZombie
+class BDP_ShotgunGuy: BDP_BaseZombie
 {
 	Default
 	{
@@ -42,7 +42,7 @@ class BDPShotgunGuy: BDPBaseZombie
 		damagefactor "SSG", 250;
 		PainChance "LowKick", 255;
 		DropItem "GrenadeAmmo", 15;
-		DropItem "ShotgunDrop";
+		DropItem "BDP_ShotgunDrop";
 		damagetype "Melee";
 		DamageFactor "Head", 1.5;
 		damagefactor "Melee", 1.25;
@@ -60,7 +60,7 @@ class BDPShotgunGuy: BDPBaseZombie
 		MaxStepHeight 24;
 		MaxDropOffHeight 32;
 		Tag "Shotgun Zombie";
-		BDPBaseZombie.VoicePitch 0.9;
+		BDP_BaseZombie.VoicePitch 0.9;
 		SeeSound "grunt/sight";
 		PainSound "grunt/pain";
 		DeathSound "grunt/death";
@@ -162,7 +162,7 @@ class BDPShotgunGuy: BDPBaseZombie
 		Goto ContinueMissile;
 	Spawn:
 		SHID A 1;
-		TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_spawnitemex("BDP_ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
 		TNT1 A 0 A_GiveInventory("SKShotgunGuy", 1);
 		TNT1 A 0 ACS_NamedExecuteAlways("BDCheckStuff");//Check if new monsters are disabled
 		TNT1 A 0 ACS_NamedExecuteAlways("BDCHeckClassicMonsters", 0, 0, 0, 0);//Check if Vanilla Mode is activated
@@ -171,7 +171,7 @@ class BDPShotgunGuy: BDPBaseZombie
 		TNT1 A 0 A_GiveInventory("TypeSergeant", 1);
 		TNT1 A 0 A_TakeInventory("SergeantAmmo", 6);
 		TNT1 A 0 A_GiveInventory("SergeantAmmo", random(0,5));
-		TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_spawnitemex("BDP_ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
 		SPOS B 1;
 		Goto Stand;
 	Stand:
@@ -1039,7 +1039,7 @@ class BDPShotgunGuy: BDPBaseZombie
 	Raise:
 		SPOS L 5;
 		SPOS KJIH 5;
-		TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_spawnitemex("BDP_ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
 		Goto SeeContinue;
 	StealthKill:
 		TNT1 A 0;
@@ -1062,7 +1062,7 @@ class BDPShotgunGuy: BDPBaseZombie
 	Death.Frost:
 		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
 		TNT1 A 0 A_ChangeFlag("SOLID", 0);
-		TNT1 A 0 A_SpawnItem("FrozenShotgunguy");
+		TNT1 A 0 A_SpawnItem("BDP_FrozenShotgunguy");
 		Stop;
 	Death.Massacre:
 		Goto Death;
@@ -1098,7 +1098,7 @@ class BDPShotgunGuy: BDPBaseZombie
 	}
 }
 
-class ShotgunGuy1Damaged : BDPShotgunGuy 
+class ShotgunGuy1Damaged : BDP_ShotgunGuy 
 {
 	Default
 	{
@@ -1159,7 +1159,7 @@ class DeadShotgunGuy1 : CurbstompedMarine //Replaces DeadShotgunguy
 	States
 	{
 	Spawn:
-		TNT1 A 0 NODELAY A_giveinventory("BDPCorpseInventory",1);
+		TNT1 A 0 NODELAY A_giveinventory("BDP_CorpseInventory",1);
 		SPOS L -1;
 		Stop;
 	Death:
@@ -1321,7 +1321,7 @@ class DeadShotgunguy_Slumped : ZombiemanTorso
 	{
 	Spawn:
 		TNT1 A 0;
-		TNT1 A 0 A_spawnitemex("ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
+		TNT1 A 0 A_spawnitemex("BDP_ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
 	Spawn2:
 		TNT1 A 0 A_Recoil(6);
 		BR93 A 6;

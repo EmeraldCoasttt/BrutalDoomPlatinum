@@ -1,9 +1,9 @@
 // For Skull events
-class BDPModifier_Events : EventHandler
+class BDP_ModifierEvents : EventHandler
 {
 	bool doOpenModifiers;
 	int curleveltics;
-	Array<BDPModifier> modifiers;
+	Array<BDP_Modifier> modifiers;
 	
 	static void getActiveModifiers(out Array<String> modNames)
 	{	
@@ -37,7 +37,7 @@ class BDPModifier_Events : EventHandler
 	{	
 		if( doOpenModifiers && curleveltics >= 2 ) 
 		{
-			//Menu.SetMenu("BDPModifierMenu");
+			//Menu.SetMenu("BDP_ModifierMenu");
 			doOpenModifiers = false;
 		}
 	
@@ -103,9 +103,9 @@ class BDPModifier_Events : EventHandler
 		int MODLOCKED = unlockedMods.Size();
 		
 		modifiers.Clear();	
-		let it = ThinkerIterator.Create("BDPModifier");
-		BDPModifier md;
-		while(md = BDPModifier(it.Next())) 
+		let it = ThinkerIterator.Create("BDP_Modifier");
+		BDP_Modifier md;
+		while(md = BDP_Modifier(it.Next())) 
 		{
 			string clsName = md.getClassName();
 			clsName = clsName.MakeLower();
@@ -126,8 +126,8 @@ class BDPModifier_Events : EventHandler
 		curleveltics = 0;
 		foreach(cls : AllActorClasses)
 		{
-			if( !(cls is "BDPModifier") || cls.getClassName() == "BDPModifier" ) continue;
-			let md = BDPModifier(Actor.Spawn(cls));
+			if( !(cls is "BDP_Modifier") || cls.getClassName() == "BDP_Modifier" ) continue;
+			let md = BDP_Modifier(Actor.Spawn(cls));
 			md.Init();
 		}
 		UpdateModifierStatus();

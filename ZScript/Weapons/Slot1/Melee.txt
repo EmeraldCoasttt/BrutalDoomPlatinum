@@ -1,4 +1,4 @@
-class BDPFist : BDPWeaponBase replaces Fist
+class BDP_Fist : BDP_Weapon replaces Fist
 {
 	override void DoSpriteStain()
 	{
@@ -25,12 +25,12 @@ class BDPFist : BDPWeaponBase replaces Fist
 		Weapon.Kickback 100;
 		Obituary "%o was Ripped and Teared by 	%k";
 		+WEAPON.MELEEWEAPON
-		+BDPWeaponBase.BLOODSTAIN
+		+BDP_Weapon.BLOODSTAIN
 		+INVENTORY.UNDROPPABLE
 		Tag "Fists";
 		Inventory.AltHUDIcon "MEDKC0";
-		BDPWeaponBase.voiceacted 0;
-		BDPWeaponBase.handedness 2;
+		BDP_Weapon.voiceacted 0;
+		BDP_Weapon.handedness 2;
 	}
 	States
 	{
@@ -89,7 +89,7 @@ class BDPFist : BDPWeaponBase replaces Fist
 		{
 			if(CountInv("iJustThrowedMySaw") > 0)
 			{
-				A_TakeInventory("BDPChainsaw",1);
+				A_TakeInventory("BDP_Chainsaw",1);
 				A_TakeInventory("iJustThrowedMySaw",1);
 			}
 			A_SetCrosshairDX("Null");
@@ -727,7 +727,7 @@ CLASS MeleeAttack : Actor
 						Continue;
 				If(mo.bmissile && mo.target != target && mo.damage)
 				{
-					If(mo.bspawnceiling || mo.health < 1 || mo is "headkicking" || mo is "BDECGRASS" || mo is "BaseHeadShot")
+					If(mo.bspawnceiling || mo.health < 1 || mo is "headkicking" || mo is "BDECGRASS" || mo is "BDP_Headshot")
 					{
 						Continue;
 					}
@@ -769,7 +769,7 @@ CLASS MeleeAttack : Actor
 						}
 						If(target)
 						{
-							target.takeinventory("ASGShield",20);
+							target.takeinventory("BDP_ASGShield",20);
 						}
 					
 					
@@ -832,7 +832,7 @@ CLASS MeleeAttack : Actor
 					//If(target && target.findinventory("nofatality") || target && target.findinventory("hasagib") || !dofatality) {Damagetype = "ExtremePunches";}
 					Damagetype = "ExtremePunches";
 					Damagetodeal = berserkdamage;
-					If(target && target.findinventory("powerrage"))
+					If(target && target.findinventory("BDP_PowerRage"))
 					{
 						Damagetodeal = 1500;
 					}
@@ -857,7 +857,7 @@ CLASS MeleeAttack : Actor
 			If(target && victim)
 			{
 			//A_startsound("footmeat",3);
-			If(target.findinventory("powerquakedamage"))
+			If(target.findinventory("BDP_PowerQuadDamage"))
 			{
 				target.a_startsound("items/quaddamage/active", 103);
 			}
@@ -926,7 +926,7 @@ CLASS MeleeAttack : Actor
 			If(target && target.findinventory("powerstrength"))
 			{
 			A_spraydecal("crackmelee",36);
-			A_spawnitemex("ricochetnospark", 0,0,0,0,0,0,180);
+			A_spawnitemex("BDP_RicochetNoSpark", 0,0,0,0,0,0,180);
 				If(DoorBuster && target.findinventory("sequencebreaker"))
 				{
 					BDP_DoorBuster.DestroyDoor(target, breakLocks: BDP_DoorBuster.LB_All);
@@ -1078,7 +1078,7 @@ CLASS MeleeAttackAir : MeleeAttackSlide
 			If(target && target.findinventory("powerstrength"))
 			{
 				A_spraydecal("crackmelee",36);
-				A_spawnitemex("ricochetnospark", 0,0,0,0,0,0,180);
+				A_spawnitemex("BDP_RicochetNoSpark", 0,0,0,0,0,0,180);
 				If(DoorBuster && target.findinventory("sequencebreaker"))
 				{
 					BDP_DoorBuster.DestroyDoor(target,  breakLocks: BDP_DoorBuster.LB_All);
@@ -1124,7 +1124,7 @@ CLASS MeleeAttackLeft : MeleeAttack
 						If(target && target.findinventory("powerstrength"))
 							{
 								A_spraydecal("crackmelee",36);
-								A_spawnitemex("ricochetnospark", 0,0,0,0,0,0,180);
+								A_spawnitemex("BDP_RicochetNoSpark", 0,0,0,0,0,0,180);
 							}
 					}
 				TNT1 A 0 A_AlertMonsters(32);
@@ -1212,7 +1212,7 @@ CLASS MeleeAttackRight : MeleeAttackLeft
 						If(target && target.findinventory("powerstrength"))
 							{
 								A_spraydecal("crackmelee",36);
-								A_spawnitemex("ricochetnospark", 0,0,0,0,0,0,180);
+								A_spawnitemex("BDP_RicochetNoSpark", 0,0,0,0,0,0,180);
 			
 							}
 					}

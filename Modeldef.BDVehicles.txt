@@ -1,4 +1,4 @@
-Model BDPTank     // Name of actor in DECORATE
+Model BDP_Tank     // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "tankbase.md3"    // Model index, model file
@@ -12,7 +12,7 @@ Model BDPTank     // Name of actor in DECORATE
    
 }
 
-Model BDPTank     // Name of actor in DECORATE
+Model BDP_Tank     // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "tankbase.md3"    // Model index, model file
@@ -26,7 +26,7 @@ Model BDPTank     // Name of actor in DECORATE
    
 }
 
-Model BDPTank     // Name of actor in DECORATE
+Model BDP_Tank     // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "tankbase.md3"    // Model index, model file
@@ -40,7 +40,7 @@ Model BDPTank     // Name of actor in DECORATE
    
 }
 
-Model Scorpion_TurretBase      // Name of actor in DECORATE
+Model BDP_ScorpionTurretBase      // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "tankturret1base.md3"    // Model index, model file
@@ -55,7 +55,7 @@ Model Scorpion_TurretBase      // Name of actor in DECORATE
 }
 
 
-Model Scorpion_TurretCannon      // Name of actor in DECORATE
+Model BDP_ScorpionTurretCannon      // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "tankturret1gun1.md3"    // Model index, model file
@@ -69,7 +69,7 @@ Model Scorpion_TurretCannon      // Name of actor in DECORATE
    
 }
 
-Model Scorpion_TurretGun     // Name of actor in DECORATE
+Model BDP_ScorpionTurretGun     // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "tankturret1gun2.md3"    // Model index, model file
@@ -83,7 +83,7 @@ Model Scorpion_TurretGun     // Name of actor in DECORATE
    
 }
 
-Model BDPHoverTank     // Name of actor in DECORATE
+Model BDP_HoverTank     // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "tankbase2.md3"    // Model index, model file
@@ -98,7 +98,7 @@ Model BDPHoverTank     // Name of actor in DECORATE
    
 }
 
-Model Hovertank_buttrocket      // Name of actor in DECORATE
+Model BDP_HoverTankButtRocket      // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "buttrocket.md3"    // Model index, model file
@@ -113,7 +113,7 @@ Model Hovertank_buttrocket      // Name of actor in DECORATE
    
 }
 
-Model Hovertank_TurretBase      // Name of actor in DECORATE
+Model BDP_HoverTankTurretBase      // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "tankturret1base.md3"    // Model index, model file
@@ -128,7 +128,7 @@ Model Hovertank_TurretBase      // Name of actor in DECORATE
 }
 
 
-Model Hovertank_TurretCannon      // Name of actor in DECORATE
+Model BDP_HoverTankTurretCannon      // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "HoverTankTurret.md3"    // Model index, model file
@@ -142,7 +142,7 @@ Model Hovertank_TurretCannon      // Name of actor in DECORATE
    
 }
 
-Model Hovertank_TurretCannon      // Name of actor in DECORATE
+Model BDP_HoverTankTurretCannon      // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "HoverTankTurret2.md3"    // Model index, model file
@@ -156,7 +156,7 @@ Model Hovertank_TurretCannon      // Name of actor in DECORATE
    
 }
 
-Model Chopper_TurretCannon      // Name of actor in DECORATE
+Model BDP_ChopperTurretCannon      // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "HoverTankTurret.md3"    // Model index, model file
@@ -170,7 +170,7 @@ Model Chopper_TurretCannon      // Name of actor in DECORATE
    
 }
 
-Model Chopper_TurretCannon      // Name of actor in DECORATE
+Model BDP_ChopperTurretCannon      // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "HoverTankTurret2.md3"    // Model index, model file
@@ -185,7 +185,7 @@ Model Chopper_TurretCannon      // Name of actor in DECORATE
 }
 
 
-Model BDPCHOPPER     // Name of actor in DECORATE
+Model BDP_Chopper     // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "Heli.obj"    // Model index, model file
@@ -201,7 +201,7 @@ Model BDPCHOPPER     // Name of actor in DECORATE
    
 }
 
-Model CHOPPERBLADES     // Name of actor in DECORATE
+Model BDP_ChopperBLADES     // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "HeliBlades.obj"    // Model index, model file
@@ -222,7 +222,7 @@ Model CHOPPERBLADES     // Name of actor in DECORATE
    
 }
 
-Model CHOPPERBLADES     // Name of actor in DECORATE
+Model BDP_ChopperBLADES     // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
 
@@ -247,7 +247,7 @@ Model CHOPPERBLADES     // Name of actor in DECORATE
    
 }
 
-Model CHOPPERGEAR   // Name of actor in DECORATE
+Model BDP_ChopperGEAR   // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "HeliBlades.obj"    // Model index, model file
@@ -263,7 +263,7 @@ Model CHOPPERGEAR   // Name of actor in DECORATE
    
 }
 
-Model CHOPPERGEARSMALL   // Name of actor in DECORATE
+Model BDP_ChopperGEARSMALL   // Name of actor in DECORATE
 {
    Path "models/vehicles"    // Path to model in PK3
    Model 0 "HeliBlades.obj"    // Model index, model file

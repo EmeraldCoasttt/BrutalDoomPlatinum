@@ -1,4 +1,4 @@
-CLASS BDPRocketLauncher : BDPWeaponBase
+CLASS BDP_RocketLauncher : BDP_Weapon
 {
 	Default
 	{
@@ -8,8 +8,8 @@ CLASS BDPRocketLauncher : BDPWeaponBase
 		Weapon.SlotPriority 3;
 		Weapon.SelectionOrder 2500;
 		Weapon.AmmoGive 2;
-		Weapon.AmmoType "BDPRocketAmmo";
-		BDPWeaponBase.MagCapacity 6;
+		Weapon.AmmoType "BDP_RocketAmmo";
+		BDP_Weapon.MagCapacity 6;
 		Inventory.PickupSound "RLANDRAW";
 		+WEAPON.EXPLOSIVE
 		Inventory.PickupMessage "You got the Rocket Launcher! (Slot 5)";
@@ -24,7 +24,7 @@ CLASS BDPRocketLauncher : BDPWeaponBase
 	override void DoEffect() 
 	{
 		super.DoEffect();
-		If(owner.player && owner.player.readyweapon is "BDPRocketLauncher" && owner.player.cmd.buttons & BT_ALTATTACK)
+		If(owner.player && owner.player.readyweapon is "BDP_RocketLauncher" && owner.player.cmd.buttons & BT_ALTATTACK)
 		{
 			If(!lastticklaser)
 			{
@@ -575,7 +575,7 @@ class GuidedLaserNEO : Actor
 	}
 }
 
-CLASS Rocket2 : BrutalProjectile
+CLASS Rocket2 : BDP_Projectile
 {
 	Default
 	{
@@ -632,7 +632,7 @@ CLASS Rocket2 : BrutalProjectile
 		//TNT1 A 0 A_spawnitemex("nukedamage")
 		tnt1 A 0 A_giveinventory("rocketdetonate");
 		EXPL A 0 Radius_Quake (3, 8, 0, 15, 0);//(intensity, duration, damrad, tremrad, tid)
-		TNT1 A 0 A_spawnitemex("ricochetexplosion");
+		TNT1 A 0 A_spawnitemex("BDP_RicochetExplosion");
 		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
 		TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);

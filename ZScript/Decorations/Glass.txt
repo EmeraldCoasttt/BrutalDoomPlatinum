@@ -1,4 +1,4 @@
-class BDPBreakableWindow : Actor
+class BDP_BreakableWindow : Actor
 {
 	Default
 	{
@@ -12,19 +12,19 @@ class BDPBreakableWindow : Actor
 	Spawn:
 		TNT1 A 0 NoDelay
 		{
-			A_SpawnItemEx("BDPWindowGlass", flags:SXF_SETMASTER);
-			A_SpawnItemEx("BDPWindowGlass", angle:180, SXF_SETMASTER);
-			A_SpawnItemEx("BDPUnbreakableWindowCollider", yofs:-30);
-			A_SpawnItemEx("BDPUnbreakableWindowCollider", yofs:30);
+			A_SpawnItemEx("BDP_WindowGlass", flags:SXF_SETMASTER);
+			A_SpawnItemEx("BDP_WindowGlass", angle:180, SXF_SETMASTER);
+			A_SpawnItemEx("BDP_UnbreakableWindowCollider", yofs:-30);
+			A_SpawnItemEx("BDP_UnbreakableWindowCollider", yofs:30);
 			for(int i = -3; i < 4; i++)
-				A_SpawnItemEx("BDPWindowCollider", yofs:i * 8, flags:SXF_SETMASTER);
+				A_SpawnItemEx("BDP_WindowCollider", yofs:i * 8, flags:SXF_SETMASTER);
 		}
 		XXX1 A -1;
 		Stop;
 	}
 }
 
-class BDPWindowCollider : Actor
+class BDP_WindowCollider : Actor
 {
 	Default
 	{
@@ -51,7 +51,7 @@ class BDPWindowCollider : Actor
 	}
 }
 
-class BDPWindowGlass : BDPWindowCollider
+class BDP_WindowGlass : BDP_WindowCollider
 {
 	Default
 	{
@@ -82,7 +82,7 @@ class BDPWindowGlass : BDPWindowCollider
 	}
 }
 
-class BDPUnbreakableWindowCollider : BDPWindowCollider
+class BDP_UnbreakableWindowCollider : BDP_WindowCollider
 {
 	Default
 	{
@@ -91,7 +91,7 @@ class BDPUnbreakableWindowCollider : BDPWindowCollider
 	}
 }
 
-class BDPBreakableWindowWide : BDPBreakableWindow
+class BDP_BreakableWindowWide : BDP_BreakableWindow
 {
 	Default
 	{
@@ -102,19 +102,19 @@ class BDPBreakableWindowWide : BDPBreakableWindow
 	Spawn:
 		TNT1 A 0 NoDelay
 		{
-			A_SpawnItemEx("BDPWindowGlassWide", flags:SXF_SETMASTER);
-			A_SpawnItemEx("BDPWindowGlassWide", angle:180, SXF_SETMASTER);
-			A_SpawnItemEx("BDPUnbreakableWindowColliderWide", yofs:-48);
-			A_SpawnItemEx("BDPUnbreakableWindowColliderWide", yofs:48);
+			A_SpawnItemEx("BDP_WindowGlassWide", flags:SXF_SETMASTER);
+			A_SpawnItemEx("BDP_WindowGlassWide", angle:180, SXF_SETMASTER);
+			A_SpawnItemEx("BDP_UnbreakableWindowColliderWide", yofs:-48);
+			A_SpawnItemEx("BDP_UnbreakableWindowColliderWide", yofs:48);
 			for(int i = -5; i < 6; i++)
-				A_SpawnItemEx("BDPWindowCollider", yofs:i * 8, flags:SXF_SETMASTER);
+				A_SpawnItemEx("BDP_WindowCollider", yofs:i * 8, flags:SXF_SETMASTER);
 		}
 		XXX1 A -1;
 		Stop;
 	}
 }
 
-class BDPWindowGlassWide : BDPWindowGlass
+class BDP_WindowGlassWide : BDP_WindowGlass
 {
 	Default
 	{
@@ -139,7 +139,7 @@ class BDPWindowGlassWide : BDPWindowGlass
 	}
 }
 
-class BDPUnbreakableWindowColliderWide : BDPUnbreakableWindowCollider
+class BDP_UnbreakableWindowColliderWide : BDP_UnbreakableWindowCollider
 {
 	Default
 	{

@@ -5,7 +5,7 @@
 // Original BDoom actor and related classes by Agent_Ash aka Jekyll Grim Payne
 // Modified for BDP by Emerald
 
-Class BDPActor : Actor abstract {
+Class BDP_Actor : Actor abstract {
 
 
 	Array<string> BDPDirtTexture;
@@ -1019,7 +1019,7 @@ mixin class BDP_LinearMapCheck {
 }
 
 //base class for most debris
-Class BDP_BaseDebris : BDPActor abstract {
+Class BDP_BaseDebris : BDP_Actor abstract {
 	protected bool landed;			//true if object landed on the floor (or ceiling, if can stick to ceiling)
 	protected bool moving; 		//marks actor as moving; sets to true automatically if actor spawns with non-zero vel
 	name sfxtype; //'debris', 'flames', 'blood', 'gibs' — based on the value the thing gets put into a special array that controls their number, see BDP_events.zc
@@ -1752,7 +1752,7 @@ Class BDP_RingSmoke : BDP_WallSmoke {
 }
 
 // Base puff class. Also holds arrays with texture names to simulate different effects for different "surfaces"
-Class BDPPuff : BDPActor abstract {
+Class BDPPuff : BDP_Actor abstract {
 	mixin BDP_DecalControl;
 	Default {
 		+NOBLOCKMAP
@@ -2102,7 +2102,7 @@ Class BDP_PlaneDecal : BDP_SmallDebris {
 	}
 	override void PostBeginPlay() {
 		super.PostBeginPlay();
-		//if (BDPActor.CheckAnimated(self,ceiling:ceiling)) {
+		//if (BDP_Actor.CheckAnimated(self,ceiling:ceiling)) {
 		//	destroy();
 		//	return;
 		//}

@@ -1,4 +1,4 @@
-Class BrutalProjectile : Actor
+Class BDP_Projectile : Actor
 {
 	//Thanks RicardoLuis0 for the seeker code
 
@@ -15,15 +15,15 @@ Class BrutalProjectile : Actor
 	Default
 	{
 		Projectile;
-		BrutalProjectile.rotspeed 15;
-		BrutalProjectile.MaxRotAngle 360;
-		BrutalProjectile.offset 0,0,0;
+		BDP_Projectile.rotspeed 15;
+		BDP_Projectile.MaxRotAngle 360;
+		BDP_Projectile.offset 0,0,0;
 		+forcexybillboard;
 	}
 	
 	Override int specialmissilehit(actor Victim)
 	{
-		If(target && victim is "BaseHeadShot" && victim.tracer && victim.tracer == target)
+		If(target && victim is "BDP_Headshot" && victim.tracer && victim.tracer == target)
 		{
 			Return 1;
 		
@@ -84,7 +84,7 @@ Class BrutalProjectile : Actor
 	
 	Action Void A_GuidedRocket()
 	{
-		let laun = BDPRocketLauncher(target.player.ReadyWeapon);
+		let laun = BDP_RocketLauncher(target.player.ReadyWeapon);
 			if(laun && laun.laser) {
 				invoker.tracer = laun.laser;
 			}
@@ -97,7 +97,7 @@ Class BrutalProjectile : Actor
 
 }
 
-Class FastBrutalProjectile : Actor
+Class BDP_FastProjectileBase : Actor
 {
 	Default
 	{
@@ -106,7 +106,7 @@ Class FastBrutalProjectile : Actor
 	
 	Override int specialmissilehit(actor Victim)
 	{
-		If(target && victim is "BaseHeadShot")
+		If(target && victim is "BDP_Headshot")
 		{
 			Return 1;
 		

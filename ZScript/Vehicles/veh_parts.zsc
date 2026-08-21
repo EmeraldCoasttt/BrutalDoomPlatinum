@@ -84,7 +84,7 @@ class VehPart : Actor
 	static VehPart Attach(class<VehPart> partname, VehBase to, vector3 offset = (0,0,0), vector2 angles = (0,0))
 	{
 		vector3 finalpos;
-		finalpos = BDPMath.V3Offset(to.angle+angles.x, to.pitch+angles.y, to.roll, offset.x, offset.y, offset.z, 1.);
+		finalpos = BDP_Math.V3Offset(to.angle+angles.x, to.pitch+angles.y, to.roll, offset.x, offset.y, offset.z, 1.);
 		finalpos = level.vec3offset(to.pos, finalpos);
 		let vpt = VehPart(Spawn(partname, finalpos));
 		
@@ -104,7 +104,7 @@ class VehPart : Actor
 		vector3 finalpos;
 		vector3 animpos = level.vec3Offset(posoffs, anim_posoffs);
 		vector3 finaloffs = level.vec3Offset(animpos, posdiff);
-		finalpos = BDPMath.V3Offset(from.angle+angoffs.x+anim_angoffs.x, from.pitch+angoffs.y+anim_angoffs.y, from.roll, finaloffs.x, finaloffs.y, finaloffs.z, 1.);
+		finalpos = BDP_Math.V3Offset(from.angle+angoffs.x+anim_angoffs.x, from.pitch+angoffs.y+anim_angoffs.y, from.roll, finaloffs.x, finaloffs.y, finaloffs.z, 1.);
 		
 		finalpos = level.vec3offset(from.pos, finalpos);
 		return finalpos;
@@ -116,11 +116,11 @@ class VehPart : Actor
 		{
 			 
 				if(base.onground || bfloat)
-				BDPMath.AlignToPlane(self,base);
+				BDP_Math.AlignToPlane(self,base);
 			else 
 			{
-				pitch = BDPMath.Lerp(pitch, 0, 0.15);
-				roll = BDPMath.Lerp(roll, 0, 0.15);
+				pitch = BDP_Math.Lerp(pitch, 0, 0.15);
+				roll = BDP_Math.Lerp(roll, 0, 0.15);
 			}
 		}
 		If(partflags & bALIGNTOBASE)
@@ -132,7 +132,7 @@ class VehPart : Actor
 		
 		if( !base.onground && (base.vehflags & base.bFALLINGPITCH) && base.vel.z <= -3.0 && pitch < 35)
 		{
-			double fallrate = BDPMath.fmap(abs(base.vel.z), 0, 10, 0.1, 2.0);
+			double fallrate = BDP_Math.fmap(abs(base.vel.z), 0, 10, 0.1, 2.0);
 			A_SetPitch(pitch + fallrate, SPF_INTERPOLATE); 
 		}
 	}
@@ -305,7 +305,7 @@ class VehBase : Actor
 	virtual bool RemoveDriver(PlayerPawn user, vector3 exitpos)
 	{	
 		// Eject
-		vector3 outpos = BDPMath.V3Offset(angle, pitch, roll, exitpos.x, exitpos.y, exitpos.z, 1.);
+		vector3 outpos = BDP_Math.V3Offset(angle, pitch, roll, exitpos.x, exitpos.y, exitpos.z, 1.);
 		outpos = level.vec3offset(pos, outpos);
 		bool canexit = user.CheckMove(outpos.xy);
 		if(!canexit) 
@@ -392,7 +392,7 @@ class VehBase : Actor
 	// Update stuff
 	void UpdateActorPos(Actor act, vector3 posoffs)
 	{
-		vector3 finalpos = BDPMath.V3Offset(angle, pitch, roll, posoffs.x, posoffs.y, posoffs.z, 1.);
+		vector3 finalpos = BDP_Math.V3Offset(angle, pitch, roll, posoffs.x, posoffs.y, posoffs.z, 1.);
 		finalpos = level.vec3offset(pos, finalpos);
 		finalpos = level.vec3offset(finalpos, vel);
 		act.SetOrigin(finalpos, true);
@@ -424,7 +424,7 @@ class VehBase : Actor
 	virtual bool OnDriveAttempt(PlayerPawn user)
 	{
 		// Used primarily for setting up passengers.
-		If(user is "BDPPlayer")
+		If(user is "BDP_Player")
 		{
 		return true;
 		}
@@ -491,11 +491,11 @@ class VehBase : Actor
 		if( (vehflags & bALIGNTOPLANE) )
 		{
 				if(onground || bfloat)
-				BDPMath.AlignToPlane(self,self);
+				BDP_Math.AlignToPlane(self,self);
 			else 
 			{
-				pitch = BDPMath.Lerp(pitch, 0, 0.15);
-				roll = BDPMath.Lerp(roll, 0, 0.15);
+				pitch = BDP_Math.Lerp(pitch, 0, 0.15);
+				roll = BDP_Math.Lerp(roll, 0, 0.15);
 			}
 		
 		}
@@ -505,7 +505,7 @@ class VehBase : Actor
 		
 		if( !onground && (vehflags & bFALLINGPITCH) && vel.z <= -3.0 && pitch < 35)
 		{
-			double fallrate = BDPMath.fmap(abs(vel.z), 0, 10, 0.1, 2.0);
+			double fallrate = BDP_Math.fmap(abs(vel.z), 0, 10, 0.1, 2.0);
 			A_SetPitch(pitch + fallrate, SPF_INTERPOLATE); 
 		}
 		
@@ -513,7 +513,7 @@ class VehBase : Actor
 		
 		if( !onground && (vehflags & bMOVEMENTPITCH) && pitch < 35 && pitch > -35)
 		{
-			double fallrate = BDPMath.fmap(abs(truevel.x), 0, 10, 0.1, 2.0);
+			double fallrate = BDP_Math.fmap(abs(truevel.x), 0, 10, 0.1, 2.0);
 			If(truevel.x > 0)
 			{
 				A_SetPitch(pitch + fallrate, SPF_INTERPOLATE); 
@@ -526,7 +526,7 @@ class VehBase : Actor
 		}
 		if( !onground && (vehflags & bMOVEMENTPITCH) && roll < 35 && roll > -35)
 		{
-			double fallrate = BDPMath.fmap(abs(truevel.y), 0, 10, 0.1, 2.0);
+			double fallrate = BDP_Math.fmap(abs(truevel.y), 0, 10, 0.1, 2.0);
 			If(truevel.y > 0)
 			{
 				A_SetRoll(roll - fallrate, SPF_INTERPOLATE); 
@@ -589,7 +589,7 @@ class VehCamera : VehPart
 		// Do zoom effects.
 		if(abs(CameraFOV-desired_zoom) >= 0.001)
 		{
-			CameraFOV = BDPMath.Lerp(CameraFOV, default_fov / desired_zoom, zoom_interp);
+			CameraFOV = BDP_Math.Lerp(CameraFOV, default_fov / desired_zoom, zoom_interp);
 		}
 		
 		// Do quake effects
@@ -656,7 +656,7 @@ class VehLight : Spotlight
 		SpotOuterAngle = aperture.z;
 		
 		// Update position
-		vector3 followpos = BDPMath.RelativeV3Offset(emitter, viewoffs.x, viewoffs.y, viewoffs.z, posoffs.x, posoffs.y, posoffs.z, distoffs);
+		vector3 followpos = BDP_Math.RelativeV3Offset(emitter, viewoffs.x, viewoffs.y, viewoffs.z, posoffs.x, posoffs.y, posoffs.z, distoffs);
 		SetOrigin(followpos, true);
 		
 		// Update angles
