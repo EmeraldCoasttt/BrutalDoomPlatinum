@@ -79,11 +79,7 @@ CLASS BDPBFG9000 : BDPWeaponBase
 			A_FlashOverlay(state:"ChargeFlash");
 		}
 		BFGN AFAF 1 A_GunLight(250,2,0,255,0);
-		BFGN GHIJGHIJKLMNKLMNOPQR 1 
-		{
-			A_GunLight(250,2,0,255,0);
-			A_TakeAmmo("BDPCell",3);
-		}
+		BFGN GHIJGHIJKLMNKLMNOPQR 1 A_GunLight(250,2,0,255,0);
 		TNT1 AAAAAAAAA 0 BRIGHT A_FireProjectile("BFGFireParticle", random(-12,12), 0, -1, 0, 0, random(-9,9));
 		TNT1 AAAA 0 A_FireProjectile("GreenFlareSpawn",0,0,0,0);
 		BFGA A 2 BRIGHT 
@@ -91,6 +87,7 @@ CLASS BDPBFG9000 : BDPWeaponBase
 			A_FlashOverlay();
 			A_GunLight(500,2,0,255,0);
 			A_FireProjectile("BFGBallWithTracers");
+			A_TakeAmmo("BDPCell", 60);
 			A_WeaponRecoil(8,0,4,0.50);
 			A_Recoil(8*cos(pitch));
 			if(vel.Z != 0)

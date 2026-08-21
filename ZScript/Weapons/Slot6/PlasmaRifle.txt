@@ -168,7 +168,6 @@ class BDPPlasmaRifle : BDPWeaponBase
 		PLSN A 0 A_StartSound("PLSCHARG",1);
 		PRSG HH 4
 		{
-			A_TakeMag();
 			invoker.heat++;
 		}
 	AltFireLoop:
@@ -179,7 +178,6 @@ class BDPPlasmaRifle : BDPWeaponBase
 				A_FlashOverlay(state:"ChargeFlash2");
 			else
 				A_FlashOverlay(state:"ChargeFlash");
-			A_TakeMag();
 			invoker.heat++;
 		}
 		PRSG IIII 1 Bright
@@ -208,7 +206,6 @@ class BDPPlasmaRifle : BDPWeaponBase
 		TNT1 A 0 A_JumpIf(invoker.heat == 0,"EndAlt");
 		PRSG H 2
 		{
-			A_TakeMag(-1);
 			invoker.heat--;
 		}
 		loop;
@@ -242,6 +239,7 @@ class BDPPlasmaRifle : BDPWeaponBase
 			for(int i = 0; i < 9; i++)
 				A_FireProjectile ("BluePlasmaParticleWeapon", random(-19,19), 0, -1, 0, 0, random(-9,9));
 			A_FlashOverlay();
+			A_TakeMag(10);
 			A_StopSound(6);
 			A_ZoomFactor(0.9);
 			A_ClearOverlays(6,6);
