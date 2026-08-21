@@ -174,7 +174,7 @@ CLASS BDP_BattleRifle : BDP_Weapon
 				A_GunLight();
 				invoker.burstcount++;
 				
-				A_WeaponRecoil(3);
+				A_WeaponRecoil(1.5);
 				
 			}
 			BR45 D 1
@@ -258,7 +258,7 @@ CLASS BDP_BattleRifle : BDP_Weapon
 				A_TakeMag();
 				invoker.burstcount++;
 				
-				A_WeaponRecoil(1.5);
+				A_WeaponRecoil(0.5);
 				
 			}
 			BR4Z D 1 Bright
