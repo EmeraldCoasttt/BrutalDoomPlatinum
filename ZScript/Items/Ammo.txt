@@ -127,8 +127,8 @@ class BDP_SmallBulletBox : BDP_MultiAmmo replaces Clip
 {
 	Default
 	{
-		BDP_MultiAmmo.ammotype1 "BDPClip1";
-		BDP_MultiAmmo.ammotype2 "BDPClip2";
+		BDP_MultiAmmo.ammotype1 "BDP_Clip1";
+		BDP_MultiAmmo.ammotype2 "BDP_Clip2";
 		BDP_MultiAmmo.ammoamount1 10;
 		BDP_MultiAmmo.ammoamount2 30;
 		Inventory.PickupMessage "Picked up a small box of bullets.";
