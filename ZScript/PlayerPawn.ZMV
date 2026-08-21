@@ -1861,6 +1861,8 @@ class BDPPlayerPawn : PlayerPawn
 				bobfactor *= player.crouchfactor;
 				//Can't sprint while crouching
 				Bsprinting = false;
+				//Crouching disables sprint lockout; you can't sprint while you're crouching anyways
+				if(!(cmd.buttons & BT_ATTACK)) blockSprint = false;
 			}
 			//Check sprint
 			else If((cmd.forwardmove || cmd.sidemove) && cmd.buttons & BT_SPEED)
