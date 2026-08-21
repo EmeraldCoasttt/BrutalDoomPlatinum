@@ -143,7 +143,6 @@ class BDPChainsaw : BDPWeaponBase
 		SAWG HIJ 1;
 		TNT1 A 2;
 	FireNoStartup:
-		TNT1 A 0 A_BDPMeleeStart(300);
 		TNT1 A 0 A_StartSound("weapons/chainsaw/loop",1);
 		SAWF AB 1 A_BDPMeleeStart(300);
 		TNT1 A 0
@@ -168,7 +167,6 @@ class BDPChainsaw : BDPWeaponBase
 		SAWG KLM 1;
 		TNT1 A 2;
 	Fire2NoStartup:
-		TNT1 A 0 A_BDPMeleeStart(300);
 		TNT1 A 0 A_StartSound("weapons/chainsaw/loop",1);
 		SAWF JK 1 A_BDPMeleeStart(300);
 		TNT1 A 0
