@@ -248,6 +248,7 @@ class BDPPlayerPawn : PlayerPawn
 	bool blockSlide;
 	bool slidefriction;
 	bool blockTaunt;
+	bool blockSprint;
 	int oldInputs[35];
 	
 	double slideSpeed;
@@ -1864,18 +1865,19 @@ class BDPPlayerPawn : PlayerPawn
 			//Check sprint
 			else If((cmd.forwardmove || cmd.sidemove) && cmd.buttons & BT_SPEED)
 			{
-				If(!exhausted)
-				{
-					Bsprinting = true;
-				}
-				else
+				if(exhausted)
 				{
 					A_startSound("Tired", 21,CHANF_NOSTOP);
 					bsprinting = false;
 				}
+				else if(!blockSprint)
+				{
+					Bsprinting = true;
+				}
 			}
 			Else
 			{
+				if(!(cmd.buttons & BT_ATTACK)) blockSprint = false;
 				Bsprinting = false;
 			}
 		

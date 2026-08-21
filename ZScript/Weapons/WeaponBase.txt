@@ -224,6 +224,9 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 	action void A_KeepSprinting(int flags = 0) {}
 	override state GetAtkState(bool hold)
 	{
+		let dplr = BDPPlayerPawn(owner);
+		dplr.blockSprint = true;
+		dplr.bSPRINTING = false;
 		owner.player.SetPSprite(49,null);
 		owner.player.SetPSprite(50,null);
 		firing = true;
@@ -1078,7 +1081,7 @@ Class BDPWeaponBase : DoomWeapon abstract//Weapon
 			}
 			if(!dplr.blockSpecial)
 				player.WeaponState |= WF_USER3OK;
-			if(kicksprint && invoker.aimMode == 0 && player.cmd.buttons & BT_SPEED && player.crouchdir != -1 && (player.cmd.forwardmove != 0 || player.cmd.sidemove != 0))
+			if(kicksprint && invoker.aimMode == 0 && !dplr.blockSprint && player.cmd.buttons & BT_SPEED && player.crouchdir != -1 && (player.cmd.forwardmove != 0 || player.cmd.sidemove != 0))
 				A_Overlay(50,"Sprint",true);
 			else if(player.FindPSprite(50))
 			{
