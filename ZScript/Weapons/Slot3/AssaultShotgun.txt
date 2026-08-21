@@ -437,6 +437,10 @@ class BDP_AssaultShotgun : BDP_Weapon
 		"####" NOOPRT 1;
 		TNT1 A 0
 		{
+			if(invoker.mag < 16)
+			{
+				A_ReloadMag(0, true);
+			}
 			A_StartSound("ASGREL2", 1);
 			if(invoker.dragonsbreath)
 			{

@@ -255,14 +255,14 @@ CLASS BDP_SuperShotgun : BDP_Weapon
 		SHTZ A 0
 		{
 			A_StartSound("weapons/sshotl");
-			if(invoker.mag < 1)
-				A_ReloadMag(additive:true);
 			if(!invoker.uraniumShells)
 			{
 				invoker.uraniumShells = true;
 				ChangeAmmoIcon1("SHEL]0");
 				invoker.magConversion = (1, 1);
 			}
+			if(invoker.mag < 1)
+				A_ReloadMag(additive:true);
 		}
 		SSGD IJKLMNOOPQRS 1;
 		SHTZ A 0

@@ -434,9 +434,9 @@ class BDP_Shotgun : BDP_Weapon
 				invoker.glassSlugs = true;
 				A_SetCrosshairDX("SLUGRet",2000);
 			}
-			if(invoker.mag < 6)
+			if(invoker.mag < 7)
 			{
-				A_ReloadMag(0,true);
+				A_ReloadMag(0, true);
 			}
 		}
 		SHTN YZ 1;

@@ -180,6 +180,7 @@ class BDP_UnspentShell : BDP_SpentCasing
 	{
 		Scale 0.25;
 		BounceSound "weapons/shell";
+		+CANBOUNCEWATER
 	}
 	States
 	{
@@ -277,6 +278,10 @@ class BDP_SpentChaosGrenade : BDP_SpentGrenade
 
 class BDP_UnspentGrenade : BDP_SpentGrenade
 {
+	Default
+	{
+		+CANBOUNCEWATER
+	}
 	States
 	{
 	Spawn:
@@ -288,7 +293,7 @@ class BDP_UnspentGrenade : BDP_SpentGrenade
 	}
 }
 
-class BDP_UnspentChaosGrenade : BDP_SpentGrenade
+class BDP_UnspentChaosGrenade : BDP_UnspentGrenade
 {
 	States
 	{
