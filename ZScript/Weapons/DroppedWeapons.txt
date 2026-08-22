@@ -1,6 +1,6 @@
 class BDP_WeaponDropper : Actor
 {
-	name weaponToDrop;
+	class<BDP_DroppedWeapon> weaponToDrop;
 	property WeaponToDrop : weaponToDrop;
 	
 	Default
@@ -67,11 +67,11 @@ class BDP_DroppedWeapon : Actor
 		}
 	}
 }
-class BDP_PistolDrop : BDP_WeaponDropper {Default {BDP_WeaponDropper.WeaponToDrop "DroppedPistol";}}
-class BDP_RifleDrop : BDP_WeaponDropper {Default {BDP_WeaponDropper.WeaponToDrop "DroppedRifle";}}
-class BDP_ShotgunDrop : BDP_WeaponDropper { Default {BDP_WeaponDropper.WeaponToDrop "DroppedShotgun";}}
-class BDP_SMGDrop : BDP_WeaponDropper {Default {BDP_WeaponDropper.WeaponToDrop "DroppedSMG";}}
-class BDP_MinigunDrop : BDP_WeaponDropper {Default {BDP_WeaponDropper.WeaponToDrop "DroppedMinigun";}}
+class BDP_PistolDrop : BDP_WeaponDropper {Default {BDP_WeaponDropper.WeaponToDrop "BDP_DroppedPistol";}}
+class BDP_RifleDrop : BDP_WeaponDropper {Default {BDP_WeaponDropper.WeaponToDrop "BDP_DroppedRifle";}}
+class BDP_ShotgunDrop : BDP_WeaponDropper { Default {BDP_WeaponDropper.WeaponToDrop "BDP_DroppedShotgun";}}
+class BDP_SMGDrop : BDP_WeaponDropper {Default {BDP_WeaponDropper.WeaponToDrop "BDP_DroppedSubmachineGun";}}
+class BDP_MinigunDrop : BDP_WeaponDropper {Default {BDP_WeaponDropper.WeaponToDrop "BDP_DroppedMinigun";}}
 
 class BDP_DroppedRifle : BDP_DroppedWeapon
 {
