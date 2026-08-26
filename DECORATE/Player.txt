@@ -46,7 +46,8 @@ ACTOR BDP_Player : BDP_PlayerPawn Replaces DoomPlayer //PlayerPawn Replaces Doom
 	
 	Player.ColorRange 112, 127
 	//Speed 1.0
-	Player.RunHealth 999
+	Player.ForwardMove 1.0, 0.5
+	Player.SideMove 1.0, 0.5
 	Player.DisplayName "DOOM Marine"
 	Player.StartItem "BDP_Pistol"
 	Player.StartItem "BDP_Fist"
