@@ -350,7 +350,7 @@ class HeatWaveRipper : Actor
 		stop;
 	}
 }
-
+/*
 Class Placednuke : actor
 {
 	Default
@@ -463,4 +463,4 @@ Class Nuke : Ammo
 		sTOP;
 
 	}
-}
+}*/
