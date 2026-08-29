@@ -503,29 +503,13 @@ Actor CandlestickForEye //: Candlestick1
 {	
 Radius 20
 Height 14
-+RANDOMIZE
-scale .7
 -SOLID
-Translation "58:63=96:101", "64:79=102:111", "144:151=102:111", "236:239=110:111", "120:120=51:51"
 States
    {
     Spawn:
-		CAND C 1
-		TNT1 A 0 A_SpawnItemEx("CandleStick1Flare", 0, 0, 20)
+		CAND A 0 NoDelay A_SpawnItemEx("CandleStick1Flare", 0, 0, 20)
 	Stay:
-		CAND C 25 bright
-		TNT1 A 0 A_Jump(128, "Stay2")
-		
-	Stay1:
-		CAND CBCBCB 2 BRIGHT
-		CAND C 12 BRIGHT
-		CAND CBCB 2 BRIGHT
-		Loop
-		
-	Stay2:
-		CAND CBCBCB 2 BRIGHT
-		CAND C 25 BRIGHT
-		CAND CBCB 2 BRIGHT
-		Loop
+		CAND A -1 Bright
+		Stop
 	}
 }
