@@ -130,7 +130,7 @@ class BDP_HUD : DoomStatusBar
 			DrawImage(pwr, (143, 169), DI_ITEM_LEFT_TOP);
 		}
 		
-		if (CPlayer.mo.FindInventory("PowerShield", true) || CPlayer.mo.FindInventory("PowerShield2", true))
+		if (CPlayer.mo.FindInventory("BDP_PowerShield"))
 		{
 			DrawImage("HASARMR", (179, 169), DI_ITEM_LEFT_TOP);
 		}
@@ -342,9 +342,9 @@ class BDP_HUD : DoomStatusBar
 		if (!armor)
 			return Font.CR_UNTRANSLATED;
 		
-		// PowerShield forces 100% absorption for the current armor
+		// BDP_PowerShield forces 100% absorption for the current armor
 		// and gets its own color:
-		if (CPlayer.mo.CountInv("PowerShield") || CPlayer.mo.CountInv("PowerShield2"))
+		if (CPlayer.mo.FindInventory("BDP_PowerShield"))
 			return Font.CR_Cyan;
 		
 		double sp = armor.savepercent;
@@ -479,19 +479,20 @@ class BDP_HUD : DoomStatusBar
 			DrawImage('HASBERK', iconPos + smallIconOfs, DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
 			smallIconOfs.y = (smallIconOfs.y + 5);
 		}
-		if (CPlayer.mo.FindInventory("PowerBoost", true))
+		if (CPlayer.mo.FindInventory("BDP_PowerBoost", true))
 		{
 			//name pwr = CPlayer.mo.FindInventory("NoFatality") ? 'HASBERK2' : 'HASBERK';
 			DrawImage('HASBSTR', iconPos + smallIconOfs, DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
 			smallIconOfs.y = (smallIconOfs.y + 5);
 		}
-		if (CPlayer.mo.CountInv("PowerShield") || CPlayer.mo.CountInv("PowerShield2"))
-			{
-				DrawImage("HASARMR", iconPos + smallIconOfs,DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
-				DrawImage(CPlayer.mo.CountInv("PowerShieldCharge") < 3 ? "ARMRCHR2" : "ARMRCHRG", iconPos + smallIconOfs + (6, 0), DI_ITEM_LEFT_TOP);
-				DrawImage(CPlayer.mo.CountInv("PowerShieldCharge") < 2 ? "ARMRCHR2" : "ARMRCHRG", iconPos + smallIconOfs + (6, 2), DI_ITEM_LEFT_TOP);
-				DrawImage(CPlayer.mo.CountInv("PowerShieldCharge") < 1 ? "ARMRCHR2" : "ARMRCHRG", iconPos + smallIconOfs + (6, 4), DI_ITEM_LEFT_TOP);
-			}
+		let shield = BDP_PowerShield(cplayer.mo.FindInventory("BDP_PowerShield"));
+		if(shield)
+		{
+			DrawImage("HASARMR", iconPos + smallIconOfs, DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
+			DrawImage(shield.charges < 3 ? "ARMRCHR2" : "ARMRCHRG", iconPos + smallIconOfs + (6, 0), DI_ITEM_LEFT_TOP);
+			DrawImage(shield.charges < 2 ? "ARMRCHR2" : "ARMRCHRG", iconPos + smallIconOfs + (6, 2), DI_ITEM_LEFT_TOP);
+			DrawImage(shield.charges < 1 ? "ARMRCHR2" : "ARMRCHRG", iconPos + smallIconOfs + (6, 4), DI_ITEM_LEFT_TOP);
+		}
 		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(Cplayer.mo);
 		If(BDPplr && BDPplr.extralives > 0)
 		{
@@ -506,10 +507,10 @@ class BDP_HUD : DoomStatusBar
 		}
 		
 		// Armor:
-		if (CPlayer.mo.CountInv("PowerShield") || CPlayer.mo.CountInv("PowerShield2"))
+		if (CPlayer.mo.FindInventory("BDP_PowerShield"))
 		{
 			iconPos.x += iconSpacing;
-			DrawImage("ARM2G0",iconpos,iconflags);
+			DrawImage("ARM3C0",iconpos,iconflags);
 			let armor = BasicArmor(CPlayer.mo.FindInventory("BasicArmor"));
 			
 				// armor amount
@@ -539,9 +540,9 @@ class BDP_HUD : DoomStatusBar
 			{
 				// armor icon
 				//Should always show as energy armor if equipped
-				If(CPlayer.mo.FindInventory("PowerShield"))
+				If(CPlayer.mo.FindInventory("BDP_PowerShield"))
 				{
-					DrawImage("ARM2G0",iconpos,iconflags);
+					DrawImage("ARM3C0",iconpos,iconflags);
 				}
 				else
 				{
@@ -792,7 +793,7 @@ class BDP_HUD : DoomStatusBar
 		int minutes = (totalSeconds / 60) % 60;
 		int seconds = totalSeconds % 60;
 
-		return String.Format("%d:%d", minutes, seconds);
+		return String.Format("%d:%02d", minutes, seconds);
 	}
 	
 	// Draw powerups in rows, powerup icon to the left, powerup time to the right.
@@ -826,7 +827,7 @@ class BDP_HUD : DoomStatusBar
 				}
 				else if (item is "BDP_PowerInvulnerable")
 				{
-					iconName = "PINVB0";
+					iconName = "PINVA0";
 					col = Font.CR_Black;
 				}
 				else if (item is "BDP_PowerInvisibility")
@@ -834,19 +835,19 @@ class BDP_HUD : DoomStatusBar
 					iconName = "PINSA0";
 					col = Font.CR_Blue;
 				}
-				else if (item is "BDP_PowerNightVision")
+				/*else if (item is "BDP_NightVision")
 				{
 					iconName = "SVISE0";
 					col = Font.CR_Cyan;
-				}
+				}*/
 				else if (item is "BDP_PowerQuadDamage")
 				{
-					iconName = "SIG2A0";
+					iconName = "QUAKA0";
 					col = Font.CR_Purple;
 				}
 				else if (item is "BDP_PowerSpeed")
 				{
-					iconName = "SIG4A0";
+					iconName = "TURBA0";
 					col = Font.CR_Yellow;
 				}
 				else if (item is "BDP_PowerRage")

@@ -1,133 +1,98 @@
-Class BDP_HealthBonus : Health Replaces HealthBonus
+class BDP_HealthBonus : Health Replaces HealthBonus
 {
 	Default
 	{
-		+COUNTITEM;
-		+INVENTORY.ALWAYSPICKUP;
-		+INVENTORY.NEVERRESPAWN;
+		+COUNTITEM
+		+INVENTORY.ALWAYSPICKUP
+		+INVENTORY.NEVERRESPAWN
 		Inventory.Amount 2;
 		Inventory.MaxAmount 300;
 		Tag "Health Bonus";
 		Inventory.PickupMessage "$GOTHTHBONUS";
 		Health.LowMessage 10, "Picked up a health bonus. It's better than nothing...";
 		Inventory.PickupSound "items/healthbonus";
+		BDP_HealthBonus.ScoreAmount 10;
 	}
+	
+	mixin BDP_ScoreMixin;
+	
 	States
 	{
 	Spawn:
-		BON1 A 0;
-		BON1 A 0 ACS_NamedExecuteAlways("BDCheckDecorations", 0, 0, 0, 0);//Check if advanced decorations are disabled.
-		TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn2");
-	NULL A 0 A_jump(128,2);
-	NULL A 0 A_ChangeFlag("XFLIP",1);
-	TNT1 A 0;
-		TNT1 A 0 A_Jump(128,"Spawn4"); //Variation
-	Spawn2:	
-        TNT1 A 0 A_CheckSight ("Spawn3");
-		BON1 ABCDCB 2 A_SpawnItem("BlueFlareSmallItem",0,7);
-		Loop;
-	Spawn3:
-		BON1 A 9;
-		Goto Spawn2;
-		
-	Spawn4:	
-        TNT1 A 0 A_CheckSight ("Spawn5");
-		BON1 IJKLKJ 2 A_SpawnItem("BlueFlareSmallItem",0,7);
-		Loop;
-	Spawn5:
-		BON1 I 9;
-		Goto Spawn4;
-		
-	Vanilla:
-		BON1 ABCDCB 2;
-		Loop;
-	}
-	 override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
+		BON1 A 0 NoDelay
 		{
-			toucher.Score += 10;
-			return true;
+			bXFLIP = random(0, 1);
+			return A_Jump(256, "Spawn1", "Spawn2");
 		}
-		Else
-		{
-		return false;
-		}
+	Spawn1:
+		BON1 AABBCCDDCCBB 2 A_SpawnItemEx("BlueFlareSmallItem", zofs:7);
+		Loop;
+	Spawn2:
+		BON1 EEFFGGHHGGFF 2 A_SpawnItemEx("BlueFlareSmallItem", zofs:7);
+		Loop;
 	}
 }
 
-Class BDP_LightArmor : BasicArmorPickup Replaces GreenArmor
+class HealthPlusNoCount : BDP_HealthBonus
 {
 	Default
 	{
-		//Scale 0.8
-		Scale 1.3;
-		Radius 20;
-		Height 16;
-		Inventory.Pickupmessage "Picked up the Light armor.";
-		Inventory.Icon "ARM1A0";
-		Armor.SavePercent 33.3;
-		Armor.SaveAmount 100;
-		Inventory.PickupSound "ARMOR";
+		-COUNTITEM
+	}
+}
+
+class HealthPlusFatalityBonus : HealthPlusNoCount
+{
+	Default
+	{
+		Inventory.Amount 5;
+		Inventory.PickupSound "items/hellishhealthbonus";
 	}
 	States
 	{
 	Spawn:
-	TNT1 A 1;
-	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn3");
-	NULL A 0 A_jump(128,2);
-	NULL A 0 A_ChangeFlag("XFLIP",1);
-	TNT1 A 0;
-	TNT1 A 0 A_Jump(256,"Spawn1","spawn2","spawn3","spawn4");
-	
-	Spawn1:
-	    TNT1 A 0 A_CheckSight("Spawn1Alt");
-		ARM1 A 10;
-		ARM1 AAAAAA 2 bright A_SpawnItem("GreenFlareMedium",0,10);
-		loop;
-	Spawn1Alt:
-		ARM1 A 19;
-		Goto Spawn1;
-		
-		Spawn2:
-	    TNT1 A 0 A_CheckSight("Spawn2Alt");
-		ARM1 B 10;
-		ARM1 BBBBBB 2 bright A_SpawnItem("GreenFlareMedium",0,10);
-		loop;
-	Spawn2Alt:
-		ARM1 B 19;
-		Goto Spawn2;
-		
-		Spawn3:
-	    TNT1 A 0 A_CheckSight("Spawn3Alt");
-		ARM1 C 10;
-		ARM1 CCCCCC 2 bright A_SpawnItem("GreenFlareMedium",0,10);
-		loop;
-	Spawn3Alt:
-		ARM1 C 19;
-		Goto Spawn3;
-		
-		Spawn4:
-	    TNT1 A 0 A_CheckSight("Spawn4Alt");
-		ARM1 D 10;
-		ARM1 DDDDDD 2 bright A_SpawnItem("GreenFlareMedium",0,10);
-		loop;
-	Spawn4Alt:
-		ARM1 D 19;
-		Goto Spawn4;
-		
+		CBO1 AABBCCDDCCBB 2 A_SpawnItemEx("RedFlareSmall", zofs:7);
+		Loop;
 	}
-	override bool TryPickup (in out Actor toucher)
+}
+
+class HealthPlusFatalityBonus2 : HealthPlusFatalityBonus
+{
+	Default
 	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 100;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
+		Inventory.Amount 2;
+	}
+}
+
+class BDP_LightArmor : BasicArmorPickup Replaces GreenArmor
+{
+	Default
+	{
+		Radius 20;
+		Height 16;
+		Inventory.Pickupmessage "Picked up the security armor.";
+		Inventory.Icon "ARM1A0";
+		Armor.SavePercent 33.33;
+		Armor.SaveAmount 100;
+		Inventory.PickupSound "ARMOR";
+		BDP_LightArmor.ScoreAmount 100;
+	}
+	
+	mixin BDP_ScoreMixin;
+	
+	override void BeginPlay()
+	{
+		bXFLIP = random(0, 1);
+		frame = random(0, 3);
+		super.BeginPlay();
+	}
+	
+	States
+	{
+	Spawn:
+		ARM1 # 10;
+		ARM1 ##### 2 BRIGHT A_SpawnItemEx("GreenFlareMedium", zofs:10);
+		Loop;
 	}
 }
 
@@ -143,397 +108,256 @@ Class BDP_HeavyArmorSpawner: RandomSpawner Replaces BlueArmor
 	}
 }
 
-
-
-Class BDP_EnergyArmor : CustomInventory 
+Class BDP_EnergyArmor : Inventory 
 {
 	Default
 	{
-	+COUNTITEM;
-		+INVENTORY.ALWAYSPICKUP;
-		Inventory.PickupMessage "You got the Energy Shield!";
+		+COUNTITEM
+		+INVENTORY.ALWAYSPICKUP
+		+INVENTORY.AUTOACTIVATE
+		Inventory.PickupMessage "Picked up the energy armor!";
 		Inventory.PickupSound "misc/p_pkup";
 		Inventory.PickupSound "items/energyshield";
-		Scale 1.3;
-		Tag "Regenerating Armor";
+		Tag "Energy Armor";
+		BDP_EnergyArmor.ScoreAmount 500;
 	}
+	
+	mixin BDP_ScoreMixin;
+	
+	override bool Use(bool pickup)
+	{
+		owner.GiveInventory("BDP_PowerShield", 1);
+		owner.GiveInventory("BDP_MjolnirArmor", 50);
+		let shield = BDP_PowerShield(owner.FindInventory("BDP_PowerShield"));
+		if(shield) shield.charges = 3;
+		return true;
+	}
+	
 	States
 	{
 	Spawn:
-		ARM2 EEEFFF 1 BRIGHT A_SpawnItem("BlueFlareSmall",0,10);
+		ARM3 AAABBB 1 BRIGHT A_SpawnItem("BlueFlareSmall",0,10);
 		Loop;
-
-	Pickup:
-		TNT1 A 0 A_GiveInventory("PowerShield");
-		//TNT1 A 20 ACS_NamedExecuteAlways("BerserkMessage")
-		Stop;
-		}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.giveinventory("PowerShieldCharge",3);
-			toucher.Score += 500;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
 	}
 }
 
-Class BDP_HeavyArmor : BasicArmorPickup //Replaces BlueArmor
+class BDP_HeavyArmor : BasicArmorPickup
 {
 	Default
 	{
-	Scale 1.3;
-	Radius 20;
-	Height 16;
-	Inventory.Pickupmessage "Picked up the Heavy Combat armor.";
-	Inventory.Icon "ARM2A0";
-	Armor.Savepercent 50.1;
-	Armor.Saveamount 200;
-    Inventory.PickupSound "ARMOR";
+		Radius 20;
+		Height 16;
+		Inventory.Pickupmessage "Picked up the combat armor!";
+		Inventory.Icon "ARM2A0";
+		Armor.SavePercent 50;
+		Armor.SaveAmount 200;
+		Inventory.PickupSound "ARMOR";
+		BDP_HeavyArmor.ScoreAmount 200;
 	}
-	States
-	{
-	Spawn:
-	TNT1 A 1;
-	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn3");
-	NULL A 0 A_jump(128,2);
-	NULL A 0 A_ChangeFlag("XFLIP",1);
-	TNT1 A 0;
-	TNT1 A 0 A_Jump(256,"Spawn1","Spawn2","Spawn3","spawn4");
 	
-	Spawn1:
-		TNT1 A 0 A_CheckSight("Spawn1Alt");
-		ARM2 A 10;
-		ARM2 AAAAA 2 bright A_SpawnItem("BlueFlareMedium3",0,10);
-		loop;
-	Spawn1Alt:
-		ARM2 A 19;
-		Goto Spawn1;
-		
-		Spawn2:
-		TNT1 A 0 A_CheckSight("Spawn2Alt");
-		ARM2 B 10;
-		ARM2 BBBBB 2 bright A_SpawnItem("BlueFlareMedium3",0,10);
-		loop;
-	Spawn2Alt:
-		ARM2 B 19;
-		Goto Spawn2;
-		
-		Spawn3:
-		TNT1 A 0 A_CheckSight("Spawn3Alt");
-		ARM2 C 10;
-		ARM2 CCCCC 2 bright A_SpawnItem("BlueFlareMedium3",0,10);
-		loop;
-	Spawn3Alt:
-		ARM2 C 19;
-		Goto Spawn2;
-		
-		Spawn4:
-		TNT1 A 0 A_CheckSight("Spawn4Alt");
-		ARM2 D 10;
-		ARM2 DDDDD 2 bright A_SpawnItem("BlueFlareMedium3",0,10);
-		loop;
-	Spawn4Alt:
-		ARM2 D 19;
-		Goto Spawn4;
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 200;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-	}
-}
-
-// Skulltag armor ---------------------------------------------------------------
-
-CLASS BDP_DemonicArmor : BasicArmorPickup
-{
-	Default
-	{
-	Scale 1.3;
-	Radius 20;
-	Height 16;
-	Inventory.Pickupmessage "Picked up Demonic armor.";
-	Inventory.Icon "ARM4A0";
-	Armor.Savepercent 66.6;
-	Armor.Saveamount 300;
-    Inventory.PickupSound "ARMOR";
-	}
-	States
-	{
-	Spawn:
-	TNT1 A 1;
-//	TNT1 A 0 A_Jump(256,"Spawn1","Spawn2","Spawn3","spawn4")
+	mixin BDP_ScoreMixin;
 	
-	Spawn1:
-		TNT1 A 0 A_CheckSight("Spawn1Alt");
-		ARM4 A 10;
-		ARM4 AAAAA 2 bright A_SpawnItem("RedFlareMedium",0,10);
-		loop;
-	Spawn1Alt:
-		ARM4 A 19;
-		Goto Spawn1;
-}
-override bool TryPickup (in out Actor toucher)
+	override void BeginPlay()
 	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 300;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
+		bXFLIP = random(0, 1);
+		frame = random(0, 3);
+		super.BeginPlay();
 	}
-}
-
-Class GiveArmor : BasicArmorBonus
-{
-	Default
-	{
-	Radius 20;
-	Height 16;
-	Inventory.Pickupmessage "$GOTARMBONUS";
-	Inventory.Icon "BON2I0";
-	Armor.Savepercent 33.1;
-	Armor.Saveamount 1;
-	Armor.Maxsaveamount 9999;
-	+COUNTITEM;
-	+INVENTORY.ALWAYSPICKUP;
-	}
-	States
-	{
-	Spawn:
-		BON2 AAABBBCCCDDDCCCBBB 2;
-		loop;
-	}
-	 override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 10;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-	}
-}
-
-
-Class CrueltyBonus5armor : BasicArmorBonus
-{
-	Default
-	{
-	-COUNTITEM;
-	Radius 220;
-	+INVENTORY.ALWAYSPICKUP;
 	
-	Inventory.Icon "BON2I0";
-	Armor.Savepercent 50.1;
-	Armor.Saveamount 5;
-	Armor.Maxsaveamount 300;
-	Inventory.PickupMessage "Cruelty Bonus awarded! +5 Armor";
-	}
 	States
 	{
 	Spawn:
-        TNT1 A 50;
-		Stop;
+		ARM2 # 10;
+		ARM2 ##### 2 bright A_SpawnItemEx("BlueFlareMedium3", zofs:10);
+		Loop;
 	}
 }
 
+class BDP_DemonicArmor : BasicArmorPickup
+{
+	Default
+	{
+		Radius 20;
+		Height 16;
+		Inventory.Pickupmessage "Picked up the hellforged armor!";
+		Inventory.Icon "ARM4A0";
+		Armor.SavePercent 66.67;
+		Armor.SaveAmount 300;
+		Inventory.PickupSound "ARMOR";
+		BDP_DemonicArmor.ScoreAmount 300;
+	}
+	
+	mixin BDP_ScoreMixin;
+	
+	override void BeginPlay()
+	{
+		bXFLIP = random(0, 1);
+		frame = random(0, 3);
+		super.BeginPlay();
+	}
+	
+	States
+	{
+	Spawn:
+		ARM4 # 10;
+		ARM4 ##### 2 bright A_SpawnItemEx("RedFlareMedium", zofs:10);
+		loop;
+	}
+}
 
 // Armor bonus --------------------------------------------------------------
 
-Class BDP_ArmorBonus : BasicArmorBonus Replaces ArmorBonus
+class BDP_ArmorBonus : BasicArmorBonus Replaces ArmorBonus
 {
 	Default
 	{
-	Radius 20;
-	Height 16;
-	Inventory.Pickupmessage "$GOTARMBONUS";
-	Inventory.Icon "BON2I0";
-	Armor.Savepercent 33.1;
-	Armor.Saveamount 2;
-	Armor.Maxsaveamount 300;
-	+COUNTITEM;
-	+INVENTORY.NEVERRESPAWN;
-	+INVENTORY.ALWAYSPICKUP;
-	Inventory.PickupSound "items/armorbonus";
+		Radius 20;
+		Height 16;
+		Inventory.Pickupmessage "$GOTARMBONUS";
+		Inventory.Icon "BON2I0";
+		Armor.SavePercent 33.33;
+		Armor.SaveAmount 2;
+		Armor.MaxSaveAmount 300;
+		+COUNTITEM
+		+INVENTORY.NEVERRESPAWN
+		+INVENTORY.ALWAYSPICKUP
+		Inventory.PickupSound "items/armorbonus";
+		BDP_ArmorBonus.ScoreAmount 10;
 	}
+	
+	mixin BDP_ScoreMixin;
+	
 	States
 	{
 	Spawn:
-	    TNT1 A 0;
-		TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn2");
-	NULL A 0 A_jump(128,2);
-	NULL A 0 A_ChangeFlag("XFLIP",1);
-	TNT1 A 0;
-	    TNT1 A 0 A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
-		Loop;
-		
+		BON2 A 0 NoDelay
+		{
+			bXFLIP = random(0, 1);
+			return A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
+		}
 	Spawn1:
 		BON2 AAABCDDDCB 2;
 		Loop;
 	Spawn2:
-		BON2 IIIJKLLLKJ 2;
+		BON2 EEEFGHHHGF 2;
 		Loop;
 	Spawn3:
-		BON2 MMMNOPPPON 2;
+		BON2 IIIJKLLLKJ 2;
 		Loop;
-	}
-	 override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 10;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
 	}
 }
 
-Class BDP_ArmorBonusDroped : BasicArmorBonus
+class ArmorShardNoCount : BDP_ArmorBonus
 {
 	Default
 	{
-	Radius 20;
-	Height 16;
-	Inventory.Pickupmessage "$GOTARMBONUS";
-	Inventory.Icon "BON2I0";
-	Armor.Savepercent 33.1;
-	Armor.Saveamount 5;
-	Armor.Maxsaveamount 300;
-	+COUNTITEM;
-	+INVENTORY.NEVERRESPAWN;
-	+INVENTORY.ALWAYSPICKUP;
-	Inventory.PickupSound "items/armorbonus";
+		-COUNTITEM
+	}
+}
+
+class ArmorShardFatalityBonus : ArmorShardNoCount
+{
+	Default
+	{
+		Armor.SaveAmount 5;
+		Inventory.Icon "BON2E0";
+		Inventory.PickupSound "items/hellisharmorbonus";
 	}
 	States
 	{
 	Spawn:
-        //TNT1 A 0 A_CheckSight ("Spawn2")
-		BON2 AAABCDB 2; //A_SpawnItem("GreenFlareSmall",0,7)
+		CBO2 AAABCDDDCB 2 A_SpawnItemEx("RedFlareSmall", zofs:7);
 		Loop;
-	Spawn2:
-		BON2 A 9;
-		Goto Spawn;
-	}
-	 override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 10;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
 	}
 }
 
-
-Class BDP_Stimpack : Health Replaces Stimpack
+class ArmorShardFatalityBonus2 : ArmorShardFatalityBonus
 {
 	Default
 	{
-	Inventory.Amount 10;
-	Inventory.PickupMessage "$GOTSTIM";
-	Health.LowMessage 10, "At least it'll help ease the pain...";
-	Inventory.PickupSound "GOTHPS";
+		Armor.SaveAmount 2;
 	}
+}
+
+class Helmet1Armor : ArmorShardNoCount
+{
 	States
 	{
 	Spawn:
-	    TNT1 A 0;
+		BON2 A 0 NoDelay
+		{
+			bXFLIP = random(0, 1);
+		}
+		Goto Spawn2;
+	}
+}
 
-	TNT1 A 0;
-		TNT1 A 0 A_Jump(100,"Spawn1","spawn2");
-		MEDK F -1;
-		Stop;
-		
-		
-	Spawn1:
-	MEDK H -1;
-	Stop;
-	Spawn2:
-	MEDK B -1;
-	Stop;
+class Helmet1ArmorB : ArmorShardNoCount
+{
+	States
+	{
+	Spawn:
+		BON2 A 0 NoDelay
+		{
+			bXFLIP = random(0, 1);
+		}
+		Goto Spawn3;
+	}
+}
+
+class BDP_Stimpack : Health replaces Stimpack
+{
+	Default
+	{
+		Inventory.Amount 10;
+		Inventory.PickupMessage "$GOTSTIM";
+		Health.LowMessage 10, "At least it'll help ease the pain...";
+		Inventory.PickupSound "GOTHPS";
+		BDP_Stimpack.ScoreAmount 50;
+	}
 	
-	}
-	 override bool TryPickup (in out Actor toucher)
+	mixin BDP_ScoreMixin;
+	
+	override void BeginPlay()
 	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 50;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
+		frame = random(0, 2);
+		if(BDP_Handler.getMedikitColor()) frame += 3;
+		super.BeginPlay();
 	}
-}
-
-// Medikit -----------------------------------------------------------------
-
-Class BDP_Medikit : Health Replaces Medikit
-{
-	Default
-	{
-	Inventory.Amount 25;
-	Inventory.PickupMessage "$GOTMEDIKIT";
-	Health.LowMessage 25, "$GOTMEDINEED";
-	Health.LowMessage 10, "Picked up a medikit. That was close...";
-	Inventory.PickupSound "GOTHPB";
-	}
+	
 	States
 	{
 	Spawn:
-	    TNT1 A 0;
-
-	TNT1 A 0;
-		TNT1 A 0 A_Jump(100,"Spawn1","spawn2");
-		MEDK E -1;
+		STIM # -1;
 		Stop;
-		
-		
-	Spawn1:
-	MEDK G -1;
-	Stop;
-	Spawn2:
-	MEDK A -1;
-	Stop;
 	}
- override bool TryPickup (in out Actor toucher)
+}
+
+class BDP_Medikit : Health replaces Medikit
+{
+	Default
 	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 100;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
+		Inventory.Amount 25;
+		Inventory.PickupMessage "$GOTMEDIKIT";
+		Health.LowMessage 25, "$GOTMEDINEED";
+		Health.LowMessage 10, "Picked up a medikit. That was close...";
+		Inventory.PickupSound "GOTHPB";
+		BDP_Medikit.ScoreAmount 100;
+	}
+	
+	mixin BDP_ScoreMixin;
+	
+	override void BeginPlay()
+	{
+		frame = random(0, 2);
+		if(BDP_Handler.getMedikitColor()) frame += 3;
+		super.BeginPlay();
+	}
+	
+	States
+	{
+	Spawn:
+		MEDI # -1;
+		Stop;
 	}
 }

@@ -666,11 +666,6 @@ object BDP_Soulsphere
     frame SOUL { light SOULSPHERE }
 }
 
-object BDP_SoulsphereOneUp
-{
-    frame SOUL { light SOULSPHERE }
-}
-
 // Invulnerability Sphere
 pulselight INVULN
 {

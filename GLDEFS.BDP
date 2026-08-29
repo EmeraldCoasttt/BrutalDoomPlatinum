@@ -9,11 +9,6 @@ object BDP_Megasphere
     frame MEGA { light MegaSphereLight }
 }
 
-object BDP_MegasphereOneUp
-{
-    frame MEGA { light MegaSphereLight }
-}
-
 pulselight MegaSphereLight
 {
     color 1.0 1.0 1.0
@@ -39,9 +34,9 @@ pulselight BlurSphereLight
 
 object BDP_NightVision
 {
-	frame SVISC { light NightVisionLight }
-	frame SVISB { light NightVisionLight }
-	frame SVISA { light NightVisionLight }
+	frame PVISC { light NightVisionLight }
+	frame PVISB { light NightVisionLight }
+	frame PVISA { light NightVisionLight }
 }
  
 pulselight NightVisionLight
@@ -76,7 +71,7 @@ pulselight BiosigilLight
     interval 2.0
     offset 0 16 0
 }
-object QuadSigil
+object BDP_QuadDamage
 {
     frame Quak { light QuakeSigilLight }
 }
@@ -90,7 +85,7 @@ pulselight QuakesigilLight
     offset 0 16 0
 }
 
-object HasteSphere
+object BDP_HasteSphere
 {
     frame TURB { light HasteSigilLight }
 }

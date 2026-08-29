@@ -1,40 +1,167 @@
-CLASS BDP_BaseKey: CustomInventory
+class BDP_Key : Inventory abstract
 {
-	int keyid; 
-	property keyid : keyid;
 	Default
 	{
-	BDP_BaseKey.keyid 0;
-	Radius 20;
-	Height 16;
-	+NOTDMATCH;
-	Scale 0.82;
-	Inventory.PickupSound "items/keycard";
+		Radius 20;
+		Height 16;
+		Inventory.MaxAmount 0;
+		Inventory.PickupSound "items/keycard";
+		+NOTDMATCH
+		+INVENTORY.AUTOACTIVATE
 	}
-	states
+	
+	class<Key> keyActor;
+	property KeyActor : keyActor;
+	
+	int keyID; 
+	property KeyID : keyID;
+	
+	override bool Use(bool pickup)
+	{
+		owner.GiveInventory(keyActor, 1);
+		return true;
+	}
+	
+	override void BeginPlay()
+	{
+		if(random(0, 20) == 20)
+			frame = 2;
+		/*else
+			frame = randompick(0, 0, 5, 7);*/
+		bXFLIP = random(0, 1);
+		ACS_NamedExecuteAlways("areascantid" ,0, keyID);
+		super.BeginPlay();
+	}
+}
+
+class BDP_SkullKey : BDP_Key abstract
+{
+	Default
+	{
+		Inventory.PickupSound "items/skullkey";
+	}
+	
+	override void BeginPlay()
+	{
+		super.BeginPlay();
+		if(random(0, 20) == 20)
+			frame = randompick(8, 10);
+		else
+			frame = randompick(0, 0, 0, 2, 4, 6);
+	}
+}
+
+class BDP_BlueCard : BDP_Key replaces BlueCard
+{
+	Default
+	{
+		Tag "Blue Keycard";
+		Inventory.Pickupmessage "$GOTBLUECARD";
+		Inventory.Icon "STKEYS0";
+		BDP_Key.KeyID 0;
+		BDP_Key.KeyActor "BlueCard";
+	}
+	States
 	{
 	Spawn:
-		TNT1 A 10;
-		loop;
-	Pickup:
-		TNT1 A 1;
-		stop;
-	}
-	
-	Override void beginplay()
-	{
-		acs_namedexecutealways("areascantid",0,keyid);
-		Super.beginplay();
+		BKEY # 10 {frame--;}
+		BKEY # 10 BRIGHT {frame++;}
+		Loop;
 	}
 }
 
-CLASS BDP_BaseSkull: BDP_BaseKey
+class BDP_RedCard : BDP_Key replaces RedCard
 {
 	Default
 	{
-	Inventory.PickupSound "items/skullkey";
+		Tag "Red Keycard";
+		Inventory.Pickupmessage "$GOTREDCARD";
+		Inventory.Icon "STKEYS2";
+		BDP_Key.KeyID 1;
+		BDP_Key.KeyActor "RedCard";
 	}
-	
+	States
+	{
+	Spawn:
+		RKEY # 10 {frame--;}
+		RKEY # 10 BRIGHT {frame++;}
+		Loop;
+	}
 }
 
+class BDP_YellowCard : BDP_Key replaces YellowCard
+{
+	Default
+	{
+		Tag "Yellow Keycard";
+		Inventory.Pickupmessage "$GOTYELWCARD";
+		Inventory.Icon "STKEYS1";
+		BDP_Key.KeyID 2;
+		BDP_Key.KeyActor "YellowCard";
+	}
+	States
+	{
+	Spawn:
+		YKEY # 10 {frame--;}
+		YKEY # 10 BRIGHT {frame++;}
+		Loop;
+	}
+}
 
+class BDP_BlueSkull : BDP_SkullKey replaces BlueSkull
+{
+	Default
+	{
+		Tag "Blue Skullkey";
+		Inventory.Pickupmessage "$GOTBLUESKUL";
+		Inventory.Icon "STKEYS3";
+		BDP_Key.KeyID 3;
+		BDP_Key.KeyActor "BlueSkull";
+	}
+	States
+	{
+	Spawn:
+		BSKU # 10 {frame--;}
+		BSKU # 10 BRIGHT {frame++;}
+		Loop;
+	}
+}
+
+class BDP_RedSkull : BDP_SkullKey replaces RedSkull
+{
+	Default
+	{
+		Tag "Red Skullkey";
+		Inventory.Pickupmessage "$GOTREDSKUL";
+		Inventory.Icon "STKEYS5";
+		BDP_Key.KeyID 4;
+		BDP_Key.KeyActor "RedSkull";
+	}
+	
+	States
+	{
+	Spawn:
+		RSKU # 10 {frame--;}
+		RSKU # 10 BRIGHT {frame++;}
+		Loop;
+	}
+}
+
+class BDP_YellowSkull : BDP_SkullKey replaces YellowSkull
+{
+	Default
+	{
+		Tag "Yellow Skullkey";
+		Inventory.Pickupmessage "$GOTYELWSKUL";
+		Inventory.Icon "STKEYS4";
+		BDP_Key.KeyID 5;
+		BDP_Key.KeyActor "YellowSkull";
+	}
+	States
+	{
+	Spawn:
+		YSKU # 10 {frame--;}
+		YSKU # 10 BRIGHT {frame++;}
+		Loop;
+	}
+}

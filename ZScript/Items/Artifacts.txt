@@ -1,229 +1,124 @@
-CLASS BDP_AllMap : inventory replaces Allmap
+// Computer Area Map --------------------------------------------------------------
+
+class BDP_AllMap : Inventory replaces Allmap
 {
-Default
-{
-  -INVENTORY.FANCYPICKUPSOUND;
-  Inventory.PickupSound "items/computermap";
-  +COUNTITEM
-		+INVENTORY.ALWAYSPICKUP
+	Default
+	{
 		Inventory.MaxAmount 0;
 		Inventory.PickupMessage "$GOTMAP";
-  }
-  
-  States
+		Inventory.PickupSound "items/computermap";
+		BDP_AllMap.ScoreAmount 500;
+		+COUNTITEM
+		+BRIGHT
+		+INVENTORY.ALWAYSPICKUP
+		+INVENTORY.AUTOACTIVATE
+	}
+	
+	mixin BDP_ScoreMixin;
+	
+	States
 	{
 	Spawn:
-		TNT1 A 0 NODELAY A_startsound("COMPFAN",1,CHANF_LOOPING,0.75);
-		PMAP ABCDCB 6 Bright;
+		TNT1 A 0 NODELAY A_StartSound("COMPFAN", flags:CHANF_LOOPING, 0.25);
+		PMAP ABCDCB 6;
 		Loop;
 	}
-  Override void tick()
-	{	
-		Super.tick();
-	}
-	override bool TryPickup (in out Actor toucher)
+	
+	override bool Use(bool pickup)
 	{
 		level.allmap = true;
 		A_StopSound(1);
-	
-	If(GetCvar("bd_allmapdx") == 0)
-	{
-	toucher.giveinventory("allthemap",1);
-	}
-	
-			toucher.Score += 500;
-			goawayanddie();
-			return true;
-	
-	
-		
-	
+		if(GetCvar("bd_allmapdx") == 0)
+			owner.giveinventory("BDP_PowerScanner", 1);
+		return true;
 	}
 }
 
-CLASS allthemap : powerupgiver
-	{
-		Default
-		{
-		Inventory.MaxAmount 0;
-		Powerup.duration  0x7FFFFFFF;
-		Powerup.type "powerscanner";
-		+inventory.autoactivate;
-		}
-		States
-		{
-		Spawn:
-		TNT1 A 1;
-		Loop;
-		}
-}
-
-Class PowerShieldCharge : Inventory
+class BDP_PowerScanner : PowerScanner
 {
 	Default
 	{
-		Inventory.maxamount 3;
+		Powerup.Duration 0x7FFFFFFD;
 	}
 }
 
-class PowerShield : Powerup
+// Energy Armor --------------------------------------------------------------
+
+class BDP_PowerShield : Powerup
 {
-	bool bhasplayedsound;
-	int damagetimer;
-	bool firstcharge;
-	bool takencharge;
-	bool chargedwhilezero;
 	Default
 	{
-		Powerup.Duration 1;
-		//Powerup.Color "00 00 FF", 0.5;
+		Powerup.Duration 0x7FFFFFFD;
 		+INVENTORY.HUBPOWER
 	}
 	
-	override bool HandlePickup (Inventory item)
+	bool playedSound;
+	int damageTimer;
+	int charges;
+	
+	override void BeginPlay()
 	{
-		if (item.GetClass() == GetClass())
-		{ // Setting EffectTics to 0 will force Powerup's HandlePickup()
-		  // method to reset the tic count so you get the red flash again.
-			EffectTics = 0;
-		}
-		return Super.HandlePickup (item);
-	}
-
-	//===========================================================================
-	//
-	// APowerStrength :: DoEffect
-	//
-	//===========================================================================
-
-	override void Tick ()
-	{
-		// Strength counts up to diminish the fade.
-		EffectTics += 2;
-		Super.Tick();
+		charges = 3;
+		super.BeginPlay();
 	}
 	
-	override void ModifyDamage (int damage, Name damageType, out int newdamage, bool passive, Actor inflictor, Actor source, int flags) {
-	
-	
-	if (owner && passive && damage > 0)
+	override void ModifyDamage (int damage, Name damageType, out int newdamage, bool passive, Actor inflictor, Actor source, int flags)
 	{
-	if(owner.countinv("basicarmor") > 0)
-	{
-	owner.a_startsound("StickyGrenade/Hit",125);
-	bhasplayedsound = false;
-	damagetimer = 240;
-	}
-	
-	
-	}
-	
-	}
-	
-	override void doeffect()
-	{
-	
-		
-		If(owner && owner.countinv("powershieldcharge") > 0)
+		if (owner && passive && damage > 0 && owner.countinv("basicarmor") > 0)
 		{
-			chargedwhilezero = false;
-		}
-		
-		damagetimer = (damagetimer - 1);
-		If(owner && owner.countinv("basicarmor") < 21 && owner.countinv("basicarmor") > 0)
-		{
-		owner.a_startsound("mjoln3",126,CHANF_LOOPING);
-		}
-		else if(owner && owner.countinv("basicarmor") < 1)
-		{
-			owner.a_startsound("mjoln2",126,CHANF_LOOPING);
-			If(!takencharge && firstcharge)
+			owner.A_StartSound("StickyGrenade/Hit", 125);
+			playedSound = false;
+			damageTimer = 240;
+			if(owner.ApplyDamageFactor(damageType, damage) >= owner.CountInv("BasicArmor"))
 			{
-				owner.takeinventory("powershieldcharge",1);
-				takencharge = true;
+				owner.A_StartSound("mjoln2",126,CHANF_LOOPING);
+				charges--;
 			}
 		}
-		else if(owner)
-		{
-		owner.a_stopsound(126);
-		}
-		
-		
-		
-		If(damagetimer < 1 && owner && owner.countinv("basicarmor") < 50)
-		{
-			
-			If(!bhasplayedsound)
-			{
-				//owner.a_startsound("mjoln",125,CHANF_NOSTOP);
-				firstcharge = true;
-				takencharge = false;
-				owner.a_startsound("mjoln",125,CHANF_NOSTOP,1.0,ATTN_NORM,0.0,(owner.countinv("basicarmor") / 50.0 ));
-				bhasplayedsound = true;
-				If(owner.countinv("powershieldcharge") < 1)
-				{
-					chargedwhilezero = true;
-				}
-			}
-			
-			owner.giveinventory("BDP_MjolnirArmor", 1);
-			
-		}
-		//Else
-		//{
-		//owner.a_stopsound(125);
-		//}
-
+	}
+	
+	override void DoEffect()
+	{
+		if(damageTimer > 0) damageTimer;
 		If(owner)
 		{
-		let playerArmor = BasicArmor(owner.FindInventory('BasicArmor'));
-		playerArmor.SavePercent = 1.0;
+			int armorCount = owner.countinv("basicarmor");
+			if(armorCount > 20)
+			{
+				owner.A_StopSound(126);
+			}
+			else if(armorCount > 0)
+			{
+				owner.A_StartSound("mjoln3", 126, CHANF_LOOPING);
+			}
+			
+			if(damageTimer < 1 && armorCount < 50)
+			{
+				if(!playedSound)
+				{
+					owner.A_StartSound("mjoln", 125, CHANF_NOSTOP, startTime:(armorCount / 50.0 ));
+					playedSound = true;
+				}
+				owner.GiveInventory("BDP_MjolnirArmor", 1);
+			}
+			
+			let playerArmor = BasicArmor(owner.FindInventory('BasicArmor'));
+			playerArmor.SavePercent = 1.0;
+			owner.bNOBLOOD = (armorCount > 0);
+			if(charges < 0 && armorCount < 1)
+			{
+				owner.A_StopSound(126);
+				DepleteOrDestroy();
+			}
 		}
 		
-		If(owner && owner.countinv("basicarmor") > 0)
-		{
-		owner.bnoblood = true;
-		}
-		Else if (owner)
-		{
-		owner.bnoblood = false;
-		}
-		If(owner && owner.countinv("powershieldcharge") < 1 && owner.countinv("basicarmor") < 1 && chargedwhilezero)
-		{
-			owner.A_stopsound(126);
-			depleteordestroy();
-		}
-		If(owner && owner.countinv("powershieldcharge") > 1)
-		{
-			firstcharge = true;
-		}
-		Super.doeffect();
+		super.DoEffect();
 	}
-
-	//===========================================================================
-	//
-	// APowerStrength :: GetBlend
-	//
-	//===========================================================================
 	
 	Override void detachfromowner()
 	{
-	
-	owner.bnoblood = false;
-	super.detachfromowner();
-	}
-	
-	
-	
-}
-
-
-class PowerShield2 : Powershield
-{
-	Default
-	{
-		Powerup.Color "00 00 00", 0.0;
-		-INVENTORY.HUBPOWER
+		owner.bNOBLOOD = false;
+		super.detachfromowner();
 	}
 }
 
@@ -231,106 +126,360 @@ class BDP_MjolnirArmor : BasicArmorBonus
 {
 	Default
 	{
-		Radius 20;
-		Height 16;
-		Inventory.Pickupmessage "$GOTARMBONUS";
 		Inventory.Icon "ARM2A0";
-		Armor.Savepercent 100;
-		Armor.Saveamount 1;
-		Armor.Maxsaveamount 100;
+		Armor.SavePercent 100;
+		Armor.SaveAmount 1;
+		Armor.MaxSaveAmount 50;
+	}
+}
+
+// Booster Frame --------------------------------------------------------------
+
+class BDP_BoosterFrame : PowerupGiver
+{
+	Default
+	{
+		Scale 0.5;
+		Inventory.PickupMessage "You got the Booster Frame!";
+		Inventory.PickupSound "BSTRPUP";
+		Powerup.Type "BDP_PowerBoost";
+		Inventory.MaxAmount 0;
+		BDP_BoosterFrame.ScoreAmount 500;
 		+COUNTITEM
 		+INVENTORY.ALWAYSPICKUP
+		+INVENTORY.AUTOACTIVATE
 	}
+	
+	mixin BDP_ScoreMixin;
+	
 	States
 	{
 	Spawn:
-		BON2 ABCDCB 6;
-		loop;
+		BFRM A -1;
+		Stop;
 	}
 }
 
-
-CLASS PowerAreaScan : Powerup
+class BDP_PowerBoost : Powerup
 {
-Default
-	{
-		Powerup.Duration -7;
-		Powerup.Color "11 FF 00", 0.9;
-		+INVENTORY.HUBPOWER
-	}
-	
-	override void Tick ()
-	{
-		// Strength counts up to diminish the fade.
-		EffectTics += 6;
-		Super.Tick();
-	}
-	
-	
-	override color GetBlend ()
-	{
-		// slowly fade the berserk out
-		int cnt = 128 - (EffectTics>>3);
-
-		if (cnt > 0)
-		{
-			return Color(BlendColor.a*cnt/256,
-				BlendColor.r, BlendColor.g, BlendColor.b);
-		}
-		return 0;
-	}
-
-}
-
-
-Class PowerTimeFreezerNu : PowerTimeFreezer
-{
-	int freezertics;
 	Default
 	{
-		+Inventory.NOSCREENBLINK;
-		Powerup.duration -60;
+		Powerup.Duration 0x7FFFFFFD;
+		+INVENTORY.HUBPOWER;
+		+INVENTORY.NOTELEPORTFREEZE;
 	}
-	override void initeffect()
-	{
-		owner.A_startsound("TIMEFREZ",66,0,1.0,ATTN_NONE);
-		owner.giveinventory("PowerChronoEffect",1);
-		Super.initeffect();
-	}
-	override void doeffect()
-	{
-		Super.doeffect();
-		
-		Freezertics = freezertics + 1;
-		
-		
-		 S_ResumeSound(false);
-      S_PauseSound(false, true); // This will freeze music, but not sound effects.
-      if (Level.maptime & 1 || (Owner != null && Owner.player != null && Owner.player.cheats & CF_PREDICTING))
-      {
-         return;
-      }
-      Level.SetFrozen ( EffectTics > 4*32
-         || (( EffectTics > 3*32 && EffectTics <= 4*32 ) && ((EffectTics + 1) & 15) != 0 )
-         || (( EffectTics > 2*32 && EffectTics <= 3*32 ) && ((EffectTics + 1) & 7) != 0 )
-         || (( EffectTics >   32 && EffectTics <= 2*32 ) && ((EffectTics + 1) & 3) != 0 )
-         || (( EffectTics >    0 && EffectTics <= 1*32 ) && ((EffectTics + 1) & 1) != 0 ));
-		If(freezertics >= 1045)
-		{
-		DepleteorDestroy();
-		}
-	}
-
 }
 
+// Invulnerability Sphere ---------------------------------------------------
 
-CLASS PowerChronoEffect : Powerup
+class BDP_InvulnerabilitySphere  : PowerupGiver Replaces InvulnerabilitySphere
 {
-Default
+	Default
 	{
-		Powerup.Duration -30;
-		Powerup.Color "FF 6C 00";
+		Inventory.MaxAmount 0;
+		Powerup.Type "BDP_PowerInvulnerable";
+		Inventory.PickupMessage "$GOTINVUL";
+		Tag "Invulnerability";
+		BDP_InvulnerabilitySphere.ScoreAmount 500;
+		+COUNTITEM
+		+FLOATBOB
+		+FORCEXYBILLBOARD
+		+BRIGHT
+		+INVENTORY.AUTOACTIVATE
+		+INVENTORY.ALWAYSPICKUP
+		+INVENTORY.BIGPOWERUP
+	}
+	
+	mixin BDP_ScoreMixin;
+	
+	States
+	{
+	Spawn:
+		PINV A 0 NoDelay A_StartSound("POWERHUM", flags:CHANF_LOOPING, 0.25);
+	SpawnLoop:
+		PINV AAABBBCCCDDD 2 A_SpawnItemEx("GreenFlareMedium", zofs:20);
+		Loop;
+	}
+}
+
+class BDP_PowerInvulnerable : PowerInvulnerable
+{
+	override void Tick()
+	{
+		if (Owner == NULL)
+		{
+			Destroy ();
+		}
+		If(effecttics == 104)
+		{
+			Owner.a_startsound("INVOFF",108);
+		}
+		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
+		{
+			if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
+			{
+				Destroy ();
+			}
+		}
+	}
+}
+
+class MiniInvul : InvulnerabilitySphere
+{
+	Default
+	{
+		Tag "Invulnerability";
+		Powerup.Duration -5;
+		Powerup.Colormap 0.0, 0.0, 0.0, 1.0,1.0,1.0;
+	}
+}
+
+// Soulsphere --------------------------------------------------------------
+
+class BDP_Soulsphere : Inventory Replaces SoulSphere
+{
+	Default
+	{
+		Inventory.MaxAmount 0;
+		Inventory.PickupMessage "$GOTSUPER";
+		Inventory.PickupSound "items/soulsphere";
+		Tag "Soulsphere";
+		BDP_Soulsphere.ScoreAmount 500;
+		BDP_Soulsphere.ExtraLives 1;
+		+COUNTITEM
+		+FLOATBOB
+		+FORCEXYBILLBOARD
+		+BRIGHT
+		+INVENTORY.ALWAYSPICKUP
+		+INVENTORY.AUTOACTIVATE
+	}
+	
+	mixin BDP_ScoreMixin;
+	
+	override bool Use(bool pickup)
+	{
+		let dplr = BDP_PlayerPawn(owner);
+		if(dplr && !dplr.oneupmanship) owner.GiveBody(100, 200);
+		return true;
+	}
+	
+	States
+	{
+	Spawn:
+		SOUL A 0 NoDelay A_startSound("POWERHUM", flags:CHANF_LOOPING, 0.25);
+	SpawnLoop:
+		SOUL AAABBBCCCDDDCCCBBB 2 A_SpawnItem("BlueFlareMedium2",0,20);
+		Loop;
+	}
+}
+
+// Megasphere --------------------------------------------------------------
+
+class BDP_Megasphere : Inventory replaces Megasphere
+{
+	Default
+	{
+		+COUNTITEM
+		+FLOATBOB
+		+FORCEXYBILLBOARD
+		+BRIGHT
+		+INVENTORY.AUTOACTIVATE
+		+INVENTORY.ALWAYSPICKUP
+		Inventory.PickupMessage "$GOTMSPHERE";
+		Inventory.PickupSound "items/soulsphere";
+		Tag "Megasphere";
+		BDP_Megasphere.ScoreAmount 500;
+		BDP_Megasphere.ExtraLives 3;
+	}
+	
+	mixin BDP_ScoreMixin;
+	
+	override bool Use(bool pickup)
+	{
+		
+		let dplr = BDP_PlayerPawn(owner);
+		if(dplr && !dplr.oneupmanship)
+		{
+			owner.GiveInventory("BDP_HeavyArmor", 1);
+			owner.GiveBody(200, 200);
+		}
+		return true;
+	}
+	
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_StartSound("MEGAHUM", flags:CHANF_LOOPING, 0.25);
+	SpawnLoop:
+		MEGA AAABBBCCCDDD 2 A_SpawnItem("LensFlare",0,35);
+		Loop;
+	}
+}	
+
+// Light Amplification Visor --------------------------------------------------------------
+
+class BDP_NightVision : Inventory replaces Infrared
+{
+	Default
+	{
+		+COUNTITEM
+		+INVENTORY.ALWAYSPICKUP
 		+INVENTORY.HUBPOWER
+		Inventory.MaxAmount 1;
+		Inventory.PickupMessage "$GOTVISOR";
+		Inventory.PickupSound "items/nightvision";
+		BDP_NightVision.ScoreAmount 500;
+	}
+	
+	mixin BDP_ScoreMixin;
+	
+	States
+	{
+	Spawn:
+		PVIS E 7;
+		PVIS D 3 Bright A_SpawnItemEx("RedFlareVerySmall", zofs:10);
+		PVIS C 2 Bright A_SpawnItemEx("RedFlareVerySmall", zofs:10);
+		PVIS BAB 1 Bright A_SpawnItemEx("RedFlareVerySmall", zofs:10);
+		PVIS C 2 Bright A_SpawnItemEx("RedFlareVerySmall", zofs:10);
+		PVIS D 3 Bright A_SpawnItemEx("RedFlareVerySmall", zofs:10);
+		Loop;
+	}
+}
+
+// Berserk --------------------------------------------------------------
+
+class BDP_Berserk : Inventory replaces Berserk
+{
+	bool green;
+	
+	Default
+	{
+		+COUNTITEM
+		+INVENTORY.AUTOACTIVATE
+		+INVENTORY.ALWAYSPICKUP
+		Inventory.PickupMessage "$GOTBERSERK";
+		Inventory.PickupSound "misc/p_pkup";
+		Inventory.PickupSound "BERSPKUP";
+		Tag "Berserk Pack";
+		BDP_Berserk.ScoreAmount 500;
+	}
+	
+	mixin BDP_ScoreMixin;
+	
+	override bool Use(bool pickup)
+	{
+		owner.GiveInventory("PowerStrength", 1);
+		owner.GiveBody(100, 100);
+		owner.A_SelectWeapon("BDP_Fist");
+		return true;
+	}
+	
+	override void BeginPlay()
+	{
+		frame = random(0, 2);
+		if(BDP_Handler.getMedikitColor())
+		{
+			frame += 3;
+			green = true;
+		}
+		super.BeginPlay();
+	}
+	
+	States
+	{
+	Spawn:
+		PSTR # 2 NoDelay A_SpawnItemEx(green ? "GreenFlareSmall2" : "RedFlareVerySmall", zofs:8);
+		Loop;
+	}
+}
+
+// Partial Invisibility --------------------------------------------------------------
+
+class BDP_Blursphere : PowerupGiver replaces Blursphere
+{
+	Default
+	{
+		+COUNTITEM
+		+FLOATBOB
+		+FORCEXYBILLBOARD
+		+BRIGHT
+		+VISIBILITYPULSE
+		+INVENTORY.AUTOACTIVATE
+		+INVENTORY.ALWAYSPICKUP
+		+INVENTORY.BIGPOWERUP
+		Inventory.PickupMessage "$GOTINVIS";
+		powerup.type "BDP_PowerInvisibility";
+		Powerup.Duration -30;
+		RenderStyle "Translucent";
+		Inventory.PickupSound "INVISON";
+		BDP_Blursphere.ScoreAmount 500;
+	}
+	
+	mixin BDP_ScoreMixin;
+	
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_StartSound("INVISHUM", flags:CHANF_LOOPING, 0.25);
+	SpawnLoop:
+		PINS AAABBBCCCDDD 2 A_SpawnItemEx("RedFlare", zofs:24);
+		Loop;
+	}
+}
+
+class BDP_PowerInvisibility : PowerInvisibility
+{
+	Default
+	{
+		+INVENTORY.NOSCREENBLINK;
+	}
+	Override void tick()
+	{
+		if (Owner == NULL)
+		{
+			Destroy ();
+		}
+		If(effecttics == 104)
+		{
+			Owner.a_startsound("BLURWARN",108);
+		}
+		If(effecttics == 15)
+		{
+			Owner.a_startsound("INVISOFF",107);
+		}
+		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
+		{
+			if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
+			{
+				
+				Destroy ();
+			}
+		}
+	}
+	
+	override void DoEffect ()
+	{
+		Super.DoEffect();
+		Owner.A_SetRenderStyle(1.0,STYLE_ColorBlend);
+	}
+	
+	override void AlterWeaponSprite (VisStyle vis, in out int changed)
+	{
+		
+		if (changed == 1)
+		{
+			// something else set the weapon sprite back to opaque but this item is still active.
+			float ts = float((Strength / 100) * (special1 + 1));
+			vis.Alpha = clamp((1. - ts), 0., 1.);
+			vis.RenderStyle = STYLE_ColorBlend;
+		}
+		// Handling of Strife-like cumulative invisibility powerups, the weapon itself shouldn't become invisible
+		if ((vis.Alpha < 0.25f && special1 > 0) || (vis.Alpha == 0))
+		{
+			vis.Alpha = clamp((1. - Strength/100.), 0., 1.);
+			vis.invert = true;
+		}
+		changed = -1;	// This item is valid so another one shouldn't reset the translucency
 	}
 }
 
@@ -496,69 +645,190 @@ class SalInvisHandler : EventHandler
 	}
 }
 
+// Quad Damage --------------------------------------------------------------
 
-CLASS PowerBoost : Powerup
-{
-	Default
-	{
-		Powerup.Duration 0x7FFFFFFD;
-		+INVENTORY.HUBPOWER;
-		+INVENTORY.NOTELEPORTFREEZE;
-	}
-}
-
-CLASS BDP_PowerNightVision : Powerup
-{
-	Default
-	{
-		Powerup.Duration 0x7FFFFFFD;
-		+INVENTORY.HUBPOWER;
-	}
-}
-
-class BDP_BoosterFrame : CustomInventory
+class BDP_QuadDamage : PowerupGiver
 {
 	Default
 	{
 		+COUNTITEM
+		+FLOATBOB
 		+INVENTORY.ALWAYSPICKUP
-		Inventory.PickupMessage "You got the Booster Frame!";
-		Inventory.PickupSound "BSTRPUP";
-		Scale 0.5;
+		+INVENTORY.AUTOACTIVATE
+		Inventory.PickupMessage "Quad Damage!";
+		Inventory.PickupSound "sigil/quake";
+		Tag "Quad Damage";
+		powerup.duration -30;
+		powerup.type "BDP_PowerQuadDamage";
+		BDP_QuadDamage.ScoreAmount 500;
 	}
+	
+	mixin BDP_ScoreMixin;
+	
 	States
 	{
 	Spawn:
-		BFRM A -1;
-		Stop;
-	Pickup:
-		TNT1 A 0 A_GiveInventory("PowerBoost");
-		Stop;
+	    QUAK A 0 NoDelay A_StartSound("QUADHUM", flags:CHANF_LOOPING, 0.25);
+	SpawnLoop:
+		QUAK ABCB 6 Bright;
+		Loop;
 	}
-	
-	 override bool TryPickup (in out Actor toucher)
+}
+
+class BDP_PowerQuadDamage : PowerDamage
+{
+	Default
 	{
-	If( Super.trypickup(Toucher))
+		damagefactor "normal", 4;
+	}
+	Override void tick()
+	{
+		if (Owner == NULL)
 		{
-			toucher.Score += 500;
-			return true;
+			Destroy ();
 		}
-		Else
+		
+		If(EffectTics == 104)
 		{
-		return false;
+			Owner.a_startsound("items/quaddamage/warn",107);
+		}
+		
+		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
+		{
+			if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
+			{
+				Destroy ();
+			}
 		}
 	}
 }
 
+// Haste Sphere --------------------------------------------------------------
 
-
-
-CLASS BDP_PowerRage : PowerSpeed
+class BDP_HasteSphere : PowerUpGiver
 {
-Default
+	Default
+	{
+		+COUNTITEM
+		+FLOATBOB
+		+FORCEXYBILLBOARD
+		+BRIGHT
+		+INVENTORY.AUTOACTIVATE
+		+INVENTORY.ALWAYSPICKUP
+		Inventory.PickupMessage "Haste!";
+		Inventory.PickupSound "sigil/haste";
+		Tag "Haste";
+		powerup.duration -30;
+		powerup.type "BDP_PowerSpeed";
+		BDP_HasteSphere.ScoreAmount 500;
+	}
+	
+	mixin BDP_ScoreMixin;
+	
+	States
+	{
+	Spawn:
+	    TURB A 0 NoDelay A_StartSound("POWERHUM", flags:CHANF_LOOPING, 0.25);
+	SpawnLoop:
+		TURB AAABBBCCCDDD 2 A_SpawnItemEx("YellowFlareSmall", zofs:26);
+		Loop;
+	}
+}
+
+class BDP_PowerSpeed : powerspeed
+{
+	Default
+	{
+		Speed 1.7;
+		inventory.icon "TNT1A0";
+		+INVENTORY.NOTELEPORTFREEZE
+	}
+	override void Tick()
+	{
+		if (Owner == NULL)
+		{
+			Destroy ();
+		}
+		If(effecttics == 104)
+		{
+			Owner.a_startsound("HASTEOFF",108);
+		}
+		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
+		{
+			if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
+			{
+				Destroy ();
+			}
+		}
+	}
+}
+
+// Radiation Suit --------------------------------------------------------------
+
+class BDP_RadSuit : PowerupGiver replaces RadSuit
+{
+	Default
+	{
+		Height 46;
+		+INVENTORY.AUTOACTIVATE
+		+INVENTORY.ALWAYSPICKUP
+		+BRIGHT
+		Inventory.MaxAmount 0;
+		Inventory.PickupMessage "$GOTSUIT" ;
+		Inventory.PickupSound "items/radsuit";
+		Powerup.Type "PowerIronFeet";
+		Powerup.Color "None";
+		BDP_RadSuit.ScoreAmount 500;
+	}
+	
+	mixin BDP_ScoreMixin;
+	
+	States
+	{
+	Spawn:
+		SUIT A -1;
+		Stop;
+	}
+}
+
+// Rage Sphere --------------------------------------------------------------
+
+class BDP_RageSphere : PowerupGiver
+{
+	Default
+	{
+		+COUNTITEM
+		+FLOATBOB
+		+FORCEXYBILLBOARD
+		+BRIGHT
+		+INVENTORY.AUTOACTIVATE
+		+INVENTORY.ALWAYSPICKUP
+		+INVENTORY.BIGPOWERUP
+		Inventory.MaxAmount 0;
+		Powerup.Type "BDP_PowerRage";
+		Inventory.PickupMessage "Rage sphere! Liquify them.";
+		Tag "Rage Sphere";
+		Inventory.PickupSound "RAGEPUP";
+		BDP_RageSphere.ScoreAmount 500;
+	}
+	
+	mixin BDP_ScoreMixin;
+	
+	States
+	{
+	Spawn:
+		DDMG A 0 NoDelay A_StartSound("POWERHUM", flags:CHANF_LOOPING, 0.25);
+	SpawnLoop:
+		DDMG AAABBBCCCDDD 2 A_SpawnItemEx("RedFlareMedium", zofs:20);
+		Loop;
+	}
+}
+
+class BDP_PowerRage : PowerSpeed
+{
+	Default
 	{
 		Powerup.Duration -30;
-		//Powerup.Color "91 00 00";
 		Speed 1.5;
 		+INVENTORY.HUBPOWER
 	}
@@ -597,8 +867,6 @@ Default
 	
 	override void ModifyDamage (int damage, Name damageType, out int newdamage, bool passive, Actor inflictor, Actor source, int flags)
 	{
-	
-		
 		If(passive)
 		{
 			newdamage = (damage * 0.25);
@@ -608,771 +876,6 @@ Default
 			Owner.givebody(10);
 			newdamage = damage;
 			source.a_startsound("Items/Rage/Kill",624);
-		}
-		
-	
-	}
-}
-
-CLASs BDP_PowerInvulnerable : PowerInvulnerable
-{
-Override void tick()
-	{
-		if (Owner == NULL)
-		{
-			Destroy ();
-		}
-		If(effecttics == 104)
-		{
-			Owner.a_startsound("INVOFF",108);
-		}
-		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
-		{
-		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
-		{
-			Destroy ();
-		}
-		}
-	}
-}
-
-CLASS BDP_PowerSpeed : powerspeed
-{
-Default
-{
-Speed 1.7;
-+INVENTORY.NOTELEPORTFREEZE;
-inventory.icon "TNT1A0";
-}
-Override void tick()
-	{
-		if (Owner == NULL)
-		{
-			Destroy ();
-		}
-		If(effecttics == 104)
-		{
-			Owner.a_startsound("HASTEOFF",108);
-		}
-		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
-		{
-		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
-		{
-			Destroy ();
-		}
-		}
-	}
-
-}
-
-
-CLASS BDP_PowerQuadDamage : PowerDamage
-{
-Default
-{
-damagefactor "normal", 4;
-//Inventory.icon "SIG2A0"
-//activesound "items/quaddamage";
-}
-
-Override void tick()
-	{
-		if (Owner == NULL)
-		{
-			Destroy ();
-		}
-		
-		If(EffectTics == 104)
-		{
-			Owner.a_startsound("items/quaddamage/warn",107);
-		}
-		
-		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
-		{
-			if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
-			{
-				Destroy ();
-			}
-		}
-	}
-}
-
-CLASs BDP_PowerInvisibility : PowerInvisibility
-{
-	Default
-	{
-		+INVENTORY.NOSCREENBLINK;
-	}
-Override void tick()
-	{
-		if (Owner == NULL)
-		{
-			Destroy ();
-		}
-		If(effecttics == 104)
-		{
-			Owner.a_startsound("BLURWARN",108);
-		}
-		If(effecttics == 15)
-		{
-			Owner.a_startsound("INVISOFF",107);
-		}
-		If(owner && !owner.findinventory("pausepowerup") || owner && EffectTics < 105)
-		{
-		if (EffectTics == 0 || (EffectTics > 0 && --EffectTics == 0))
-		{
-			
-			Destroy ();
-		}
-		}
-	}
-	
-	override void DoEffect ()
-	{
-		Super.DoEffect();
-		Owner.A_SetRenderStyle(1.0,STYLE_ColorBlend);
-	}
-	override void AlterWeaponSprite (VisStyle vis, in out int changed)
-	{
-		
-		if (changed == 1)
-		{
-			// something else set the weapon sprite back to opaque but this item is still active.
-			float ts = float((Strength / 100) * (special1 + 1));
-			vis.Alpha = clamp((1. - ts), 0., 1.);
-			vis.RenderStyle = STYLE_ColorBlend;
-		}
-		// Handling of Strife-like cumulative invisibility powerups, the weapon itself shouldn't become invisible
-		if ((vis.Alpha < 0.25f && special1 > 0) || (vis.Alpha == 0))
-		{
-			vis.Alpha = clamp((1. - Strength/100.), 0., 1.);
-			vis.invert = true;
-		}
-		changed = -1;	// This item is valid so another one shouldn't reset the translucency
-	}
-}
-
-// Invulnerability Sphere ---------------------------------------------------
-
-CLASS BDP_InvulnerabilitySphere  : PowerupGiver Replaces InvulnerabilitySphere
-{
-	Default
-	{
-		+COUNTITEM;
-		//these 3 make it float. If you want to remove the floating effects, remove those 3 properties.
-		+NOGRAVITY;
-		+FLOATBOB;
-		FloatSpeed 1;
-		+INVENTORY.AUTOACTIVATE;
-		+INVENTORY.ALWAYSPICKUP;
-		+INVENTORY.BIGPOWERUP;
-		Inventory.MaxAmount 0;
-		Powerup.Type "BDP_PowerInvulnerable";
-		//Powerup.Colormap 0.0, 0.0, 0.0, 1.0,1.0,1.0
-		Inventory.PickupMessage "$GOTINVUL";
-		Tag "Invulnerability";
-	}
-	States
-	{
-	Spawn:
-	    TNT1 A 0 A_PlaySound("POWERHUM", 0, 0.4, 1);
-		PINV AAABBBCCCDDD 2 Bright A_SpawnItem("GreenFlareMedium",0,20);
-		Loop;
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 500;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-	}
-}
-
-
-
-
-// Soulsphere --------------------------------------------------------------
-
-Class BDP_Soulsphere : CustomInventory Replaces SoulSphere
-{
-	Default
-	{
-		+COUNTITEM;
-		+NOGRAVITY;
-		+FLOATBOB;
-		FloatSpeed 1;
-		+INVENTORY.ALWAYSPICKUP;
-		Inventory.PickupMessage "Soulsphere";
-		Inventory.PickupSound "items/soulsphere";
-		Tag "Soulsphere";
-	}
-	States
-	{
-	Spawn:
-	   TNT1 A 0 NODELAY A_startSound("POWERHUM",4,CHANF_LOOPING);
-		SOUL AAABBBCCCDDDCCCBBB 2 Bright A_SpawnItem("BlueFlareMedium2",0,20);
-		Loop;
-	Pickup:
-		TNT1 A 0 A_stopsound(4);
-        TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360));
-		TNT1 A 0 A_GiveInventory("SoulSphereHealth", 1);
-		Stop;
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 500;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-	}
-}
-
-CLASS BDP_SoulsphereOneUp : BDP_Soulsphere
-{
-	Default
-	{
-		Inventory.PickupSound "1UP";
-	}
-	States
-	{
-	Pickup:
-		TNT1 A 0 A_stopsound(4);
-        TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360));
-
-		Stop;
-	}
-		override bool TryPickup (in out Actor toucher)
-	{
-		toucher.Score += 500;
-		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(toucher);
-		If(BDPplr)
-		{
-			BDPplr.extralives ++;
-		}
-		GoAwayAndDie();
-		return true;
-	}
-}
-
-CLASS SoulSphereHealth : Health	
-{
-	Default
-	{
-		Inventory.Amount 100;
-		Inventory.MaxAmount 200;
-		+INVENTORY.ALWAYSPICKUP;
-	}
-	
-
-}
-
-CLASS BDP_Megasphere : CustomInventory Replaces Megasphere
-{
-	Default
-	{
-		+COUNTITEM;
-		+NOGRAVITY;
-		+FLOATBOB;
-		FloatSpeed 1;
-		+INVENTORY.ALWAYSPICKUP;
-		Inventory.PickupMessage "Megasphere";
-		Inventory.PickupSound "items/soulsphere";
-		Tag "Megasphere";
-	}
-	States
-	{
-	Spawn:
-	    TNT1 A 0 A_StartSound("MEGAHUM",4,CHANF_LOOPING);
-		MEGA AABBCCDD 2 BRIGHT A_SpawnItem("LensFlare",0,35);
-		Loop;
-
-	Pickup:
-		TNT1 A 0 A_stopsound(4);
-        TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360));
-		TNT1 A 0 A_GiveInventory("BDP_HeavyArmor", 1);
-		TNT1 AA 0 A_GiveInventory("SoulsphereHealth", 1);
-		Stop;
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 300;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-	}
-}	
-
-CLASS BDP_MegasphereOneUp : BDP_Megasphere
-{
-	Default
-	{
-		Inventory.PickupSound "1UP";
-	}
-	States
-	{
-	
-	Pickup:
-		TNT1 A 0 A_stopsound(4);
-        TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360));
-
-		Stop;
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-		toucher.Score += 500;
-		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(toucher);
-		If(BDPplr)
-		{
-			BDPplr.extralives += 3;
-		}
-		GoAwayAndDie();
-		return true;
-	}
-}	
-
-
-CLASS MiniInvul : InvulnerabilitySphere
-{
-	Default
-	{
-		Tag "Invulnerability";
-		Powerup.Duration -5;
-		Powerup.Colormap 0.0, 0.0, 0.0, 1.0,1.0,1.0;
-	}
-}
-
-// infrared -----------------------------------------------------------------
-
-CLASS BDP_NightVision : CustomInventory  Replaces InfraRed
-{
-	Default
-	{
-		+COUNTITEM;
-		+INVENTORY.ALWAYSPICKUP;
-		Inventory.PickupMessage "You got the Infrared Vision Googles.";
-		Inventory.PickupSound "items/nightvision";
-	}
-	States
-	{
-	Spawn:
-		TNT1 A 0 A_CheckSight("Spawn2");
-		SVIS E 7;
-		SVIS D 3 Bright A_SpawnItem("RedFlareVerySmall",0,10);
-		SVIS C 2 Bright A_SpawnItem("RedFlareVerySmall",0,10);
-		SVIS BAB 1 Bright A_SpawnItem("RedFlareVerySmall",0,10);
-		SVIS C 2 Bright A_SpawnItem("RedFlareVerySmall",0,10);
-		SVIS D 3 Bright A_SpawnItem("RedFlareVerySmall",0,10);
-		Loop;
-	Spawn2:
-		SVIS E 4;
-		SVIS DCBACD 2 BRIGHT;
-		Goto Spawn;
-		
-	Pickup:
-		TNT1 A 1 A_GiveInventory("BDP_InfraredGiver",1);
-		Stop;
-		
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 500;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-	}
-}
-
-
-
-CLASS BDP_InfraredGiver : PowerupGiver
-{
-	Default
-	{
-		+COUNTITEM;
-		+INVENTORY.AUTOACTIVATE;
-		+INVENTORY.ALWAYSPICKUP;
-		Inventory.MaxAmount 0;
-		powerup.type "BDP_PowerNightVision";
-		+inventory.autoactivate;
-		//Powerup.Color 99 99 99;
-		Inventory.PickupMessage "$GOTVISOR";
-		
-	}
-	States
-	{
-	Spawn:
-		SVIS E 7;
-		SVIS D 3 Bright A_SpawnItem("RedFlareVerySmall",0,10);
-		SVIS C 2 Bright A_SpawnItem("RedFlareVerySmall",0,10);
-		SVIS BAB 1 Bright A_SpawnItem("RedFlareVerySmall",0,10);
-		SVIS C 2 Bright A_SpawnItem("RedFlareVerySmall",0,10);
-		SVIS D 3 Bright A_SpawnItem("RedFlareVerySmall",0,10);
-		Loop;
-		
-	}
-}
-
-
-// Berserk ------------------------------------------------------------------
-
-CLASS BDP_Berserk : CustomInventory Replaces Berserk
-{
-	DEFAULT
-	{
-		Scale 1.2;
-		+COUNTITEM;
-		+INVENTORY.ALWAYSPICKUP;
-		Inventory.PickupMessage "$GOTBERSERK";
-		Inventory.PickupSound "misc/p_pkup";
-		Inventory.PickupSound "BERSPKUP";
-		+Inventory.NEVERRESPAWN;
-		Tag "Berserk Pack";
-	}
-	States
-	{
-	Spawn:
-		MEDK C 0;
-		//MEDK C 0 A_SpawnItemEx("EvidenceCheckerbERSERk", 0, 0, 0, 0, 0, 0, 0, SXF_NOCHECKPOSITION)
-		//TNT1 A 0 A_JUMP(64,"spawn5")
-		TNT1 A 0 A_Jump(94,"Spawn3");
-	Spawn1:	
-		TNT1 A 0 A_CheckSight("Spawn2")	;
-		MEDK C 2 A_SpawnItem("RedFlareVerySmall",0,10);
-		Loop;
-	Spawn2:
-		MEDK C 14;
-		Goto Spawn1;
-	Spawn3:	
-		TNT1 A 0 A_CheckSight("Spawn4");
-		MEDK D 2 A_SpawnItem("RedFlareVerySmall",0,10);
-		Loop;
-	Spawn4:
-		MEDK D 14;
-		Goto Spawn3;
-	Pickup:
-		TNT1 A 0 A_GiveInventory("PowerStrength");
-		TNT1 A 0 HealThing(100, 0);
-		//TNT1 A 20 ACS_NamedExecuteAlways("BerserkMessage")
-		TNT1 A 0 A_SelectWeapon("BDP_Fist");
-		//TNT1 A 0 A_Print ("Press Reload to alternate execution modes.")
-		Stop;
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 500;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-	}
-}
-
-CLASS Berserk2 : powerupgiver
-{
-	Default
-	{
-		powerup.type "powerstrength";
-		+inventory.autoactivate;
-	}
-}
-
-Class BDP_Blursphere : Blursphere REPLACES Blursphere
-{
-	Default
-	{
-	  +COUNTITEM;
-	  +NOGRAVITY;
-	  +FLOATBOB;
-	  FloatSpeed 1;
-	  +VISIBILITYPULSE;
-	  +INVENTORY.AUTOACTIVATE;
-	  +INVENTORY.ALWAYSPICKUP;
-	  +INVENTORY.BIGPOWERUP;
-	  RenderStyle "Translucent";
-	  Inventory.PickupMessage "$GOTINVIS";
-	  powerup.type "BDP_PowerInvisibility";
-	  Powerup.Duration -30;
-	  Inventory.PickupSound "INVISON";
-  }
-  States
-  {
-  Spawn:
-		TNT1 A 0 A_startSound("INVISHUM",4,CHANF_LOOPING);
-     PINS AABBCCDDCCBB 2 Bright A_SpawnItem("RedFlare", 0, 24);
-     Loop;
-	Pickup:
-		TNT1 A 0 A_stopsound(4);
-		STOP;
-  }
-  override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 500;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-	}
-}
-
-
-Class QuadSigil : PowerUpGiver
-{
-	Default
-	{
-		+COUNTITEM;
-		+NOGRAVITY;
-		+FLOATBOB;
-		FloatSpeed 1;
-		+INVENTORY.ALWAYSPICKUP;
-		Inventory.PickupMessage "Quad Rampage!";
-		Inventory.PickupSound "sigil/quake";
-		Tag "Soulsphere";
-		powerup.duration -30;
-		//powerup.color "purple"
-		powerup.type "BDP_PowerQuadDamage";
-		+inventory.autoactivate;
-	}
-	States
-	{
-	Spawn:
-	    TNT1 A 0 NODELAY A_PlaySound("QUADHUM", 5, 0.7);
-		QUAK BBBCCCBBBCCCBBBCCCBBBCCCBBBCCCBBBCCCBBBCCCBBBCCCBBBCCCBBBCCCBBBCCCBBBCCCBBBCCCBBBCCCBBBCCCBBBCCCBBBCCC 2 Bright;// A_SpawnItem("PurpleFlareSmall",0,30)
-		Loop;
-	Pickup:
-		TNT1 A 0 A_stopsound(5);
-        TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360));
-		Stop;
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 500;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-	}
-}
-
-
-CLASS HasteSphere : PowerUpGiver
-{
-	Default
-	{
-		+COUNTITEM;
-		+NOGRAVITY;
-		+FLOATBOB;
-		FloatSpeed 1;
-		+INVENTORY.ALWAYSPICKUP;
-		Inventory.PickupMessage "Haste Sphere!";
-		Inventory.PickupSound "sigil/haste";
-		Tag "Soulsphere";
-		powerup.duration -30;
-		//powerup.color "Yellow"
-		powerup.type "BDP_PowerSpeed";
-		+inventory.autoactivate;
-	}
-	States
-	{
-	Spawn:
-	    TNT1 A 0 A_PlaySound("POWERHUM", 0, 0.4, 1);
-		TURB AAABBBCCCBBB 2 Bright A_SpawnItem("YellowFlareSmall",0,20);
-		Loop;
-	Pickup:
-        TNT1 AAAAAAAAAAAAA 0 A_CustomMissile ("ShinnySmoke", 0, 0, random (0, 360), 2, random (0, 360));
-		Stop;
-	}
-	override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 500;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-	}
-}
-
-
-
-CLASS Biovision : powerupgiver
-{
-	Default
-	{
-
-+inventory.autoactivate;
-inventory.maxamount 0;
-powerup.duration -60;
-//	powerup.color "purple"
-	powerup.type "powertorch";
-	}
-}
-
-CLASS Biofeet : powerupgiver
-{
-Default
-{
-+inventory.autoactivate;
-inventory.maxamount 0;
-powerup.duration -60;
-//	powerup.color "purple"
-	powerup.type "powerironfeet";
-	}
-}
-
-Class BDP_RadSuit : CustomInventory Replaces Radsuit
-{
-Default
-{
-	  Height 46;
-	  +INVENTORY.AUTOACTIVATE;
-	  +INVENTORY.ALWAYSPICKUP;
-	  Inventory.MaxAmount 0;
-	  Inventory.PickupMessage "$GOTSUIT" ;
-	  Inventory.PickupSound "items/radsuit";
- }
-  States
-  {
-  Spawn:
-    SUIT A 10;
-	SUIT A 10 BRIGHT;
-	Loop;
-  Pickup:
-		TNT1 A 0;
-		TNT1 A 0 A_GiveInventory("Radsuit3", 1);
-		//TNT1 A 0 A_GiveInventory("Radsuit2", 1)
-		Stop;
-  }
-  override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 500;
-			return true;
-		}
-		Else
-		{
-		return false;
-		}
-	}
-}
-
-CLASS RadSuit2 : PowerupGiver
-{
-	Default
-	{
-	  Height 46;
-	  +INVENTORY.AUTOACTIVATE;
-	  +INVENTORY.ALWAYSPICKUP;
-	  Inventory.MaxAmount 0;
-	  Inventory.PickupMessage "$GOTSUIT";
-	  Powerup.Type "PowerMask";
-	  Powerup.Duration -60;
-  }
-  States
-  {
-  Spawn:
-    SUIT A 10;
-	SUIT A 10 BRIGHT;
-	Loop;
-  }
-}
-
-
-
-CLASS RadSuit3 : PowerupGiver
-{
-	Default
-	{
-	  Height 46;
-	  +INVENTORY.AUTOACTIVATE;
-	  +INVENTORY.ALWAYSPICKUP;
-	  Inventory.MaxAmount 0;
-	  Powerup.Color "None";
-	  Inventory.PickupMessage "$GOTSUIT";
-	  Powerup.Type "PowerIronFeet";
-  }
-  States
-  {
-  Spawn:
-    SUIT A 10;
-	SUIT A 10 BRIGHT;
-	Loop;
-  }
-}
-		
-
-Class RageSphere : PowerupGiver
-{
-	Default
-	{
-	+COUNTITEM;
-	//these 3 make it float. If you want to remove the floating effects, remove those 3 properties.
-	+NOGRAVITY;
-	+FLOATBOB;
-	FloatSpeed 1;
-	+INVENTORY.AUTOACTIVATE;
-	+INVENTORY.ALWAYSPICKUP;
-	+INVENTORY.BIGPOWERUP;
-	Inventory.MaxAmount 0;
-	Powerup.Type "BDP_PowerRage";
-	//Powerup.Colormap 0.0, 0.0, 0.0, 1.0,1.0,1.0
-	Inventory.PickupMessage "Rage sphere! Liquify them.";
-	Tag "Rage Sphere";
-	Inventory.PickupSound "RAGEPUP";
-	}
-	States
-	{
-	Spawn:
-	    TNT1 A 0 A_PlaySound("POWERHUM", 0, 0.4, 1);
-		DDMG AAABBBCCCDDD 2 Bright A_SpawnItem("RedFlareMedium",0,20);
-		Loop;
-	}
-	
-	 override bool TryPickup (in out Actor toucher)
-	{
-	If( Super.trypickup(Toucher))
-		{
-			toucher.Score += 500;
-			return true;
-		}
-		Else
-		{
-		return false;
 		}
 	}
 }
@@ -1388,6 +891,6 @@ class BDP_BarrelBonus : RandomSpawner
 		DropItem "BDP_Shell", 255, 10;
 		DropItem "BDP_RocketAmmo", 255, 10;
 		DropItem "BDP_Revolver", 255, 1;
-		DropItem "BDP_SubMachineGun", 255, 1;
+		DropItem "BDP_SubmachineGun", 255, 1;
     }
 }

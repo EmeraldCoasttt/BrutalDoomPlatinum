@@ -796,10 +796,6 @@ pic BDHEL11B rand 2 2
 
 warp2 texture UMTPA0 0.3
 
-Texture NKLGH0
-    pic NKLGE0 tics 2
-	pic NKLGF0 tics 2
-	pic NKLGG0 tics 2
-Texture ARM2G0
-	pic ARM2E0 tics 3
-	pic ARM2F0 tics 3
+Texture ARM3C0
+	pic ARM3A0 tics 3
+	pic ARM3B0 tics 3

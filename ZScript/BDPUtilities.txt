@@ -161,6 +161,7 @@
 	{
 	
 	bool mercilessgranted;
+	bool greenMedikits, setMedikits;
 	actor IconOfSin;
 	
 	//Enforces pistol starting unless modifier is active
@@ -251,6 +252,21 @@
 		}
     }
 	*/
+	static bool getMedikitColor()
+	{
+		let handler = BDP_Handler(EventHandler.Find("BDP_Handler"));
+		if(handler)
+		{
+			if(!handler.setMedikits)
+			{
+				handler.greenMedikits = random(0, 1);
+				handler.setMedikits = true;
+			}
+			return handler.greenMedikits;
+		}
+		return false;
+	}
+	
 	static clearscope bool IsAABBColliding(Actor mo1, Actor mo2)
 	{	
 		Vector2 diff = level.Vec2Diff(mo1.pos.xy + mo1.vel.xy, mo2.pos.xy + mo2.vel.xy);		
@@ -324,7 +340,6 @@
 			BDP_SecretSpawner.SpawnSecrets();
 		}
 		mercilessgranted = false;
-	
 	}
 	
 	

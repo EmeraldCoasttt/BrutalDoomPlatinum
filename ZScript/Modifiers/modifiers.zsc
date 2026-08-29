@@ -111,21 +111,7 @@ class BDP_ModifierOneUpmanship : BDP_Modifier
 		BDP_Modifier.DisplayName "One-Upmanship";
 		BDP_Modifier.Description "Soul Spheres grant extra lives";
 	}
-	Override void worldthingspawned(Worldevent e)
-	{
-	If(e.thing && e.thing.getclassname() == "BDP_Soulsphere")
-		{
-			Actor.spawn("BDP_SoulsphereOneUp",e.thing.pos);
-			E.thing.destroy();
-		}
-		
-	If(e.thing  && e.thing.getclassname() == "BDP_Megasphere")
-		{
-			Actor.spawn("BDP_MegasphereOneUp",e.thing.pos);
-			E.thing.destroy();
-		}
 	
-	}
 	override void WorldTick()
 	{
 		for(int i = 0; i < MAXPLAYERS; i++)
@@ -258,7 +244,38 @@ class BDP_ModifierScoreMaster : BDP_Modifier
 
 }
 
-
+mixin class BDP_ScoreMixin
+{
+	int scoreAmount;
+	property ScoreAmount : scoreAmount;
+	
+	int extraLives;
+	property ExtraLives : extraLives;
+	
+	override bool TryPickup(in out Actor toucher)
+	{
+		if(super.TryPickup(toucher))
+		{
+			toucher.Score += scoreAmount;
+			if(!extraLives) return true;
+			BDP_PlayerPawn dplr = BDP_PlayerPawn(toucher);
+			If(dplr && dplr.oneupmanship)
+				dplr.extralives += extraLives;
+			return true;
+		}
+		return false;
+	}
+	
+	override void PlayPickupSound(Actor toucher)
+	{
+		if(extraLives)
+		{
+			let dplr = BDP_PlayerPawn(toucher);
+			if(dplr && dplr.oneupmanship) PickupSound = "1UP";
+		}
+		super.PlayPickupSound(toucher);
+	}
+}
 
 class BDP_ModifierShockFactor : BDP_Modifier
 {

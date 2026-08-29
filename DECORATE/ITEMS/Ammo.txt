@@ -1,8 +1,6 @@
 //Changes made:
 //Rifle/pistol mags, rockets, shells and shellboxes had alternative pickups coded in.
 
-
-
 ACTOR MiniGunCount : Ammo 
 {
 	Inventory.PickupMessage "Picked up a Deployable Turret"
@@ -25,20 +23,6 @@ ACTOR MiniGunCount : Ammo
 
 // Backpack ---------------------------------------------------------------
 
-ACTOR DoubleRifleAmmo : Ammo
-{
-   Inventory.Amount 0
-   Inventory.MaxAmount 62
-   Ammo.BackpackAmount 0
-   Ammo.BackpackMaxAmount 62
-   Inventory.Icon "RIFLB0"
-}
-
-
-
-
-
-
 ACTOR Clip1Drop : BDP_Clip1
 {
 }
@@ -52,29 +36,6 @@ ACTOR BDSMGAmmo : Ammo
    Inventory.Icon SMGZA0
 }
 
-
-
-ACTOR BDDualSMGAmmo : Ammo
-{
-   Inventory.Amount 0
-   Inventory.MaxAmount 82
-   Ammo.BackpackAmount 0
-   Ammo.BackpackMaxAmount 82
-   Inventory.Icon SMGZB0
-}
-
-
-
-
-ACTOR SSGAmmo : Ammo
-{
-   Inventory.Amount 0
-   Inventory.MaxAmount 2
-   Ammo.BackpackAmount 0
-   Ammo.BackpackMaxAmount 2
-   Inventory.Icon "SGN2A0"
-}
-
 ACTOR PlasmaAmmo : Ammo
 {
    Inventory.Amount 0
@@ -82,17 +43,6 @@ ACTOR PlasmaAmmo : Ammo
    Ammo.BackpackAmount 0
    Ammo.BackpackMaxAmount 50
    Inventory.Icon "PLASA0"
-}
-
-
-
-ACTOR GLAmmo : Ammo
-{
-   Inventory.Amount 0
-   Inventory.MaxAmount 1
-   Ammo.BackpackAmount 0
-   Ammo.BackpackMaxAmount 1
-   Inventory.Icon "GLAPA0"
 }
 
 ACTOR MiniHellRocketAmmo : Ammo
@@ -104,7 +54,6 @@ ACTOR MiniHellRocketAmmo : Ammo
    Inventory.Icon "FATBD0"
 }
 
-
 ACTOR SoulAmmo : Ammo
 {
    Inventory.Amount 0
@@ -114,16 +63,6 @@ ACTOR SoulAmmo : Ammo
    Inventory.Icon "BON1E0"
    Inventory.PickupMessage "Souls of the damned."
    Inventory.PickupSound "ZombieFodder/Soul"
-}
-
-
-ACTOR BuzzSawAmmo : Ammo
-{
-   Inventory.Amount 30
-   Inventory.MaxAmount 30
-   Ammo.BackpackAmount 450
-   Ammo.BackpackMaxAmount 30
-   Inventory.Icon "HBUSE0"
 }
 
 ACTOR Gas : Ammo
@@ -155,27 +94,6 @@ ACTOR FlameCannonPickup
 
 }
 
-ACTOR MP40Ammo : Ammo
-{
-   Inventory.Amount 0
-   Inventory.MaxAmount 32
-   Ammo.BackpackAmount 0
-   Ammo.BackpackMaxAmount 32
-   Inventory.Icon "MP40I0"
-   
-}
-
-
-ACTOR DualMP40Ammo : Ammo
-{
-   Inventory.Amount 0
-   Inventory.MaxAmount 64
-   Ammo.BackpackAmount 0
-   Ammo.BackpackMaxAmount 64
-   Inventory.Icon "MP40J0"
-   
-}
-
 ACTOR RailgunAmmo : Ammo
 {
    Inventory.Amount 0
@@ -184,19 +102,6 @@ ACTOR RailgunAmmo : Ammo
    Inventory.Icon "SRCGA0"
    Ammo.BackpackMaxAmount 5
 }
-
-
-ACTOR NuRailgunAmmo : Ammo
-{
-   Inventory.Amount 0
-   Inventory.MaxAmount 5
-   Ammo.BackpackAmount 0
-   Inventory.Icon "SRCGA0"
-   Ammo.BackpackMaxAmount 5
-}
-
-		
-		
 
 ACTOR GrenadeAmmo : Ammo
 {
@@ -216,198 +121,6 @@ ACTOR GrenadeAmmo : Ammo
 	}
 }
 
-
-ACTOR GrenadeBox : GrenadeAmmo
-{
-	Game Doom
-	SpawnID 139
-	Inventory.PickupMessage "Picked up a box of throwables."
-	Inventory.Pickupsound "RCKCLIP"
-	Inventory.Amount 4
-	Scale 0.9
-	States
-	{
-	Spawn:
-	TNT1 A 1
-	TNT1 A 0 A_JumpIf(getCVAR("Dox_SimplePickups")==true,"Spawn1")
-//	TNT1 A 0 A_Jump(48, "SpawnGrenadeBox")
-	TNT1 A 0 A_Jump(256, "spawn1", "spawn2", "spawn3")
-	Loop
-	
-	    Spawn1:
-		RBOK G -1
-		Stop
-		
-        Spawn2:
-		RBOK H -1
-		Stop
-		
-		Spawn3:
-		RBOK I -1
-		Stop
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-ACTOR TankAmmo : Ammo
-{
-	Inventory.PickupMessage "Picked up a Magazine."
-	Inventory.Amount 10
-	Inventory.MaxAmount 100
-	Ammo.BackpackAmount 0
-	Ammo.BackpackMaxAmount 100
-	Inventory.Icon "NULL"
-	States
-	{
-	Spawn:
-		CLIP A -1
-		Stop
-	}
-}
-
-
-ACTOR MechAmmo : Ammo
-{
-
-	Inventory.PickupMessage "Picked up a Magazine."
-	Inventory.Amount 10
-	Inventory.MaxAmount 100
-	Ammo.BackpackAmount 0
-	Ammo.BackpackMaxAmount 100
-	Inventory.Icon "NULL"
-	States
-	{
-	Spawn:
-		CLIP A -1
-		Stop
-	}
-}
-
-
-
-
-ACTOR HeavyMachinegunAmmo : Ammo
-{
-	Game Doom
-	Inventory.PickupMessage "Picked up a Magazine."
-	Inventory.Amount 100
-	Inventory.MaxAmount 2000
-	Ammo.BackpackAmount 0
-	Ammo.BackpackMaxAmount 2000
-	Inventory.Icon "NULL"
-	States
-	{
-	Spawn:
-		CLIP A -1
-		Stop
-	}
-}
-
-
-
-
-ACTOR MechRocketAmmo : Ammo
-{
-	Game Doom
-	Inventory.PickupMessage "Picked up a Magazine."
-	Inventory.Amount 5
-	Inventory.MaxAmount 60
-	Ammo.BackpackAmount 0
-	Ammo.BackpackMaxAmount 60
-	Inventory.Icon "NULL"
-	States
-	{
-	Spawn:
-		CLIP A -1
-		Stop
-	}
-}
-
-
-ACTOR MechLaserAmmo : Ammo
-{
-	Game Doom
-	Inventory.PickupMessage "Picked up a Magazine."
-	Inventory.Amount 30
-	Inventory.MaxAmount 200
-	Ammo.BackpackAmount 0
-	Ammo.BackpackMaxAmount 200
-	Inventory.Icon "NULL"
-	States
-	{
-	Spawn:
-		CLIP A -1
-		Stop
-	}
-}
-
-
-
-ACTOR MechMOrtarAmmo : Ammo
-{
-	Game Doom
-	Inventory.PickupMessage "Picked up a Magazine."
-	Inventory.Amount 1
-	Inventory.MaxAmount 20
-	Ammo.BackpackAmount 0
-	Ammo.BackpackMaxAmount 20
-	Inventory.Icon "NULL"
-	States
-	{
-	Spawn:
-		CLIP A -1
-		Stop
-	}
-}
-
-
-
-ACTOR HelicopterRocketAmmo : Ammo
-{
-	Game Doom
-	Inventory.PickupMessage "Picked up a Magazine."
-	Inventory.Amount 1
-	Inventory.MaxAmount 100
-	Ammo.BackpackAmount 0
-	Ammo.BackpackMaxAmount 100
-	Inventory.Icon "NULL"
-	States
-	{
-	Spawn:
-		CLIP A -1
-		Stop
-	}
-}
-
-
-ACTOR HelicopterMissileAmmo : Ammo
-{
-	Game Doom
-	Inventory.PickupMessage "Picked up a Magazine."
-	Inventory.Amount 1
-	Inventory.MaxAmount 50
-	Ammo.BackpackAmount 0
-	Ammo.BackpackMaxAmount 50
-	Inventory.Icon "NULL"
-	States
-	{
-	Spawn:
-		CLIP A -1
-		Stop
-	}
-}
-
-
-		
 ACTOR BDPistolAmmo : Ammo
 {
    Inventory.Amount 0
@@ -416,115 +129,3 @@ ACTOR BDPistolAmmo : Ammo
    Ammo.BackpackMaxAmount 16
    Inventory.Icon PISTG0
 }
-
-
-ACTOR BDDualPistolAmmo : Ammo
-{
-   Inventory.Amount 0
-   Inventory.MaxAmount 32
-   Ammo.BackpackAmount 0
-   Ammo.BackpackMaxAmount 32
-   Inventory.Icon PISTH0
-}
-
-ACTOR PickyNuke : Nuke
-{
-
-
-	States
-	{
-	Spawn:
-		TNT1 A 0
-		TNT1 A 0 //A_JumpIfInventory("BFG10k",1,"stay",AAPTR_PLAYER1)
-		nope:
-		 TNT1 A 0 A_SpawnItemEx ("BDP_CellPack",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION|SXF_TRANSFERSPECIAL|SXF_TRANSFERAMBUSHFLAG,0, tid)
- 		stop
-		Stay:
-		TNT1 A 0 A_JumpIfInventory("Nuke",1,"nope",AAPTR_PLAYER1)
-		NULL A 0 A_jump(128,2)
-		NULL A 0 A_ChangeFlag("XFLIP",1)
-		Stay2:
-		TNT1 A 0 A_startSound ("10KIDLE",12,0,0.5)
-		NKLG EFGEFG 2 A_spawnitemex("greenflaresmall",0,0,8)
-		LOOP
-		
-	}
-
-
-}
-
-Actor AmmoFragGrenade : Ammo
-{
-	Inventory.PickupMessage "Picked up a Grenade."
-	Inventory.Amount 1
-	Inventory.MaxAmount 2
-	Ammo.BackpackAmount 1
-	Ammo.BackpackMaxAmount 4
-	Inventory.PickupSound "GRNPIN"
-	Scale 0.5
-	States
-	{
-	Spawn:
-		GRND D -1
-		Stop
-	}
-
-}
-
-Actor AmmoPipeBomb : Ammo
-{
-	Inventory.PickupMessage "Picked up a Proximity Mine."
-	Inventory.Amount 1
-	Inventory.MaxAmount 2
-	Ammo.BackpackAmount 1
-	Ammo.BackpackMaxAmount 4
-	Scale 0.40
-	Inventory.PickupSound "PIPESEL"
-	
-	States
-	{
-	Spawn:
-		PIPb B -1
-		Stop
-	}
-
-}
-
-Actor AmmoIceGrenade : Ammo
-{
-	Inventory.PickupMessage "Picked up an Freeze 'Nade."
-	Inventory.Amount 1
-	Inventory.MaxAmount 2
-	Ammo.BackpackAmount 1
-	Ammo.BackpackMaxAmount 3
-	Scale 0.5
-	Inventory.PickupSound "ICEGPRE2"
-	States
-	{
-	Spawn:
-		GRND E -1
-		Stop
-	}
-
-}
-
-Actor AmmoVoidGrenade : Ammo
-{
-	Inventory.PickupMessage "Picked up a Void Grenade."
-	Inventory.Amount 1
-	Inventory.MaxAmount 1
-	Ammo.BackpackAmount 0
-	Ammo.BackpackMaxAmount 2
-	Scale 0.5
-	Inventory.PickupSound "VoidNadeBounce"
-
-	States
-	{
-	Spawn:
-		GRND F -1
-		Stop
-	}
-
-}
-
-

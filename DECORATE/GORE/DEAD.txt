@@ -3021,7 +3021,7 @@ ACTOR DyingComando
 		Stop
 	Death:
 	    CFTB D 1
-		TNT1 A 0 A_SpawnItem ("CrueltyBonus5Health")
+		TNT1 A 0 A_SpawnItem ("HealthPlusFatalityBonus")
 TNT1 AAAAAAAAAA 0 A_CustomMissile ("Brutal_FlyingBlood", 15, 0, random (0, 360), 2, random (0, 160))
 TNT1 AAA 0 A_CustomMissile ("Xdeath1", 15, 0, random (0, 360), 2, random (0, 160))
          TNT1 A 1 A_SpawnItem ("SuperBrutalizedDeadChaingunGuy", 3)

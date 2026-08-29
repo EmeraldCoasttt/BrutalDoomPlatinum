@@ -44,8 +44,8 @@ damage 0
 
 //ITEMS
 #include DECORATE/ITEMS/AMMO.txt
-#include DECORATE/ITEMS/HEALTH2.txt
-#include DECORATE/ITEMS/KEYS.txt
+//#include DECORATE/ITEMS/HEALTH2.txt
+//#include DECORATE/ITEMS/KEYS.txt
 
 //Guns Guns Guns
 #include DECORATE/EFFECTS/TRACERS.txt

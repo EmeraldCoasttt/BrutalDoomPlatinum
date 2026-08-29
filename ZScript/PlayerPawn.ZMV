@@ -1348,7 +1348,7 @@ class BDP_PlayerPawn : PlayerPawn
 				flashtimer--;
 			}
 			
-			If(flashburnout > 0 && !findinventory("BDP_PowerNightVision"))
+			If(flashburnout > 0 && !findinventory("BDP_NightVision"))
 			{
 				flashburnout--;
 			}
@@ -1359,7 +1359,7 @@ class BDP_PlayerPawn : PlayerPawn
 				{
 					flashtimer = 20;
 					flashon = false;
-					If(!findinventory("BDP_PowerNightVision"))
+					If(!findinventory("BDP_NightVision"))
 					{
 						A_startsound("FLASHOFF",5);
 					}
@@ -1378,7 +1378,7 @@ class BDP_PlayerPawn : PlayerPawn
 					flashtimer = 20;
 					flashburnout = 700;
 					flashon = true;
-					If(!findinventory("BDP_PowerNightVision"))
+					If(!findinventory("BDP_NightVision"))
 					{
 						A_startsound("FLASHON",5);
 						A_giveinventory("BDP_flashlight",1);
@@ -1403,7 +1403,7 @@ class BDP_PlayerPawn : PlayerPawn
 					Takeinventory("switchflashlight",1);
 				}
 				
-			If(findinventory("BDP_PowerNightVision") && flashon)
+			If(findinventory("BDP_NightVision") && flashon)
 				{
 					PPShader.SetEnabled("NiteVis",true);
 					giveinventory("VisorAmp",1);
@@ -1570,27 +1570,21 @@ class BDP_PlayerPawn : PlayerPawn
 			ultrabonus = true;
 		}
 		
-		If(spawnwitharmor && !findinventory("powershield",TRUE) && health > 0)
+		If(spawnwitharmor && !findinventory("BDP_PowerShield") && health > 0)
 		{
-			GiveInventory("PowerShield2",1);
-			giveinventory("powershieldcharge",3);
-			
-		}
-		If(spawnwitharmor)
-		{
-			giveinventory("powershieldcharge",3);
+			GiveInventory("BDP_PowerShield", 1);
 		}
 		
 		If(spawnberserked && !findinventory("powerstrength",TRUE) && health > 0)
 		{
-			GiveInventory("Berserk2",1);
+			GiveInventory("PowerStrength",1);
 			If((health) < 50)
 			{
 				a_sethealth(100);
 			}
 		}
 		
-		If(maximumoverdrive && !findinventory("powerboost",TRUE) && health > 0)
+		If(maximumoverdrive && !findinventory("BDP_PowerBoost",TRUE) && health > 0)
 		{
 			GiveInventory("BDP_BoosterFrame",1);
 		}
@@ -1714,7 +1708,7 @@ class BDP_PlayerPawn : PlayerPawn
 	{
 		let player = self.player;
 		UserCmd cmd = player.cmd;
-		If(countinv("powerboost") > 0)
+		If(countinv("BDP_PowerBoost") > 0)
 		{
 			Booster = true;
 		}
@@ -2045,7 +2039,7 @@ class BDP_PlayerPawn : PlayerPawn
 		
 		let player = self.player;
 		// [RH] check for jump
-		If(!player.onground && !doublejumpready && !oldjump && (countinv("powerboost") > 0))
+		If(!player.onground && !doublejumpready && !oldjump && (countinv("BDP_PowerBoost") > 0))
 		{
 			doublejumpready = true;
 		
@@ -3265,7 +3259,7 @@ class BDP_Flashlight : CustomInventory {
 					spillOuter = 60;
 					spillRadius = 384;
 					
-					If (owner.findinventory("BDP_PowerNightVision"))
+					If (owner.findinventory("BDP_NightVision"))
 					{
 						Beamradius = 1500;
 						SpillRadius = 1200;
@@ -3387,7 +3381,7 @@ class BDP_Flashlight : CustomInventory {
 			if(SelfLight1) { SelfLight1.Destroy(); }
 			if(SelfLight2) { SelfLight2.Destroy(); }
 		}
-		if (level.time % 5 == 0 && !owner.findinventory("BDP_PowerNightVision"))
+		if (level.time % 5 == 0 && !owner.findinventory("BDP_NightVision"))
 		{
 			FLineTraceData AlertTrace;
 			owner.LineTrace(Owner.Angle, 328, owner.pitch, TRF_SOLIDACTORS, owner.height * 0.5, data: AlertTrace);

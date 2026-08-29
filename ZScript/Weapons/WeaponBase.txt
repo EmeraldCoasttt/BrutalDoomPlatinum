@@ -1477,7 +1477,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 				
 				If(owner.findinventory("istacticalclass") && dplr)
 				{
-					If(owner.findinventory("powerstrength") || owner.findinventory("powerboost"))
+					If(owner.findinventory("powerstrength") || owner.findinventory("BDP_powerboost"))
 					{
 						if (level.time % 2 == 0)
 						{

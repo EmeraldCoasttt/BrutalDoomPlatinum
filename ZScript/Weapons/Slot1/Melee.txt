@@ -28,7 +28,7 @@ class BDP_Fist : BDP_Weapon replaces Fist
 		+BDP_Weapon.BLOODSTAIN
 		+INVENTORY.UNDROPPABLE
 		Tag "Fists";
-		Inventory.AltHUDIcon "MEDKC0";
+		Inventory.AltHUDIcon "PSTRA0";
 		BDP_Weapon.voiceacted 0;
 		BDP_Weapon.handedness 2;
 	}
