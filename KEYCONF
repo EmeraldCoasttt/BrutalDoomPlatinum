@@ -10,6 +10,9 @@
 
 	addmenukey "Toss Grenade" "+user2"
 	
+	addmenukey "Use Equipment" bdp_useequipment
+	alias bdp_useequipment "netevent bdp_useequipment"
+	
 	addmenukey "Swap Grenades" swapgrenade
 	defaultbind I swapgrenade
 	alias swapgrenade "pukename swapgrenades"

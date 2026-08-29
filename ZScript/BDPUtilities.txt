@@ -235,6 +235,11 @@
 		{
 			bdplr.togglescanner();
 		}
+		
+		if(e.name ~== "bdp_useequipment" && bdplr && bdplr.OwnedEquipment && bdplr.activeEquipment)
+		{
+			bdplr.OwnedEquipment.Use(false);
+		}
 	}
 	/*
 	override bool InputProcess(InputEvent e)

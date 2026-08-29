@@ -274,9 +274,11 @@ class BDP_PlayerPawn : PlayerPawn
 	array<Weapon> pickedUpWeapons;
 	// Weapon we're focusing on (pressing Use will pick
 	// it up):
-	Weapon focusWeapon;
+	Inventory focusItem;
+	BDP_Equipment ownedEquipment;
+	bool activeEquipment;
 	// Text prompt to show for this weapon:
-	String focusWeaponPrompt;
+	String focusItemPrompt;
 	// Will be set to true when pressing use to let
 	// the weapon be picked up:
 	bool manualPickup;
@@ -801,8 +803,11 @@ class BDP_PlayerPawn : PlayerPawn
 	{
 		// If not weapon, do the usual:
 		let weap = Weapon(item);
-		if (!weap) return true;
-	
+		let equip = BDP_Equipment(item);
+		if (!weap && !equip) return true;
+		
+		if(weap)
+		{
 		bool overCap = ExceedsWeapCapacity(weap);
 		bool canDualWield = IsDualWieldable(weap);
 		
@@ -831,13 +836,13 @@ class BDP_PlayerPawn : PlayerPawn
 		
 		// If this is a weapon we're already getting a promopt about,
 		// and player pressed Use, pick it up:
-		if (weap == focusWeapon && manualPickup && !isfists && !isbarrel)
+		if (weap == focusItem && manualPickup && !isfists && !isbarrel)
 		{
 			// if over capacity, drop readyweapon:
 			if (overCap)
 			{
 				DropOwnedWeapon(self.player.readyweapon);
-				player.pendingweapon = focusWeapon;
+				player.pendingweapon = weap;
 			}
 			// if dual-wieldable, activate that:
 			if (canDualWield)
@@ -845,7 +850,7 @@ class BDP_PlayerPawn : PlayerPawn
 				A_selectweapon(weap.getclassname());
 			}
 			// and flush the pointer:
-			focusWeapon = null;
+			focusItem = null;
 			manualPickup = false;
 			weap.giveinventory("AmmoTaken",1);
 			AddToPickupList(weap);
@@ -853,10 +858,10 @@ class BDP_PlayerPawn : PlayerPawn
 		}
 		
 		
-		if (weap == focusWeapon && manualPickup && isbarrel)
+		if (weap == focusItem && manualPickup && isbarrel)
 		{
 			// and flush the pointer:
-			focusWeapon = null;
+			focusItem = null;
 			manualPickup = false;
 			AddToPickupList(weap);
 			return true;
@@ -931,21 +936,67 @@ class BDP_PlayerPawn : PlayerPawn
 		string keystr = "\cl\cg"..Bindings.NameAllKeys(usekeys, false).."\cl"; //get buttons and colorize
 		keystr.Replace(", ","\cl/\cg"); //clean up the separators
 		// Otherwise update prompt text and weapon pointer:
-		focusWeaponPrompt =  "Press "..keystr..PICKUPSTR_PICK; //base prompt
+		focusItemPrompt =  "Press "..keystr..PICKUPSTR_PICK; //base prompt
 		if (canDualWield)
 		{
-			focusWeaponPrompt = "Press "..keystr..PICKUPSTR_DW; //dual-wield prompt
+			focusItemPrompt = "Press "..keystr..PICKUPSTR_DW; //dual-wield prompt
 		}
 		else if (overCap && !isbarrel) //we're at capacity
 		{
-			focusWeaponPrompt =  "Press "..keystr..PICKUPSTR_SWAP; //swap prompt
+			focusItemPrompt =  "Press "..keystr..PICKUPSTR_SWAP; //swap prompt
 		}
 		// Construct the prompt (this assumes "%s" is present to pass
 		// the name of the weapon to, and calls StringTable.Localize
 		// so it'll be correctly localized if LANGUAGE is used):
-		focusWeaponPrompt = String.Format(StringTable.Localize(focusWeaponPrompt), weap.GetTag());
+		focusItemPrompt = String.Format(StringTable.Localize(focusItemPrompt), weap.GetTag());
 		
-		focusWeapon = weap;
+		focusItem = weap;
+		return false;
+		}
+		else if(equip)
+		{
+			if (self.FindInventory(equip.GetClass()))
+			{
+				return false;
+			}
+			bool overCap = (ownedEquipment != null);
+			
+			if (distance3d(equip) > 128)
+			{
+				return true;
+			}
+			
+			// If this is a weapon we're already getting a promopt about,
+			// and player pressed Use, pick it up:
+			if (equip == focusItem && manualPickup)
+			{
+				// if over capacity, drop readyweapon:
+				if (overCap)
+					self.DropInventory(ownedEquipment);
+				ownedEquipment = BDP_Equipment(focusItem);
+				activeEquipment = equip.activeEquipment;
+				// and flush the pointer:
+				focusItem = null;
+				manualPickup = false;
+				return true;
+			}
+			
+			Bindings.GetAllKeysForCommand(usekeys,"+use");
+			string keystr = "\cl\cg"..Bindings.NameAllKeys(usekeys, false).."\cl"; //get buttons and colorize
+			keystr.Replace(", ","\cl/\cg"); //clean up the separators
+			focusItemPrompt =  "Press "..keystr..PICKUPSTR_PICK; //base prompt
+			if (overCap) //we're at capacity
+			{
+				focusItemPrompt =  "Press "..keystr..PICKUPSTR_SWAP; //swap prompt
+			}
+			// Construct the prompt (this assumes "%s" is present to pass
+			// the name of the weapon to, and calls StringTable.Localize
+			// so it'll be correctly localized if LANGUAGE is used):
+			focusItemPrompt = String.Format(StringTable.Localize(focusItemPrompt), equip.GetTag());
+			
+			focusItem = equip;
+			return false;
+		}
 		return false;
 	}
 	
@@ -965,7 +1016,8 @@ class BDP_PlayerPawn : PlayerPawn
 		if (BDP_Handler.IsVoodooDoll(self)) return;
 		
 		let weap = Weapon(item);
-		if (!weap) return;
+		let equip = BDP_Equipment(item);
+		if (!weap && !equip) return;
 		
 
 		// If it was in the picked-up list, remove it from there:
@@ -976,9 +1028,9 @@ class BDP_PlayerPawn : PlayerPawn
 			pickedUpWeapons.Delete(id);
 		}
 		// If it was the focus weapon, flush the pointer:
-		if (weap == focusWeapon)
+		if (item == focusItem)
 		{
-			focusWeapon = null;
+			focusItem = null;
 		}
 	}
 	void togglescanner()
@@ -2357,13 +2409,13 @@ class BDP_PlayerPawn : PlayerPawn
 		{
 			oldInputs[i] = oldinputs[i - 1];
 		}
-		if (focusWeapon && !BDP_Handler.IsVoodooDoll(self))
+		if (focusItem && !BDP_Handler.IsVoodooDoll(self))
 		{
 			// Check if our and weapon's collision boxes no longer align.
-			// If so, flush the focusWeapon pointer:
-			if (!BDP_Handler.IsAABBColliding(self, focusWeapon))
+			// If so, flush the focusItem pointer:
+			if (!BDP_Handler.IsAABBColliding(self, focusItem))
 			{
-				focusWeapon = null;
+				focusItem = null;
 				manualPickup = false;
 			}
 			// Otherwise if player is pressing Use, let them
@@ -2371,7 +2423,7 @@ class BDP_PlayerPawn : PlayerPawn
 			else if ((player.cmd.buttons & BT_USE) && !(player.oldbuttons & BT_USE))
 			{
 				manualPickup = true;
-				focusWeapon.Touch(self);
+				focusItem.Touch(self);
 			}
 		}
 	// Get Distance under crosshair.

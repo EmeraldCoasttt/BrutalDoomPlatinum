@@ -1,0 +1,91 @@
+class BDP_Equipment : Inventory abstract
+{
+	bool activeEquipment;
+	property Active : activeEquipment;
+	
+	int cooldown;
+	bool pickupDeleted;
+	
+	Default
+	{
+		Inventory.MaxAmount 1;
+		BDP_Equipment.Active true;
+		+INVENTORY.AUTOACTIVATE
+	}
+}
+
+//placeholder items
+class BDP_ZerkItem : BDP_Equipment
+{
+	Default
+	{
+		Tag "Berserk";
+	}
+	
+	override bool Use(bool pickup)
+	{
+		if(pickup && !pickupDeleted)
+		{
+			owner.GiveInventory("PowerStrength", 1);
+			owner.GiveBody(100, 100);
+			owner.A_SelectWeapon("BDP_Fist");
+			pickupDeleted = true;
+		}
+		else if(!pickup)
+		{
+			owner.GiveBody(30);
+			cooldown = 30;
+		}
+		return false;
+	}
+	
+	States
+	{
+	Spawn:
+		PSTR A -1;
+		Stop;
+	}
+}
+
+class BDP_PackItem : BDP_Equipment
+{
+	Default
+	{
+		Tag "Backpack";
+		BDP_Equipment.Active false;
+	}
+	
+	override bool Use(bool pickup)
+	{
+		owner.GiveInventory("BDP_PackBoost", 1);
+		pickupDeleted = true;
+		return false;
+	}
+	
+	override void OnDrop(Actor dropper)
+	{
+		dropper.TakeInventory("BDP_PackBoost", 1);
+	}
+	
+	States
+	{
+	Spawn:
+		BPAK A -1;
+		Stop;
+	}
+}
+
+class BDP_PackBoost : BackpackItem
+{
+	override Inventory CreateCopy(Actor other)
+	{
+		let dplr = BDP_PlayerPawn(other);
+		if(dplr)
+		{
+			let equip = BDP_Equipment(dplr.ownedEquipment);
+			if(equip)
+				bDepleted = equip.pickupDeleted;
+		}
+		return super.CreateCopy(other);
+	}
+}

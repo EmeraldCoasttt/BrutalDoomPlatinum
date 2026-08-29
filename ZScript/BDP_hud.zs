@@ -572,7 +572,9 @@ class BDP_HUD : DoomStatusBar
 		// Selected item:
 		iconPos.x += iconSpacing;
 		DrawSelectedInventory(iconPos, iconflags);
-		
+		let dplr = BDP_PlayerPawn(cplayer.mo);
+		if(dplr && dplr.ownedEquipment)
+			DrawTexture(GetIcon(dplr.ownedEquipment, 0), iconPos, iconFlags);
 		
 	}
 	
@@ -777,10 +779,10 @@ class BDP_HUD : DoomStatusBar
 		DrawGrenadeIndicator(mIndexfnt, iconPos, iconFlags, (22,22));
 		
 		let plr = BDP_PlayerPawn(CPlayer.mo);
-		if (plr && plr.focusWeapon && !automapactive)
+		if (plr && plr.focusItem && !automapactive)
 		{
-			textureID focusicon = geticon(plr.focusweapon,0);
-			DrawString(weapPromptFnt, plr.focusWeaponPrompt, (-22, -48), DI_SCREEN_RIGHT_BOTTOM|DI_TEXT_ALIGN_RIGHT, scale: (0.5, 0.5));
+			textureID focusicon = geticon(plr.focusItem,0);
+			DrawString(weapPromptFnt, plr.focusItemPrompt, (-22, -48), DI_SCREEN_RIGHT_BOTTOM|DI_TEXT_ALIGN_RIGHT, scale: (0.5, 0.5));
 			Drawtexture(focusicon,(-22,-51),DI_SCREEN_RIGHT_BOTTOM|DI_ITEM_RIGHT_BOTTOM);
 		}
 		
