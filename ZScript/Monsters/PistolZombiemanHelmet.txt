@@ -458,7 +458,7 @@ class DroppedHelmet : Actor
 	States
 	{
 	Spawn:
-		BON2 A 1 A_SetRoll(roll-12);
+		BON2 E 1 A_SetRoll(roll-12);
 		//DRPH ABCDEFGHABCDEFGHABCDEFGHABCDEFGHABCDEFGH 3
 		loop;//Stop
 	Death:
@@ -475,7 +475,7 @@ class DroppedHelmet2 : DroppedHelmet
 	States
 	{
 	Spawn:
-		BON2 A 1 A_SetRoll(roll+12);
+		BON2 E 1 A_SetRoll(roll+12);
 		//DRPH HGFEDCBAHGFEDCBAHGFEDCBAHGFEDCBAHGFEDCBA 3
 		loop;//Stop
 	Death:
@@ -491,7 +491,7 @@ class DroppedHelmetB : DroppedHelmet
 	States
 	{
 	Spawn:
-		BON2 M 1 A_SetRoll(roll-12);
+		BON2 I 1 A_SetRoll(roll-12);
 		//DRPH IJKLMNOPIJKLMNOPIJKLMNOPIJKLMNOPIJKLMNOP 3
 		loop;//Stop
 	Death:
@@ -508,7 +508,7 @@ class DroppedHelmetB2: DroppedHelmet
 	States
 	{
 	Spawn:
-		BON2 M 1 A_SetRoll(roll+12);
+		BON2 I 1 A_SetRoll(roll+12);
 		//DRPH PONMLKJIPONMLKJIPONMLKJIPONMLKJIPONMLKJI 3
 		loop;//Stop
 	Death:
