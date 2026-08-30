@@ -351,6 +351,7 @@ class BDP_NightVision : Inventory replaces Infrared
 class BDP_Berserk : Inventory replaces Berserk
 {
 	bool green;
+	int spawnFrame;
 	
 	Default
 	{
@@ -359,7 +360,7 @@ class BDP_Berserk : Inventory replaces Berserk
 		+INVENTORY.ALWAYSPICKUP
 		Inventory.PickupMessage "$GOTBERSERK";
 		Inventory.PickupSound "misc/p_pkup";
-		Inventory.PickupSound "BERSPKUP";
+		Inventory.PickupSound "GOTHPS";
 		Tag "Berserk Pack";
 		BDP_Berserk.ScoreAmount 500;
 	}
@@ -368,9 +369,14 @@ class BDP_Berserk : Inventory replaces Berserk
 	
 	override bool Use(bool pickup)
 	{
-		owner.GiveInventory("PowerStrength", 1);
 		owner.GiveBody(100, 100);
-		owner.A_SelectWeapon("BDP_Fist");
+		bool a;
+		actor b;
+		[a, b] = A_SpawnItemEx("BDP_BerserkEquipment", xvel:frandom(-1.0, 1.0), frandom(-1.0, 1.0), frandom(4.0, 8.0), flags:SXF_SETMASTER);
+		let spawn = BDP_BerserkEquipment(b);
+		if(!spawn) return true;
+		spawn.frame = spawn.spawnFrame = spawnFrame;
+		spawn.green = green;
 		return true;
 	}
 	
@@ -382,6 +388,7 @@ class BDP_Berserk : Inventory replaces Berserk
 			frame += 3;
 			green = true;
 		}
+		spawnFrame = frame;
 		super.BeginPlay();
 	}
 	

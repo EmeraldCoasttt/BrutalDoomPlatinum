@@ -27,4 +27,5 @@ bdp_energyarmor,secret,2
 bdp_quaddamage,secret,2
 bdp_hastesphere,secret,2
 bdp_boosterframe,secret,2
+bdp_equipmentspawner,secret,2
 bdp_ragesphere,secret,3

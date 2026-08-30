@@ -206,6 +206,9 @@ class BDP_PlayerPawn : PlayerPawn
 	float lasttichealth;
 	int paintimer;
 	int healtimer;
+	int regenTime;
+	int regenCap;
+	int regenDelay;
 	int geigertimer;
 	
 	//Shaders
@@ -608,6 +611,9 @@ class BDP_PlayerPawn : PlayerPawn
 		PPShader.SetEnabled("haste", false);
 		PPShader.SetEnabled("rage", false);
 		PPShader.SetEnabled("quad", false);
+		regenTime = 8;
+		regenCap = 20;
+		regenDelay = 175;
 		super.PostBeginPlay();
 	}
 	
@@ -1362,17 +1368,17 @@ class BDP_PlayerPawn : PlayerPawn
 		}
 		If(health < lasttichealth)
 		{
-			paintimer = 180;
+			paintimer = regenDelay;
 			healtimer = 0;
 		}
 		lasttichealth = health;
-		If(paintimer <= 0 && healtimer < 8)
+		If(paintimer <= 0 && healtimer < regenTime)
 		{
 			healtimer++;
 		}
-		If(healtimer >= 8 && health < 20 && health > 0)
+		If(healtimer >= regenTime && health < regenCap && health > 0)
 		{
-			A_sethealth(health + 1);
+			GiveBody(1);
 			healtimer = 0;
 		}
 			

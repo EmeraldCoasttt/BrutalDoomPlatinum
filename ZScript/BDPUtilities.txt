@@ -236,9 +236,14 @@
 			bdplr.togglescanner();
 		}
 		
-		if(e.name ~== "bdp_useequipment" && bdplr && bdplr.OwnedEquipment && bdplr.activeEquipment)
+		if(e.name ~== "bdp_use_equipment" && bdplr && bdplr.OwnedEquipment && bdplr.activeEquipment)
 		{
 			bdplr.OwnedEquipment.Use(false);
+		}
+		
+		if(e.name ~== "bdp_release_equipment" && bdplr && bdplr.OwnedEquipment && bdplr.activeEquipment)
+		{
+			bdplr.OwnedEquipment.ReleaseEquipment();
 		}
 	}
 	/*

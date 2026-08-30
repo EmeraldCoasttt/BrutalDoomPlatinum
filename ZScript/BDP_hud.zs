@@ -574,7 +574,11 @@ class BDP_HUD : DoomStatusBar
 		DrawSelectedInventory(iconPos, iconflags);
 		let dplr = BDP_PlayerPawn(cplayer.mo);
 		if(dplr && dplr.ownedEquipment)
-			DrawTexture(GetIcon(dplr.ownedEquipment, 0), iconPos, iconFlags);
+		{
+			let equip = BDP_Equipment(dplr.ownedEquipment);
+			DrawTexture(GetIcon(equip, 0), iconPos, iconFlags);
+			if(equip.cooldown) DrawString(mconfont, string.format("%d", ceil(equip.cooldown / 35.0)), iconPos + (8, -8));
+		}
 		
 	}
 	
