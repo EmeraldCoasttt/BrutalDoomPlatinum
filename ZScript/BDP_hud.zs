@@ -576,7 +576,7 @@ class BDP_HUD : DoomStatusBar
 		if(dplr && dplr.ownedEquipment)
 		{
 			let equip = BDP_Equipment(dplr.ownedEquipment);
-			DrawTexture(GetIcon(equip, 0), iconPos, iconFlags);
+			DrawTexture(GetIcon(equip, 0), iconPos, iconFlags, col:equip.cooldown ? 0xff808080 : 0xffffffff);
 			if(equip.cooldown) DrawString(mconfont, string.format("%d", ceil(equip.cooldown / 35.0)), iconPos + (8, -8));
 		}
 		
