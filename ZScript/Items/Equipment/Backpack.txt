@@ -1,0 +1,56 @@
+class BDP_Backpack : BDP_Equipment
+{
+	Default
+	{
+		Tag "Backpack";
+		Inventory.Icon "BPAKA0";
+		Inventory.PickupMessage "$GOTBACKPACK";
+		Inventory.PickupSound "BACKPACK";
+		BDP_Equipment.Active false;
+	}
+	
+	override void PickupEquipment(bool depleted)
+	{
+		owner.GiveInventory("BDP_BackpackItem", 1);
+	}
+	
+	override void OnDrop(Actor dropper)
+	{
+		dropper.TakeInventory("BDP_BackpackItem", 1);
+	}
+	
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_Jump(64, "SpawnOriginal");
+		TNT1 A 0 A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
+		Loop;
+	SpawnOriginal:
+		BPAK A -1;
+		Stop;
+	Spawn1:
+		BPAK BCDE 4;
+		LOOP;
+	Spawn2:
+		BPAK CDEB 4;
+		LOOP;
+	Spawn3:
+		BPAK DEBC 4;
+		LOOP;
+	}
+}
+
+class BDP_BackpackItem : BackpackItem
+{
+	override Inventory CreateCopy(Actor other)
+	{
+		let dplr = BDP_PlayerPawn(other);
+		if(dplr)
+		{
+			let equip = BDP_Equipment(dplr.ownedEquipment);
+			if(equip)
+				bDepleted = equip.pickupDepleted;
+		}
+		return super.CreateCopy(other);
+	}
+}

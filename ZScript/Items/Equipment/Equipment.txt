@@ -1,0 +1,91 @@
+class BDP_Equipment : Inventory abstract
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+		BDP_Equipment.Active true;
+		+INVENTORY.AUTOACTIVATE
+	}
+	
+	const TICRATE = 35;
+	
+	int cooldown;
+	int effectTimer;
+	bool pickupDepleted;
+	bool holding;
+	
+	bool activeEquipment;
+	property Active : activeEquipment;
+	
+	override bool Use(bool pickup)
+	{
+		if(pickup)
+		{
+			PickupEquipment(pickupDepleted);
+			pickupDepleted = true;
+		}
+		else if(!pickup)
+		{
+			if(!cooldown) holding = true;
+			int cd = UseEffect(cooldown);
+			if(cd) cooldown = cd * TICRATE;
+		}
+		return false;
+	}
+	
+	override void Tick()
+	{
+		if(cooldown > 0)
+			cooldown--;
+		super.Tick();
+	}
+	
+	override void DoEffect()
+	{
+		if(holding)
+		{
+			bool cancel = HoldEffect();
+			if(cancel)
+				ReleaseEquipment();
+		}
+	}
+	
+	void ReleaseEquipment()
+	{
+		if(!holding) return;
+		int cd = ReleaseEffect(cooldown);
+		if(cd) cooldown = cd * TICRATE;
+		holding = false;
+	}
+	
+	virtual void PickupEquipment(bool depleted)
+	{
+		return;
+	}
+	
+	virtual int UseEffect(bool onCooldown)
+	{
+		return 0;
+	}
+	
+	virtual bool HoldEffect()
+	{
+		return false;
+	}
+	
+	virtual int ReleaseEffect(bool onCooldown)
+	{
+		return 0;
+	}
+}
+
+class BDP_EquipmentSpawner : RandomSpawner replaces Backpack
+{
+	Default
+	{
+		DropItem "BDP_Backpack", 255, 1;
+		DropItem "BDP_FragGrenade", 255, 1;
+		DropItem "BDP_LandMine", 255, 1;
+		DropItem "BDP_HologramProjector", 255, 1;
+	}
+}

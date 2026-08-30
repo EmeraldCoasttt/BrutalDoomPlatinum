@@ -1,0 +1,121 @@
+class BDP_FragGrenade : BDP_Equipment
+{
+	Default
+	{
+		Tag "Frag Grenade";
+		Inventory.Icon "GRNDD0";
+		Inventory.PickupMessage "Picked up a Frag Grenade.";
+		Inventory.PickupSound "GRNPIN";
+		Scale 0.5;
+	}
+	
+	int fuse;
+	const MAX_FUSE = 48;
+	
+	override int UseEffect(bool onCooldown)
+	{
+		if(onCooldown) return 0;
+		fuse = 0;
+		return 0;
+	}
+	
+	override bool HoldEffect()
+	{
+		fuse++;
+		if(fuse % 8 == 0) owner.A_StartSound("BEP");
+		if(fuse > MAX_FUSE) return true;
+		return false;
+	}
+	
+	override int ReleaseEffect(bool onCooldown)
+	{
+		if(onCooldown) return 0;
+		owner.A_StartSound("GRNTOSS");
+		let nade = HandGrenade(owner.SpawnPlayerMissile("HandGrenade"));
+		if(nade) nade.fuse = fuse;
+		return 45;
+	}
+	States
+	{
+	Spawn:
+		GRND D -1;
+		Stop;
+	}
+}
+
+class HandGrenade : Actor
+{
+	Default
+	{
+		Scale 0.5;
+		Radius 4;
+		Height 4;
+		Projectile;
+		Speed 30;
+		DamageFunction 2;
+		Gravity 0.7;
+		Projectile;
+		BounceFactor 0.60;
+		WallBounceFactor 0.40;
+		BounceSound "HandNadeBounce";
+		Obituary "%o ate %k grenade.";
+		+BOUNCEONFLOORS
+		+BOUNCEONWALLS
+		+BOUNCEONCEILINGS
+		+ALLOWBOUNCEONACTORS
+		+BOUNCEAUTOOFFFLOORONLY
+		+CANBOUNCEWATER
+		+SKYEXPLODE
+		+FORCEXYBILLBOARD
+		+ROLLSPRITE
+		+ROLLCENTER
+		+MTHRUSPECIES
+		+XFLIP
+		-NOTELEPORT
+		-NOGRAVITY
+	}
+	
+	const FUSE_MAX = 48;
+	int fuse;
+	
+	override void Tick()
+	{
+		fuse++;
+		Super.Tick();
+	}
+	
+	States
+	{
+	Spawn:
+		GRND A 1 NoDelay
+		{
+			A_SetRoll(roll + 22.5);
+			if(fuse > FUSE_MAX) return findstate("Explode");
+			return findstate(null);
+		}
+		Loop;
+	Death:
+		TNT1 A 0
+		{
+			A_SetRoll(45);
+			A_StopSound();
+			A_StartSound("HandNadeBounce", 0);
+			A_AlertMonsters(128);
+			A_SpawnItem("GrenadeAlerter");
+		}
+	DeathLoop:
+		GRND A 1
+		{
+			A_CustomMissile("GrenadeSmoke", 0, 0, random (-6,6), 2, random (0, 360));
+			if(fuse > FUSE_MAX) return findstate("Explode");
+			return findstate(null);
+		}
+		Loop;
+	Explode:
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_SpawnItem("FragGrenadeExplosion");
+		TNT1 A 0 A_StopSound();
+		TNT1 A 0 A_PlaySound("GRENEXPL");
+		Stop;
+	}
+}

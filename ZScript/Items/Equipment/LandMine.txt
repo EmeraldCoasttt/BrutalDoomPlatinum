@@ -1,3 +1,73 @@
+class BDP_LandMine : BDP_Equipment
+{
+	Default
+	{
+		Tag "Land Mine";
+		Inventory.Icon "PIPBB0";
+		Inventory.PickupMessage "Picked up a Land Mine.";
+		Inventory.PickupSound "PIPESEL";
+		Scale 0.4;
+	}
+	
+	override int UseEffect(bool onCooldown)
+	{
+		if(onCooldown) return 0;
+		owner.A_StartSound("DukeThrw");
+		owner.SpawnPlayerMissile("PipebombThrownQuickTossed");
+		return 45;
+	}
+	States
+	{
+	Spawn:
+		PIPB B -1;
+		Stop;
+	}
+}
+
+class PipeBombThrown : Actor
+{
+	Default
+	{
+		Height 3;
+		Radius 6;
+		Speed 30;
+		Damage 2;
+		Scale 0.4;
+		Projectile;
+		BounceType "Doom";
+		DamageType "Kick";
+		BounceType "Doom";
+		BounceFactor 0.60;
+		WallBounceFactor 0.10;
+		Mass 2;
+		BounceSound "PIPBOING";
+		Species "ThrownPipebombs";
+		+WINDTHRUST
+		+MOVEWITHSECTOR
+		+FORCEXYBILLBOARD
+		+EXPLODEONWATER
+		+SKYEXPLODE
+		+BOUNCEONWALLS
+		+BOUNCEONCEILINGS
+		+MTHRUSPECIES
+		+THRUACTORS
+		-BOUNCEONFLOORS
+		-BOUNCEONACTORS
+		-DROPOFF
+		-NOTELEPORT
+		-NOGRAVITY
+	}
+	States
+	{
+	Spawn:
+		PIPB B 1;
+		Loop;
+	Death:
+		TNT1 A 0 A_SpawnItemEx("PipeBombThrownIdle");
+		Stop;
+	}
+}
+
 CLASS PipeBombThrownIdle: Actor
 {
 	float beepvolume;

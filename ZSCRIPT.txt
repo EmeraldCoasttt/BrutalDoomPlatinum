@@ -16,12 +16,18 @@ version "4.14.0"
 #include "Zscript/MapEnhancement.txt"
 
 #include "Zscript/Items/Artifacts.txt"
-#include "Zscript/Items/Equipment.txt"
 //#include "Zscript/Items/DemonRunes.txt"
 #include "Zscript/Items/Health.txt"
 #include "Zscript/Items/Keyes.txt"
 
 #include "Zscript/Items/Ammo.txt"
+
+#include "Zscript/Items/Equipment/Equipment.txt"
+#include "Zscript/Items/Equipment/Berserk.txt"
+#include "Zscript/Items/Equipment/Backpack.txt"
+#include "Zscript/Items/Equipment/FragGrenade.txt"
+#include "Zscript/Items/Equipment/LandMine.txt"
+#include "Zscript/Items/Equipment/HologramProjector.txt"
 
 #include "Zscript/Weapons/WeaponBase.txt"
 #include "Zscript/Weapons/WeaponSpawners.txt"
@@ -68,7 +74,6 @@ version "4.14.0"
 #include "Zscript/Weapons/Slot8/Tenderizer.txt"
 #include "Zscript/Weapons/Slot8/ExplosiveBarrel.txt"
 //Slot 9
-#include "Zscript/Weapons/Slot9/Mines.txt"
 #include "Zscript/Weapons/Slot9/VoidGrenades.txt"
 
 #include "zscript/Gore/NashGoreMath.zc"

@@ -1,0 +1,88 @@
+class BDP_BerserkEquipment : BDP_Equipment
+{
+	Default
+	{
+		Tag "Berserk";
+		Inventory.PickupMessage "$GOTBERSERK";
+		Inventory.PickupSound "BERSPKUP";
+	}
+	
+	bool green;
+	int spawnFrame;
+	
+	override void PostBeginPlay()
+	{
+		string frameLetter;
+		switch(spawnFrame)
+		{
+		default:
+			frameLetter = "A";
+			break;
+		case 1:
+			frameLetter = "B";
+			break;
+		case 2:
+			frameLetter = "C";
+			break;
+		case 3:
+			frameLetter = "D";
+			break;
+		case 4:
+			frameLetter = "E";
+			break;
+		case 5:
+			frameLetter = "F";
+			break;
+		}
+		icon = TexMan.CheckForTexture("PSTM"..frameLetter.."0", TexMan.Type_Sprite);
+		super.PostBeginPlay();
+	}
+	
+	override void PickupEquipment(bool depleted)
+	{
+		owner.GiveInventory("PowerStrength", 1);
+		if(depleted) return;
+		owner.A_SelectWeapon("BDP_Fist");
+	}
+	
+	override int UseEffect(bool onCooldown)
+	{
+		if(onCooldown) return 0;
+		owner.A_StartSound("GOTHPS", 0);
+		let dplr = BDP_PlayerPawn(owner);
+		dplr.regenTime = 2;
+		dplr.regenCap = 40;
+		dplr.regenDelay = 35;
+		dplr.painTimer = 0;
+		effectTimer = 30 * TICRATE;
+		return 60;
+	}
+	
+	override void DoEffect()
+	{
+		if(effectTimer < 0) return;
+		if(effectTimer > 0)
+			effectTimer--;
+		else
+		{
+			let dplr = BDP_PlayerPawn(owner);
+			dplr.regenTime = 8;
+			dplr.regenCap = 20;
+			dplr.regenDelay = 175;
+			effectTimer = -1;
+		}
+	}
+	
+	override void OnDrop(Actor dropper)
+	{
+		dropper.TakeInventory("PowerStrength", 1);
+		frame = spawnFrame;
+	}
+	
+	States
+	{
+	Spawn:
+		PSTM # 2 NoDelay A_SpawnItemEx(green ? "GreenFlareSmall2" : "RedFlareVerySmall", zofs:6);
+		Loop;
+	}
+}
