@@ -37,11 +37,13 @@ class BDP_Pistol : BDP_Weapon replaces Pistol
 		PIS2 GH 0;
 		PISD ABCDEFGHIJKLMNOPQRSTUVWXYZ 1;
 		Stop;
-	Grenade: //30
+	TossItem: //8
 		TNT1 A 0 A_EndAim();
 		TNT1 A 0 A_SetCrosshairDX("PISTRet", 1000);
 		PISB ABCD 1 A_SetSilencedSprites("PISB","PISD");
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		PISB DCBA 1 A_SetSilencedSprites("PISB","PISD");
 		Goto Ready;
 	Kick: //18

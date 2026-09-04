@@ -42,133 +42,6 @@ class BDP_PowerScanner : PowerScanner
 	}
 }
 
-// Energy Armor --------------------------------------------------------------
-
-class BDP_PowerShield : Powerup
-{
-	Default
-	{
-		Powerup.Duration 0x7FFFFFFD;
-		+INVENTORY.HUBPOWER
-	}
-	
-	bool playedSound;
-	int damageTimer;
-	int charges;
-	
-	override void BeginPlay()
-	{
-		charges = 3;
-		super.BeginPlay();
-	}
-	
-	override void ModifyDamage (int damage, Name damageType, out int newdamage, bool passive, Actor inflictor, Actor source, int flags)
-	{
-		if (owner && passive && damage > 0 && owner.countinv("basicarmor") > 0)
-		{
-			owner.A_StartSound("StickyGrenade/Hit", 125);
-			playedSound = false;
-			damageTimer = 240;
-			if(owner.ApplyDamageFactor(damageType, damage) >= owner.CountInv("BasicArmor"))
-			{
-				owner.A_StartSound("mjoln2",126,CHANF_LOOPING);
-				charges--;
-			}
-		}
-	}
-	
-	override void DoEffect()
-	{
-		if(damageTimer > 0) damageTimer;
-		If(owner)
-		{
-			int armorCount = owner.countinv("basicarmor");
-			if(armorCount > 20)
-			{
-				owner.A_StopSound(126);
-			}
-			else if(armorCount > 0)
-			{
-				owner.A_StartSound("mjoln3", 126, CHANF_LOOPING);
-			}
-			
-			if(damageTimer < 1 && armorCount < 50)
-			{
-				if(!playedSound)
-				{
-					owner.A_StartSound("mjoln", 125, CHANF_NOSTOP, startTime:(armorCount / 50.0 ));
-					playedSound = true;
-				}
-				owner.GiveInventory("BDP_MjolnirArmor", 1);
-			}
-			
-			let playerArmor = BasicArmor(owner.FindInventory('BasicArmor'));
-			playerArmor.SavePercent = 1.0;
-			owner.bNOBLOOD = (armorCount > 0);
-			if(charges < 0 && armorCount < 1)
-			{
-				owner.A_StopSound(126);
-				DepleteOrDestroy();
-			}
-		}
-		
-		super.DoEffect();
-	}
-	
-	Override void detachfromowner()
-	{
-		owner.bNOBLOOD = false;
-		super.detachfromowner();
-	}
-}
-
-class BDP_MjolnirArmor : BasicArmorBonus
-{
-	Default
-	{
-		Inventory.Icon "ARM2A0";
-		Armor.SavePercent 100;
-		Armor.SaveAmount 1;
-		Armor.MaxSaveAmount 50;
-	}
-}
-
-// Booster Frame --------------------------------------------------------------
-
-class BDP_BoosterFrame : PowerupGiver
-{
-	Default
-	{
-		Scale 0.5;
-		Inventory.PickupMessage "You got the Booster Frame!";
-		Inventory.PickupSound "BSTRPUP";
-		Powerup.Type "BDP_PowerBoost";
-		Inventory.MaxAmount 0;
-		BDP_BoosterFrame.ScoreAmount 500;
-		+COUNTITEM
-		+INVENTORY.ALWAYSPICKUP
-		+INVENTORY.AUTOACTIVATE
-	}
-	
-	mixin BDP_ScoreMixin;
-	
-	States
-	{
-	Spawn:
-		BFRM A -1;
-		Stop;
-	}
-}
-
-class BDP_PowerBoost : Powerup
-{
-	Default
-	{
-		Powerup.Duration 0x7FFFFFFD;
-		+INVENTORY.HUBPOWER;
-		+INVENTORY.NOTELEPORTFREEZE;
-	}
-}
 
 // Invulnerability Sphere ---------------------------------------------------
 
@@ -348,7 +221,7 @@ class BDP_NightVision : Inventory replaces Infrared
 
 // Berserk --------------------------------------------------------------
 
-class BDP_Berserk : Inventory replaces Berserk
+/*class BDP_Berserk : Inventory replaces Berserk
 {
 	bool green;
 	int spawnFrame;
@@ -398,7 +271,7 @@ class BDP_Berserk : Inventory replaces Berserk
 		PSTR # 2 NoDelay A_SpawnItemEx(green ? "GreenFlareSmall2" : "RedFlareVerySmall", zofs:8);
 		Loop;
 	}
-}
+}*/
 
 // Partial Invisibility --------------------------------------------------------------
 

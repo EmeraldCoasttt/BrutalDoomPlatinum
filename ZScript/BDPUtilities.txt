@@ -236,12 +236,12 @@
 			bdplr.togglescanner();
 		}
 		
-		if(e.name ~== "bdp_use_equipment" && bdplr && bdplr.OwnedEquipment && bdplr.activeEquipment)
+		if(e.name ~== "bdp_use_equipment" && bdplr && bdplr.OwnedEquipment && bdplr.OwnedEquipment.bActive)
 		{
 			bdplr.OwnedEquipment.Use(false);
 		}
 		
-		if(e.name ~== "bdp_release_equipment" && bdplr && bdplr.OwnedEquipment && bdplr.activeEquipment)
+		if(e.name ~== "bdp_release_equipment" && bdplr && bdplr.OwnedEquipment && bdplr.OwnedEquipment.bActive)
 		{
 			bdplr.OwnedEquipment.ReleaseEquipment();
 		}
@@ -739,6 +739,9 @@
 			If(e.thing && e.thing.target && e.thing.bismonster && e.thing.target is "BDP_PlayerPawn")
 			{
 				e.thing.target.giveinventory("PausePowerup",105);
+				let dplr = BDP_PlayerPawn(e.thing.target);
+				if(dplr.ownedEquipment && dplr.ownedEquipment.GetClassName() == "BDP_DarkClaw")
+					dplr.ownedEquipment.cooldown = clamp(dplr.ownedEquipment.cooldown - e.thing.default.health, 0, 1000);
 			}
 			int currentkills = Level.Killed_monsters;
 		

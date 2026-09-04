@@ -1,0 +1,100 @@
+class BDP_EnergyArmor : BDP_Equipment
+{
+	Default
+	{
+		Tag "Energy Shield";
+		Inventory.Icon "ARM3C0";
+		Inventory.PickupMessage "Picked up the energy shield!";
+		Inventory.PickupSound "items/energyshield";
+		BDP_Equipment.Cooldown 6;
+		-BDP_EQUIPMENT.ACTIVE
+	}
+	
+	bool playedSound;
+	double savePercentCache;
+	
+	override void PickupEquipment(bool depleted)
+	{
+		if(depleted) return;
+		owner.GiveInventory("BDP_MjolnirArmor", 50);
+	}
+	
+	override void OnDrop(Actor dropper)
+	{
+		let playerArmor = BasicArmor(dropper.FindInventory('BasicArmor'));
+		 playerArmor.SavePercent = savePercentCache;
+	}
+	
+	override void ModifyDamage (int damage, Name damageType, out int newdamage, bool passive, Actor inflictor, Actor source, int flags)
+	{
+		if (owner && passive && damage > 0 && owner.countinv("basicarmor") > 0)
+		{
+			owner.A_StartSound("StickyGrenade/Hit", 125);
+			playedSound = false;
+			int incomingDamage = owner.ApplyDamageFactor(damageType, damage);
+			if(owner.countinv("basicarmor") - incomingDamage < 50)
+				TriggerCooldown(true);
+		}
+	}
+	
+	override void DoEffect()
+	{
+		If(owner)
+		{
+			int armorCount = owner.countinv("basicarmor");
+			if(armorCount > 20 || !cooldown)
+			{
+				owner.A_StopSound(126);
+			}
+			else if(armorCount > 0)
+			{
+				owner.A_StartSound("mjoln3", 126, CHANF_LOOPING);
+			}
+			else
+			{
+				owner.A_StartSound("mjoln2", 126, CHANF_LOOPING);
+			}
+			
+			if(!cooldown && armorCount < 50)
+			{
+				if(!playedSound)
+				{
+					owner.A_StartSound("mjoln", 125, CHANF_NOSTOP, startTime:(armorCount / 50.0 ));
+					playedSound = true;
+				}
+				owner.GiveInventory("BDP_MjolnirArmor", 1);
+			}
+			
+			let playerArmor = BasicArmor(owner.FindInventory('BasicArmor'));
+			if(playerArmor.SavePercent < 1.0) savePercentCache = playerArmor.SavePercent;
+			playerArmor.SavePercent = 1.0;
+			owner.bNOBLOOD = (armorCount > 0);
+		}
+		
+		super.DoEffect();
+	}
+	
+	Override void detachfromowner()
+	{
+		owner.bNOBLOOD = false;
+		super.detachfromowner();
+	}
+	
+	States
+	{
+	Spawn:
+		ARM3 AAABBB 1 BRIGHT A_SpawnItem("BlueFlareSmall",0,10);
+		Loop;
+	}
+}
+
+class BDP_MjolnirArmor : BasicArmorBonus
+{
+	Default
+	{
+		Inventory.Icon "ARM2A0";
+		Armor.SavePercent 100;
+		Armor.SaveAmount 1;
+		Armor.MaxSaveAmount 50;
+	}
+}

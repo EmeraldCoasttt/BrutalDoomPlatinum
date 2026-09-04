@@ -3,19 +3,35 @@ class BDP_Equipment : Inventory abstract
 	Default
 	{
 		Inventory.MaxAmount 1;
-		BDP_Equipment.Active true;
+		BDP_Equipment.Cooldown 0;
+		BDP_Equipment.Charges 1;
 		+INVENTORY.AUTOACTIVATE
+		+BDP_EQUIPMENT.ACTIVE
 	}
 	
-	const TICRATE = 35;
-	
-	int cooldown;
+	int EquipFlags;
+		
+	double cooldown;
 	int effectTimer;
 	bool pickupDepleted;
 	bool holding;
 	
-	bool activeEquipment;
-	property Active : activeEquipment;
+	flagdef CooldownNotTimer : EquipFlags, 0;
+	flagdef Active : EquipFlags, 1;
+	
+	double maxCooldown;
+	property Cooldown : maxCooldown;
+	
+	int charges;
+	property Charges : charges;
+	
+	void TriggerCooldown(bool force = false)
+	{
+		int mod = bCooldownNotTimer ? 1 : TICRATE;
+		if(force || !cooldown && bActive)
+			cooldown = maxCooldown * mod;
+		if(charges > 0) charges--;
+	}
 	
 	override bool Use(bool pickup)
 	{
@@ -23,20 +39,30 @@ class BDP_Equipment : Inventory abstract
 		{
 			PickupEquipment(pickupDepleted);
 			pickupDepleted = true;
+			return false;
 		}
-		else if(!pickup)
+		if(charges)
 		{
-			if(!cooldown) holding = true;
-			int cd = UseEffect(cooldown);
-			if(cd) cooldown = cd * TICRATE;
+			bool cd = UseEffect();
+			if(!bActive) return false;
+			holding = true;
+			if(cd)
+			{
+				TriggerCooldown();
+			}
 		}
 		return false;
 	}
 	
 	override void Tick()
 	{
-		if(cooldown > 0)
-			cooldown--;
+		if(!bCooldownNotTimer && cooldown > 0 && charges < default.charges) cooldown--;
+		if(!cooldown && charges < default.charges)
+		{
+			charges++;
+			if(charges < default.charges && !bCooldownNotTimer)
+				cooldown = maxCooldown * TICRATE;
+		}
 		super.Tick();
 	}
 	
@@ -52,9 +78,12 @@ class BDP_Equipment : Inventory abstract
 	
 	void ReleaseEquipment()
 	{
-		if(!holding) return;
-		int cd = ReleaseEffect(cooldown);
-		if(cd) cooldown = cd * TICRATE;
+		if(!holding || !charges || !bActive) return;
+		bool cd = ReleaseEffect();
+		if(cd)
+		{
+			TriggerCooldown();
+		}
 		holding = false;
 	}
 	
@@ -63,9 +92,9 @@ class BDP_Equipment : Inventory abstract
 		return;
 	}
 	
-	virtual int UseEffect(bool onCooldown)
+	virtual bool UseEffect()
 	{
-		return 0;
+		return false;
 	}
 	
 	virtual bool HoldEffect()
@@ -73,9 +102,9 @@ class BDP_Equipment : Inventory abstract
 		return false;
 	}
 	
-	virtual int ReleaseEffect(bool onCooldown)
+	virtual bool ReleaseEffect()
 	{
-		return 0;
+		return false;
 	}
 }
 

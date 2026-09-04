@@ -108,39 +108,6 @@ Class BDP_HeavyArmorSpawner: RandomSpawner Replaces BlueArmor
 	}
 }
 
-Class BDP_EnergyArmor : Inventory 
-{
-	Default
-	{
-		+COUNTITEM
-		+INVENTORY.ALWAYSPICKUP
-		+INVENTORY.AUTOACTIVATE
-		Inventory.PickupMessage "Picked up the energy armor!";
-		Inventory.PickupSound "misc/p_pkup";
-		Inventory.PickupSound "items/energyshield";
-		Tag "Energy Armor";
-		BDP_EnergyArmor.ScoreAmount 500;
-	}
-	
-	mixin BDP_ScoreMixin;
-	
-	override bool Use(bool pickup)
-	{
-		owner.GiveInventory("BDP_PowerShield", 1);
-		owner.GiveInventory("BDP_MjolnirArmor", 50);
-		let shield = BDP_PowerShield(owner.FindInventory("BDP_PowerShield"));
-		if(shield) shield.charges = 3;
-		return true;
-	}
-	
-	States
-	{
-	Spawn:
-		ARM3 AAABBB 1 BRIGHT A_SpawnItem("BlueFlareSmall",0,10);
-		Loop;
-	}
-}
-
 class BDP_HeavyArmor : BasicArmorPickup
 {
 	Default

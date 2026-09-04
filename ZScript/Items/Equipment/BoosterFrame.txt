@@ -1,0 +1,31 @@
+class BDP_BoosterFrame : BDP_Equipment
+{
+	Default
+	{
+		Tag "Berserk";
+		Inventory.PickupMessage "You got the Booster Frame!";
+		Inventory.PickupSound "BSTRPUP";
+		BDP_Equipment.Cooldown 5;
+		Scale 0.5;
+		-BDP_EQUIPMENT.ACTIVE
+	}
+	
+	override void PickupEquipment(bool depleted)
+	{
+		let dplr = BDP_PlayerPawn(owner);
+		if(dplr) dplr.booster = true;
+	}
+	
+	override void OnDrop(Actor dropper)
+	{
+		let dplr = BDP_PlayerPawn(dropper);
+		if(dplr) dplr.booster = false;
+	}
+	
+	States
+	{
+	Spawn:
+		BFRM A -1;
+		Stop;
+	}
+}

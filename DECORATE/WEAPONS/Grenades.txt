@@ -351,31 +351,6 @@ ACTOR OldFreezenadeAlt: OldFreezenade
 
 ACTOR NowBlowUpPleaseUwU: Inventory {Inventory.MaxAmount 1}
 ACTOR HasThrownPipebomb: Inventory {Inventory.MaxAmount 1}
-ACTOR PipebombThrownSlow: PipeBombThrown { Speed 10 }
-
-ACTOR PipebombThrownQuickTossed: PipeBombThrown
-{
-	States
-	{
-	Death:
-      TNT1 A 0
-	  TNT1 A 0 A_JumpIfInventory("NowBlowUpPleaseUwU",1,"SpawnExplodingPipebomb")
-	  TNT1 A 0 A_SpawnItemEx("PipeBombThrownIdleQuickTossed",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION)
-      stop
-	}
-}
-
-ACTOR PipeBombThrownIdleQuickTossed: PipeBombThrownIdle
-{
-	States
-	{
-	Pickup:
-	  TNT1 A 0
-	  TNT1 A 0 A_TakeInventory("HasThrownPipebomb",1)
-	  TNT1 A 0 A_GiveInventory("AmmoPipeBomb",1)
-	  stop
-	}
-}
 
 ACTOR PipeBombThrownExplodeNow: CustomInventory
 {

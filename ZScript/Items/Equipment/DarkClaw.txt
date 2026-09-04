@@ -1,0 +1,32 @@
+class BDP_DarkClaw : BDP_Equipment
+{
+	Default
+	{
+		Tag "Dark Claw";
+		Inventory.Icon "DCLWA0";
+		Inventory.PickupMessage "Picked up the dark claw.";
+		Inventory.PickupSound "GRNPIN";
+		BDP_Equipment.Cooldown 1000;
+		BDP_Equipment.Charges 1;
+		+BDP_EQUIPMENT.COOLDOWNNOTTIMER
+	}
+	
+	int fuse;
+	const MAX_FUSE = 48;
+	
+	override bool UseEffect()
+	{
+		owner.A_StartSound("items/darkclaw/blast", 0);
+		owner.A_Explode(500, 128, XF_NOTMISSILE, damagetype:"Incinerate");
+		for(int i = -4; i < 5; i++)
+			owner.SpawnPlayerMissile("SmallExplosionFlames", owner.angle + i * 20, z:-16, noautoaim:true);
+		return true;
+	}
+	
+	States
+	{
+	Spawn:
+		DCLW A -1;
+		Stop;
+	}
+}

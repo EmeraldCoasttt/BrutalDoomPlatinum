@@ -1,17 +1,25 @@
-class BDP_BerserkEquipment : BDP_Equipment
+class BDP_Berserk : BDP_Equipment replaces Berserk
 {
 	Default
 	{
 		Tag "Berserk";
 		Inventory.PickupMessage "$GOTBERSERK";
 		Inventory.PickupSound "BERSPKUP";
+		BDP_Equipment.Cooldown 30;
 	}
 	
 	bool green;
 	int spawnFrame;
 	
-	override void PostBeginPlay()
+	override void BeginPlay()
 	{
+		frame = random(0, 2);
+		if(BDP_Handler.getMedikitColor())
+		{
+			frame += 3;
+			green = true;
+		}
+		spawnFrame = frame;
 		string frameLetter;
 		switch(spawnFrame)
 		{
@@ -34,55 +42,36 @@ class BDP_BerserkEquipment : BDP_Equipment
 			frameLetter = "F";
 			break;
 		}
-		icon = TexMan.CheckForTexture("PSTM"..frameLetter.."0", TexMan.Type_Sprite);
-		super.PostBeginPlay();
+		icon = TexMan.CheckForTexture("PSTR"..frameLetter.."0", TexMan.Type_Sprite);
+		super.BeginPlay();
 	}
 	
 	override void PickupEquipment(bool depleted)
 	{
 		owner.GiveInventory("PowerStrength", 1);
-		if(depleted) return;
-		owner.A_SelectWeapon("BDP_Fist");
-	}
-	
-	override int UseEffect(bool onCooldown)
-	{
-		if(onCooldown) return 0;
-		owner.A_StartSound("GOTHPS", 0);
 		let dplr = BDP_PlayerPawn(owner);
 		dplr.regenTime = 2;
 		dplr.regenCap = 40;
 		dplr.regenDelay = 35;
+		if(depleted) return;
 		dplr.painTimer = 0;
-		effectTimer = 30 * TICRATE;
-		return 60;
-	}
-	
-	override void DoEffect()
-	{
-		if(effectTimer < 0) return;
-		if(effectTimer > 0)
-			effectTimer--;
-		else
-		{
-			let dplr = BDP_PlayerPawn(owner);
-			dplr.regenTime = 8;
-			dplr.regenCap = 20;
-			dplr.regenDelay = 175;
-			effectTimer = -1;
-		}
+		owner.A_SelectWeapon("BDP_Fist");
 	}
 	
 	override void OnDrop(Actor dropper)
 	{
 		dropper.TakeInventory("PowerStrength", 1);
+		let dplr = BDP_PlayerPawn(dropper);
+		dplr.regenTime = 8;
+		dplr.regenCap = 20;
+		dplr.regenDelay = 175;
 		frame = spawnFrame;
 	}
 	
 	States
 	{
 	Spawn:
-		PSTM # 2 NoDelay A_SpawnItemEx(green ? "GreenFlareSmall2" : "RedFlareVerySmall", zofs:6);
+		PSTR # 2 NoDelay A_SpawnItemEx(green ? "GreenFlareSmall2" : "RedFlareVerySmall", zofs:6);
 		Loop;
 	}
 }

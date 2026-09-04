@@ -10,7 +10,6 @@ class BDP_HUD : DoomStatusBar
 	HUDFont mDiginumber;
 	HUDFont weapPromptFnt;
 	Int ArrowTimer;
-	int lasttickgrenade;
 	int hinttimer;
 	double hintfade;
 	int randomhint;
@@ -130,12 +129,10 @@ class BDP_HUD : DoomStatusBar
 			DrawImage(pwr, (143, 169), DI_ITEM_LEFT_TOP);
 		}
 		
-		if (CPlayer.mo.FindInventory("BDP_PowerShield"))
+		if (CPlayer.mo.FindInventory("BDP_EnergyArmor") && cplayer.mo.CountInv("BasicArmor") > 0)
 		{
 			DrawImage("HASARMR", (179, 169), DI_ITEM_LEFT_TOP);
 		}
-		
-		DrawGrenadeIndicator(mIndexfnt, (334, 194), box: (22,22),TRUE);
 		
 		// Mag:
 		DrawImage("STARMS", (104,168), DI_ITEM_LEFT_TOP);
@@ -157,91 +154,6 @@ class BDP_HUD : DoomStatusBar
 		DrawStaminaBar((106, 166));
 	}
 	
-	// Draws grenade indicator. Returns false if for some reason
-	// the pointer to the grenade item wasn't obtained:
-	bool DrawGrenadeIndicator(HUDFont fnt, vector2 pos, int flags = 0, vector2 box = (-1,-1), bool reversed = FALSE)
-	{
-		If(ArrowTimer <= 66)
-		ArrowTimer++;
-	
-		//let gammo = CPlayer.mo.FindInventory("GrenadeAmmo");
-		//if (gammo)
-		//{
-			string nade = "";
-			string nade2 = "";
-			int nade1ammo = 0;
-			int nade2ammo = 0;
-			// Pick the grenade icon based on the amount of
-			// NadeType in inventory:
-			int nadeAmt = (CPlayer.mo.CountInv("NadeType"));
-			switch (nadeAmt)
-			{
-			case 1:
-				nade2 = "GRNDA"; 
-				nade = "PIPBE";
-				nade2ammo = (CPlayer.mo.CountInv("AmmoFragGrenade"));
-				nade1ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
-				break;
-			case 0:
-				nade = "GRNDA"; 
-				nade2 = "PIPBE";
-				nade1ammo = (CPlayer.mo.CountInv("AmmoFragGrenade"));
-				nade2ammo = (CPlayer.mo.CountInv("AmmoPipeBomb"));
-				break;
-			}
-			if (nade)
-			{
-				If(nade1ammo > 0)
-				{
-					DrawImage(nade, pos, flags, box: box);
-					//DrawString(fnt, String.Format("%d", gammo.amount), pos + (box.x / 2, -4), flags|DI_TEXT_ALIGN_RIGHT);
-					DrawString(
-					msmallfont,
-					String.Format("%d",nade1ammo),
-					pos + ((box.x / 6) + 5, -8),
-					DI_TEXT_ALIGN_RIGHT,
-					Font.CR_White
-					//scale:(0.8, 0.8)
-					);
-				}
-				If(nade2ammo > 0)
-				{
-					If(reversed)
-					pos = (pos + (17, 0));
-					else
-					pos = (pos + (-17, 0));
-					DrawImage(nade2, pos, flags, box: (11,11), scale:(0.5,0.5));
-					DrawString(
-						msmallfont,
-						String.Format("%d",nade2ammo),
-						pos + ( 3, -4),
-						DI_TEXT_ALIGN_RIGHT,
-						Font.CR_White,
-						scale:(0.5, 0.5)
-					);
-				}
-				
-				
-				If(lasttickgrenade != CPlayer.mo.CountInv("NadeType"))
-				{
-					ArrowTimer = 0;
-				}
-				LastTickGrenade = CPlayer.mo.CountInv("NadeType");
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				return true;
-			}
-		//}
-		return false;
-	}
-
 	// For whatever reason the base DrawInventoryBar() in Zscript behaves differently
 	// from its SBARINFO analog, and is also generally less flexible.
 	// This is a copy of the function from statusbarcore but with the following
@@ -342,9 +254,9 @@ class BDP_HUD : DoomStatusBar
 		if (!armor)
 			return Font.CR_UNTRANSLATED;
 		
-		// BDP_PowerShield forces 100% absorption for the current armor
+		// BDP_EnergyArmor forces 100% absorption for the current armor
 		// and gets its own color:
-		if (CPlayer.mo.FindInventory("BDP_PowerShield"))
+		if (CPlayer.mo.FindInventory("BDP_EnergyArmor"))
 			return Font.CR_Cyan;
 		
 		double sp = armor.savepercent;
@@ -479,20 +391,6 @@ class BDP_HUD : DoomStatusBar
 			DrawImage('HASBERK', iconPos + smallIconOfs, DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
 			smallIconOfs.y = (smallIconOfs.y + 5);
 		}
-		if (CPlayer.mo.FindInventory("BDP_PowerBoost", true))
-		{
-			//name pwr = CPlayer.mo.FindInventory("NoFatality") ? 'HASBERK2' : 'HASBERK';
-			DrawImage('HASBSTR', iconPos + smallIconOfs, DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
-			smallIconOfs.y = (smallIconOfs.y + 5);
-		}
-		let shield = BDP_PowerShield(cplayer.mo.FindInventory("BDP_PowerShield"));
-		if(shield)
-		{
-			DrawImage("HASARMR", iconPos + smallIconOfs, DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
-			DrawImage(shield.charges < 3 ? "ARMRCHR2" : "ARMRCHRG", iconPos + smallIconOfs + (6, 0), DI_ITEM_LEFT_TOP);
-			DrawImage(shield.charges < 2 ? "ARMRCHR2" : "ARMRCHRG", iconPos + smallIconOfs + (6, 2), DI_ITEM_LEFT_TOP);
-			DrawImage(shield.charges < 1 ? "ARMRCHR2" : "ARMRCHRG", iconPos + smallIconOfs + (6, 4), DI_ITEM_LEFT_TOP);
-		}
 		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(Cplayer.mo);
 		If(BDPplr && BDPplr.extralives > 0)
 		{
@@ -507,7 +405,7 @@ class BDP_HUD : DoomStatusBar
 		}
 		
 		// Armor:
-		if (CPlayer.mo.FindInventory("BDP_PowerShield"))
+		if (CPlayer.mo.FindInventory("BDP_EnergyArmor") && cplayer.mo.CountInv("BasicArmor") > 0)
 		{
 			iconPos.x += iconSpacing;
 			DrawImage("ARM3C0",iconpos,iconflags);
@@ -540,7 +438,7 @@ class BDP_HUD : DoomStatusBar
 			{
 				// armor icon
 				//Should always show as energy armor if equipped
-				If(CPlayer.mo.FindInventory("BDP_PowerShield"))
+				If(CPlayer.mo.FindInventory("BDP_EnergyArmor") && cplayer.mo.CountInv("BasicArmor") > 0)
 				{
 					DrawImage("ARM3C0",iconpos,iconflags);
 				}
@@ -572,14 +470,6 @@ class BDP_HUD : DoomStatusBar
 		// Selected item:
 		iconPos.x += iconSpacing;
 		DrawSelectedInventory(iconPos, iconflags);
-		let dplr = BDP_PlayerPawn(cplayer.mo);
-		if(dplr && dplr.ownedEquipment)
-		{
-			let equip = BDP_Equipment(dplr.ownedEquipment);
-			DrawTexture(GetIcon(equip, 0), iconPos, iconFlags, col:equip.cooldown ? 0xff808080 : 0xffffffff);
-			if(equip.cooldown) DrawString(mconfont, string.format("%d", ceil(equip.cooldown / 35.0)), iconPos + (8, -8));
-		}
-		
 	}
 	
 	int stambarFadeTime; //modified in Tick()
@@ -779,23 +669,36 @@ class BDP_HUD : DoomStatusBar
 			);
 		}
 		
-		iconPos += (iconSpacing * 1, 17);
-		DrawGrenadeIndicator(mIndexfnt, iconPos, iconFlags, (22,22));
-		
-		let plr = BDP_PlayerPawn(CPlayer.mo);
-		if (plr && plr.focusItem && !automapactive)
+		iconPos += (iconSpacing * 1.2, 17);
+		let dplr = BDP_PlayerPawn(cplayer.mo);
+		if(dplr && dplr.ownedEquipment)
 		{
-			textureID focusicon = geticon(plr.focusItem,0);
-			DrawString(weapPromptFnt, plr.focusItemPrompt, (-22, -48), DI_SCREEN_RIGHT_BOTTOM|DI_TEXT_ALIGN_RIGHT, scale: (0.5, 0.5));
+			let equip = BDP_Equipment(dplr.ownedEquipment);
+			DrawTexture(GetIcon(equip, 0), iconPos, iconFlags, col:equip.charges ? 0xffffffff : 0xff808080);
+			if(equip.cooldown)
+			{
+				if(equip.bCooldownNotTimer)
+					DrawString(mconfont, string.format("%d", equip.cooldown), iconPos + (16, -8), DI_TEXT_ALIGN_RIGHT);
+				else
+					DrawString(mconfont, TicsToSeconds(equip.cooldown), iconPos + (16, -8), DI_TEXT_ALIGN_RIGHT);
+			}
+			if(equip.default.charges > 1)
+				DrawString(mconfont, string.format("%d", equip.charges), iconPos + (16, -16), DI_TEXT_ALIGN_RIGHT);
+		}
+		
+		if (dplr && dplr.focusItem && !automapactive)
+		{
+			textureID focusicon = geticon(dplr.focusItem,0);
+			DrawString(weapPromptFnt, dplr.focusItemPrompt, (-22, -48), DI_SCREEN_RIGHT_BOTTOM|DI_TEXT_ALIGN_RIGHT, scale: (0.5, 0.5));
 			Drawtexture(focusicon,(-22,-51),DI_SCREEN_RIGHT_BOTTOM|DI_ITEM_RIGHT_BOTTOM);
 		}
 		
 		
 	}
 	
-	string TicsToSeconds(int tics)
+	string TicsToSeconds(double tics)
 	{
-		int totalSeconds = tics / TICRATE;
+		int totalSeconds = ceil(tics / TICRATE);
 		int minutes = (totalSeconds / 60) % 60;
 		int seconds = totalSeconds % 60;
 

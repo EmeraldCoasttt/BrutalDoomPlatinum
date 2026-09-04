@@ -6,7 +6,7 @@ class BDP_Backpack : BDP_Equipment
 		Inventory.Icon "BPAKA0";
 		Inventory.PickupMessage "$GOTBACKPACK";
 		Inventory.PickupSound "BACKPACK";
-		BDP_Equipment.Active false;
+		-BDP_EQUIPMENT.ACTIVE
 	}
 	
 	override void PickupEquipment(bool depleted)
@@ -30,13 +30,13 @@ class BDP_Backpack : BDP_Equipment
 		Stop;
 	Spawn1:
 		BPAK BCDE 4;
-		LOOP;
+		Loop;
 	Spawn2:
 		BPAK CDEB 4;
-		LOOP;
+		Loop;
 	Spawn3:
 		BPAK DEBC 4;
-		LOOP;
+		Loop;
 	}
 }
 

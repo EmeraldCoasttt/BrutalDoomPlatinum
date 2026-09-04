@@ -1,4 +1,4 @@
-	addkeysection "BrutalDoom - Advanced Actions" BrutalDoomPlatinumActions	 
+	addkeysection "Brutal Doom Platinum" BrutalDoomPlatinumActions	 
 	
 	addmenukey "Kick" "+user1"
 
@@ -7,23 +7,17 @@
 	addmenukey "Flashlight" flashlightswitch
 	alias flashlightswitch "pukename PressFlashlight"
 	defaultbind F flashlightswitch
-
-	addmenukey "Toss Grenade" "+user2"
 	
 	addmenukey "Use Equipment" +bdp_use_equipment
 	alias +bdp_use_equipment "netevent bdp_use_equipment"
 	alias -bdp_use_equipment "netevent bdp_release_equipment"
 	
-	addmenukey "Swap Grenades" swapgrenade
-	defaultbind I swapgrenade
-	alias swapgrenade "pukename swapgrenades"
-
 	addmenukey "Scan Area" scanner
 	alias scanner "netevent togglescanner" 
 
 	addmenukey "Taunt" "+user4"
 
-	addkeysection "Brutal Doom - Cheats" BrutalDoomAdvMoves				  // here too
+	addkeysection "BDP Cheats" BrutalDoomPlatinumCheats				  // here too
 
 	addmenukey "Slow motion toggle" SlowMoBind
 	alias SlowMoBind "i_timescale 0.3; rebind SlowMoBind2"

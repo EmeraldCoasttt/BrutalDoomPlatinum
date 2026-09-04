@@ -5,7 +5,9 @@ class BDP_HologramProjector : BDP_Equipment
 		Tag "Hologram Projector";
 		Inventory.PickupMessage "Picked up a Hologram Projector!";
 		Inventory.PickupSound "items/computermap";
+		BDP_Equipment.Cooldown 15;
 		Inventory.Icon "HOLOA0";
+		Scale 0.5;
 	}
 	
 	actor laser;
@@ -17,14 +19,13 @@ class BDP_HologramProjector : BDP_Equipment
 		return lasersight.HitLocation - (lasersight.HitDir * 4);
 	}
 	
-	override int UseEffect(bool onCooldown)
+	override bool UseEffect()
 	{
-		if(onCooldown) return 0;
 		FLineTraceData lasersight;
 		vector3 targetpos = LaserTrace(lasersight);
 		laser = Spawn("HoloLaser", targetpos);
 		owner.A_StartSound("BEP", 0);
-		return 0;
+		return false;
 	}
 	
 	override bool HoldEffect()
@@ -36,9 +37,8 @@ class BDP_HologramProjector : BDP_Equipment
 		return false;
 	}
 	
-	override int ReleaseEffect(bool onCooldown)
+	override bool ReleaseEffect()
 	{
-		if(onCooldown) return 0;
 		if(laser)
 			laser.Destroy();
 		if(hologram)
@@ -66,7 +66,7 @@ class BDP_HologramProjector : BDP_Equipment
 			hologram.angle = owner.angle;
 		}
 		owner.A_StartSound("BEPBEP", 0);
-		return 5;
+		return true;
 	}
 	
 	States
