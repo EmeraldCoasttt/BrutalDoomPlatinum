@@ -18,6 +18,18 @@ class BDP_Ammo : Ammo
 		}
 		return (class<Ammo>)(type);
 	}
+	
+	override bool HandlePickup(Inventory item)
+	{
+		let ammoitem = Ammo(item);
+		if(ammoitem != null && ammoitem.GetParentAmmo() == GetClass() && owner.FindInventory("BDP_Backpack")) item.amount = ceil(item.amount * 1.25);
+		return super.HandlePickup(item);
+	}
+	
+	override string PickupMessage()
+	{
+		return string.format(StringTable.Localize(pickupMsg).." (+%d)", amount);
+	}
 }
 
 class BDP_MultiAmmo : Inventory
@@ -208,7 +220,7 @@ class BDP_Shell : BDP_Ammo replaces Shell
 {
 	Default
 	{
-		Inventory.PickupMessage "$GOTSHELLS";
+		Inventory.PickupMessage "Picked up some shotgun shells.";
 		Inventory.Amount 4;
 		Inventory.MaxAmount 50;
 		Ammo.BackpackAmount 4;
@@ -216,10 +228,7 @@ class BDP_Shell : BDP_Ammo replaces Shell
 		Inventory.Icon "SHELA0";
 		Inventory.Pickupsound "SHELPK1";
 	}
-	override string PickupMessage()
-	{
-		return string.format(amount > 1 ? "Picked up %d shotgun shells." : "Picked up a shotgun shell.",amount);
-	}
+	
 	States
 	{
 	Spawn:
@@ -325,18 +334,13 @@ class BDP_RocketAmmo : BDP_Ammo replaces RocketAmmo
 {
 	Default
 	{
-	Inventory.PickupMessage "$GOTROCKET";
+	Inventory.PickupMessage "Picked up some rockets.";
 	Inventory.Amount 1;
 	Inventory.MaxAmount 50;
 	Ammo.BackpackAmount 1;
 	Ammo.BackpackMaxAmount 100;
 	Inventory.Icon "ROCKA0";
 	Inventory.Pickupsound "RCKCLIP";
-	}
-	
-	override string PickupMessage()
-	{
-		return string.format(amount > 1 ? "Picked up %d rockets." : "Picked up a rocket.",amount);
 	}
 	
 	States
@@ -404,6 +408,7 @@ class BDP_Cell : BDP_Ammo replaces Cell
 		Inventory.Icon "CELLA0";
 		BDP_Ammo.ScoreAmount 100;
 	}
+	
 	States
 	{
 	Spawn:
