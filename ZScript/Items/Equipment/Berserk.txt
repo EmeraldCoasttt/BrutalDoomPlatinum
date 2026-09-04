@@ -5,7 +5,7 @@ class BDP_Berserk : BDP_Equipment replaces Berserk
 		Tag "Berserk";
 		Inventory.PickupMessage "$GOTBERSERK";
 		Inventory.PickupSound "BERSPKUP";
-		BDP_Equipment.Cooldown 30;
+		BDP_Equipment.Cooldown 15;
 	}
 	
 	bool green;
@@ -58,6 +58,14 @@ class BDP_Berserk : BDP_Equipment replaces Berserk
 		owner.A_SelectWeapon("BDP_Fist");
 	}
 	
+	override bool UseEffect()
+	{
+		if(!owner.FindInventory("BDP_Chainsaw") || owner.player.ReadyWeapon is "BDP_Chainsaw") return false;
+		owner.TakeInventory("BDP_BerserkStates", 1);
+		owner.GiveInventory("BDP_BerserkStates", 1);
+		return true;
+	}
+	
 	override void OnDrop(Actor dropper)
 	{
 		dropper.TakeInventory("PowerStrength", 1);
@@ -73,5 +81,99 @@ class BDP_Berserk : BDP_Equipment replaces Berserk
 	Spawn:
 		PSTR # 2 NoDelay A_SpawnItemEx(green ? "GreenFlareSmall2" : "RedFlareVerySmall", zofs:6);
 		Loop;
+	}
+}
+
+class BDP_BerserkStates : CustomInventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.AUTOACTIVATE
+	}
+	
+	override void Tick()
+	{
+		return;
+	}
+	
+	action void A_QuadSound()
+	{	
+		If(invoker.owner.findinventory("BDP_PowerQuadDamage"))
+		{
+			invoker.owner.a_startsound("items/quaddamage/active", 103);
+		}
+	}
+	
+	action void A_TakeAmmo(class<Inventory> ammotype, int ammoamount = 1, bool force = false)
+	{
+		If(!findinventory("BDP_PowerSpeed") || force)
+		{
+			ammoamount > 0 ? A_TakeInventory(ammotype,ammoamount) : A_GiveInventory(ammotype,ammoamount);
+		}
+	}
+	
+	States
+	{
+	Use:
+		TNT1 A -1
+		{
+			let dplr = BDP_PlayerPawn(invoker.owner);
+			dplr.canLedgeClimb = false;
+			A_ClearOverlays(49,50);
+			A_Overlay(90, "ThrowChainsaw");
+			player.SetPSprite(1, player.readyweapon.ResolveState("TossItem"));
+			A_OverlayOffset(90); //no args resets it to default position.
+		}
+		Wait;
+	ThrowChainsaw:
+		TNT1 A 5;
+		SAWF CD 1;
+		TNT1 A 0
+		{
+			A_StartSound("weapons/gswing", 1);
+			A_FireProjectile("ThrowedChainsaw", 0, 0, 0, 0);
+			A_TakeAmmo("BDP_Chainsaw");
+			A_QuadSound();
+		}
+		AXEZ ABC 1
+		{
+			A_SetAngle(Angle+2, SPF_INTERPOLATE);
+			A_SetPitch(Pitch+1, SPF_INTERPOLATE);
+		}
+		AXEZ D 1
+		{
+			A_SetAngle(Angle+1, SPF_INTERPOLATE);
+			A_SetPitch(Pitch+0.5, SPF_INTERPOLATE);
+		}
+		AXEZ E 1
+		{
+			A_SetAngle(Angle+0.5, SPF_INTERPOLATE); //7,5
+			A_SetPitch(Pitch+0.2, SPF_INTERPOLATE); //3,7
+		}
+		AXEZ E 2;
+		AXEZ E 1
+		{
+			A_SetAngle(Angle-0.5, SPF_INTERPOLATE);
+			A_SetPitch(Pitch-0.2, SPF_INTERPOLATE);
+		}
+		AXEZ EEF 1
+		{
+			A_SetAngle(Angle-2, SPF_INTERPOLATE);
+			A_SetPitch(Pitch-1, SPF_INTERPOLATE);
+		}
+		AXEZ G 1
+		{
+			A_SetAngle(Angle-1, SPF_INTERPOLATE);
+			A_SetPitch(Pitch-0.5, SPF_INTERPOLATE);
+		}
+		AXEZ HI 1;
+		TNT1 A 5;
+		TNT1 A 0
+		{
+			player.SetPSprite(1, player.readyweapon.ResolveState("FinishToss"));
+			TakeInventory("BDP_BerserkStates", 1);
+		}
+		Stop;
 	}
 }
