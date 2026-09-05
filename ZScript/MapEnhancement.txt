@@ -2,6 +2,17 @@
 
 Class BDP_MapEnhancer : LevelPostProcessor
 {
+	protected void ReplaceSectorTexture(int sectornum, int plane, string texture)
+	{
+		if(TexMan.CheckForTexture(texture, TexMan.Type_Any).IsValid())
+		{
+			SetSectorTexture(sectornum, plane, texture);
+		}
+		else
+		{
+			console.printf("\cgFailed to replace "..(plane == Sector.ceiling ? "ceiling" : "floor").." of sector %d with texture '\ci%s\cg'", sectornum, texture);
+		}
+	}
 	
 	protected void Apply( Name checksum, String mapname )
 	{
@@ -197,8 +208,8 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					Levellocals.ReplaceTextures("BROWN96", "METAL24B", TexMan.NOT_MIDDLE);
 					Levellocals.ReplaceTextures("BROWN1", "METALIN4", TexMan.NOT_BOTTOM);
 					Levellocals.ReplaceTextures("BROWN1", "GREIND5",0);
-					Level.Sectors[4].settexture(Sector.floor,TexMan.CheckForTexture("FLAT9",TexMan.Type_Any));
-					Level.Sectors[37].settexture(Sector.floor,TexMan.CheckForTexture("LAVAFL",TexMan.Type_Any));
+					ReplaceSectorTexture(4, false, "FLAT9");
+					ReplaceSectorTexture(37, false, "LAVAFL");
 					
 					SetThingEdNum(172,2004);
 					SetThingEdNum(173,17);
@@ -295,11 +306,11 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					Levellocals.ReplaceTextures("STEP6", "LIT05S",0);
 					Levellocals.ReplaceTextures("STEP5", "LIT05S",0);
 					levellocals.ReplaceTextures("BROWN144", "CLIFF05B",0);
-					Level.Sectors[4].settexture(Sector.floor,TexMan.CheckForTexture("MFLR8_2",TexMan.Type_Any));
-					Level.Sectors[0].settexture(Sector.floor,TexMan.CheckForTexture("MFLR8_2",TexMan.Type_Any));
-					Level.Sectors[1].settexture(Sector.floor,TexMan.CheckForTexture("FLOOR4_8",TexMan.Type_Any));
-					Level.Sectors[2].settexture(Sector.floor,TexMan.CheckForTexture("FLOOR4_8",TexMan.Type_Any));
-					Level.Sectors[3].settexture(Sector.floor,TexMan.CheckForTexture("FLOOR4_8",TexMan.Type_Any));
+					ReplaceSectorTexture(0, Sector.floor, "MFLR8_2");
+					ReplaceSectorTexture(4, Sector.floor, "MFLR8_2");
+					ReplaceSectorTexture(1, Sector.floor, "FLOOR4_8");
+					ReplaceSectorTexture(2, Sector.floor, "FLOOR4_8");
+					ReplaceSectorTexture(3, Sector.floor, "FLOOR4_8");
 					
 					SetThingEdNum(26,25855);
 					SetThingEdNum(27,25855);
@@ -438,7 +449,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
 				{
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any),TexMan.CheckForTexture("SKYPHO",TexMan.Type_Any));
-					Level.Sectors[31].settexture(Sector.ceiling,TexMan.CheckForTexture("BDBLOOD1",TexMan.Type_Any));
+					ReplaceSectorTexture(31, Sector.ceiling, "BDBLOOD1");
 					levellocals.ReplaceTextures("BROWNHUG", "CLIFF05B",0);
 					//levellocals.ReplaceTextures("BROWN1", "CLIFF05B",0);
 					
@@ -1426,7 +1437,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
 				{
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYEAR5",TexMan.Type_Any),TexMan.CheckForTexture("SKYEAR5",TexMan.Type_Any));
-					Level.Sectors[149].settexture(Sector.ceiling,TexMan.CheckForTexture("F_SKY1",TexMan.Type_Any));
+					ReplaceSectorTexture(149, Sector.ceiling, "F_SKY1");
 					levellocals.ReplaceTextures ("FLAT5_4", "MFLR8_2", TexMan.NOT_CEILING);
 					OffsetSectorPlane(70, Sector.ceiling, 32);
 				}
@@ -1437,8 +1448,8 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
 				{
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYEAR5",TexMan.Type_Any),TexMan.CheckForTexture("SKYEAR5",TexMan.Type_Any));
-					Level.Sectors[1].settexture(Sector.ceiling,TexMan.CheckForTexture("SLIME15",TexMan.Type_Any));
-					Level.Sectors[1].settexture(Sector.floor,TexMan.CheckForTexture("SLIME15",TexMan.Type_Any));
+					ReplaceSectorTexture(1, Sector.floor, "SLIME15");
+					ReplaceSectorTexture(1, Sector.ceiling, "SLIME15");
 					OffsetSectorPlane(1, Sector.ceiling, -8);
 					OffsetSectorPlane(1, Sector.floor, 8);
 					OffsetSectorPlane(21, Sector.floor, -16);
@@ -1838,7 +1849,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYCIT1",TexMan.Type_Any),TexMan.CheckForTexture("SKYCIT2",TexMan.Type_Any));
 					levellocals.ReplaceTextures("BIGDOOR6", "SPCDOOR3",0);
 					levellocals.ReplaceTextures("MFLR8_4", "APOCTX1",0);
-					Level.Sectors[21].settexture(Sector.floor,TexMan.CheckForTexture("JUNKY15",TexMan.Type_Any));
+					ReplaceSectorTexture(21, Sector.floor, "JUNKY15");
 					
 					AddThing(25916, (1248, -928, -999), 0);
 					AddThing(11001, (-1120, -384, -999), 0);
@@ -1976,7 +1987,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					levellocals.ReplaceTextures("ROCK5", "STONE6",0);
 					levellocals.ReplaceTextures("METAL", "BRWINDOW",0);
 					levellocals.ReplaceTextures("RROCK19", "APOCTX1",0);
-					Level.Sectors[53].settexture(Sector.floor,TexMan.CheckForTexture("APOCTX1",TexMan.Type_Any));
+					ReplaceSectorTexture(53, Sector.floor, "APOCTX1");
 					OffsetSectorPlane(53, Sector.floor, 184);
 					
 					AddThing(11011, (704, -1504, -999), 0);
@@ -2762,7 +2773,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					levellocals.ReplaceTextures("GATE2", "BLACK",0);
 					levellocals.ReplaceTextures("RROCK09", "RROCK18",0);
 					levellocals.ReplaceTextures("A-VINE1", "AVINE1B",0);
-					Level.Sectors[19].settexture(Sector.floor,TexMan.CheckForTexture("FWATER1",TexMan.Type_Any));
+					ReplaceSectorTexture(19, Sector.floor, "FWATER1");
 					OffsetSectorPlane(19, Sector.floor, -128);
 
 					AddThing(25923, (-1152, 1888,-9999), 225);
