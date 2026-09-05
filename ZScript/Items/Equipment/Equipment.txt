@@ -78,11 +78,13 @@ class BDP_Equipment : Inventory abstract
 	
 	void ReleaseEquipment()
 	{
-		if(!holding || !charges || !bActive) return;
-		bool cd = ReleaseEffect();
-		if(cd)
+		if(holding && charges && bActive)
 		{
-			TriggerCooldown();
+			bool cd = ReleaseEffect();
+			if(cd)
+			{
+				TriggerCooldown();
+			}
 		}
 		holding = false;
 	}

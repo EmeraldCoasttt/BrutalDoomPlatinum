@@ -11,28 +11,8 @@ class BDP_FragGrenade : BDP_Equipment
 		Scale 0.5;
 	}
 	
-	int fuse;
-	const MAX_FUSE = 48;
-	
 	override bool UseEffect()
 	{
-		fuse = 0;
-		return false;
-	}
-	
-	override bool HoldEffect()
-	{
-		fuse++;
-		if(fuse % 8 == 0) owner.A_StartSound("BEP");
-		if(fuse > MAX_FUSE) return true;
-		return false;
-	}
-	
-	override bool ReleaseEffect()
-	{
-		/*owner.A_StartSound("GRNTOSS");
-		let nade = BDP_FragGrenadeThrown(owner.SpawnPlayerMissile("BDP_FragGrenadeThrown"));
-		if(nade) nade.fuse = fuse;*/
 		owner.TakeInventory("BDP_FragGrenadeStates", 1);
 		owner.GiveInventory("BDP_FragGrenadeStates", 1);
 		return true;
@@ -53,6 +33,9 @@ class BDP_FragGrenadeStates : CustomInventory
 		Inventory.MaxAmount 1;
 		+INVENTORY.AUTOACTIVATE
 	}
+	
+	int fuse;
+	const MAX_FUSE = 48;
 	
 	override void Tick()
 	{
@@ -85,18 +68,47 @@ class BDP_FragGrenadeStates : CustomInventory
 		GRTH ABCDEF 1;
 		TNT1 A 0 A_StartSound ("GRNPIN");
 		GRTH FGHIJK 1;
+	Cook:
 		TNT1 A 2;
+		TNT1 A 0
+		{
+			let dplr = BDP_PlayerPawn(invoker.owner);
+			if(dplr.ownedEquipment.holding && invoker.fuse < MAX_FUSE)
+			{
+				invoker.fuse++;
+				if(invoker.fuse % 8 == 0) A_StartSound("BEP");
+				return resolvestate("Cook");
+			}
+			if(invoker.fuse == MAX_FUSE)
+				return resolvestate("KillYourself");
+			return resolvestate(null);
+		}
 		TNT1 A 0 A_StartSound ("CS16uwu");
 		TNT1 A 0 A_Jump(2,2);
 		TNT1 A 0 A_StartSound ("GRNTOSS");
 		GRTH LM 1;
 		TNT1 A 0
 		{
-			A_FireProjectile("BDP_FragGrenadeThrown", 0, 0, 0, 0, 0, 0);
+			let grn = BDP_FragGrenadeThrown(A_FireProjectile("BDP_FragGrenadeThrown"));
+			if(grn) grn.fuse = invoker.fuse;
 			A_QuadSound();
 		}
 		GRTH NOP 1;
 		TNT1 A 5;
+		TNT1 A 0
+		{
+			player.SetPSprite(1, player.readyweapon.ResolveState("FinishToss"));
+			TakeInventory("BDP_FragGrenadeStates", 1);
+		}
+		Stop;
+	KillYourself:
+		TNT1 A 0
+		{
+			let grn = BDP_FragGrenadeThrown(A_FireProjectile("BDP_FragGrenadeThrown"));
+			if(grn) grn.fuse = invoker.fuse;
+			A_QuadSound();
+		}
+		TNT1 A 30;
 		TNT1 A 0
 		{
 			player.SetPSprite(1, player.readyweapon.ResolveState("FinishToss"));
