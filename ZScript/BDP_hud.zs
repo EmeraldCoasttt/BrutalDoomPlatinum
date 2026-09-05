@@ -385,12 +385,6 @@ class BDP_HUD : DoomStatusBar
 			numFlags, 
 			translation: GetHealthColor(CPlayer.health)
 		);
-		if (CPlayer.mo.FindInventory("PowerStrength", true))
-		{
-			//name pwr = CPlayer.mo.FindInventory("NoFatality") ? 'HASBERK2' : 'HASBERK';
-			DrawImage('HASBERK', iconPos + smallIconOfs, DI_SCREEN_LEFT_BOTTOM|DI_ITEM_LEFT_TOP);
-			smallIconOfs.y = (smallIconOfs.y + 5);
-		}
 		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(Cplayer.mo);
 		If(BDPplr && BDPplr.extralives > 0)
 		{
