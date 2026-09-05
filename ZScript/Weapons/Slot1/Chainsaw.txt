@@ -151,7 +151,9 @@ class BDP_Chainsaw : BDP_Weapon
 		{
 			A_StartSound("weapons/chainsaw/draw", 5);
 			A_BDPMeleeStart(100);
-			A_Saw("", "", 14, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
+			A_Saw("", "", 4, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
+			A_Saw("", "", 4, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
+			A_Saw("", "", 4, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
 			A_QuadSound;
 		}
 		SAWF CDE 1 A_BDPMelee(200,"MeleeAttackSaw",0,false);
@@ -174,7 +176,9 @@ class BDP_Chainsaw : BDP_Weapon
 		{
 			A_StartSound("weapons/chainsaw/draw", 5);
 			A_BDPMeleeStart(100);
-			A_Saw("", "", 14, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
+			A_Saw("", "", 4, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
+			A_Saw("", "", 4, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
+			A_Saw("", "", 4, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
 			A_QuadSound;
 		}
 		SAWF LMN 1 A_BDPMelee(200,"MeleeAttackSaw",0,false);
