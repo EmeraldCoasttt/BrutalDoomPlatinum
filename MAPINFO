@@ -33,7 +33,6 @@ DoomEdNums
 	7262 = BDP_Chopper
 	7264 = BDP_HoverTank
 	7265 = BDP_Bike
-	25871 = BDP_MjolnirPickup
 	26012 = bleedingsky
 	26014 = BDP_BossBrain
 	26015 = JungleRain
@@ -42,7 +41,6 @@ DoomEdNums
 	26020 = TNTShipSpawner
 	26022 = BDP_ShockFactorPickup
 	26023 = BDP_PerfectHatredPickup
-	26024 = BDP_ManAndAHalfPickup
 	26025 = BDP_GunSlingerPickup
 	26026 = BDP_OneUpmanshipPickup
 	26027 = BDP_UltraNightmarePickup

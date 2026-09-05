@@ -175,14 +175,12 @@ class BDP_PlayerPawn : PlayerPawn
 	int flashburnout;
 	
 	//Skulls
-	bool spawnwitharmor;
-	bool spawnberserked;
+	bool spawnWithFrags;
 	bool shockfactor;
 	bool istactical;
 	bool ischatterbox;
 	bool oneupmanship;
 	bool sequencebreak;
-	bool maximumoverdrive;
 	bool ultranightmare;
 	int ultraseed;
 	bool alreadyblacklisted;
@@ -1626,24 +1624,11 @@ class BDP_PlayerPawn : PlayerPawn
 			ultrabonus = true;
 		}
 		
-		If(spawnwitharmor && !findinventory("BDP_EnergyArmor") && health > 0)
+		If(spawnWithFrags && !ownedEquipment && health > 0)
 		{
-			GiveInventory("BDP_EnergyArmor", 1);
+			GiveInventory("BDP_FragGrenade", 1);
+			ownedEquipment = BDP_Equipment(FindInventory("BDP_FragGrenade"));
 		}
-		
-		If(spawnberserked && !findinventory("powerstrength",TRUE) && health > 0)
-		{
-			GiveInventory("PowerStrength",1);
-			If((health) < 50)
-			{
-				a_sethealth(100);
-			}
-		}
-		
-		/*If(maximumoverdrive && !findinventory("BDP_BoosterFrame",TRUE) && health > 0)
-		{
-			GiveInventory("BDP_BoosterFrame",1);
-		}*/
 		
 		If(sequencebreak && !findinventory("sequencebreaker"))
 		{

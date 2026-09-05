@@ -428,76 +428,13 @@ class BDP_ModifierSequenceBreak : BDP_Modifier
 
 }
 
-class BDP_ModifierMaximumOverdrive : BDP_Modifier
-{
-	Default
-	{
-		BDP_Modifier.Icon "AUGHST0";
-		BDP_Modifier.DisplayName "Maximum Overdrive";
-		BDP_Modifier.Description "A Booster Frame is equipped at all times!";
-	}
-	override void WorldTick()
-	{
-		for(int i = 0; i < MAXPLAYERS; i++)
-		{
-			if(!PlayerInGame[i]) continue;
-			PlayerInfo plr = players[i];
-			if(!plr) continue;
-			
-			let dplr = BDP_PlayerPawn(plr.mo);
-			if(!dplr) continue;
-			
-			dplr.maximumoverdrive = true;
-		}
-	}
-
-}
-
-class BDP_ModifierMjolnir : BDP_Modifier
-{
-	Default
-	{
-		BDP_Modifier.Icon "HLMST00";
-		BDP_Modifier.DisplayName "Mjolnir";
-		BDP_Modifier.Description "Permanent Energy Armor powerup";
-	}
-	
-	override void WorldTick()
-	{
-		for(int i = 0; i < MAXPLAYERS; i++)
-		{
-			if(!PlayerInGame[i]) continue;
-			PlayerInfo plr = players[i];
-			if(!plr) continue;
-			
-			let dplr = BDP_PlayerPawn(plr.mo);
-			if(!dplr) continue;
-			
-			dplr.spawnwitharmor = true;
-		}
-	}
-	
-	Override void worldthingspawned(Worldevent e)
-	{
-		If(e.thing && e.thing is "BDP_EnergyArmor")
-		{
-			Actor.spawn("BDP_DemonicArmor",e.thing.pos);
-			E.thing.destroy();
-		}
-		
-	}
-
-}
-
-
-
-class BDP_ModifierManAndAHalf : BDP_Modifier
+class BDP_ModifierFragger : BDP_Modifier
 {
 	Default
 	{
 		BDP_Modifier.Icon "STMAN";
-		BDP_Modifier.DisplayName "Man And A Half";
-		BDP_Modifier.Description "Start every level berserked";
+		BDP_Modifier.DisplayName "Fragger";
+		BDP_Modifier.Description "Start with frag grenades";
 	}
 	
 	override void WorldTick()
@@ -511,7 +448,7 @@ class BDP_ModifierManAndAHalf : BDP_Modifier
 			let dplr = BDP_PlayerPawn(plr.mo);
 			if(!dplr) continue;
 			
-			dplr.spawnberserked = true;
+			dplr.spawnWithFrags = true;
 		}
 	}
 }

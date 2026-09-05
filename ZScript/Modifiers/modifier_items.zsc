@@ -2,15 +2,13 @@ class BDP_ModifierSpawner : randomspawner
 {
 	Default
 	{
-		Dropitem "BDP_MjolnirPickup";
+		Dropitem "BDP_FraggerPickup";
 		Dropitem "BDP_ShockFactorPickup";
 		Dropitem "BDP_PerfectHatredPickup";
-		Dropitem "BDP_ManAndAHalfPickup";
 		Dropitem "BDP_GunSlingerPickup";
 		Dropitem "BDP_OneUpmanshipPickup";
 		Dropitem "BDP_UltraNightmarePickup";
 		Dropitem "BDP_SequenceBreakPickup";
-		Dropitem "BDP_MaximumOverdrivePickUp";
 		Dropitem "BDP_SkullcrusherPickUp";
 		Dropitem "BDP_ScoreMasterPickUp";
 		Dropitem "BDP_RealismPickUp";
@@ -63,14 +61,14 @@ class BDP_ModifierPickup : Inventory
     }
 }
 
-class BDP_MjolnirPickup : BDP_ModifierPickup
+class BDP_FraggerPickup : BDP_ModifierPickup
 {
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_Mjolnir";
-		translation "200:207=[0,215,215]:[0,47,47]","240:247=244:247";
-		BDP_ModifierPickup.modifiermessage "Mjolnir Unlocked!";
+		BDP_ModifierPickup.modifierclass "Modifier_Fragger";
+		translation "200:207=[117,117,117]:[0,0,0]","240:247=244:247";
+		BDP_ModifierPickup.modifiermessage "Fragger Unlocked!";
 		+floatbob;
     }
 }
@@ -95,18 +93,6 @@ class BDP_PerfectHatredPickup : BDP_ModifierPickup
 		BDP_ModifierPickup.modifierclass "Modifier_PerfectHatred";
 		translation "200:207=[130,0,0]:[60,0,0]","240:247=244:247";
 		BDP_ModifierPickup.modifiermessage "Perfect Hatred Unlocked!";
-		+floatbob;
-    }
-}
-
-class BDP_ManAndAHalfPickup : BDP_ModifierPickup
-{
- Default
-    {
-        
-		BDP_ModifierPickup.modifierclass "Modifier_ManAndAHalf";
-		translation "200:207=[117,117,117]:[0,0,0]","240:247=244:247";
-		BDP_ModifierPickup.modifiermessage "Man And A Half Unlocked!";
 		+floatbob;
     }
 }
@@ -157,18 +143,6 @@ class BDP_SequenceBreakPickup : BDP_ModifierPickup
 		+floatbob;
     }
 }
-class BDP_MaximumOverdrivePickup : BDP_ModifierPickup
-{
- Default
-    {
-        
-		BDP_ModifierPickup.modifierclass "Modifier_MaximumOverdrive";
-		BDP_ModifierPickup.modifiermessage "Maximum Overdrive Unlocked!";
-		+floatbob;
-    }
-}
-
-
 
 class BDP_ChatterboxPickup : BDP_ModifierPickup
 {
