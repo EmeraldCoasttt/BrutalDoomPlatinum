@@ -186,7 +186,7 @@ class BDP_AssaultRifle : BDP_Weapon
 			A_ZoomFactor(0.98);
 			A_QuadSound();
 			A_GunLight();
-			A_TakeAltMag();
+			A_TakeAltMag(force:true);
 		}
 		TNT1 A 0 A_ZoomFactor(1.0);
 		RIFF FGHI 1;
@@ -207,7 +207,7 @@ class BDP_AssaultRifle : BDP_Weapon
 			A_ZoomFactor(1.75);
 			A_QuadSound();
 			A_GunLight();
-			A_TakeAltMag();
+			A_TakeAltMag(force:true);
 		}
 		TNT1 A 0 A_ZoomFactor(1.8);
 		RI2F FGH 1;
@@ -259,7 +259,7 @@ class BDP_AssaultRifle : BDP_Weapon
 		TNT1 A 0 A_SpawnItemEX("BDP_SpentGrenade",2,0,40,0,0,-4,0);
 		RIGL IJJLNPPQSUVV 1;
 		HBUS A 0 A_StartSound("Weapons/GrenadeLoad", 5);
-		TNT1 A 0 {invoker.altmag = 1; TakeInventory("BDP_RocketAmmo",1);}
+		TNT1 A 0 {invoker.altmag = 1;}
 		RIGL XYYZ 1;
 		RIG2 BDE 1;
 		HBUS A 0 A_StartSound("Rifle/Grenade2", 5);
