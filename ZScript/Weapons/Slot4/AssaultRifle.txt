@@ -222,6 +222,7 @@ class BDP_AssaultRifle : BDP_Weapon
 	AltFire:
 		RIFZ A 1 A_StartAim(1.8);
 		RIFZ BC 1;
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_ATTACK, "FireAim");
 	Aim:
 		RIFZ C 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
 		Loop;
