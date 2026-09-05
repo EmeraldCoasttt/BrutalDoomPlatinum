@@ -209,7 +209,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					Levellocals.ReplaceTextures("BROWN1", "METALIN4", TexMan.NOT_BOTTOM);
 					Levellocals.ReplaceTextures("BROWN1", "GREIND5",0);
 					ReplaceSectorTexture(4, false, "FLAT9");
-					ReplaceSectorTexture(37, false, "LAVAFL");
+					ReplaceSectorTexture(37, false, "LAVA4");
 					
 					SetThingEdNum(172,2004);
 					SetThingEdNum(173,17);
