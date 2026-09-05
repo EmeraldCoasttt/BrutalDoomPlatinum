@@ -719,14 +719,16 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			dplr.blockSpecial = true;
 			A_StartSound(insound);
 			invoker.scopeZoom = true;
+			A_Print(string.format("\cd%.0f\cjx Zoom", highfactor),1);
 		}
 		else if(player.cmd.buttons & BT_USER3 && !dplr.blockSpecial && invoker.scopeZoom)
 		{
 			dplr.blockSpecial = true;
 			A_StartSound(outsound);
 			invoker.scopeZoom = false;
+			A_Print(string.format("%.0f\cjx Zoom", lowfactor),1);
 		}
-		A_ZoomFactor(invoker.scopeZoom ? highfactor : lowfactor);
+		if(invoker.aimMode) A_ZoomFactor(invoker.scopeZoom ? highfactor : lowfactor);
 	}
 	
 	action void A_EndAim(string outsound = "ADSOUT")
