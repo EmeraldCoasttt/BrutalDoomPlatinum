@@ -1,0 +1,107 @@
+class BDP_MGTurret : BDP_Equipment
+{
+	Default
+	{
+		Tag "Machine Gun Turret";
+		Inventory.Icon "MGNTD1";
+		Inventory.PickupMessage "Picked up the machine gun turret.";
+		Inventory.PickupSound "CBOXPKUP";
+		BDP_Equipment.Cooldown 120;
+		Scale 0.75;
+	}
+	
+	Actor turret;
+	
+	override bool UseEffect()
+	{
+		if(turret)
+			turret.Die(owner, self);
+		turret = Spawn("BDP_PlacedTurret", owner.pos + AngleToVector(owner.angle, 16));
+		if(turret) turret.angle = owner.angle;
+		return true;
+	}
+	
+	States
+	{
+	Spawn:
+		MGNT D -1;
+		Stop;
+	}
+}
+
+class BDP_PlacedTurret : BDP_NotMonster
+{
+	Default
+	{
+		Health 150;
+		Monster;
+		Speed 0;
+		height 35;
+		radius 16;
+		Scale 0.75;
+		-COUNTKILL
+		+FRIENDLY
+		+NOBLOOD
+		+SHOOTABLE
+		+LOOKALLAROUND
+		+DONTTHRUST
+	}
+	
+	Override void tick()
+	{
+		//Avoid detonating explosive barrels
+		If(target && target is "explosivebarrelbase")
+		{
+			target = null;
+		}
+		Super.tick();
+	}
+		
+	States
+	{
+	Spawn:
+		TNT1 A 0 NoDelay A_StartSound("CBOXPKUP", 0);
+	Spawn2:
+		MGNT A 10 A_Look();
+		Loop;
+	See:
+		MGNT A 5
+		{
+			A_StartSound("bepbep", 0);
+			A_FaceTarget();
+		}
+		TNT1 A 0 A_JumpIf(target, "Missile");
+		Goto Spawn2;
+	Missile:
+		MGNT A 1 A_FaceTarget();
+		MGNT B 1
+		{
+			A_StartSound("FARMGN", 6);
+			A_StartSound("DSPISTOL", 5);
+			A_SpawnProjectile("MonsterMinigunTracer", 30, 5, frandom(-2.0, 2.0), CMF_OFFSETPITCH, frandom(-2.0, 2.0));
+			A_SpawnProjectile("BDP_SpentRifleCasing", spawnofs_xy:10, random(-80, -100), CMF_AIMDIRECTION, random(-15, -35));
+			A_SpawnProjectile("BDP_SpentBeltLink", spawnofs_xy:10, random(-80, -100), CMF_AIMDIRECTION, random(-15, -35));
+		}
+		MGNT A 1 A_FaceTarget();
+		MGNT C 1
+		{
+			A_StartSound("FARMGN", 6);
+			A_StartSound("DSPISTOL", 5);
+			A_SpawnProjectile("MonsterMinigunTracer", 30, -5, frandom(-2.0, 2.0), CMF_OFFSETPITCH, frandom(-2.0 ,2.0));
+			A_SpawnProjectile("BDP_SpentRifleCasing", spawnofs_xy:-10, random(80, 100), CMF_AIMDIRECTION, random(-15, -35));
+			A_SpawnProjectile("BDP_SpentBeltLink", spawnofs_xy:-10, random(80, 100), CMF_AIMDIRECTION, random(-15, -35));
+		}
+		TNT1 A 0 A_MonsterRefire(128, "Spawn2");
+		Loop;
+	Death:
+		TNT1 AAAAAAAAA 0 A_SpawnProjectile ("GlassShard", 96, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AAAAA 0 A_SpawnProjectile ("CrashMetalShards", 32, 0, random (0, 360), 2, random (20, 50));
+		TNT1 A 0
+		{
+			A_SpawnItemEx("pipebombexplosion");
+			A_Scream();
+			A_NoBlocking();
+		}
+		Stop;
+	}
+}

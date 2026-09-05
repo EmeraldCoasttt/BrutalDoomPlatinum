@@ -1,0 +1,136 @@
+class BDP_RevenantLauncher : BDP_Equipment
+{
+	Default
+	{
+		Tag "Revenant Launchers";
+		Inventory.Icon "FATBD0";
+		Inventory.PickupMessage "Picked up the revenant launchers.";
+		Inventory.PickupSound "revup";
+		BDP_Equipment.Cooldown 120;
+	}
+	
+	override bool UseEffect()
+	{
+		owner.TakeInventory("BDP_RevenantLauncherStates", 1);
+		owner.GiveInventory("BDP_RevenantLauncherStates", 1);
+		return true;
+	}
+	
+	States
+	{
+	Spawn:
+		FATB D -1;
+		Stop;
+	}
+}
+
+class BDP_RevenantLauncherStates : CustomInventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.AUTOACTIVATE
+	}
+	
+	int burstCount;
+	
+	override void Tick()
+	{
+		return;
+	}
+	
+	action void A_QuadSound()
+	{	
+		If(invoker.owner.findinventory("BDP_PowerQuadDamage"))
+		{
+			invoker.owner.a_startsound("items/quaddamage/active", 103);
+		}
+	}
+	
+	States
+	{
+	Use:
+		TNT1 A -1
+		{
+			A_Overlay(90, "FireLaunchers");
+			A_OverlayOffset(90); //no args resets it to default position.
+		}
+		Wait;
+	FireLaunchers:
+		RVCG JKLMN 2;
+		RVCG A 5;
+	BurstFire:
+		RVCG B 1
+		{
+			A_FireProjectile("BDP_PlayerRevenantSeekerMissiles", spawnofs_xy:-20);
+			A_StartSound("RLANSHOT", 69);
+			A_StartSound("skeleton/attack", 70);
+			A_QuadSound();
+		}
+		RVCG C 1;
+		RVCG F 1
+		{
+			A_FireProjectile("BDP_PlayerRevenantSeekerMissiles", spawnofs_xy:20);
+			A_StartSound("RLANSHOT", 69);
+			A_StartSound("skeleton/attack", 70);
+			A_QuadSound();
+		}
+		RVCG G 1;
+		TNT1 A 0
+		{
+			if(invoker.burstCount < 5)
+			{
+				invoker.burstCount++;
+				return resolvestate("BurstFire");
+			}
+			return resolvestate(null);
+		}
+		RVCG A 5;
+		RVCG NMLKJ 2;
+		TNT1 A 0 TakeInventory("BDP_RevenantLauncherStates", 1);
+		Stop;
+	}
+}
+
+class BDP_PlayerRevenantSeekerMissiles : BDP_Projectile
+{
+	Default
+	{
+		Radius 12;
+		Height 8;
+		Speed 20;
+		DamageFunction 128;
+		Projectile;
+		+SEEKERMISSILE
+		Scale 0.5;
+		damagetype "Explosives";
+		DeathSound "skeleton/tracex";
+	}
+	States
+	{
+	Spawn:
+		FATB AA 1 BRIGHT A_SpawnItem("YellowFlareSmall",0,0);
+		TNT1 A 0 A_SpawnItemEx("OldschoolRocketSmokeTrail2", 0, 0, 0, 0, 0, 0, 0, 128);
+		TNT1 A 0 A_CustomMissile ("OldschoolRocketSmokeTrail2", 2, 0, random (160, 210), 2, random (-30, 30));
+		TNT1 A 0
+		{
+			if(GetAge() > 15) A_SeekerMissile (4, 8, SMF_LOOK|SMF_PRECISE, 100);
+		}
+		Loop;
+		
+	Death:
+		BFE1 A 0 Bright A_Explode(128, 120, 0);
+		EXPL A 0 Radius_Quake (6, 54, 0, 15, 0);
+		TNT1 A 0 A_SpawnItem("WhiteShockwaveSmall");
+		TNT1 A 0 a_spawnitemex("BDP_RicochetExplosionSmall");
+		EXPL A 0 A_CustomMissile ("ExplosionSmoke", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItemEx ("ExplosionFlareSpawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 AAA 0 A_CustomMissile ("BDExplosionparticles", 0, 0, random (0, 360), 2, random (0, 360));
+		TNT1 AA 0 A_CustomMissile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (0, 90));
+		TNT1 AAAA 0 A_CustomMissile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360));
+		Stop;
+	}
+}

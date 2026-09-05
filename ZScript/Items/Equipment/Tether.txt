@@ -1,0 +1,66 @@
+class BDP_Tether : BDP_Equipment
+{
+	Default
+	{
+		Tag "Dimensional Tether";
+		Inventory.PickupMessage "Picked up a dimensional tether!";
+		Inventory.PickupSound "items/computermap";
+		BDP_Equipment.Cooldown 15;
+		Inventory.Icon "HOLOA0";
+		Scale 0.5;
+	}
+	
+	Actor linkPoint;
+	
+	override bool UseEffect()
+	{
+		if(!linkPoint)
+		{
+			owner.A_StartSound("BEPBEP", 0);
+			linkPoint = Spawn("BDP_TetherDest", owner.pos);
+			return false;
+		}
+		else
+		{
+			owner.A_SpawnItemEx("TeleportFog");
+			linkPoint.A_SpawnItemEx("TeleportFog");
+			owner.SetOrigin(linkPoint.pos, false);
+			linkPoint.Destroy();
+			owner.A_StartSound("Weapons/Unmaker/UseTeleporter", 0);
+			return true;
+		}
+	}
+	
+	override void OnDrop(Actor dropper)
+	{
+		if(linkPoint)
+		{
+			linkPoint.Destroy();
+			linkPoint = null;
+		}
+	}
+	
+	States
+	{
+	Spawn:
+		HOLO A -1;
+		Stop;
+	}
+}
+
+class BDP_TetherDest : Actor
+{
+	Default
+	{
+		-SOLID
+		Radius 16;
+		Height 56;
+		RenderStyle "Subtract";
+	}
+	States
+	{
+	Spawn:
+		PLAY A -1;
+		Stop;
+	}
+}
