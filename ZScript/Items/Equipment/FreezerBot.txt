@@ -7,7 +7,7 @@ class BDP_FreezerBot : BDP_Equipment
 		Inventory.PickupMessage "Picked up a freezer bot.";
 		Inventory.PickupSound "freezebot/talk";
 		BDP_Equipment.Cooldown 120;
-		Scale 0.5;
+		Scale 0.8;
 	}
 	
 	override bool UseEffect()
