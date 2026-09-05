@@ -259,7 +259,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		return resolvestate(null);
 	}
 	
-	/*override Vector2 ModifyBobLayer(Vector2 Bob, int layer, double ticfrac)
+	override Vector2 ModifyBobLayer(Vector2 Bob, int layer, double ticfrac)
 	{
 		let dplr = PlayerPawn(owner);
 		if(layer == 2 || layer == -3 && owner.player && dplr)
@@ -291,7 +291,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 					}
 				}
 				double BobSpeed = (BobSpeed * 128);
-				double angle = (BobSpeed * owner.player.GetWBobSpeed() * 35 /	TICRATE*(10 - 1 + i)) * (360. / 8192.);
+				double angle = (BobSpeed * owner.player.GetWBobSpeed() * 35 /	TICRATE*(owner.player.BobTimer - 1 + i)) * (360. / 8192.);
 				double BobIntensity = (owner.player.WeaponState & WF_WEAPONBOBBING) ? 1. : owner.player.GetWBobFire();
 				if (curbob != 0)
 				{
@@ -310,7 +310,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			return p1 * (1. - ticfrac) + p2 * ticfrac;
 		}
 		return Bob;
-	}*/
+	}
 	
 	action void a_weaponvoiceline()
 	{
