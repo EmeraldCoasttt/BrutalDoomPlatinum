@@ -445,16 +445,19 @@ class BDP_PlayerPawn : PlayerPawn
 			if((player.cmd.buttons & BT_USER1 && !blockKick || canSlide) && CountInv("veh_manager") < 1)
 			{
 				BDP_Weapon weap = BDP_Weapon(player.ReadyWeapon);
-				if(ownedEquipment && ownedEquipment.bReplacesMelee)
+				if(!canSlide)
 				{
-					ownedEquipment.QuickMelee();
-					return resolvestate("KickWait");
-				}
-				if(weap && weap.bReplacesMelee)
-				{
-					player.SetPSprite(1, player.readyweapon.ResolveState("QuickMelee"));
-					A_Overlay(90, "MeleeWait");
-					return resolvestate("KickWait");
+					if(ownedEquipment && ownedEquipment.bReplacesMelee)
+					{
+						ownedEquipment.QuickMelee();
+						return resolvestate("KickWait");
+					}
+					if(weap && weap.bReplacesMelee)
+					{
+						player.SetPSprite(1, player.readyweapon.ResolveState("QuickMelee"));
+						A_Overlay(90, "MeleeWait");
+						return resolvestate("KickWait");
+					}
 				}
 				bool kickflash = (weap.readyLeft && weap.readyRight || !weap.bDUALWEAPON) && player.WeaponState & WF_USER1OK;
 				blockKick = true;
