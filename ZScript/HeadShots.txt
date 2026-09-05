@@ -206,6 +206,7 @@ CLASS BDP_RevenantHeadshot : BDP_Headshot
 	Default
 	{
 		BDP_Headshot.offsetz 60;
+		BDP_Headshot.offsetx 16;
 		radius 8;
 		height 16;
 		Species "boners";
