@@ -152,7 +152,8 @@ class BDP_DarkClawStates : CustomInventory
 		CLAW BC 1 A_BDPMeleeStart();
 		TNT1 A 0
 		{
-			if((A_BDPMelee(projectile:"MeleeAttackDarkClaw") || invoker.forceActivate) && !invoker.onCooldown)
+			Actor victim = A_BDPMelee(projectile:"MeleeAttackDarkClaw");
+			if((victim && victim.bISMONSTER || invoker.forceActivate) && !invoker.onCooldown)
 			{
 				A_StartSound("items/darkclaw/blast", 0);
 				int hitMonsters = A_Explode(500, 128, XF_NOTMISSILE, damagetype:"Incinerate");
