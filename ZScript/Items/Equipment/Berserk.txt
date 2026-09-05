@@ -5,7 +5,6 @@ class BDP_Berserk : BDP_Equipment replaces Berserk
 		Tag "Berserk";
 		Inventory.PickupMessage "$GOTBERSERK";
 		Inventory.PickupSound "BERSPKUP";
-		BDP_Equipment.Cooldown 15;
 	}
 	
 	bool green;
@@ -63,7 +62,7 @@ class BDP_Berserk : BDP_Equipment replaces Berserk
 		if(!owner.FindInventory("BDP_Chainsaw") || owner.player.ReadyWeapon is "BDP_Chainsaw") return false;
 		owner.TakeInventory("BDP_BerserkStates", 1);
 		owner.GiveInventory("BDP_BerserkStates", 1);
-		return true;
+		return false;
 	}
 	
 	override void OnDrop(Actor dropper)
