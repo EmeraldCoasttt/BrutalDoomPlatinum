@@ -71,3 +71,7 @@ warp2 texture UMTPA0 0.3
 Texture ARM3C0
 	pic ARM3A0 tics 3
 	pic ARM3B0 tics 3
+
+//mes stuff
+texture	BDLFAL1  	range	BDLFAL4  	tics 8 //i got this from sunder but i don't know who made it.
+texture	BDWFAL1  	range	BDWFAL4  	tics 8

@@ -917,7 +917,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					levellocals.ReplaceTextures("MIDGRATE", "BDHEL07", 0);
 					levellocals.ReplaceTextures("SKULWALL", "BDHEL08", 0);
 					levellocals.ReplaceTextures("SKULWAL3", "BDHEL08", 0);
-					levellocals.ReplaceTextures("firewalL", "LFALL01", 0);
+					levellocals.ReplaceTextures("firewalL", "BDLFAL1", 0);
 					levellocals.ReplaceTextures("WOOD4", "BDHEL01", 0);
 					levellocals.ReplaceTextures("METAL1", "SKSPINE2", 0);
 					levellocals.ReplaceTextures("STARG2", "MARBLE3", 0);
@@ -1228,7 +1228,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					levellocals.ReplaceTextures("BIGBRIK2", "INDUS4",0);
 					levellocals.ReplaceTextures("SPACEW3", "SPACM0",0);
 					levellocals.ReplaceTextures("MIDGRATE", "GRATX",0);
-					levellocals.ReplaceTextures("PIPEWAL1", "WFALL1", TexMan.NOT_MIDDLE | TexMan.NOT_TOP);
+					levellocals.ReplaceTextures("PIPEWAL1", "BDWFAL1", TexMan.NOT_MIDDLE | TexMan.NOT_TOP);
 					levellocals.ReplaceTextures("", "BRONZE1", TexMan.NOT_MIDDLE | TexMan.NOT_TOP);
 					levellocals.ReplaceTextures("STONE2", "BUNKER05",0);
 					levellocals.ReplaceTextures("STEP6", "LIT05S",0);
@@ -1294,7 +1294,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					levellocals.ReplaceTextures("BIGBRIK2", "INDUS4",0);
 					levellocals.ReplaceTextures("SPACEW3", "SPACM0",0);
 					levellocals.ReplaceTextures("MIDGRATE", "GRATX",0);
-					levellocals.ReplaceTextures("PIPEWAL1", "WFALL1", TexMan.NOT_MIDDLE | TexMan.NOT_TOP);
+					levellocals.ReplaceTextures("PIPEWAL1", "BDWFAL1", TexMan.NOT_MIDDLE | TexMan.NOT_TOP);
 					levellocals.ReplaceTextures("", "BRONZE1", TexMan.NOT_MIDDLE | TexMan.NOT_TOP);
 					levellocals.ReplaceTextures("STONE2", "BUNKER05",0);
 					levellocals.ReplaceTextures("STEP6", "LIT05S",0);
@@ -1375,7 +1375,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					levellocals.ReplaceTextures("BIGBRIK2", "INDUS4",0);
 					levellocals.ReplaceTextures("SPACEW3", "SPACM0",0);
 					levellocals.ReplaceTextures("MIDGRATE", "GRATX",0);
-					levellocals.ReplaceTextures("PIPEWAL1", "WFALL1", TexMan.NOT_MIDDLE | TexMan.NOT_TOP);
+					levellocals.ReplaceTextures("PIPEWAL1", "BDWFAL1", TexMan.NOT_MIDDLE | TexMan.NOT_TOP);
 					levellocals.ReplaceTextures("", "BRONZE1", TexMan.NOT_MIDDLE | TexMan.NOT_TOP);
 					levellocals.ReplaceTextures("STONE2", "BUNKER05",0);
 					levellocals.ReplaceTextures("STEP6", "LIT05S",0);
