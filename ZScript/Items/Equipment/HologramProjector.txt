@@ -5,7 +5,7 @@ class BDP_HologramProjector : BDP_Equipment
 		Tag "Hologram Projector";
 		Inventory.PickupMessage "Picked up a Hologram Projector!";
 		Inventory.PickupSound "items/computermap";
-		BDP_Equipment.Cooldown 15;
+		BDP_Equipment.Cooldown 30;
 		Inventory.Icon "HOLOA0";
 		Scale 0.5;
 	}
@@ -110,7 +110,7 @@ class BDP_Hologram : BDP_NotMonster
 		Alpha 0.75;
 		Radius 16;
 		Height 56;
-		Health 200;
+		Health 100;
 		MaxStepHeight 666;
 		BloodType "HoloBlood";
 	}

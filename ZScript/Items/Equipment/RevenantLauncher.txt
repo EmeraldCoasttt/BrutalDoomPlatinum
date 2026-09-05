@@ -6,7 +6,7 @@ class BDP_RevenantLauncher : BDP_Equipment
 		Inventory.Icon "FATBD0";
 		Inventory.PickupMessage "Picked up the revenant launchers.";
 		Inventory.PickupSound "revup";
-		BDP_Equipment.Cooldown 120;
+		BDP_Equipment.Cooldown 45;
 	}
 	
 	override bool UseEffect()
