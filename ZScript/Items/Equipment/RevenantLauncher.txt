@@ -84,7 +84,7 @@ class BDP_RevenantLauncherStates : CustomInventory
 		RVCG B 1
 		{
 			let tracer = A_FireProjectile("BDP_PlayerRevenantSeekerMissiles", spawnofs_xy:-20);
-			if(tracer)
+			if(tracer && invoker.targets.Size() > 0)
 			{
 				if(invoker.currentTarget > invoker.targets.Size() - 1)
 					invoker.currentTarget = 0;
@@ -100,7 +100,7 @@ class BDP_RevenantLauncherStates : CustomInventory
 		RVCG F 1
 		{
 			let tracer = A_FireProjectile("BDP_PlayerRevenantSeekerMissiles", spawnofs_xy:20);
-			if(tracer)
+			if(tracer && invoker.targets.Size() > 0)
 			{
 				if(invoker.currentTarget > invoker.targets.Size() - 1)
 					invoker.currentTarget = 0;
