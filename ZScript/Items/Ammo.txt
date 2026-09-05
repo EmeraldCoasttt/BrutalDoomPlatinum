@@ -3,10 +3,14 @@ class BDP_Ammo : Ammo
 	Default
 	{
 		BDP_Ammo.ScoreAmount 50;
+		BDP_Ammo.BackpackBoost true;
 		+FORCEXYBILLBOARD;
 	}
 	
 	mixin BDP_ScoreMixin;
+	
+	bool backpackBoost;
+	property BackpackBoost : backpackBoost;
 	
 	override Class<Ammo> GetParentAmmo()
 	{
@@ -21,8 +25,8 @@ class BDP_Ammo : Ammo
 	
 	override bool HandlePickup(Inventory item)
 	{
-		let ammoitem = Ammo(item);
-		if(ammoitem != null && ammoitem.GetParentAmmo() == GetClass() && owner.FindInventory("BDP_Backpack")) item.amount = ceil(item.amount * 1.25);
+		let ammoitem = BDP_Ammo(item);
+		if(ammoitem != null && ammoitem.GetParentAmmo() == GetClass() && owner.FindInventory("BDP_Backpack") && ammoitem.backpackBoost) item.amount = ceil(item.amount * 1.25);
 		return super.HandlePickup(item);
 	}
 	
@@ -265,7 +269,8 @@ class BDP_UnspentShellPickup : BDP_Shell
 	Default
 	{
 		Scale 0.25;
-		Inventory.Amount 1;	
+		Inventory.Amount 1;
+		BDP_Ammo.BackpackBoost false;
 	}
 	
 	States
@@ -377,6 +382,10 @@ class BDP_RocketBox : BDP_RocketAmmo replaces RocketBox
 
 class BDP_UnspentGrenadePickup : BDP_RocketAmmo
 {
+	Default
+	{
+		BDP_Ammo.BackpackBoost false;
+	}
 	States
 	{
 	Spawn:
@@ -385,7 +394,7 @@ class BDP_UnspentGrenadePickup : BDP_RocketAmmo
 	}
 }
 
-class BDP_UnspentChaosGrenadePickup : BDP_RocketAmmo
+class BDP_UnspentChaosGrenadePickup : BDP_UnspentGrenadePickup
 {
 	States
 	{
