@@ -170,7 +170,10 @@ class BDP_DarkClawStates : CustomInventory
 		TNT1 A 0
 		{
 			player.SetPSprite(1, player.readyweapon.ResolveState("FinishToss"));
-			TakeInventory("BDP_ThermiteGrenadeStates", 1);
+			let dplr = BDP_PlayerPawn(invoker.owner);
+			if(!dplr) return;
+			dplr.blockKick = true;
+			TakeInventory("BDP_DarkClawStates", 1);
 		}
 		Stop;
 	}

@@ -447,6 +447,7 @@ class BDP_PlayerPawn : PlayerPawn
 				BDP_Weapon weap = BDP_Weapon(player.ReadyWeapon);
 				if(!canSlide)
 				{
+					blockKick = true;
 					if(ownedEquipment && ownedEquipment.bReplacesMelee)
 					{
 						ownedEquipment.QuickMelee();
