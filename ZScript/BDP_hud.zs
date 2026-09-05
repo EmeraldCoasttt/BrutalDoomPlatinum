@@ -671,7 +671,7 @@ class BDP_HUD : DoomStatusBar
 		
 		iconPos += (iconSpacing * 1.2, 17);
 		let dplr = BDP_PlayerPawn(cplayer.mo);
-		if(dplr && dplr.ownedEquipment)
+		if(dplr && dplr.ownedEquipment && !dplr.ownedEquipment.bNoIcon)
 		{
 			let equip = BDP_Equipment(dplr.ownedEquipment);
 			DrawTexture(GetIcon(equip, 0), iconPos, iconFlags, box:(32, 32), col:equip.charges ? 0xffffffff : 0xff808080);

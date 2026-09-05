@@ -18,6 +18,7 @@ class BDP_Equipment : Inventory abstract
 	
 	flagdef CooldownNotTimer : EquipFlags, 0;
 	flagdef Active : EquipFlags, 1;
+	flagdef NoIcon : EquipFlags, 2;
 	
 	double maxCooldown;
 	property Cooldown : maxCooldown;

@@ -8,6 +8,7 @@ class BDP_EnergyArmor : BDP_Equipment
 		Inventory.PickupSound "items/energyshield";
 		BDP_Equipment.Cooldown 6;
 		-BDP_EQUIPMENT.ACTIVE
+		+BDP_EQUIPMENT.NOICON
 	}
 	
 	bool playedSound;
