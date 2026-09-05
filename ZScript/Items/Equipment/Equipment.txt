@@ -64,6 +64,7 @@ class BDP_Equipment : Inventory abstract
 			charges++;
 			if(charges < default.charges && !bCooldownNotTimer)
 				cooldown = maxCooldown * TICRATE;
+			if(owner) owner.A_StartSound("items/equipment/recharged", 0);
 		}
 		super.Tick();
 	}

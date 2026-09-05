@@ -73,3 +73,4 @@ GASPK GASPK
 COMPFAN COMPFAN
 
 items/darkclaw/blast "sounds/items/equipment/darkclawblast.wav"
+items/equipment/recharged "sounds/items/equipment/equipmentrecharged.ogg"

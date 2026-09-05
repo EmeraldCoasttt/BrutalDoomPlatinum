@@ -668,14 +668,16 @@ class BDP_HUD : DoomStatusBar
 		if(dplr && dplr.ownedEquipment && !dplr.ownedEquipment.bNoIcon)
 		{
 			let equip = BDP_Equipment(dplr.ownedEquipment);
-			DrawTexture(GetIcon(equip, 0), iconPos, iconFlags, box:(32, 32), col:equip.charges ? 0xffffffff : 0xff808080);
+			double iconHeight = TexMan.CheckRealHeight(GetIcon(equip, 0)) + 1;
+			if(equip.cooldown)
+				SetClipRect(iconPos.x - 16, iconPos.y - iconHeight + iconHeight * (equip.cooldown / (equip.maxCooldown * TICRATE)), 32, 32, DI_SCREEN_RIGHT_BOTTOM);
+			DrawTexture(GetIcon(equip, 0), iconPos, iconFlags, box:(32, 32));
 			if(equip.cooldown)
 			{
-				if(equip.bCooldownNotTimer)
-					DrawString(mconfont, string.format("%d", equip.cooldown), iconPos + (16, -8), DI_TEXT_ALIGN_RIGHT);
-				else
-					DrawString(mconfont, TicsToSeconds(equip.cooldown), iconPos + (16, -8), DI_TEXT_ALIGN_RIGHT);
+				SetClipRect(iconPos.x - 16, iconPos.y - iconHeight, 32, iconHeight * (equip.cooldown / (equip.maxCooldown * TICRATE)), DI_SCREEN_RIGHT_BOTTOM);
+				DrawTexture(GetIcon(equip, 0), iconPos, iconFlags, box:(32, 32), col:0xff202020);
 			}
+			ClearClipRect();
 			if(equip.default.charges > 1)
 				DrawString(mconfont, string.format("%d", equip.charges), iconPos + (16, -16), DI_TEXT_ALIGN_RIGHT);
 		}
