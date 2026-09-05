@@ -7,6 +7,12 @@ Class BDP_MapEnhancer : LevelPostProcessor
 	{
 		Console.printf("%s", level.getchecksum());
 		
+		//global texture changes
+		If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0)
+		{
+			levellocals.ReplaceTextures("STEP1", "BDSTEP1",0);
+		}
+		
 		switch ( checksum )
 		{
 			//e1m1
