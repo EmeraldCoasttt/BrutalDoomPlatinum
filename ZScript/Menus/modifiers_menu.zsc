@@ -319,7 +319,7 @@ class BDP_ModifierMenu : BDP_ComponentMenu
 	override void OnMenuThink()
 	{
 		// Update Server CVar for active Modifiers
-		string modStr = "";
+		int modInt = 0;
 		for(int i = 0; i < buttons.Size(); i++)
 		{
 			let btn = ModifierButton(buttons[i]);
@@ -327,17 +327,14 @@ class BDP_ModifierMenu : BDP_ComponentMenu
 			
 			if(btn.toggled) 
 			{
-				if(modStr == "") 
-					modStr.AppendFormat("%s", modifiers[i].getClassName());
-				else
-					modStr.AppendFormat(", %s", modifiers[i].getClassName());
+				modInt |= modifiers[i].bitFlag;
 			}
 		}
 		
 		// This should only be active from the title, so we don't really
 		// need to worry about player numbers.
 		let sv_activemods = CVar.GetCVar("bdp_active_modifiers", players[consoleplayer]);
-		if(sv_activemods) sv_activemods.SetString(modStr);
+		if(sv_activemods) sv_activemods.SetInt(modInt);
 	}
 	
 	override bool MenuEvent(int mkey, bool fromcontroller)

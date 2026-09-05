@@ -140,8 +140,8 @@ server int Dox_MEStextureReplacements  = 0;
 
 server bool G_Trichording = false;
 
-server noarchive string bdp_active_modifiers = "";
-server string bdp_unlocked_modifiers = "Modifier_StayFrosty, Modifier_Turbonerd, Modifier_Chatterbox, Modifier_Triathlon";
+server noarchive int bdp_active_modifiers = 0;
+server int bdp_unlocked_modifiers = 7;
 server bool bdp_modifiers_allunlocked = false;
 
 nosave string bdp_seed_blacklist = "1,2,3,4";

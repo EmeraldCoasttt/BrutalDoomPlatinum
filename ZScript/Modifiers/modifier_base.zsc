@@ -7,11 +7,13 @@ class BDP_Modifier : Actor
 	string displayName;
 	string description;
 	string graphic;
+	int bitFlag;
 		
 	Property DisplayName : displayName;
 	Property Description : description;
 	Property ScoreModifier : scoreModifier; 
 	Property Icon : graphic;
+	Property ModifierID : bitFlag;
 		
 	Default
 	{

@@ -131,8 +131,7 @@ class BDP_Soulsphere : Inventory Replaces SoulSphere
 	
 	override bool Use(bool pickup)
 	{
-		let dplr = BDP_PlayerPawn(owner);
-		if(dplr && !dplr.oneupmanship) owner.GiveBody(100, 200);
+		if(!(bdp_active_modifiers & Modifier_OneUpmanship)) owner.GiveBody(100, 200);
 		return true;
 	}
 	
@@ -169,9 +168,7 @@ class BDP_Megasphere : Inventory replaces Megasphere
 	
 	override bool Use(bool pickup)
 	{
-		
-		let dplr = BDP_PlayerPawn(owner);
-		if(dplr && !dplr.oneupmanship)
+		if(!(bdp_active_modifiers & Modifier_OneUpmanship))
 		{
 			owner.GiveInventory("BDP_HeavyArmor", 1);
 			owner.GiveBody(200, 200);

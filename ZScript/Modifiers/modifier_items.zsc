@@ -18,34 +18,32 @@ class BDP_ModifierSpawner : randomspawner
 }
 class BDP_ModifierPickup : Inventory
 {
-	string modifierclass;
-	property modifierclass : modifierclass;
+	int ModifierID;
+	property ModifierID : ModifierID;
 	string modifiermessage;
 	property modifiermessage : modifiermessage;
     Default
     {
         Inventory.MaxAmount 666;
-		BDP_ModifierPickup.modifierclass "Modifier_Example2";
+		BDP_ModifierPickup.ModifierID 0;
 		Inventory.pickupsound "null";
 		Inventory.pickupmessage "You got a Modifier!";
 		BDP_ModifierPickup.modifiermessage "YOU SHOULDN'T BE SEEING THIS";
 		+BRIGHT;
     }
 
-    static void UnlockModifier(string modifierClass)
+    static void UnlockModifier(int ModifierID)
     {
-      // This should be a Server CVar, so we should be able to use consoleplayer.
-      let sv_unlockedmods = CVar.GetCVar("bdp_unlocked_modifiers", players[consoleplayer]);
-
-      if(bdp_unlocked_modifiers == "") 
-        sv_unlockedmods.SetString(modifierClass);
-      else
-        sv_unlockedmods.SetString(String.Format("%s, %s", bdp_unlocked_modifiers, modifierClass));
+		// This should be a Server CVar, so we should be able to use consoleplayer.
+		let sv_unlockedmods = CVar.GetCVar("bdp_unlocked_modifiers", players[consoleplayer]);
+		int modInt = sv_unlockedmods.GetInt();
+		modInt |= ModifierID;
+		sv_unlockedmods.SetInt(modInt);
     }
 
     override void AttachToOwner(Actor other)
     {
-        UnlockModifier(modifierclass);
+        UnlockModifier(ModifierID);
 		other.A_startsound("MODSTING",720,0,1.0,ATTN_NONE);
 		other.A_Print(modifiermessage,5);
 		EventHandler.SendNetworkEvent("flag_updatemodifierstatus");
@@ -66,7 +64,7 @@ class BDP_FraggerPickup : BDP_ModifierPickup
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_Fragger";
+		BDP_ModifierPickup.ModifierID Modifier_Fragger;
 		translation "200:207=[117,117,117]:[0,0,0]","240:247=244:247";
 		BDP_ModifierPickup.modifiermessage "Fragger Unlocked!";
 		+floatbob;
@@ -78,7 +76,7 @@ class BDP_ShockFactorPickup : BDP_ModifierPickup
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_ShockFactor";
+		BDP_ModifierPickup.ModifierID Modifier_ShockFactor;
 		translation "200:207=[236,0,0]:[81,0,0]","240:247=244:247";
 		BDP_ModifierPickup.modifiermessage "Shock Factor Unlocked!";
 		+floatbob;
@@ -90,7 +88,7 @@ class BDP_PerfectHatredPickup : BDP_ModifierPickup
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_PerfectHatred";
+		BDP_ModifierPickup.ModifierID Modifier_PerfectHatred;
 		translation "200:207=[130,0,0]:[60,0,0]","240:247=244:247";
 		BDP_ModifierPickup.modifiermessage "Perfect Hatred Unlocked!";
 		+floatbob;
@@ -102,7 +100,7 @@ class BDP_GunSlingerPickup : BDP_ModifierPickup
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_Gunslinger";
+		BDP_ModifierPickup.ModifierID Modifier_Gunslinger;
 		translation "200:207=[79,149,0]:[0,77,81]","240:247=244:247";
 		BDP_ModifierPickup.modifiermessage "Gunslinger Unlocked!";
 		+floatbob;
@@ -114,7 +112,7 @@ class BDP_OneUpmanshipPickup : BDP_ModifierPickup
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_OneUpmanship";
+		BDP_ModifierPickup.ModifierID Modifier_OneUpmanship;
 		translation "200:207=[19,210,149]:[0,51,51]","240:247=244:247";
 		BDP_ModifierPickup.modifiermessage "One-Upmanship Unlocked!";
 		+floatbob;
@@ -126,7 +124,7 @@ class BDP_UltranightmarePickup : BDP_ModifierPickup
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_Ultranightmare";
+		BDP_ModifierPickup.ModifierID Modifier_Ultranightmare;
 		translation "200:207=[19,210,149]:[0,51,51]","240:247=244:247";
 		BDP_ModifierPickup.modifiermessage "Ultra Nightmare Unlocked!";
 		+floatbob;
@@ -138,7 +136,7 @@ class BDP_SequenceBreakPickup : BDP_ModifierPickup
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_SequenceBreak";
+		BDP_ModifierPickup.ModifierID Modifier_SequenceBreak;
 		BDP_ModifierPickup.modifiermessage "Sequence Break Unlocked!";
 		+floatbob;
     }
@@ -149,7 +147,7 @@ class BDP_ChatterboxPickup : BDP_ModifierPickup
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_Chatterbox";
+		BDP_ModifierPickup.ModifierID Modifier_Chatterbox;
 		BDP_ModifierPickup.modifiermessage "Chatterbox Unlocked!";
 		+floatbob;
     }
@@ -160,7 +158,7 @@ class BDP_TRIATHLONPickup : BDP_ModifierPickup
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_Triathlon";
+		BDP_ModifierPickup.ModifierID Modifier_Triathlon;
 		BDP_ModifierPickup.modifiermessage "Triathlon Unlocked!";
 		+floatbob;
     }
@@ -171,7 +169,7 @@ class BDP_SkullcrusherPickup : BDP_ModifierPickup
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_Skullcrusher";
+		BDP_ModifierPickup.ModifierID Modifier_Skullcrusher;
 		BDP_ModifierPickup.modifiermessage "Skullcrusher Unlocked!";
 		+floatbob;
     }
@@ -182,7 +180,7 @@ class BDP_ScoremasterPickup : BDP_ModifierPickup
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_Scoremaster";
+		BDP_ModifierPickup.ModifierID Modifier_Scoremaster;
 		BDP_ModifierPickup.modifiermessage "Scoremaster Unlocked!";
 		+floatbob;
     }
@@ -193,7 +191,7 @@ class BDP_RealismPickup : BDP_ModifierPickup
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_Realism";
+		BDP_ModifierPickup.ModifierID Modifier_Realism;
 		BDP_ModifierPickup.modifiermessage "Realism Unlocked!";
 		+floatbob;
     }
@@ -204,7 +202,7 @@ class BDP_GluttonyPickup : BDP_ModifierPickup
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_Gluttony";
+		BDP_ModifierPickup.ModifierID Modifier_Gluttony;
 		BDP_ModifierPickup.modifiermessage "Gluttony Unlocked!";
 		+floatbob;
     }
@@ -216,7 +214,7 @@ class BDP_KickInTheHeadPickup : BDP_ModifierPickup
  Default
     {
         
-		BDP_ModifierPickup.modifierclass "Modifier_KickintheHead";
+		BDP_ModifierPickup.ModifierID Modifier_KickintheHead;
 		BDP_ModifierPickup.modifiermessage "Kick In The Head Unlocked!";
 		+floatbob;
     }

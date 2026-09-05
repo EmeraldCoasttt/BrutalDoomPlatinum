@@ -5,32 +5,14 @@ class BDP_ModifierEvents : EventHandler
 	int curleveltics;
 	Array<BDP_Modifier> modifiers;
 	
-	static void getActiveModifiers(out Array<String> modNames)
+	static int getActiveModifiers()
 	{	
-		// Filter string CVar so we can cleanly pull skull class
-		// names out of it.
-		string activeMods = bdp_active_modifiers;
-		activeMods = activeMods.MakeLower();
-		activeMods.Filter();
-		activeMods.Replace(" ", "");
-		activeMods.Replace("\t", "");
-		activeMods.Replace(String.Format("%c", 13), "");
-		
-		// Split filtered CVar into an array of skull classnames.
-		activeMods.Split(modNames, ",");
+		return bdp_active_modifiers;
 	}
 	
-	static void checkModifierUnlocked(out Array<String> modNames)
+	static bool checkModifierUnlocked(int toCheck)
 	{	
-		string unlockedMods = bdp_unlocked_modifiers;
-		unlockedMods = unlockedMods.MakeLower();
-		unlockedMods.Filter();
-		unlockedMods.Replace(" ", "");
-		unlockedMods.Replace("\t", "");
-		unlockedMods.Replace(String.Format("%c", 13), "");
-		
-		// Split filtered CVar into an array of skull classnames.
-		unlockedMods.Split(modNames, ",");
+		return (bdp_unlocked_modifiers & toCheck);
 	}
 	
 	override void WorldTick()
@@ -95,12 +77,8 @@ class BDP_ModifierEvents : EventHandler
 	
 	void UpdateModifierStatus()
 	{
-		Array<String> activeMods;
-		Array<String> unlockedMods;
-		checkModifierUnlocked(unlockedMods);
-		getActiveModifiers(activeMods);
-		int MODNOTFOUND = activeMods.Size();
-		int MODLOCKED = unlockedMods.Size();
+		int activeMods;
+		activeMods = getActiveModifiers();
 		
 		modifiers.Clear();	
 		let it = ThinkerIterator.Create("BDP_Modifier");
@@ -110,10 +88,10 @@ class BDP_ModifierEvents : EventHandler
 			string clsName = md.getClassName();
 			clsName = clsName.MakeLower();
 			
-			if( (unlockedMods.Find(clsName) == MODLOCKED) && !bdp_modifiers_allunlocked )
+			if(!checkModifierUnlocked(md.bitFlag) && !bdp_modifiers_allunlocked )
 				continue;
 			
-			if(activeMods.Find(clsName) != MODNOTFOUND)
+			if(activeMods & md.bitFlag)
 				md.enabled = true;
 				
 			modifiers.Push(md);

@@ -473,7 +473,7 @@ class BDP_HUD : DoomStatusBar
 	void DrawStaminaBar(vector2 pos, int flags = 0)
 	{		
 		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(Cplayer.mo);
-		if (!BDPplr || !BDPplr.istactical)
+		if (!BDPplr || !(bdp_active_modifiers & Modifier_StayFrosty))
 			return;
 		
 		int amt = BDPplr.stamina;
@@ -815,7 +815,7 @@ class BDP_HUD : DoomStatusBar
 		vector2 pos = basePos;
 		double Ystep = fnt.mFont.GetHeight();
 		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(Cplayer.mo);
-		If(BDPplr && BDPplr.scoremaster)
+		If(BDPplr && bdp_active_modifiers & Modifier_ScoreMaster)
 		{
 			DrawString(
 			fnt, 
@@ -945,8 +945,7 @@ class BDP_HUD : DoomStatusBar
 		{
 			hintfade += 0.02;
 		}
-		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(cplayer.mo);
-		bool nightmare = BDPplr.ultranightmare;
+		bool nightmare = (bdp_active_modifiers & Modifier_UltraNightmare);
 		If(hinttimer >= 150 && !nightmare)
 		{
 			DrawString(Fnt, string.format(stringtable.localize(deathstring[randomhint])), (0, -80), DI_SCREEN_CENTER_BOTTOM|DI_TEXT_ALIGN_CENTER, Font.CR_White, hintfade, scale: (0.75, 0.75));

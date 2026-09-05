@@ -327,8 +327,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	
 	action bool A_DiscardMag(int chamber = 0)
 	{
-		let dplr = BDP_PlayerPawn(invoker.owner);
-		if(dplr && dplr.gluttony)
+		if(bdp_active_modifiers & Modifier_Gluttony)
 		{
 			Until(invoker.mag <= chamber)
 			{
@@ -601,7 +600,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	
 	action void A_gunslingermag(int chamber = 0)
 	{
-		If(invoker.gunslinger && invoker.gunslingereligible)
+		If(bdp_active_modifiers & Modifier_Gunslinger && invoker.gunslingereligible)
 		{
 			A_reloadMag(chamber);
 		}
@@ -831,7 +830,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		let dplr = BDP_PlayerPawn(invoker.owner);
 		double mod = 1.0;
 		
-		if(dplr.advancedrecoil)
+		if(bdp_active_modifiers & Modifier_KickInTheHead)
 		{
 			if(dplr.bsprinting) mod *= 1.4;
 			if(dplr.player.crouchfactor < 0.6) mod *= 0.6;

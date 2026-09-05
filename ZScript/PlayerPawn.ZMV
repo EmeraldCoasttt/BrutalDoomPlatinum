@@ -175,25 +175,13 @@ class BDP_PlayerPawn : PlayerPawn
 	int flashburnout;
 	
 	//Skulls
-	bool spawnWithFrags;
-	bool shockfactor;
-	bool istactical;
-	bool ischatterbox;
-	bool oneupmanship;
-	bool sequencebreak;
-	bool ultranightmare;
 	int ultraseed;
 	bool alreadyblacklisted;
 	bool extralifegranted;
 	bool ultrabonus;
 	int extralives;
 	bool reversalmodifier;
-	bool triathlon;
-	bool scoremaster;
 	int previousscore;
-	bool realism;
-	bool gluttony;
-	bool advancedrecoil;
 	
 	int killstreak;
 	int killstreaktimer;
@@ -720,7 +708,7 @@ class BDP_PlayerPawn : PlayerPawn
 		}
 
 		if ((player.cmd.buttons & BT_USE ||
-			((deathmatch || alwaysapplydmflags) && sv_forcerespawn)) && !sv_norespawn && !ultranightmare)
+			((deathmatch || alwaysapplydmflags) && sv_forcerespawn)) && !sv_norespawn && !(bdp_active_modifiers & Modifier_UltraNightmare))
 		{
 			if (Level.maptime >= player.respawn_time || ((player.cmd.buttons & BT_USE) && player.Bot == NULL))
 			{
@@ -764,7 +752,7 @@ class BDP_PlayerPawn : PlayerPawn
 		// only if the given weapon is NOT dual-wieldable and
 		// the number of already owned weapons is larger than
 		// the given number:
-		return !IsDualWieldable(weap) && TRIATHLON && (CountOwnedWeapons() >= MAXOWNEDWEAPONS);
+		return !IsDualWieldable(weap) && bdp_active_modifiers & Modifier_Triathlon && (CountOwnedWeapons() >= MAXOWNEDWEAPONS);
 	}
 	
 	void AddToPickupList(Weapon weap)
@@ -1024,7 +1012,7 @@ class BDP_PlayerPawn : PlayerPawn
 
 		// If it was in the picked-up list, remove it from there:
 		int id = pickedUpWeapons.Find(weap);
-		if (id < pickedUpWeapons.Size() && TRIATHLON && (CountOwnedWeapons() > MAXOWNEDWEAPONS))
+		if (id < pickedUpWeapons.Size() && bdp_active_modifiers & Modifier_Triathlon && (CountOwnedWeapons() > MAXOWNEDWEAPONS))
 		{
 			DropOwnedWeapon(weap);
 			pickedUpWeapons.Delete(id);
@@ -1249,7 +1237,7 @@ class BDP_PlayerPawn : PlayerPawn
 				{
 					Damage = (damage * 0.25);
 				}
-			If(realism)
+			If(bdp_active_modifiers & Modifier_Realism)
 				{
 					Damage = (damage * 4);
 				}
@@ -1264,7 +1252,7 @@ class BDP_PlayerPawn : PlayerPawn
 		{
 		Super.playerthink();
 		
-		If(scoremaster)
+		If(bdp_active_modifiers & Modifier_ScoreMaster)
 		{
 			If(score > (previousscore * 50000))
 			{
@@ -1383,7 +1371,7 @@ class BDP_PlayerPawn : PlayerPawn
 		
 		If(health >= 1)
 		{
-			If(ischatterbox)
+			If(bdp_active_modifiers & Modifier_Chatterbox)
 			{
 				TauntThink();
 			}
@@ -1545,7 +1533,7 @@ class BDP_PlayerPawn : PlayerPawn
 			
 		}
 		
-		If(ultranightmare && !ultraseed)
+		If(bdp_active_modifiers & Modifier_UltraNightmare && !ultraseed)
 		{
 		
 			string data = bdp_seed_blacklist;
@@ -1618,25 +1606,25 @@ class BDP_PlayerPawn : PlayerPawn
 			
 		}	
 		
-		if(ultranightmare && oneupmanship && !ultrabonus)
+		if(bdp_active_modifiers & Modifier_UltraNightmare && bdp_active_modifiers & Modifier_OneUpmanship && !ultrabonus)
 		{
 			Extralives += 3;
 			ultrabonus = true;
 		}
 		
-		If(spawnWithFrags && !ownedEquipment && health > 0)
+		If(bdp_active_modifiers & Modifier_Fragger && !ownedEquipment && health > 0)
 		{
 			GiveInventory("BDP_FragGrenade", 1);
 			ownedEquipment = BDP_Equipment(FindInventory("BDP_FragGrenade"));
 		}
 		
-		If(sequencebreak && !findinventory("sequencebreaker"))
+		If(bdp_active_modifiers & Modifier_SequenceBreak && !findinventory("sequencebreaker"))
 		{
 			GiveInventory("SequenceBreaker",1);
 		}
 		
 		
-		If(shockfactor && level.time % 5 == 0)
+		If(bdp_active_modifiers & Modifier_ShockFactor && level.time % 5 == 0)
 		{
 			A_alertmonsters(0,AMF_TARGETEMITTER);
 		}
@@ -1663,7 +1651,7 @@ class BDP_PlayerPawn : PlayerPawn
 		}
 		
 		//giveinventory("meathook",1);
-		If (istactical)
+		If (bdp_active_modifiers & Modifier_StayFrosty)
 		{
 		Giveinventory("istacticalclass",1);
 		Takeinventory("isnottacticalclass",1);
@@ -1759,7 +1747,7 @@ class BDP_PlayerPawn : PlayerPawn
 		}*/
 		
 		
-		If(stamina >= 99 && istactical)
+		If(stamina >= 99 && bdp_active_modifiers & Modifier_StayFrosty)
 		{
 			exhausted = true;
 		}
@@ -2041,7 +2029,7 @@ class BDP_PlayerPawn : PlayerPawn
 		
 		If(boostlevel >= 3)
 		{
-			If(sequencebreak)
+			If(bdp_active_modifiers & Modifier_SequenceBreak)
 			{
 				BDP_DoorBuster.DestroyDoor(self,  breakLocks: BDP_DoorBuster.LB_All);
 			}
@@ -2132,7 +2120,7 @@ class BDP_PlayerPawn : PlayerPawn
 				//console.printf("%i",vel.z);
 				bOnMobj = false;
 				player.jumpTics = -1;
-				If(istactical)
+				If(bdp_active_modifiers & Modifier_StayFrosty)
 				Stamina += 20;
 				if (!(player.cheats & CF_PREDICTING)) A_StartSound("BDPJUMP", 32);
 				If(doublejumpready)
@@ -2321,7 +2309,7 @@ class BDP_PlayerPawn : PlayerPawn
 		
 		pitch -= recoil.x;
 		angle -= recoil.y;
-		if(!advancedRecoil)
+		if(!(bdp_active_modifiers & Modifier_KickInTheHead))
 		{
 			if(recoil.x > 0)
 			{
