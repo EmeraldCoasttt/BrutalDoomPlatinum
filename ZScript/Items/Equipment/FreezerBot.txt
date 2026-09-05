@@ -10,11 +10,40 @@ class BDP_FreezerBot : BDP_Equipment
 		Scale 0.8;
 	}
 	
+	FreezeBot buddy;
+	int deployState;
+	
+	override void DoEffect()
+	{
+		if(deployState == 2 && (!buddy || buddy.health < 1))
+		{
+			deployState = 0;
+			TriggerCooldown();
+		}
+		super.DoEffect();
+	}
+	
 	override bool UseEffect()
 	{
-		owner.TakeInventory("BDP_FreezerBotStates", 1);
-		owner.GiveInventory("BDP_FreezerBotStates", 1);
-		return true;
+		if(deployState == 0)
+		{
+			owner.TakeInventory("BDP_FreezerBotStates", 1);
+			owner.GiveInventory("BDP_FreezerBotStates", 1);
+			deployState = 1;
+		}
+		else if(buddy)
+		{
+			buddy.Die(owner, self, meansofdeath:"Betrayal");
+			deployState = 0;
+		}
+		return false;
+	}
+	
+	override void OnDrop(Actor dropper)
+	{
+		if(buddy)
+			buddy.Die(owner, self, meansofdeath:"Betrayal");
+		deployState = 0;
 	}
 	
 	States
@@ -77,9 +106,17 @@ class BDP_FreezerBotStates : CustomInventory
 		FR2R BCDEFGHIJJJJJJJJJ 1;
 		FR2R K 1
 		{
-			let buddy = spawn("Freezebot", (pos.x, pos.y, pos.z + 40));
-			If(buddy)
+			let buddy = Freezebot(spawn("Freezebot", (pos.x, pos.y, pos.z + 40)));
+			let equip = BDP_FreezerBot(FindInventory("BDP_FreezerBot"));
+			if(buddy)
+			{
 				buddy.angle = angle + 180;
+				if(equip)
+				{
+					equip.buddy = buddy;
+					equip.deployState = 2;
+				}
+			}
 		}
 		FR2R LMNOPQRST 1;
 		TNT1 A 5;
