@@ -17,7 +17,8 @@ class BDP_DarkClaw : BDP_Equipment
 	override bool UseEffect()
 	{
 		owner.A_StartSound("items/darkclaw/blast", 0);
-		owner.A_Explode(500, 128, XF_NOTMISSILE, damagetype:"Incinerate");
+		int hitMonsters = owner.A_Explode(500, 128, XF_NOTMISSILE, damagetype:"Incinerate");
+		owner.GiveBody(hitMonsters * 5);
 		for(int i = -4; i < 5; i++)
 			owner.SpawnPlayerMissile("SmallExplosionFlames", owner.angle + i * 20, z:-16, noautoaim:true);
 		return true;
