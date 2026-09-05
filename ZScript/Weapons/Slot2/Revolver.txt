@@ -75,7 +75,7 @@ class BDP_Revolver : BDP_Weapon
 		REVO M 1 Bright
 		{
 			//A_FireBullets (0, 0, 1, 60, "RevolverPuff", FBF_NORANDOM,0,"DecorativeTracer",-4);
-			A_FirePiercingBullet(30,"revolverpuff",0,0,0,-4);
+			A_FirePiercingBullet(31,"revolverpuff",0,0,0,-4);
 			A_FlashOverlay();
 			A_FireParticles(5);
 			A_StartSound("REVFIRE2", 1);
@@ -107,7 +107,7 @@ class BDP_Revolver : BDP_Weapon
 		RE2F ABCC 1;
 		RE2F D 1 Bright
 		{
-			A_FirePiercingBullet(30,"revolverpuff",0,0,0,-4);
+			A_FirePiercingBullet(31,"revolverpuff",0,0,0,-4);
 			A_FlashOverlay(state:"AltMuzzleFlash");
 			A_FireParticles(5);
 			A_StartSound("REVFIRE2", 1);
