@@ -91,21 +91,27 @@ class FireGrenade : Actor
 	{
 		Radius 4;
 		Height 4;
-		Speed 40;
-		Gravity 0.3;
+		Speed 30;
+		Gravity 0.7;
 		DamageFunction 0;
 		Projectile;
 		Scale 0.75;
+		BounceFactor 0.60;
+		WallBounceFactor 0.40;
 		Obituary "%o was stuck by a thermite grenade.";
-		BounceType "Doom";
 		BounceCount 5;
 		BounceSound "Weapons/GrenadeBounce";
 		DeathSound "Weapons/GrenadeBounce";
+		+BOUNCEONFLOORS
+		+BOUNCEONWALLS
+		+BOUNCEONCEILINGS
+		+ALLOWBOUNCEONACTORS
+		+BOUNCEAUTOOFFFLOORONLY
+		+CANBOUNCEWATER
+		+SKYEXPLODE
 		-NOGRAVITY
-		-ALLOWBOUNCEONACTORS
 		+HITTRACER
 		+FORCEXYBILLBOARD
-		+CANBOUNCEWATER
 	}
 	
 
