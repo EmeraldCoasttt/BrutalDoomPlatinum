@@ -6,27 +6,47 @@ class BDP_Tether : BDP_Equipment
 		Inventory.PickupMessage "Picked up a dimensional tether!";
 		Inventory.PickupSound "items/computermap";
 		BDP_Equipment.Cooldown 15;
-		Inventory.Icon "HOLOA0";
+		Inventory.Icon "TETHA0";
 		Scale 0.5;
 	}
 	
-	Actor linkPoint;
+	BDP_TetherDest linkPoint;
+	
+	override void DoEffect()
+	{
+		if(linkPoint)
+		{
+			if(linkPoint.targetInRange)
+			{
+				if(icon == TexMan.CheckForTexture("TETHB0"))
+					owner.A_StartSound("BEPBEP");
+				icon = TexMan.CheckForTexture("TETHC0");
+			}
+			else
+			{
+				icon = TexMan.CheckForTexture("TETHB0");
+			}
+		}
+		super.DoEffect();
+	}
 	
 	override bool UseEffect()
 	{
 		if(!linkPoint)
 		{
 			owner.A_StartSound("BEPBEP", 0);
-			linkPoint = Spawn("BDP_TetherDest", owner.pos);
+			linkPoint = BDP_TetherDest(Spawn("BDP_TetherDest", owner.pos));
+			icon = TexMan.CheckForTexture("TETHB0");
 			return false;
 		}
 		else
 		{
 			owner.A_SpawnItemEx("TeleportFog");
 			linkPoint.A_SpawnItemEx("TeleportFog");
-			owner.SetOrigin(linkPoint.pos, false);
+			owner.TeleportMove(linkPoint.pos, true);
 			linkPoint.Destroy();
 			owner.A_StartSound("Weapons/Unmaker/UseTeleporter", 0);
+			icon = TexMan.CheckForTexture("TETHA0");
 			return true;
 		}
 	}
@@ -43,7 +63,7 @@ class BDP_Tether : BDP_Equipment
 	States
 	{
 	Spawn:
-		HOLO A -1;
+		TETH A -1;
 		Stop;
 	}
 }
@@ -53,10 +73,29 @@ class BDP_TetherDest : Actor
 	Default
 	{
 		-SOLID
+		+BLOCKEDBYSOLIDACTORS
+		+DONTTHRUST
 		Radius 16;
 		Height 56;
 		RenderStyle "Subtract";
 	}
+	
+	bool targetInRange;
+	
+	override void Tick()
+	{
+		super.Tick();
+		BlockThingsIterator it = BlockThingsIterator.Create(self, 1);
+		while (it.Next())
+		{
+			if(!it.thing || !it.thing.bISMONSTER || CheckPosition(pos.xy, true)) continue;
+			if(!targetInRange) A_StartSound("BEPBEP");
+			targetInRange = true;
+			return;
+		}
+		targetInRange = false;
+	}
+	
 	States
 	{
 	Spawn:
