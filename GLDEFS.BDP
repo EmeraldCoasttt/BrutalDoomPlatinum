@@ -339,7 +339,7 @@ flickerlight BFGEXPLOred
 	chance 0.99
 }
 
-object BFGBallWithTracers
+object SuperBFGBall
 {
     frame BFS1A { light BFGBALL }
     frame BFS1B { light BFGBALL }

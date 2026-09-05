@@ -3,7 +3,7 @@ class BDP_MGTurret : BDP_Equipment
 	Default
 	{
 		Tag "Machine Gun Turret";
-		Inventory.Icon "MGNTD1";
+		Inventory.Icon "MGNTD0";
 		Inventory.PickupMessage "Picked up the machine gun turret.";
 		Inventory.PickupSound "CBOXPKUP";
 		BDP_Equipment.Cooldown 120;
