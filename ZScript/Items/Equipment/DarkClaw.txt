@@ -80,6 +80,31 @@ class BDP_DarkClawStates : CustomInventory
 		vel += BDP_Math.VecFromAngles(angle, pitch, -amt);
 	}
 	
+	//from project brutality
+	action void A_UseLine(int range = 64) {
+		FLineTraceData useline;
+		LineTrace(angle, range, pitch, offsetz:player.viewheight, data:useline);
+		if (useline.HitLine && useline.LineSide == line.front)
+		{
+			if(FindInventory("PowerStrength"))
+			{
+				bool isDoor = false;
+				switch (useline.HitLine.special)
+				{
+				case Generic_Door:
+				case Door_LockedRaise:
+				case Door_Animated:
+				case Door_Open:
+				case Door_Raise:
+					isDoor = true;
+					break;
+				}
+				if(isDoor) return;
+			}
+			useline.HitLine.Activate(player.mo, useline.LineSide, SPAC_Use);
+		}
+	}
+	
 	action Actor A_BDPMelee(double range = 200, name projectile = "MeleeAttack", double spawnheight = -7, bool doHitThrust = true)
 	{
 		Actor Victim;
@@ -153,6 +178,7 @@ class BDP_DarkClawStates : CustomInventory
 		TNT1 A 0
 		{
 			Actor victim = A_BDPMelee(projectile:"MeleeAttackDarkClaw");
+			if(!invoker.forceActivate) A_UseLine();
 			if((victim && victim.bISMONSTER || invoker.forceActivate) && !invoker.onCooldown)
 			{
 				A_StartSound("items/darkclaw/blast", 0);

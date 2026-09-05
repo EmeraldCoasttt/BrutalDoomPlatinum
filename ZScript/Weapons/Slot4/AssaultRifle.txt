@@ -338,7 +338,11 @@ class BDP_AssaultRifle : BDP_Weapon
 			A_ClearOverlays(49, 50);
 		}
 		RIBB BCD 1 A_SetAngle(angle + 1.5, SPF_INTERPOLATE);
-		TNT1 A 0 A_BDPMelee(150, "MeleeAttackRiflebash", 1);
+		TNT1 A 0
+		{
+			A_BDPMelee(150, "MeleeAttackRiflebash", 1);
+			A_UseLine();
+		}
 		RIBB TTUUU 1;
 		RIBB VWXYZ 1 A_SetAngle(angle - 0.75, SPF_INTERPOLATE);
 		RIB2 BA 1;
