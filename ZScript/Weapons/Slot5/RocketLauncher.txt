@@ -462,6 +462,7 @@ CLASS BDP_RocketLauncher : BDP_Weapon
 			let drum = BDP_SpentMag(A_FireProjectileDX("BDP_SpentRocketDrum", random(-80, -100), random(40, 60), 15, 35, -20));
 			if(drum)
 				drum.ammo = curmag;
+			A_DiscardMag();
 		}
 		MISR DDE 1;
 		MISR FGH 1;

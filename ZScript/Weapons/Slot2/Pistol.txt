@@ -238,7 +238,7 @@ class BDP_Pistol : BDP_Weapon replaces Pistol
 			if(spentmag)
 				spentmag.ammo = invoker.mag;
 		}
-		TNT1 A 0 A_DiscardMag;
+		TNT1 A 0 A_DiscardMag(1);
 		PISR IJKLMNOPQRSTUVWXYZ 1 A_SetSilencedSprites("PISR","SILR");
 		PI2R ABCDEFGHI 1 A_SetSilencedSprites("PI2R","2ILR");
 		TNT1 A 0 A_StartSound("PISTFOL5",10);
