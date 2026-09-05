@@ -31,15 +31,19 @@ class BDP_FreezerBeam : BDP_Weapon
 	TNT1 A 8;
 	TNT1 A 0 A_FireCustomMissile("FrozenSmokeSpawner",0,0,-1,7);
 	stop;
-	Grenade: //30
-		TNT1 A 0 A_CheckIfMag(1,"GrenadeNoAmmo");
+	TossItem: //8
+		TNT1 A 0 A_CheckIfMag(1,"TossItemNoAmmo");
 		FR1S EFGH 1;
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		FR1S DCBA 1;
 		Goto Ready;
-	GrenadeNoAmmo:
+	TossItemNoAmmo:
 		FR1S MNOP 1;
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		FR1S LKJI 1;
 		Goto Ready;
 	Kick: //18

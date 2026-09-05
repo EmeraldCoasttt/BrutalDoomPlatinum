@@ -81,11 +81,13 @@ CLASS BDP_RocketLauncher : BDP_Weapon
 	}
 	States
 	{
-	Grenade: //30
+	TossItem: //8
 		TNT1 A 0 A_JumpIf(invoker.mag >= 3, "Grenade2"); //standard
 		TNT1 A 0 A_JumpIf(invoker.mag >= 2, "Grenade3"); //only 2 left
 		MISS SROE 1;
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		MISS DCLK 1;
 		Goto Ready;
 	Grenade2:

@@ -23,9 +23,11 @@ class BDP_GrenadeLauncher : BDP_Weapon
 	}
 	States
 	{
-	Grenade: //30
+	TossItem: //8
 		GLSA EFGH 1;
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		GLSA DCBA 1;
 		Goto ReverseStrapIdle;
 	Kick: //18

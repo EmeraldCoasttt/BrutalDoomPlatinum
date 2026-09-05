@@ -16,12 +16,12 @@ class BDP_DualRevolver : BDP_Weapon
 	}
 	States
 	{
-	Grenade: //8
-		TNT1 A 4 A_DrawDualOverlays("DeselectOverlay","DeselectOverlay",true);
+	TossItem: //8
+		TNT1 A 6 A_DrawDualOverlays("DeselectLeft","DeselectRight",true);
 		TNT1 A 1;
 		Wait;
 	FinishToss:
-		TNT1 A 4 A_DrawDualOverlays("SelectOverlay","SelectOverlay",true);
+		TNT1 A 6 A_DrawDualOverlays("SelectLeft","SelectRight",true);
 		Goto Ready;
 	Kick: //18
 		TNT1 A 4 A_DrawDualOverlays("KickOverlay","KickOverlay",true);

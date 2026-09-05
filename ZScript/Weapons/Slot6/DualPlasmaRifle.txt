@@ -49,9 +49,11 @@ class BDP_DualPlasmaRifle : BDP_Weapon
 		3UPR A 0;
 		2UPR A 0;
 		Stop;
-	Grenade: //30
+	TossItem: //30
 		TNT1 A 6 A_DrawDualOverlays("DeselectLeft", "DeselectRight");
-		TNT1 A 20;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		TNT1 A 6 A_DrawDualOverlays("SelectLeft", "SelectRight");
 		Goto Ready;
 	Kick: //18

@@ -19,10 +19,12 @@ class BDP_SubmachineGun : BDP_Weapon
 	}
 	States
 	{
-	Grenade: //30
+	TossItem: //8
 		TNT1 A 0 A_EndAim();
 		SMGS ABCD 1;
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		SMGS HGFE 1;
 		Goto Ready;
 	Kick: //18

@@ -60,9 +60,11 @@ class BDP_Fist : BDP_Weapon replaces Fist
 		3UN5 ABCDEFGHIJKL 0;
 		3UC2 ABCDEF 0;
 		Stop;
-	Grenade: //30
+	TossItem: //8
 		FISA ABCD 1;
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		FISA DCBA 1;
 		Goto Ready;
 	Sprint:

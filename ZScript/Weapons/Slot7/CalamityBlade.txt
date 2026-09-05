@@ -68,9 +68,11 @@ class BDP_CalamityBlade : BDP_Weapon
 	SpawnNoAmmo:
 		CBLD A -1;
 		Stop;
-	Grenade: //30
+	TossItem: //8
 		HETS EFGH 1;
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		HETS DCBA 1;
 		Goto Ready;
 	Kick: //18

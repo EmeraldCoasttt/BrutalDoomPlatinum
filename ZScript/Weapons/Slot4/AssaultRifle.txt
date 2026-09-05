@@ -48,9 +48,11 @@ class BDP_AssaultRifle : BDP_Weapon
 	}
 	States
 	{
-	Grenade: //30
+	TossItem: //8
 		RIFG EDCB 1;
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		RIFG IHGF 1;
 		Goto Ready;
 	Kick: //18

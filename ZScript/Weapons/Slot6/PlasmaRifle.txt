@@ -42,9 +42,11 @@ class BDP_PlasmaRifle : BDP_Weapon
 	}
 	States
 	{
-	Grenade: //30
+	TossItem: //8
 		PRSG PQRS 1;
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		PRSG WVUT 1;
 		Goto Ready;
 	Kick: //18

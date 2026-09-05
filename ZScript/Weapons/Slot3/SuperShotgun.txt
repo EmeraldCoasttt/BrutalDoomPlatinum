@@ -24,9 +24,11 @@ CLASS BDP_SuperShotgun : BDP_Weapon
 	CacheSprites:
 		SHO4 A 0;
 		Stop;
-	Grenade: //30
+	TossItem: //8
 		SHT5 EFGH 1;
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		SHT5 DCBA 1;
 		Goto Ready;
 	Kick: //18

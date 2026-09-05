@@ -18,9 +18,11 @@ CLASS BDP_Incinerator : BDP_Weapon
 	}
 	States
 	{
-	Grenade: //30
+	TossItem: //8
 		FLMS EFGH 1;
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		FLMS ABCD 1;
 		Goto Ready;
 	Kick: //18

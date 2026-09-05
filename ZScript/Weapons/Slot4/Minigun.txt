@@ -27,11 +27,13 @@ class BDP_Minigun : BDP_Weapon
 	}
 	States
 	{
-	Grenade: //30
+	TossItem: //8
 		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### ][ZY 1;
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;
 		#### UVWX 1;

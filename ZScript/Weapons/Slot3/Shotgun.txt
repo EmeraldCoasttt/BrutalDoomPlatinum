@@ -19,10 +19,12 @@ class BDP_Shotgun : BDP_Weapon
 	}
 	States
 	{
-	Grenade: //30
+	TossItem: //8
 		TNT1 A 0 A_EndAim();
 		SHTA NOPQ 1;
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		SHTA MLKJ 1;
 		Goto Ready;
 	Kick: //18

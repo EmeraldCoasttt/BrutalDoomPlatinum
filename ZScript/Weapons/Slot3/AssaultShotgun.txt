@@ -128,9 +128,11 @@ class BDP_AssaultShotgun : BDP_Weapon
 	}
 	States
 	{
-	Grenade: //30
+	TossItem: //8
 		A12S EFGH 1;
-		TNT1 A 22;
+		TNT1 A 1;
+		Wait;
+	FinishToss:
 		A12S DCBA 1;
 		Goto Ready;
 	Kick: //18
