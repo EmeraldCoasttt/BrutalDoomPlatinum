@@ -2,7 +2,7 @@ class BDP_BoosterFrame : BDP_Equipment
 {
 	Default
 	{
-		Tag "Berserk";
+		Tag "Booster Frame";
 		Inventory.PickupMessage "You got the Booster Frame!";
 		Inventory.PickupSound "BSTRPUP";
 		BDP_Equipment.Cooldown 5;
