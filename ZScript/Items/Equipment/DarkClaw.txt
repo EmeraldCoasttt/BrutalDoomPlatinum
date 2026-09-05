@@ -212,7 +212,7 @@ class MeleeAttackDarkClaw : MeleeAttack
 		Radius 4;
 		Height 2;
 		Damagetype "cut";
-		damagefunction 50;
+		damagefunction 66;
 		Projectile;
 		speed 30;
 		decal "SawHorizontal";
