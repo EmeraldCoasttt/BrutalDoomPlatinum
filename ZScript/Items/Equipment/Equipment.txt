@@ -19,6 +19,7 @@ class BDP_Equipment : Inventory abstract
 	flagdef CooldownNotTimer : EquipFlags, 0;
 	flagdef Active : EquipFlags, 1;
 	flagdef NoIcon : EquipFlags, 2;
+	flagdef ReplacesMelee : EquipFlags, 3;
 	
 	double maxCooldown;
 	property Cooldown : maxCooldown;
@@ -108,6 +109,11 @@ class BDP_Equipment : Inventory abstract
 	virtual bool ReleaseEffect()
 	{
 		return false;
+	}
+	
+	virtual void QuickMelee()
+	{
+		return;
 	}
 }
 

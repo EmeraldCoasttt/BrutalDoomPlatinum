@@ -67,6 +67,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	int BDPWeaponFlags;
 	flagdef BloodStain : BDPWeaponFlags, 0;
 	flagdef DualWeapon : BDPWeaponFlags, 1;
+	flagdef ReplacesMelee : BDPWeaponFlags, 2;
 	
 	int aimMode;
 	bool scopeZoom;
