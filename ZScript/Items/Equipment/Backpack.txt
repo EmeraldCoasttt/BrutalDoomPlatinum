@@ -1,5 +1,8 @@
 class BDP_Backpack : BDP_Equipment
 {
+	array<Class<BDP_Ammo> > ammoTypes;
+	array<Int> ammoHeld;
+	
 	Default
 	{
 		Tag "Backpack";
@@ -9,13 +12,48 @@ class BDP_Backpack : BDP_Equipment
 		-BDP_EQUIPMENT.ACTIVE
 	}
 	
+	override void PostBeginPlay()
+	{
+		int end = AllActorClasses.Size();
+		for (int i = 0; i < end; i++)
+		{
+			let ammotype = (class<BDP_Ammo>)(AllActorClasses[i]);
+			if(ammotype && GetDefaultByType(ammotype).GetParentAmmo() == ammotype)
+			{
+				ammoTypes.Push(ammotype.getclassname());
+				ammoHeld.push(GetDefaultByType(ammotype).amount);
+			}
+		}
+	}
+	
 	override void PickupEquipment(bool depleted)
 	{
 		owner.GiveInventory("BDP_BackpackItem", 1);
+		for (int i = 0; i < ammoTypes.size(); i++)
+		{
+			owner.SetInventory(ammoTypes[i], owner.CountInv(ammoTypes[i]) + ammoHeld[i]);
+			//console.printf("gave player %d "..ammoTypes[i].getclassname(), ammoHeld[i]);
+		}
 	}
 	
 	override void OnDrop(Actor dropper)
 	{
+		array<Class<BDP_Ammo> > ammoCache;
+		ammoCache.Move(ammoTypes);
+		ammoHeld.Clear();
+		for (int i = 0; i < ammoCache.size(); i++)
+		{
+			int ownedAmmo = dropper.CountInv(ammoCache[i]);
+			int defMax = GetDefaultByType(ammoCache[i]).maxamount;
+			if(ownedAmmo > defMax)
+			{
+				int excess = ownedAmmo - defMax;
+				dropper.TakeInventory(ammoCache[i], excess);
+				ammoTypes.Push(ammoCache[i]);
+				ammoHeld.push(excess);
+				//console.printf("stored %d "..ammoTypes[i].getclassname(), ammoHeld[i]);
+			}
+		}
 		dropper.TakeInventory("BDP_BackpackItem", 1);
 	}
 	
@@ -44,13 +82,7 @@ class BDP_BackpackItem : BackpackItem
 {
 	override Inventory CreateCopy(Actor other)
 	{
-		let dplr = BDP_PlayerPawn(other);
-		if(dplr)
-		{
-			let equip = BDP_Equipment(dplr.ownedEquipment);
-			if(equip)
-				bDepleted = equip.pickupDepleted;
-		}
+		bDepleted = true;
 		return super.CreateCopy(other);
 	}
 }
