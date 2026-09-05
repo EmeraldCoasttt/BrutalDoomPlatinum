@@ -283,7 +283,7 @@ class HeatWaveRipper : Actor
 	{
 		Tag "Heatwave Ripper";
 		Projectile;
-		Damage 10;
+		DamageFunction 45;
 		Speed 20;
 		Radius 16;
 		Height 8;
