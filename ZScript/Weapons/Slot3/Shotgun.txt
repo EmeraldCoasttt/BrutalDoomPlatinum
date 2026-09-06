@@ -335,7 +335,7 @@ class BDP_Shotgun : BDP_Weapon
 				A_StartSound("weapons/sg", 1);
 			}
 			A_FlashOverlay(state:"MuzzleFlashAim");
-			A_WeaponRecoil(4);
+			A_WeaponRecoil(4, recoverspeed:1);
 			A_FireParticles(12);
 			A_StartSound("FARSHT", 6);
 			A_AlertMonstersDX();

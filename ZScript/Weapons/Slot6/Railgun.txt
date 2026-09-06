@@ -92,7 +92,10 @@ class BDP_Railgun : BDP_Weapon
 				A_Fireprojectile ("PlasmaSmoke", 0, 0, 0, 2);
 				A_StartSound("RAILF01", 1);
 				A_TakeMag();
-				A_WeaponRecoil(6);
+				double recoilMod = 1.0;
+				if(invoker.aimMode) recoilMod *= 0.5;
+				if(invoker.aimMode && invoker.scopeZoom) recoilMod *= 0.5;
+				A_WeaponRecoil(6 * recoilMod, recoverspeed:1 * recoilMod);
 				A_QuadSound();
 				if(invoker.owner.pos.z <= invoker.owner.floorz)
 				{

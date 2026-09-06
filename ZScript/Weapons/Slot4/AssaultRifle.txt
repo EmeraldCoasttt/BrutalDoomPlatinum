@@ -162,7 +162,7 @@ class BDP_AssaultRifle : BDP_Weapon
 			A_StartSound("FARRIF", 6);
 			A_AlertMonstersDX();
 			A_ZoomFactor(1.75);
-			A_WeaponRecoil(1.5,0,4);
+			A_WeaponRecoil(1.0,0,4);
 			A_QuadSound();
 			A_GunLight();
 			A_MagClick();
