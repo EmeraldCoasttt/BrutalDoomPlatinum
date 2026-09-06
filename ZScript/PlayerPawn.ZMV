@@ -2299,6 +2299,7 @@ class BDP_PlayerPawn : PlayerPawn
 			
 		void StopHook(bool severed = false)
 	{
+		if(GrappledMonster) A_StartSound(severed ? "MHKRTRCT" : "MHKSTP", CHAN_AUTO);
 		if(severed) vel += GrappleVel;
 		Rope = GrappleVel = (0, 0, 0);
 		PendulumLength = 0;
