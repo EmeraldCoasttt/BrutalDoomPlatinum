@@ -669,7 +669,11 @@ class BDP_HUD : DoomStatusBar
 		{
 			let equip = BDP_Equipment(dplr.ownedEquipment);
 			int mod = equip.bCooldownNotTimer ? 1 : TICRATE;
-			double iconHeight = TexMan.CheckRealHeight(GetIcon(equip, 0)) + 1;
+			double iconWidth;
+			double iconHeight;
+			[iconWidth, iconHeight] = TexMan.GetSize(GetIcon(equip, 0));
+			double biggestSide = max(iconHeight, iconWidth);
+			if(biggestSide > 32) iconHeight /= (biggestSide / 32);
 			if(equip.cooldown)
 				SetClipRect(iconPos.x - 16, iconPos.y - iconHeight + iconHeight * (equip.cooldown / (equip.maxCooldown * mod)), 32, 32, DI_SCREEN_RIGHT_BOTTOM);
 			DrawTexture(GetIcon(equip, 0), iconPos, iconFlags, box:(32, 32));
