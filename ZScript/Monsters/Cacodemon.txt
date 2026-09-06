@@ -358,13 +358,6 @@ class BDP_Cacodemon : Cacodemon Replaces Cacodemon
 		CACB B -1;
 		Stop;
 	Death.fire:
-		TNT1 A 0;
-		TNT1 A 0 A_Scream();
-		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_Playsound("props/redfire");
-		TNT1 A 0 A_CustomMissile ("PlasmaSmoke", 24, 0, random (0, 180), 2, random (0, 180));
-		TNT1 A 0 A_SpawnItem("BurningCacoDemon");
-		Stop;
 	Death.Explosives:
 	XDeath:
 	Death.Desintegrate:

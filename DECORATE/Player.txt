@@ -557,6 +557,8 @@ ACTOR BDP_Player : BDP_PlayerPawn Replaces DoomPlayer //PlayerPawn Replaces Doom
         NULL A 1
         NULL A -1
         Stop
+	Death.Fire:
+    Death.flames:
     Death.burn:
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)
@@ -586,20 +588,6 @@ ACTOR BDP_Player : BDP_PlayerPawn Replaces DoomPlayer //PlayerPawn Replaces Doom
         PBUR EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE 4 A_CustomMissile ("GreenFlameTrailsbIG", 8, random (-10, 10), random (0, 180), 2, random (20, 90))
         PBUR E -1
         Stop
-	Death.Fire:
-    Death.flames:
-        NULL A 0
-		TNT1 A 0 A_JumpIfInTargetInventory("EnemyIsArchvile", 1, "Death.ArchvileExplode")
-		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
-		MARN A 0 A_Givetotarget("KilledPlayer",1)
-        NULL A 0 ACS_NamedExecuteAlways("BDStartCamera", 0, 0, 0, 0)//Start Camera
-        NULL A 0 A_Scream
-        NULL A 0 A_NoBlocking
-		TNT1 A 0 A_PLaySound("BIGSCRE", 2)
-        NULL A 0 A_SpawnItem("GenericBurningGuy")
-        NULL A 1
-        NULL A -1
-		Stop
    Death.Desintegrate:
 		MARN A 0 A_GiveInventory("PlayerIsDead", 1)
 		MARN A 0 A_Givetotarget("KilledPlayer",1)

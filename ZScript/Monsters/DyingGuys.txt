@@ -70,7 +70,14 @@ class DyingZombieman : Actor
 	Death.Burn:
 		TNT1 AA 0 A_SpawnItemEx("ArmorShardFatalityBonus2", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
 		TNT1 AA 0 A_SpawnItemEx("HealthPlusFatalityBonus2", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
-		TNT1 A 0 A_SpawnItem ("DyingZombiemanInFlames");
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_Scream();
+		TNT1 A 0 A_ChangeFlag("THRUACTORS", 1);
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
+		BRZ3 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH 3 A_CustomMissile("BurnParticles", 5, 0, random (0, 360), 2, random (50, 130));
+        TNT1 A 0 A_SpawnItem("100SmallFireFocusSpawnerz");
+		BRZ3 HHHHHHHHHHHHHHHHHHHHHHHH 10 A_CustomMissile("PlasmaSmoke", 15, 0, random (0, 360), 2, random (50, 130));
+		BRZ3 H -1;
 		Stop;
 	Death.Trample:	
 	Death.Kick:
@@ -683,9 +690,19 @@ class DyingSergeant : Actor
 	Death.Flames:
 		TNT1 A 0 A_SpawnItemEx("ArmorShardFatalityBonus2", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
 		TNT1 A 0 A_SpawnItemEx("HealthPlusFatalityBonus2", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
-		TNT1 A 0 A_Scream();
-		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("BurningZombie");
+		TNT1 A 0 A_Stop();
+		PBR1 A 6 A_XScream();
+		TNT1 AAAA 0 A_CustomMissile ("FlameTrails", 42, 0, random (0, 360), 2, random (0, 180));
+		PBR1 B 6 A_NoBlocking();
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn");
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15));
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35));
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35));
+		PBR1 CCDD 3 A_CustomMissile ("FlameTrails", 32, 0, random (0, 360), 2, random (0, 180));
+		PBR1 EEFF 3;
+		PBR1 GG 3;
+		PBR1 H -1;
 		Stop;
 	Spawn:
 		TNT1 A 0 NODELAY A_spawnitemex("BDP_ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
@@ -884,7 +901,15 @@ class DyingSergeantNoLeg : Actor
 	Death.Burn:
 		TNT1 A 0 A_SpawnItemEx("ArmorShardFatalityBonus2", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
 		TNT1 A 0 A_SpawnItemEx("HealthPlusFatalityBonus2", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
-		TNT1 A 0 A_SpawnItem ("DyingSergeantNoLegInFlames");
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_ChangeFlag("THRUACTORS", 1);
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
+		TNT1 A 0 A_Scream();
+		BRZ3 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH 3 A_CustomMissile("BurnParticles", 5, 0, random (0, 360), 2, random (50, 130));
+        TNT1 A 0 A_SpawnItem("100SmallFireFocusSpawnerz");
+		BRZ3 HHHHHHHHHHHHHHHHHHHHHHHH 10 A_CustomMissile("PlasmaSmoke", 15, 0, random (0, 360), 2, random (50, 130));
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0);
+		BRZ3 H -1;
 		Stop;
 	Death.Trample:	
 	Death.Kick:
@@ -1191,9 +1216,19 @@ class DyingZombiemanNoArm : DyingSergeant
 	Death.Flames:
 		TNT1 A 0 A_SpawnItemEx("ArmorShardFatalityBonus2", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
 		TNT1 A 0 A_SpawnItemEx("HealthPlusFatalityBonus2", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
-		TNT1 A 0 A_Scream();
-		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("BurningZombie");
+		TNT1 A 0 A_Stop();
+		PBR1 A 6 A_XScream();
+		TNT1 AAAA 0 A_CustomMissile ("FlameTrails", 42, 0, random (0, 360), 2, random (0, 180));
+		PBR1 B 6 A_NoBlocking();
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn");
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15));
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35));
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35));
+		PBR1 CCDD 3 A_CustomMissile ("FlameTrails", 32, 0, random (0, 360), 2, random (0, 180));
+		PBR1 EEFF 3;
+		PBR1 GG 3;
+		PBR1 H -1;
 		Stop;
 	Spawn:
 		TNT1 A 0 NODELAY A_spawnitemex("BDP_ZombieHeadshot",0,0,0,0,0,0,0,SXF_SETTRACER | SXF_NOCHECKPOSITION);
@@ -1328,9 +1363,19 @@ class ZombieManDyingAfterFatality : DyingZombiemanNoArm
 	Death.Flames:
 		TNT1 A 0 A_SpawnItemEx("ArmorShardFatalityBonus2", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
 		TNT1 A 0 A_SpawnItemEx("HealthPlusFatalityBonus2", 0, 0, 20, random (-1, 1), random (-1, 1), 8);
-		TNT1 A 0 A_Scream();
-		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItem("BurningZombie");
+		TNT1 A 0 A_Stop();
+		PBR1 A 6 A_XScream();
+		TNT1 AAAA 0 A_CustomMissile ("FlameTrails", 42, 0, random (0, 360), 2, random (0, 180));
+		PBR1 B 6 A_NoBlocking();
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorCraterSmall",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_SpawnItem("BarrelExplosionSmokeColumn");
+		TNT1 A 0 A_SpawnItemEx("TinyBurningPiece", random (-15, 15), random (-15, 15));
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece2", random (-35, 35), random (-35, 35));
+		TNT1 AA 0 A_SpawnItemEx("TinyBurningPiece3", random (-45, 45), random (-45, 35));
+		PBR1 CCDD 3 A_CustomMissile ("FlameTrails", 32, 0, random (0, 360), 2, random (0, 180));
+		PBR1 EEFF 3;
+		PBR1 GG 3;
+		PBR1 H -1;
 		Stop;
 	Spawn:
 		ZZD5 E 1;

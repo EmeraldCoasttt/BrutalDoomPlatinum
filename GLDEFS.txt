@@ -102,21 +102,6 @@ object BDECTorch
     frame TORC { light BIGREDTORCH }
 }
 
-
-
-
-object BurningZombie
-{
-    frame BDT1 { light BIGREDTORCH }
-	frame BDT2 { light BIGREDTORCH }
-	frame BDT3 { light BIGREDTORCH }
-}
-
-
-
-
-
-
 object Candlestick1
 {
 frame CAND { light CandleStickLight }
@@ -1174,37 +1159,6 @@ object BDP_ArmorBonus
 	frame BON2C { light GREENITEM2  }
 	frame BON2D { light GREENITEM2  }
 }
-
-
-
-
-object BurningImp
-{
- frame IZD4 { light BIGREDTORCH }
-}
-
-object GenericBurningGuy
-{
- frame BUR2 { light BIGREDTORCH }
- frame BURNF0 { light BIGREDTORCH }
- frame BURNG0 { light BIGREDTORCH }
- frame BURNH0 { light BIGREDTORCH }
- frame BURNI0 { light BIGREDTORCH }
- frame BURNJ0 { light BIGREDTORCH }
- frame BURNK0 { light BIGREDTORCH }
- frame BURNL0 { light BIGREDTORCH }
- frame BURNM0 { light BIGREDTORCH }
- frame BURNN0 { light BIGREDTORCH }
- frame BURNO0 { light BIGREDTORCH }
- frame BURNP0 { light BIGREDTORCH }
- frame BURNQ0 { light BIGREDTORCH }
- frame BURNR0 { light BIGREDTORCH }
- frame BURNS0 { light BIGREDTORCH }
- frame BURNT0 { light SMALLREDTORCH }
- frame BURNU0 { light SMALLREDTORCH }
-}
-
-
 
 pulselight ROCKETLIGHT
 {
