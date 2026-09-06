@@ -25,7 +25,7 @@ class BDP_SubmachineGun : BDP_Weapon
 		TNT1 A 1;
 		Wait;
 	FinishToss:
-		SMGS HGFE 1;
+		SMGS DCBA 1;
 		Goto Ready;
 	Kick: //18
 		SMGF DEFG 1;

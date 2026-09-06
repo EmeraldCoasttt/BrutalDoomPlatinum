@@ -29,7 +29,7 @@ CLASS BDP_SuperShotgun : BDP_Weapon
 		TNT1 A 1;
 		Wait;
 	FinishToss:
-		SHT5 DCBA 1;
+		SHT5 HGFE 1;
 		Goto Ready;
 	Kick: //18
 		SH69 PQRS 1;

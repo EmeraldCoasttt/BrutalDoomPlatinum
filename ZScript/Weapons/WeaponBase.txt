@@ -1555,6 +1555,9 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	FinishToss:
 		TNT1 A 4;
 		Goto Ready;
+	DoingMelee:
+		TNT1 A 1;
+		Wait;
 	NoAmmo:
 		TNT1 A 0 A_DryFire();
 		TNT1 A 0

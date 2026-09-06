@@ -112,7 +112,7 @@ class BDP_Railgun : BDP_Weapon
 		TNT1 A 1;
 		Wait;
 	FinishToss:
-		RAIS DCBA 1;
+		RAIS HGFE 1;
 		Goto Ready;
 	Kick: //18
 		RAIK ABCD 1;

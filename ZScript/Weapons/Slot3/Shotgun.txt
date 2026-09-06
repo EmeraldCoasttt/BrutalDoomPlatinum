@@ -25,7 +25,7 @@ class BDP_Shotgun : BDP_Weapon
 		TNT1 A 1;
 		Wait;
 	FinishToss:
-		SHTA MLKJ 1;
+		SHTA QPON 1;
 		Goto Ready;
 	Kick: //18
 		SHTA RSTU 1;

@@ -23,7 +23,7 @@ CLASS BDP_Incinerator : BDP_Weapon
 		TNT1 A 1;
 		Wait;
 	FinishToss:
-		FLMS ABCD 1;
+		FLMS HGFE 1;
 		Goto Ready;
 	Kick: //18
 		FLMK ABCD 1;

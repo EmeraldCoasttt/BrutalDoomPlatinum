@@ -23,7 +23,7 @@ class BDP_Unmaker : BDP_Weapon
 		TNT1 A 1;
 		Wait;
 	FinishToss:
-		UNHS DCBA 1;
+		UNHS HGFE 1;
 		Goto Ready;
 	Kick: //18
 		UNHG EFGH 1;

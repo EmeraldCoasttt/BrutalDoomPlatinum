@@ -28,7 +28,7 @@ class BDP_GrenadeLauncher : BDP_Weapon
 		TNT1 A 1;
 		Wait;
 	FinishToss:
-		GLSA DCBA 1;
+		GLSA HGFE 1;
 		Goto ReverseStrapIdle;
 	Kick: //18
 		GLAN BCDE 1;

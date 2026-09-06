@@ -133,7 +133,7 @@ class BDP_AssaultShotgun : BDP_Weapon
 		TNT1 A 1;
 		Wait;
 	FinishToss:
-		A12S DCBA 1;
+		A12S HGFE 1;
 		Goto Ready;
 	Kick: //18
 		A12G BCDE 1;

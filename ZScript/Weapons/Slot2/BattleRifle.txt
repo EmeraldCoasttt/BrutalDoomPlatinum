@@ -93,7 +93,7 @@ CLASS BDP_BattleRifle : BDP_Weapon
 		TNT1 A 1;
 		Wait;
 	FinishToss:
-		BR4S DCBA 1;
+		BR4S HGFE 1;
 		Goto Ready;
 	Kick: //18
 		BR4K ABCD 1;

@@ -47,7 +47,7 @@ class BDP_PlasmaRifle : BDP_Weapon
 		TNT1 A 1;
 		Wait;
 	FinishToss:
-		PRSG WVUT 1;
+		PRSG SRQP 1;
 		Goto Ready;
 	Kick: //18
 		PRSK ABCD 1 A_LowFrame();

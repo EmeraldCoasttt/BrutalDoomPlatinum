@@ -73,7 +73,7 @@ class BDP_CalamityBlade : BDP_Weapon
 		TNT1 A 1;
 		Wait;
 	FinishToss:
-		HETS DCBA 1;
+		HETS HGFE 1;
 		Goto Ready;
 	Kick: //18
 		HETK BCDE 1;

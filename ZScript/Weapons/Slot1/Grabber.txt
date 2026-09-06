@@ -77,7 +77,7 @@ class BDP_Grabber : BDP_Weapon
 		TNT1 A 1;
 		Wait;
 	FinishToss:
-		BFGS ABCD 1;
+		BFGS HGFE 1;
 		Goto Ready;
 	Kick: //18
 		BFGN BCDE 1;

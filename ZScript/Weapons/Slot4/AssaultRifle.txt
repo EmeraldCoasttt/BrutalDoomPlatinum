@@ -54,7 +54,7 @@ class BDP_AssaultRifle : BDP_Weapon
 		TNT1 A 1;
 		Wait;
 	FinishToss:
-		RIFG IHGF 1;
+		RIFG BCDE 1;
 		Goto Ready;
 	Kick: //18
 		RIFG JKLM 1;
