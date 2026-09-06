@@ -623,6 +623,17 @@ class BDP_PlayerPawn : PlayerPawn
 		super.PostBeginPlay();
 	}
 	
+	override void CheckWeaponChange()
+	{
+		let weap = BDP_Weapon(player.ReadyWeapon);
+		if(weap && weap.quickSwap && player.PendingWeapon != WP_NOCHANGE)
+		{
+			player.weaponstate |= WF_WEAPONSWITCHOK;
+			weap.quickSwap = false;
+		}
+		Super.CheckWeaponChange();
+	}
+	
 	override Vector2 BobWeapon(double ticfrac)
 	{
 		player.WeaponState |= WF_WEAPONBOBBING;
