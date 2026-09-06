@@ -24,12 +24,20 @@ CLASS BDP_Incinerator : BDP_Weapon
 		super.DoEffect();
 		if(owner.player && owner.player.readyweapon == self && owner.player.cmd.buttons & BT_ALTATTACK)
 		{
-			if(!smokeBombs) owner.A_StartSound("weapons/incinerator/startaltfire", 3);
+			if(!smokeBombs)
+			{
+				owner.A_StartSound("weapons/incinerator/startaltfire", 3);
+				A_SetCrosshairDX("SMOKRet", 800);
+			}
 			smokeBombs = true;
 		}
 		else
 		{
-			if(smokeBombs) owner.A_StartSound("weapons/incinerator/endaltfire", 3);
+			if(smokeBombs)
+			{
+				owner.A_StartSound("weapons/incinerator/endaltfire", 3);
+				A_SetCrosshairDX("FLAMRet", 800);
+			}
 			smokeBombs = false;
 		}
 	}
