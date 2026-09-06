@@ -152,8 +152,6 @@ OptionMenu "BDPSetup"
 	Tooltip "Should be 'on'."
 	Option "Adjust sprite clipping", gl_spriteclip, "SpriteclipModes"
 	Tooltip "Should be 'forced-perspective'. Prevents sprites from being cut off by the floor."
-	Option "$GMPLYMNU_PISTOLSTART",				"sv_pistolstart", "YesNo"
-	Tooltip "Shortcut for pistol starting."
 }
 
 OptionMenu "DoxGameplayOptions"
