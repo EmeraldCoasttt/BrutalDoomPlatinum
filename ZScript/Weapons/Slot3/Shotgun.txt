@@ -136,7 +136,7 @@ class BDP_Shotgun : BDP_Weapon
 		{
 			if(invoker.glassSlugs)
 			{
-				A_FireBullets(0.2, 0.1, 1, 95, "ShotgunPuffSlug", FBF_NORANDOM);
+				A_FireBullets(1, 1, -1, 95, "ShotgunPuffSlug", FBF_NORANDOM);
 				for(int i = 0; i < 3; i++)
 				{
 					A_FireProjectile("SlugGlass", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
@@ -311,7 +311,7 @@ class BDP_Shotgun : BDP_Weapon
 		{
 			if(invoker.glassSlugs)
 			{
-				A_FireBullets(0.3, 0.2, 1, 90, "ShotgunPuffSlug", FBF_NORANDOM);
+				A_FireBullets(0.5, 0.5, -1, 95, "ShotgunPuffSlug", FBF_NORANDOM);
 				for(int i = 0; i < 3; i++)
 				{
 					A_FireProjectile("SlugGlass", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
@@ -335,7 +335,7 @@ class BDP_Shotgun : BDP_Weapon
 				A_StartSound("weapons/sg", 1);
 			}
 			A_FlashOverlay(state:"MuzzleFlashAim");
-			A_WeaponRecoil(8);
+			A_WeaponRecoil(4);
 			A_FireParticles(12);
 			A_StartSound("FARSHT", 6);
 			A_AlertMonstersDX();
