@@ -6,6 +6,7 @@ class glasmaball : plasmaball replaces plasmaball
 class BDP_GrenadeLauncher : BDP_Weapon
 {
 	bool chaosGrenades;
+	bool stickyGrenades;
 	
 	Default
 	{
@@ -21,6 +22,22 @@ class BDP_GrenadeLauncher : BDP_Weapon
 		Tag "$BDPGRENADE";
 		Inventory.AltHUDIcon "GLAPA0";
 	}
+	
+	override void DoEffect() 
+	{
+		super.DoEffect();
+		if(owner.player && owner.player.readyweapon == self && owner.player.cmd.buttons & BT_ALTATTACK)
+		{
+			if(!stickyGrenades) owner.A_StartSound("weapons/grenadelauncher/startaltfire", 3);
+			stickyGrenades = true;
+		}
+		else
+		{
+			if(stickyGrenades) owner.A_StartSound("weapons/grenadelauncher/endaltfire", 3);
+			stickyGrenades = false;
+		}
+	}
+	
 	States
 	{
 	TossItem: //8
@@ -56,14 +73,14 @@ class BDP_GrenadeLauncher : BDP_Weapon
 		Stop;
 	StrapIdle:
 		SHTN A 0 A_JumpIfInventory("NoShotgunStrap",1,"Ready");
-		GLR3 FEDCBAGHIJKLLLKJIHGABCDDDCBAGHIJJJIHG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,forcereload:true);
+		GLR3 FEDCBAGHIJKLLLKJIHGABCDDDCBAGHIJJJIHG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD|WRF_NOSECONDARY,forcereload:true);
 		Goto Ready;
 	ReverseStrapIdle:
 		SHTN A 0 A_JumpIfInventory("NoShotgunStrap",1,"Ready");
-		GLR3 LKJIHGABCDDDCBAGHIJJJIHG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,forcereload:true);
+		GLR3 LKJIHGABCDDDCBAGHIJJJIHG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD|WRF_NOSECONDARY,forcereload:true);
 		Goto Ready;
 	Ready:
-		GLAN A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD,forcereload:true);
+		GLAN A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD|WRF_NOSECONDARY,forcereload:true);
 		Goto Ready;
 	Deselect:
 		GLSA EFGH 1;
@@ -90,7 +107,11 @@ class BDP_GrenadeLauncher : BDP_Weapon
 		GLAF A 1 Bright 
 		{
 			A_FlashOverlay();
-			A_FireProjectileDX(invoker.chaosGrenades ? "StupidGrenade" : "GrenadeDetonates",rvel:false);
+			let nade = GrenadeDetonates(A_FireProjectileDX(invoker.chaosGrenades ? "StupidGrenade" : "GrenadeDetonates",rvel:false));
+			if(nade)
+			{
+				nade.sticky = invoker.stickyGrenades;
+			}
 			A_FireProjectile("RedFlareSpawn",-5,0,0,0);
 			A_FireProjectile("GrenadeMissileBreaksGlass", 0, 0, 0, 0);
 			A_WeaponRecoil(10);
@@ -262,24 +283,24 @@ class BDP_GrenadeLauncher : BDP_Weapon
 		GLSA DBA 1;
 		Goto StrapIdle;
 	Fidget:
-		GLR1 ABCDEFGGGG 1 A_WeaponReadyDX(0,false);
+		GLR1 ABCDEFGGGG 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
 		TNT1 A 0 A_StartSound("foley/GLDownwardsToOpen",10);
-		GLR1 FHIJK 1 A_WeaponReadyDX(0,false);
-		GLR2 L 1 A_WeaponReadyDX(0,false);
+		GLR1 FHIJK 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
+		GLR2 L 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
 		TNT1 A 0 A_StartSound("Weapons/GrenadeOpen");
-		GLR2 MN 1 A_WeaponReadyDX(0,false);
-		GLR2 O 1 A_WeaponReadyDX(0,false);
-		GLR2 P 11 A_WeaponReadyDX(0,false);
+		GLR2 MN 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
+		GLR2 O 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
+		GLR2 P 11 A_WeaponReadyDX(WRF_NOSECONDARY,false);
 	FidgetLoop:
-		GLR2 P 1 A_WeaponReadyDX(0,false);
+		GLR2 P 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
 		TNT1 A 0 A_PressingReload("FidgetLoop");
-		GLR2 QR 1 A_WeaponReadyDX(0,false);
-		GLR2 S 1 A_WeaponReadyDX(0,false);
-		TNT1 A 2 A_WeaponReadyDX(0,false);
+		GLR2 QR 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
+		GLR2 S 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
+		TNT1 A 2 A_WeaponReadyDX(WRF_NOSECONDARY,false);
 		TNT1 A 0 A_StartSound("foley/GLUpwardsToClose",10);
-		TNT1 A 1 A_WeaponReadyDX(0,false);
+		TNT1 A 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
 		TNT1 A 0 A_StartSound("Weapons/GrenadeClose");
-		GLSA DCBA 1 A_WeaponReadyDX(0,false);
+		GLSA DCBA 1 A_WeaponReadyDX(WRF_NOSECONDARY,false);
 		Goto StrapIdle;
 	Spawn:
 		GLAP A 0 NoDelay A_Jump(256, "Spawn1", "Spawn2", "Spawn3");
@@ -438,12 +459,50 @@ Class GrenadeDetonates : Actor
 	Obituary "$OB_MPROCKET";
 	Scale 0.7;
 	}
+	
+	bool sticky;
+    Vector3 stickOfs;
+    double stickAngle;
+	
+	override void PostBeginPlay()
+	{
+		if(sticky)
+		{
+			bBOUNCEONFLOORS = false;
+			bBOUNCEONWALLS = false;
+			bBOUNCEONCEILINGS = false;
+			bBOUNCEONACTORS = false;
+		}
+		super.PostBeginPlay();
+	}
+	
+	override int SpecialMissileHit(Actor victim)
+	{
+		int result = Super.SpecialMissileHit(victim);
+		if(sticky && victim != target && result == MHIT_DEFAULT) tracer = victim;
+		return result;
+	}
+	
+	state CheckDetonation(statelabel detonate = "Explode", statelabel noDetonate = null)
+	{
+		if(sticky || target && target.player && target.player.readyweapon is "BDP_GrenadeLauncher" && target.player.cmd.buttons & BT_ATTACK)
+			return resolvestate(noDetonate);
+		return resolvestate(detonate);
+	}
+	
+	state CheckStickyDetonation(statelabel detonate = "Explode", statelabel noDetonate = null)
+	{
+		if(target && target.player && target.player.readyweapon is "BDP_GrenadeLauncher" && target.player.cmd.buttons & BT_ALTATTACK)
+			return resolvestate(noDetonate);
+		return resolvestate(detonate);
+	}
+	
 	States
 	{
 	Spawn:
 		GBPJ AAABBBCCC 1 
 		{
-			A_SpawnProjectile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
+			A_SpawnProjectile (sticky ? "GrenadeTrail" : "RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
 			//A_SpawnItemEX("RocketFlare");
 		}
 		Goto bounce;
@@ -451,57 +510,100 @@ Class GrenadeDetonates : Actor
 		GBPJ AAABBBCCCDDDEEEFFFGGGHHH 1 
 		{
 			A_SpawnItemEX("GrenadeFlare");
-			A_SpawnProjectile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
-			If(target && target.player && target.player.cmd.buttons & BT_ATTACK)
-			{
-				Return resolvestate(null);
-			}
-			Else
-			{
-				Return resolvestate("Explode");
-			}
+			A_SpawnProjectile (sticky ? "GrenadeTrail" : "RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
+			return CheckDetonation();
 		}
 		Loop;
 	Bounce:
-		TNT1 A 0
-		{
-			If(target && target.player && target.player.cmd.buttons & BT_ATTACK)
-			{
-				Return resolvestate("spawn2");
-			}
-			Else
-			{
-				Return resolvestate("Explode");
-			}
-		}
+		TNT1 A 0 CheckDetonation(noDetonate:"Spawn2");
 	Death:
+		TNT1 A 0 A_JumpIf(sticky, "StickDeath");
 	Xdeath:
-
+		TNT1 A 0 A_JumpIf(sticky, "StickXDeath");
 		GBPJ AAAA 1 
 		{
 			A_SpawnItemEX("GrenadeFlare");
 			A_SpawnProjectile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
-			If(target && target.player && target.player.cmd.buttons & BT_ATTACK)
-			{
-				Return resolvestate(null);
-			}
-			Else
-			{
-				Return resolvestate("Explode");
-			}
-		
+			return CheckDetonation();
 		}
 		Loop;
 	
+	StickDeath:
+		TNT1 A 0 
+		{
+			A_startsound("StickyGrenade/Stick", 0);
+			A_startsound("StickyGrenade/Hit", 0);
+			bnogravity = true;
+			tracer = null;
+			return findstate("StuckOnLevel");
+		}
+		Goto StuckOnLevel;
+	StickXdeath:
+		TNT1 A 0 
+		{
+			A_startsound("StickyGrenade/Stick", 0);
+			A_startsound("StickyGrenade/Hit", 0);
+			If(tracer)
+			{
+				tracer.a_pain();
+				stickOfs = tracer.Vec3To(self);
+				stickAngle = tracer.angle;
+			}
+			else
+			{
+				setstatelabel("fall");
+			}
+			return findstate("StuckOnActor");
+		}
+		Goto StuckOnActor;
+	StuckOnLevel:
+		GBPJ A 1
+		{
+			A_SpawnItemEX("GrenadeFlare");
+			A_SpawnProjectile ("GrenadeTrail", 2, 0, random (70, 110), 2, random (0, 360));
+			return CheckStickyDetonation();
+		}
+		Loop;
+	StuckOnActor:
+		GBPJ A 1 
+		{
+			If(!tracer || tracer.health < 1)
+			{
+				setstatelabel("fall");
+			}
+			If(tracer && tracer.health > 0)
+			{
+				double angDiff = DeltaAngle(stickAngle, tracer.angle);
+				if (angDiff)
+				{
+					stickOfs.xy = RotateVector(stickOfs.xy, angDiff);
+					angle += angDiff;
+				}
+				
+				SetOrigin(tracer.Vec3Offset(stickOfs.x, stickOfs.y, stickOfs.z), true);
+				stickAngle = tracer.angle;
+				A_SpawnItemEX("GrenadeFlare");
+				A_SpawnProjectile ("GrenadeTrail", 2, 0, random (70, 110), 2, random (0, 360));
+			}
+			return CheckStickyDetonation();
+		}
+		LOOP;
+	Fall:
+		TNT1 A 0
+		{
+			tracer = null;
+			bnogravity = false;
+		}
+		Goto Spawn;
 	Explode:
 		TNT1 A 0 A_stopsound(7);
 		TNT1 A 0 A_StartSound("Explosion", 1);
 		EXPL A 0 Radius_Quake (8, 8, 0, 128, 0);//(intensity, duration, damrad, tremrad, tid)
 		TNT1 A 0 A_SpawnItemEx ("GrenadeExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
-	   TNT1 A 0 A_spawnitemex("BDP_RicochetExplosion");
+		TNT1 A 0 A_spawnitemex("BDP_RicochetExplosion");
 		TNT1 AAAAAAAAAA 0 A_spawnProjectile ("BDExplosionparticlesBig", 0, 0, random (0, 360), 2, random (0, 360));
 		TNT1 AAAAAAA 0 A_SpawnProjectile ("BDExplosionparticles2", 0, 0, random (0, 360), 2, random (0, -90));
-	   	TNT1 AAAA 0 A_spawnProjectile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))  ;
+		TNT1 AAAA 0 A_spawnProjectile ("SmallExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360))  ;
 		TNT1 AAAAAAA 0 A_SpawnProjectile ("ExplosionFlames", 0, 0, random (0, 360), 2, random (0, 360));
 		TNT1 AAAAAAAAAAAAAA 0 A_SpawnProjectile ("ExplosionParticleHeavy", 0, 0, random (0, 360), 2, random (0, -180));
 		TNT1 AAAAAA 0 A_SpawnProjectile ("ExplosionParticleHeavy", 0, 0, random (0, 180), 2, random (0, 180));
@@ -529,35 +631,52 @@ CLASS StupidGrenade : GrenadeDetonates
 		{
 			A_SpawnItemEX("GrenadeFlareGreen");
 			A_SpawnProjectile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
-			If(target && target.player && target.player.cmd.buttons & BT_ATTACK)
-			{
-				Return resolvestate(null);
-			}
-			Else
-			{
-				Return resolvestate("Explode");
-			}
+			return CheckDetonation();
 		}
 		Loop;
-		Death:
+	Death:
+		TNT1 A 0 A_JumpIf(sticky, "StickDeath");
 	Xdeath:
-
+		TNT1 A 0 A_JumpIf(sticky, "StickXDeath");
 		GBPJ AAAA 1 
 		{
 			A_SpawnItemEX("GrenadeFlareGreen");
 			A_SpawnProjectile ("RocketSmokeTrail52", 2, 0, random (70, 110), 2, random (0, 360));
-			If(target && target.player && target.player.cmd.buttons & BT_ATTACK)
-			{
-				Return resolvestate(null);
-			}
-			Else
-			{
-				Return resolvestate("Explode");
-			}
-		
+			return CheckDetonation();
 		}
 		Loop;
-		
+	StuckOnLevel:
+		GBPJ A 1
+		{
+			A_SpawnItemEX("GrenadeFlareGreen");
+			A_SpawnProjectile ("GrenadeTrail", 2, 0, random (70, 110), 2, random (0, 360));
+			return CheckStickyDetonation();
+		}
+		Loop;
+	StuckOnActor:
+		GBPJ A 1 
+		{
+			If(!tracer || tracer.health < 1)
+			{
+				setstatelabel("fall");
+			}
+			If(tracer && tracer.health > 0)
+			{
+				double angDiff = DeltaAngle(stickAngle, tracer.angle);
+				if (angDiff)
+				{
+					stickOfs.xy = RotateVector(stickOfs.xy, angDiff);
+					angle += angDiff;
+				}
+				
+				SetOrigin(tracer.Vec3Offset(stickOfs.x, stickOfs.y, stickOfs.z), true);
+				stickAngle = tracer.angle;
+				A_SpawnItemEX("GrenadeFlareGreen");
+				A_SpawnProjectile ("GrenadeTrail", 2, 0, random (70, 110), 2, random (0, 360));
+			}
+			return CheckStickyDetonation();
+		}
+		LOOP;
 		Explode:
 		TNT1 A 0 A_startsound("STUPGREN");
 		BG2G A 0 Bright A_SpawnItem("GreenShockWave",0,0,0);

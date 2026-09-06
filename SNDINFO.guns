@@ -56,6 +56,9 @@ DoomRR/IncineratorFlame/death1 DSINCHT1
 DoomRR/IncineratorFlame/death2 DSINCHT2
 DoomRR/IncineratorFlame/fizzle DSINCHT3
 
+weapons/incinerator/startaltfire "sounds/combat/weapons/slot 5/incinerator/altfire_start.ogg"
+weapons/incinerator/endaltfire "sounds/combat/weapons/slot 5/incinerator/altfire_end.ogg"
+
 DoomRR/heatwave/charge DSHETCHG
 DoomRR/heatwave/fire DSHETSHT
 DoomRR/heatwave/explode DSHETXPL
@@ -456,6 +459,8 @@ NDLRON NDLRON
 
 
 //Sticky Grenade
+weapons/grenadelauncher/startaltfire "sounds/combat/weapons/slot 5/grenade_launcher/altfire_start.ogg"
+weapons/grenadelauncher/endaltfire "sounds/combat/weapons/slot 5/grenade_launcher/altfire_end.ogg"
 
 $random StickyGrenade/Explode { PLGRNXP1 PLGRNXP2 PLGRNXP3 PLGRNXP4 }
 PLGRNXP1 PLGRNXP1

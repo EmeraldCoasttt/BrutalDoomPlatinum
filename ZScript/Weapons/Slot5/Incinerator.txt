@@ -16,6 +16,24 @@ CLASS BDP_Incinerator : BDP_Weapon
 		Tag "$BDPFLAMER";
 		Inventory.AltHUDIcon "FLMGA0";
 	}
+	
+	bool smokeBombs;
+	
+	override void DoEffect() 
+	{
+		super.DoEffect();
+		if(owner.player && owner.player.readyweapon == self && owner.player.cmd.buttons & BT_ALTATTACK)
+		{
+			if(!smokeBombs) owner.A_StartSound("weapons/incinerator/startaltfire", 3);
+			smokeBombs = true;
+		}
+		else
+		{
+			if(smokeBombs) owner.A_StartSound("weapons/incinerator/endaltfire", 3);
+			smokeBombs = false;
+		}
+	}
+	
 	States
 	{
 	TossItem: //8
@@ -49,7 +67,7 @@ CLASS BDP_Incinerator : BDP_Weapon
 		FLMK DCBA 1 A_SetSprites("TNT1A0",1);
 		Stop;
 	Ready:
-		FLMT ABC 1 A_weaponreadyDX(WRF_ALLOWRELOAD);
+		FLMT ABC 1 A_weaponreadyDX(WRF_ALLOWRELOAD|WRF_NOSECONDARY);
 		Loop;
 	Deselect:
 		TNT1 A 0 {
@@ -85,6 +103,7 @@ CLASS BDP_Incinerator : BDP_Weapon
 		Stop;
 	Fire:
 		TNT1 A 0 A_JumpIf(waterlevel > 1, "NoAmmo");
+		TNT1 A 0 A_JumpIf(invoker.smokeBombs, "FireSmoke");
 		TNT1 A 0 A_CheckIfMag();
 		FLMT D 1 Bright
 		{
@@ -101,6 +120,7 @@ CLASS BDP_Incinerator : BDP_Weapon
 		TNT1 A 0 A_JumpIf(invoker.mag > 0, 2);
 		TNT1 A 0 A_StartSound("FLAMSTOP", 1);
 		Goto NoAmmo;
+		TNT1 A 0 A_JumpIf(invoker.smokeBombs, "SwitchToFireSmoke");
 		TNT1 A 0 A_RefireDX();
 		TNT1 A 0 A_GunLight(500,3);
 		TNT1 A 0 A_StartSound("FLAMSTOP", 1);
@@ -108,7 +128,10 @@ CLASS BDP_Incinerator : BDP_Weapon
 	MuzzleFlash2:
 		FLMM AAB 1 Bright;
 		Stop;
-	SpecialAction:
+	SwitchToFireSmoke:
+		TNT1 A 0 A_StartSound("FLAMSTOP", 1);
+		FLMT ABC 1;
+	FireSmoke:
 		FLMG A 0 A_JumpIf(waterlevel > 1, "NoAmmo");
 		FLMG A 0 A_CheckIfMag(5);
 		TNT1 A 0 a_alertmonstersDX();
@@ -131,6 +154,8 @@ CLASS BDP_Incinerator : BDP_Weapon
 		FLMT E 1 Bright;
 		FLMT AB 1;
 		FLMT CABC 1;
+		TNT1 A 0 A_JumpIf(invoker.smokeBombs, "Ready");
+		TNT1 A 0 A_RefireDX();
 		Goto Ready;
 	DoReload:	
 		FLMT K 1 A_Startsound("FLMRUNLD",2);
