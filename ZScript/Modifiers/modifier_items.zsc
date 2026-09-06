@@ -220,4 +220,15 @@ class BDP_KickInTheHeadPickup : BDP_ModifierPickup
     }
 }
 
+class BDP_HoarderPickup : BDP_ModifierPickup
+{
+ Default
+    {
+        
+		BDP_ModifierPickup.ModifierID Modifier_Hoarder;
+		BDP_ModifierPickup.modifiermessage "Hoarder Unlocked!";
+		+floatbob;
+    }
+}
+
 //Man And A Half "200:207=[117,117,117]:[0,0,0]"

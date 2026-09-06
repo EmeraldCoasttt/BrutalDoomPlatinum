@@ -168,6 +168,7 @@
 	
 	override void worldunloaded(worldevent e)
 	{
+		if(bdp_active_modifiers & Modifier_Hoarder) return;
 		PlayerInfo plr = players[ consoleplayer ];
 		if(plr)
 		{

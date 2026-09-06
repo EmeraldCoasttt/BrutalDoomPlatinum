@@ -3,18 +3,19 @@ enum BDP_Modifiers
 	Modifier_StayFrosty		= 1 << 0,
 	Modifier_Chatterbox		= 1 << 1,
 	Modifier_Triathlon		= 1 << 2,
-	Modifier_OneUpmanship	= 1 << 3,
-	Modifier_UltraNightmare	= 1 << 4,
-	Modifier_SkullCrusher	= 1 << 5,
-	Modifier_ScoreMaster	= 1 << 6,
-	Modifier_ShockFactor	= 1 << 7,
-	Modifier_PerfectHatred	= 1 << 8,
-	Modifier_Realism		= 1 << 9,
-	Modifier_Gunslinger		= 1 << 10,
-	Modifier_SequenceBreak	= 1 << 11,
-	Modifier_Fragger		= 1 << 12,
-	Modifier_Gluttony		= 1 << 13,
-	Modifier_KickInTheHead	= 1 << 14
+	Modifier_KickInTheHead	= 1 << 3,
+	Modifier_Hoarder		= 1 << 4,
+	Modifier_OneUpmanship	= 1 << 5,
+	Modifier_UltraNightmare	= 1 << 6,
+	Modifier_SkullCrusher	= 1 << 7,
+	Modifier_ScoreMaster	= 1 << 8,
+	Modifier_ShockFactor	= 1 << 9,
+	Modifier_PerfectHatred	= 1 << 10,
+	Modifier_Realism		= 1 << 11,
+	Modifier_Gunslinger		= 1 << 12,
+	Modifier_SequenceBreak	= 1 << 13,
+	Modifier_Fragger		= 1 << 14,
+	Modifier_Gluttony		= 1 << 15
 }
 
 class BDP_ModifierStayFrosty : BDP_Modifier
@@ -76,7 +77,27 @@ class BDP_ModifierTriathlon : BDP_Modifier
 	}
 }
 
+class BDP_ModifierKickintheHead : BDP_Modifier
+{
+	Default
+	{
+		BDP_Modifier.Icon "STKICK";
+		BDP_Modifier.DisplayName "Kick In The Head";
+		BDP_Modifier.Description "Recoil is affected by movement and will not auto-correct";
+		BDP_Modifier.ModifierID Modifier_KickInTheHead;
+	}
+}
 
+class BDP_ModifierHoarder : BDP_Modifier
+{
+	Default
+	{
+		BDP_Modifier.Icon "STHOARD";
+		BDP_Modifier.DisplayName "Hoarder";
+		BDP_Modifier.Description "Your inventory persists through level changes.";
+		BDP_Modifier.ModifierID Modifier_Hoarder;
+	}
+}
 
 class BDP_ModifierOneUpmanship : BDP_Modifier
 {
@@ -314,16 +335,5 @@ class BDP_ModifierGluttony : BDP_Modifier
 		BDP_Modifier.DisplayName "Gluttony";
 		BDP_Modifier.Description "Reloading discards the contents of the current magazine";
 		BDP_Modifier.ModifierID Modifier_Gluttony;
-	}
-}
-
-class BDP_ModifierKickintheHead : BDP_Modifier
-{
-	Default
-	{
-		BDP_Modifier.Icon "STKICK";
-		BDP_Modifier.DisplayName "Kick In The Head";
-		BDP_Modifier.Description "Recoil is affected by movement and will not auto-correct";
-		BDP_Modifier.ModifierID Modifier_KickInTheHead;
 	}
 }
