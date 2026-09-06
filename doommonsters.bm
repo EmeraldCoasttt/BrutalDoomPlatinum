@@ -487,14 +487,6 @@ brightmap sprite DEMPA4A6
 {
 	map "brightmaps/doom/monsters/Demon/DEMPA4A6.png"
 }
-brightmap sprite DEMPA5
-{
-	map "brightmaps/doom/monsters/Demon/DEMPA5.png"
-}
-brightmap sprite DEMPB1
-{
-	map "brightmaps/doom/monsters/Demon/DEMPB1.png"
-}
 brightmap sprite DEMPB2B8
 {
 	map "brightmaps/doom/monsters/Demon/DEMPB2B8.png"
@@ -506,10 +498,6 @@ brightmap sprite DEMPB3B7
 brightmap sprite DEMPB4B6
 {
 	map "brightmaps/doom/monsters/Demon/DEMPB4B6.png"
-}
-brightmap sprite DEMPB5
-{
-	map "brightmaps/doom/monsters/Demon/DEMPB5.png"
 }
 brightmap sprite S2RGI0
 {
@@ -527,33 +515,17 @@ brightmap sprite SAPCA3A7
 {
 	map "brightmaps/doom/monsters/Demon/SAPCA3A7.png"
 }
-brightmap sprite SAPCA4A6
-{
-	map "brightmaps/doom/monsters/Demon/SAPCA4A6.png"
-}
-brightmap sprite SAPCA5
-{
-	map "brightmaps/doom/monsters/Demon/SAPCA5.png"
-}
 brightmap sprite SAPCB1
 {
 	map "brightmaps/doom/monsters/Demon/SAPCB1.png"
 }
-brightmap sprite SAPCB28
+brightmap sprite SAPCB2B8
 {
 	map "brightmaps/doom/monsters/Demon/SAPCB2B8.png"
 }
 brightmap sprite SAPCB3B7
 {
 	map "brightmaps/doom/monsters/Demon/SAPCB3B7.png"
-}
-brightmap sprite SAPCB4B6
-{
-	map "brightmaps/doom/monsters/Demon/SAPCB4B6.png"
-}
-brightmap sprite SAPCB5
-{
-	map "brightmaps/doom/monsters/Demon/SAPCB5.png"
 }
 brightmap sprite SARGA1
 {
@@ -567,14 +539,6 @@ brightmap sprite SARGA3C7
 {
 	map "brightmaps/doom/monsters/Demon/SARGA3C7.png"
 }
-brightmap sprite SARGA4C6
-{
-	map "brightmaps/doom/monsters/Demon/SARGA4C6.png"
-}
-brightmap sprite SARGA5
-{
-	map "brightmaps/doom/monsters/Demon/SARGA5.png"
-}
 brightmap sprite SARGB1
 {
 	map "brightmaps/doom/monsters/Demon/SARGB1.png"
@@ -586,14 +550,6 @@ brightmap sprite SARGB2D8
 brightmap sprite SARGB3D7
 {
 	map "brightmaps/doom/monsters/Demon/SARGB3D7.png"
-}
-brightmap sprite SARGB4D6
-{
-	map "brightmaps/doom/monsters/Demon/SARGB4D6.png"
-}
-brightmap sprite SARGB5
-{
-	map "brightmaps/doom/monsters/Demon/SARGB5.png"
 }
 brightmap sprite SARGC1
 {
@@ -607,14 +563,6 @@ brightmap sprite SARGC3A7
 {
 	map "brightmaps/doom/monsters/Demon/SARGC3A7.png"
 }
-brightmap sprite SARGC4A6
-{
-	map "brightmaps/doom/monsters/Demon/SARGC4A6.png"
-}
-brightmap sprite SARGC5
-{
-	map "brightmaps/doom/monsters/Demon/SARGC5.png"
-}
 brightmap sprite SARGD1
 {
 	map "brightmaps/doom/monsters/Demon/SARGD1.png"
@@ -627,14 +575,6 @@ brightmap sprite SARGD3B7
 {
 	map "brightmaps/doom/monsters/Demon/SARGD3B7.png"
 }
-brightmap sprite SARGD4B6
-{
-	map "brightmaps/doom/monsters/Demon/SARGD4B6.png"
-}
-brightmap sprite SARGD5
-{
-	map "brightmaps/doom/monsters/Demon/SARGD5.png"
-}
 brightmap sprite SARGE1
 {
 	map "brightmaps/doom/monsters/Demon/SARGE1.png"
@@ -646,18 +586,6 @@ brightmap sprite SARGE2
 brightmap sprite SARGE3
 {
 	map "brightmaps/doom/monsters/Demon/SARGE3.png"
-}
-brightmap sprite SARGE4
-{
-	map "brightmaps/doom/monsters/Demon/SARGE4.png"
-}
-brightmap sprite SARGE5
-{
-	map "brightmaps/doom/monsters/Demon/SARGE5.png"
-}
-brightmap sprite SARGE6
-{
-	map "brightmaps/doom/monsters/Demon/SARGE6.png"
 }
 brightmap sprite SARGE7
 {
@@ -679,18 +607,6 @@ brightmap sprite SARGF3
 {
 	map "brightmaps/doom/monsters/Demon/SARGF3.png"
 }
-brightmap sprite SARGF4
-{
-	map "brightmaps/doom/monsters/Demon/SARGF4.png"
-}
-brightmap sprite SARGF5
-{
-	map "brightmaps/doom/monsters/Demon/SARGF5.png"
-}
-brightmap sprite SARGF6
-{
-	map "brightmaps/doom/monsters/Demon/SARGF6.png"
-}
 brightmap sprite SARGF7
 {
 	map "brightmaps/doom/monsters/Demon/SARGF7.png"
@@ -710,18 +626,6 @@ brightmap sprite SARGG2
 brightmap sprite SARGG3
 {
 	map "brightmaps/doom/monsters/Demon/SARGG3.png"
-}
-brightmap sprite SARGG4
-{
-	map "brightmaps/doom/monsters/Demon/SARGG4.png"
-}
-brightmap sprite SARGG5
-{
-	map "brightmaps/doom/monsters/Demon/SARGG5.png"
-}
-brightmap sprite SARGG6
-{
-	map "brightmaps/doom/monsters/Demon/SARGG6.png"
 }
 brightmap sprite SARGG7
 {
@@ -743,22 +647,6 @@ brightmap sprite SARGH3
 {
 	map "brightmaps/doom/monsters/Demon/SARGH3.png"
 }
-brightmap sprite SARGH4
-{
-	map "brightmaps/doom/monsters/Demon/SARGH4.png"
-}
-brightmap sprite SARGH5
-{
-	map "brightmaps/doom/monsters/Demon/SARGH5.png"
-}
-brightmap sprite SARGH6
-{
-	map "brightmaps/doom/monsters/Demon/SARGH6.png"
-}
-brightmap sprite SARGH7
-{
-	map "brightmaps/doom/monsters/Demon/SARGH7.png"
-}
 brightmap sprite SARGH8
 {
 	map "brightmaps/doom/monsters/Demon/SARGH8.png"
@@ -766,54 +654,6 @@ brightmap sprite SARGH8
 brightmap sprite SARGI0
 {
 	map "brightmaps/doom/monsters/Demon/SARGI0.png"
-}
-brightmap sprite SARGJ0
-{
-	map "brightmaps/doom/monsters/Demon/SARGJ0.png"
-}
-brightmap sprite SARGK0
-{
-	map "brightmaps/doom/monsters/Demon/SARGK0.png"
-}
-brightmap sprite SARGL0
-{
-	map "brightmaps/doom/monsters/Demon/SARGL0.png"
-}
-brightmap sprite SARGM0
-{
-	map "brightmaps/doom/monsters/Demon/SARGM0.png"
-}
-brightmap sprite SARGN0
-{
-	map "brightmaps/doom/monsters/Demon/SARGN0.png"
-}
-brightmap sprite SARGO0
-{
-	map "brightmaps/doom/monsters/Demon/SARGO0.png"
-}
-brightmap sprite SARGP0
-{
-	map "brightmaps/doom/monsters/Demon/SARGP0.png"
-}
-brightmap sprite SARGQ0
-{
-	map "brightmaps/doom/monsters/Demon/SARGQ0.png"
-}
-brightmap sprite SARGR0
-{
-	map "brightmaps/doom/monsters/Demon/SARGR0.png"
-}
-brightmap sprite SARGS0
-{
-	map "brightmaps/doom/monsters/Demon/SARGS0.png"
-}
-brightmap sprite SARGT0
-{
-	map "brightmaps/doom/monsters/Demon/SARGT0.png"
-}
-brightmap sprite SARGU0
-{
-	map "brightmaps/doom/monsters/Demon/SARGU0.png"
 }
 brightmap sprite SARGY1
 {
@@ -827,33 +667,6 @@ brightmap sprite SARGY3Y7
 {
 	map "brightmaps/doom/monsters/Demon/SARGY3Y7.png"
 }
-brightmap sprite SARGY4Y6
-{
-	map "brightmaps/doom/monsters/Demon/SARGY4Y6.png"
-}
-brightmap sprite SARGY5
-{
-	map "brightmaps/doom/monsters/Demon/SARGY5.png"
-}brightmap sprite SARGY1
-{
-	map "brightmaps/doom/monsters/Demon/SARGY1.png"
-}
-brightmap sprite SARGY2Y8
-{
-	map "brightmaps/doom/monsters/Demon/SARGY2Y8.png"
-}
-brightmap sprite SARGY3Y7
-{
-	map "brightmaps/doom/monsters/Demon/SARGY3Y7.png"
-}
-brightmap sprite SARGY4Y6
-{
-	map "brightmaps/doom/monsters/Demon/SARGY4Y6.png"
-}
-brightmap sprite SARGY5
-{
-	map "brightmaps/doom/monsters/Demon/SARGY5.png"
-}
 brightmap sprite SARGZ1
 {
 	map "brightmaps/doom/monsters/Demon/SARGZ1.png"
@@ -865,30 +678,6 @@ brightmap sprite SARGZ2Z8
 brightmap sprite SARGZ3Z7
 {
 	map "brightmaps/doom/monsters/Demon/SARGZ3Z7.png"
-}
-brightmap sprite SARGZ4Z6
-{
-	map "brightmaps/doom/monsters/Demon/SARGZ4Z6.png"
-}
-brightmap sprite SARGZ5
-{
-	map "brightmaps/doom/monsters/Demon/SARGZ5.png"
-}
-brightmap sprite SARHA0
-{
-	map "brightmaps/doom/monsters/Demon/SARHA0.png"
-}
-brightmap sprite SARHB0
-{
-	map "brightmaps/doom/monsters/Demon/SARHB0.png"
-}
-brightmap sprite SARHC0
-{
-	map "brightmaps/doom/monsters/Demon/SARHC0.png"
-}
-brightmap sprite SARHD0
-{
-	map "brightmaps/doom/monsters/Demon/SARHD0.png"
 }
 brightmap sprite SARKA1
 {
@@ -902,14 +691,6 @@ brightmap sprite SARKA3A7
 {
 	map "brightmaps/doom/monsters/Demon/SARKA3A7.png"
 }
-brightmap sprite SARKA4A6
-{
-	map "brightmaps/doom/monsters/Demon/SARKA4A6.png"
-}
-brightmap sprite SARKA5
-{
-	map "brightmaps/doom/monsters/Demon/SARKA5.png"
-}
 brightmap sprite SARKB1
 {
 	map "brightmaps/doom/monsters/Demon/SARKB1.png"
@@ -921,14 +702,6 @@ brightmap sprite SARKB2B8
 brightmap sprite SARKB3B7
 {
 	map "brightmaps/doom/monsters/Demon/SARKB3B7.png"
-}
-brightmap sprite SARKB4B6
-{
-	map "brightmaps/doom/monsters/Demon/SARKB4B6.png"
-}
-brightmap sprite SARKB5
-{
-	map "brightmaps/doom/monsters/Demon/SARKB5.png"
 }
 brightmap sprite SARKD0
 {
@@ -974,18 +747,6 @@ brightmap sprite SG1AA3
 {
 	map "brightmaps/doom/monsters/Demon/SG1AA3.png"
 }
-brightmap sprite SG1AA4
-{
-	map "brightmaps/doom/monsters/Demon/SG1AA4.png"
-}
-brightmap sprite SG1AA5
-{
-	map "brightmaps/doom/monsters/Demon/SG1AA5.png"
-}
-brightmap sprite SG1AA6
-{
-	map "brightmaps/doom/monsters/Demon/SG1AA6.png"
-}
 brightmap sprite SG1AA7
 {
 	map "brightmaps/doom/monsters/Demon/SG1AA7.png"
@@ -1005,18 +766,6 @@ brightmap sprite SG1AB2
 brightmap sprite SG1AB3
 {
 	map "brightmaps/doom/monsters/Demon/SG1AB3.png"
-}
-brightmap sprite SG1AB4
-{
-	map "brightmaps/doom/monsters/Demon/SG1AB4.png"
-}
-brightmap sprite SG1AB5
-{
-	map "brightmaps/doom/monsters/Demon/SG1AB5.png"
-}
-brightmap sprite SG1AB6
-{
-	map "brightmaps/doom/monsters/Demon/SG1AB6.png"
 }
 brightmap sprite SG1AB7
 {
@@ -1038,18 +787,6 @@ brightmap sprite SG1AC3
 {
 	map "brightmaps/doom/monsters/Demon/SG1AC3.png"
 }
-brightmap sprite SG1AC4
-{
-	map "brightmaps/doom/monsters/Demon/SG1AC4.png"
-}
-brightmap sprite SG1AC5
-{
-	map "brightmaps/doom/monsters/Demon/SG1AC5.png"
-}
-brightmap sprite SG1AC6
-{
-	map "brightmaps/doom/monsters/Demon/SG1AC6.png"
-}
 brightmap sprite SG1AC7
 {
 	map "brightmaps/doom/monsters/Demon/SG1AC7.png"
@@ -1069,18 +806,6 @@ brightmap sprite SG1AD2
 brightmap sprite SG1AD3
 {
 	map "brightmaps/doom/monsters/Demon/SG1AD3.png"
-}
-brightmap sprite SG1AD4
-{
-	map "brightmaps/doom/monsters/Demon/SG1AD4.png"
-}
-brightmap sprite SG1AD5
-{
-	map "brightmaps/doom/monsters/Demon/SG1AD5.png"
-}
-brightmap sprite SG1AD6
-{
-	map "brightmaps/doom/monsters/Demon/SG1AD6.png"
 }
 brightmap sprite SG1AD7
 {
@@ -1102,18 +827,6 @@ brightmap sprite SG1AE3
 {
 	map "brightmaps/doom/monsters/Demon/SG1AE3.png"
 }
-brightmap sprite SG1AE4
-{
-	map "brightmaps/doom/monsters/Demon/SG1AE4.png"
-}
-brightmap sprite SG1AE5
-{
-	map "brightmaps/doom/monsters/Demon/SG1AE5.png"
-}
-brightmap sprite SG1AE6
-{
-	map "brightmaps/doom/monsters/Demon/SG1AE6.png"
-}
 brightmap sprite SG1AE7
 {
 	map "brightmaps/doom/monsters/Demon/SG1AE7.png"
@@ -1133,18 +846,6 @@ brightmap sprite SG1AF2
 brightmap sprite SG1AF3
 {
 	map "brightmaps/doom/monsters/Demon/SG1AF3.png"
-}
-brightmap sprite SG1AF4
-{
-	map "brightmaps/doom/monsters/Demon/SG1AF4.png"
-}
-brightmap sprite SG1AF5
-{
-	map "brightmaps/doom/monsters/Demon/SG1AF5.png"
-}
-brightmap sprite SG1AF6
-{
-	map "brightmaps/doom/monsters/Demon/SG1AF6.png"
 }
 brightmap sprite SG1AF7
 {
@@ -1166,18 +867,6 @@ brightmap sprite SG1AG3
 {
 	map "brightmaps/doom/monsters/Demon/SG1AG3.png"
 }
-brightmap sprite SG1AG4
-{
-	map "brightmaps/doom/monsters/Demon/SG1AG4.png"
-}
-brightmap sprite SG1AG5
-{
-	map "brightmaps/doom/monsters/Demon/SG1AG5.png"
-}
-brightmap sprite SG1AG6
-{
-	map "brightmaps/doom/monsters/Demon/SG1AG6.png"
-}
 brightmap sprite SG1AG7
 {
 	map "brightmaps/doom/monsters/Demon/SG1AG7.png"
@@ -1186,15 +875,6 @@ brightmap sprite SG1AG8
 {
 	map "brightmaps/doom/monsters/Demon/SG1AG8.png"
 }
-brightmap sprite XDP5A0I0
-{
-	map "brightmaps/doom/monsters/Demon/XDP5A0I0.png"
-}
-brightmap sprite XDP5B0J0
-{
-	map "brightmaps/doom/monsters/Demon/XDP5B0J0.png"
-}
-
 brightmap sprite ACB0A0
 {
 	map "brightmaps/doom/monsters/Chaingun1/ACB0A0.png"
