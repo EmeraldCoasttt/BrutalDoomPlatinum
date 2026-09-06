@@ -515,6 +515,46 @@ brightmap sprite S2RGI0
 {
 	map "brightmaps/doom/monsters/Demon/S2RGI0.png"
 }
+brightmap sprite SAPCA1
+{
+	map "brightmaps/doom/monsters/Demon/SAPCA1.png"
+}
+brightmap sprite SAPCA2A8
+{
+	map "brightmaps/doom/monsters/Demon/SAPCA2A8.png"
+}
+brightmap sprite SAPCA3A7
+{
+	map "brightmaps/doom/monsters/Demon/SAPCA3A7.png"
+}
+brightmap sprite SAPCA4A6
+{
+	map "brightmaps/doom/monsters/Demon/SAPCA4A6.png"
+}
+brightmap sprite SAPCA5
+{
+	map "brightmaps/doom/monsters/Demon/SAPCA5.png"
+}
+brightmap sprite SAPCB1
+{
+	map "brightmaps/doom/monsters/Demon/SAPCB1.png"
+}
+brightmap sprite SAPCB28
+{
+	map "brightmaps/doom/monsters/Demon/SAPCB2B8.png"
+}
+brightmap sprite SAPCB3B7
+{
+	map "brightmaps/doom/monsters/Demon/SAPCB3B7.png"
+}
+brightmap sprite SAPCB4B6
+{
+	map "brightmaps/doom/monsters/Demon/SAPCB4B6.png"
+}
+brightmap sprite SAPCB5
+{
+	map "brightmaps/doom/monsters/Demon/SAPCB5.png"
+}
 brightmap sprite SARGA1
 {
 	map "brightmaps/doom/monsters/Demon/SARGA1.png"
@@ -774,6 +814,45 @@ brightmap sprite SARGT0
 brightmap sprite SARGU0
 {
 	map "brightmaps/doom/monsters/Demon/SARGU0.png"
+}
+brightmap sprite SARGY1
+{
+	map "brightmaps/doom/monsters/Demon/SARGY1.png"
+}
+brightmap sprite SARGY2Y8
+{
+	map "brightmaps/doom/monsters/Demon/SARGY2Y8.png"
+}
+brightmap sprite SARGY3Y7
+{
+	map "brightmaps/doom/monsters/Demon/SARGY3Y7.png"
+}
+brightmap sprite SARGY4Y6
+{
+	map "brightmaps/doom/monsters/Demon/SARGY4Y6.png"
+}
+brightmap sprite SARGY5
+{
+	map "brightmaps/doom/monsters/Demon/SARGY5.png"
+}brightmap sprite SARGY1
+{
+	map "brightmaps/doom/monsters/Demon/SARGY1.png"
+}
+brightmap sprite SARGY2Y8
+{
+	map "brightmaps/doom/monsters/Demon/SARGY2Y8.png"
+}
+brightmap sprite SARGY3Y7
+{
+	map "brightmaps/doom/monsters/Demon/SARGY3Y7.png"
+}
+brightmap sprite SARGY4Y6
+{
+	map "brightmaps/doom/monsters/Demon/SARGY4Y6.png"
+}
+brightmap sprite SARGY5
+{
+	map "brightmaps/doom/monsters/Demon/SARGY5.png"
 }
 brightmap sprite SARGZ1
 {
