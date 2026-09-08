@@ -86,21 +86,18 @@ class BDP_DarkClawStates : CustomInventory
 		LineTrace(angle, range, pitch, offsetz:player.viewheight, data:useline);
 		if (useline.HitLine && useline.LineSide == line.front)
 		{
-			if(FindInventory("PowerStrength"))
+			bool isDoor = false;
+			switch (useline.HitLine.special)
 			{
-				bool isDoor = false;
-				switch (useline.HitLine.special)
-				{
-				case Generic_Door:
-				case Door_LockedRaise:
-				case Door_Animated:
-				case Door_Open:
-				case Door_Raise:
-					isDoor = true;
-					break;
-				}
-				if(isDoor) return;
+			case Generic_Door:
+			case Door_LockedRaise:
+			case Door_Animated:
+			case Door_Open:
+			case Door_Raise:
+				isDoor = true;
+				break;
 			}
+			if(isDoor) return;
 			useline.HitLine.Activate(player.mo, useline.LineSide, SPAC_Use);
 		}
 	}
@@ -109,30 +106,23 @@ class BDP_DarkClawStates : CustomInventory
 	{
 		Actor Victim;
 		
-			FLineTraceData lt;
-			double aimz = self.player ? self.player.viewheight : (self.height * 0.5);
-			self.LineTrace(self.angle, range, self.pitch, 0, aimz, data:lt);
-			victim = lt.HitActor;
-			int aimCheck = -6;
-			bool backsmack;
+		FLineTraceData lt;
+		double aimz = self.player ? self.player.viewheight : (self.height * 0.5);
+		self.LineTrace(self.angle, range, self.pitch, 0, aimz, data:lt);
+		victim = lt.HitActor;
+		int aimCheck = -6;
+		bool backsmack;
 		
 		
-			while (aimCheck++ < 6 && !victim)
-			{
-				self.LineTrace(self.angle + (aimCheck * 8), range, self.pitch, 0, aimz, data:lt);
+		while (aimCheck++ < 6 && !victim)
+		{
+			self.LineTrace(self.angle + (aimCheck * 8), range, self.pitch, 0, aimz, data:lt);
 			victim = lt.hitActor;
-			}
+		}
 			
-			
-		
-			
-		
 		if(victim && victim.bSHOOTABLE && victim.bISMONSTER) 
 		{
-			
 			vector3 victimAngles = level.sphericalCoords(victim.pos, self.pos, (victim.angle, victim.pitch));
-			
-
 			
 			double inertia = BDP_Math.GetInertia(victim.mass);
 			self.A_Quake(2,3,0,20,"");
@@ -140,17 +130,28 @@ class BDP_DarkClawStates : CustomInventory
 			if(doHitThrust && victim.bsolid)
 			{
 				self.vel *= 0;
-				self.vel += BDP_Math.VecFromAngles(self.angle, self.pitch, -12);	
+				self.vel += BDP_Math.VecFromAngles(self.angle, self.pitch, -12);
 			}
-						
 		}
 		actor proj = A_FireProjectile(projectile, 0, 0, 0, spawnheight);
-			If(proj && victim && victim.bSHOOTABLE)
-			{
-				proj.setorigin(victim.pos,false);
-			}
+		If(proj && victim && victim.bSHOOTABLE)
+		{
+			proj.setorigin(victim.pos,false);
+		}
 		
 		return victim;
+	}
+	
+	action void A_SpawnBonuses(actor victim, int damage, int amount = 1)
+	{
+		if(victim.health - victim.ApplyDamageFactor("Fire", damage) < 1)
+		{
+			class<Actor> bonus = "HealthPlusFatalityBonus";
+			if(victim.FindInventory("firetic") || victim is "BDP_LostSoul")
+				bonus = "ArmorShardFatalityBonus";
+			for(int i = 0; i < amount; i++)
+				victim.A_SpawnItemEx(bonus, xvel:frandom(-2.0, 2.0), frandom(-2.0, 2.0), frandom(4.0, 6.0));
+		}
 	}
 	
 	States
@@ -178,17 +179,34 @@ class BDP_DarkClawStates : CustomInventory
 		TNT1 A 0
 		{
 			Actor victim = A_BDPMelee(projectile:"MeleeAttackDarkClaw");
+			if(victim && victim is "BDP_Headshot") victim = victim.tracer;
 			if(!invoker.forceActivate) A_UseLine();
-			if((victim && victim.bISMONSTER || invoker.forceActivate) && !invoker.onCooldown)
+			A_QuadSound();
+			if((victim && victim.bISMONSTER && !victim.bFRIENDLY || invoker.forceActivate) && !invoker.onCooldown)
 			{
+				A_StartSound("items/darkclaw/blast", 0);
 				let dplr = BDP_PlayerPawn(invoker.owner);
 				if(dplr && dplr.ownedEquipment is "BDP_DarkClaw") dplr.ownedEquipment.TriggerCooldown();
-				A_StartSound("items/darkclaw/blast", 0);
-				int hitMonsters = A_Explode(500, 128, XF_NOTMISSILE, damagetype:"Incinerate");
-				GiveBody(hitMonsters * 5);
-				for(int i = -4; i < 5; i++)
-					A_FireProjectile("SmallExplosionFlames", i * 20, spawnheight:-16);
-				A_QuadSound();
+				BlockThingsIterator it = BlockThingsIterator.Create(self, 200);
+				
+				while(it.Next())
+				{
+					target = it.thing;
+					if(target && target.bISMONSTER && !target.bFRIENDLY && (target.health > 0 || target == victim) && CheckLOF(CLOFF_SKIPENEMY|CLOFF_SKIPFRIEND|CLOFF_SKIPOBJECT, ptr_target:AAPTR_TARGET))
+					{
+						double distance = Distance3D(target);
+						if(distance > 200) continue;
+						int damage = 500 * ((200 - distance) / 200);
+						A_SpawnBonuses(target, damage, 3);
+						target.DamageMobj(invoker, invoker.owner, damage, "Fire");
+					}
+				}
+				
+				for(int i = 0; i < 36; i++)
+				{
+					Vector2 fvel = AngleToVector(angle + i * 10, 16);
+					A_SpawnItemEx("SmallExplosionFlames", zofs:32, fvel.x, fvel.y);
+				}
 			}
 		}
 		CLAW DEFGH 1;
@@ -209,31 +227,44 @@ class MeleeAttackDarkClaw : MeleeAttack
 {
 	Default
 	{
-		Radius 4;
-		Height 2;
 		Damagetype "cut";
-		damagefunction 66;
-		Projectile;
-		speed 30;
+		MeleeAttack.BaseDamage 66;
 		decal "SawHorizontal";
 		+BLOODSPLATTER;
-	
 	}
+	
+	override int DoSpecialDamage(Actor victim, int damage, Name damagetype)
+	{
+		if(victim.health - victim.ApplyDamageFactor(damagetype, damage) < 1)
+		{
+			class<Actor> bonus = "HealthPlusFatalityBonus";
+			if(victim.FindInventory("firetic") || victim is "BDP_LostSoul")
+				bonus = "ArmorShardFatalityBonus";
+			victim.A_SpawnItemEx(bonus, xvel:frandom(-2.0, 2.0), frandom(-2.0, 2.0), frandom(4.0, 6.0));
+		}
+		return super.DoSpecialDamage(victim, damage, damagetype);
+	}
+	
 	States
 	{
 	Spawn:
         TNT1 A 1;
 		Stop;
 	Death:
-		TNT1 A 10 
+		TNT1 A 0;
+		TNT1 A 0
 		{
+			if(target.findinventory("sequencebreaker"))
+				BDP_DoorBuster.DestroyDoor(target,  breakLocks: BDP_DoorBuster.LB_All);
+			else
+				BDP_DoorBuster.DestroyDoor(target,  breakLocks: BDP_DoorBuster.LB_CheckKey);
 			A_SpawnItemEx("BDP_Ricochet",0,0,0,0,0,0,180);
 			A_StartSound("baron/melee", 0);
 			Radius_Quake(2, 3, 0, 4, 0);
 		}
 		Stop;
 	XDeath:
-		TNT1 A 10
+		TNT1 A 0
 		{
 			Radius_Quake(2, 3, 0, 4, 0);
 			A_StartSound("CSAWFLESH", 0);

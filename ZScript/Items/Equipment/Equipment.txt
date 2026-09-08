@@ -123,7 +123,7 @@ class BDP_Equipment : Inventory abstract
 	}
 }
 
-class BDP_EquipmentSpawner : RandomSpawner replaces Backpack
+class BDP_BackpackSpawner : RandomSpawner replaces Backpack
 {
 	Default
 	{
@@ -139,5 +139,14 @@ class BDP_EquipmentSpawner : RandomSpawner replaces Backpack
 		DropItem "BDP_Tether", 255, 1;
 		DropItem "BDP_ThermiteGrenade", 255, 1;
 		DropItem "BDP_MGTurret", 255, 1;
+	}
+}
+
+class BDP_BerserkSpawner : RandomSpawner replaces Berserk
+{
+	Default
+	{
+		DropItem "BDP_Berserk", 255, 1;
+		DropItem "BDP_DarkClaw", 255, 1;
 	}
 }

@@ -1114,7 +1114,6 @@ CLASS MeleeAttackLeft : MeleeAttack
 				MeleeAttack.berserkdamage 75;
 				DamageType "Melee";
 				MeleeAttack.splatterblood TRUE;
-				MeleeAttack.bonushealth TRUE;
 				MeleeAttack.Parry FALSE;
 			}
 		States

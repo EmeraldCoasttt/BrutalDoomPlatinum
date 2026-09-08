@@ -1,4 +1,4 @@
-class BDP_Berserk : BDP_Equipment replaces Berserk
+class BDP_Berserk : BDP_Equipment
 {
 	Default
 	{

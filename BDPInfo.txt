@@ -25,5 +25,5 @@ bdp_revolver,secret,1
 bdp_battlerifle,secret,1
 bdp_quaddamage,secret,2
 bdp_hastesphere,secret,2
-bdp_equipmentspawner,secret,2
+bdp_backpackspawner,secret,2
 bdp_ragesphere,secret,3
