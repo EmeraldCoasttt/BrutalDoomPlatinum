@@ -12,21 +12,7 @@ class BDP_WeaponDropper : Actor
 	States
 	{
 		Spawn:
-		TNT1 A 0 NoDelay
-		{
-			if(random(0,9) == 0)
-			{
-				if(random(0,1) == 0)
-				{
-					A_CustomMissile("BDP_DroppedFragGrenade", 20, 0, random (0, 360), 2, random (30, 50));
-				}
-				else
-				{
-					A_CustomMissile("BDP_DroppedPipeBomb", 20, 0, random (0, 360), 2, random (30, 50));
-				}
-			}
-			A_CustomMissile(WeaponToDrop, 20, 0, random (0, 360), 2, random (30, 50));
-		}
+		TNT1 A 0 NoDelay A_CustomMissile(WeaponToDrop, 20, 0, random (0, 360), 2, random (30, 50));
 		Stop;
 	}
 }
@@ -134,54 +120,6 @@ class BDP_DroppedSubmachineGun : BDP_DroppedWeapon
 		Loop;
 	Death:
 		TNT1 A 0 A_SpawnDroppedWeapon("BDP_SubmachineGun",7);
-		Stop;
-	}
-}
-
-class BDP_DroppedFragGrenade : BDP_DroppedWeapon
-{
-	Default
-	{
-		Scale 0.5;
-		Speed 9;
-		BounceSound "HandNadeBounce";
-	}
-	States
-	{
-	Spawn:
-		TNT1 A 0 NoDelay A_Jump(256,"Spawn1","spawn2");
-	Spawn1:
-		GRND D 1 {A_SetRoll(roll + 11.25);bThruActors = 0;}
-		Loop;
-	Spawn2:
-		GRND D 1 {A_SetRoll(roll - 11.25);bThruActors = 0;}
-		Loop;
-	Death:
-		TNT1 A 0 A_SpawnItemEx("AmmoFragGrenade");
-		Stop;
-	}
-}
-
-class BDP_DroppedPipeBomb : BDP_DroppedWeapon
-{
-	Default
-	{
-		Scale 0.4;
-		Speed 9;
-		BounceSound "PIPBOING";
-	}
-	States
-	{
-	Spawn:
-		TNT1 A 0 NoDelay A_Jump(256,"Spawn1","Spawn2");
-	Spawn1:
-		PIPB B 1 {A_SetRoll(roll + 11.25);bThruActors = 0;}
-		Loop;
-	Spawn2:
-		PIPB B 1 {A_SetRoll(roll - 11.25);bThruActors = 0;}
-		Loop;
-	Death:
-		TNT1 A 0 A_SpawnItemEx("AmmoPipeBomb");
 		Stop;
 	}
 }

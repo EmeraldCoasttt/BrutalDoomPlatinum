@@ -51,7 +51,6 @@ ACTOR BDP_Player : BDP_PlayerPawn Replaces DoomPlayer //PlayerPawn Replaces Doom
 	Player.DisplayName "DOOM Marine"
 	Player.StartItem "BDP_Pistol"
 	Player.StartItem "BDP_Fist"
-	Player.startitem "AmmoFragGrenade", 2
 	Player.StartItem "BDP_Clip1", 30
 	Player.startitem "BDP_ASGShield", 100
 	Player.startitem "BDP_RocketAmmo", 1
