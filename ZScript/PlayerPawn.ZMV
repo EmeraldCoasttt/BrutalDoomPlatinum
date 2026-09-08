@@ -755,6 +755,17 @@ class BDP_PlayerPawn : PlayerPawn
 		PPShader.SetEnabled("NiteVis",false);
 	}
 	
+	override void CheatGive (String name, int amount)
+	{
+		super.CheatGive(name, amount);
+		class<BDP_Equipment> equip = name;
+		if(equip)
+		{
+			self.DropInventory(ownedEquipment);
+			ownedEquipment = BDP_Equipment(FindInventory(name));
+		}
+	}
+	
 	// Counts all owned weapons:
 	int CountOwnedWeapons()
 	{
