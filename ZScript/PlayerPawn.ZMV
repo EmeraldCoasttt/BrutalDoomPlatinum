@@ -761,7 +761,18 @@ class BDP_PlayerPawn : PlayerPawn
 		class<BDP_Equipment> equip = name;
 		if(equip)
 		{
-			if(ownedEquipment) self.DropInventory(ownedEquipment);
+			if(ownedEquipment)
+			{
+				if(ownedEquipment is equip)
+				{
+					DropInventory(ownedEquipment);
+					GiveInventory(name, 1);
+				}
+				else
+				{
+					DropInventory(ownedEquipment);
+				}
+			}
 			ownedEquipment = BDP_Equipment(FindInventory(name));
 		}
 	}
