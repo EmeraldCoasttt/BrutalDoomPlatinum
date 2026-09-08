@@ -761,7 +761,7 @@ class BDP_PlayerPawn : PlayerPawn
 		class<BDP_Equipment> equip = name;
 		if(equip)
 		{
-			self.DropInventory(ownedEquipment);
+			if(ownedEquipment) self.DropInventory(ownedEquipment);
 			ownedEquipment = BDP_Equipment(FindInventory(name));
 		}
 	}
