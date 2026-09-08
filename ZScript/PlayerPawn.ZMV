@@ -2587,8 +2587,8 @@ class BDP_PlayerPawn : PlayerPawn
 	{
 		ZMPlayer = self.player;
 		
-		//Already ledge grabbing, no clipping, moving away from where you are looking, ceiling already too low for sure
-		if((pos.z <= floorz) || LedgeCheck || LedgeGrabbed || (ZMPlayer.Cheats & CF_NOCLIP2) || Vel.XY dot AngleToVector(Angle) <= 0 || CeilingZ <= Pos.Z + Height * 1.6f) { return; }
+		//Already ledge grabbing, no clipping, moving away from where you are looking, ceiling already too low for sure, could already clear the ledge
+		if((pos.z <= floorz) || LedgeCheck || LedgeGrabbed || (ZMPlayer.Cheats & CF_NOCLIP2) || Vel.XY dot AngleToVector(Angle) <= 0 || CeilingZ <= Pos.Z + Height * 1.6f || vel.z > 6) { return; }
 		
 		//============================================
 		//Find ledge (if any)						//
