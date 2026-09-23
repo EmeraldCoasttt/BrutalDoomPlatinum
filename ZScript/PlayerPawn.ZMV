@@ -20,6 +20,7 @@ class BDP_PlayerPawn : PlayerPawn
 	bool	Bsprinting;
 	bool exhausted;
 	int stamina;
+	int showKickflash;
 	
 	//////////////////
 	
@@ -462,12 +463,10 @@ class BDP_PlayerPawn : PlayerPawn
 				}
 				bool kickflash = (weap.readyLeft && weap.readyRight || !weap.bDUALWEAPON) && player.WeaponState & WF_USER1OK;
 				blockKick = true;
-				statelabel st = "Kick";
 				statelabel ac = "KickAction";
 				statelabel tr = "KickTranslatable";
 				if(canSlide)
 				{
-					st = "SlideKick";
 					ac = "SlideKickAction";
 					tr = "SlideKickTranslatable";
 				}
@@ -477,12 +476,11 @@ class BDP_PlayerPawn : PlayerPawn
 					tr = "AirKickTranslatable";
 				}
 				A_StartSound("KICK",69);
-				if(kickflash && weap.resolvestate(st) && !bSPRINTING)
-					player.SetPSprite(1,weap.resolvestate(st));
 				A_Overlay(-601,tr);
 				A_OverlayFlags(-601, PSPF_PLAYERTRANSLATED, true);
 				A_OverlayFlags(-601, PSPF_ADDBOB, false);
 				A_StartSound("KICK",69);
+				showKickflash = 1;
 				return resolvestate(ac);
 			}
 			return resolvestate(null);
@@ -500,7 +498,13 @@ class BDP_PlayerPawn : PlayerPawn
 			A_BDPMelee();
 			A_UseLine();
 		}
-		KICK DEEEEFGHIJKLM 1;
+		KICK DEEEEFGHIJK 1;
+		TNT1 A 0
+		{
+			if(!bSPRINTING) showKickflash = 0;
+			else showKickflash = 2;
+		}
+		KICK LM 1;
 		TNT1 A 4 {blockKick = true;}
 		Goto KickCheck;
 	KickTranslatable:
@@ -517,7 +521,13 @@ class BDP_PlayerPawn : PlayerPawn
 			A_BDPMelee(200,"meleeattackair",-31);
 			A_UseLine();
 		}
-		KICK RRSTUVWXYZ[] 1;
+		KICK RRSTUVWXYZ 1;
+		TNT1 A 0
+		{
+			if(!bSPRINTING) showKickflash = 0;
+			else showKickflash = 2;
+		}
+		KICK [] 1;
 		TNT1 A 4 {blockKick = true;}
 		Goto KickCheck;
 	AirKickTranslatable:
@@ -591,11 +601,16 @@ class BDP_PlayerPawn : PlayerPawn
 				A_OverlayOffset(-602,0,(10 - pitch) * 2);
 			}
 		}
-		TNT1 A 4
+		TNT1 A 2
 		{
 			A_OverlayOffset(-602,0,0);
 			viewbob = 1.0;
 			blockKick = true;
+		}
+		TNT1 A 2
+		{
+			if(!((player.cmd.forwardmove || player.cmd.sidemove) && player.cmd.buttons & BT_SPEED)) showKickflash = 0;
+			else showKickflash = 2;
 		}
 		Goto KickCheck;
 	SlideKickTranslatable:
@@ -1282,7 +1297,7 @@ class BDP_PlayerPawn : PlayerPawn
 					SetStateLabel("pain.bikelaunch");
 					
 				}
-			If(source is "Freezerbot" || source is "FreezeBot" || inflictor is "FreezeBot" || Inflictor is "Freezerbot")
+			If(source is "FreezerBot" || inflictor is "FreezerBot")
 				{
 					damage = 0;
 					
@@ -1968,15 +1983,17 @@ class BDP_PlayerPawn : PlayerPawn
 				}
 				else if(!blockSprint)
 				{
+					if(showKickflash == 0) showKickflash = 2;
 					Bsprinting = true;
 				}
+				if(blockSprint && showKickflash == 2) showKickflash = 0;
 			}
 			Else
 			{
 				if(!(cmd.buttons & BT_ATTACK)) blockSprint = false;
+				if(showKickflash == 2) showKickflash = 0;
 				Bsprinting = false;
 			}
-		
 			
 			If(boostlevel >= 3)
 			{
@@ -2063,6 +2080,7 @@ class BDP_PlayerPawn : PlayerPawn
 		{
 			Bsprinting = false;
 		}
+		if((blockSprint || !cmd.forwardmove && !cmd.sidemove) && showKickflash == 2) showKickflash = 0;
 		
 		If(boostlevel > 3 && !checkmove(Pos.XY + AngleToVector(angle, 16), PCM_NOACTORS))
 		{

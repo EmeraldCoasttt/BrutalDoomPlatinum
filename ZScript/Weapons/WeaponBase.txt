@@ -214,8 +214,9 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	
 	override state GetDownState()
 	{
-		owner.player.SetPSprite(49,null);
 		owner.player.SetPSprite(50,null);
+		if(InStateSequence(owner.player.FindPSprite(PSP_WEAPON).curstate, resolvestate("Select")))
+			return resolvestate("InstaDeselect");
 		return resolvestate("Deselect");
 	}
 	
@@ -232,7 +233,6 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			dplr.blockSprint = true;
 			dplr.bSPRINTING = false;
 		}
-		owner.player.SetPSprite(49,null);
 		owner.player.SetPSprite(50,null);
 		firing = true;
 		if(aimMode > 0)
@@ -245,14 +245,12 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		let dplr = BDP_PlayerPawn(owner);
 		if(aimMode == 1 && !dplr.blockAltfire)
 		{
-			owner.player.SetPSprite(49,null);
 			owner.player.SetPSprite(50,null);
 			dplr.blockAltfire = true;
 			return resolvestate("AimEnd");
 		}
 		if(resolvestate("Altfire"))
 		{
-			owner.player.SetPSprite(49,null);
 			owner.player.SetPSprite(50,null);
 			altFiring = true;
 			return resolvestate("Altfire");
@@ -260,6 +258,21 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		return resolvestate(null);
 	}
 	
+	Action double, double AnglePitchCalculator(double XYOffset, double ZOffset)
+	{
+		FLineTraceData CrossHairProjection;
+		LineTrace(Angle, 10000, Pitch, TRF_THRUACTORS, player.ViewHeight, data: CrossHairProjection);
+		
+		Double AccurateAngle = 0;
+		Double AccuratePitch = 0;
+		Float Distance = CrossHairProjection.Distance;
+			
+		if(XYOffset) { AccurateAngle = VectorAngle(Distance, XYOffset); }
+		if(ZOffset) { AccuratePitch = VectorAngle(Distance, ZOffset); }
+		
+		return AccurateAngle, AccuratePitch;
+	}
+
 	override Vector2 ModifyBobLayer(Vector2 Bob, int layer, double ticfrac)
 	{
 		let dplr = PlayerPawn(owner);
@@ -1093,7 +1106,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		invoker.quickSwap = false;
 		let dplr = BDP_PlayerPawn(invoker.owner);
 		dplr.canLedgeClimb = true;
-		DoReadyWeaponToFire(dplr, !(dxflags & WRF_NoPrimary), !(dxflags & WRF_NoSecondary) && invoker.aimMode != 2);
+		if(dplr.showKickflash != 1 || !player.FindPSprite(50)) DoReadyWeaponToFire(dplr, !(dxflags & WRF_NoPrimary), !(dxflags & WRF_NoSecondary) && invoker.aimMode != 2);
 		DoReadyWeaponToSwitch(player, !(dxflags & WRF_NoSwitch));
 		if(kicksprint && invoker.aimMode == 0)
 			player.WeaponState |= WF_USER1OK;
@@ -1112,13 +1125,6 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			}
 			if(!dplr.blockSpecial)
 				player.WeaponState |= WF_USER3OK;
-			if(kicksprint && invoker.aimMode == 0 && !dplr.blockSprint && player.cmd.buttons & BT_SPEED && player.crouchdir != -1 && (player.cmd.forwardmove != 0 || player.cmd.sidemove != 0))
-				A_Overlay(50,"Sprint",true);
-			else if(player.FindPSprite(50))
-			{
-				A_ClearOverlays(49,50);
-				A_Overlay(49,"SprintEnd");
-			}
 		}
 		if(invoker.aimMode == 2 && invoker.aimTics < 1 && !(player.cmd.buttons & BT_ALTATTACK))
 			return resolvestate("AimEnd");
@@ -1128,7 +1134,12 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		return resolvestate(null);
 	}
 	
-	action bool JustPressed(int which) // "which" being any BT_* value, mentioned above or not
+	action bool Pressed(int which) // "which" being any BT_* value, mentioned above or not
+	{
+		return player.cmd.buttons & which;
+	}
+	
+	action bool JustPressed(int which)
 	{
 		return player.cmd.buttons & which && !(player.oldbuttons & which);
 	}
@@ -1420,6 +1431,22 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		}
 		If(player && player.readyweapon is self.getclass())
 		{
+			let psp = owner.player.FindPSprite(PSP_WEAPON);
+			if(dplr.showKickflash > 0 && !player.FindPSprite(50) && (player.WeaponState & WF_WEAPONREADY || bDUALWEAPON && readyLeft && readyRight) && !aimMode &&
+			(dplr.showKickflash == 1 || !dplr.blockSprint && (player.cmd.forwardmove || player.cmd.sidemove)) &&
+			psp && !InStateSequence(psp.curstate, resolvestate("LetsGetStarted")) && !InStateSequence(psp.curstate, resolvestate("DoReload")) && !InStateSequence(psp.curstate, resolvestate("Fidget")))
+			{
+				player.SetPSprite(50, resolvestate("Sprint"));
+			}
+			else if(!dplr.showKickflash && player.FindPSprite(50) && !dplr.blockSprint && !InStateSequence(player.FindPSprite(50).curstate, resolvestate("SprintEnd")))
+			{
+				player.SetPSprite(50, resolvestate("SprintEnd"));
+			}
+			if(psp && player.FindPSprite(50))
+			{
+				psp.sprite = GetSpriteIndex("TNT1");
+			}
+			
 			if(!(player.readyweapon is "BDP_Fist"))
 			{
 				let fists = BDP_Weapon(owner.FindInventory("BDP_Fist"));
@@ -1598,7 +1625,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			{
 				A_clearoverlays(-30,30);
 			}
-			A_clearoverlays(49,50);
+			A_clearoverlays(50,50);
 			A_WeaponOffset(0,32);
 			A_Stop();
 			A_ZoomFactor(1.0);
@@ -1726,7 +1753,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	Reload:
 		#### # 1
 		{
-			A_ClearOverlays(49,50);
+			A_ClearOverlays(50,50);
 			if(resolvestate(invoker.fidgetState) && invoker.aimMode == 0 && (invoker.fidgetState != "Fidget" && player.cmd.buttons & BT_RELOAD || LastPressed(BT_RELOAD,7,true)))
 			{
 				return resolvestate(invoker.fidgetState);
@@ -1739,20 +1766,25 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	User4:
 		#### # 1
 		{
-			if(invoker.handedness == 2 && !resolvestate("Taunt"))
+			let dplr = BDP_PlayerPawn(self);
+			if(dplr.blockTaunt || player.FindPSPrite(69)) return resolvestate(null);
+			dplr.blockTaunt = true;
+			if(invoker.handedness == 2)
 			{
-				return resolvestate("TauntNone");
+				A_Overlay(69, "TauntNone");
+				if(resolvestate("Taunt"))
+					return resolvestate("Taunt");
+				return resolvestate(null);
 			}
 			else
 			{
 				A_Overlay(69,"TauntAction");
+				dplr.showKickflash = 1;
 			}
 			return resolvestate(null);
 		}
-		TNT1 A 0 {return resolvestate("Taunt");}
 		Goto Ready;
 	TauntAction:
-		TNT1 A 4;
 		TNT1 A 0 
 		{
 			If(random(1,200) == 7)
@@ -1771,20 +1803,30 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		FUCK ABCD 1 A_AlertMonsters();
 		FUCK E 1;
 		FUCK F 12;
-		FUCK EDCBA 1;
-		TNT1 A 4 A_Takeinventory("Taunting",1);
-		TNT1 A 0
-		{
-			let dplr = BDP_PlayerPawn(invoker.owner);
+		FUCK EDC 1;
+		TNT1 A 0 {
+			A_Takeinventory("Taunting",1);
+			let dplr = BDP_PlayerPawn(self);
+			if(!dplr.bSPRINTING) dplr.showKickflash = 0;
+			else dplr.showKickflash = 2;
 			dplr.blockTaunt = false;
 		}
+		FUCK BA 1;
 		Stop;
 	FinishTauntLeft:
 		FUCK GHIJ 1 A_AlertMonsters();
 		FUCK K 1;
 		FUCK L 12;
 		FUCK KJIHG 1;
-		TNT1 A 4 A_Takeinventory("Taunting",1);
+		TNT1 A 4 {
+			A_Takeinventory("Taunting",1);
+			let dplr = BDP_PlayerPawn(self);
+			if(dplr)
+			{
+				if(!dplr.bSPRINTING) dplr.showKickflash = 0;
+				else dplr.showKickflash = 2;
+			}
+		}
 		TNT1 A 0
 		{
 			let dplr = BDP_PlayerPawn(invoker.owner);
@@ -1814,7 +1856,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			let dplr = BDP_PlayerPawn(invoker.owner);
 			dplr.blockTaunt = false;
 		}
-		Goto Ready;
+		Stop;
 	User3:
 		#### # 1
 		{
@@ -1824,7 +1866,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 				A_Print("You must have two "..invoker.GetTag().."s to Dual wield!",3);
 			else if(resolvestate("SpecialAction"))
 			{
-				A_ClearOverlays(49,50);
+				A_ClearOverlays(50,50);
 				return resolvestate("SpecialAction");
 			}
 			return resolvestate(null);

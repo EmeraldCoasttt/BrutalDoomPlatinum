@@ -27,29 +27,13 @@ class BDP_Shotgun : BDP_Weapon
 	FinishToss:
 		SHTA QPON 1;
 		Goto Ready;
-	Kick: //18
-		SHTA RSTU 1;
-		SHTA V 10;
-		SHTA UTSR 1;
-		Goto Ready;
-	SlideKick: //25
-		SHTA RSTU 1;
-		SHTA V 17;
-		SHTA UTSR 1;
-		Goto Ready;
-	Taunt: //30
-		TNT1 A 0 A_EndAim();
-		SHTA RSTU 1;
-		SHTA V 22;
-		SHTA UTSR 1;
-		Goto Ready;
 	Sprint:
-		SHTA RSTU 1 A_SetSprites("TNT1A0",1);
+		SHTA RSTU 1;
 	SprintLoop:
-		SHTA V 1 A_SetSprites("TNT1A0",1);
+		SHTA V 1;
 		Loop;
 	SprintEnd:
-		SHTA UTSR 1 A_SetSprites("TNT1A0",1);
+		SHTA UTSR 1;
 		Stop;
 	Spawn:
 		TNT1 A 0 NoDelay A_jump(256,"spawn1","spawn2","spawn3");

@@ -49,40 +49,12 @@ class BDP_PlasmaRifle : BDP_Weapon
 	FinishToss:
 		PRSG SRQP 1;
 		Goto Ready;
-	Kick: //18
-		PRSK ABCD 1 A_LowFrame();
-		PRSK E 10 A_LowFrame();
-		PRSK DCBA 1 A_LowFrame();
-		Goto Ready;
-	SlideKick: //25
-		PRSK ABCD 1 A_LowFrame();
-		PRSK E 17 A_LowFrame();
-		PRSK DCBA 1 A_LowFrame();
-		Goto Ready;
-	Taunt: //30
-		PRSK ABCD 1 A_LowFrame();
-		PRSK E 22 A_LowFrame();
-		PRSK DCBA 1 A_LowFrame();
-		Goto Ready;
 	Sprint:
-		PRSK ABCD 1
-		{
-			A_SetSprites("TNT1A0",1);
-			A_LowFrame();
-		}
-	SprintLoop:
-		PRSK E 1
-		{
-			A_SetSprites("TNT1A0",1);
-			A_LowFrame();
-		}
-		Loop;
+		PRSK ABCD 1 A_LowFrame();
+		PRSK E 1 A_LowFrame();
+		Wait;
 	SprintEnd:
-		PRSK DCBA 1
-		{
-			A_SetSprites("TNT1A0",1);
-			A_LowFrame();
-		}
+		PRSK DCBA 1 A_LowFrame();
 		Stop;
 	Ready:
 		PRSG A 1

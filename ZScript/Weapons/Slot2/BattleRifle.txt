@@ -87,7 +87,7 @@ CLASS BDP_BattleRifle : BDP_Weapon
 	
 	States
 	{
-	TossItem: //8
+	TossItem:
 		TNT1 A 0 A_EndAim();
 		BR4S EFGH 1;
 		TNT1 A 1;
@@ -95,32 +95,22 @@ CLASS BDP_BattleRifle : BDP_Weapon
 	FinishToss:
 		BR4S HGFE 1;
 		Goto Ready;
-	Kick: //18
-		BR4K ABCD 1;
-		BR4K E 10;
-		BR4K DCBA 1;
-		Goto Ready;
-	SlideKick: //25
-		BR4K ABCD 1;
-		BR4K E 17;
-		BR4K DCBA 1;
-		Goto Ready;
-	Taunt: //30
-		BR4K ABCD 1;
-		BR4K E 22;
-		BR4K DCBA 1;
-		Goto Ready;
 	Sprint:
-		BR4K ABCD 1 A_SetSprites("TNT1A0",1);
+		BR4K ABCD 1;
 	SprintLoop:
-		BR4K E 1 A_SetSprites("TNT1A0",1);
+		BR4K E 1;
 		Loop;
 	SprintEnd:
-		BR4K DCBA 1 A_SetSprites("TNT1A0",1);
+		BR4K DCBA 1;
 		Stop;
 	
 		Select:
-			TNT1 A 1 {A_SetCrosshairDX("BR45Ret",2000); A_GunSlingerMag();}
+			TNT1 A 1
+			{
+				A_SetCrosshairDX("BR45Ret",2000);
+				A_GunSlingerMag();
+				A_WeaponReady(WRF_NOFIRE);
+			}
 			TNT1 A 0 A_startSound("BR45PICK",1);
 			BR4S DCBA 1 A_WeaponReady(WRF_NOFIRE);
 			GOto Ready;

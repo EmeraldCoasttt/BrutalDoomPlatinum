@@ -19,35 +19,19 @@ class BDP_Revolver : BDP_Weapon
 	}
 	States
 	{
-	TossItem: //8
+	TossItem:
 		REVS EFGH 1;
 		TNT1 A 1;
 		Wait;
 	FinishToss:
 		REVS HGFE 1;
 		Goto Ready;
-	Kick: //18
-		REVR CIJK 1;
-		REVR L 10;
-		REVR KJIC 1;
-		Goto Ready;
-	SlideKick: //25
-		REVR CIJK 1;
-		REVR L 17;
-		REVR KJIC 1;
-		Goto Ready;
-	Taunt: //30
-		REVR CIJK 1;
-		REVR L 22;
-		REVR KJIC 1;
-		Goto Ready;
 	Sprint:
-		REVR CIJK 1 A_SetSprites("TNT1A0",1);
-	SprintLoop:
-		REVR L 1 A_SetSprites("TNT1A0",1);
-		Loop;
+		REVR CIJK 1;
+		REVR L 1;
+		Wait;
 	SprintEnd:
-		REVR KJIC 1 A_SetSprites("TNT1A0",1);
+		REVR KJIC 1;
 		Stop;
 	Ready:
 		REVO A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
@@ -58,9 +42,14 @@ class BDP_Revolver : BDP_Weapon
 		TNT1 A 0 A_Lower();
 		Wait;
 	Select:
-		TNT1 A 1 {A_SetCrosshairDX("REVORet",2000);A_GunSlingerMag();}
+		TNT1 A 1
+		{
+			A_SetCrosshairDX("REVORet",2000);
+			A_GunSlingerMag();
+			A_WeaponReady(WRF_NOFIRE);
+		}
 		REVO A 0 A_StartSound("REVCOCK");
-		REVS DCBA 1;
+		REVS DCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
 	SelectFromDual:
 		TNT1 A 0 A_ClearOverlays(2, 3);

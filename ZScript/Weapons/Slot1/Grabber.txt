@@ -79,31 +79,16 @@ class BDP_Grabber : BDP_Weapon
 	FinishToss:
 		BFGS HGFE 1;
 		Goto Ready;
-	Kick: //18
-		BFGN BCDE 1;
-		BFGN E 10;
-		BFGN EDCB 1;
-		Goto Ready;
-	SlideKick: //25
-		BFGN BCDE 1;
-		BFGN E 17;
-		BFGN EDCB 1;
-		Goto Ready;
-	Taunt: //30
-		BFGN BCDE 1;
-		BFGN E 22;
-		BFGN EDCB 1;
-		Goto Ready;
 	Ready:
 		BFGN A 1 A_WeaponReadyDX();
 		Loop;
 	Sprint:
-		BFGN BCDE 1 A_SetSprites("TNT1A0",1);
+		BFGN BCDE 1;
 	SprintLoop:
-		BFGN E 1 A_SetSprites("TNT1A0",1);
-		Loop;
+		BFGN E 1;
+		Wait;
 	SprintEnd:
-		BFGN EDCB 1 A_SetSprites("TNT1A0",1);
+		BFGN EDCB 1;
 		Stop;
 	Deselect:
 		BFGS EFGH 1;

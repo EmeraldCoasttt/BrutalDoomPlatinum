@@ -14,7 +14,6 @@ class BDP_SubmachineGun : BDP_Weapon
 		Inventory.maxamount 2;
 		Tag "$BDPSMG";
 		Inventory.AltHUDIcon "SMGZA0";
-		BDP_Weapon.handedness 1;
 		BDP_Weapon.DualWeapon "BDP_DualSMG";
 	}
 	States
@@ -27,29 +26,12 @@ class BDP_SubmachineGun : BDP_Weapon
 	FinishToss:
 		SMGS DCBA 1;
 		Goto Ready;
-	Kick: //18
-		SMGF DEFG 1;
-		SMGF H 10;
-		SMGF GFED 1;
-		Goto Ready;
-	SlideKick: //25
-		SMGF DEFG 1;
-		SMGF H 17;
-		SMGF GFED 1;
-		Goto Ready;
-	Taunt: //30
-		TNT1 A 0 A_EndAim();
-		SM2S JKLM 1;
-		SM2S X 22;
-		SM2S MLKJ 1;
-		Goto Ready;
 	Sprint:
-		SMGF DEFG 1 A_SetSprites("TNT1A0",1);
-	SprintLoop:
-		SMGF H 1 A_SetSprites("TNT1A0",1);
-		Loop;
+		SMGF DEFG 1;
+		SMGF H 1;
+		Wait;
 	SprintEnd:
-		SMGF GFED 1 A_SetSprites("TNT1A0",1);
+		SMGF GFED 1;
 		Stop;
 	Deselect:
 		TNT1 A 0 A_EndAim();

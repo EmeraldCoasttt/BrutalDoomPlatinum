@@ -3,14 +3,13 @@ class BDP_Chainsaw : BDP_Weapon
 	override void DoSpriteStain()
 	{
 		super.DoSpriteStain();
-		if(!(CheckSprint() || owner.player.FindPSprite(49)))
+		if(!owner.player.FindPSprite(50))
 		{
 			StainSprites("AWB");
 			StainSprites("AWF");
 			StainSprites("AWG");
 			StainSprites("AWS");
 		}
-		StainSprites("AWS",49);
 		StainSprites("AWS",50);
 	}
 	
@@ -59,43 +58,15 @@ class BDP_Chainsaw : BDP_Weapon
 	FinishToss:
 		SAWS UTSR 1;
 		Goto Ready;
-	Kick: //18
-		SAWS VWXY 1;
-		SAWS [Z 2;
-		TNT1 A 0 {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,-10);}
-		SAWS [Z[ 2;
-		SAWS YXWV 1;
-		Goto Ready;
-	SlideKick: //25
-		SAWS VWXY 1;
-		SAWS [Z 2;
-		TNT1 A 0 {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,-10);}
-		SAWS [Z[Z 2;
-		TNT1 A 0 {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,-10);}
-		SAWS [Z 2;
-		SAWS [ 1;
-		SAWS YXWV 1;
-		Goto Ready;
-	Taunt: //30
-		SAWS VWXY 1;
-		SAWS [Z 2;
-		TNT1 A 0 {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,-10);}
-		SAWS [Z[Z 2;
-		TNT1 A 0 {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,-10);}
-		SAWS [Z[Z 2;
-		TNT1 A 0 {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,-10);}
-		SAWS [ 2;
-		SAWS YXWV 1;
-		Goto Ready;
 	Sprint:
-		SAWS VWXY 1 A_SetSprites("TNT1A0",1);
+		SAWS VWXY 1;
 	SprintLoop:
-		SAWS [[ZZ 1 A_SetSprites("TNT1A0",1);
+		SAWS [[ZZ 1;
 		TNT1 A 0 {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,-10);}
-		SAWS [[ZZ 1 A_SetSprites("TNT1A0",1);
+		SAWS [[ZZ 1;
 		Loop;
 	SprintEnd:
-		SAWS YXWV 1 A_SetSprites("TNT1A0",1);
+		SAWS YXWV 1;
 		Stop;
 	Select:
 		TNT1 A 1 {A_SetCrosshairDX("Null"); A_GiveInventory("HasCutingWeapon",1);}
@@ -114,6 +85,15 @@ class BDP_Chainsaw : BDP_Weapon
 		TNT1 A 1;
 		TNT1 A 0 A_Lower();
 		Wait;
+	Ready:
+		TNT1 A 0 {A_StopSound(1); if(!player.FindPSprite(50)) {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,0,5);}}
+		SAWG ABCDEFGG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		TNT1 A 0 A_JumpIf(invoker.bloodStain == 0,"Ready");
+		TNT1 A 0 {if(!player.FindPSprite(50)) {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,0,5);}}
+		1AWB ABCDEFGG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		TNT1 A 0 {if(!player.FindPSprite(50)) {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,0,5);}}
+		1AWB HIJKLMNN 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		Loop;
 	Fidget:
 		TNT1 A 0 A_StartSound("DSSAWZIP", 1);
 		SAWS A 3 A_WeaponReadyDX(0,false);
@@ -125,15 +105,6 @@ class BDP_Chainsaw : BDP_Weapon
 		TNT1 A 0 A_StartSound("weapons/chainsaw/draw", 3);
 		SAWS HIJKLM 1 A_WeaponReadyDX(0,false);
 		Goto Ready;
-	Ready:
-		TNT1 A 0 {A_StopSound(1); if(!invoker.CheckSprint()) {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,0,5);}}
-		SAWG ABCDEFGG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		TNT1 A 0 A_JumpIf(invoker.bloodStain == 0,"Ready");
-		TNT1 A 0 {if(!invoker.CheckSprint()) {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,0,5);}}
-		1AWB ABCDEFGG 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		TNT1 A 0 {if(!invoker.CheckSprint()) {A_StartSound("weapons/chainsaw/idle", 6); A_FireProjectile("SmokeSpawner",0,0,0,5);}}
-		1AWB HIJKLMNN 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		Loop;
 	Fire:
 		TNT1 A 0 A_StopSound(6);
 		TNT1 A 0 A_JumpIf(invoker.sideFired,"Fire2");

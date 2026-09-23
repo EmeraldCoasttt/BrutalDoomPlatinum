@@ -38,53 +38,6 @@ class BDP_Minigun : BDP_Weapon
 		CHAE A 0;
 		#### YZ[] 1;
 		Goto Ready;
-	Kick: //18
-		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
-		CHAE A 0;
-		#### A 0 A_JumpIf(invoker.spinning,"SpinKick");
-		#### HIJK 1;
-		#### L 10;
-		#### KJIH 1;
-		Goto Ready;
-	SpinKick: 
-		#### A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
-		#### MNOP 1;
-		#### QRSTQRSTQR 1;
-		#### A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
-		#### PONM 1;
-		TNT1 A 0 A_JumpIfInventory("BDP_Clip2",1,"Ready2");
-		Goto Ready2;
-	SlideKick: //25
-		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
-		CHAE A 0;
-		#### A 0 A_JumpIf(invoker.spinning,"SpinSlideKick");
-		#### HIJK 1;
-		#### L 17;
-		#### KJIH 1;
-		Goto Ready;
-	SpinSlideKick: 
-		#### A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
-		#### MNOP 1;
-		#### QRSTQRSTQRSTQRSTQ 1;
-		#### A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
-		#### PONM 1;
-		TNT1 A 0 A_JumpIfInventory("BDP_Clip2",1,"Ready2");
-		Goto Ready2;
-	Taunt: //30
-		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
-		CHAE A 0;
-		#### A 0 A_JumpIf(invoker.spinning,"SpinTaunt");
-		#### HIJK 1;
-		#### L 22;
-		#### KJIH 1;
-		Goto Ready;
-	SpinTaunt: 
-		#### A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
-		#### MNOP 1;
-		#### QRSTQRSTQRSTQRSTQRSTQR 1;
-		#### A 0 A_startsound("CHAINSPI",5,CHANF_LOOPING,0.5);
-		#### PONM 1;
-		Goto Ready2;
 	Sprint: 
 		CHAG A 0 A_JumpIfInventory("BDP_Clip2",1,2);
 		CHAE A 0;

@@ -44,35 +44,19 @@ CLASS BDP_Incinerator : BDP_Weapon
 	
 	States
 	{
-	TossItem: //8
+	TossItem:
 		FLMS EFGH 1;
 		TNT1 A 1;
 		Wait;
 	FinishToss:
 		FLMS HGFE 1;
 		Goto Ready;
-	Kick: //18
-		FLMK ABCD 1;
-		FLMK E 10;
-		FLMK DCBA 1;
-		Goto Ready;
-	SlideKick: //25
-		FLMK ABCD 1;
-		FLMK E 17;
-		FLMK DCBA 1;
-		Goto Ready;
-	Taunt: //30
-		FLMK ABCD 1;
-		FLMK E 22;
-		FLMK DCBA 1;
-		Goto Ready;
 	Sprint:
-		FLMK ABCD 1 A_SetSprites("TNT1A0",1);
-	SprintLoop:
-		FLMK E 1 A_SetSprites("TNT1A0",1);
-		Loop;
+		FLMK ABCD 1;
+		FLMK E 1;
+		Wait;
 	SprintEnd:
-		FLMK DCBA 1 A_SetSprites("TNT1A0",1);
+		FLMK DCBA 1;
 		Stop;
 	Ready:
 		FLMT ABC 1 A_weaponreadyDX(WRF_ALLOWRELOAD|WRF_NOSECONDARY);
@@ -350,18 +334,23 @@ class SmokeSpewer : Actor
 		Height 4;
 		Speed 40;
 		Gravity 0.3;
-		DamageFunction 0;
+		DamageFunction 20;
+		DamageType "Kick";
 		Projectile;
 		Scale 0.75;
-		BounceType "Doom";
 		BounceFactor 0.25;
 		WallBounceFactor 0.05;
 		BounceCount 2;
 		BounceSound "Weapons/GrenadeBounce";
 		DeathSound "Weapons/GrenadeBounce";
-		-NOGRAVITY
-		+FORCEXYBILLBOARD
+		+BOUNCEONWALLS
+		+BOUNCEONFLOORS
+		+BOUNCEONCEILINGS
+		+ALLOWBOUNCEONACTORS
+		+BOUNCEONACTORS
 		+CANBOUNCEWATER
+		+FORCEXYBILLBOARD
+		-NOGRAVITY
 	}
 	States
 	{

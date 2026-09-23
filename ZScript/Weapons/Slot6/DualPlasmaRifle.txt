@@ -49,22 +49,12 @@ class BDP_DualPlasmaRifle : BDP_Weapon
 		3UPR A 0;
 		2UPR A 0;
 		Stop;
-	TossItem: //30
+	TossItem:
 		TNT1 A 6 A_DrawDualOverlays("DeselectLeft", "DeselectRight");
 		TNT1 A 1;
 		Wait;
 	FinishToss:
 		TNT1 A 6 A_DrawDualOverlays("SelectLeft", "SelectRight");
-		Goto Ready;
-	Kick: //18
-		TNT1 A 4 A_DrawDualOverlays("KickLeft", "KickRight");
-		TNT1 A 10;
-		TNT1 A 4 A_DrawDualOverlays("KickLeftEnd", "KickRightEnd");
-		Goto Ready;
-	SlideKick: //25
-		TNT1 A 4 A_DrawDualOverlays("KickLeft", "KickRight");
-		TNT1 A 17;
-		TNT1 A 4 A_DrawDualOverlays("KickLeftEnd", "KickRightEnd");
 		Goto Ready;
 	Sprint:
 		TNT1 A 0 A_DrawDualOverlays("SprintLeft", "SprintRight");
@@ -76,20 +66,6 @@ class BDP_DualPlasmaRifle : BDP_Weapon
 		TNT1 A 0 A_DrawDualOverlays("SprintLeftEnd", "SprintRightEnd");
 		TNT1 A 4;
 		Stop;
-	KickLeft:
-		DUPL MNOP 1 A_LowSprites("3UPL", "3UPL", "2UPL", "DUPL");
-		DUPL Q 1 A_LowSprites("3UPL", "3UPL", "2UPL", "DUPL");
-		Wait;
-	KickLeftEnd:
-		DUPL PONM 1 A_LowSprites("3UPL", "3UPL", "2UPL", "DUPL");
-		Goto ReadyLeft;
-	KickRight:
-		DUPR MNOP 1 A_LowSprites("3UPR", "3UPR", "2UPR", "DUPR", true);
-		DUPR Q 1 A_LowSprites("3UPR", "3UPR", "2UPR", "DUPR", true);
-		Wait;
-	KickRightEnd:
-		DUPR PONM 1 A_LowSprites("3UPR", "3UPR", "2UPR", "DUPR", true);
-		Goto ReadyRight;
 	SprintLeft:
 		DUPL MNOP 1
 		{

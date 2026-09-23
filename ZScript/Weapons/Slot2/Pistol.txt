@@ -37,7 +37,7 @@ class BDP_Pistol : BDP_Weapon replaces Pistol
 		PIS2 GH 0;
 		PISD ABCDEFGHIJKLMNOPQRSTUVWXYZ 1;
 		Stop;
-	TossItem: //8
+	TossItem:
 		TNT1 A 0 A_EndAim();
 		TNT1 A 0 A_SetCrosshairDX("PISTRet", 1000);
 		PISB EFGH 1 A_SetSilencedSprites("PISB","PISD");
@@ -46,34 +46,18 @@ class BDP_Pistol : BDP_Weapon replaces Pistol
 	FinishToss:
 		PISB HGFE 1 A_SetSilencedSprites("PISB","PISD");
 		Goto Ready;
-	Kick: //18
-		TNT1 A 0 A_SetCrosshairDX("PISTRet", 1000);
-		PISK ABCD 1 A_SetSilencedSprites("PISK","S1LK");
-		PISK E 10 A_SetSilencedSprites("PISK","S1LK");
-		PISK DCBA 1 A_SetSilencedSprites("PISK","S1LK");
-		Goto Ready;
-	SlideKick: //25
-		TNT1 A 0 A_SetCrosshairDX("PISTRet", 1000);
-		PISK ABCD 1 A_SetSilencedSprites("PISK","S1LK");
-		PISK E 17 A_SetSilencedSprites("PISK","S1LK");
-		PISK DCBA 1 A_SetSilencedSprites("PISK","S1LK");
-		Goto Ready;
-	Taunt: //30
-		TNT1 A 0 A_EndAim();
-		TNT1 A 0 A_SetCrosshairDX("PISTRet", 1000);
-		PISK ABCD 1 A_SetSilencedSprites("PISK","S1LK");
-		PISK E 22 A_SetSilencedSprites("PISK","S1LK");
-		PISK DCBA 1 A_SetSilencedSprites("PISK","S1LK");
-		Goto Ready;
 	Sprint:
 		TNT1 A 0 A_SetCrosshairDX("PISTRet", 1000);
-		PISK ABCD 1 {A_SetSilencedSprites("PISK","S1LK"); A_SetSprites("TNT1A0",1);}
+		PISK ABCD 1 A_SetSilencedSprites("PISK","S1LK");
 	SprintLoop:
-		PISK E 1 {A_SetSilencedSprites("PISK","S1LK"); A_SetSprites("TNT1A0",1);}
+		PISK E 1 A_SetSilencedSprites("PISK","S1LK");
 		Loop;
 	SprintEnd:
-		PISK DCBA 1 {A_SetSilencedSprites("PISK","S1LK"); A_SetSprites("TNT1A0",1);}
+		PISK DCBA 1 A_SetSilencedSprites("PISK","S1LK");
 		Stop;
+	Ready:
+		PIS2 F 1 {A_SetSilencedSprites("PIS2","2ILE"); return A_WeaponReadyDX(WRF_ALLOWRELOAD);}
+		Loop;
 	LetsGetStarted:
 		TNT1 A 0 A_TakeInventory("NeverSelectedShotgun",1);
 		TNT1 A 0 A_SetCrosshairDX("Null");
@@ -107,9 +91,6 @@ class BDP_Pistol : BDP_Weapon replaces Pistol
 		PISB DCB 1 A_WeaponReadyDX(kicksprint:false);
 		TNT1 A 0 A_SetCrosshairDX("PISTRet", 1000);
 		Goto Ready;
-	Ready:
-		PIS2 F 1 {A_SetSilencedSprites("PIS2","2ILE"); return A_WeaponReadyDX(WRF_ALLOWRELOAD);}
-		Loop;
 	Fidget: //Yay, it's back!
 		TNT1 A 0 A_StartSound("PISTFOL4");
 		PISB BC 1 {A_SetSilencedSprites("PISB","PISD"); return A_WeaponReadyDX(0,false);}
@@ -140,9 +121,18 @@ class BDP_Pistol : BDP_Weapon replaces Pistol
 		Wait;
 	Select:
 		TNT1 A 0 A_JumpIfInventory("NeverSelectedShotgun",1,"LetsGetStarted");
-		TNT1 A 1 {A_SetCrosshairDX("PISTRet", 1000); A_GunslingerMag(1);}
+		TNT1 A 1
+		{
+			A_SetCrosshairDX("PISTRet", 1000);
+			A_GunslingerMag(1);
+			A_WeaponReady(WRF_NOFIRE);
+		}
 		TNT1 A 0 A_StartSound("PSRLIN");
-		PISB DCBA 1 A_SetSilencedSprites("PISB","PISD");
+		PISB DCBA 1
+		{
+			A_SetSilencedSprites("PISB","PISD");
+			A_WeaponReady(WRF_NOFIRE);
+		}
 		Goto Ready;
 	MuzzleFlash:
 		TNT1 A 0 A_Jump(128,"MuzzleFlash2","MuzzleFlash3");

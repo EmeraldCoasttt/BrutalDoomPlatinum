@@ -40,35 +40,19 @@ class BDP_GrenadeLauncher : BDP_Weapon
 	
 	States
 	{
-	TossItem: //8
+	TossItem:
 		GLSA EFGH 1;
 		TNT1 A 1;
 		Wait;
 	FinishToss:
 		GLSA HGFE 1;
 		Goto ReverseStrapIdle;
-	Kick: //18
-		GLAN BCDE 1;
-		GLAN F 10;
-		GLAN EDCB 1;
-		Goto ReverseStrapIdle;
-	SlideKick: //25
-		GLAN BCDE 1;
-		GLAN F 17;
-		GLAN EDCB 1;
-		Goto ReverseStrapIdle;
-	Taunt: //30
-		GLAN BCDE 1;
-		GLAN F 22;
-		GLAN EDCB 1;
-		Goto ReverseStrapIdle;
 	Sprint:
-		GLAN BCDE 1 A_SetSprites("TNT1A0",1);
-	SprintLoop:
-		GLAN F 1 A_SetSprites("TNT1A0",1);
-		Loop;
+		GLAN BCDE 1;
+		GLAN F 1;
+		Wait;
 	SprintEnd:
-		GLAN EDCB 1 A_SetSprites("TNT1A0",1);
+		GLAN EDCB 1;
 		TNT1 A 0 {player.SetPSprite(1,resolvestate("ReverseStrapIdle"));}
 		Stop;
 	StrapIdle:
