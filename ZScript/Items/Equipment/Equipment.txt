@@ -7,6 +7,7 @@ class BDP_Equipment : Inventory abstract
 		BDP_Equipment.Charges 1;
 		+INVENTORY.AUTOACTIVATE
 		+BDP_EQUIPMENT.ACTIVE
+		BDP_Equipment.ReadySound "items/equipment/recharged";
 	}
 	
 	int EquipFlags;
@@ -26,6 +27,9 @@ class BDP_Equipment : Inventory abstract
 	
 	int charges;
 	property Charges : charges;
+	
+	string ReadySound;
+	Property ReadySound : Readysound;
 	
 	void TriggerCooldown(bool force = false)
 	{
@@ -64,9 +68,7 @@ class BDP_Equipment : Inventory abstract
 			charges++;
 			if(owner)
 			{
-				owner.A_StartSound("items/equipment/recharged", 0);
-				owner.A_StartSound("items/equipment/recharged", 0);
-				owner.A_StartSound("items/equipment/recharged", 0);
+				owner.A_StartSound(READYSOUND, 207);
 			}
 			if(charges < default.charges && !bCooldownNotTimer)
 				cooldown = maxCooldown * TICRATE;
