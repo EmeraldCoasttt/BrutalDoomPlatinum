@@ -194,6 +194,11 @@ DHINT37 = "The assault rifle is perfect for grenade jumping.";
 DHINT38 = "Jumping as soon as you land preserves your momentum.";
 DHINT39 = "The revolver is perfectly accurate, if you can manage its recoil.";
 DHINT40 = "Slidejumping is more effective the closer to the end of the slide you are.";
+DHINT41 = "Your meathook can be severed, flinging you in the direction you were travelling.";
+DHINT42 = "The dimensional tether notifies you when an enemy will be telefragged by your return.";
+DHINT43 = "Dropping a backpack will cause any excess ammo to be stored inside it.";
+DHINT44 = "The revenant launchers can target up to 10 different enemies per attack.";
+
 
 //nashgore
 OPTMNU_NASHGORE = "Customize NashGore NEXT";

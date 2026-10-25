@@ -44,6 +44,15 @@ class BDP_Zombieguy : BDP_Actor
 		ZFOD L 5;
 		ZFOD M -1;
 		Stop;
+	Death.Decapitate:
+		TNT1 A 0
+		{
+			A_XScream();
+			A_NoBlocking();
+			A_FaceTarget();
+			A_SpawnGore("ZombieguyDecapitation",5);
+		}
+		Goto FallHeadless;
 	Death.head:
 		TNT1 A 0
 		{
@@ -52,6 +61,8 @@ class BDP_Zombieguy : BDP_Actor
 			A_FaceTarget();
 			A_SpawnGore("ZombieHeadExplosion",5);
 		}
+		Goto FallHeadless;
+	FallHeadless:
 		ZFDX A 7;
 		ZFDX B 7;
 		ZFDX C 5;
@@ -59,6 +70,8 @@ class BDP_Zombieguy : BDP_Actor
 		ZFDX E -1;
 		Stop;
 	XDeath:
+	Death.ExplosiveImpact:
+	Death.SSG:
 		ZFOD N 5;
 		ZFOD O 5 A_XScream();
 		ZFOD P 5 A_NoBlocking();

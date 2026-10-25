@@ -64,6 +64,16 @@ class ZombieHeadExplosion : BDP_GoreGroup
 	}
 }
 
+class ZombieguyDecapitation : BDP_GoreGroup
+{
+	override void SetGoreGroups()
+	{
+		AddGoreActor("BDP_ZombieguyHeadGib",0,0,48,random(-170, -190),random(-25,-45));
+		AddGoreActor("Blood",0,0,48,random(0,359),random(0,-180));
+		AddGoreActor("NashGoreBloodSpurt",0,0,48,random(0,359),random(0,-180));
+	}
+}
+
 /*class TestGoreGroup : BDP_GoreGroup
 {
 	override void SetGoreGroups()
@@ -103,6 +113,18 @@ class BDP_BaseGib : NashGoreGibs
 		BDP_BaseGib.CanStretch false;
 		BDP_BaseGib.BloodSplashes true;
 	}
+	
+	action void A_SpawnGore(class<BDP_GoreGroup> group, double velocity, double xposmult = 1.0, double yposmult = 1.0, double zposmult = 1.0)
+	{
+		BDP_GoreGroup g = BDP_GoreGroup.Create(group);
+		for(int i = 0; i < g.actors.size(); i++)
+		{
+			let [result,actor] = A_SpawnItemEx(g.actors[i],g.xpos[i] * xposmult,g.ypos[i] * yposmult,g.zpos[i] * zposmult);
+			if(g.flipsprite[i] > -1) actor.bSPRITEFLIP = g.flipsprite[i];
+			actor.Vel3DFromAngle(velocity * frandom(0.8,1.2), angle + g.angle[i], g.pitch[i]);
+		}
+	}
+	
 	States
 	{
 	Bounce.Floor:
@@ -331,6 +353,24 @@ class BDP_ZombiemanFootGib : BDP_BaseGib
 		Goto SpawnLoop;
 	}
 }
+
+class BDP_ZombieguyHeadGib : BDP_ShootableGib
+{
+	States
+	{
+	Spawn:
+		ZFHD A 0;
+		Goto SpawnLoop;
+	RealDeath:
+		TNT1 A -1
+		{
+			A_StartSound("misc/xdeath5");
+			A_SpawnGore("ZombieHeadExplosion", 5, zposmult:0.2);
+		}
+		Stop;
+	}
+}
+
 
 	Class BDP_CorpseInventory : inventory
 	{

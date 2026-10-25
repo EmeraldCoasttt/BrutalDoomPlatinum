@@ -86,6 +86,7 @@ CLASS BDP_Headshot : ACTOR
 		
 	
 	damagetypetoactor = damagetypex;
+	if(damagetype == "Cut" || damagetype == "ExtremePunches") damagetypetoactor = "Decapitate";
 		If(damagetype == "precise" || damagetype == "railgun" || damagetype == "Revolver" || damagetype == "Pistol")
 		{
 			damagetoactor = (damage * 2.0);

@@ -8,7 +8,7 @@ ACTOR BDP_Player : BDP_PlayerPawn Replaces DoomPlayer //PlayerPawn Replaces Doom
 	Height 56
 	Mass 130
     player.viewheight 44
-    player.attackzoffset 17
+    player.attackzoffset 16
     GibHealth 20
 	PainChance 255
 	painchance "blackhole", 25

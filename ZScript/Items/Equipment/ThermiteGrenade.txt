@@ -93,7 +93,8 @@ class FireGrenade : Actor
 		Height 4;
 		Speed 30;
 		Gravity 0.7;
-		DamageFunction 0;
+		DamageFunction 20;
+		DamageType "Kick";
 		Projectile;
 		Scale 0.75;
 		BounceFactor 0.60;
