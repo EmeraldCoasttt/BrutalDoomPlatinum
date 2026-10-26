@@ -92,7 +92,8 @@ class BDP_DualRevolver : BDP_Weapon
 			else
 				return A_CheckIfMag();
 		}
-		RFDF C 1 A_StartSound("REVFIRE1");
+		RE3F A 1 A_StartSound("REVFIRE1");
+		RE3F B 1;
 		RFDF B 1 BRIGHT
 		{
 			if(OverlayID() == 3)
