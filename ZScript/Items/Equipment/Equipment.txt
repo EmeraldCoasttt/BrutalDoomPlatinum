@@ -86,6 +86,11 @@ class BDP_Equipment : Inventory abstract
 		}
 	}
 	
+	override void PlayPickupSound(Actor toucher)
+	{
+		toucher.A_StartSound(PickupSound, 666);
+	}
+	
 	void ReleaseEquipment()
 	{
 		if(holding && charges && bActive)

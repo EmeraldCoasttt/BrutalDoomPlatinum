@@ -205,6 +205,9 @@ mixin class BDP_ScoreMixin
 	int extraLives;
 	property ExtraLives : extraLives;
 	
+	int pickupChannel;
+	property PickupChannel : pickupChannel;
+	
 	override bool TryPickup(in out Actor toucher)
 	{
 		if(super.TryPickup(toucher))
@@ -225,7 +228,7 @@ mixin class BDP_ScoreMixin
 		{
 			if(bdp_active_modifiers & Modifier_OneUpmanship) PickupSound = "1UP";
 		}
-		super.PlayPickupSound(toucher);
+		toucher.A_StartSound(PickupSound, pickupChannel ? pickupChannel : CHAN_ITEM);
 	}
 }
 

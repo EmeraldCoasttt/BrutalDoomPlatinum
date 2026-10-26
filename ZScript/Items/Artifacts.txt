@@ -8,6 +8,7 @@ class BDP_AllMap : Inventory replaces Allmap
 		Inventory.PickupMessage "$GOTMAP";
 		Inventory.PickupSound "items/computermap";
 		BDP_AllMap.ScoreAmount 500;
+		BDP_AllMap.PickupChannel 667;
 		+COUNTITEM
 		+BRIGHT
 		+INVENTORY.ALWAYSPICKUP
@@ -54,6 +55,7 @@ class BDP_InvulnerabilitySphere  : PowerupGiver Replaces InvulnerabilitySphere
 		Inventory.PickupMessage "$GOTINVUL";
 		Tag "Invulnerability";
 		BDP_InvulnerabilitySphere.ScoreAmount 500;
+		BDP_InvulnerabilitySphere.PickupChannel 668;
 		+COUNTITEM
 		+FLOATBOB
 		+FORCEXYBILLBOARD
@@ -119,6 +121,7 @@ class BDP_Soulsphere : Inventory Replaces SoulSphere
 		Tag "Soulsphere";
 		BDP_Soulsphere.ScoreAmount 500;
 		BDP_Soulsphere.ExtraLives 1;
+		BDP_Soulsphere.PickupChannel 669;
 		+COUNTITEM
 		+FLOATBOB
 		+FORCEXYBILLBOARD
@@ -162,6 +165,7 @@ class BDP_Megasphere : Inventory replaces Megasphere
 		Tag "Megasphere";
 		BDP_Megasphere.ScoreAmount 500;
 		BDP_Megasphere.ExtraLives 3;
+		BDP_Megasphere.PickupChannel 669;
 	}
 	
 	mixin BDP_ScoreMixin;
@@ -199,6 +203,7 @@ class BDP_NightVision : Inventory replaces Infrared
 		Inventory.PickupMessage "$GOTVISOR";
 		Inventory.PickupSound "items/nightvision";
 		BDP_NightVision.ScoreAmount 500;
+		BDP_NightVision.PickupChannel 670;
 	}
 	
 	mixin BDP_ScoreMixin;
@@ -290,6 +295,7 @@ class BDP_Blursphere : PowerupGiver replaces Blursphere
 		RenderStyle "Translucent";
 		Inventory.PickupSound "INVISON";
 		BDP_Blursphere.ScoreAmount 500;
+		BDP_Blursphere.PickupChannel 671;
 	}
 	
 	mixin BDP_ScoreMixin;
@@ -538,6 +544,7 @@ class BDP_QuadDamage : PowerupGiver
 		powerup.duration -30;
 		powerup.type "BDP_PowerQuadDamage";
 		BDP_QuadDamage.ScoreAmount 500;
+		BDP_QuadDamage.PickupChannel 672;
 	}
 	
 	mixin BDP_ScoreMixin;
@@ -598,6 +605,7 @@ class BDP_HasteSphere : PowerUpGiver
 		powerup.duration -30;
 		powerup.type "BDP_PowerSpeed";
 		BDP_HasteSphere.ScoreAmount 500;
+		BDP_HasteSphere.PickupChannel 673;
 	}
 	
 	mixin BDP_ScoreMixin;
@@ -656,6 +664,7 @@ class BDP_RadSuit : PowerupGiver replaces RadSuit
 		Powerup.Type "PowerIronFeet";
 		Powerup.Color "None";
 		BDP_RadSuit.ScoreAmount 500;
+		BDP_RadSuit.PickupChannel 674;
 	}
 	
 	mixin BDP_ScoreMixin;
@@ -687,6 +696,7 @@ class BDP_RageSphere : PowerupGiver
 		Tag "Rage Sphere";
 		Inventory.PickupSound "RAGEPUP";
 		BDP_RageSphere.ScoreAmount 500;
+		BDP_RageSphere.PickupChannel 675;
 	}
 	
 	mixin BDP_ScoreMixin;
