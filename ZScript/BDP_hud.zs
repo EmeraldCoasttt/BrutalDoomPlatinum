@@ -845,7 +845,7 @@ class BDP_HUD : DoomStatusBar
 			labelPos.y += Ystep;
 			
 			DrawString(fnt, "Items:", labelPos, flags2, Font.CR_White);
-			DrawString(fnt, String.Format("%d/%d", Level.found_items, Level.total_secrets), pos, flags2, Font.CR_White);
+			DrawString(fnt, String.Format("%d/%d", Level.found_items, Level.total_items), pos, flags2, Font.CR_White);
 			pos.y += Ystep;
 			labelPos.y += Ystep;
 			
