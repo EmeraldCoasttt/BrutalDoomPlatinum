@@ -1900,6 +1900,7 @@ ACTOR BDECGrateBar : BDdecorationBase2
 	+SOLID
 	+GHOST
 	+THRUGHOST
+	+WALLSPRITE
 	Mass 99999999
 	States
 	{
@@ -1955,6 +1956,7 @@ ACTOR BDECGrateBarDS : BDdecorationBase2
 	+GHOST
 	+THRUGHOST
 	-ACTLIKEBRIDGE
+	+WALLSPRITE
 	Mass 99999999
 	States
 	{
