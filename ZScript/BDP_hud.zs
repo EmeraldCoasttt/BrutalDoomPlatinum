@@ -818,49 +818,55 @@ class BDP_HUD : DoomStatusBar
 	
 	void DrawTopRight(HudFont fnt, vector2 basePos = (-4, 1))
 	{
-		int flags = DI_SCREEN_RIGHT_TOP|DI_TEXT_ALIGN_RIGHT;
+		int flags = DI_SCREEN_RIGHT_TOP|DI_TEXT_ALIGN_LEFT;
+		int flags2 = DI_SCREEN_RIGHT_TOP|DI_TEXT_ALIGN_RIGHT;
 		vector2 pos = basePos;
+		vector2 labelPos = (basePos.x - 60, pos.y);
 		double Ystep = fnt.mFont.GetHeight();
 		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(Cplayer.mo);
 		If(BDPplr && bdp_active_modifiers & Modifier_ScoreMaster)
 		{
-			DrawString(
-			fnt, 
-			String.Format("Score: %d", Cplayer.mo.score), 
-			pos,
-			flags,
-			Font.CR_White
-			);
+			DrawString(fnt, "Score:", labelPos, flags2, Font.CR_White);
+			DrawString(fnt, String.Format("%d", Cplayer.mo.score), pos, flags2, Font.CR_White);
 			pos.y += Ystep;
+			labelPos.y += Ystep;
 		}
 		if (deathmatch)
 		{
-			DrawString(
-				fnt, 
-				String.Format("Frags: %d", CPlayer.fragcount), 
-				pos,
-				flags,
-				Font.CR_DarkRed
-			);
+			DrawString(fnt, "Frags:", labelPos, flags2, Font.CR_DarkRed);
+			DrawString(fnt, String.Format("%d", Cplayer.fragcount), pos, flags2, Font.CR_DarkRed);
 			pos.y += Ystep;
+			labelPos.y += Ystep;
 		}
-		
-		DrawString(
-			fnt, 
-			String.Format("Kills: %d/%d", Level.killed_monsters, Level.total_monsters), 
-			pos,
-			flags,
-			Font.CR_White
-		);
-		pos.y += Ystep;
-		
-		DrawString(
-			fnt, 
-			String.Format("Secrets: %d/%d", Level.found_secrets, Level.total_secrets), 
-			pos,
-			flags,
-			Font.CR_White
-		);
+		if(bdp_active_modifiers & Modifier_MaximumOverdrive) {
+			DrawString(fnt, "Kills:", labelPos, flags2, Font.CR_White);
+			DrawString(fnt, String.Format("%d/%d", Level.killed_monsters, Level.total_monsters), pos, flags2, Font.CR_White);
+			pos.y += Ystep;
+			labelPos.y += Ystep;
+			
+			DrawString(fnt, "Items:", labelPos, flags2, Font.CR_White);
+			DrawString(fnt, String.Format("%d/%d", Level.found_items, Level.total_secrets), pos, flags2, Font.CR_White);
+			pos.y += Ystep;
+			labelPos.y += Ystep;
+			
+			DrawString(fnt, "Secrets:", labelPos, flags2, Font.CR_White);
+			DrawString(fnt, String.Format("%d/%d", Level.found_secrets, Level.total_secrets), pos, flags2, Font.CR_White);
+			pos.y += Ystep;
+			labelPos.y += Ystep;
+			
+			int currentTime = Thinker.Tics2Seconds(Level.Time);
+			int totalTime = Thinker.Tics2Seconds(Level.TotalTime);
+			
+			DrawString(fnt, "Time:", labelPos, flags2, Font.CR_White);
+			DrawString(fnt, String.Format("%02d:%02d:%02d", currentTime / 3600, currentTime % 3600 / 60, currentTime % 60), pos, flags2, Font.CR_White);
+			pos.y += Ystep;
+			labelPos.y += Ystep;
+			
+			DrawString(fnt, "Total:", labelPos, flags2, Font.CR_White);
+			DrawString(fnt, String.Format("%02d:%02d:%02d", totalTime / 3600, totalTime % 3600 / 60, totalTime % 60), pos, flags2, Font.CR_White);
+			pos.y += Ystep;
+			labelPos.y += Ystep;
+		}
 		pos.y += Ystep;
 		DrawKeys((-4, pos.y), DI_SCREEN_RIGHT_TOP|DI_ITEM_RIGHT_TOP, (8,8));
 	}
