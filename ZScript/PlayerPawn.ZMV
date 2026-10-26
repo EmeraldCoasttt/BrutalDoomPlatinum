@@ -2109,9 +2109,11 @@ class BDP_PlayerPawn : PlayerPawn
 			{
 				BDP_DoorBuster.DestroyDoor(self,  breakLocks: BDP_DoorBuster.LB_CheckKey);
 			}
-			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,VectorAngle(vel.xy)-angle,SXF_ABSOLUTEVELOCITY);
-			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,VectorAngle(vel.xy)-angle,SXF_ABSOLUTEVELOCITY);
-			a_spawnitemex("Speedline",140,frandom(40,-40),frandom(0,80),vel.x,vel.y,vel.z,VectorAngle(vel.xy)-angle,SXF_ABSOLUTEVELOCITY);
+			
+			double lineOfs = cos(angle - VectorAngle(vel.xy)) / 2 + 0.5;
+			
+			for(int i = 0; i < 12; i++)
+				a_spawnitemex("Speedline",140 * lineOfs,frandom(160,-160),frandom(0,80),vel.x,vel.y,vel.z,0,SXF_ABSOLUTEVELOCITY|SXF_SETMASTER);
 			
 			Actor speedMo = Spawn("PlayerSpeedTrail", Pos, NO_REPLACE);
 			if (speedMo)
@@ -3291,7 +3293,10 @@ Class Speedline : Actor
 	States
 	{
 		Spawn:
-			TNT1 A 0 NODELAY A_recoil(30);
+			TNT1 A 0 NODELAY {
+				angle = VectorAngle(master.vel.xy);
+				A_recoil(30);
+			}
 			TRAC A 5;
 			Spawn2:
 			TRAC A 1 A_FadeOut(0.10);
