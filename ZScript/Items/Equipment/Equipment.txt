@@ -131,7 +131,6 @@ class BDP_BackpackSpawner : RandomSpawner replaces Backpack
 	{
 		DropItem "BDP_Backpack", 255, 1;
 		DropItem "BDP_BoosterFrame", 255, 1;
-		DropItem "BDP_DarkClaw", 255, 1;
 		DropItem "BDP_EnergyArmor", 255, 1;
 		DropItem "BDP_FragGrenade", 255, 1;
 		DropItem "BDP_FreezerBot", 255, 1;
