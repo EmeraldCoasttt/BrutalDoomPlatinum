@@ -34,6 +34,8 @@ class BDP_Pistol : BDP_Weapon replaces Pistol
 		2ILE ABCDEFGH 0;
 		SILR ABCDEFGHIJKLMNOPQRSTUVWXYZ 0;
 		2ILR ABCDEFGHIJKLM 0;
+		5ILR A 0;
+		6ILR A 0;
 		PIS2 GH 0;
 		PISD ABCDEFGHIJKLMNOPQRSTUVWXYZ 1;
 		Stop;
@@ -219,6 +221,26 @@ class BDP_Pistol : BDP_Weapon replaces Pistol
 		TNT1 A 0 A_EndAim();
 		TNT1 A 0 A_StartSound("reload");
 		TNT1 A 0 A_StartSound("PISTFOL4",10);
+		TNT1 A 0 A_JumpIf(invoker.mag < 1, "EmptyReload");
+		PISB BCD 1 A_SetSilencedSprites("PISB","PISD");
+		PI5R ABCDEFGH 1 A_SetSilencedSprites("PI5R","5ILR");
+		TNT1 A 0 A_StartSound("prel");
+		TNT1 A 0
+		{
+			let spentmag = BDP_SpentMag(A_FireProjectileDX("BDP_SpentPistolMag",random(75,85),random(65,75),2,20,-24));
+			if(spentmag)
+				spentmag.ammo = invoker.mag;
+		}
+		TNT1 A 0 A_DiscardMag(1);
+		PI5R IJKLMNOPQRSTUVWXYZ 1 A_SetSilencedSprites("PI5R","5ILR");
+		TNT1 A 0 A_ReloadMag(1);
+		PI6R ABC 1 A_SetSilencedSprites("PI6R","6ILR");
+		TNT1 A 0 A_StopSound(4);
+		PI6R DEF 1 A_SetSilencedSprites("PI6R","6ILR");
+		TNT1 A 0 A_StartSound("PISTFOL5",10);
+		PISB CB 1 A_SetSilencedSprites("PISB","PISD");
+		Goto Ready;
+	EmptyReload:
 		PISB BCD 1 A_SetSilencedSprites("PISB","PISD");
 		PISR ABCDEFGH 1 A_SetSilencedSprites("PISR","SILR");
 		TNT1 A 0 A_StartSound("prel");
@@ -230,9 +252,9 @@ class BDP_Pistol : BDP_Weapon replaces Pistol
 		}
 		TNT1 A 0 A_DiscardMag(1);
 		PISR IJKLMNOPQRSTUVWXYZ 1 A_SetSilencedSprites("PISR","SILR");
+		TNT1 A 0 A_ReloadMag(0);
 		PI2R ABCDEFGHI 1 A_SetSilencedSprites("PI2R","2ILR");
 		TNT1 A 0 A_StartSound("PISTFOL5",10);
-		TNT1 A 0 A_ReloadMag(1);
 		PI2R JKLM 1 A_SetSilencedSprites("PI2R","2ILR");
 		PISB CB 1 A_SetSilencedSprites("PISB","PISD");
 		Goto Ready;
