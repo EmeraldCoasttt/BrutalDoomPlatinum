@@ -70,7 +70,7 @@ class BDP_InvulnerabilitySphere  : PowerupGiver Replaces InvulnerabilitySphere
 	States
 	{
 	Spawn:
-		PINV A 0 NoDelay A_StartSound("POWERHUM", flags:CHANF_LOOPING, 0.25);
+		PINV A 0 NoDelay A_StartSound("INVULHUM", flags:CHANF_LOOPING);
 	SpawnLoop:
 		PINV AAABBBCCCDDD 2 A_SpawnItemEx("GreenFlareMedium", zofs:20);
 		Loop;
