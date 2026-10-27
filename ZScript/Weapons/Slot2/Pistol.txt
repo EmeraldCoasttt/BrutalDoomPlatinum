@@ -105,7 +105,7 @@ class BDP_Pistol : BDP_Weapon replaces Pistol
 	FidgetLoop:
 		PTFP G 2 {A_SetSilencedSprites("PTFP","SILI"); return A_WeaponReadyDX(WRF_ALLOWRELOAD,false,fidgetstate:"FidgetLoop");}
 		PTFP H 1 {A_SetSilencedSprites("PTFP","SILI"); return A_WeaponReadyDX(0,false);}
-		PI2R E 2 {A_SetSilencedSprites("PI2R","2ILR"); return A_WeaponReadyDX(0,false);}
+		PTFP I 2 {A_SetSilencedSprites("PI2R","2ILR"); return A_WeaponReadyDX(0,false);}
 		TNT1 A 0 A_StartSound("foley/PistolSlideForward", 1);
 		PI2R F 1 {A_SetSilencedSprites("PI2R","2ILR"); A_WeaponReadyDX(WRF_ALLOWRELOAD,false,fidgetstate:"SpamFidget");}
 		PI2R G 1 {A_SetSilencedSprites("PI2R","2ILR"); A_WeaponReadyDX(WRF_ALLOWRELOAD,false,fidgetstate:"SpamFidget");}
