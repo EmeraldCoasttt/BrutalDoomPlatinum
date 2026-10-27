@@ -6,6 +6,7 @@ class BDP_EnergyArmor : BDP_Equipment
 		Inventory.Icon "ARM3C0";
 		Inventory.PickupMessage "Picked up the energy shield!";
 		Inventory.PickupSound "items/energyshield";
+		BDP_Equipment.ReadySound "NULL";
 		BDP_Equipment.Cooldown 6;
 		-BDP_EQUIPMENT.ACTIVE
 		+BDP_EQUIPMENT.NOICON
