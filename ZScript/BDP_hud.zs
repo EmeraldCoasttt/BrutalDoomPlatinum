@@ -6,6 +6,7 @@ class BDP_HUD : DoomStatusBar
 	HUDFont mIndexfnt;
 	HUDFont mSmallFont;
 	HUDFont mSmallFontNS;
+	HUDFont mSmallFontMonoNS;
 	HUDFont mConfont;
 	HUDFont mDiginumber;
 	HUDFont weapPromptFnt;
@@ -32,6 +33,7 @@ class BDP_HUD : DoomStatusBar
 		mSmallFont = HUDFont.Create(fnt, 0, false, 1, 1);
 		// Smallfont without shadow:
 		mSmallFontNS = HUDFont.Create(fnt, 0, false);
+		mSmallFontMonoNS = HUDFont.Create(fnt, fnt.GetCharWidth("0"), Mono_CellLeft);
 		// Confont:
 		fnt = "CONFONT";
 		mConfont = HUDFont.Create(fnt, 0, false, 0, 1);
@@ -828,7 +830,9 @@ class BDP_HUD : DoomStatusBar
 		int currentTime = Thinker.Tics2Seconds(Level.Time);
 			
 			DrawString(fnt, "Time:", labelPos, flags2, Font.CR_White);
-			DrawString(fnt, String.Format("%02d:%02d:%02d", currentTime / 3600, currentTime % 3600 / 60, currentTime % 60), pos, flags2, Font.CR_White);
+			DrawString(mSmallFontMonoNS, String.Format("%02d:", currentTime / 3600), (pos.x - 31, pos.y), flags2, Font.CR_White);
+			DrawString(mSmallFontMonoNS, String.Format("%02d:", currentTime % 3600 / 60), (pos.x - 11, pos.y), flags2, Font.CR_White);
+			DrawString(mSmallFontMonoNS, String.Format("%02d", currentTime % 60), (pos.x + 1, pos.y), flags2, Font.CR_White);
 			pos.y += Ystep;
 			labelPos.y += Ystep;
 		
