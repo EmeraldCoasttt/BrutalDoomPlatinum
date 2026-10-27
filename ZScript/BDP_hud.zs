@@ -824,6 +824,15 @@ class BDP_HUD : DoomStatusBar
 		vector2 labelPos = (basePos.x - 60, pos.y);
 		double Ystep = fnt.mFont.GetHeight();
 		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(Cplayer.mo);
+		if(bdp_active_modifiers & Modifier_MaximumOverdrive) {
+		int currentTime = Thinker.Tics2Seconds(Level.Time);
+			
+			DrawString(fnt, "Time:", labelPos, flags2, Font.CR_White);
+			DrawString(fnt, String.Format("%02d:%02d:%02d", currentTime / 3600, currentTime % 3600 / 60, currentTime % 60), pos, flags2, Font.CR_White);
+			pos.y += Ystep;
+			labelPos.y += Ystep;
+		
+		}
 		If(BDPplr && bdp_active_modifiers & Modifier_ScoreMaster)
 		{
 			DrawString(fnt, "Score:", labelPos, flags2, Font.CR_White);
@@ -839,13 +848,10 @@ class BDP_HUD : DoomStatusBar
 			labelPos.y += Ystep;
 		}
 		if(bdp_active_modifiers & Modifier_MaximumOverdrive) {
+		
+		
 			DrawString(fnt, "Kills:", labelPos, flags2, Font.CR_White);
 			DrawString(fnt, String.Format("%d/%d", Level.killed_monsters, Level.total_monsters), pos, flags2, Font.CR_White);
-			pos.y += Ystep;
-			labelPos.y += Ystep;
-			
-			DrawString(fnt, "Items:", labelPos, flags2, Font.CR_White);
-			DrawString(fnt, String.Format("%d/%d", Level.found_items, Level.total_items), pos, flags2, Font.CR_White);
 			pos.y += Ystep;
 			labelPos.y += Ystep;
 			
@@ -854,20 +860,11 @@ class BDP_HUD : DoomStatusBar
 			pos.y += Ystep;
 			labelPos.y += Ystep;
 			
-			int currentTime = Thinker.Tics2Seconds(Level.Time);
-			int totalTime = Thinker.Tics2Seconds(Level.TotalTime);
 			
-			DrawString(fnt, "Time:", labelPos, flags2, Font.CR_White);
-			DrawString(fnt, String.Format("%02d:%02d:%02d", currentTime / 3600, currentTime % 3600 / 60, currentTime % 60), pos, flags2, Font.CR_White);
-			pos.y += Ystep;
-			labelPos.y += Ystep;
 			
-			DrawString(fnt, "Total:", labelPos, flags2, Font.CR_White);
-			DrawString(fnt, String.Format("%02d:%02d:%02d", totalTime / 3600, totalTime % 3600 / 60, totalTime % 60), pos, flags2, Font.CR_White);
-			pos.y += Ystep;
-			labelPos.y += Ystep;
+			
 		}
-		pos.y += Ystep;
+		//pos.y += Ystep;
 		DrawKeys((-4, pos.y), DI_SCREEN_RIGHT_TOP|DI_ITEM_RIGHT_TOP, (8,8));
 	}
 	
