@@ -7,7 +7,7 @@ class BDP_HologramProjector : BDP_Equipment
 		Inventory.PickupSound "HOLOBEP3";
 		BDP_Equipment.ReadySound "HOLOBEP3";
 		BDP_Equipment.Cooldown 15;
-		Inventory.Icon "HOLOA0";
+		Inventory.Icon "HOLOE0";
 		Scale 0.5;
 	}
 	
@@ -73,8 +73,8 @@ class BDP_HologramProjector : BDP_Equipment
 	States
 	{
 	Spawn:
-		HOLO A -1;
-		Stop;
+		HOLO ABCD 3;
+		Loop;
 	}
 }
 

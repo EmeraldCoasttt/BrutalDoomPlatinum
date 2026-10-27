@@ -8,6 +8,7 @@ class BDP_Equipment : Inventory abstract
 		+INVENTORY.AUTOACTIVATE
 		+BDP_EQUIPMENT.ACTIVE
 		BDP_Equipment.ReadySound "items/equipment/recharged";
+		+FORCEXYBILLBOARD
 	}
 	
 	int EquipFlags;
