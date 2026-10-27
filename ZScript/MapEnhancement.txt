@@ -1476,6 +1476,16 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					}
 					ClearSectorTags(1);
 					OffsetSectorPlane(2, Sector.floor, -8);
+					SetThingEdNum(43, 26999);
+					SetThingSkills(57, 0);
+					SetThingSkills(58, 0);
+					SetThingSkills(59, 0);
+					SetThingSkills(72, 0);
+					SetThingSkills(93, 0);
+					SetThingSkills(94, 0);
+					SetThingSkills(95, 0);
+					SetThingSkills(96, 0);
+					SetThingSkills(97, 0);
 				}
 				Break;
 
