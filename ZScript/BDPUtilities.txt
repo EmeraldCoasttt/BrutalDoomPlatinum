@@ -766,9 +766,17 @@
 					console.printf("Modifier Spawned!");
 				}
 			}
-	
+		
+			if(e.thing && e.thing.bBOSSDEATH && level.GetChecksum().MakeLower() == '291f24417fb3dd411339ae82ef9b3597') {
+				if(level.killed_monsters == level.total_monsters - 1) {
+					for(int i = 180; i < 184; i++)
+					{
+						level.Lines[i].flags &= ~Line.ML_BLOCK_PLAYERS;
+						level.Lines[i].sidedef[Line.front].SetTexture(Side.mid, TexMan.CheckForTexture(""));
+					}
+				}
+			}
 		}
-	
 	}
 	
 	
