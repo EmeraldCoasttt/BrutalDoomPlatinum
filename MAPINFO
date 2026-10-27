@@ -48,6 +48,7 @@ DoomEdNums
 	3134 = BDP_BattleRifle
 	5462 = BDP_Turret
 	25869 = BDP_EnergyArmor
+	26999 = BDP_Backpack
 	
 	25943 = BDP_Zombieguy
 	25942 = BDP_NightmareSpectre

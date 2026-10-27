@@ -1468,10 +1468,24 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(15848, (-1632, -736, -999), 0);
 					AddThing(11009, (-960, -736, -999), 0);
 					AddThing(11008, (-320, 256, -999), 0);
-					AddThing(25896, (-720, -160, -999), 0);
-					AddThing(25896, (-608, -272, -999), 90);
-					AddThing(25896, (-608, -48, -999), 90);
-					AddThing(25896, (-496, -160, -999), 0);
+					for(int i = 180; i < 184; i++)
+					{
+						SetWallTexture(i, Line.front, Side.mid, "FIREBLU1");
+						Level.Lines[i].alpha = 0.5;
+						SetLineFlags(i, Line.ML_BLOCK_PLAYERS);
+					}
+					ClearSectorTags(1);
+					OffsetSectorPlane(2, Sector.floor, -8);
+					SetThingEdNum(43, 26999);
+					SetThingSkills(57, 0);
+					SetThingSkills(58, 0);
+					SetThingSkills(59, 0);
+					SetThingSkills(72, 0);
+					SetThingSkills(93, 0);
+					SetThingSkills(94, 0);
+					SetThingSkills(95, 0);
+					SetThingSkills(96, 0);
+					SetThingSkills(97, 0);
 				}
 				Break;
 
