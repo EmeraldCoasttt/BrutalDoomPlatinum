@@ -4,8 +4,9 @@ class BDP_HologramProjector : BDP_Equipment
 	{
 		Tag "Hologram Projector";
 		Inventory.PickupMessage "Picked up a Hologram Projector!";
-		Inventory.PickupSound "items/computermap";
-		BDP_Equipment.Cooldown 30;
+		Inventory.PickupSound "HOLOBEP3";
+		BDP_Equipment.ReadySound "HOLOBEP3";
+		BDP_Equipment.Cooldown 15;
 		Inventory.Icon "HOLOA0";
 		Scale 0.5;
 	}
@@ -24,7 +25,7 @@ class BDP_HologramProjector : BDP_Equipment
 		FLineTraceData lasersight;
 		vector3 targetpos = LaserTrace(lasersight);
 		laser = Spawn("HoloLaser", targetpos);
-		owner.A_StartSound("BEP", 0);
+		owner.A_StartSound("HOLOBEP", 0);
 		return false;
 	}
 	
@@ -65,7 +66,7 @@ class BDP_HologramProjector : BDP_Equipment
 			hologram.tracer = self;
 			hologram.angle = owner.angle;
 		}
-		owner.A_StartSound("BEPBEP", 0);
+		owner.A_StartSound("HOLOBEP2", 0);
 		return true;
 	}
 	
