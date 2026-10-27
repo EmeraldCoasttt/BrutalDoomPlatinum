@@ -139,7 +139,7 @@ class BDP_PistolZombiemanHelmet : BDP_PistolZombieman
 		TNT1 A 0 A_CheckSight("Advance");
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 1);
 		9OS2 D 2 A_FaceTarget();
-		TNT1 A 0 A_Jump(100, "Missile", "Pain.Avoid");
+		TNT1 A 0 A_Jump(50, "Missile");
 		TNT1 A 0;
 		9OS2 D 2 A_Recoil(5);
 		TNT1 A 0 A_Jump(64, "Missile");
@@ -167,7 +167,6 @@ class BDP_PistolZombiemanHelmet : BDP_PistolZombieman
 		TNT1 A 0 A_JumpIfInventory("EnemyMemory", 15, "SearchForPlayer");
 		TNT1 A 0 A_GiveInventory("EnemyMemory", 1);
 		9OS2 AAA 2 A_Chase();
-		TNT1 A 0 A_Jump(8, "Pain.Avoid");
 		TNT1 A 0;
 		9OS2 BBB 2 A_Chase();
 		9OS2 CCC 2 A_Chase();
@@ -202,7 +201,6 @@ class BDP_PistolZombiemanHelmet : BDP_PistolZombieman
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
 		TNT1 A 0 A_TakeInventory("SKZombieman", 1);
 		TNT1 A 0 A_TakeInventory("EnemyMemory", 10);
-		TNT1 A 0 A_Jump(16, "Pain.Avoid");
 		TNT1 A 0;
 		//TNT1 A 0 A_TakeInventory("CantFire", 1);
 		//TNT1 A 0 A_CustomMissile("MonsterTargetCheck", 34, 0, 0, 0); 
