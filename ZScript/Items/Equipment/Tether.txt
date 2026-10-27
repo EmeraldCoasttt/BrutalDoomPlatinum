@@ -43,6 +43,7 @@ class BDP_Tether : BDP_Equipment
 		{
 			owner.A_SpawnItemEx("TeleportFog");
 			linkPoint.A_SpawnItemEx("TeleportFog");
+			linkPoint.A_StopSound();
 			owner.TeleportMove(linkPoint.pos, true);
 			linkPoint.Destroy();
 			owner.A_StartSound("Weapons/Unmaker/UseTeleporter", 0);
@@ -77,7 +78,11 @@ class BDP_TetherDest : Actor
 		+DONTTHRUST
 		Radius 16;
 		Height 56;
-		RenderStyle "Subtract";
+		Scale 0.01;
+		+FORCEXYBILLBOARD
+		+SQUAREPIXELS
+		+rollsprite
+		+rollcenter
 	}
 	
 	bool targetInRange;
@@ -99,7 +104,41 @@ class BDP_TetherDest : Actor
 	States
 	{
 	Spawn:
-		PLAY A -1;
-		Stop;
+		TETH DEF 1 BRIGHT 
+		{
+			A_StartSound("TETHHUM", flags:CHANF_LOOPING);
+			A_SetRoll(roll - 69);
+			A_SpawnItemEx("TetherSpark", random(10, -10), random(10, -10), random(30,50), random(-0.8, 0.8), random(-0.8, 0.8), random(-0.5, 0.5), random(-1,-360), SXF_CLIENTSIDE|SXF_NOCHECKPOSITION);
+			If(scale.x < 0.5)
+			{
+				scale.x += 0.04;
+				scale.y += 0.04;
+			}
+		}
+		LOOP;
 	}
+}
+
+CLASS TetherSpark : Actor
+{ 
+	Default
+	{
+    RenderStyle "Add";
+    Scale 0.016;
+    Alpha 0.95;
+    +NOINTERACTION;
+    +NOGRAVITY;
+    +CLIENTSIDEONLY;
+	+FORCEXYBILLBOARD;
+	}
+    States
+    {
+    Spawn:
+	TNT1 A 0;
+	TNT1 A 10;
+	Spawn2:
+    LEYS O 3 bright A_ChangeVelocity (frandom(-0.8, 0.8), frandom(-0.8, 0.8), frandom(-0.8, 0.8), 0);
+    LEYS O 1 bright A_FadeOut(0.07);
+    Loop;
+    }
 }
