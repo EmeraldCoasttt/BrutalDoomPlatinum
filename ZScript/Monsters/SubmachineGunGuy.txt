@@ -144,7 +144,7 @@ class BDP_SubmachineGunGuy : BDP_ShotgunGuy
 		TNT1 A 0 A_CheckSight("Advance");
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 1);
 		PSS3 D 2 A_FaceTarget();
-		TNT1 A 0 A_Jump(100, "Missile", "Pain.Avoid");
+		TNT1 A 0 A_Jump(50, "Missile");
 		TNT1 A 0;
 		PSS3 D 2 A_Recoil(4);
 		TNT1 A 0 A_Jump(64, "Missile");
@@ -201,7 +201,6 @@ class BDP_SubmachineGunGuy : BDP_ShotgunGuy
 		//TNT1 A 0 A_SpawnItemEx("FootSep", 0, 0, 20, 0, 0);
 		TNT1 A 0 A_TakeInventory("SKShotgunGuy", 1);
 		PSS3 AAA 2 A_Chase();
-		TNT1 A 0 A_Jump(8, "Pain.Avoid");
 		TNT1 A 0;
 		PSS3 BBB 2 A_Chase();
 		PSS3 CCC 2 A_Chase();

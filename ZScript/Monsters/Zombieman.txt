@@ -289,7 +289,7 @@ class BDP_Zombieman : BDP_BaseZombie
 		TNT1 A 0 A_CheckSight("Advance");
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 1);
 		POSR D 2 A_FaceTarget();
-		TNT1 A 0 A_Jump(100, "Missile", "Pain.Avoid");
+		TNT1 A 0 A_Jump(50, "Missile");
 		TNT1 A 0;
 		POSR D 2 A_Recoil(4);
 		TNT1 A 0 A_Jump(64, "Missile");
@@ -317,7 +317,6 @@ class BDP_Zombieman : BDP_BaseZombie
 		TNT1 A 0 A_JumpIfInventory("EnemyMemory", 15, "SearchForPlayer");
 		TNT1 A 0 A_GiveInventory("EnemyMemory", 1);
 		POSR AAA 2 A_Chase();
-		TNT1 A 0 A_Jump(8, "Pain.Avoid");
 		TNT1 A 0;
 		POSR BBB 2 A_Chase();
 		POSR CCC 2 A_Chase();
@@ -354,7 +353,6 @@ class BDP_Zombieman : BDP_BaseZombie
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
 		TNT1 A 0 A_TakeInventory("SKZombieman", 1);
 		TNT1 A 0 A_TakeInventory("EnemyMemory", 10);
-		TNT1 A 0 A_Jump(16, "Pain.Avoid");
 		TNT1 A 0;
 		POSR E 10 A_FaceTarget();
 		TNT1 A 0 A_Jump(32, "MissileCrouched");
