@@ -85,6 +85,11 @@ class BDP_Fist : BDP_Weapon replaces Fist
 		PUNS FFE 3;
 		PUNS DB 1;
 		Goto Ready;
+	Ready:
+		TNT1 A 0 A_TakeInventory("PSeq1", 2);
+		TNT1 A 0 A_TakeInventory("PSeq2", 2);
+		FISA EEFFGGHHIIJJKKLL 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		Loop;
 	Select:
 		TNT1 A 1
 		{
@@ -98,11 +103,6 @@ class BDP_Fist : BDP_Weapon replaces Fist
 		PUNS A 1;
 		FISA DCBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
-	Ready:
-		TNT1 A 0 A_TakeInventory("PSeq1", 2);
-		TNT1 A 0 A_TakeInventory("PSeq2", 2);
-		FISA EEFFGGHHIIJJKKLL 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		Loop;
 	Deselect:
 		TNT1 A 0 A_Takeinventory("PSeq1",3);
 		FISA ABCD 1;

@@ -36,29 +36,41 @@ class BDP_Shotgun : BDP_Weapon
 		SHTA UTSR 1;
 		Stop;
 	Spawn:
-		TNT1 A 0 NoDelay A_jump(256,"spawn1","spawn2","spawn3");
-		LOOP;
-	Spawn1:
+		SHTC B 0 NoDelay {frame = random(1, 4);}
+	SpawnLoop:
 		SHTC B 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
-		LOOP;
-	Spawn2:
-		SHTC C 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
-		LOOP;
-	Spawn3:
-		SHTC D 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
-		LOOP;
-	Spawn4:
-		SHTC E 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
-		LOOP;
-	Spawn5:
-		SHTC F 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
-		LOOP;
-	Spawn6:
-		SHTC G 1 A_jumpifinventory("AmmoTaken",1,"SpawnNoAmmo");
 		LOOP;
 	SpawnNoAmmo:
 		SHTC A -1;
 		LOOP;
+	Ready:
+		SHTN A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
+		Goto Ready;
+	Select:
+		TNT1 A 1 
+		{ 
+			if (invoker.glassSlugs)
+			{
+				A_SetCrosshairDX("SLUGRet",2000);
+				ChangeAmmoIcon1("SHELZ0");
+			}
+			else
+			{
+				A_SetCrosshairDX("SGUNRet", 400);
+			}
+			A_GunslingerMag();
+			A_WeaponReady(WRF_NOFIRE);
+		}
+		TNT1 A 0 A_StartSound("weapons/shotgun/pump2");
+		SHTA MLKJ 1 A_WeaponReady(WRF_NOFIRE);
+		Goto Ready;
+	Deselect:
+		TNT1 A 0 A_EndAim();
+		SHTA NOPQ 1;
+		TNT1 A 1;
+		TNT1 A 0 ChangeAmmoIcon1("SHELA0");
+		TNT1 A 0 A_Lower;
+		Wait;
 	Fidget:
 		TNT1 A 0 A_EndAim();
 		TNT1 A 0 A_StartSound("foley/ShotgunPumpMisc", 10);
@@ -82,40 +94,13 @@ class BDP_Shotgun : BDP_Weapon
 		SHTN CBA 1 A_WeaponReadyDX(0,false);
 		SHTA FGHI 1 A_WeaponReadyDX(0,false);
 		Goto Ready;
-	Select:
-		TNT1 A 1 
-		{ 
-			if (invoker.glassSlugs)
-			{
-				A_SetCrosshairDX("SLUGRet",2000);
-				ChangeAmmoIcon1("SHELZ0");
-			}
-			else
-			{
-				A_SetCrosshairDX("SGUNRet", 400);
-			}
-			A_GunslingerMag();
-		}
-		TNT1 A 0 A_StartSound("weapons/shotgun/pump2");
-		SHTA MLKJ 1 A_WeaponReady(WRF_NOFIRE);
-		Goto Ready;
-	Ready:
-		SHTN A 1 A_WeaponReadyDX(WRF_ALLOWRELOAD);
-		Goto Ready;
-	Deselect:
-		TNT1 A 0 A_EndAim();
-		SHTA NOPQ 1;
-		TNT1 A 1;
-		TNT1 A 0 ChangeAmmoIcon1("SHELA0");
-		TNT1 A 0 A_Lower;
-		Wait;
 	MuzzleFlash:
 		SHTM AB 1 Bright;
 		Stop;
 	Fire:
 		SHTN A 0 A_CheckIfMag();
 		TNT1 A 0 A_JumpIf(invoker.glassSlugs, "FireSlug");
-		TNT1 A 0 A_JumpIf(invoker.emptyChamber,"Pump1");
+		TNT1 A 0 A_JumpIf(invoker.emptyChamber, "NoAmmo");
 		SHTA A 1 Bright
 		{
 			if(invoker.glassSlugs)
@@ -164,63 +149,82 @@ class BDP_Shotgun : BDP_Weapon
 		TNT1 A 0 A_CheckIfMag(1,"Ready");
 		Goto Pump1;
 	Pump1:
+		TNT1 A 0 A_JumpIf(invoker.aimMode, "PumpAim");
 		TNT1 A 0 A_JumpIf((invoker.glassSlugs || FindInventory("BDP_PowerSpeed"))&& invoker.mag > 0,"PumpingSlug");
 		TNT1 A 0 A_StartSound("foley/ShotgunPumpMisc", 10);
-		SHTN ABCDEFG 1;
+		SHTN ABCDEFG 1 A_WeaponReady(WRF_NOFIRE|WRF_NOBOB);//Allows quick switch
 		TNT1 A 0 A_AutoReloadMag(1,"ReloadFromPumping");
 	Pump1Part2:
-		TNT1 A 0 A_WeaponReady(WRF_NOFIRE| WRF_NOBOB);//Allows quick switch
-		TNT1 A 0 A_StartSound("foley/ShotgunPumpIn", 11);
-		SHTN H 1 A_StartSound("weapons/sgpump", 3);
 		TNT1 A 0
 		{
-			if(invoker.glassSlugs)
-			{
-				A_FireProjectileDX("BDP_SpentGlassShell", random(-85, -95), random(-20, -40), -10, 30, -15);
-			}
+			A_StartSound("foley/ShotgunPumpIn", 11);
+			A_StartSound("weapons/shotgun/pump1", 3);
+		}
+		SHTN HIJ 1
+		{
+			if(LastPressed(BT_RELOAD, 7, true) || !CVar.GetCVar("ManualShotgunPump", player).GetBool())
+				return resolvestate(null);
 			else
 			{
-				A_FireProjectileDX("BDP_SpentShell", random(-85, -95), random(-20, -40), -10, 30, -15);
+				A_StartSound("weapons/empty", 3);
+				return resolvestate("FailPump");
 			}
+		}
+		TNT1 A 0
+		{
+			class<Actor> casing = "BDP_SpentShell";
+			if(invoker.glassSlugs) casing = "BDP_SpentGlassShell";
+				A_FireProjectileDX(casing, random(-85, -95), random(-20, -40), -10, 30, -15);
 			invoker.emptyChamber = false;
 		}
-		SHTN IJKLMN 1;
+		SHTN K 1;
+	HoldPump:
+		SHTN L 1;
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD && CVar.GetCVar("ManualShotgunPump", player).GetBool(), "HoldPump");
+		SHTN MN 1;
+		TNT1 A 0 A_StartSound("weapons/shotgun/pump2", 4);
 		TNT1 A 0 A_StartSound("foley/ShotgunPumpOut", 11);
 		SHT0 A 0 A_JumpIf(invoker.glassSlugs,2);
 		SHTN A 0;
 		"####" PQ 1;
 		TNT1 A 0 A_SemiFlag();
+	FailPump:
 		SHTN FEDCB 1;
 		TNT1 A 0 A_StartSound("foley/ShotgunPumpMisc", 10,0,0.7);
 		Goto FinishPump;
+	PumpThenReload:
+		SHTN ABCDEFG 1;
+		Goto Pump2Part2;
 	Pump2:
 		TNT1 A 0 A_CheckIfMag();
 		SHTN TSFG 1;
+	Pump2Part2:
 		TNT1 A 0 A_StartSound("foley/ShotgunPumpIn", 11);
-		SHTN H 1 A_StartSound("weapons/sgpump", 3);
+		SHTN H 1 A_StartSound("weapons/shotgun/pump1", 3);
 		TNT1 A 0
 		{
-			if(invoker.glassSlugs)
-			{
-				A_FireProjectileDX("BDP_SpentGlassShell", random(-85, -95), random(-20, -40), -10, 30, -15);
-			}
-			else
-			{
-				A_FireProjectileDX("BDP_SpentShell", random(-85, -95), random(-20, -40), -10, 30, -15);
-			}
+			class<Actor> casing = "BDP_SpentShell";
+			if(invoker.glassSlugs) casing = "BDP_SpentGlassShell";
+				A_FireProjectileDX(casing, random(-85, -95), random(-20, -40), -10, 30, -15);
 			invoker.emptyChamber = false;
 		}
 	Pump2Cont:
-		SHTN IJKLMN 1;
+		SHTN IJK 1;
+		SHTN L 10;
+		TNT1 A 0 A_StartSound("insertshell",5);
+		TNT1 A 0 A_ReloadMag(0,true);
+		SHTN MNM 1;
+		SHTN L 10;
+		SHTN MN 1;
 		TNT1 A 0 A_StartSound("foley/ShotgunPumpOut", 11);
+		TNT1 A 0 A_StartSound("weapons/shotgun/pump2", 3);
 		SHT0 A 0 A_JumpIf(invoker.glassSlugs,2);
 		SHTN A 0;
 		"####" PQ 1;
 		SHTN A 0 A_JumpIfInventory("BDP_Shell",1,1);
 		Goto FinishPump;
-		SHTN A 0 A_CheckIfMag(6,"ReloadNormally2");
-		SHTN FEDCB 1;
-		SHTN PQFEDCB 1 A_WeaponReady(WRF_NOFIRE|WRF_NOBOB);
+		SHTN A 0 A_CheckIfMag(7,"ReloadNormally2");
+		SHTN FEDCB 1 A_WeaponReady(WRF_NOFIRE|WRF_NOBOB);
 		Goto FinishPump;
 	Pump2Alt:
 		TNT1 A 0 A_CheckIfMag();
@@ -245,14 +249,23 @@ class BDP_Shotgun : BDP_Weapon
 		SHT0 A 0 A_JumpIf(invoker.glassSlugs,2);
 		SHTN A 0;
 		"####" PQ 1;
-		SHTN FEDCB 1;
+		SHTN FEDCB 1 A_WeaponReady(WRF_NOFIRE|WRF_NOBOB);
 		Goto FinishPump;
 	PumpingSlug:
-		SHTN A 6;
+		SHTN AA 1 A_WeaponReady(WRF_NOFIRE|WRF_NOBOB);//Allows quick switch
 		TNT1 A 0 A_StartSound("foley/ShotgunPumpIn", 11);
-		TNT1 A 0 A_StartSound("weapons/sgpump", 3);
-		SHT9 GI 1;
-		SHT9 J 1 {invoker.emptyChamber = false;}
+		TNT1 A 0 A_StartSound("weapons/shotgun/pump1", 3);
+		SHT9 GIJ 1;
+		TNT1 A 0
+		{
+			if(LastPressed(BT_RELOAD, 5, true) || !CVar.GetCVar("ManualShotgunPump", player).GetBool())
+				return resolvestate(null);
+			else
+			{
+				A_StartSound("weapons/empty", 3);
+				return resolvestate("FailPumpSlug");
+			}
+		}
 		TNT1 A 0
 		{
 			if(invoker.glassSlugs)
@@ -263,10 +276,16 @@ class BDP_Shotgun : BDP_Weapon
 			{
 				A_FireProjectileDX("BDP_SpentShell", random(-80, -90), random(-20, -40), 0, 20, -14);
 			}
+			invoker.emptyChamber = false;
 		}
-		TNT1 A 0 A_StartSound("foley/ShotgunPumpOut", 11);
-		SHT9 JJJ 1;
+		SHT9 J 2;
+	HoldPumpSlug:
+		SHT9 J 1;
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD && CVar.GetCVar("ManualShotgunPump", player).GetBool(), "HoldPumpSlug");
 		TNT1 A 0 A_SemiFlag();
+		TNT1 A 0 A_StartSound("foley/ShotgunPumpOut", 11);
+		TNT1 A 0 A_StartSound("weapons/shotgun/pump2", 3);
+	FailPumpSlug:
 		SHT9 IHG 1;
 		SHTN A 1;
 		TNT1 A 0 A_SemiRefire("Fire");
@@ -290,26 +309,21 @@ class BDP_Shotgun : BDP_Weapon
 		Stop;
 	FireAim:
 		TNT1 A 0 A_CheckIfMag();
-		TNT1 A 0 A_JumpIf(invoker.emptyChamber,"PumpAim");
+		TNT1 A 0 A_JumpIf(invoker.emptyChamber, "NoAmmo");
 		SHT8 D 1 Bright
 		{
 			if(invoker.glassSlugs)
 			{
 				A_FireBullets(0.5, 0.5, -1, 95, "ShotgunPuffSlug", FBF_NORANDOM);
-				for(int i = 0; i < 3; i++)
+				for(int i = 0; i < 9; i++)
 				{
 					A_FireProjectile("SlugGlass", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-					A_FireProjectile("SlugGlass2", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-					A_FireProjectile("SlugGlass4", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-					A_FireProjectile("SlugGlass5", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-					A_FireProjectile("SlugGlass5", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
+					A_FireProjectile("SlugGlass"..random(2, 5), random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
 				}
 				A_FireProjectile("DecorativeNail", 0, 0, 0, 2, 0, 0);
 				A_FireProjectile("SlugMetalShard", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
 				A_FireProjectile("SlugMetalShard", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
 				A_FireProjectile("SlugMetalShard2", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-				A_FireProjectile("SlugGlass3", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
-				A_FireProjectile("SlugGlass3", random(-12,12), 0, random(-1,1), -12, 0, random(-3,3));
 				A_StartSound("weapons/sgSLUG", 1);
 			}
 			else
@@ -338,8 +352,18 @@ class BDP_Shotgun : BDP_Weapon
 		SHT8 C 2;
 		SHTN A 0 A_GiveInventory ("Pumping", 1);
 		TNT1 A 0 A_StartSound("foley/ShotgunPumpIn", 11);
-		TNT1 A 0 A_StartSound("weapons/sgpump", 3);
-		SHT8 GHII 1;
+		TNT1 A 0 A_StartSound("weapons/shotgun/pump1", 3);
+		SHT8 G 1;
+		SHT8 HII 1
+		{
+			if(LastPressed(BT_RELOAD, 3, true) || !CVar.GetCVar("ManualShotgunPump", player).GetBool())
+				return resolvestate(null);
+			else
+			{
+				A_StartSound("weapons/empty", 3);
+				return resolvestate("FailPumpAim");
+			}
+		}
 		TNT1 A 0 {invoker.emptyChamber = false;}
 		SHTN A 0
 		{
@@ -354,7 +378,14 @@ class BDP_Shotgun : BDP_Weapon
 		}
 		TNT1 A 0 A_StartSound("foley/ShotgunPumpOut", 11);
 		SHTN A 0 A_TakeInventory("ShotgunWasEmpty", 1);
-		SHT8 JJIHHGG 1;
+		SHT8 J 1;
+	HoldPumpAim:
+		SHT8 J 1;
+		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_RELOAD && CVar.GetCVar("ManualShotgunPump", player).GetBool(), "HoldPumpAim");
+		TNT1 A 0 A_StartSound("weapons/shotgun/pump2", 3);
+		SHT8 IHH 1;
+	FailPumpAim:
+		SHT8 GG 1;
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_ATTACK,"FireAim");
 		Goto Aim;
 	ReloadFromPumping:
@@ -364,28 +395,37 @@ class BDP_Shotgun : BDP_Weapon
 		SHTN ST 1;
 		Goto InsertShellAnimation;
 	DoReload:
+		SHTN A 0 A_JumpIf(invoker.mag > 0 && invoker.emptyChamber, "Pump1");
+		SHTN A 0 A_JumpIf(invoker.mag < 1 && invoker.emptyChamber, "PumpThenReload");
 		TNT1 A 0 A_EndAim();
-		SHTN BCDEF 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		SHTN BCDE 1;
 	ReloadNormally2:
-		SHTN FST 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		SHTN FST 1;
+		SHTN U 3;
+		Goto InsertFirstShell;
 	InsertShellAnimation:
 		TNT1 A 0 A_CheckIfAmmo("BDP_Shell",1,"CantFinishReload");
-		SHTN UUUUUUUV 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
-		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_USER3 || player.oldbuttons & BT_USER3,"DualWieldFromReload");
+		SHTN UUUUUUU 1
+		{
+			if(LastPressed(BT_ATTACK, 7))
+				return resolvestate("CantFinishReload");
+			if(LastPressed(BT_USER3, 7))
+				return resolvestate("DualWieldFromReload");
+			return resolvestate(null);
+		}
+	InsertFirstShell:
+		SHTN V 1;
 		SHT5 A 0 A_JumpIf(invoker.glassSlugs,2);
 		SHTN A 0;
-		"####" W 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		#### W 1;
 		TNT1 A 0 A_StartSound("insertshell",5);
 		TNT1 A 0 A_ReloadMag(0,true);
-		SHTN X 1 A_WeaponReady(WRF_NOBOB|WRF_NOSECONDARY);
-		SHTN YZ 1 A_WeaponReady(WRF_NOBOB|WRF_NOSECONDARY);
-		SHTN "[]" 1 A_WeaponReady(WRF_NOBOB|WRF_NOSECONDARY);
+		SHTN XYZ[] 1;
 		SHTN A 0 A_JumpIf(invoker.emptyChamber,"Pump2");
 		SHTN A 0 A_CheckIfMag(7,"InsertShellAnimation");
 	CantFinishReload:
 		TNT1 A 0 A_StartSound("foley/ShotgunReloadLower", 10);
-		SHTN TS 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
-		SHTN FEDCB 1 A_WeaponReady(WRF_NOBOB|WRF_NOFIRE);
+		SHTN TSFEDCB 1;
 		Goto FinishPump;
 	DualWieldFromReload:
 		TNT1 A 0 A_JumpIfInventory("GlassSlugSelected",1,2);
