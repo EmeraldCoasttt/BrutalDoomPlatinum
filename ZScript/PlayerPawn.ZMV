@@ -2386,20 +2386,20 @@ class BDP_PlayerPawn : PlayerPawn
 		angle -= recoil.y;
 		if(!(bdp_active_modifiers & Modifier_KickInTheHead))
 		{
-			if(recoil.x > 0)
+			if(recoil.x)
 			{
-				if(pitch + antiRecoil.x > -90)
+				if(abs(pitch + antiRecoil.x) < 90)
 					antiRecoil.x += recoil.x;
 				recoilSpeed.x = recoil.x;
 			}
-			if(abs(recoil.y) > 0)
+			if(recoil.y)
 			{
 				antiRecoil.y += recoil.y;
 				recoilSpeed.y = recoil.y;
 			}
 		}
-		if(antiRecoil.x > 0 && player.cmd.pitch < 0)
-			antiRecoil.x = clamp(antiRecoil.x + player.cmd.pitch * (360. / 65536.),0,90);
+		if(antiRecoil.x > 0 && player.cmd.pitch < 0 || antiRecoil.x < 0 && player.cmd.pitch > 0)
+			antiRecoil.x = clamp(antiRecoil.x + player.cmd.pitch * (360. / 65536.),player.cmd.pitch > 0 ? -90 : 0, player.cmd.pitch > 0 ? 0 : 90);
 		if(antiRecoil.y > 0 && player.cmd.yaw > 0 || antiRecoil.y < 0 && player.cmd.yaw < 0)
 			antiRecoil.y = clamp(antiRecoil.y - player.cmd.yaw * (360. / 65536.),player.cmd.yaw > 0 ? 0 : -360,player.cmd.yaw > 0 ? 360 : 0);
 		if(recoilTics > 0)
@@ -2408,25 +2408,16 @@ class BDP_PlayerPawn : PlayerPawn
 		{
 			if(antiRecoil.x < 15 + recoilSpeed.x)
 			{
-				if(antiRecoil.x > antiRecoilSpeed)
+				Vector2 recoilDir = (antiRecoil.x || antiRecoil.y ? antiRecoil.Unit() : (0, 0)) * antiRecoilSpeed;
+				if(recoilDir.x)
 				{
-					pitch += antiRecoilSpeed;
-					antiRecoil.x -= antiRecoilSpeed;
+					pitch += min(abs(antiRecoil.x), abs(recoilDir.x)) * (antiRecoil.x / abs(antiRecoil.x));
+					antiRecoil.x -= min(abs(antiRecoil.x), abs(recoilDir.x)) * (antiRecoil.x / abs(antiRecoil.x));
 				}
-				else
+				if(recoilDir.y)
 				{
-					pitch += antiRecoil.x;
-					antiRecoil.x = 0;
-				}
-				if(abs(antiRecoil.y) > antiRecoilSpeed)
-				{
-					angle += antiRecoil.y > 0 ? antiRecoilSpeed : -antiRecoilSpeed;
-					antiRecoil.y -= antiRecoil.y > 0 ? antiRecoilSpeed : -antiRecoilSpeed;
-				}
-				else
-				{
-					angle += antiRecoil.y;
-					antiRecoil.y = 0;
+					angle += min(abs(antiRecoil.y), abs(recoilDir.y)) * (antiRecoil.y / abs(antiRecoil.y));
+					antiRecoil.y -= min(abs(antiRecoil.y), abs(recoilDir.y)) * (antiRecoil.y / abs(antiRecoil.y));
 				}
 			}
 			else

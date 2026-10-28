@@ -893,6 +893,18 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		dplr.antiRecoilSpeed = recoverspeed;
 	}
 	
+	//for melee weapons
+	action void A_CameraSwing(double offsetpitch, double offsetangle = 0, int recovertime = 2, double recoverspeed = 2)
+	{
+		let dplr = BDP_PlayerPawn(invoker.owner);
+		
+		dplr.recoilTics = recovertime;
+		dplr.recoilTicGoal = recovertime;
+		
+		dplr.recoil = (offsetpitch, offsetangle);
+		dplr.antiRecoilSpeed = recoverspeed;
+	}
+	
 	action state A_DualWield()
 	{
 		if(CountInv(invoker.GetClassName()) > 1)
