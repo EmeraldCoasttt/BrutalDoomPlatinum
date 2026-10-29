@@ -195,7 +195,7 @@ class BDP_DarkClawStates : CustomInventory
 		}
 		TNT1 A 0
 		{
-			Actor victim = A_BDPMelee(projectile:"MeleeAttackDarkClaw");
+			Actor victim = A_BDPMelee(projectile:"MeleeAttackDarkClaw", 0);
 			if(victim && victim is "BDP_Headshot") victim = victim.tracer;
 			if(!invoker.forceActivate) A_UseLine();
 			A_QuadSound();
@@ -251,7 +251,7 @@ class MeleeAttackDarkClaw : MeleeAttack
 	{
 		Damagetype "cut";
 		MeleeAttack.BaseDamage 80;
-		decal "SawHorizontal";
+		decal "DarkClawScratch";
 		+BLOODSPLATTER;
 	}
 	

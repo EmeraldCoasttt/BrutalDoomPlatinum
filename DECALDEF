@@ -18,6 +18,40 @@ decal SawHorizontal
 	randomflipx
 }
 
+decal ClawScratch1
+{
+	pic CLAWDC1
+	x-scale 0.2
+	y-scale 0.15
+}
+decal ClawScratch2
+{
+	pic CLAWDC2
+	x-scale 0.2
+	y-scale 0.15
+}
+decal ClawScratch3
+{
+	pic CLAWDC3
+	x-scale 0.2
+	y-scale 0.15
+}
+decal ClawScratch4
+{
+	pic CLAWDC4
+	x-scale 0.2
+	y-scale 0.15
+}
+
+decalgroup DarkClawScratch
+{
+	ClawScratch1	1
+	ClawScratch2	1
+	ClawScratch3	1
+	ClawScratch4	1
+}
+
+
 decal Crack1
 {
 	pic BFGLITE1
