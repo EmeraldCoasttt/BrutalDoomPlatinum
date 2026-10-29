@@ -596,7 +596,19 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	action Actor A_DiscardDualMag(class<Actor> missiletype, int chamber = 0, double offsetangle = 0, double offsetpitch = 0, double offsetx = 0, double offsety = 0, double offsetz = 0)
 	{
 		let weap = BDP_Weapon(FindInventory(invoker.DualWeapon));
-		return weap.A_DiscardMag(missiletype, chamber, offsetangle, offsetpitch, offsetx, offsety, offsetz);
+		let magActor = BDP_SpentMag(A_FireProjectileDX(missiletype, offsetangle, offsetpitch, offsetx, offsety, offsetz, true));
+		magActor.ammo = weap.mag - chamber;
+		Until(weap.mag <= chamber)
+		{
+			weap.mag -= weap.magConversion.x;
+			if(!(bdp_active_modifiers & Modifier_Gluttony))
+			{
+				if(GiveInventory(weap.ammotype1, weap.magConversion.y)) continue;
+				magActor.ammoHeld += weap.magConversion.y;
+			}
+		}
+		if(weap.mag < 0) weap.mag = 0;
+		return magActor;
 	}
 	
 	action void A_TakeDualMag(int ammoamount = 1, bool take = true, bool force = false)
