@@ -181,7 +181,7 @@ class BDP_DarkClawStates : CustomInventory
 		Wait;
 	SwingClaw:
 		TNT1 A 1;
-		CLAW A 1 A_WeaponRecoil(-1.2, -6.0, 3, 3.0);
+		CLAW A 1 A_CameraSwing(-1.2, -6.0, 3, 3.0);
 		TNT1 A 0
 		{
 			A_StartSound("skeleton/swing", 0);
@@ -190,7 +190,7 @@ class BDP_DarkClawStates : CustomInventory
 		CLAW BC 1 
 		{
 			A_BDPMeleeStart();
-			A_WeaponRecoil(-1.0, -5.0, 3, 3.0);
+			A_CameraSwing(-1.0, -5.0, 3, 3.0);
 		}
 		TNT1 A 0
 		{
@@ -225,9 +225,9 @@ class BDP_DarkClawStates : CustomInventory
 				}
 			}
 		}
-		CLAW D 1 A_WeaponRecoil(-0.8, -4.0, 3, 3.0);
-		CLAW E 1 A_WeaponRecoil(-0.6, -3.0, 3, 3.0);
-		CLAW F 1 A_WeaponRecoil(-0.4, -2.0, 3, 3.0);
+		CLAW D 1 A_CameraSwing(-0.8, -4.0, 3, 3.0);
+		CLAW E 1 A_CameraSwing(-0.6, -3.0, 3, 3.0);
+		CLAW F 1 A_CameraSwing(-0.4, -2.0, 3, 3.0);
 		CLAW GH 1;
 		TNT1 A 1 
 		{
