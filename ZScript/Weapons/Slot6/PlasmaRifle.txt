@@ -269,10 +269,7 @@ class BDP_PlasmaRifle : BDP_Weapon
 		{
 			A_ClearReFire();
 			A_StartSound("Plasma/Reload1", 5);
-			let spentmag = BDP_SpentMag(A_FireProjectileDX("BDP_SpentCell", random(75, 85), random(35, 55), 0, 25, -20));
-			if(spentmag)
-				spentmag.ammo = invoker.mag;
-			A_DiscardMag();
+			A_DiscardMag("BDP_SpentCell", 0, random(75, 85), random(35, 55), 0, 25, -20);
 		}
 		PRSR AAZBCDEFGHH 1;
 		PRSR I 20;

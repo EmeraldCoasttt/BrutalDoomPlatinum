@@ -319,17 +319,8 @@ class BDP_AssaultShotgun : BDP_Weapon
 		A1R1 IJ 1;
 		"####" A 0
 		{
-			//if(invoker.mag <= 1)
-				//A_FireProjectile("EmptyASGDrumSpawn",180,0,-4,-10);
-			int curmag = invoker.mag;
-			let droppedmag = BDP_SpentASGMag(A_FireProjectileDX("BDP_SpentASGMag", random(-80, -100), random(25, 45), 0, 35, -35));
-			if(droppedmag)
-			{
-				droppedmag.ammo = curmag;
-				if(invoker.dragonsbreath)
-					droppedmag.dbreath = true;
-			}
-			A_DiscardMag();
+			let droppedMag = BDP_SpentASGMag(A_DiscardMag("BDP_SpentAsgMag", 1, random(-80, -100), random(25, 45), 0, 35, -35));
+			if(droppedMag) droppedMag.dbreath = invoker.dragonsbreath;
 		}
 		A12R G 3;
 		TNT1 A 0 A_StartSound("foley/ShotgunReloadRaise", 10);
@@ -479,19 +470,12 @@ class BDP_AssaultShotgun : BDP_Weapon
 		"####" G 1 offset(0,33);
 		"####" A 0 A_StartSound("ASGREL1", 1);
 		"####" A 0 A_StartSound("foley/ASGDrumOut", 10,0,0.7);
-		"####" A 0 A_DiscardMag();
 		"####" H 1 offset(0,32);
 		A1R1 IJ 1;
 		TNT1 A 0
 		{
-			int curmag = invoker.mag;
-			let droppedmag = BDP_SpentASGMag(A_FireProjectileDX("BDP_SpentASGMag", random(-80, -100), random(25, 45), 0, 35, -35));
-			if(droppedmag)
-			{
-				droppedmag.ammo = curmag;
-				if(invoker.dragonsbreath)
-					droppedmag.dbreath = true;
-			}
+			let droppedMag = BDP_SpentASGMag(A_DiscardMag("BDP_SpentAsgMag", 1, random(-80, -100), random(25, 45), 0, 35, -35));
+			if(droppedMag) droppedMag.dbreath = invoker.dragonsbreath;
 		}
 		A12R G 3;
 		TNT1 A 0 A_StartSound("foley/ShotgunReloadRaise", 10);

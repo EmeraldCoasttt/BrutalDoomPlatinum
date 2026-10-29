@@ -173,6 +173,7 @@ class BDP_DarkClawStates : CustomInventory
 		{
 			let dplr = BDP_PlayerPawn(invoker.owner);
 			dplr.canLedgeClimb = false;
+			A_ClearOverlays(2, 3);
 			A_ClearOverlays(49,50);
 			A_Overlay(90, "SwingClaw");
 			player.SetPSprite(1, player.readyweapon.ResolveState("DoingMelee"));

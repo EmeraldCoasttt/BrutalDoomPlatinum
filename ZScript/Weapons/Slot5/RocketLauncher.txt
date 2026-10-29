@@ -443,14 +443,7 @@ CLASS BDP_RocketLauncher : BDP_Weapon
 	DoReload:
 		RLNG A 0 A_StartSound("ROCKREL1", 3);
 		MISR ABCC 1;
-		TNT1 A 0
-		{
-			int curmag = invoker.mag;
-			let drum = BDP_SpentMag(A_FireProjectileDX("BDP_SpentRocketDrum", random(-80, -100), random(40, 60), 15, 35, -20));
-			if(drum)
-				drum.ammo = curmag;
-			A_DiscardMag();
-		}
+		TNT1 A 0 A_DiscardMag("BDP_SpentRocketDrum", 0, random(-80, -100), random(40, 60), 15, 35, -20);
 		MISR DDE 1;
 		MISR FGH 1;
 		MISR IJKLMM 1;
