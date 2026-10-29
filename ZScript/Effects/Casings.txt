@@ -486,7 +486,7 @@ class BDP_SpentBattleRifleClip : BDP_SpentMag
 		Speed 6;
 		DeathSound "BR45BOUNCE";
 		BounceSound "BR45BOUNCE";
-		BDP_SpentMag.AmmoType "BDP_Clip2";
+		BDP_SpentMag.AmmoType "BDP_Clip1";
 		+thruactors
 	}
 	
@@ -517,6 +517,7 @@ class BDP_SpentBattleRifleClip : BDP_SpentMag
 			{
 				bSPECIAL = true;
 				bMISSILE = false;
+				bTHRUACTORS = false;
 				A_ChangeLinkFlags(false);
 			}
 		}
