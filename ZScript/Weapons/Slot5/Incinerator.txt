@@ -154,8 +154,7 @@ CLASS BDP_Incinerator : BDP_Weapon
 		FLMT OPQRSS 1;
 		FLMT T 1
 		{
-			A_DiscardMag();
-			A_FireProjectileDX("BDP_SpentFlamethrowerTank",3,-30,30,0,-10);
+			A_DiscardMag("BDP_SpentFlamethrowerTank",0,3,-30,30,0,-10);
 		}
 		FLMT ZZTSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 1;
 		FLMT T 1

@@ -340,17 +340,21 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	
 	}
 	
-	action bool A_DiscardMag(int chamber = 0)
+	action Actor A_DiscardMag(class<Actor> missiletype, int chamber = 0, double offsetangle = 0, double offsetpitch = 0, double offsetx = 0, double offsety = 0, double offsetz = 0)
 	{
-		if(bdp_active_modifiers & Modifier_Gluttony)
+		let magActor = BDP_SpentMag(A_FireProjectileDX(missiletype, offsetangle, offsetpitch, offsetx, offsety, offsetz, true));
+		magActor.ammo = invoker.mag - chamber;
+		Until(invoker.mag <= chamber)
 		{
-			Until(invoker.mag <= chamber)
+			invoker.mag -= invoker.magConversion.x;
+			if(!(bdp_active_modifiers & Modifier_Gluttony))
 			{
-				invoker.mag--;
+				if(GiveInventory(invoker.ammotype1, invoker.magConversion.y)) continue;
+				magActor.ammoHeld += invoker.magConversion.y;
 			}
-			return true;
 		}
-		return false;
+		if(invoker.mag < 0) invoker.mag = 0;
+		return magActor;
 	}
 	
 	action void A_SetCrosshairDX(string crosshairname, int crosshairrange = 5000, double crosshairscale = 1.0)
@@ -589,10 +593,10 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			weap.A_ReloadMag(chamber,additive,free);
 	}
 	
-	action void A_DiscardDualMag(int chamber = 0)
+	action Actor A_DiscardDualMag(class<Actor> missiletype, int chamber = 0, double offsetangle = 0, double offsetpitch = 0, double offsetx = 0, double offsety = 0, double offsetz = 0)
 	{
 		let weap = BDP_Weapon(FindInventory(invoker.DualWeapon));
-		weap.A_DiscardMag(chamber);
+		return weap.A_DiscardMag(missiletype, chamber, offsetangle, offsetpitch, offsetx, offsety, offsetz);
 	}
 	
 	action void A_TakeDualMag(int ammoamount = 1, bool take = true, bool force = false)

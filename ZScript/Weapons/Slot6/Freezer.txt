@@ -192,8 +192,7 @@ class BDP_FreezerBeam : BDP_Weapon
 		FRRL IJKLLLMNOPP 1;
 		FRRL Q 20
 		{
-			A_FireProjectileDX("BDP_SpentFreezerCell", random(-75, -85), random(70, 90), 10, 25, -20);
-			A_DiscardMag();
+			A_DiscardMag("BDP_SpentFreezerCell", 0, random(-75, -85), random(70, 90), 10, 25, -20);
 		}
 		FRRL RRSTUV 1;
 		FRRL W 1 {A_StartSound("RAILINSR"); A_ReloadMag();}

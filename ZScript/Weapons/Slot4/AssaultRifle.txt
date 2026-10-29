@@ -262,13 +262,7 @@ class BDP_AssaultRifle : BDP_Weapon
 		TNT1 A 0 A_EndAim();
 		TNT1 A 0 A_StartSound("Relo1", 6);
 		RIFR ABC 1;
-		TNT1 A 0
-		{
-			let spentmag = BDP_SpentMag(A_FireProjectileDX("BDP_SpentRifleMag", random(75, 85), random(35, 55), 0, 25, -20));
-			if(spentmag)
-				spentmag.ammo = invoker.mag;
-			A_DiscardMag(1);
-		}
+		TNT1 A 0 A_DiscardMag("BDP_SpentRifleMag", 1, random(75, 85), random(35, 55), 0, 25, -20);
 		RIFR DEFGG 1;
 		RIFR H 18;
 		RIFR IJKLMNNO 1;
