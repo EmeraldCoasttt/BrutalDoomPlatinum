@@ -78,6 +78,29 @@ class BDP_SpentRevolverCasing : BDP_SpentCasing
 	}
 }
 
+class BDP_UnspentRevolverCasing : BDP_SpentRevolverCasing
+{
+	States
+	{
+	Spawn:
+		C452 A 3;
+		Goto Fly;
+	Death:
+		TNT1 A 0 A_SpawnItemEx("BDP_UnspentRevolverCasingPickup");
+		Stop;
+	}
+}
+
+class BDP_UnspentRevolverCasingFake : BDP_SpentRevolverCasing
+{
+	States
+	{
+	Spawn:
+		C452 A 3;
+		Goto Fly;
+	}
+}
+
 class BDP_SpentRifleCasing : BDP_SpentCasing
 {
 	States
