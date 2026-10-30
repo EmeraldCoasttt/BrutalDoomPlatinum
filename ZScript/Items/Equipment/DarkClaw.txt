@@ -204,7 +204,7 @@ class BDP_DarkClawStates : CustomInventory
 				A_StartSound("items/darkclaw/blast", 0);
 				let dplr = BDP_PlayerPawn(invoker.owner);
 				if(dplr && dplr.ownedEquipment is "BDP_DarkClaw") dplr.ownedEquipment.TriggerCooldown();
-				BlockThingsIterator it = BlockThingsIterator.Create(self, 200);
+				BlockThingsIterator it = BlockThingsIterator.Create(self, 400);
 				
 				while(it.Next())
 				{
@@ -212,8 +212,8 @@ class BDP_DarkClawStates : CustomInventory
 					if(target && target.bISMONSTER && !target.bFRIENDLY && (target.health > 0 || target == victim) && CheckLOF(CLOFF_SKIPENEMY|CLOFF_SKIPFRIEND|CLOFF_SKIPOBJECT, ptr_target:AAPTR_TARGET))
 					{
 						double distance = Distance3D(target);
-						if(distance > 200) continue;
-						int damage = 500 * ((200 - distance) / 200);
+						if(distance > 400) continue;
+						int damage = 1500 * ((400 - distance) / 400);
 						A_SpawnBonuses(target, damage, 3);
 						target.DamageMobj(invoker, invoker.owner, damage, "Fire");
 					}
