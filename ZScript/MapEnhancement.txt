@@ -1787,9 +1787,9 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					levellocals.ReplaceTextures("FLAT5_2", "FLOOR0_2",0);
 					levellocals.ReplaceTextures("FLAT5_1", "METAIND3",0);
 					levellocals.ReplaceTextures("CEIL1_1", "SLIME16",0);
-					levellocals.ReplaceTextures("WOODMET2", "NEWDOR3",0);
-					levellocals.ReplaceTextures("WOODMET4", "NEWDOR3",0);
-					levellocals.ReplaceTextures("WOODMET1", "SUPPORT3",0);
+					//levellocals.ReplaceTextures("WOODMET2", "NEWDOR3",0);
+					//levellocals.ReplaceTextures("WOODMET4", "NEWDOR3",0);
+					//levellocals.ReplaceTextures("WOODMET1", "SUPPORT3",0);
 					levellocals.ReplaceTextures("WOODVERT", "METAIND4",0);
 					
 					AddThing(15848, (-704, -1664, -999), 0);
@@ -1857,7 +1857,8 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(11010, (128, -3456, -999), 80);
 					AddThing(11010, (1536, -640, -999), 80);
 					AddThing(11010, (576, -1152, -999), 80);
-					AddThing(3134, (1296, 144, 128));
+					SetThingEdNum(13, 3134);
+					SetThingEdNum(213, 2048);
 				}
 				Break;
 
