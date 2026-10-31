@@ -638,6 +638,11 @@ class BDP_PlayerPawn : PlayerPawn
 		super.PostBeginPlay();
 	}
 	
+	override void Travelled() {
+		super.Travelled();
+		showKickflash = false;
+	}
+	
 	override void CheckWeaponChange()
 	{
 		let weap = BDP_Weapon(player.ReadyWeapon);
