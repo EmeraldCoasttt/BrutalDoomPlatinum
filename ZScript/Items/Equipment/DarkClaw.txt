@@ -5,7 +5,8 @@ class BDP_DarkClaw : BDP_Equipment
 		Tag "Dark Claw";
 		Inventory.Icon "DCLWA0";
 		Inventory.PickupMessage "Picked up the dark claw.";
-		Inventory.PickupSound "GRNPIN";
+		Inventory.PickupSound "items/darkclaw/pickup";
+		BDP_Equipment.ReadySound "items/darkclaw/recharge";
 		BDP_Equipment.Cooldown 2000;
 		BDP_Equipment.Charges 1;
 		+BDP_EQUIPMENT.COOLDOWNNOTTIMER
