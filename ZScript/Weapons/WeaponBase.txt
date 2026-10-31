@@ -1463,7 +1463,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			let psp = owner.player.FindPSprite(PSP_WEAPON);
 			if(dplr.showKickflash > 0 && !player.FindPSprite(50) && (player.WeaponState & WF_WEAPONREADY || bDUALWEAPON && readyLeft && readyRight) && !aimMode &&
 			(dplr.showKickflash == 1 || !dplr.blockSprint && (player.cmd.forwardmove || player.cmd.sidemove)) &&
-			psp && !InStateSequence(psp.curstate, resolvestate("LetsGetStarted")) && !InStateSequence(psp.curstate, resolvestate("DoReload")) && !InStateSequence(psp.curstate, resolvestate("Fidget")))
+			psp && !InStateSequence(psp.curstate, resolvestate("LetsGetStarted")) && !InStateSequence(psp.curstate, resolvestate("DoReload")) && !InStateSequence(psp.curstate, resolvestate("Fidget")) && !InStateSequence(psp.curstate, resolvestate("DoingMelee")))
 			{
 				player.SetPSprite(50, resolvestate("Sprint"));
 			}
