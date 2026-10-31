@@ -198,7 +198,16 @@ class BDP_DarkClawStates : CustomInventory
 		{
 			Actor victim = A_BDPMelee(projectile:"MeleeAttackDarkClaw", 0);
 			if(victim && victim is "BDP_Headshot") victim = victim.tracer;
-			if(!invoker.forceActivate) A_UseLine();
+			if(!invoker.forceActivate)
+			{
+				A_UseLine();
+				if(!invoker.owner)
+				{
+					A_ClearOverlays(90, 90);
+					TakeInventory("BDP_DarkClawStates", 1);
+					return;
+				}
+			}
 			A_QuadSound();
 			if((victim && victim.bISMONSTER && !victim.bFRIENDLY || invoker.forceActivate) && !invoker.onCooldown)
 			{
