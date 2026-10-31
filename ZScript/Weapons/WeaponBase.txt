@@ -584,8 +584,8 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	action void A_ReloadDualMag(int chamber = 0, bool additive = false, bool free = false)
 	{
 		let weap = BDP_Weapon(FindInventory(invoker.DualWeapon));
-			int touse = floor(CountInv(invoker.ammotype1) / 2);
-		if(CountInv(weap.ammotype1) < weap.magCapacity + invoker.magCapacity && touse > 0) {
+		int touse = floor(CountInv(invoker.ammotype1) / 2);
+		if(CountInv(weap.ammotype1) < weap.magCapacity + invoker.magCapacity && touse > 0 && CountInv(invoker.ammotype1) + invoker.mag < DualMag()) {
 			TakeInventory(weap.ammotype1,touse);
 			weap.A_ReloadMag(chamber,additive,free);
 			GiveInventory(weap.ammotype1,touse);
