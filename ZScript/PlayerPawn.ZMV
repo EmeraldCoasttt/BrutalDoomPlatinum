@@ -506,9 +506,11 @@ class BDP_PlayerPawn : PlayerPawn
 		TNT1 A 1;
 		Wait;
 	KickAction:
-		KICK ABC 1 {
-			A_BDPMeleeStart();
-			A_CameraSwing(0, -3, 5);
+		TNT1 A 0 A_BDPMeleeStart();
+		KICK A 1 A_CameraSwing(2, -1.0, 5);
+		KICK BC 1 {
+			
+			A_CameraSwing(3, -1.5, 7,1);
 		}
 		TNT1 A 0 {
 			A_BDPMelee();
@@ -527,7 +529,12 @@ class BDP_PlayerPawn : PlayerPawn
 		KIC9 ABCDEEEEFGHIJKLM 1;
 		Stop;
 	AirKickAction:
-		KICK NOPQ 1 A_BDPMeleeStart(400);
+		KICK N 1 
+		{	
+			A_BDPMeleeStart(400);
+			A_CameraSwing(1, -2.0, 5);
+		}
+		KICK OPQ 1 A_CameraSwing(1.5, -3, 5,1.7);
 		TNT1 A 0
 		{
 			//double spd = Vel.XY dot Angle.ToVector();
