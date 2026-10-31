@@ -215,7 +215,8 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	override state GetDownState()
 	{
 		owner.player.SetPSprite(50,null);
-		if(InStateSequence(owner.player.FindPSprite(PSP_WEAPON).curstate, resolvestate("Select")))
+		let psp = owner.player.FindPSprite(PSP_WEAPON);
+		if(psp && InStateSequence(psp.curstate, resolvestate("Select")))
 			return resolvestate("InstaDeselect");
 		return resolvestate("Deselect");
 	}
