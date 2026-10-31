@@ -291,7 +291,7 @@ class BDP_PlayerPawn : PlayerPawn
 	Action void A_PistolStart()
     {
         let p = player;
-        let me = p.mo;
+        let me = BDP_PlayerPawn(p.mo);
         if (p.playerstate != PST_DEAD)
         {
             p.health = me.health = me.SpawnHealth();
@@ -303,6 +303,9 @@ class BDP_PlayerPawn : PlayerPawn
             me.ClearInventory();
             me.GiveDefaultInventory();
         }
+		me.regenTime = 8;
+		me.regenCap = 20;
+		me.regenDelay = 175;
 		//A_SelectWeapon("BDPPistol");
 		//p.readyweapon.setstate(p.readyweapon.findstate("select"));
 		
