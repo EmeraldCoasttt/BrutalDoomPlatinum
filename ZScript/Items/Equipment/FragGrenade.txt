@@ -5,9 +5,10 @@ class BDP_FragGrenade : BDP_Equipment
 		Tag "Frag Grenade";
 		Inventory.Icon "GRNDA";
 		Inventory.PickupMessage "Picked up a Frag Grenade.";
-		Inventory.PickupSound "GRNPIN";
-		BDP_Equipment.Cooldown 20;
-		BDP_Equipment.Charges 2;
+		Inventory.PickupSound "PIPESEL";
+		BDP_Equipment.ReadySound "GRENREDY";
+		BDP_Equipment.Cooldown 30;
+		//BDP_Equipment.Charges 2;
 		Scale 0.5;
 	}
 	
