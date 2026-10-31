@@ -774,7 +774,7 @@
 				if(level.killed_monsters == level.total_monsters - 1) {
 					for(int i = 180; i < 184; i++)
 					{
-						level.Lines[i].flags &= ~Line.ML_BLOCK_PLAYERS;
+						level.Lines[i].flags &= ~Line.ML_BLOCKING;
 						level.Lines[i].sidedef[Line.front].SetTexture(Side.mid, TexMan.CheckForTexture(""));
 					}
 				}
