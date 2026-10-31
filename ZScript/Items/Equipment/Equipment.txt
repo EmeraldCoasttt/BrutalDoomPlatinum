@@ -155,7 +155,7 @@ class BDP_UncommonEquipment : RandomSpawner
 {
 	Default
 	{
-		DropItem "BDP_ThermiteGrenade", 255, 1;
+		//DropItem "BDP_ThermiteGrenade", 255, 1;
 		DropItem "BDP_EnergyArmor", 255, 1;
 		DropItem "BDP_Tether", 255, 1;
 		DropItem "BDP_BoosterFrame", 255, 1;
