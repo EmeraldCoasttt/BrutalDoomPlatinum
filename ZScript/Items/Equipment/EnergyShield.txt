@@ -7,7 +7,7 @@ class BDP_EnergyArmor : BDP_Equipment
 		Inventory.PickupMessage "Picked up the energy shield!";
 		Inventory.PickupSound "items/energyshield";
 		BDP_Equipment.ReadySound "NULL";
-		BDP_Equipment.Cooldown 6;
+		BDP_Equipment.Cooldown 4;
 		-BDP_EQUIPMENT.ACTIVE
 		+BDP_EQUIPMENT.NOICON
 	}
@@ -18,7 +18,7 @@ class BDP_EnergyArmor : BDP_Equipment
 	override void PickupEquipment(bool depleted)
 	{
 		if(depleted) return;
-		owner.GiveInventory("BDP_MjolnirArmor", 50);
+		//owner.GiveInventory("BDP_MjolnirArmor", 50);
 	}
 	
 	override void OnDrop(Actor dropper)
@@ -29,19 +29,22 @@ class BDP_EnergyArmor : BDP_Equipment
 	
 	override void ModifyDamage (int damage, Name damageType, out int newdamage, bool passive, Actor inflictor, Actor source, int flags)
 	{
+		int incomingDamage;
 		if (owner && passive && damage > 0 && owner.countinv("basicarmor") > 0)
 		{
 			owner.A_StartSound("StickyGrenade/Hit", 125);
 			playedSound = false;
-			int incomingDamage = owner.ApplyDamageFactor(damageType, damage);
-			if(owner.countinv("basicarmor") - incomingDamage < 50)
-				TriggerCooldown(true);
+			incomingDamage = owner.ApplyDamageFactor(damageType, damage);
+			
 		}
+		//Do this after so cooldown gets reset even if shields aren't active
+		if(owner && owner.countinv("basicarmor") - incomingDamage < 50)
+				TriggerCooldown(true);
 	}
 	
 	override void DoEffect()
 	{
-		If(owner)
+		If(owner && owner.health > 0)
 		{
 			int armorCount = owner.countinv("basicarmor");
 			if(armorCount > 20 || !cooldown)

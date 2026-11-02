@@ -1317,7 +1317,10 @@ class BDP_PlayerPawn : PlayerPawn
 			{
 				Damage = (damage * 0.15);
 			}
-			
+			If(countinv("basicarmor") > 0 && countinv("BDP_EnergyArmor") > 0)
+			{
+				Damage = (damage * 0.5);
+			}
 			//console.printf(inflictor.getclassname());
 			If(source is "BDP_Bike" && !invehicle)
 				{
