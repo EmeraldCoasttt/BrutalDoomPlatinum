@@ -350,7 +350,7 @@ class DragonsBreathSparkle : Actor
 	}
 	Override void Tick()
 	{
-		if(GetAge() > 1 && GetAge() < 20)
+		/*if(GetAge() > 1 && GetAge() < 20)
 		{
 			FSpawnParticleParams dbtrail;
 			dbtrail.texture = TexMan.CheckForTexture("SPRKA0");
@@ -363,7 +363,7 @@ class DragonsBreathSparkle : Actor
 			dbtrail.lifetime = 24; 
 			dbtrail.pos = pos;
 			Level.SpawnParticle(dbtrail);
-		}
+		}*/
 		Super.Tick();
 	}
 	States
