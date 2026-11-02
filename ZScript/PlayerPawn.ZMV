@@ -345,13 +345,21 @@ class BDP_PlayerPawn : PlayerPawn
 			self.LineTrace(self.angle, range, self.pitch, 0, aimz, data:lt);
 			victim = lt.HitActor;
 			int aimCheck = -6;
+			int aimCheckVertical = -6;
 			bool backsmack;
 		
+		
+			while (aimCheckVertical++ < 6 && !victim)
+			{
+				//console.printf("%i",AimCheckVertical);
+				self.LineTrace(self.angle, range, self.pitch  + (aimCheck * 8), 0, aimz, data:lt);
+				victim = lt.hitActor;
+			}
 		
 			while (aimCheck++ < 6 && !victim)
 			{
 				self.LineTrace(self.angle + (aimCheck * 8), range, self.pitch, 0, aimz, data:lt);
-			victim = lt.hitActor;
+				victim = lt.hitActor;
 			}
 			
 			
