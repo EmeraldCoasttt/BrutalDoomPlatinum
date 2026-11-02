@@ -395,9 +395,9 @@ class BDP_Shotgun : BDP_Weapon
 		SHTN ST 1;
 		Goto InsertShellAnimation;
 	DoReload:
+		TNT1 A 0 A_EndAim();
 		SHTN A 0 A_JumpIf(invoker.mag > 0 && invoker.emptyChamber, "Pump1");
 		SHTN A 0 A_JumpIf(invoker.mag < 1 && invoker.emptyChamber, "PumpThenReload");
-		TNT1 A 0 A_EndAim();
 		SHTN BCDE 1;
 	ReloadNormally2:
 		SHTN FST 1;
