@@ -825,7 +825,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		}
 	}
 	
-	action Actor, Actor A_FireProjectileDX(class<Actor> missiletype, double offsetangle = 0, double offsetpitch = 0, double offsetx = 0, double offsety = 0, double offsetz = 0, bool rvel = true)	
+	action Actor, Actor A_FireProjectileDX(class<Actor> missiletype, double offsetangle = 0, double offsetpitch = 0, double offsetx = 0, double offsety = 0, double offsetz = 0, bool rvel = true, bool accurateAngles = false)	
 	{
 		FTranslatedLineTarget t;
 		
@@ -837,7 +837,10 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			BDPGMQuaternion rotated = base.multiplyQuat(angl).multiplyQuat(ptch);
 			Vector3 dir;
 			[dir.x, dir.y, dir.z] = rotated.toAngles();
-			quat ofsbase = Quat.FromAngles(angle, pitch, roll);
+			double baseAngle = self.angle;
+			double basePitch = self.pitch;
+			if(accurateAngles) [baseAngle, basePitch] = AnglePitchCalculator(offsetx, offsetz);
+			quat ofsbase = Quat.FromAngles(baseAngle, basePitch, roll);
 			Vector3 offset = (offsety, -offsetx, offsetz);
 			Vector3 ppos = ofsbase * offset;
 			Vector3 ofs = level.Vec3Offset(pos, ppos) - pos;
