@@ -97,7 +97,6 @@ class BDP_GrenadeLauncher : BDP_Weapon
 				nade.sticky = invoker.stickyGrenades;
 			}
 			A_FireProjectile("RedFlareSpawn",-5,0,0,0);
-			A_FireProjectile("GrenadeMissileBreaksGlass", 0, 0, 0, 0);
 			A_WeaponRecoil(10);
 			A_FireParticles(7);
 			A_StartSound("weapons/firegrenade", 1);
