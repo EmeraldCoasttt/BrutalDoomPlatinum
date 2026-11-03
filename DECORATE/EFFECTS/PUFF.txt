@@ -600,7 +600,7 @@ scale 0.15
 alpha 0.7
 Radius 5
 damagetype Saw
-decal "SawHorizontal"
+decal "SawVertical"
   +NOBLOCKMAP
   +NOGRAVITY
   +NOEXTREMEDEATH

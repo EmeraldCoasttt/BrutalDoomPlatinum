@@ -665,7 +665,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		//Invoker.gunslingerammoname = ammopool;
 	}
 	
-	action void A_BDPMeleeStart(double range = 200)
+	action void A_BDPMeleeStart(double range = 200, double speed = 20)
 	{
 	//if(A_CheckMeleeRange(skipWalls:true) < range) A_Recoil3D(-20); 
 		FLineTraceData lt;
@@ -673,7 +673,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			If(lt.hitactor && lt.hitactor.bsolid && lt.hitactor.bismonster)
 			{
 				A_face(lt.hitactor,0,0,0,0,FAF_MIDDLE);
-				A_Recoil3D(-20);
+				A_Recoil3D(-speed);
 			}
 	}
 	

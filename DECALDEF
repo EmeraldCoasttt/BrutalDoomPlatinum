@@ -1,11 +1,9 @@
 decal SawVertical
 {
-	pic SawVert
+	pic SAWVERT
 	shade "00 00 00"
 	x-scale 0.2
-	y-scale 2.0
-	randomflipy
-	randomflipx
+	y-scale 0.2
 }
 
 decal SawHorizontal

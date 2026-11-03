@@ -112,19 +112,32 @@ class BDP_Chainsaw : BDP_Weapon
 		TNT1 A 2;
 	FireNoStartup:
 		TNT1 A 0 A_StartSound("weapons/chainsaw/loop",1);
-		SAWF AB 1 A_BDPMeleeStart(300);
+		SAWF A 1 
+		{
+			A_CameraSwing(-0.4, -1.5, 3, 3.0);
+			A_BDPMeleeStart(300);
+		}
+		SAWF B 1
+		{
+			A_CameraSwing(-0.6, -3.0, 3, 3.0);
+		}
 		TNT1 A 0
 		{
 			A_StartSound("weapons/chainsaw/draw", 5);
 			A_BDPMeleeStart(100);
-			A_Saw("", "", 4, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
-			A_Saw("", "", 4, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
-			A_Saw("", "", 4, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
 			A_QuadSound;
 		}
-		SAWF CDE 1 A_BDPMelee(200,"MeleeAttackSaw",0,false);
-		SAWF F 1 A_BDPMelee(200,"MeleeAttackSaw",0,TRUE);
-		SAWF GHI 1;
+		SAWF CDE 1 
+		{
+			A_BDPMelee(200,"MeleeAttackSaw",0,TRUE);
+			A_CameraSwing(-0.6, -3.0, 3, 3.0);
+		}
+		SAWF F 1 
+		{
+			A_BDPMelee(200,"MeleeAttackSaw",0,TRUE);
+			A_CameraSwing(-0.6, -3.0, 3, 3.0);
+		}
+		SAWF GHI 1 A_CameraSwing(-0.6, -3.0, 3, 3.0);
 		TNT1 A 0 {A_SemiFlag(); invoker.sideFired = true;}
 		TNT1 A 8 A_WeaponReady(WRF_NOFIRE|WRF_NOBOB);
 		TNT1 A 0 A_SemiRefire("Fire2NoStartup");
@@ -137,19 +150,32 @@ class BDP_Chainsaw : BDP_Weapon
 		TNT1 A 2;
 	Fire2NoStartup:
 		TNT1 A 0 A_StartSound("weapons/chainsaw/loop",1);
-		SAWF JK 1 A_BDPMeleeStart(300);
+		SAWF J 1 
+		{
+			A_CameraSwing(-0.4, 1.5, 3, 3.0);
+			A_BDPMeleeStart(300);
+		}
+		SAWF K 1
+		{
+			A_CameraSwing(-0.6, 3.0, 3, 3.0);
+		}
 		TNT1 A 0
 		{
 			A_StartSound("weapons/chainsaw/draw", 5);
 			A_BDPMeleeStart(100);
-			A_Saw("", "", 4, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
-			A_Saw("", "", 4, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
-			A_Saw("", "", 4, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
 			A_QuadSound;
 		}
-		SAWF LMN 1 A_BDPMelee(200,"MeleeAttackSaw",0,false);
-		SAWF O 1 A_BDPMelee(200,"MeleeAttackSaw",0,TRUE);
-		SAWF PQR 1;
+		SAWF LMN 1 
+		{
+			A_BDPMelee(200,"MeleeAttackSaw",0,TRUE);
+			A_CameraSwing(-0.6, 3.0, 3, 3.0);
+		}
+		SAWF O 1 
+		{
+			A_BDPMelee(200,"MeleeAttackSaw",0,TRUE);
+			A_CameraSwing(-0.6, 3.0, 3, 3.0);
+		}
+		SAWF PQR 1 A_CameraSwing(-0.6, 3.0, 3, 3.0);
 		TNT1 A 0 {A_SemiFlag(); invoker.sideFired = false;}
 		TNT1 A 8 A_WeaponReady(WRF_NOFIRE|WRF_NOBOB);
 		TNT1 A 0 A_SemiRefire("FireNoStartup");
@@ -164,8 +190,8 @@ class BDP_Chainsaw : BDP_Weapon
 		TNT1 A 0 A_QuadSound();
 		SAWG RSTU 1
 		{
-			A_BDPMeleeStart(100);
-			A_Saw("", "", 4, "SSawPuff2", SF_NORANDOM|SF_NOPULLIN|SF_NOTURN, 100, 32);
+			//A_BDPMeleeStart(100,1);
+			A_Saw("", "", 8, "SSawPuff2", SF_NORANDOM, 100, 0);
 		}
 		TNT1 A 0 A_JumpIf(player.cmd.buttons & BT_ALTATTACK,"FireLoop");
 		SAWG VWON 1 A_WeaponReadyDX();
