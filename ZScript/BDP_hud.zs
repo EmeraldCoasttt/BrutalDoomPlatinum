@@ -631,7 +631,7 @@ class BDP_HUD : DoomStatusBar
 			);
 		}
 		
-		if(weap.bDUALWEAPON)
+		if(weap && weap.bDUALWEAPON)
 		{
 			iconPos.x += iconSpacing;
 			let dualweap = BDP_Weapon(CPlayer.mo.FindInventory(weap.DualWeapon));
