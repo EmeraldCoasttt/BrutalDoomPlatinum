@@ -131,7 +131,7 @@ class UnmakerLaser : FastProjectile
   +activatepcross
   +activateimpact
   DAmagetype "Desintegrate";
-  DamageFunction 60;
+  DamageFunction 120;
   Renderstyle 'Add';
   Decal "PENTAGRAM";
   Alpha 1;
