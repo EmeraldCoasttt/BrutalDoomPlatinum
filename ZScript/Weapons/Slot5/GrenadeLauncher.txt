@@ -28,12 +28,18 @@ class BDP_GrenadeLauncher : BDP_Weapon
 		super.DoEffect();
 		if(owner.player && owner.player.readyweapon == self && owner.player.cmd.buttons & BT_ALTATTACK && !chaosGrenades)
 		{
-			if(!stickyGrenades) owner.A_StartSound("weapons/grenadelauncher/startaltfire", 3);
+			if(!stickyGrenades) {
+				owner.A_StartSound("weapons/grenadelauncher/startaltfire", 3);
+				A_SetCrosshairDX("STCKRet", 500);
+			}
 			stickyGrenades = true;
 		}
 		else
 		{
-			if(stickyGrenades) owner.A_StartSound("weapons/grenadelauncher/endaltfire", 3);
+			if(stickyGrenades) {
+				owner.A_StartSound("weapons/grenadelauncher/endaltfire", 3);
+				A_SetCrosshairDX("NADERet", 500);
+			}
 			stickyGrenades = false;
 		}
 	}
