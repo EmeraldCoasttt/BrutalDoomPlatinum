@@ -1312,7 +1312,7 @@ class BDP_PlayerPawn : PlayerPawn
 	Override int takespecialdamage(Actor inflictor, Actor source, int damage, Name damagetype)
 		{
 		
-			//console.printf(player.readyweapon.getclassname());
+			//console.printf(inflictor.getclassname());
 			BDP_AssaultShotgun weap = BDP_AssaultShotgun(player.ReadyWeapon);
 			If(weap && weap.ASGSHieldActive)
 			{
@@ -1325,9 +1325,10 @@ class BDP_PlayerPawn : PlayerPawn
 			{
 				Damage = (damage * 0.15);
 			}
-			If(countinv("basicarmor") > 0 && countinv("BDP_EnergyArmor") > 0)
+			If(countinv("basicarmor") > 0 && countinv("BDP_EnergyArmor") > 0 && inflictor != self)
 			{
 				Damage = (damage * 0.5);
+				a_startsound("StickyGrenade/Hit",125);
 			}
 			//console.printf(inflictor.getclassname());
 			If(source is "BDP_Bike" && !invehicle)

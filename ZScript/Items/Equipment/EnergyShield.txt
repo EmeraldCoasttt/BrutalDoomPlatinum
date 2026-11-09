@@ -32,7 +32,7 @@ class BDP_EnergyArmor : BDP_Equipment
 		int incomingDamage;
 		if (owner && passive && damage > 0 && owner.countinv("basicarmor") > 0)
 		{
-			owner.A_StartSound("StickyGrenade/Hit", 125);
+			//owner.A_StartSound("StickyGrenade/Hit", 125);
 			playedSound = false;
 			incomingDamage = owner.ApplyDamageFactor(damageType, damage);
 			
