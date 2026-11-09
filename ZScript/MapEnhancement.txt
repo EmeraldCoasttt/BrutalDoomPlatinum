@@ -1768,7 +1768,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(11010, (-32, -352, -999), 80);
 					AddThing(11010, (-128, -1088, -999), 80);
 					AddThing(11010, (-832, -192, -999), 80);
-					AddThing(25918, (-184, -2168, -999), 0);
+					//AddThing(25918, (-184, -2168, -999), 0);
 				}
 				Break;
 
@@ -1871,7 +1871,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					levellocals.ReplaceTextures("MFLR8_4", "APOCTX1",0);
 					ReplaceSectorTexture(21, Sector.floor, "JUNKY15");
 					
-					AddThing(25916, (1248, -928, -999), 0);
+					//AddThing(25916, (1248, -928, -999), 0);
 					AddThing(11001, (-1120, -384, -999), 0);
 					AddThing(11001, (-1280, -640, -999), 0);
 					AddThing(11001, (-1792, -352, -999), 0);
@@ -1998,7 +1998,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 			case 'f42dbba1898907accf63215d2ba5630d':
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
 				{
-					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYCITH",TexMan.Type_Any),TexMan.CheckForTexture("SKYCITH",TexMan.Type_Any));
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYCITH",TexMan.Type_Any),TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any));
 					levellocals.ReplaceTextures("BIGDOOR6", "NEWDOR4",0);
 					levellocals.ReplaceTextures("TANROCK5", "STONE7",0);
 					levellocals.ReplaceTextures("ROCK1", "STONE5",0);
@@ -2009,7 +2009,6 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					levellocals.ReplaceTextures("RROCK19", "APOCTX1",0);
 					ReplaceSectorTexture(53, Sector.floor, "APOCTX1");
 					OffsetSectorPlane(53, Sector.floor, 184);
-					
 					AddThing(11011, (704, -1504, -999), 0);
 					AddThing(11003, (992, -2784, -999), 0);
 					AddThing(11002, (736, -1408, -999), 0);
@@ -2020,7 +2019,7 @@ Class BDP_MapEnhancer : LevelPostProcessor
 					AddThing(11005, (96, -2048, -999), 100);
 					AddThing(11007, (128, -3072, -999), 80);
 					AddThing(11010, (-832, -192, -999), 80);
-					AddThing(25917, (4064, -640, 370), 0);
+					//AddThing(25917, (4064, -640, 370), 0);
 				}
 				Break;
 
