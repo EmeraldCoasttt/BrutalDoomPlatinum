@@ -161,7 +161,7 @@ class BDP_Minigun : BDP_Weapon
 		CHAF G 1 Bright
 		{
 
-			A_FireBullets(5, 5, -1, 8, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
+			A_FireBullets(5, 5, -1, 6, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 			A_FlashOverlay(state:"MuzzleFlash4");
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_WeaponRecoil(1.5,frandom(-0.6,0.6));
@@ -178,21 +178,20 @@ class BDP_Minigun : BDP_Weapon
 		CHAF B 1
 		{
 
-			A_FireBullets(5, 5, -1, 8, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
+			A_FireBullets(5, 5, -1, 6, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_FireProjectileDX("BDP_SpentRifleCasing", random(-80, -90), random(-40, -50), 0, 20, -14);
 			A_FireParticles();
 			A_AlertMonstersDX();
 			A_ZoomFactor(0.99);
 			A_QuadSound();
-			A_TakeAmmo("BDP_Clip2",1);
 			//A_GunLight();
 		}
 		TNT1 A 0 A_CheckIfAmmo("BDP_Clip2",1,"NoAmmoHoldWasFiring");
 		CHAF E 1 Bright
 		{
 
-			A_FireBullets(5, 5, -1, 8, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
+			A_FireBullets(5, 5, -1, 6, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 			A_FlashOverlay(state:"MuzzleFlash3");
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_WeaponRecoil(1.5,frandom(-0.6,0.6));
@@ -209,7 +208,7 @@ class BDP_Minigun : BDP_Weapon
 		CHAF D 1
 		{
 
-			A_FireBullets(5, 5, -1, 8, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
+			A_FireBullets(5, 5, -1, 6, "MachineGunBulletPuff", FBF_NORANDOM,8192,"decorativetracer",-12);
 			A_WeaponOffset(random(-1,1),32+random(0,1));
 			A_FireProjectileDX("BDP_SpentRifleCasing", random(-80, -90), random(-40, -50), 0, 20, -14);
 			A_FireParticles();
