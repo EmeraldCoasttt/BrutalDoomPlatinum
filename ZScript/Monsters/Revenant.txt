@@ -520,7 +520,7 @@ FatalityImp:
 		Goto Death.Rare;
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_Scream();
-		SKEX A 100 A_SpawnItem("RevenantU", 0, 40);
+		SKEX A 100;// A_SpawnItem("RevenantU", 0, 40);
 		SKEX BCDE 6;
 		TNT1 A 0 A_SpawnItem ("XDeadSkeleton", 1);
 		Stop;
@@ -596,7 +596,7 @@ FatalityImp:
 	Death.Rare:
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_Scream();
-		SKEX A 0 A_SpawnItemEx("RevenantU", 0, 0, 40, 0, 0, 0, 0, SXF_NOCHECKPOSITION );
+		//SKEX A 0 A_SpawnItemEx("RevenantU", 0, 0, 40, 0, 0, 0, 0, SXF_NOCHECKPOSITION );
 		TNT1 A 0 A_CustomMissile ("RoamingLegs", 0, 0, random (0, 360), 2, random (0, 160));
 		Stop;
 	Raise:
