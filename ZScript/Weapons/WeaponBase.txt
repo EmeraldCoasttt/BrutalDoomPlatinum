@@ -344,7 +344,6 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	action Actor A_DiscardMag(class<Actor> missiletype, int chamber = 0, double offsetangle = 0, double offsetpitch = 0, double offsetx = 0, double offsety = 0, double offsetz = 0)
 	{
 		let magActor = BDP_SpentMag(A_FireProjectileDX(missiletype, offsetangle, offsetpitch, offsetx, offsety, offsetz, true));
-		magActor.ammo = invoker.mag - chamber;
 		Until(invoker.mag <= chamber)
 		{
 			invoker.mag -= invoker.magConversion.x;
@@ -598,7 +597,6 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	{
 		let weap = BDP_Weapon(FindInventory(invoker.DualWeapon));
 		let magActor = BDP_SpentMag(A_FireProjectileDX(missiletype, offsetangle, offsetpitch, offsetx, offsety, offsetz, true));
-		magActor.ammo = weap.mag - chamber;
 		Until(weap.mag <= chamber)
 		{
 			weap.mag -= weap.magConversion.x;
