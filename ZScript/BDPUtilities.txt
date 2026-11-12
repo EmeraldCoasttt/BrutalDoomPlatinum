@@ -779,6 +779,15 @@
 					}
 				}
 			}
+			if(!bd_disablemapenhancements && e.thing && e.thing.bBOSSDEATH && level.GetChecksum().MakeLower() == '20251eda21b2f2ecf6ff5b8bbc00b26c') {
+				if(e.thing.bE2M8BOSS) {
+					for(int i = 1127; i < 1130; i++)
+					{
+						level.Lines[i].flags &= ~Line.ML_BLOCKING;
+						level.Lines[i].sidedef[Line.front].SetTexture(Side.mid, TexMan.CheckForTexture(""));
+					}
+				}
+			}
 		}
 	}
 	

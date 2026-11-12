@@ -2073,6 +2073,20 @@ Class BDP_MapEnhancer : LevelPostProcessor
 				}
 				Break;
 
+			//map29
+			case '20251eda21b2f2ecf6ff5b8bbc00b26c':
+				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
+				{
+					Levellocals.ChangeSky(TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any),TexMan.CheckForTexture("SKYHEL",TexMan.Type_Any));
+					for(int i = 1127; i < 1130; i++)
+					{
+						SetWallTexture(i, Line.front, Side.mid, "FIREBLU1");
+						Level.Lines[i].alpha = 0.5;
+						SetLineFlags(i, Line.ML_BLOCKING);
+					}
+				}
+				Break;
+
 			//map30
 			case '5eecd88f4491f516d590ce4bbf45f532':
 				If(Cvar.getcvar("bd_disablemapenhancements").getint() == 0) 
