@@ -233,6 +233,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			let dplr = BDP_PlayerPawn(owner);
 			dplr.blockSprint = true;
 			dplr.bSPRINTING = false;
+			dplr.hideCrosshair = false;
 		}
 		owner.player.SetPSprite(50,null);
 		firing = true;
@@ -248,12 +249,14 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		{
 			owner.player.SetPSprite(50,null);
 			dplr.blockAltfire = true;
+			dplr.hideCrosshair = false;
 			return resolvestate("AimEnd");
 		}
 		if(resolvestate("Altfire"))
 		{
 			owner.player.SetPSprite(50,null);
 			altFiring = true;
+			dplr.hideCrosshair = false;
 			return resolvestate("Altfire");
 		}
 		return resolvestate(null);
@@ -1466,10 +1469,12 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			(dplr.showKickflash == 1 || !dplr.blockSprint && (player.cmd.forwardmove || player.cmd.sidemove)) &&
 			psp && !InStateSequence(psp.curstate, resolvestate("LetsGetStarted")) && !InStateSequence(psp.curstate, resolvestate("DoReload")) && !InStateSequence(psp.curstate, resolvestate("Fidget")) && !InStateSequence(psp.curstate, resolvestate("DoingMelee")))
 			{
+				dplr.hideCrosshair = true;
 				player.SetPSprite(50, resolvestate("Sprint"));
 			}
 			else if(!dplr.showKickflash && player.FindPSprite(50) && !dplr.blockSprint && !InStateSequence(player.FindPSprite(50).curstate, resolvestate("SprintEnd")))
 			{
+				dplr.hideCrosshair = false;
 				player.SetPSprite(50, resolvestate("SprintEnd"));
 			}
 			if(psp && player.FindPSprite(50))

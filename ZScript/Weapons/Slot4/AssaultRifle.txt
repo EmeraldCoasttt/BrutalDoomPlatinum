@@ -353,6 +353,7 @@ class BDP_AssaultRifle : BDP_Weapon
 			let dplr = BDP_PlayerPawn(invoker.owner);
 			if(!dplr) return;
 			dplr.blockKick = true;
+			dplr.hideCrosshair = false;
 		}
 		Goto Ready;
 	/*//AltFire:

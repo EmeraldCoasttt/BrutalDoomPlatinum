@@ -223,6 +223,7 @@ class BDP_PlayerPawn : PlayerPawn
 	vector3 aimpos;
 	Actor aimActor2;
 	vector3 aimpos2;
+	bool hideCrosshair;
 	string crosshair;
 	vector2 crosshairscale;
 	int crosshairrange;
@@ -474,12 +475,14 @@ class BDP_PlayerPawn : PlayerPawn
 					if(ownedEquipment && ownedEquipment.bReplacesMelee)
 					{
 						ownedEquipment.QuickMelee();
+						hideCrosshair = true;
 						return resolvestate("KickWait");
 					}
 					if(weap && weap.bReplacesMelee)
 					{
 						player.SetPSprite(1, player.readyweapon.ResolveState("QuickMelee"));
 						A_Overlay(90, "MeleeWait");
+						hideCrosshair = true;
 						return resolvestate("KickWait");
 					}
 				}

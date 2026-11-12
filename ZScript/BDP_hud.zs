@@ -876,7 +876,7 @@ class BDP_HUD : DoomStatusBar
 	{		
 		// Get player
 		BDP_PlayerPawn BDPplr = BDP_PlayerPawn(Cplayer.mo);
-		If(BDPplr && BDPplr.health > 0)
+		If(BDPplr && BDPplr.health > 0 && !BDPplr.hideCrosshair)
 		{
 			let curvehicle = Veh_Manager(BDPplr.FindInventory("Veh_Manager"));
 			
@@ -1116,7 +1116,7 @@ class BDP_OverlayUI : EventHandler
 			DrawKeys(e);
 		}
 		
-		If(BDPplr && BDPplr.health > 0 && BDPplr.findinventory("Meathook"))
+		If(BDPplr && BDPplr.health > 0 && BDPplr.findinventory("Meathook") && !BDPplr.hideCrosshair)
 		{
 			Actor aimAct = bdpplr.aimActor2; 
 			bool hostileAim = aimAct && aimAct.isHostile(bdpplr) && aimAct.bISMONSTER && !(aimAct is "BDP_Vehicle") && !aimAct.bSHADOW;
