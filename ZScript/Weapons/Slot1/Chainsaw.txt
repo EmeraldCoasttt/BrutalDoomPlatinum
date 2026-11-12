@@ -70,12 +70,16 @@ class BDP_Chainsaw : BDP_Weapon
 		Stop;
 	Select:
 		TNT1 A 1 {A_SetCrosshairDX("Null"); A_GiveInventory("HasCutingWeapon",1);}
+		SAWG JIHG 1 A_WeaponReady(WRF_NOFIRE);
+		Goto Ready;
+	Respect:
+		TNT1 A 1 {A_SetCrosshairDX("Null"); A_GiveInventory("HasCutingWeapon",1);}
 		SAWS NOPQ 1 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_StartSound("DSSAWZIP", 1);
-		SAWS A 3 A_WeaponReady(WRF_NOFIRE);
-		SAWS BCCDDEFG 1 A_WeaponReady(WRF_NOFIRE);
+		SAWS A 3 A_WeaponReadyDX();
+		SAWS BCCDDEFG 1 A_WeaponReadyDX();
 		TNT1 A 0 A_StartSound("weapons/chainsaw/draw", 3);
-		SAWS HIJKLM 1 A_WeaponReady(WRF_NOFIRE);
+		SAWS HIJKLM 1 A_WeaponReadyDX();
 		Goto Ready;
 	Deselect:
 		TNT1 A 0 A_TakeInventory("HasCutingWeapon",1);

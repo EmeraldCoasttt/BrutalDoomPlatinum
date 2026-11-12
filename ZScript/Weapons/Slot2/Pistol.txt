@@ -60,8 +60,7 @@ class BDP_Pistol : BDP_Weapon replaces Pistol
 	Ready:
 		PIS2 F 1 {A_SetSilencedSprites("PIS2","2ILE"); return A_WeaponReadyDX(WRF_ALLOWRELOAD);}
 		Loop;
-	LetsGetStarted:
-		TNT1 A 0 A_TakeInventory("NeverSelectedShotgun",1);
+	Respect:
 		TNT1 A 0 A_SetCrosshairDX("Null");
 		PONG A 20 A_WeaponReadyDX(kicksprint:false);
 		PUNS BDEFF 1 A_WeaponReadyDX(kicksprint:false);
@@ -84,6 +83,7 @@ class BDP_Pistol : BDP_Weapon replaces Pistol
 		PONG A 1 A_WeaponReadyDX(kicksprint:false);
 		FISA C 1 A_WeaponReadyDX(kicksprint:false);
 		TNT1 A 3 A_WeaponReadyDX(kicksprint:false);
+		TNT1 A 0 A_SetCrosshairDX("PISTRet", 1000);
 		PISR ABCDEFGH 1 A_WeaponReadyDX(kicksprint:false);
 		TNT1 A 0 A_StartSound("prel");
 		PISR OOOOOPQRSTUVWXYZ 1 A_WeaponReadyDX(kicksprint:false);
@@ -122,7 +122,6 @@ class BDP_Pistol : BDP_Weapon replaces Pistol
 		TNT1 A 0 A_Lower();
 		Wait;
 	Select:
-		TNT1 A 0 A_JumpIfInventory("NeverSelectedShotgun",1,"LetsGetStarted");
 		TNT1 A 1
 		{
 			A_SetCrosshairDX("PISTRet", 1000);

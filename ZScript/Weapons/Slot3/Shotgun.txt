@@ -64,6 +64,30 @@ class BDP_Shotgun : BDP_Weapon
 		TNT1 A 0 A_StartSound("weapons/shotgun/pump2");
 		SHTA MLKJ 1 A_WeaponReady(WRF_NOFIRE);
 		Goto Ready;
+	Respect:
+		TNT1 A 1 A_SetCrosshairDX("SGUNRet", 400);
+		SHTA MLKJ 1 A_WeaponReadyDX();
+		TNT1 A 0 A_StartSound("foley/ShotgunPumpMisc", 10);
+		SHTN ABCDEFG 1 A_WeaponReadyDX();
+		TNT1 A 0
+		{
+			A_StartSound("foley/ShotgunPumpIn", 11);
+			A_StartSound("weapons/shotgun/pump1", 3);
+		}
+		SHTN HIJ 1 A_WeaponReadyDX();
+		TNT1 A 0
+		{
+			A_FireProjectileDX("BDP_SpentShell", random(-85, -95), random(-20, -40), -10, 30, -15);
+			A_FireProjectileDX("BDP_EyeGib", random(-85, -95), random(-20, -40), -10, 30, -15);
+		}
+		SHTN KLMN 1 A_WeaponReadyDX();
+		TNT1 A 0 A_StartSound("weapons/shotgun/pump2", 4);
+		TNT1 A 0 A_StartSound("foley/ShotgunPumpOut", 11);
+		SHTN PQ 1 A_WeaponReadyDX();
+		SHTN FEDCB 1 A_WeaponReadyDX();
+		TNT1 A 0 A_StartSound("foley/ShotgunPumpMisc", 10,0,0.7);
+		SHTA FGHI 1 A_WeaponReadyDX();
+		Goto Ready;
 	Deselect:
 		TNT1 A 0 A_EndAim();
 		SHTA NOPQ 1;

@@ -144,6 +144,8 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	bool asgshieldactive;
 	bool quickSwap;
 	
+	bool respected;
+	
 	Default
 	{
 	BDP_Weapon.Handedness 0;
@@ -1467,7 +1469,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			let psp = owner.player.FindPSprite(PSP_WEAPON);
 			if(dplr.showKickflash > 0 && !player.FindPSprite(50) && (player.WeaponState & WF_WEAPONREADY || bDUALWEAPON && readyLeft && readyRight) && !aimMode &&
 			(dplr.showKickflash == 1 || !dplr.blockSprint && (player.cmd.forwardmove || player.cmd.sidemove)) &&
-			psp && !InStateSequence(psp.curstate, resolvestate("LetsGetStarted")) && !InStateSequence(psp.curstate, resolvestate("DoReload")) && !InStateSequence(psp.curstate, resolvestate("Fidget")) && !InStateSequence(psp.curstate, resolvestate("DoingMelee")))
+			psp && !InStateSequence(psp.curstate, resolvestate("Respect")) && !InStateSequence(psp.curstate, resolvestate("DoReload")) && !InStateSequence(psp.curstate, resolvestate("Fidget")) && !InStateSequence(psp.curstate, resolvestate("DoingMelee")))
 			{
 				dplr.hideCrosshair = true;
 				player.SetPSprite(50, resolvestate("Sprint"));
@@ -1781,6 +1783,11 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			{
 				invoker.switchingDual = false;
 				return resolvestate("SelectFromDual");
+			}
+			if(!invoker.respected)
+			{
+				invoker.respected = true;
+				if(resolvestate("Respect")) return resolvestate("Respect");
 			}
 			return resolvestate("Select");
 		}
