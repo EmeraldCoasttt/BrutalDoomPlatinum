@@ -302,6 +302,7 @@ class BDP_PlayerPawn : PlayerPawn
         {
             me.ClearInventory();
             me.GiveDefaultInventory();
+			me.booster = false;
         }
 		me.regenTime = 8;
 		me.regenCap = 20;
