@@ -225,7 +225,9 @@ class BDP_DarkClawStates : CustomInventory
 						if(distance > 400) continue;
 						int damage = 1500 * ((400 - distance) / 400);
 						//A_SpawnBonuses(target, damage, 3);
-						target.DamageMobj(invoker, invoker.owner, damage, "Fire");
+						name damagetype = "Fire";
+						if(target is "BDP_Mancubus") damagetype = "Plasma";
+						target.DamageMobj(invoker, invoker.owner, damage, damagetype);
 					}
 				}
 				
