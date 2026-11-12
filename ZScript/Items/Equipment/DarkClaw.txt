@@ -224,7 +224,7 @@ class BDP_DarkClawStates : CustomInventory
 						double distance = Distance3D(target);
 						if(distance > 400) continue;
 						int damage = 1500 * ((400 - distance) / 400);
-						A_SpawnBonuses(target, damage, 3);
+						//A_SpawnBonuses(target, damage, 3);
 						target.DamageMobj(invoker, invoker.owner, damage, "Fire");
 					}
 				}
@@ -260,12 +260,12 @@ class MeleeAttackDarkClaw : MeleeAttack
 	Default
 	{
 		Damagetype "cut";
-		MeleeAttack.BaseDamage 80;
+		MeleeAttack.BaseDamage 160;
 		decal "DarkClawScratch";
 		+BLOODSPLATTER;
 	}
 	
-	override int DoSpecialDamage(Actor victim, int damage, Name damagetype)
+	/*override int DoSpecialDamage(Actor victim, int damage, Name damagetype)
 	{
 		if(victim.health - victim.ApplyDamageFactor(damagetype, damage) < 1)
 		{
@@ -275,7 +275,7 @@ class MeleeAttackDarkClaw : MeleeAttack
 			victim.A_SpawnItemEx(bonus, xvel:frandom(-2.0, 2.0), frandom(-2.0, 2.0), frandom(4.0, 6.0));
 		}
 		return super.DoSpecialDamage(victim, damage, damagetype);
-	}
+	}*/
 	
 	States
 	{
