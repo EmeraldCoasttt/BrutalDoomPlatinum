@@ -151,13 +151,20 @@ CLASS BDP_Incinerator : BDP_Weapon
 		TNT1 A 0 A_RefireDX();
 		Goto Ready;
 	DoReload:	
+		TNT1 A 0 A_JumpIf(!GetMagLoaded(), "SkipUnload");
 		FLMT K 1 A_Startsound("FLMRUNLD",2);
 		FLMT OPQRSS 1;
 		FLMT T 1
 		{
 			A_DiscardMag("BDP_SpentFlamethrowerTank",0,3,-30,30,0,-10);
 		}
-		FLMT ZZTSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS 1;
+		FLMT ZZT 1;
+		FLMT S 17;
+		Goto ContinueReload;
+	SkipUnload:
+		FLMT KOPQRSS 1;
+	ContinueReload:
+		FLMT S 17;
 		FLMT T 1
 		{
 			A_ReloadMag();

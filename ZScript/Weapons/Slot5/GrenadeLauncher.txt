@@ -144,16 +144,32 @@ class BDP_GrenadeLauncher : BDP_Weapon
 		GLR1 ABCDEFGGGG 1;
 		TNT1 A 0 A_StartSound("foley/GLDownwardsToOpen",10);
 		GLR1 FHIJK 1;
-		GLR1 L 1 A_Overlay(2,"ReloadSmoke");
+		GLR1 L 1
+		{
+			if(GetMagLoaded())
+			{
+				A_Overlay(2,"ReloadSmoke");
+			}
+		}
 		TNT1 A 0
 		{
-			A_FireProjectileDX(invoker.chaosGrenades ? "BDP_SpentChaosGrenade" : "BDP_SpentGrenade", random(80, 100), random(-50, -70), 2, 35, -16);
-			A_StartSound("foley/GLEjectShell",11);
 			A_StartSound("Weapons/GrenadeOpen");
+			if(GetMagLoaded())
+			{
+				A_FireProjectileDX(invoker.chaosGrenades ? "BDP_SpentChaosGrenade" : "BDP_SpentGrenade", random(80, 100), random(-50, -70), 2, 35, -16);
+				A_StartSound("foley/GLEjectShell",11);
+				SetMagLoaded(false);
+				return resolvestate(null);
+			}
+			else
+			{
+				return resolvestate("ReloadNoSmoke");
+			}
 		}
 		GLR1 MN 1 A_FireProjectile("SmokeSpawner",0,0,0,-1);
 		GLR1 O 1 A_FireProjectile("SmokeSpawner",0,0,0,2);
 		GLR1 PP 1 A_FireProjectile("SmokeSpawner",0,0,0,3);
+	ContinueReload:
 		GLR4 A 0 A_JumpIf(invoker.chaosGrenades, 2);
 		GLR1 A 0;
 		"####" QRSTUU 1;
@@ -167,20 +183,41 @@ class BDP_GrenadeLauncher : BDP_Weapon
 		GLSA DCBA 1 A_WeaponReady(WRF_NOFIRE);
 		TNT1 A 0 A_RefireDX();
 		Goto StrapIdle;
+	ReloadNoSmoke:
+		GLR1 MN 1;
+		GLR1 O 1;
+		GLR1 PP 1;
+		Goto ContinueReload;
 	ReloadHaste:
 		GLR1 ACEGG 1;
 		TNT1 A 0 A_StartSound("foley/GLDownwardsToOpen",10);
 		GLR1 FIK 1;
-		GLR1 L 1 A_Overlay(2,"ReloadSmoke");
+		GLR1 L 1
+		{
+			if(GetMagLoaded())
+			{
+				A_Overlay(2,"ReloadSmoke");
+			}
+		}
 		TNT1 A 0
 		{
-			A_FireProjectile(invoker.chaosGrenades ? "GrenadeCasingSpawner2" : "GrenadeCasingSpawner",0,0,-4, -14);
-			A_StartSound("foley/GLEjectShell",11);
 			A_StartSound("Weapons/GrenadeOpen");
+			if(GetMagLoaded())
+			{
+				A_FireProjectileDX(invoker.chaosGrenades ? "BDP_SpentChaosGrenade" : "BDP_SpentGrenade", random(80, 100), random(-50, -70), 2, 35, -16);
+				A_StartSound("foley/GLEjectShell",11);
+				SetMagLoaded(false);
+				return resolvestate(null);
+			}
+			else
+			{
+				return resolvestate("ReloadNoSmokeHaste");
+			}
 		}
 		GLR1 N 1 A_FireProjectile("SmokeSpawner",0,0,0,-1);
 		GLR1 O 1 A_FireProjectile("SmokeSpawner",0,0,0,2);
 		GLR1 P 1 A_FireProjectile("SmokeSpawner",0,0,0,3);
+	ContinueReloadHaste:
 		GLR4 A 0 A_JumpIf(invoker.chaosGrenades, 2);
 		GLR1 A 0;
 		"####" RTU 1;
@@ -193,6 +230,11 @@ class BDP_GrenadeLauncher : BDP_Weapon
 		TNT1 A 0 A_StartSound("Weapons/GrenadeClose");
 		GLSA DBA 1 A_WeaponReady(WRF_NOFIRE);
 		Goto StrapIdle;
+	ReloadNoSmokeHaste:
+		GLR1 N 1;
+		GLR1 O 1;
+		GLR1 P 1;
+		Goto ContinueReloadHaste;
 	/*SpecialAction:
 		TNT1 A 0 A_CheckIfAmmo("BDP_RocketAmmo");
 		TNT1 A 0
