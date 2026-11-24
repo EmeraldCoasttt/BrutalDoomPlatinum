@@ -4,6 +4,7 @@ class BDP_DualRevolver : BDP_Weapon
 	{
 		Weapon.AmmoType "BDP_Clip1";
 		BDP_Weapon.MagCapacity 6;
+		BDP_Weapon.OpenBolt true;
 		Obituary "%o was shot down by %k's revolver.";
 		Weapon.SisterWeapon "BDP_Revolver";
 		+WEAPON.POWERED_UP

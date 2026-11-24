@@ -148,6 +148,9 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	bool magLoaded;
 	bool chamberLoaded;
 	
+	bool openBolt;
+	property OpenBolt : openBolt;
+	
 	Default
 	{
 	BDP_Weapon.Handedness 0;
@@ -749,7 +752,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		{
 			invoker.mag -= ammoamount;
 		}
-		if(invoker.mag == 0)
+		if(!invoker.openBolt && invoker.mag == 0)
 		{
 			SetChamberLoaded(false);
 		}

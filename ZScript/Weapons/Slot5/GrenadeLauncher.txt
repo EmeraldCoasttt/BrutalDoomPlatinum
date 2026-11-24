@@ -13,6 +13,7 @@ class BDP_GrenadeLauncher : BDP_Weapon
 		Weapon.AmmoGive 2;
 		Weapon.AmmoType "BDP_RocketAmmo";
 		BDP_Weapon.MagCapacity 1;
+		BDP_Weapon.OpenBolt true;
 		Inventory.PickupSound "ROCKPKUP";
 		Weapon.SlotNumber 5;
 		Weapon.SlotPriority 2;

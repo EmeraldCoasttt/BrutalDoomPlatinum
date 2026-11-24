@@ -30,6 +30,7 @@ class BDP_DualPlasmaRifle : BDP_Weapon
 	{
 		Weapon.AmmoType "BDP_Cell";
 		BDP_Weapon.MagCapacity 40;
+		BDP_Weapon.OpenBolt true;
 		Weapon.SisterWeapon "BDP_PlasmaRifle";
 		+WEAPON.POWERED_UP
 		+BDP_Weapon.DUALWEAPON

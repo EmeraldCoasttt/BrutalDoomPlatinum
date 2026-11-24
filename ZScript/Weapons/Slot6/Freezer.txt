@@ -5,6 +5,7 @@ class BDP_FreezerBeam : BDP_Weapon
 		Weapon.AmmoGive 40;
 		Weapon.AmmoType "BDP_Cell";
 		BDP_Weapon.MagCapacity 60;
+		BDP_Weapon.OpenBolt true;
 		Obituary "%o was put on ice by %k's Freezer Beam.";
 		Inventory.PickupSound "PLSDRAW";
 		Inventory.Pickupmessage "You got the Freezer Beam! (Slot 6)";

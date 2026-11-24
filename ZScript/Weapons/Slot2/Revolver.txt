@@ -5,6 +5,7 @@ class BDP_Revolver : BDP_Weapon
 		Weapon.AmmoGive 6;
 		Weapon.AmmoType "BDP_Clip1";
 		BDP_Weapon.MagCapacity 6;
+		BDP_Weapon.OpenBolt true;
 		Weapon.SlotNumber 2;
 		Weapon.SlotPriority 2;
 		weapon.selectionorder 3800;

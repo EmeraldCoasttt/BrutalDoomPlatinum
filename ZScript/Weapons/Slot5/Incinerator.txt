@@ -10,6 +10,7 @@ CLASS BDP_Incinerator : BDP_Weapon
 		Weapon.AmmoType "BDP_RocketAmmo";
 		BDP_Weapon.MagCapacity 60;
 		BDP_Weapon.MagConversion (10,1);
+		BDP_Weapon.OpenBolt true;
 		Inventory.PickupSound "FLMRPUP";
 		+WEAPON.EXPLOSIVE
 		Inventory.PickupMessage "You got the Incinerator! (Slot 5)";

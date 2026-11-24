@@ -10,6 +10,7 @@ CLASS BDP_SuperShotgun : BDP_Weapon
 		Weapon.AmmoType "BDP_Shell";
 		BDP_Weapon.MagCapacity 2;
 		BDP_Weapon.MagConversion (2,2);
+		BDP_Weapon.OpenBolt true;
 		Inventory.PickupMessage "You got the Super Shotgun! (Slot 3)";
 		Obituary "$OB_MPSSHOTGUN";
 		Inventory.PickupSound "CLIPINSS";
@@ -212,7 +213,6 @@ CLASS BDP_SuperShotgun : BDP_Weapon
 		{
 			A_StartSound("weapons/sshotl");
 			A_ReloadMag();
-			SetChamberLoaded(true);
 			if(invoker.uraniumShells)
 			{
 				invoker.uraniumShells = false;
@@ -261,7 +261,6 @@ CLASS BDP_SuperShotgun : BDP_Weapon
 		TNT1 A 0
 		{
 			A_ReloadMag(free:true);
-			SetChamberLoaded(true);
 		}
 		SHTZ Z 1;
 		SH69 BL 1;
@@ -287,7 +286,6 @@ CLASS BDP_SuperShotgun : BDP_Weapon
 			}
 			if(invoker.mag < 1)
 				A_ReloadMag(additive:true);
-			SetChamberLoaded(true);
 		}
 		SSGD IJKLMNOOPQRS 1;
 		SHTZ A 0
@@ -295,7 +293,6 @@ CLASS BDP_SuperShotgun : BDP_Weapon
 			A_StartSound("weapons/sshotl");
 			if(invoker.mag < 2)
 				A_ReloadMag(additive:true);
-			SetChamberLoaded(true);
 		}
 		SSGD TUVWX 1;
 		SHTZ A 0 A_StartSound("foley/SSGraiseAfterClose",10);
