@@ -349,8 +349,8 @@ class NashGoreActor : NashGorePlugin
 					let deathSpr = Owner.FindState('Death', true).GetSpriteTexture(0);
 					let xDeathSpr = Owner.FindState('Death.Extreme', true).GetSpriteTexture(0);
 					//Console.Printf("%s, %s", TexMan.GetName(deathSpr), TexMan.GetName(xDeathSpr));
-					if (deathSpr == xDeathSpr)
-						bogusXDeathStates = true;
+					//if (deathSpr == xDeathSpr)
+						//bogusXDeathStates = true;
 				}
 
 				bool validXDeath =
