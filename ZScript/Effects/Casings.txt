@@ -690,12 +690,14 @@ class BDP_SpentFreezerCell : BDP_SpentMag
 	
 	override void SetSprites()
 	{
+		if(ammoHeld < 1)
+			frame = 0;
 		return;
 	}
 	
 	States {
 	Spawn:
-		ECLF A 4;
+		ECLF B 4;
 		Goto Fly;
 	}
 }
