@@ -1,6 +1,5 @@
 class BDP_Shotgun : BDP_Weapon
 {
-	bool emptyChamber;
 	bool glassSlugs;
 	
 	Default
@@ -124,7 +123,7 @@ class BDP_Shotgun : BDP_Weapon
 	Fire:
 		SHTN A 0 A_CheckIfMag();
 		TNT1 A 0 A_JumpIf(invoker.glassSlugs, "FireSlug");
-		TNT1 A 0 A_JumpIf(invoker.emptyChamber, "NoAmmo");
+		TNT1 A 0 A_JumpIf(!GetChamberLoaded(), "NoAmmo");
 		SHTA A 1 Bright
 		{
 			if(invoker.glassSlugs)
@@ -161,7 +160,7 @@ class BDP_Shotgun : BDP_Weapon
 			A_QuadSound();
 			A_GunLight();
 			A_TakeMag();
-			invoker.emptyChamber = true;
+			SetChamberLoaded(false);
 		}
 		SHTA B 1 Bright;
 		TNT1 A 0 A_WeaponOffset(random(-1,1),32+random(0,1) );
@@ -170,7 +169,7 @@ class BDP_Shotgun : BDP_Weapon
 		TNT1 A 0 A_WeaponOffset(0,32);
 		TNT1 A 0 A_JumpIf(GetCvar("ManualShotgunPump")==1,"Ready") ;
 		TNT1 A 0 A_AutoReloadMag(1,"Pump1");
-		TNT1 A 0 A_CheckIfMag(1,"Ready");
+		TNT1 A 0 A_JumpIf(invoker.mag < 1, "Ready");
 		Goto Pump1;
 	Pump1:
 		TNT1 A 0 A_JumpIf(invoker.aimMode, "PumpAim");
@@ -199,7 +198,7 @@ class BDP_Shotgun : BDP_Weapon
 			class<Actor> casing = "BDP_SpentShell";
 			if(invoker.glassSlugs) casing = "BDP_SpentGlassShell";
 				A_FireProjectileDX(casing, random(-85, -95), random(-20, -40), -10, 30, -15);
-			invoker.emptyChamber = false;
+			SetChamberLoaded(true);
 		}
 		SHTN K 1;
 	HoldPump:
@@ -230,7 +229,7 @@ class BDP_Shotgun : BDP_Weapon
 			class<Actor> casing = "BDP_SpentShell";
 			if(invoker.glassSlugs) casing = "BDP_SpentGlassShell";
 				A_FireProjectileDX(casing, random(-85, -95), random(-20, -40), -10, 30, -15);
-			invoker.emptyChamber = false;
+			SetChamberLoaded(true);
 		}
 	Pump2Cont:
 		SHTN IJK 1;
@@ -266,7 +265,7 @@ class BDP_Shotgun : BDP_Weapon
 			{
 				A_FireProjectileDX("BDP_UnSpentGlassShell", random(-85, -95), random(-20, -40), -10, 30, -15);
 			}
-			invoker.emptyChamber = false;
+			SetChamberLoaded(true);
 		}
 		SHTN IJKLMN 1;
 		TNT1 A 0 A_StartSound("foley/ShotgunPumpOut", 11);
@@ -300,7 +299,7 @@ class BDP_Shotgun : BDP_Weapon
 			{
 				A_FireProjectileDX("BDP_SpentShell", random(-80, -90), random(-20, -40), 0, 20, -14);
 			}
-			invoker.emptyChamber = false;
+			SetChamberLoaded(true);
 		}
 		SHT9 J 2;
 	HoldPumpSlug:
@@ -333,7 +332,7 @@ class BDP_Shotgun : BDP_Weapon
 		Stop;
 	FireAim:
 		TNT1 A 0 A_CheckIfMag();
-		TNT1 A 0 A_JumpIf(invoker.emptyChamber, "NoAmmo");
+		TNT1 A 0 A_JumpIf(!GetChamberLoaded(), "NoAmmo");
 		SHT8 D 1 Bright
 		{
 			if(invoker.glassSlugs)
@@ -365,12 +364,12 @@ class BDP_Shotgun : BDP_Weapon
 			A_QuadSound();
 			A_GunLight();
 			A_TakeMag();
-			invoker.emptyChamber = true;
+			SetChamberLoaded(false);
 		}
 		SHT8 E 1 A_ZoomFactor(1.2);
 		SHT8 EFGCC 1;
 		TNT1 A 0 A_JumpIf(GetCvar("ManualShotgunPump")==1,"Aim") ;
-		TNT1 A 0 A_CheckIfMag(1,"Aim");
+		TNT1 A 0 A_JumpIf(invoker.mag < 1, "Aim");
 		Goto PumpAim;
 	PumpAim:
 		SHT8 C 2;
@@ -388,7 +387,7 @@ class BDP_Shotgun : BDP_Weapon
 				return resolvestate("FailPumpAim");
 			}
 		}
-		TNT1 A 0 {invoker.emptyChamber = false;}
+		TNT1 A 0 {SetChamberLoaded(true);}
 		SHTN A 0
 		{
 			if(invoker.glassSlugs)
@@ -420,8 +419,8 @@ class BDP_Shotgun : BDP_Weapon
 		Goto InsertShellAnimation;
 	DoReload:
 		TNT1 A 0 A_EndAim();
-		SHTN A 0 A_JumpIf(invoker.mag > 0 && invoker.emptyChamber, "Pump1");
-		SHTN A 0 A_JumpIf(invoker.mag < 1 && invoker.emptyChamber, "PumpThenReload");
+		SHTN A 0 A_JumpIf(invoker.mag > 0 && !GetChamberLoaded(), "Pump1");
+		SHTN A 0 A_JumpIf(invoker.mag < 1 && !GetChamberLoaded(), "PumpThenReload");
 		SHTN BCDE 1;
 	ReloadNormally2:
 		SHTN FST 1;
@@ -445,7 +444,7 @@ class BDP_Shotgun : BDP_Weapon
 		TNT1 A 0 A_StartSound("insertshell",5);
 		TNT1 A 0 A_ReloadMag(0,true);
 		SHTN XYZ[] 1;
-		SHTN A 0 A_JumpIf(invoker.emptyChamber,"Pump2");
+		SHTN A 0 A_JumpIf(!GetChamberLoaded(),"Pump2");
 		SHTN A 0 A_CheckIfMag(7,"InsertShellAnimation");
 	CantFinishReload:
 		TNT1 A 0 A_StartSound("foley/ShotgunReloadLower", 10);
