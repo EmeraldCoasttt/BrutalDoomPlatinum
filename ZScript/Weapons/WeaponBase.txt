@@ -145,6 +145,8 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	bool quickSwap;
 	
 	bool respected;
+	bool magLoaded;
+	bool chamberLoaded;
 	
 	Default
 	{
@@ -171,6 +173,8 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		{
 			magConversion = (1,1);
 		}
+		magLoaded = true;
+		chamberLoaded = true;
 		Super.beginplay();
 	}
 	
@@ -359,6 +363,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			}
 		}
 		if(invoker.mag < 0) invoker.mag = 0;
+		SetMagLoaded(false);
 		return magActor;
 	}
 	
@@ -527,6 +532,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			//	giveinventory(secondarymag,1);
 			//}
 		}
+		SetMagLoaded(true);
 	}
 	
 	action void A_HandleDualFiring(statelabel firestate, statelabel altstate = null, bool sprinting = false)
@@ -596,6 +602,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		}
 		else
 			weap.A_ReloadMag(chamber,additive,free);
+		weap.SetMagLoaded(true);
 	}
 	
 	action Actor A_DiscardDualMag(class<Actor> missiletype, int chamber = 0, double offsetangle = 0, double offsetpitch = 0, double offsetx = 0, double offsety = 0, double offsetz = 0)
@@ -612,6 +619,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			}
 		}
 		if(weap.mag < 0) weap.mag = 0;
+		weap.SetMagLoaded(false);
 		return magActor;
 	}
 	
@@ -740,6 +748,10 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		if(!findinventory("BDP_PowerSpeed") || force)
 		{
 			invoker.mag -= ammoamount;
+		}
+		if(invoker.mag == 0)
+		{
+			SetChamberLoaded(false);
 		}
 	}
 	
@@ -985,7 +997,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	
 	action state A_CheckIfMag(int ammoamount = 1, statelabel label = "NoAmmo", bool force = false)
 	{
-		If(invoker.mag >= ammoamount || (findinventory("BDP_PowerSpeed") && !force))
+		If(invoker.mag >= ammoamount && GetChamberLoaded() || (findinventory("BDP_PowerSpeed") && !force))
 		{
 		Return ResolveState(null);
 		}
@@ -1109,7 +1121,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 	Action state A_AutoReloadMag(int minammo = 1, statelabel label = "Reload", bool force = false)
 	{
 		//FORCE flag is intended for single shot weapons
-		If(invoker.magCapacity > 0 && invoker.mag < minammo && countinv(invoker.ammotype1) >= invoker.magConversion.y && (invoker.owner.getcvar("bdp_autoreload") == true || force == true) && (invoker.readyLeft && invoker.readyRight || !invoker.bDUALWEAPON))
+		If(invoker.magCapacity > 0 && (invoker.mag < minammo && countinv(invoker.ammotype1) >= invoker.magConversion.y || !GetChamberLoaded()) && (invoker.owner.getcvar("bdp_autoreload") == true || force == true) && (invoker.readyLeft && invoker.readyRight || !invoker.bDUALWEAPON))
 			Return Resolvestate(Label);
 		Return Resolvestate(Null);
 	}
@@ -1153,6 +1165,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			{
 				invoker.fidgetState = fidgetstate;
 				if((invoker.mag < invoker.magCapacity || invoker.bDUALWEAPON && DualMag() < invoker.magCapacity) && CountInv(invoker.ammotype1) >= invoker.magConversion.y ||
+				(!GetChamberLoaded() || invoker.bDUALWEAPON && GetDualChamberLoaded()) ||
 				resolvestate(invoker.fidgetState) && invoker.aimMode == 0 && (invoker.fidgetState != "Fidget" && player.cmd.buttons & BT_RELOAD || LastPressed(BT_RELOAD,7,true)))
 				{
 					player.WeaponState |= WF_WEAPONRELOADOK;
@@ -1449,6 +1462,50 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		Vector2 ofs = AngleToVector(ang, spawnofs_xy);
 		SpawnPlayerMissile("decorativetracer",angle + spread_xy,ofs.x,ofs.y,spawnofs_z);
 		self.Pitch = saved_player_pitch;
+	}
+	
+	action void SetMagLoaded(bool set)
+	{
+		invoker.magLoaded = set;
+	}
+	
+	action bool GetMagLoaded()
+	{
+		return invoker.magLoaded;
+	}
+	
+	action void SetDualMagLoaded(bool set)
+	{
+		let weap = BDP_Weapon(FindInventory(invoker.DualWeapon));
+		weap.magLoaded = set;
+	}
+	
+	action bool GetDualMagLoaded()
+	{
+		let weap = BDP_Weapon(FindInventory(invoker.DualWeapon));
+		return weap.magLoaded;
+	}
+	
+	action void SetChamberLoaded(bool set)
+	{
+		invoker.chamberLoaded = set;
+	}
+	
+	action bool GetChamberLoaded()
+	{
+		return invoker.chamberLoaded;
+	}
+	
+	action void SetDualChamberLoaded(bool set)
+	{
+		let weap = BDP_Weapon(FindInventory(invoker.DualWeapon));
+		weap.chamberLoaded = set;
+	}
+	
+	action bool GetDualChamberLoaded()
+	{
+		let weap = BDP_Weapon(FindInventory(invoker.DualWeapon));
+		return weap.chamberLoaded;
 	}
 	
 	override void DoEffect() 
