@@ -1,9 +1,9 @@
-class BDP_ThermiteGrenade : BDP_Equipment
+class BDP_SmokeGrenade : BDP_Equipment
 {
 	Default
 	{
 		Tag "Thermite Grenade";
-		Inventory.Icon "BS2XA0";
+		Inventory.Icon "GRNDB0";
 		Inventory.PickupMessage "Picked up a thermite grenade.";
 		Inventory.PickupSound "GRNPIN";
 		BDP_Equipment.Cooldown 30;
@@ -12,20 +12,20 @@ class BDP_ThermiteGrenade : BDP_Equipment
 	
 	override bool UseEffect()
 	{
-		owner.TakeInventory("BDP_ThermiteGrenadeStates", 1);
-		owner.GiveInventory("BDP_ThermiteGrenadeStates", 1);
+		owner.TakeInventory("BDP_SmokeGrenadeStates", 1);
+		owner.GiveInventory("BDP_SmokeGrenadeStates", 1);
 		return true;
 	}
 	
 	States
 	{
 	Spawn:
-		BS2X A -1;
+		GRND B -1;
 		Stop;
 	}
 }
 
-class BDP_ThermiteGrenadeStates : CustomInventory
+class BDP_SmokeGrenadeStates : CustomInventory
 {
 	Default
 	{
@@ -61,31 +61,33 @@ class BDP_ThermiteGrenadeStates : CustomInventory
 		Wait;
 	TossGrenade:
 		TNT1 A 5;
-		GRTH ABCDEF 1;
-		TNT1 A 0 A_StartSound ("GRNPIN");
-		GRTH FGHIJK 1;
+		3RTH ABCDE 1;
+		TNT1 A 0 A_StartSound("ICEGPRE2", 0);
+		3RTH F 3;
+		3RTH GHIJK 1;
 		TNT1 A 2;
 		TNT1 A 0 A_StartSound ("CS16uwu");
 		TNT1 A 0 A_Jump(2,2);
 		TNT1 A 0 A_StartSound ("GRNTOSS");
-		GRTH LM 1;
+		GRTH OP 1;
 		TNT1 A 0
 		{
-			A_FireProjectile("FireGrenade");
+			A_FireProjectile("SmokeSpewer");
 			A_QuadSound();
 		}
-		GRTH NOP 1;
+		GRTH Q 1;
+		GRTH RSTU 1;
 		TNT1 A 5;
 		TNT1 A 0
 		{
 			player.SetPSprite(1, player.readyweapon.ResolveState("FinishToss"));
-			TakeInventory("BDP_ThermiteGrenadeStates", 1);
+			TakeInventory("BDP_SmokeGrenadeStates", 1);
 		}
 		Stop;
 	}
 }
 
-class FireGrenade : Actor
+class SmokeSpewer : Actor
 {
 	Default
 	{
@@ -96,229 +98,35 @@ class FireGrenade : Actor
 		DamageFunction 20;
 		DamageType "Kick";
 		Projectile;
-		Scale 0.75;
-		BounceFactor 0.60;
-		WallBounceFactor 0.40;
-		Obituary "%o was stuck by a thermite grenade.";
-		BounceCount 5;
+		Scale 0.5;
+		BounceFactor 0.25;
+		WallBounceFactor 0.05;
+		BounceCount 2;
 		BounceSound "Weapons/GrenadeBounce";
 		DeathSound "Weapons/GrenadeBounce";
-		+BOUNCEONFLOORS
 		+BOUNCEONWALLS
+		+BOUNCEONFLOORS
 		+BOUNCEONCEILINGS
 		+ALLOWBOUNCEONACTORS
-		+BOUNCEAUTOOFFFLOORONLY
+		+BOUNCEONACTORS
 		+CANBOUNCEWATER
-		+SKYEXPLODE
-		-NOGRAVITY
-		+HITTRACER
 		+FORCEXYBILLBOARD
+		+ROLLSPRITE
+		+ROLLCENTER
+		-NOGRAVITY
 	}
-	
-
-		
-	
-	Vector3 stickOfs;
-	double stickAngle;
-	
-	int sawtimer;
-	int sawtimer2;
-	bool hasexploded;
-	bool stuck;
-	bool ihitsomething;
-	
-	Override void tick()
-	{
-		Super.tick();
-		A_spawnprojectile("SmallFlameTrails", 0, 0, random (0, 360), 2, random (-70, -110));
-		A_spawnprojectile("firegrenade_debris", 0, 0, random (0, 360), 2, random (0, 360));
-		A_spawnprojectile("firegrenade_debris", 0, 0, random (0, 360), 2, random (0, 360));
-		A_spawnprojectile("firegrenade_debris", 0, 0, random (0, 360), 2, random (0, 360));
-		sawtimer++;
-		sawtimer2++;
-		If(sawtimer >= 10)
-		{
-			sawtimer = 0;
-			If(tracer && target)
-			{
-				
-				tracer.damagemobj(Self,Target,15,"Fire");
-				
-			}
-			A_explode(15,200,XF_HURTSOURCE | XF_THRUSTLESS, false, DAMAGETYPE: "Fire");
-		}
-		If(sawtimer2 >= 245)
-		{
-			A_stopsound(4);
-			Destroy();
-		}
-	
-	}
-	
-	
-	Override void beginplay()
-		{
-		//tracer = null;
-		super.beginplay();
-		//savedangle = angle;
-		}
-	
-	
 	States
 	{
 	Spawn:
-		BS2X ABCD 1
+		GRND B 1 A_SetRoll(roll + 22.5);
+		Loop;
+	Death:
+		GRND E 2
 		{
-		A_startsound("THRMT",4,CHANF_LOOPING);
-		//savedheight = floorz;
-		tracer = null;
+			A_SetRoll(0);
+			A_SpawnProjectile("BlockingSmoke", 0, 0, frandom(0, 360), CMF_AIMDIRECTION, frandom(0, -75));
+			A_FadeOut(0.004);
 		}
 		Loop;
-		
-		
-		
-
-		Xdeath:
-		TNT1 A 0;
-		//TNT1 A 0 A_startsound("StickyGrenade/Hit");
-		TNT1 A 0 
-		{
-		ihitsomething = true;
-		stuck = true;
-		//tracer = victim;
-			If(tracer)
-			{
-				tracer.a_pain();
-				stickOfs = tracer.Vec3To(self);
-					stickAngle = tracer.angle;
-		busebouncestate = false;
-		}
-		If(!tracer)
-		{
-		setstatelabel("Death");
-		}
-		}
-		Stuck:
-		BS2X A 1 
-		{
-		
-		If(!tracer || tracer.health < 1)
-		{
-		setstatelabel("Death");
-		}
-
-
-			If(tracer && tracer.health > 0)
-			{
-			/*
-			If(tracer.health < 200 && !tracer.findinventory("melee_attacks"))
-			{
-			//tracer.angle = (tracer.angle + frandom(-40,40));
-		//	tracer.a_stop();
-		//	tracer.a_recoil(-7);
-			tracer.reactiontime = 10;
-			}
-			*/
-			
-				double angDiff = DeltaAngle(stickAngle, tracer.angle);
-					if (angDiff)
-					{
-						stickOfs.xy = RotateVector(stickOfs.xy, angDiff);
-						angle += angDiff;
-					}
-
-				SetOrigin(tracer.Vec3Offset(stickOfs.x, stickOfs.y, stickOfs.z), true);
-				stickAngle = tracer.angle;
-				//tracer.a_stop();
-			
-				//Warp(tracer,calculatingpos.x,calculatingpos.y,calculatedpos.z,savedangle,WARPF_NOCHECKPOSITION | WARPF_ABSOLUTEANGLE | WARPF_INTERPOLATE | WARPF_TOFLOOR);
-				//angle = savedangle;
-			}
-		
-			
-		}
-		LOOP;
-		
-		death:
-		TNT1 A 0 
-		{
-		ihitsomething = true;
-		//A_startsound("StickyGrenade/Hit");
-		tracer = null;
-		}
-		
-		TNT1 A 0
-		{
-		busebouncestate = false;
-		bnogravity = true;
-		}
-		StayDead:
-		BS2X A 1;
-		LOOP;
-		
-
-		
-		
-	
-	ExplodeTime:
-	TNT1 A 0;
-		TNT1 A 10;
-		stop;
-		
-	Fall:
-		 //AXEG A 0 A_SpawnItemEX("Sparks");
-		//AXEG A 0 A_startSound("AXECLN", 6);
-		TNT1 A 0
-		{
-		tracer = null;
-		bnogravity = false;
-		}
-	Goto Death;
-	
-	
-	Bounce:
-	TNT1 A 0
-	{
-	tracer = null;
-	bhitowner = TRUE;
 	}
-	Goto spawn;
-	
-	}
-}
-
-Class FireGrenade_Debris : Actor
-{
-	Default
-	{
-	height 1;
-	radius 1;
-	mass 0;
-	speed 3;
-	+CLIENTSIDEONLY
-	+MISSILE +NOBLOCKMAP
-	BounceType 'Doom';
-	bouncefactor 0.3;
-	renderstyle "Add";
-	scale 0.03;
-	Gravity 0.8;
-  }
-  
-  Override void beginplay()
-  {
-	Speed = frandom(4,20);
-	float potentialscale = frandom(0.01,0.05);
-	A_setscale(potentialscale,potentialscale);
-	Super.beginplay();
-  }
-  states
-  {
-  Spawn:
-	SPRK A random(1,10) bright;
-  Death:
-	SPRK A 1 bright A_FadeOut (0.1);
-	loop;
-
-
-  }
 }
