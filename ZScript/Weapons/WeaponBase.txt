@@ -1168,7 +1168,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 			{
 				invoker.fidgetState = fidgetstate;
 				if((invoker.mag < invoker.magCapacity || invoker.bDUALWEAPON && DualMag() < invoker.magCapacity) && CountInv(invoker.ammotype1) >= invoker.magConversion.y ||
-				(!GetChamberLoaded() || invoker.bDUALWEAPON && GetDualChamberLoaded()) ||
+				(!GetChamberLoaded() || invoker.bDUALWEAPON && !GetDualChamberLoaded()) ||
 				resolvestate(invoker.fidgetState) && invoker.aimMode == 0 && (invoker.fidgetState != "Fidget" && player.cmd.buttons & BT_RELOAD || LastPressed(BT_RELOAD,7,true)))
 				{
 					player.WeaponState |= WF_WEAPONRELOADOK;
