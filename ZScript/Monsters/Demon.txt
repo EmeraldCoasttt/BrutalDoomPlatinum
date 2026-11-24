@@ -4,7 +4,7 @@
 //
 //===========================================================================
 
-class BDP_Demon : Demon Replaces Demon
+class BDP_Demon : BDP_Actor Replaces Demon
 {
 	Default
 	{
@@ -17,6 +17,7 @@ class BDP_Demon : Demon Replaces Demon
 		Speed 14;
 		DamageFactor "Explosive", 1.4;
 		FastSpeed 22;
+		PainChance 180;
 		PainChance "Saw", 200;
 		Painchance "Slide", 0;
 		PainChance "Cut", 200;
@@ -32,6 +33,7 @@ class BDP_Demon : Demon Replaces Demon
 		+SLIDESONWALLS
 		+NEVERFAST
 		SeeSound "demon/sight";
+		AttackSound "demon/melee";
 		PainSound "demon/pain";
 		DeathSound "demon/death";
 		ActiveSound "PINKIDL";
@@ -54,10 +56,24 @@ class BDP_Demon : Demon Replaces Demon
 			Return resolvestate(null);
 		}
 	}
+
+	bool noArm;
+	
+	void A_LastStand()
+	{
+		health = 100;
+		sufferDeath = 'NoArm';
+		height = default.height;
+		bSHOOTABLE = true;
+		bNOPAIN = true;
+		bSOLID = true;
+		noArm = true;
+	}
+	
 	States
 	{
 	Spawn:
-		SARG Y 1;
+		SARG Y 1 NoDelay A_JumpIf(noArm, "Spawn.NoArm");
 	Spawned:	
 		TNT1 A 0 A_JumpIfInventory("EatMe", 1, "Eat");
 		SARG YZYZYZYZYZ 10 A_Look();
@@ -277,21 +293,53 @@ class BDP_Demon : Demon Replaces Demon
 		SARG K 4;
 		SARG L 4 A_NoBlocking();
 		SARG M 4;
-		TNT1 A 0 A_SpawnItem ("DeadDemon1", 1);
+		//TNT1 A 0 A_SpawnItem ("DeadDemon1", 1);
+		SARG N -1 A_CorpseState();
 		Stop;
-		TNT1 AAAAAAAAA 0;
+	DeathRemoveArm:
 		SAAR A 8;
 		SAAR B 8 A_Scream();
-		TNT1 A 0 A_NoBlocking();
-		TNT1 A 0 A_SpawnItemEx ("PoorPinkyLostHisArm",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0);
+		TNT1 A 0 A_Jump(32, "Collapse");
+		SAAR J 1 A_SufferState("SufferDeath");
+		TNT1 A 0 A_Pain();
+		SAAR JJJJ 4;
+		TNT1 A 0 A_Jump(128, "LastStand");
+		SAAR JJJJ 4;
+		TNT1 A 0 A_Pain();
+		SAAR JJJJJJJJ 4;
+		TNT1 A 0 A_Pain();
+		SAAR JJJ 4;
+		Goto Collapse;
+	Collapse:
+		TNT1 A 0
+		{
+			A_Scream();
+			A_NoBlocking();
+			A_ResetSuffer();
+		}
+		SAAR BCDEF 5;
+		SAAR F -1 A_CorpseState();
 		Stop;
+	SufferDeath:
+		TNT1 A 0 A_FaceTarget();
+		SAAR GGGGGGG 2;
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_Scream(); 
+		TNT1 A 0 A_SpawnItem ("HealthPlusFatalityBonus");
+		SAAR HHHHHHHHH 2;
+		SAAR I -1 A_CorpseState();
+		Stop;
+	LastStand:
+		TNT1 A 0 A_LastStand();
+		Goto Spawn.NoArm;
 	LeftDeath:
 		S2RG I 8;
 		S2RG J 8 A_Scream();
 		S2RG K 4;
 		S2RG L 4 A_NoBlocking();
 		S2RG M 4;
-		TNT1 A 0 A_SpawnItem ("DeadDemon1Left", 1);
+		//TNT1 A 0 A_SpawnItem ("DeadDemon1Left", 1);
+		S2RG N -1 A_CorpseState();
 		Stop;
 	CleanDeath:
 		TNT1 A 0;
@@ -301,7 +349,8 @@ class BDP_Demon : Demon Replaces Demon
 		SARG K 4;
 		SARG L 4 A_NoBlocking();
 		SARG M 4;
-		TNT1 A 0 A_SpawnItem ("DeadDemon1", 1);
+		//TNT1 A 0 A_SpawnItem ("DeadDemon1", 1);
+		SARG N -1 A_CorpseState();
 		Stop;
 	Death.Kick:
 	Death.Melee:
@@ -321,9 +370,8 @@ class BDP_Demon : Demon Replaces Demon
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_PlaySound("misc/xdeath4");//A_Scream 
 		SARH GGGGGG 2;
-		SARH HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH 2;
-		TNT1 A 0 A_SpawnItem("DeadDemonNoHead2");
-		TNT1 A -1;
+		//TNT1 A 0 A_SpawnItem("DeadDemonNoHead2");
+		SARH H -1 A_CorpseState();
 		Stop;
 	Death.Strong:
 		TNT1 A 0;
@@ -336,9 +384,8 @@ class BDP_Demon : Demon Replaces Demon
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_Scream();
 		SARH CCCCCC 2;
-		SARH DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 2;
-		TNT1 A 0 A_SpawnItem("DeadDemonNoHead");
-		TNT1 A -1;
+		//TNT1 A 0 A_SpawnItem("DeadDemonNoHead");
+		SARH D -1 A_CorpseState();
 		Stop;
 	Death.Saw:
 		TNT1 A 0;
@@ -347,18 +394,16 @@ class BDP_Demon : Demon Replaces Demon
 		SARG P 8 A_Scream();
 		SARG Q 4 A_NoBlocking();
 		SARG RRSSTT 2;
-		TNT1 A 0 A_SpawnItem ("DeadDemonHalf");
-		TNT1 TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT 2;
-		TNT1 T -1;
+		//TNT1 A 0 A_SpawnItem ("DeadDemonHalf");
+		SARG T -1 A_CorpseState();
 		Stop;
 	Death.Cut:
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_Jump(128, "Death.Cut2");
 		SARC AAABBBCCCDDD 3;
-		SARC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 2;
-		SARC D 0 A_SpawnItem("DeadDemonHalf23");
-		TNT1 A -1;
+		//SARC D 0 A_SpawnItem("DeadDemonHalf23");
+		SARC D -1 A_CorpseState();
 		Stop;
 	Death.Cut2:
 		TNT1 A 0 A_Scream();
@@ -366,9 +411,8 @@ class BDP_Demon : Demon Replaces Demon
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_Scream();
 		SARH CCCCCC 2;
-		SARH DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 2;
-		TNT1 A 0 A_SpawnItem("DeadDemonNoHead");
-		TNT1 A -1;
+		//TNT1 A 0 A_SpawnItem("DeadDemonNoHead");
+		SARH D -1 A_CorpseState();
 		Stop;
 	Death.BlackHole:
 		TNT1 A 0 A_stop();
@@ -388,9 +432,8 @@ class BDP_Demon : Demon Replaces Demon
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_NoBlocking();
 		SARC AAABBBCCCDDD 3;
-		SARC DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 2;
-		SARC D 0 A_SpawnItem("DeadDemonHalf23");
-		TNT1 A -1;
+		//SARC D 0 A_SpawnItem("DeadDemonHalf23");
+		SARC D -1 A_CorpseState();
 		Stop;
 	Death.SuperPunch:
 	Death.ExtremePunches:
@@ -411,7 +454,7 @@ class BDP_Demon : Demon Replaces Demon
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_Scream();
 		POSL ABCDE 6;
-		POSL F -1;
+		POSL F -1 A_CorpseState();
 		Stop;
 	HeavyPunchRight:
 		TNT1 A 0;
@@ -441,9 +484,6 @@ class BDP_Demon : Demon Replaces Demon
 		TNT1 A 0;
 		TNT1 A 1 A_XScream();
 		Stop;
-	DeathRemoveArm:
-		TNT1 A 0;
-		Goto Death+14;
 	Death.GreenFire:
 		TNT1 A 0;
 		TNT1 A 0 A_XScream();
@@ -517,6 +557,11 @@ class BDP_Demon : Demon Replaces Demon
 		TNT1 A 0 A_XScream();
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_FaceTarget();
+		SAGB ABCEFGHIJ 5;
+		SAGB J -1;
+		Stop;
+	Death.CorpseGibbed:
+		GIBS Z -1 A_XScream();
 		Stop;
 	Death.ExplosiveImpact:
 		TNT1 A 0 A_ChangeFLag("NODROPOFF", 0);
@@ -542,8 +587,8 @@ class BDP_Demon : Demon Replaces Demon
 		SRRD DDDDDDDDDD 3 A_CheckFloor("LandBlownAwayLeft");
 	LandBlownAwayLeft:
 		TNT1 A 0 A_Stop();
-		TNT1 A 0 A_SpawnItem("DeadDemonSRRDE");
-		TNT1 A -1;
+		//TNT1 A 0 A_SpawnItem("DeadDemonSRRDE");
+		SRRD E -1;
 		Stop;
 	BlownAwayRight:
 		TNT1 A 0 A_NoBlocking();
@@ -554,8 +599,8 @@ class BDP_Demon : Demon Replaces Demon
 		SRRD GGGGGGGGGG 3 A_CheckFloor("LandBlownAwayRight");
 	LandBlownAwayRight:
 		TNT1 A 0 A_Stop();
-		TNT1 A 0 A_SpawnItem("DeadDemonSRRDJ");
-		TNT1 A -1;
+		//TNT1 A 0 A_SpawnItem("DeadDemonSRRDJ");
+		SRRD J -1;
 		Stop;
 	Raise:
 		SARG N 5;
@@ -592,30 +637,7 @@ class BDP_Demon : Demon Replaces Demon
 		Goto See;
 	Eat:
 		TNT1 A 0 A_TakeInventory ("EatMe", 1);
-		SARK A 20 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
+		SARK AABABABABABABABABABABABAB 10 A_Look();
 		Goto Spawn;
 /*
 	Death.Eat:
@@ -625,16 +647,7 @@ class BDP_Demon : Demon Replaces Demon
 		*/
 	EatFast:
 		TNT1 A 0 A_TakeInventory ("EatMe", 1);
-		SARK A 20 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
-		SARK A 10 A_Look();
-		SARK B 10 A_Look();
+		SARK AABABABAB 10 A_Look();
 		Goto MeleeDown;
 	Death.Ice:
 	Death.Freeze:
@@ -657,40 +670,27 @@ class BDP_DemonDamaged : BDP_Demon
 	}
 }
 
-class ArmlessDemon: BDP_Demon
+extend class BDP_Demon
 {
-	Default
-	{
-		Health 100;
-		+LOOKALLAROUND
-		+NOPAIN
-		-COUNTKILL
-	}
 	States
 	{
-	Pain.KillMe:
-	Pain.Taunt:
-		TNT1 A 0;
-		TNT1 A 0 HealThing(1);
-		Goto See;
-	Idle:	
-	Spawn:
-		SG1A A 2 A_Look();
+	Spawn.NoArm:
+		SG1A A 2 A_LookEx(label:"See.NoArm");
 		TNT1 A 0 A_GiveInventory("DemonBleedingOut", 2);
 		Loop;
-	See:
-		SG1A AA 2 A_Chase();
+	See.NoArm:
+		SG1A AA 2 A_Chase(melee:"Melee.NoArm");
 		TNT1 A 0 A_Recoil(-2);
-		SG1A BB 2 A_Chase();
+		SG1A BB 2 A_Chase(melee:"Melee.NoArm");
 		TNT1 A 0 A_Recoil(-2);
-		SG1A CC 2 A_Chase();
+		SG1A CC 2 A_Chase(melee:"Melee.NoArm");
 		TNT1 A 0 A_Recoil(-2);
-		SG1A DD 2 A_Chase();
+		SG1A DD 2 A_Chase(melee:"Melee.NoArm");
 		TNT1 A 0 A_Recoil(-2);
 		TNT1 A 0 A_GiveInventory("DemonBleedingOut", 1);
 		TNT1 A 0 A_JumpIfInventory("DemonBleedingOut", 15, "Death");
 		Loop;
-	Melee:
+	Melee.NoArm:
 		TNT1 A 0;
 		TNT1 A 0 A_GiveInventory("DemonBleedingOut", 1);
 		TNT1 A 0 A_JumpIfInventory("DemonBleedingOut", 15, "Death");
@@ -704,40 +704,34 @@ class ArmlessDemon: BDP_Demon
 		SG1A G 3 A_CustomMissile("DemonAttack",5,0,0,0);
 		TNT1 A 0 A_CustomMissile("DemonAttack",40,0,0,0);
 		SG1A GGG 3;
-		Goto See;
-	Missile:
-		TNT1 A 0;
-		TNT1 A 0 A_FaceTarget();
-		TNT1 A 0 A_Recoil(-5);
-		Goto See;
-	Death.Shotgun:
-	Death.Minigun:
+		Goto See.NoArm;
+	Death.Shotgun.NoArm:
+	Death.Minigun.NoArm:
 		TNT1 A 0;
 		TNT1 A 0 A_FaceTarget();
 		SAAR GGGGGGG 2;
 		TNT1 A 0 A_NoBlocking();
 		TNT1 A 0 A_Scream();
 		SAAR HHHHHHHHH 2;
-		SAAR IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII 2;
-		SAAR I 0 A_SpawnItem("DeadDemonSAARI");
-		TNT1 A -1;
+		//SAAR I 0 A_SpawnItem("DeadDemonSAARI");
+		SAAR I -1 A_CorpseState();
 		Stop;
-	Death:
-	Death.Kick:
+	Death.NoArm:
+	Death.Kick.NoArm:
 		TNT1 A 0 A_Scream();
 		TNT1 A 0 A_NoBlocking();
 		SAAR BCDEF 5;
-		TNT1 A 0 A_SpawnItem ("DeadDemonNoArm", 5);
+		//TNT1 A 0 A_SpawnItem ("DeadDemonNoArm", 5);
+		SAAR F -1 A_CorpseState();
 		Stop;
-	Death.Saw:
+	Death.Saw.NoArm:
 		TNT1 A 0;
 		SARG O 8;
 		SARG P 8 A_Scream();
 		SARG Q 4 A_NoBlocking();
 		SARG RRSSTT 2;
-		TNT1 A 0 A_SpawnItem ("DeadDemonHalf");
-		TNT1 TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT 2;
-		TNT1 T -1;
+		//TNT1 A 0 A_SpawnItem ("DeadDemonHalf");
+		SARG T -1 A_CorpseState();
 		Stop;
 	}
 }

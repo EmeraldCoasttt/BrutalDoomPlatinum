@@ -1,76 +1,148 @@
+enum EGoreGroups
+{
+	GROUP_All,
+	GROUP_Face,
+	GROUP_Head,
+	GROUP_LeftArm,
+	GROUP_RightArm,
+	GROUP_LeftLeg,
+	GROUP_RightLeg
+}
+
 extend class BDP_Actor
 {
-	action void A_SpawnGore(class<BDP_GoreGroup> group, double velocity, double xposmult = 1.0, double yposmult = 1.0, double zposmult = 1.0)
+	array<EGoreGroups> bodyParts;
+	name sufferDeath;
+
+	override void PostBeginPlay()
 	{
-		BDP_GoreGroup g = BDP_GoreGroup.Create(group);
-		for(int i = 0; i < g.actors.size(); i++)
+		super.PostBeginPlay();
+		bodyParts.Push(GROUP_Face);
+		bodyParts.Push(GROUP_Head);
+		bodyParts.Push(GROUP_LeftArm);
+		bodyParts.Push(GROUP_RightArm);
+		bodyParts.Push(GROUP_LeftLeg);
+		bodyParts.Push(GROUP_RightLeg);
+	}
+
+	void A_SpawnGore(class<BDP_GoreGroup> groupClass, EGoreGroups group, double velocity, int minAngle = 0, int maxAngle = 360, double zpos = 0.0)
+	{
+		BDP_GoreGroup g = BDP_GoreGroup.Create(groupClass);
+		array<class<Actor>> actors;
+		if(group == GROUP_All)
 		{
-			let [result,actor] = A_SpawnItemEx(g.actors[i],g.xpos[i] * xposmult,g.ypos[i] * yposmult,g.zpos[i] * zposmult);
-			if(g.flipsprite[i] > -1) actor.bSPRITEFLIP = g.flipsprite[i];
-			actor.Vel3DFromAngle(velocity * frandom(0.8,1.2), angle + g.angle[i], g.pitch[i]);
+			for(int i = 0; i < bodyParts.Size(); i++)
+				g.AddGoreGroups(bodyParts[i]);
+			bodyParts.Clear();
 		}
+		else
+		{
+			int findPart = bodyParts.Find(group);
+			if(findPart == bodyParts.Size()) return;
+			g.AddGoreGroups(group);
+			bodyParts.Delete(findPart);
+		}
+		g.GetGoreGroups(actors);
+		for(int i = 0; i < actors.size(); i++)
+		{
+			let gib = Spawn(actors[i], (pos.xy, pos.z + zpos));
+			gib.Vel3DFromAngle(velocity * frandom(0.5,1.5), angle + random(minAngle, maxAngle), random(-15, -75));
+		}
+	}
+	
+	override int DamageMobj(Actor inflictor, Actor source, int damage, Name mod, int flags, double angle)
+	{
+		if(sufferDeath != 'None' && health - ApplyDamageFactor(mod, damage) < 1)
+		{
+			mod = sufferDeath;
+			sufferdeath == '';
+			bNOPAIN = default.bNOPAIN;
+			bNOTARGET = default.bNOTARGET;
+		}
+		super.DamageMobj(inflictor, source, damage, mod, flags, angle);
+		return damage;
+	}
+	
+	void A_SufferState(name nextState, int bodyHealth = 50)
+	{
+		sufferDeath = nextState;
+		health = bodyHealth;
+		height = default.height;
+		bSHOOTABLE = true;
+		bNOPAIN = true;
+	}
+	
+	void A_ResetSuffer()
+	{
+		sufferDeath = '';
+		bSHOOTABLE = false;
+		health = 0;
+		bNOPAIN = default.bNOPAIN;
+		bNOTARGET = default.bNOTARGET;
+	}
+	
+	void A_CorpseState(int bodyHealth = 50)
+	{
+		A_SufferState('CorpseGibbed', bodyHealth);
 	}
 }
 
 class BDP_GoreGroup
 {
-	array<class<Actor> > actors;
-	array<double> xpos;
-	array<double> ypos;
-	array<double> zpos;
-	array<double> angle;
-	array<double> pitch;
-	array<bool> flipsprite;
+	array<class<Actor>> actors;
 	
 	static BDP_GoreGroup Create(class<BDP_GoreGroup> group)
 	{
 		BDP_GoreGroup g = BDP_GoreGroup(New(group));
-		if(g)
-		{
-			g.SetGoreGroups();
-		}
 		return g;
 	}
 	
-	virtual void SetGoreGroups()
+	virtual void AddGoreGroups(EGoreGroups group)
 	{
 	}
 	
-	void AddGoreActor(class<Actor> act, double x, double y, double z, double dirxy, double dirz, int flip = -1)
+	virtual void GetGoreGroups(in out array<class<Actor>> actors)
 	{
-		actors.push(act);
-		xpos.push(x);
-		ypos.push(y);
-		zpos.push(z);
-		angle.push(dirxy);
-		pitch.push(dirz);
-		flipsprite.push(flip);
 	}
-}
-
-class ZombieHeadExplosion : BDP_GoreGroup
-{
-	override void SetGoreGroups()
+	
+	void AddGoreActor(class<Actor> act, int amt = 1)
 	{
-		AddGoreActor("BDP_BrainGib",0,0,48,random(0,359),random(0,-180));
-		AddGoreActor("BDP_BrainGib",0,0,48,random(0,359),random(0,-180));
-		AddGoreActor("BDP_EyeGib",0,0,48,random(0,359),random(0,-180));
-		for(int i = random(4,8); i > 0; i--)
+		for(int i = 0; i < amt; i++)
 		{
-			AddGoreActor("BDP_ToothGib",0,0,48,random(0,359),random(0,-180));
-			AddGoreActor("Blood",0,0,48,random(0,359),random(0,-180));
-			AddGoreActor("NashGoreBloodSpurt",0,0,48,random(0,359),random(0,-180));
+			actors.push(act);
 		}
 	}
 }
 
-class ZombieguyDecapitation : BDP_GoreGroup
+class BDP_ZombieguyGoreGroups : BDP_GoreGroup
 {
-	override void SetGoreGroups()
+	override void AddGoreGroups(EGoreGroups group)
 	{
-		AddGoreActor("BDP_ZombieguyHeadGib",0,0,48,random(-170, -190),random(-25,-45));
-		AddGoreActor("Blood",0,0,48,random(0,359),random(0,-180));
-		AddGoreActor("NashGoreBloodSpurt",0,0,48,random(0,359),random(0,-180));
+		switch(group)
+		{
+		case GROUP_Face:
+		case GROUP_Head:
+			//AddGoreActor("PlasmaBall", 400);
+			AddGoreActor("BDP_BrainGib", 2);
+			AddGoreActor("BDP_EyeGib");
+			AddGoreActor("BDP_ToothGib", 6);
+			AddGoreActor("Blood", 3);
+			AddGoreActor("NashGoreBloodSpurt", 6);
+			break;
+		case GROUP_LeftArm:
+			break;
+		case GROUP_RightArm:
+			break;
+		case GROUP_LeftLeg:
+			break;
+		case GROUP_RightLeg:
+			break;
+		}
+	}
+	
+	override void GetGoreGroups(in out array<class<Actor>> actors)
+	{
+		actors = self.actors;
 	}
 }
 
@@ -114,16 +186,18 @@ class BDP_BaseGib : NashGoreGibs
 		BDP_BaseGib.BloodSplashes true;
 	}
 	
-	action void A_SpawnGore(class<BDP_GoreGroup> group, double velocity, double xposmult = 1.0, double yposmult = 1.0, double zposmult = 1.0)
+	/*action void A_SpawnGore(class<BDP_GoreGroup> groupClass, GoreGroups group, double velocity, int angleRange = 180, double zpos = 0.0)
 	{
-		BDP_GoreGroup g = BDP_GoreGroup.Create(group);
-		for(int i = 0; i < g.actors.size(); i++)
+		BDP_GoreGroup g = BDP_GoreGroup.Create(groupClass);
+		array<class<Actor>> actors;
+		g.GetGoreGroups(actors, group);
+		for(int i = 0; i < actors.size(); i++)
 		{
-			let [result,actor] = A_SpawnItemEx(g.actors[i],g.xpos[i] * xposmult,g.ypos[i] * yposmult,g.zpos[i] * zposmult);
-			if(g.flipsprite[i] > -1) actor.bSPRITEFLIP = g.flipsprite[i];
-			actor.Vel3DFromAngle(velocity * frandom(0.8,1.2), angle + g.angle[i], g.pitch[i]);
+			let [result,actor] = A_SpawnItemEx(actors[i], zofs:zpos);
+			//if(g.flipsprite[i] > -1) actor.bSPRITEFLIP = g.flipsprite[i];
+			actor.Vel3DFromAngle(velocity * frandom(0.8,1.2), angle + random(-angleRange, angleRange), random(0, -180));
 		}
-	}
+	}*/
 	
 	States
 	{
@@ -267,6 +341,7 @@ class BDP_EyeGib : BDP_BaseGib
 		Scale 0.6;
 		BDP_BaseGib.BloodSplashes false;
 		BounceSound "";
+		Speed 6;
 	}
 	States
 	{
@@ -354,7 +429,7 @@ class BDP_ZombiemanFootGib : BDP_BaseGib
 	}
 }
 
-class BDP_ZombieguyHeadGib : BDP_ShootableGib
+/*class BDP_ZombieguyHeadGib : BDP_ShootableGib
 {
 	States
 	{
@@ -365,11 +440,11 @@ class BDP_ZombieguyHeadGib : BDP_ShootableGib
 		TNT1 A -1
 		{
 			A_StartSound("misc/xdeath5");
-			A_SpawnGore("ZombieHeadExplosion", 5, zposmult:0.2);
+			A_SpawnGore("BDP_ZombieguyGoreGroups", GROUP_HeadExplode, 5);
 		}
 		Stop;
 	}
-}
+}*/
 
 
 	Class BDP_CorpseInventory : inventory
