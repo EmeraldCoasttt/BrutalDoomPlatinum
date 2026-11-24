@@ -359,7 +359,7 @@ Class BDP_Weapon : DoomWeapon abstract//Weapon
 		Until(invoker.mag <= chamber)
 		{
 			invoker.mag -= invoker.magConversion.x;
-			if(!(bdp_active_modifiers & Modifier_Gluttony))
+			if(invoker.mag >= 0 && !(bdp_active_modifiers & Modifier_Gluttony))
 			{
 				if(GiveInventory(invoker.ammotype1, invoker.magConversion.y)) continue;
 				magActor.ammoHeld += invoker.magConversion.y;
