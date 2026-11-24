@@ -24,6 +24,7 @@ $rolloff  MasterMG 1200 3000
 
 $volume MasterMG 0.6
 
+skeleton/tracex RevBoom
 $limit skeleton/tracex 8
 
 banshee/death DSBANDTH
