@@ -2,9 +2,9 @@ class BDP_SmokeGrenade : BDP_Equipment
 {
 	Default
 	{
-		Tag "Thermite Grenade";
+		Tag "Smoke Grenade";
 		Inventory.Icon "GRNDB0";
-		Inventory.PickupMessage "Picked up a thermite grenade.";
+		Inventory.PickupMessage "Picked up a smoke grenade.";
 		Inventory.PickupSound "GRNPIN";
 		BDP_Equipment.Cooldown 30;
 		Scale 0.75;
@@ -95,7 +95,7 @@ class SmokeSpewer : Actor
 		Height 4;
 		Speed 30;
 		Gravity 0.7;
-		DamageFunction 20;
+		DamageFunction 2;
 		DamageType "Kick";
 		Projectile;
 		Scale 0.5;
