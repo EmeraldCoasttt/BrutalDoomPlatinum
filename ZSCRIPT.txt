@@ -34,7 +34,7 @@ version "5.0.0"
 #include "Zscript/Items/Equipment/LandMine.txt"
 #include "Zscript/Items/Equipment/HologramProjector.txt"
 #include "Zscript/Items/Equipment/RevenantLauncher.txt"
-#include "Zscript/Items/Equipment/ThermiteGrenade.txt"
+#include "Zscript/Items/Equipment/SmokeGrenade.txt"
 #include "Zscript/Items/Equipment/Turret.txt"
 
 #include "Zscript/Weapons/WeaponBase.txt"
